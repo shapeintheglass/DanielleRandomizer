@@ -1,24 +1,22 @@
+import filters.ItemSpawnFilter.ItemType;
+import randomizers.gameplay.LevelRandomizer;
+import utils.ItemSpawnSettings;
 
-
-/**
- * 
- * Voice line randomizer.
- * 
- * Offers three options: Randomize within character, randomize within conversation type, or randomize across the board.
- * 
- * 1. Reads in all voice IDs and makes note of which character they belong to.
- * 2. (if randomizing within conversation) Reads in all conversation IDs and makes note of which character they belong to.
- * 3. Iterates through dialogic files line by line and makes an appropriate substitution.
- * 4. Packs the finished mod.
- *  
- * @author Kida
- *
- */
 public class Main {
+  private static final String installDir = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
 
-  private static final VoiceRandomizer.RandomizeType type = VoiceRandomizer.RandomizeType.WITHIN_CHARACTER;
-
+  public static ItemType[] DEFAULT_ITEM_ORDER = { ItemType.JUNK, ItemType.SPARE_PARTS, ItemType.FOOD, ItemType.AMMO, ItemType.GRENADE,
+      ItemType.PSI_HYPO, ItemType.MEDKIT, ItemType.CHIPSET, ItemType.FAB_PLAN, ItemType.WEAPON_KIT, ItemType.WEAPON,
+      ItemType.NEUROMOD };
+  public static int[] DEFAULT_PERCENT_CHANCE = {40, 16, 8, 8, 7, 5, 5, 5, 3, 3, 3, 3};
+  
+  
   public static void main(String[] args) {
-    
+    LevelRandomizer lr = new LevelRandomizer(installDir, 
+        ItemSpawnSettings.builder()
+            .setItems(DEFAULT_ITEM_ORDER)
+            .setPercents(DEFAULT_PERCENT_CHANCE)
+            .build());
+    lr.install();
   }
 }
