@@ -1,14 +1,15 @@
 package filters;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Map;
 
 public abstract class BaseFilter {
 
   String name;
-  File tempDir;
+  Path tempDir;
 
-  public BaseFilter(String name, File tempDir) {
+  public BaseFilter(String name, Path tempDir) {
     this.name = name;
     this.tempDir = tempDir;
   }

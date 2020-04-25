@@ -1,12 +1,17 @@
 package filters;
 
+import java.nio.file.Path;
+
 public class GameplayItemFilter extends BaseFilter {
   
-  public GameplayItemFilter() {
-    super("GameplayItemFilter");
+
+  
+  
+  public GameplayItemFilter(String name, Path tempDir) {
+    super(name, tempDir);
+    // TODO Auto-generated constructor stub
   }
-  
-  
+
   public enum Options {
     
   }

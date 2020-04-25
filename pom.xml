@@ -6,11 +6,9 @@
 	<artifactId>DanielleRandomizer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
@@ -19,18 +17,25 @@
 							<version>1.7</version>
 						</path>
 					</annotationProcessorPaths>
-					<source>1.8</source>
-					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.auto.value/auto-value-annotations -->
 		<dependency>
 			<groupId>com.google.auto.value</groupId>
 			<artifactId>auto-value-annotations</artifactId>
 			<version>1.7</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.auto.value/auto-value -->
+		<dependency>
+			<groupId>com.google.auto.value</groupId>
+			<artifactId>auto-value</artifactId>
+			<version>1.7</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>

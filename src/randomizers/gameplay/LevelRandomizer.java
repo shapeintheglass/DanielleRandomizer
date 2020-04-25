@@ -55,11 +55,9 @@ public class LevelRandomizer extends BaseRandomizer {
 
   public LevelRandomizer(String installDir, ItemSpawnSettings iss) {
     super(installDir, "LevelRandomizer");
-    isf = new ItemSpawnFilter(iss);
-    ef = new EnemyFilter();
+    isf = new ItemSpawnFilter(iss, tempDirPath);
     filterList = new LinkedList<>();
     filterList.add(isf);
-    filterList.add(ef);
     Arrays.sort(LONG_ENTITY_CLASSES);
   }
 
