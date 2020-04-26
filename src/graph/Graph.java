@@ -5,23 +5,24 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
-import java.util.logging.Logger;
 
 public class Graph<T> {
 
-  Logger logger;
-
-  T root;
-  Map<T, Set<T>> connections;
+  private T root;
+  
+  private Map<T, Set<T>> connections;
 
   public Graph() {
     connections = new HashMap<T, Set<T>>();
-    logger = Logger.getLogger("Graph");
     root = null;
   }
   
   public void clear() {
     connections.clear();
+  }
+  
+  public Set<T> getNodes() {
+    return connections.keySet();
   }
   
   public Map<T, Set<String>> getEdges() {

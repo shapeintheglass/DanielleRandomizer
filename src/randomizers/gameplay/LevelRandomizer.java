@@ -20,12 +20,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import randomizers.BaseRandomizer;
+import utils.FileConsts;
+import utils.ItemSpawnSettings;
+import utils.LevelConsts;
+import utils.Utils;
 import filters.BaseFilter;
 import filters.EnemyFilter;
 import filters.ItemSpawnFilter;
-import randomizers.BaseRandomizer;
-import utils.ItemSpawnSettings;
-import utils.Utils;
 
 public class LevelRandomizer extends BaseRandomizer {
 
@@ -43,15 +45,8 @@ public class LevelRandomizer extends BaseRandomizer {
   public static final String BACKUP_LEVEL_PAK_NAME = "level_backup.pak";
   public static final String MISSION_FILE_NAME = "mission_mission0.xml";
 
-  public static final Path LOCAL_LEVELS = Paths.get("levels");
-  public static final String PREFIX = "gamesdk/levels/campaign";
-  public static final String[] LEVEL_DIRS = { "endgame", "engineering/cargobay", "engineering/lifesupport",
-      "engineering/powersource", "executive/arboretum", "executive/bridge", "executive/corporateit",
-      "executive/crewfacilities", "research/lobby", "research/prototype", "research/psychotronics",
-      "research/shuttlebay", "research/simulationlabs", "research/zerog_utilitytunnels", "station/exterior" };
-
-  public static final String[] LONG_ENTITY_CLASSES = { "TagPoint", "ArkMarker", "FlowgraphEntity", "GeomEntity",
-      "ArkInteractiveObject" };
+  public static final String[] LONG_ENTITY_CLASSES = { "TagPoint", "ArkMarker",
+      "FlowgraphEntity", "GeomEntity", "ArkInteractiveObject" };
 
   public LevelRandomizer(String installDir, ItemSpawnSettings iss) {
     super(installDir, "LevelRandomizer");
@@ -70,8 +65,8 @@ public class LevelRandomizer extends BaseRandomizer {
       return;
     }
 
-    for (String levelDir : LEVEL_DIRS) {
-      Path inputWorkingDir = LOCAL_LEVELS.resolve(levelDir);
+    for (String levelDir : LevelConsts.LEVEL_DIRS) {
+      Path inputWorkingDir = FileConsts.LOCAL_LEVELS.resolve(levelDir);
       Path tempWorkingDir = tempDirPath.resolve(levelDir);
 
       // XML file that defines the level
@@ -89,7 +84,8 @@ public class LevelRandomizer extends BaseRandomizer {
       }
 
       try {
-        filterLevelFileAndAddToZip(levelDir, missionFile, preMadeZipFile, zipTempFile);
+        filterLevelFileAndAddToZip(levelDir, missionFile, preMadeZipFile,
+            zipTempFile);
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -98,8 +94,8 @@ public class LevelRandomizer extends BaseRandomizer {
 
       // Copy into install directory
       try {
-        Files.copy(zipTempFile.toPath(),
-            Paths.get(installDir).resolve(PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME),
+        Files.copy(zipTempFile.toPath(), Paths.get(installDir).resolve(LevelConsts.PREFIX)
+            .resolve(levelDir).resolve(LEVEL_PAK_NAME),
             StandardCopyOption.REPLACE_EXISTING);
       } catch (IOException e) {
         e.printStackTrace();
@@ -109,13 +105,16 @@ public class LevelRandomizer extends BaseRandomizer {
   }
 
   private void makeBackups() throws IOException {
-    for (String levelDir : LEVEL_DIRS) {
-      Path levelPak = Paths.get(installDir).resolve(PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakNewName = Paths.get(installDir).resolve(PREFIX).resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
+    for (String levelDir : LevelConsts.LEVEL_DIRS) {
+      Path levelPak = Paths.get(installDir).resolve(LevelConsts.PREFIX).resolve(levelDir)
+          .resolve(LEVEL_PAK_NAME);
+      Path levelPakNewName = Paths.get(installDir).resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
 
       // If backup already exists, do not overwrite it!!
       if (!levelPakNewName.toFile().exists()) {
-        Files.copy(levelPak, levelPakNewName, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(levelPak, levelPakNewName,
+            StandardCopyOption.REPLACE_EXISTING);
       }
     }
   }
@@ -123,7 +122,8 @@ public class LevelRandomizer extends BaseRandomizer {
   // 4MB buffer
   private static final byte[] BUFFER = new byte[4096 * 1024];
 
-  public static void copyStreams(InputStream in, ZipOutputStream out) throws IOException {
+  public static void copyStreams(InputStream in, ZipOutputStream out)
+      throws IOException {
     int bytesRead = in.read(BUFFER);
     while (bytesRead != -1) {
       out.write(BUFFER, 0, bytesRead);
@@ -134,13 +134,16 @@ public class LevelRandomizer extends BaseRandomizer {
   /*
    * Copies level def into temp directory, while filtering.
    */
-  private void filterLevelFileAndAddToZip(String levelDir, File missionFile, File preMadeZipFile, File zipTempFile)
-      throws IOException {
+  private void filterLevelFileAndAddToZip(String levelDir, File missionFile,
+      File preMadeZipFile, File zipTempFile) throws IOException {
 
-    logger.info(String.format("filtering: %s, %s, %s", levelDir, missionFile.getName(), preMadeZipFile.getName(),
-        zipTempFile.getName()));
+    logger
+        .info(String.format("filtering: %s, %s, %s", levelDir,
+            missionFile.getName(), preMadeZipFile.getName(),
+            zipTempFile.getName()));
 
-    ZipOutputStream newZip = new ZipOutputStream(new FileOutputStream(zipTempFile));
+    ZipOutputStream newZip = new ZipOutputStream(new FileOutputStream(
+        zipTempFile));
     ZipFile originalZip = new ZipFile(preMadeZipFile.getCanonicalPath());
     // Copy existing entries from original zip into new zip
     Enumeration<? extends ZipEntry> entries = originalZip.entries();
@@ -208,7 +211,8 @@ public class LevelRandomizer extends BaseRandomizer {
   }
 
   // Filters the file representation of an entity
-  private boolean filterEntityFile(String levelDir, File entityFile, Map<String, String> config) {
+  private boolean filterEntityFile(String levelDir, File entityFile,
+      Map<String, String> config) {
     boolean mutated = false;
     for (BaseFilter bf : filterList) {
       mutated |= bf.filterEntityFile(levelDir, entityFile, config);
@@ -216,7 +220,8 @@ public class LevelRandomizer extends BaseRandomizer {
     return mutated;
   }
 
-  private void writeFileToZip(File entityFile, ZipOutputStream zos) throws FileNotFoundException, IOException {
+  private void writeFileToZip(File entityFile, ZipOutputStream zos)
+      throws FileNotFoundException, IOException {
     try (BufferedReader br = new BufferedReader(new FileReader(entityFile))) {
       String line = br.readLine();
       while (line != null) {
@@ -230,11 +235,14 @@ public class LevelRandomizer extends BaseRandomizer {
   @Override
   public boolean uninstall() {
     // Overwrite with backup
-    for (String levelDir : LEVEL_DIRS) {
-      Path levelPak = Paths.get(installDir).resolve(PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakBackup = Paths.get(installDir).resolve(PREFIX).resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
+    for (String levelDir : LevelConsts.LEVEL_DIRS) {
+      Path levelPak = Paths.get(installDir).resolve(LevelConsts.PREFIX).resolve(levelDir)
+          .resolve(LEVEL_PAK_NAME);
+      Path levelPakBackup = Paths.get(installDir).resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
       try {
-        Files.move(levelPakBackup, levelPak, StandardCopyOption.REPLACE_EXISTING);
+        Files.move(levelPakBackup, levelPak,
+            StandardCopyOption.REPLACE_EXISTING);
       } catch (IOException e) {
         e.printStackTrace();
         return false;

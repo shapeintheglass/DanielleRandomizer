@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Set;
 
 import utils.Entity;
+import utils.FileConsts;
 import utils.ItemSpawnSettings;
 import utils.Utils;
 
@@ -19,36 +20,30 @@ public class ItemDatabase {
 
   Random r;
 
-  private static final String ARK_PICKUPS_FILE = "entityarchetypes/arkpickups.xml";
-  private static final String ARK_SPECIAL_WEAPONS_FILE = "entityarchetypes/arkspecialweapons.xml";
-  private static final String ARK_PHYSICS_PROPS_FILE = "entityarchetypes/arkphysicsprops.xml";
-
-  ItemSpawnSettings iss;
-
   ItemType[] items;
   int[] percents;
 
   public enum ItemType {
-    JUNK, SPARE_PARTS, FOOD, AMMO, GRENADE, PSI_HYPO, MEDKIT, CHIPSET_SUIT, CHIPSET_SCOPE, WEAPON_KIT, FAB_PLAN, WEAPON,
-    NEUROMOD, PHARMA, SUIT_REPAIR_KIT, OTHER
+    JUNK, SPARE_PARTS, FOOD, AMMO, GRENADE, PSI_HYPO, MEDKIT, CHIPSET_SUIT, CHIPSET_SCOPE, WEAPON_KIT, FAB_PLAN, WEAPON, NEUROMOD, PHARMA, SUIT_REPAIR_KIT, OTHER
   }
 
-  // All items, keyed by name
-  Map<String, Entity> allItems;
   List<Entity> allItemsList;
-
-  // Keyed by item type
-  Map<ItemType, Map<String, Entity>> byItemType;
   Map<ItemType, List<Entity>> byItemTypeList;
+  boolean includePhysicsProps;
+  
+  public ItemDatabase(Map<ItemType, List<Entity>> database) {
+    this.byItemTypeList = database;
+    allItemsList = new ArrayList<>();
+    for (ItemType i : ItemType.values()) {
+      allItemsList.addAll(byItemTypeList.get(i));
+    }
+  }
 
-  public ItemDatabase(ItemSpawnSettings iss) {
+  public ItemDatabase(boolean includePhysicsProps) {
     r = new Random();
-    this.iss = iss;
-    allItems = new HashMap<String, Entity>();
-    byItemType = new HashMap<ItemType, Map<String, Entity>>();
+    this.includePhysicsProps = includePhysicsProps;
     byItemTypeList = new HashMap<ItemType, List<Entity>>();
     for (ItemType i : ItemType.values()) {
-      byItemType.put(i, new HashMap<String, Entity>());
       byItemTypeList.put(i, new ArrayList<Entity>());
     }
     allItemsList = new ArrayList<>();
@@ -57,10 +52,10 @@ public class ItemDatabase {
   }
 
   private void populateDatabase() {
-    getEntitiesFromFile(ARK_PICKUPS_FILE);
-    getEntitiesFromFile(ARK_SPECIAL_WEAPONS_FILE);
-    if (iss.getIncludePhysicsProps()) {
-      getEntitiesFromFile(ARK_PHYSICS_PROPS_FILE);
+    getEntitiesFromFile(FileConsts.ARK_PICKUPS_FILE);
+    getEntitiesFromFile(FileConsts.ARK_SPECIAL_WEAPONS_FILE);
+    if (includePhysicsProps) {
+      getEntitiesFromFile(FileConsts.ARK_PHYSICS_PROPS_FILE);
     }
   }
 
@@ -74,14 +69,13 @@ public class ItemDatabase {
           Map<String, String> keys = Utils.getKeysFromLine(line);
 
           String name = keys.get("name");
-          Entity e = Entity.builder().setName(name).setId(keys.get("id")).setLibrary(keys.get("library"))
-              .setArkClass(keys.get("class")).setArchetypeId(keys.get("archetypeid")).build();
+          Entity e = Entity.builder().setName(name).setId(keys.get("id"))
+              .setLibrary(keys.get("library")).setArkClass(keys.get("class"))
+              .setArchetypeId(keys.get("archetypeid")).build();
 
-          allItems.put(name, e);
           allItemsList.add(e);
 
           ItemType type = getItemTypeForEntity(e);
-          byItemType.get(type).put(name, e);
           byItemTypeList.get(type).add(e);
         }
 
@@ -106,33 +100,36 @@ public class ItemDatabase {
     int index = r.nextInt(list.size());
     return list.get(index);
   }
-  
+
   public List<Entity> getAllByType(ItemType it) {
     return byItemTypeList.get(it);
   }
-  
+
   public void overrideItemType(ItemType it, Set<Entity> newEntities) {
-    
+
   }
-  
+
   public void removeItemsFromPool(Set<Entity> toRemove) {
-    
+
   }
-  
+
   public void removeAllItemsFromPoolExcept(Set<Entity> toKeep) {
-    
+
   }
 
   private ItemType getItemTypeForEntity(Entity e) {
     String name = e.getName();
-    if (name.contains("RecyclerJunk") || name.startsWith("Crafting.Ingredients")) {
+    if (name.contains("RecyclerJunk")
+        || name.startsWith("Crafting.Ingredients")) {
       return ItemType.JUNK;
     } else if (name.equals("Misc.SpareParts")) {
       return ItemType.SPARE_PARTS;
     } else if (name.startsWith("Food.")) {
       return ItemType.FOOD;
-    } else if (name.equals("EMPGrenadeWeapon") || name.equals("LureGrenadeWeapon")
-        || name.equals("NullwaveTransmitterWeapon") || name.equals("RecyclerGrenadeWeapon")) {
+    } else if (name.equals("EMPGrenadeWeapon")
+        || name.equals("LureGrenadeWeapon")
+        || name.equals("NullwaveTransmitterWeapon")
+        || name.equals("RecyclerGrenadeWeapon")) {
       return ItemType.GRENADE;
     } else if (name.equals("Medical.PsiHypo")) {
       return ItemType.PSI_HYPO;
@@ -150,8 +147,10 @@ public class ItemDatabase {
       return ItemType.WEAPON;
     } else if (name.startsWith("Ammo.")) {
       return ItemType.AMMO;
-    } else if (name.equals("Player.Neuromod") || name.equals("Player.Neuromod_Case")
-        || name.equals("Player.Neuromod_Cinematic") || name.equals("Player.Neuromod_Calibration")) {
+    } else if (name.equals("Player.Neuromod")
+        || name.equals("Player.Neuromod_Case")
+        || name.equals("Player.Neuromod_Cinematic")
+        || name.equals("Player.Neuromod_Calibration")) {
       return ItemType.NEUROMOD;
     } else if (name.startsWith("Medical.TraumaPharmas")) {
       return ItemType.PHARMA;

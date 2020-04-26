@@ -1,4 +1,5 @@
 package randomizers.cosmetic;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,6 +22,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import randomizers.BaseRandomizer;
+import utils.FileConsts;
 
 /**
  * 
@@ -32,15 +34,11 @@ public class VoiceRandomizer extends BaseRandomizer {
   private static final String DIALOG_ID_PATTERN = "dialog=\"([0-9]*)\"";
   private static final String VOICES_ID_PATTERN = "id=\"([0-9]*)\"";
 
-  private static final String VOICES_PATH = "Dialog\\Voices";
-  private static final String DIALOGIC_PATH = "Dialog\\DialogLogic";
-
   private static final String PATCH_NAME_ZIP = "patch_randomvoicelines.zip";
 
   private static Map<String, String> DIALOG_TO_CHARACTER = new HashMap<String, String>();
   private static Map<String, List<String>> CHARACTER_TO_DIALOG = new HashMap<String, List<String>>();
   private static Map<String, String> SWAPPED_LINES_MAP = new HashMap<String, String>();
-
 
   public VoiceRandomizer(String installDir) {
     super(installDir, "randomvoicelines");
@@ -60,16 +58,19 @@ public class VoiceRandomizer extends BaseRandomizer {
       e1.printStackTrace();
     }
 
-    try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)))) {
+    try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(
+        new FileOutputStream(zipFile)))) {
       getDialogIds();
-      randomizeAndAddToZip(new File(DIALOGIC_PATH), Paths.get("ark/dialog/dialoglogic"), zos);
+      randomizeAndAddToZip(new File(FileConsts.DIALOGIC_PATH),
+          Paths.get("ark/dialog/dialoglogic"), zos);
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     // Copy the generated zip to the given destination
     try {
-      Files.copy(zipFile.toPath(), outPatchDirPath.resolve(patchName), StandardCopyOption.REPLACE_EXISTING);
+      Files.copy(zipFile.toPath(), outPatchDirPath.resolve(patchName),
+          StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -103,20 +104,23 @@ public class VoiceRandomizer extends BaseRandomizer {
           // Replace with a random dialog ID and remove from list
           String oldDialog = m.group(1);
 
-          // If this line has not already been swapped with a random line of dialogue, add
+          // If this line has not already been swapped with a random line of
+          // dialogue, add
           // it
           if (!SWAPPED_LINES_MAP.containsKey(oldDialog)) {
             String characterFile = DIALOG_TO_CHARACTER.get(oldDialog);
             List<String> dialoglines = CHARACTER_TO_DIALOG.get(characterFile);
 
             String newDialog = dialoglines.remove(0);
-            System.out.printf("Mapping %s --> %s, remaining IDs %s\n", oldDialog, newDialog, dialoglines.size());
+            System.out.printf("Mapping %s --> %s, remaining IDs %s\n",
+                oldDialog, newDialog, dialoglines.size());
 
             CHARACTER_TO_DIALOG.put(characterFile, dialoglines);
             SWAPPED_LINES_MAP.put(oldDialog, newDialog);
           }
 
-          line = line.replaceFirst(DIALOG_ID_PATTERN, String.format("dialog=\"%s\"", SWAPPED_LINES_MAP.get(oldDialog)));
+          line = line.replaceFirst(DIALOG_ID_PATTERN,
+              String.format("dialog=\"%s\"", SWAPPED_LINES_MAP.get(oldDialog)));
         }
         buffer.append(line);
         buffer.append('\n');
@@ -131,7 +135,7 @@ public class VoiceRandomizer extends BaseRandomizer {
 
   // Populates maps for dialog IDs.
   private void getDialogIds() throws FileNotFoundException, IOException {
-    for (File file : new File(VOICES_PATH).listFiles()) {
+    for (File file : new File(FileConsts.VOICES_PATH).listFiles()) {
       String fileName = file.getName();
       List<String> voiceLineIds = new ArrayList<>();
       try (BufferedReader r = new BufferedReader(new FileReader(file))) {

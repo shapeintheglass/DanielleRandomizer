@@ -13,10 +13,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import randomizers.BaseRandomizer;
+import utils.BodyConsts;
+import utils.FileConsts;
 
 public class BodyRandomizer extends BaseRandomizer {
 
-  private static final String HUMANS_FINAL_DIR = "humansfinal\\";
   private static final String PATCH_NAME_ZIP = "patch_randombodies.zip";
   private static final String ZIP_FILE_NAME_PATTERN = "objects\\characters\\humansfinal\\%s";
 
@@ -35,9 +36,10 @@ public class BodyRandomizer extends BaseRandomizer {
       e.printStackTrace();
     }
 
-    try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)))) {
+    try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(
+        new FileOutputStream(zipFile)))) {
       // TODO: Modify player character model to match Morgan.
-      for (File f : new File(HUMANS_FINAL_DIR).listFiles()) {
+      for (File f : new File(FileConsts.HUMANS_FINAL_DIR).listFiles()) {
         randomizeBody(f, String.format(ZIP_FILE_NAME_PATTERN, f.getName()), zos);
       }
     } catch (Exception e) {
@@ -46,18 +48,19 @@ public class BodyRandomizer extends BaseRandomizer {
 
     // Copy the generated zip to the given destination
     try {
-      Files.copy(zipFile.toPath(), outPatchDirPath.resolve(patchName), StandardCopyOption.REPLACE_EXISTING);
+      Files.copy(zipFile.toPath(), outPatchDirPath.resolve(patchName),
+          StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  private BodyConfig randomizeBody(File bodyCdf, String filename, ZipOutputStream zos)
-      throws FileNotFoundException, IOException {
+  private BodyConfig randomizeBody(File bodyCdf, String filename,
+      ZipOutputStream zos) throws FileNotFoundException, IOException {
     BodyConfig bc = new BodyConfig();
     logger.info("Randomizing " + bodyCdf.getName());
     StringBuilder buffer = new StringBuilder();
-    
+
     boolean keepHair = false;
 
     try (BufferedReader r = new BufferedReader(new FileReader(bodyCdf))) {
@@ -65,19 +68,21 @@ public class BodyRandomizer extends BaseRandomizer {
       while (line != null) {
         String lowerCase = line.toLowerCase();
 
-        // Look for the first line of the character def, which decides whether this is a
+        // Look for the first line of the character def, which decides whether
+        // this is a
         // male or female body
-        if (lowerCase.contains(BodyConfig.FEMALE_BODY_TYPE)) {
+        if (lowerCase.contains(BodyConsts.FEMALE_BODY_TYPE)) {
           bc.setGender(BodyConfig.Gender.FEMALE);
-        } else if(lowerCase.contains(BodyConfig.MALE_BODY_TYPE)) {
+        } else if (lowerCase.contains(BodyConsts.MALE_BODY_TYPE)) {
           bc.setGender(BodyConfig.Gender.MALE);
-        } else if (lowerCase.contains(BodyConfig.LARGE_MALE_BODY_TYPE)) {
+        } else if (lowerCase.contains(BodyConsts.LARGE_MALE_BODY_TYPE)) {
           logger.info("Skipping because this body type is not supported yet");
           return null;
         }
 
         if (line.contains("CA_SKIN")) {
-          if (lowerCase.contains("body_skin") || lowerCase.contains("aname=\"body\"")) {
+          if (lowerCase.contains("body_skin")
+              || lowerCase.contains("aname=\"body\"")) {
             line = bc.generateRandomBody();
             logger.info("Chose body type " + bc.bodyModel);
           } else if (lowerCase.contains("head_skin")) {
@@ -86,13 +91,13 @@ public class BodyRandomizer extends BaseRandomizer {
             } else {
               keepHair = true;
             }
-            logger.info("Chose head type " + bc.headModel + ", hair type " + bc.hairModel + ", and hair color " + bc.hairColor);
+            logger.info("Chose head type " + bc.headModel + ", hair type "
+                + bc.hairModel + ", and hair color " + bc.hairColor);
           } else if (lowerCase.contains("hair_skin")) {
             if (!keepHair) {
               line = "";
             }
-          }
-          else {
+          } else {
             // If the type is not accounted for here, remove it
             line = "";
             logger.info("Ignoring line: " + line);
