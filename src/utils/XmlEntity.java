@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utils.FileConsts.Archetype;
+
 public class XmlEntity {
   // Name of the tag defining this xml entity
   private String tagName = "";
@@ -19,6 +21,7 @@ public class XmlEntity {
   // Sub entities, in order
   private List<XmlEntity> subEntityOrder = new ArrayList<>();
   private int indentation = 0;
+  private Archetype archetype;
 
   private static final String END_TAG_PATTERN = "</%s>";
 
@@ -42,12 +45,22 @@ public class XmlEntity {
     }
   }
 
-  private XmlEntity(String tagName, Map<String, String> keys,
+  public XmlEntity(String tagName, Map<String, String> keys,
       List<String> keyOrder, int indentation) {
     this.tagName = tagName;
     this.keys = keys;
     this.indentation = indentation;
     this.keyOrder = keyOrder;
+  }
+
+  // Used to remember file archetype, if applicable
+  public XmlEntity setArchetype(Archetype a) {
+    this.archetype = a;
+    return this;
+  }
+
+  public Archetype getArchetype() {
+    return archetype;
   }
 
   private void addSubEntity(XmlEntity subEntity) {
@@ -121,7 +134,7 @@ public class XmlEntity {
     }
     return null;
   }
-  
+
   public XmlEntity getSubEntityByKeyValue(String key, String value) {
     for (XmlEntity x : subEntityOrder) {
       if (x.getKey(key).equals(value)) {
@@ -167,6 +180,12 @@ public class XmlEntity {
       builder.append(String.format(END_TAG_PATTERN, tagName));
     }
     return builder.toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    XmlEntity other = (XmlEntity) o;
+    return toString().equals(other.toString());
   }
 
   private String getSpaceBuffer(int indentation) {

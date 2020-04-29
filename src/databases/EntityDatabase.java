@@ -18,18 +18,6 @@ import utils.XmlEntity;
  * Rough "database" implementation that can ingest entities from their
  * entityprototype definition files, tag them, and allow retrieval by tag.
  * 
- * There are three layers of tags- entity type, group type, and super type:
- * 
- * 
- * Entity type - lowest layer of specificity, finest detailed way of requesting
- * a particular entity (ex. a voltaic phantom)
- * 
- * Group type - mid layer of specificity, groups entities with similar roles
- * together (ex. all phantom types are grouped together)
- * 
- * Super type - broadest layer of specificity, groups entities of similar types
- * together (ex. all typhon types are in the same supertype)
- *
  * The database is also mutable, so entities within a particular tag can be
  * modified. This allows features such as overriding the "typhon" category to
  * only contain nightmares.
@@ -37,108 +25,57 @@ import utils.XmlEntity;
  */
 public class EntityDatabase {
 
+  // Singleton
+  private static EntityDatabase database;
+
   private static final int READ_AHEAD = 10000;
 
   Random r;
 
-  // Lowest layer of specificity.
-  public enum EntityType {
-    // Items
-    JUNK, SPARE_PARTS, FOOD, AMMO, GRENADE, PSI_HYPO, MEDKIT,
-    // Items
-    CHIPSET_SUIT, CHIPSET_SCOPE, WEAPON_KIT, FAB_PLAN, WEAPON,
-    // Items
-    NEUROMOD, PHARMA, SUIT_REPAIR_KIT, ITEMS_OTHER,
-    // Enemies
-    MIMIC, GREATER_MIMIC, PHANTOM, POLTERGEIST, CYSTOID, CYSTOID_NEST,
-    // Enemies
-    PHANTOM_ETHERIC, PHANTOM_VOLTAIC, PHANTOM_THERMAL,
-    // Enemies
-    WEAVER, TECHNOPATH, TELEPATH, PUPPET, NIGHTMARE, TENTACLE, ENEMIES_OTHER,
-    // Robots
-    ENGINEERING_OPERATOR, MEDICAL_OPERATOR, SCIENCE_OPERATOR, MILITARY_OPERATOR, TURRET,
-    // Robots corrupted
-    CORR_ENGINEERING_OPERATOR, CORR_MEDICAL_OPERATOR, CORR_SCIENCE_OPERATOR, CORR_MILITARY_OPERATOR, CORR_TURRET,
-    // Gameplay object
-    RECYCLER, FABRICATOR, O2_STATION,
-    // Misc
-    OTHER, ENTITY_MISSING,
-  }
+  // Map of string tag to a list of entities
+  private Map<String, List<String>> tagToNameList;
+  private Map<String, XmlEntity> nameToXmlEntity;
 
-  // Mid-level tag used to combine finer entity types that can be logically
-  // grouped.
-  public enum GroupType {
-    HEALING, MIMIC, PHANTOM,
-  }
-
-  public EntityType[] GROUP_RESOURCE = { EntityType.JUNK };
-  public EntityType[] GROUP_RESTORATIVE = {};
-
-  // Highest level tag that applies to the entity's general purpose.
-  public enum SuperType {
-    PICKUP, PHYSICS_PROP, ENEMY, HUMAN, ROBOT, OTHER, ENTITY_MISSING
-  }
-
-  // Source of truth. A list is used for holding the entities because sets do
-  // not allow arbitrary retrieval.
-  private Map<EntityType, List<XmlEntity>> typeMap;
-
-  // Automatically populated when the type map is updated
-  // All items
-  private List<XmlEntity> allItemsList;
-
-  // Initializes with a specific entity database. Intended to be used for
-  // testing.
-  public EntityDatabase(Map<EntityType, List<XmlEntity>> database) {
-    // TODO: Have a single source of randomness
-    r = new Random();
-    this.typeMap = database;
-    allItemsList = new ArrayList<>();
-    updateGlobalList();
-  }
-
-  // Initializes using specific archetype files.
-  public EntityDatabase(Archetype[] archetypes) {
-    this(populateDatabase(archetypes));
-  }
-
-  // Initializes using every supported archetype file.
-  public EntityDatabase() {
-    this(populateDatabase());
-  }
-
-  // Updates the supporting tables every time the source of truth is changed.
-  private void updateGlobalList() {
-    allItemsList.clear();
-    for (EntityType i : EntityType.values()) {
-      if (typeMap.get(i) != null) {
-        allItemsList.addAll(typeMap.get(i));
-      }
+  // Creates or returns singleton instance.
+  public static EntityDatabase getInstance() {
+    if (database == null) {
+      database = new EntityDatabase();
     }
-  }
-
-  // Automatically populates with every archetype file
-  private static Map<EntityType, List<XmlEntity>> populateDatabase() {
-    return populateDatabase(Archetype.values());
-  }
-
-  // Retrieves entity archetypes from the given files
-  private static Map<EntityType, List<XmlEntity>> populateDatabase(
-      Archetype[] archetypes) {
-    Map<EntityType, List<XmlEntity>> database = new HashMap<>();
-    for (EntityType it : EntityType.values()) {
-      database.put(it, new ArrayList<>());
-    }
-
-    for (Archetype a : archetypes) {
-      getEntitiesFromFile(FileConsts.getFileForArchetype(a), database);
-    }
-
     return database;
   }
 
-  private static void getEntitiesFromFile(String file,
-      Map<EntityType, List<XmlEntity>> database) {
+  // Initializes using every supported archetype file.
+  private EntityDatabase() {
+    r = new Random();
+    populateDatabase();
+  }
+
+  // Initializes with a specific entity database.
+  // Visible for testing.
+  public EntityDatabase(Map<String, List<String>> tagToNameList,
+      Map<String, XmlEntity> nameToXmlEntity) {
+    // TODO: Have a single source of randomness
+    r = new Random();
+    this.tagToNameList = tagToNameList;
+    this.nameToXmlEntity = nameToXmlEntity;
+  }
+
+  private void populateDatabase() {
+    tagToNameList = new HashMap<>();
+    nameToXmlEntity = new HashMap<>();
+    // Pre-populate valid tags
+    for (String[] tagList : TagHelper.TAG_LIST_LIST) {
+      for (String tag : tagList) {
+        tagToNameList.put(tag, new ArrayList<String>());
+      }
+    }
+    for (Archetype a : Archetype.values()) {
+      getEntitiesFromFile(a);
+    }
+  }
+
+  private void getEntitiesFromFile(Archetype a) {
+    String file = FileConsts.getFileForArchetype(a);
     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
       br.mark(READ_AHEAD);
       String line;
@@ -146,9 +83,20 @@ public class EntityDatabase {
         if (line.contains("<EntityPrototype ")) {
           br.reset();
 
-          XmlEntity x = new XmlEntity(br);
-          EntityType type = getEntityType(x);
-          database.get(type).add(x);
+          XmlEntity x = new XmlEntity(br).setArchetype(a);
+          String name = x.getKey("Name");
+          Set<String> tags = TagHelper.getTags(name, a);
+          for (String tag : tags) {
+            if (!tagToNameList.containsKey(tag)) {
+              throw new IllegalAccessError("Unknown tag: " + tag);
+            }
+
+            tagToNameList.get(tag).add(name);
+          }
+          if (nameToXmlEntity.containsKey(name)) {
+            throw new IllegalAccessError("Duplicate name: " + name);
+          }
+          nameToXmlEntity.put(name, x);
         }
 
         br.mark(READ_AHEAD);
@@ -161,117 +109,53 @@ public class EntityDatabase {
   /*
    * Returns a random item from the entire database
    */
-  public XmlEntity getRandomItem() {
-    return getRandomItemFromList(allItemsList);
+  public XmlEntity getRandomEntity() {
+    return getRandomEntityFromList(tagToNameList.get("GLOBAL"));
   }
 
   /*
-   * Returns a random item with the given entity type
+   * Returns a random item with the given tag
    */
-  public XmlEntity getRandomItemByType(EntityType it) {
-    return getRandomItemFromList(typeMap.get(it));
+  public XmlEntity getRandomEntityByTag(String tag) {
+    return getRandomEntityFromList(tagToNameList.get(tag));
   }
 
-  private XmlEntity getRandomItemFromList(List<XmlEntity> list) {
-    if (list.isEmpty()) {
+  private XmlEntity getRandomEntityFromList(List<String> list) {
+    if (list == null || list.isEmpty()) {
       return null;
     }
     int index = r.nextInt(list.size());
-    return list.get(index);
-  }
-
-  /*
-   * Returns the list of all items of this type
-   */
-  public List<XmlEntity> getAllByType(EntityType it) {
-    return typeMap.get(it);
-  }
-
-  /*
-   * Overwrites the entries of this type with the given list of entities.
-   */
-  public void overrideItemType(EntityType it, Set<XmlEntity> newEntities) {
-    typeMap.get(it).clear();
-    typeMap.get(it).addAll(newEntities);
-    updateGlobalList();
+    String name = list.get(index);
+    return nameToXmlEntity.get(name);
   }
 
   /*
    * Removes a set of entities from the global pool
    */
+  public void removeItemsFromPool(Set<String> toRemove) {
+    for (String name : toRemove) {
+      removeFromPool(name);
+    }
+  }
 
-  public void removeItemsFromPool(Set<XmlEntity> toRemove) {
-    for (XmlEntity e : toRemove) {
-      EntityType t = getEntityType(e);
-      typeMap.get(t).remove(e);
-      allItemsList.remove(e);
+  // Removes a single entity from the pool
+  public void removeFromPool(String toRemove) {
+    // Find all tags for this entity
+    Set<String> tags = TagHelper.getTags(toRemove, null);
+    // Remove entity from the tag
+    for (String tag : tags) {
+      tagToNameList.get(tag).remove(toRemove);
     }
   }
 
   /*
-   * Removes all entities, except for the specified
+   * Removes all entities from a tag list, except for the specified
    */
-  public void removeAllItemsFromPoolExcept(Set<XmlEntity> toKeep) {
+  public void removeAllItemsFromTagExcept(String tag, Set<XmlEntity> toKeep) {
 
   }
 
-  /*
-   * Removes all entities from the local pool, except for the specified
-   */
-  public void removeAllItemsFromPoolExcept(EntityType it, Set<XmlEntity> toKeep) {
-
-  }
-
-  public void removeEntity(XmlEntity toRemove) {
-    EntityType type = getEntityType(toRemove);
-    typeMap.get(type).remove(toRemove);
-  }
-
-  // Resolves the tags to apply to an entity
-  public static EntityType getEntityType(XmlEntity e) {
-    if (e == null) {
-      return EntityType.ENTITY_MISSING;
-    }
-    String name = e.getKey("Name");
-    if (name.contains("RecyclerJunk")
-        || name.startsWith("Crafting.Ingredients")) {
-      return EntityType.JUNK;
-    } else if (name.equals("Misc.SpareParts")) {
-      return EntityType.SPARE_PARTS;
-    } else if (name.startsWith("Food.")) {
-      return EntityType.FOOD;
-    } else if (name.equals("EMPGrenadeWeapon")
-        || name.equals("LureGrenadeWeapon")
-        || name.equals("NullwaveTransmitterWeapon")
-        || name.equals("RecyclerGrenadeWeapon")) {
-      return EntityType.GRENADE;
-    } else if (name.equals("Medical.PsiHypo")) {
-      return EntityType.PSI_HYPO;
-    } else if (name.equals("Medical.MedKit")) {
-      return EntityType.MEDKIT;
-    } else if (name.startsWith("Mods.Suit")) {
-      return EntityType.CHIPSET_SUIT;
-    } else if (name.startsWith("Mods.Psychoscope")) {
-      return EntityType.CHIPSET_SCOPE;
-    } else if (name.equals("Mods.Weapon.WeaponUpgradeKit")) {
-      return EntityType.WEAPON_KIT;
-    } else if (name.startsWith("Crafting.FabricationPlans")) {
-      return EntityType.FAB_PLAN;
-    } else if (name.startsWith("Weapons.")) {
-      return EntityType.WEAPON;
-    } else if (name.startsWith("Ammo.")) {
-      return EntityType.AMMO;
-    } else if (name.equals("Player.Neuromod")
-        || name.equals("Player.Neuromod_Case")
-        || name.equals("Player.Neuromod_Cinematic")
-        || name.equals("Player.Neuromod_Calibration")) {
-      return EntityType.NEUROMOD;
-    } else if (name.startsWith("Medical.TraumaPharmas")) {
-      return EntityType.PHARMA;
-    } else if (name.equals("Player.SuitPatchKit")) {
-      return EntityType.SUIT_REPAIR_KIT;
-    } else {
-      return EntityType.OTHER;
-    }
+  public List<String> getAllForTag(String tag) {
+    return tagToNameList.get(tag);
   }
 }

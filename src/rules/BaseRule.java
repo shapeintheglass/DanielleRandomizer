@@ -1,22 +1,16 @@
 package rules;
 
-import java.io.File;
-import java.nio.file.Path;
-
-import utils.Entity;
+import utils.XmlEntity;
 
 public abstract class BaseRule {
-  public BaseRule() {
 
-  }
-  
   // Given an entity config, whether this rule should apply
-  public boolean trigger(Entity e) {
-    return false;
+  public boolean trigger(XmlEntity e, String levelDir) {
+    throw new UnsupportedOperationException();
   }
-  
-  // Make necessary change to this entity file. TempDir is provided for scratch changes.
-  public void apply(File entityFile, Path tempDir) {
-    
+
+  // Make necessary change to this entity.
+  public void apply(XmlEntity e, String levelDir) {
+    throw new UnsupportedOperationException();
   }
 }

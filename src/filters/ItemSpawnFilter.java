@@ -1,20 +1,13 @@
 package filters;
 
-import utils.FileConsts.Archetype;
-import utils.XmlEntity;
-import databases.EntityDatabase;
-import databases.EntityDatabase.EntityType;
+import rules.WithinTypeRule;
+
 
 public class ItemSpawnFilter extends BaseFilter {
 
-  private EntityDatabase database;
-
-  private Archetype[] archetypes = { Archetype.PICKUPS };
-
   public ItemSpawnFilter() {
     super("ItemSpawnFilter");
-
-    database = new EntityDatabase(archetypes);
+    rules.add(new WithinTypeRule());
   }
 
   public enum Presets {
@@ -33,20 +26,5 @@ public class ItemSpawnFilter extends BaseFilter {
                       // where to find them
     SHITLOADS_OF_WEAPONS_IN_MORGANS_APT, // Adds a shitload of weapons and ammo
                                          // to Morgan's apartment
-  }
-
-  @Override
-  public boolean filterEntity(XmlEntity x, String levelDir) {
-    String archetype = x.getKey("Archetype");
-
-    if (archetype != null && archetype.startsWith("ArkPickups.")) {
-      EntityType type = EntityDatabase.getEntityType(x);
-      if (type != EntityType.OTHER && type != EntityType.ENTITY_MISSING) {
-        XmlEntity newEntity = database.getRandomItemByType(type);
-        x.setKey("Archetype",
-            String.format("ArkPickups.%s", newEntity.getKey("Name")));
-      }
-    }
-    return false;
   }
 }

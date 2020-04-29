@@ -1,6 +1,5 @@
 package tests.databases;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import utils.Entity;
+import utils.XmlEntity;
 import databases.EntityDatabase;
-import databases.EntityDatabase.EntityType;
 
 public class EntityDatabaseTest {
 
@@ -30,39 +28,33 @@ public class EntityDatabaseTest {
     Arrays.sort(ALL_DATA);
     Arrays.sort(JUNK_LIST);
     Arrays.sort(FOOD_LIST);
-    Map<EntityType, List<Entity>> fakeDatabase = new HashMap<>();
-    fakeDatabase.put(EntityType.JUNK, createEntityList(JUNK_LIST));
-    fakeDatabase.put(EntityType.FOOD, createEntityList(FOOD_LIST));
+    Map<String, List<String>> fakeTagMap = new HashMap<>();
+    fakeTagMap.put("JUNK", Arrays.asList(JUNK_LIST));
+    fakeTagMap.put("FOOD", Arrays.asList(FOOD_LIST));
+    fakeTagMap.put("GLOBAL", Arrays.asList(ALL_DATA));
+    Map<String, XmlEntity> nameToEntityMap = new HashMap<>();
+    for (String s : ALL_DATA) {
+      nameToEntityMap.put(s, new XmlEntity(s, null, null, 0));
+    }
 
-    database = new EntityDatabase(fakeDatabase);
+    database = new EntityDatabase(fakeTagMap, nameToEntityMap);
   }
 
   @Test
   public void testGetRandomItem() {
-    Entity e = database.getRandomItem();
-    Assert.assertTrue(Arrays.binarySearch(ALL_DATA, e.getName()) >= 0);
+    XmlEntity e = database.getRandomEntity();
+    Assert.assertTrue(Arrays.binarySearch(ALL_DATA, e.getTagName()) >= 0);
   }
-  
+
   @Test
   public void testGetRandomItemByType() {
-    Entity e = database.getRandomItemByType(EntityType.FOOD);
-    Assert.assertTrue(Arrays.binarySearch(FOOD_LIST, e.getName()) >= 0);
+    XmlEntity e = database.getRandomEntityByTag("FOOD");
+    Assert.assertTrue(Arrays.binarySearch(FOOD_LIST, e.getTagName()) >= 0);
   }
 
   @Test
   public void testGetRandomItemByType_notInDatabase() {
-    Entity e = database.getRandomItemByType(EntityType.OTHER);
+    XmlEntity e = database.getRandomEntityByTag("OTHER");
     Assert.assertNull(e);
   }
-
-  private List<Entity> createEntityList(String[] names) {
-    List<Entity> list = new ArrayList<>();
-
-    Arrays.stream(names).forEach((s) -> {
-      Entity e = Entity.builder().setName(s).build();
-      list.add(e);
-    });
-    return list;
-  }
-
 }

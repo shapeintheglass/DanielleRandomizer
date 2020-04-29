@@ -1,5 +1,6 @@
 package filters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rules.BaseRule;
@@ -13,9 +14,14 @@ public abstract class BaseFilter {
 
   public BaseFilter(String filterName) {
     this.name = filterName;
+    rules = new ArrayList<>();
   }
 
-  public boolean filterEntity(XmlEntity x, String levelDir) {
-    throw new UnsupportedOperationException("Filter not implemented: " + name);
+  public void filterEntity(XmlEntity x, String levelDir) {
+    for (BaseRule r : rules) {
+      if (r.trigger(x, levelDir)) {
+        r.apply(x, levelDir);
+      }
+    }
   }
 }

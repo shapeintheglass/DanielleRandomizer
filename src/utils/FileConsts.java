@@ -20,14 +20,14 @@ public class FileConsts {
   public static final Path LOCAL_LEVELS = Paths.get("data/levels");
 
   public enum Archetype {
-    HUMANS, NPCS, PHYSICS_PROPS, PICKUPS, PROJECTILES, ROBOTS, SPECIAL_WEAPONS,
+    HUMANS, TYPHON, PHYSICS_PROPS, PICKUPS, PROJECTILES, ROBOTS, SPECIAL_WEAPONS
   }
 
   public static String getFileForArchetype(Archetype a) {
     switch (a) {
     case HUMANS:
       return HUMANS_FILE;
-    case NPCS:
+    case TYPHON:
       return NPCS_FILE;
     case PHYSICS_PROPS:
       return PHYSICS_PROPS_FILE;
@@ -39,6 +39,27 @@ public class FileConsts {
       return ROBOTS_FILE;
     case SPECIAL_WEAPONS:
       return SPECIAL_WEAPONS_FILE;
+    default:
+      return "";
+    }
+  }
+
+  public static String archetypeToPrefix(Archetype a) {
+    switch (a) {
+    case HUMANS:
+      return "ArkHumans";
+    case TYPHON:
+      return "ArkNpcs";
+    case PHYSICS_PROPS:
+      return "ArkPhysicsProps";
+    case PICKUPS:
+      return "ArkPickups";
+    case PROJECTILES:
+      return "ArkProjectiles";
+    case ROBOTS:
+      return "ArkRobots";
+    case SPECIAL_WEAPONS:
+      return "ArkSpecialWeapons";
     default:
       return "";
     }
