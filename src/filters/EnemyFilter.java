@@ -1,13 +1,11 @@
 package filters;
 
-import java.nio.file.Path;
 
 public class EnemyFilter extends BaseFilter {
 
   
-  public EnemyFilter(String name, Path tempDir) {
-    super(name, tempDir);
-    // TODO Auto-generated constructor stub
+  public EnemyFilter() {
+    super("EnemyFilter");
   }
 
   public enum Options {

@@ -2,8 +2,13 @@ package utils;
 
 public class Entity implements Comparable<Entity> {
   private String name, id, library, arkClass, archetypeId, levelDir;
+  
+  public Entity(String header) {
+    // Parses an entity from its definition or invocation
+  }
 
-  private Entity(String name, String id, String library, String arkClass, String archetypeId, String levelDir) {
+  private Entity(String name, String id, String library, String arkClass,
+      String archetypeId, String levelDir) {
     this.name = name;
     this.id = id;
     this.library = library;
@@ -39,19 +44,40 @@ public class Entity implements Comparable<Entity> {
   public static Builder builder() {
     return new Entity.Builder();
   }
+  
+  public String toEntityArchetype() {
+    return "";
+  }
+  
+  public String toInvocation() {
+    return "";
+  }
 
+  @Override
   public String toString() {
-    return String.format("Name: %s, ID: %s, Library: %s, ArkClass: %s, ArchetypeId: %s, LevelDir: %s", name, id,
-        library, arkClass, archetypeId, levelDir);
+    return String
+        .format(
+            "Name: %s, ID: %s, Library: %s, ArkClass: %s, ArchetypeId: %s, LevelDir: %s",
+            name, id, library, arkClass, archetypeId, levelDir);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    Entity other = (Entity) o;
+    return other.getName().equals(name);
+
   }
 
   public static class Builder {
     private String name = "";
+    private String nameInLevel = "";
     private String id = "";
     private String library = "";
     private String arkClass = "";
     private String archetypeId = "";
     private String levelDir = "";
+    private String originalInvocation = "";
+    private String originalDef = "";
 
     public Builder setName(String name) {
       this.name = name;

@@ -2,20 +2,20 @@ package utils;
 
 import java.util.Arrays;
 
-import databases.ItemDatabase.ItemType;
+import databases.EntityDatabase.EntityType;
 
 public class ItemSpawnSettings {
-  private ItemType[] items;
+  private EntityType[] items;
   private int[] percents;
   private boolean includePhysicsProps;
   
-  private ItemSpawnSettings(ItemType[] items, int[] percents, boolean includePhysicsProps) {
+  private ItemSpawnSettings(EntityType[] items, int[] percents, boolean includePhysicsProps) {
     this.items = items;
     this.percents = percents;
     this.includePhysicsProps = includePhysicsProps;
   }
   
-  public ItemType[] getItems() {
+  public EntityType[] getItems() {
     return items;
   }
   public int[] getPercents() {
@@ -34,11 +34,11 @@ public class ItemSpawnSettings {
   }
   
   public static class Builder {
-    private ItemType[] items;
+    private EntityType[] items;
     private int[] percents;
     private boolean includePhysicsProps;
 
-    public Builder setItems(ItemType[] items) {
+    public Builder setItems(EntityType[] items) {
       this.items = items;
       return this;
     }

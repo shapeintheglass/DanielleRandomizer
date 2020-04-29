@@ -1,26 +1,21 @@
 package filters;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 
 import rules.BaseRule;
+import utils.XmlEntity;
 
 public abstract class BaseFilter {
 
   List<BaseRule> rules;
 
   String name;
-  Path tempDir;
 
-  public BaseFilter(String name, Path tempDir) {
-    this.name = name;
-    this.tempDir = tempDir;
+  public BaseFilter(String filterName) {
+    this.name = filterName;
   }
 
-  public boolean filterEntityFile(String levelDir, File entityFile,
-      Map<String, String> config) {
+  public boolean filterEntity(XmlEntity x, String levelDir) {
     throw new UnsupportedOperationException("Filter not implemented: " + name);
   }
 }
