@@ -47,7 +47,7 @@ public class VoiceRandomizer extends BaseRandomizer {
   /**
    * Randomizes voice lines and installs into game directory
    */
-  public void install() {
+  public void randomize() {
     // Zip file containing patch changes
     File zipFile = tempDirPath.resolve(PATCH_NAME_ZIP).toFile();
     zipFile.deleteOnExit();

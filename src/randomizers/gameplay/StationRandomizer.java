@@ -100,4 +100,10 @@ public class StationRandomizer extends BaseRandomizer {
     System.out.println(sr.station.isConnected());
     System.out.println(sr.station.getDegrees());
   }
+
+  @Override
+  public void randomize() {
+    // TODO Auto-generated method stub
+    
+  }
 }

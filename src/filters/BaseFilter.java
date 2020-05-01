@@ -24,4 +24,9 @@ public abstract class BaseFilter {
       }
     }
   }
+  
+  public BaseFilter addRule(BaseRule r) {
+    rules.add(r);
+    return this;
+  }
 }

@@ -25,7 +25,7 @@ public class BodyRandomizer extends BaseRandomizer {
     super(installDir, "randombodies");
   }
 
-  public void install() {
+  public void randomize() {
     // Create a zip file to put patch changes into.
     File zipFile = tempDirPath.resolve(PATCH_NAME_ZIP).toFile();
     // zipFile.deleteOnExit();

@@ -48,10 +48,13 @@ public abstract class BaseRandomizer {
       tempDirPath.toFile().deleteOnExit();
     }
   }
-
-  public void install() {
-    throw new UnsupportedOperationException();
+  
+  public BaseRandomizer removeTempFilesOnExit() {
+    this.removeTempFilesOnExit = true;
+    return this;
   }
+
+  public abstract void randomize();
 
   public boolean uninstall() {
     Path patchDir = new File(installDir).toPath().resolve(INSTALL_LOCATION);
@@ -61,6 +64,5 @@ public abstract class BaseRandomizer {
     }
     return false;
   }
-
 
 }

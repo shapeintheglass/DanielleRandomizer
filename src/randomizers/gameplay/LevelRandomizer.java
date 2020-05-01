@@ -18,13 +18,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import filters.BaseFilter;
+import filters.EnemyFilter;
+import filters.ItemSpawnFilter;
 import randomizers.BaseRandomizer;
 import utils.FileConsts;
 import utils.LevelConsts;
 import utils.XmlEntity;
-import filters.BaseFilter;
-import filters.EnemyFilter;
-import filters.ItemSpawnFilter;
 
 public class LevelRandomizer extends BaseRandomizer {
 
@@ -45,14 +45,17 @@ public class LevelRandomizer extends BaseRandomizer {
 
   public LevelRandomizer(String installDir) {
     super(installDir, "LevelRandomizer");
-    isf = new ItemSpawnFilter();
     filterList = new LinkedList<>();
-    filterList.add(isf);
     Arrays.sort(LONG_ENTITY_CLASSES);
+  }
+  
+  public LevelRandomizer addFilter(BaseFilter f) {
+    filterList.add(f);
+    return this;
   }
 
   @Override
-  public void install() {
+  public void randomize() {
     try {
       makeBackups();
     } catch (IOException e1) {

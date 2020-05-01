@@ -27,6 +27,10 @@ public class XmlEntity {
 
   public XmlEntity(BufferedReader br) throws IOException {
     String line = br.readLine();
+    // If line is blank, skip until content is reached
+    while (line.trim().length() == 0) {
+      line = br.readLine();
+    }
 
     this.indentation = getIndentation(line);
     this.tagName = Utils.getTagName(line);
@@ -45,8 +49,11 @@ public class XmlEntity {
     }
   }
 
-  public XmlEntity(String tagName, Map<String, String> keys,
-      List<String> keyOrder, int indentation) {
+  public XmlEntity(String tagName, int indentation) {
+    this(tagName, new HashMap<>(), new ArrayList<>(), indentation);
+  }
+
+  public XmlEntity(String tagName, Map<String, String> keys, List<String> keyOrder, int indentation) {
     this.tagName = tagName;
     this.keys = keys;
     this.indentation = indentation;
@@ -63,12 +70,12 @@ public class XmlEntity {
     return archetype;
   }
 
-  private void addSubEntity(XmlEntity subEntity) {
+  public XmlEntity addSubEntity(XmlEntity subEntity) {
     subEntityOrder.add(subEntity);
+    return this;
   }
 
-  private static XmlEntity parseFromStream(BufferedReader br, String terminator)
-      throws IOException {
+  private static XmlEntity parseFromStream(BufferedReader br, String terminator) throws IOException {
     // get tag name and keys from first line
     String line = br.readLine();
 
@@ -92,8 +99,7 @@ public class XmlEntity {
     }
 
     // Get subentities until they come up null
-    XmlEntity subEntity = parseFromStream(br,
-        String.format(END_TAG_PATTERN, tagName));
+    XmlEntity subEntity = parseFromStream(br, String.format(END_TAG_PATTERN, tagName));
     while (subEntity != null) {
       newEntity.addSubEntity(subEntity);
       subEntity = parseFromStream(br, String.format(END_TAG_PATTERN, tagName));
@@ -103,6 +109,9 @@ public class XmlEntity {
   }
 
   private static int getIndentation(String line) {
+    if (line.length() == 0) {
+      return 0;
+    }
     int index = 0;
     while (line.charAt(index) == ' ') {
       index++;
@@ -124,6 +133,10 @@ public class XmlEntity {
 
   public void setKey(String key, String value) {
     keys.put(key, value);
+  }
+  
+  public List<XmlEntity> getSubEntities() {
+    return subEntityOrder;
   }
 
   public XmlEntity getSubEntityByTagName(String name) {

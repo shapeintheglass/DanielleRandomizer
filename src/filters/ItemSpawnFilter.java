@@ -1,13 +1,13 @@
 package filters;
 
-import rules.WithinTypeRule;
+import rules.ShuffleTypeRule;
 
 
 public class ItemSpawnFilter extends BaseFilter {
 
   public ItemSpawnFilter() {
     super("ItemSpawnFilter");
-    rules.add(new WithinTypeRule());
+    rules.add(new ShuffleTypeRule());
   }
 
   public enum Presets {

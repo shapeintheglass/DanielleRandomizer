@@ -12,12 +12,15 @@ public class FileConsts {
   public static final String ROBOTS_FILE = "data/entityarchetypes/arkrobots.xml";
   public static final String SPECIAL_WEAPONS_FILE = "data/entityarchetypes/arkspecialweapons.xml";
 
+  public static final String LOOT_TABLE_FILE = "data/ark/loottables.xml";
+  
   public static final String VOICES_PATH = "data/dialog/voices";
   public static final String DIALOGIC_PATH = "data/dialog/dialoglogic";
 
   public static final String HUMANS_FINAL_DIR = "data/humansfinal/";
 
   public static final Path LOCAL_LEVELS = Paths.get("data/levels");
+  
 
   public enum Archetype {
     HUMANS, TYPHON, PHYSICS_PROPS, PICKUPS, PROJECTILES, ROBOTS, SPECIAL_WEAPONS

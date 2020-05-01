@@ -14,4 +14,10 @@ public class NeuromodAbilityRandomizer extends BaseRandomizer {
     // TODO Auto-generated constructor stub
   }
 
+  @Override
+  public void randomize() {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
