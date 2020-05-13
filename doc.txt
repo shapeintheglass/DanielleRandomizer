@@ -5,6 +5,12 @@ v1 - Support spawn randomization, cosmetic randomization
 v2 - Support station randomization, snark premade, bad translation premade
 
 
+Current known issues:
+ - Item shuffler has some bugs- blacklist doesn't appear to ignore keycards
+ - Item shuffler does not handle npc spawns
+ - Allow item shuffler to distinguish between physics props and immovable objects
+ - Need support to coordinate changes across multiple files
+
 Presets:
 	Recommended - Randomizes items, enemies, neuromod tree, operator dispensers
 	Unpreyable - Nightmares added to pool, weapons removed from pool, limited to starting weapons in Morgan's apartment

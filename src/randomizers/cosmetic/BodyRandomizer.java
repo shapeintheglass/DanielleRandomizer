@@ -8,7 +8,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -18,11 +20,12 @@ import utils.FileConsts;
 
 public class BodyRandomizer extends BaseRandomizer {
 
-  private static final String PATCH_NAME_ZIP = "patch_randombodies.zip";
   private static final String ZIP_FILE_NAME_PATTERN = "objects\\characters\\humansfinal\\%s";
 
-  public BodyRandomizer(String installDir) {
-    super(installDir, "randombodies");
+  
+  
+  public BodyRandomizer(Random r, Path tempPatchDir) {
+    super(r);
   }
 
   public void randomize() {
@@ -42,14 +45,6 @@ public class BodyRandomizer extends BaseRandomizer {
       for (File f : new File(FileConsts.HUMANS_FINAL_DIR).listFiles()) {
         randomizeBody(f, String.format(ZIP_FILE_NAME_PATTERN, f.getName()), zos);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    // Copy the generated zip to the given destination
-    try {
-      Files.copy(zipFile.toPath(), outPatchDirPath.resolve(patchName),
-          StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       e.printStackTrace();
     }

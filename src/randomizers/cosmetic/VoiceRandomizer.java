@@ -7,15 +7,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -40,8 +39,11 @@ public class VoiceRandomizer extends BaseRandomizer {
   private static Map<String, List<String>> CHARACTER_TO_DIALOG = new HashMap<String, List<String>>();
   private static Map<String, String> SWAPPED_LINES_MAP = new HashMap<String, String>();
 
-  public VoiceRandomizer(String installDir) {
-    super(installDir, "randomvoicelines");
+  private Path tempPatchDir;
+  
+  public VoiceRandomizer(Random r, Path tempPatchDir) {
+    super(r);
+    this.tempPatchDir = tempPatchDir;
   }
 
   /**
@@ -49,7 +51,7 @@ public class VoiceRandomizer extends BaseRandomizer {
    */
   public void randomize() {
     // Zip file containing patch changes
-    File zipFile = tempDirPath.resolve(PATCH_NAME_ZIP).toFile();
+    File zipFile = tempPatchDir.resolve(PATCH_NAME_ZIP).toFile();
     zipFile.deleteOnExit();
     try {
       zipFile.createNewFile();
@@ -63,14 +65,6 @@ public class VoiceRandomizer extends BaseRandomizer {
       getDialogIds();
       randomizeAndAddToZip(new File(FileConsts.DIALOGIC_PATH),
           Paths.get("ark/dialog/dialoglogic"), zos);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    // Copy the generated zip to the given destination
-    try {
-      Files.copy(zipFile.toPath(), outPatchDirPath.resolve(patchName),
-          StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -96,8 +90,8 @@ public class VoiceRandomizer extends BaseRandomizer {
   private void randomizeDialog(File in, String filename, ZipOutputStream zos)
       throws FileNotFoundException, IOException {
     StringBuilder buffer = new StringBuilder();
-    try (BufferedReader r = new BufferedReader(new FileReader(in));) {
-      String line = r.readLine();
+    try (BufferedReader br = new BufferedReader(new FileReader(in));) {
+      String line = br.readLine();
       while (line != null) {
         Matcher m = Pattern.compile(DIALOG_ID_PATTERN).matcher(line);
         if (m.find()) {
@@ -124,7 +118,7 @@ public class VoiceRandomizer extends BaseRandomizer {
         }
         buffer.append(line);
         buffer.append('\n');
-        line = r.readLine();
+        line = br.readLine();
       }
     }
     byte[] bytes = buffer.toString().getBytes();
@@ -138,8 +132,8 @@ public class VoiceRandomizer extends BaseRandomizer {
     for (File file : new File(FileConsts.VOICES_PATH).listFiles()) {
       String fileName = file.getName();
       List<String> voiceLineIds = new ArrayList<>();
-      try (BufferedReader r = new BufferedReader(new FileReader(file))) {
-        String line = r.readLine();
+      try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        String line = br.readLine();
         while (line != null) {
           Matcher m = Pattern.compile(VOICES_ID_PATTERN).matcher(line);
           if (m.find()) {
@@ -147,10 +141,10 @@ public class VoiceRandomizer extends BaseRandomizer {
             DIALOG_TO_CHARACTER.put(voiceLineId, fileName);
             voiceLineIds.add(voiceLineId);
           }
-          line = r.readLine();
+          line = br.readLine();
         }
       }
-      Collections.shuffle(voiceLineIds);
+      Collections.shuffle(voiceLineIds, r);
       CHARACTER_TO_DIALOG.put(fileName, voiceLineIds);
     }
   }

@@ -14,17 +14,18 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import filters.BaseFilter;
-import filters.EnemyFilter;
-import filters.ItemSpawnFilter;
 import randomizers.BaseRandomizer;
 import utils.FileConsts;
 import utils.LevelConsts;
 import utils.XmlEntity;
+import filters.BaseFilter;
+import filters.EnemyFilter;
+import filters.ItemSpawnFilter;
 
 public class LevelRandomizer extends BaseRandomizer {
 
@@ -43,8 +44,8 @@ public class LevelRandomizer extends BaseRandomizer {
   public static final String[] LONG_ENTITY_CLASSES = { "TagPoint", "ArkMarker",
       "FlowgraphEntity", "GeomEntity", "ArkInteractiveObject" };
 
-  public LevelRandomizer(String installDir) {
-    super(installDir, "LevelRandomizer");
+  public LevelRandomizer(Random r, Path tempLevelDir) {
+    super(r);
     filterList = new LinkedList<>();
     Arrays.sort(LONG_ENTITY_CLASSES);
   }
@@ -56,13 +57,6 @@ public class LevelRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
-    try {
-      makeBackups();
-    } catch (IOException e1) {
-      e1.printStackTrace();
-      return;
-    }
-
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
       Path inputWorkingDir = FileConsts.LOCAL_LEVELS.resolve(levelDir);
       Path tempWorkingDir = tempDirPath.resolve(levelDir);
@@ -91,41 +85,6 @@ public class LevelRandomizer extends BaseRandomizer {
         e1.printStackTrace();
         return;
       }
-    }
-  }
-
-  private void makeBackups() throws IOException {
-    for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      Path levelPak = Paths.get(installDir).resolve(LevelConsts.PREFIX)
-          .resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakNewName = Paths.get(installDir).resolve(LevelConsts.PREFIX)
-          .resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
-
-      // Create backup dir if necessary
-      levelPak.toFile().mkdirs();
-
-      // If original does not exist, do nothing
-      if (!levelPak.toFile().exists()) {
-        continue;
-      }
-
-      // If backup already exists, do not overwrite it!!
-      if (!levelPakNewName.toFile().exists()) {
-        Files.copy(levelPak, levelPakNewName,
-            StandardCopyOption.REPLACE_EXISTING);
-      }
-    }
-  }
-
-  // 4MB buffer
-  private static final byte[] BUFFER = new byte[4096 * 1024];
-
-  private static void copyStreams(InputStream in, ZipOutputStream out)
-      throws IOException {
-    int bytesRead = in.read(BUFFER);
-    while (bytesRead != -1) {
-      out.write(BUFFER, 0, bytesRead);
-      bytesRead = in.read(BUFFER);
     }
   }
 
@@ -196,24 +155,5 @@ public class LevelRandomizer extends BaseRandomizer {
     for (BaseFilter filter : filterList) {
       filter.filterEntity(x, levelDir);
     }
-  }
-
-  @Override
-  public boolean uninstall() {
-    // Overwrite with backup
-    for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      Path levelPak = Paths.get(installDir).resolve(LevelConsts.PREFIX)
-          .resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakBackup = Paths.get(installDir).resolve(LevelConsts.PREFIX)
-          .resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
-      try {
-        Files.move(levelPakBackup, levelPak,
-            StandardCopyOption.REPLACE_EXISTING);
-      } catch (IOException e) {
-        e.printStackTrace();
-        return false;
-      }
-    }
-    return true;
   }
 }
