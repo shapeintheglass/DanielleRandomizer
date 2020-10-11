@@ -108,12 +108,12 @@ public class Installer {
       Path preMadeZipFile = FileConsts.DATA_LEVELS.resolve(levelDir).resolve(LEVEL_ZIP_NAME);
 
       // Location to copy into for combined zip
+      s.getTempLevelDir().resolve(levelDir).toFile().mkdirs();
       Path tempZipFile = s.getTempLevelDir().resolve(levelDir).resolve(LEVEL_ZIP_NAME);
-      
+
       // Location of the mission file
-      Path missionRelPath = Paths.get(levelDir).resolve(MISSION_FILE_NAME);
-      Path missionFile = s.getTempLevelDir().resolve(missionRelPath);
-      
+      Path missionFile = s.getTempLevelDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(MISSION_FILE_NAME);
+
       if (!missionFile.toFile().exists()) {
         continue;
       }
@@ -134,16 +134,13 @@ public class Installer {
         }
 
         // Insert mission file
-        zos.putNextEntry(new ZipEntry(missionRelPath.toString()));
+        zos.putNextEntry(new ZipEntry(MISSION_FILE_NAME));
         copyStreams(missionFileStream, zos);
         zos.closeEntry();
       }
-      
+
       // Copy zip over to final destination
-      Path levelPak = s.getInstallDir()
-          .resolve(LevelConsts.PREFIX)
-          .resolve(levelDir)
-          .resolve(LEVEL_PAK_NAME);
+      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
       Files.copy(tempZipFile, levelPak, StandardCopyOption.REPLACE_EXISTING);
     }
   }

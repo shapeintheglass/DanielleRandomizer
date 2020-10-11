@@ -1,34 +1,53 @@
 package filters;
 
-import rules.ShuffleTypeRule;
+import databases.TagHelper;
+import rules.ItemSwapRule;
 import settings.Settings;
 
 
 public class ItemSpawnFilter extends BaseFilter {
+  
+  String[] doNotTouch = {TagHelper.KEYCARD_TAG, TagHelper.MISSION_ITEM_TAG, TagHelper.NOTE_TAG, TagHelper.EQUIPMENT_TAG};
 
   /**
-   * Pre-made combination of rules that specifically filters enemies in certain settings.
+   * Pre-made combination of rules that specifically filters items in certain settings.
    */
   public ItemSpawnFilter(Settings s) {
     super("ItemSpawnFilter", s);
-    rules.add(new ShuffleTypeRule());
-  }
-
-  public enum Presets {
-
-    WITHIN_TYPE, // Shuffles items within their type
-    ALL_WRENCHES, // Changes all weapons to wrenches and removes non-wrench fab
-                  // plans
-    ALL_JUNK, // Changes all items to junk and removes all fab plans
-    NO_ITEMS, // Removes all pickup items
-  }
-
-  public enum Options {
-    NO_LOGIC, // Free-for-all, use settings to decide ratio of type
-    SHUFFLE_KEYCARDS, // Moves non-critical keycards around, modifies in-game
-                      // notes with hints on
-                      // where to find them
-    SHITLOADS_OF_WEAPONS_IN_MORGANS_APT, // Adds a shitload of weapons and ammo
-                                         // to Morgan's apartment
+    
+    switch(s.getItemSpawnSettings().getPreset() ) {
+      case ALL_JUNK:
+        rules.add(new ItemSwapRule()
+            .setInputTags(TagHelper.PHYSICS_PROP_TAG, TagHelper.PICKUP_TAG)
+            .setOutputTags(TagHelper.JUNK_TAG)
+            .setDoNotTouchTags(doNotTouch));
+        break;
+      case ALL_WRENCHES:
+        rules.add(new ItemSwapRule()
+            .setInputTags(TagHelper.PHYSICS_PROP_TAG, TagHelper.PICKUP_TAG)
+            .setOutputTags(TagHelper.WRENCH_TAG)
+            .setDoNotTouchTags(doNotTouch));
+        break;
+      case CUSTOM:
+        break;
+      case NONE:
+        break;
+      case NO_ITEMS:
+        break;
+      case NO_LOGIC:
+        rules.add(new ItemSwapRule()
+            .setInputTags(TagHelper.PHYSICS_PROP_TAG, TagHelper.PICKUP_TAG)
+            .setOutputTags(TagHelper.PHYSICS_PROP_TAG, TagHelper.PICKUP_TAG)
+            .setDoNotTouchTags(doNotTouch));
+        break;
+      case WHISKEY_AND_CIGARS:
+        rules.add(new ItemSwapRule()
+            .setInputTags(TagHelper.PHYSICS_PROP_TAG, TagHelper.PICKUP_TAG)
+            .setOutputTags(TagHelper.WHISKEY_TAG, TagHelper.CIGAR_TAG)
+            .setDoNotTouchTags(doNotTouch));
+        break;
+      default:
+        break;
+    }
   }
 }

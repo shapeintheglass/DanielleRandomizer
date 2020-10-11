@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,5 +65,23 @@ public class Utils {
       prev += weights[i];
     }
     return arr[arr.length];
+  }
+  
+  public static String getCommonElement(Set<String> s1, Set<String> s2) {
+    for(String s : s1) {
+      if (s2.contains(s)) {
+        return s;
+      }
+    }
+    return null;
+  }
+  
+  public static String getCommonElement(List<String> s1, List<String> s2) {
+    for(String s : s1) {
+      if (s2.contains(s)) {
+        return s;
+      }
+    }
+    return null;
   }
 }

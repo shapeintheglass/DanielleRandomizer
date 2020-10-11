@@ -12,6 +12,8 @@ public class EnemySettings {
     NO_LOGIC, // Randomize with no regard for type, including humans
     WITHIN_TYPE, // Randomize within type (robot, alien, human)
     ALL_NIGHTMARES, // Everything is nightmares
+    ALL_MIMICS, // Everything is mimics
+    CUSTOM, // Use custom settings
   }
 
   private Preset preset;

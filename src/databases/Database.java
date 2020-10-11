@@ -1,5 +1,6 @@
 package databases;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -36,6 +37,10 @@ public abstract class Database {
   }
   
   protected abstract void populateDatabase();
+  
+  public XmlEntity getEntityByName(String name) {
+    return nameToXmlEntity.get(name);
+  }
 
   /*
    * Returns a random item from the entire database

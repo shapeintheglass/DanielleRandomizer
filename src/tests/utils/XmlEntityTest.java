@@ -170,7 +170,7 @@ public class XmlEntityTest {
     BufferedReader br = new BufferedReader(new CharArrayReader(
         ENTITY_SIMPLE.toCharArray()));
     XmlEntity x = new XmlEntity(br);
-    x.setKey("Two", "Four");
+    x.setValue("Two", "Four");
     Assert.assertEquals(ENTITY_SIMPLE_UPDATED, x.toString());
   }
 
@@ -179,7 +179,7 @@ public class XmlEntityTest {
     BufferedReader br = new BufferedReader(new CharArrayReader(
         ENTITY_SIMPLE_NESTED_WITH_KEYS.toCharArray()));
     XmlEntity x = new XmlEntity(br);
-    x.getSubEntityByTagName("Two").setKey("Three", "Five");
+    x.getSubEntityByTagName("Two").setValue("Three", "Five");
     Assert.assertEquals(ENTITY_SIMPLE_NESTED_WITH_KEYS_UPDATED, x.toString());
   }
 

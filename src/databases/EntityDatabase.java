@@ -71,7 +71,7 @@ public class EntityDatabase extends Database {
           br.reset();
 
           XmlEntity x = new XmlEntity(br).setArchetype(a);
-          String name = x.getKey("Name");
+          String name = x.getValue("Name");
           Set<String> tags = TagHelper.getTags(name, a);
           for (String tag : tags) {
             if (!tagToNameList.containsKey(tag)) {

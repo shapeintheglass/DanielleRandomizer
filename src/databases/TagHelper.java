@@ -8,13 +8,30 @@ import utils.FileConsts.Archetype;
 public class TagHelper {
 
   // All valid tags
-  public static final String[] ITEM_TAGS = { "JUNK", "SPARE_PARTS", "FOOD", "AMMO", "GRENADE", "PSI_HYPO", "MEDKIT",
+  public static final String TYPHON_TAG = "TYPHON";
+  public static final String NIGHTMARE_TAG = "NIGHTMARE";
+  public static final String BASE_MIMIC_TAG = "BASE_MIMIC";
+
+  public static final String PHYSICS_PROP_TAG = "PHYSICS_PROP";
+  public static final String PICKUP_TAG = "PICKUP";
+  public static final String JUNK_TAG = "JUNK";
+
+  public static final String WRENCH_TAG = "WRENCH";
+  public static final String WHISKEY_TAG = "WHISKEY";
+  public static final String CIGAR_TAG = "CIGAR";
+  
+  public static final String KEYCARD_TAG = "KEYCARD";
+  public static final String MISSION_ITEM_TAG = "MISSION_ITEM";
+  public static final String NOTE_TAG = "NOTE";
+  public static final String EQUIPMENT_TAG = "EQUIPMENT";
+
+  public static final String[] ITEM_TAGS = { JUNK_TAG, "SPARE_PARTS", "FOOD", "AMMO", "GRENADE", "PSI_HYPO", "MEDKIT",
       "CHIPSET_SUIT", "CHIPSET_SCOPE", "WEAPON_KIT", "FAB_PLAN", "WEAPON", "NEUROMOD", "PHARMA", "SUIT_REPAIR_KIT",
-      "ITEM_OTHER", "KEYCARD", "NOTE", "EQUIPMENT", "MISSION_ITEM", "ALCOHOL", "GUN" };
+      "ITEM_OTHER", KEYCARD_TAG, NOTE_TAG, EQUIPMENT_TAG, MISSION_ITEM_TAG, "ALCOHOL", "GUN", WRENCH_TAG, WHISKEY_TAG, CIGAR_TAG };
   public static final String[] ITEM_GROUP_TAGS = { "HEALING", "CHIPSET" };
-  public static final String[] ENEMY_TAGS = { "BASE_MIMIC", "GREATER_MIMIC", "POLTERGEIST", "CYSTOID", "CYSTOID_NEST",
+  public static final String[] ENEMY_TAGS = { BASE_MIMIC_TAG, "GREATER_MIMIC", "POLTERGEIST", "CYSTOID", "CYSTOID_NEST",
       "PHANTOM_ETHERIC", "PHANTOM_VOLTAIC", "PHANTOM_THERMAL", "WEAVER", "TECHNOPATH", "TELEPATH", "PHANTOM_NAMED",
-      "NIGHTMARE", "TENTACLE", "TYPHON_OTHER", "PHANTOM_BASE" };
+      NIGHTMARE_TAG, "TENTACLE", "TYPHON_OTHER", "PHANTOM_BASE" };
   public static final String[] ENEMY_GROUP_TAGS = { "MIMIC", "PHANTOM" };
   public static final String[] ROBOT_TAGS = { "ENG_OP", "MED_OP", "SCI_OP", "MIL_OP", "TURRET", "ENG_OP_CORR",
       "MED_OP_CORR", "SCI_OP_CORR", "MIL_OP_CORR", "ROBOT_OTHER" };
@@ -25,8 +42,9 @@ public class TagHelper {
   // Every supported item will have this tag
   public static final String[] GLOBAL_TAG = { "GLOBAL" };
   // Every item will have a super type
-  public static final String[] SUPER_TYPE = { "PICKUP", "PHYSICS_PROP", "TYPHON", "HUMAN", "ROBOT", "PROJECTILE",
+  public static final String[] SUPER_TYPE = { PICKUP_TAG, PHYSICS_PROP_TAG, TYPHON_TAG, "HUMAN", "ROBOT", "PROJECTILE",
       "SUPER_TYPE_OTHER" };
+
   public static final String[][] TAG_LIST_LIST = { ITEM_TAGS, ITEM_GROUP_TAGS, ENEMY_TAGS, ENEMY_GROUP_TAGS, ROBOT_TAGS,
       ROBOT_GROUP_TAGS, GAMEPLAY_TAGS, OTHER_TAG, ENTITY_MISSING_TAG, GLOBAL_TAG, SUPER_TYPE };
 
@@ -147,6 +165,16 @@ public class TagHelper {
       tags.add("EQUIPMENT");
     } else {
       tags.add("ITEM_OTHER");
+    }
+
+    if (name.equals("Weapons.Wrench")) {
+      tags.add("WRENCH");
+    }
+    if (name.equals("Food.Alcohol.Bourbon")) {
+      tags.add("WHISKEY");
+    }
+    if (name.equals("Crafting.RecyclerJunk.UsedCigar")) {
+      tags.add("CIGAR");
     }
   }
 

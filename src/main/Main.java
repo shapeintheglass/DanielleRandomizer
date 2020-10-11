@@ -5,10 +5,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import filters.EnemyFilter;
+import filters.ItemSpawnFilter;
 import installers.Installer;
+import randomizers.cosmetic.BodyRandomizer;
+import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import settings.EnemySettings;
-import settings.EnemySettings.Preset;
+import settings.ItemSpawnSettings;
 import settings.Settings;
 
 public class Main {
@@ -24,14 +27,24 @@ public class Main {
         .setInstallDir(Paths.get(installDir))
         .setTempDir(tempDir)
         .setEnemySettings(new EnemySettings.Builder()
-            .setRandomizeMode(Preset.NO_LOGIC)
+            .setRandomizeMode(EnemySettings.Preset.ALL_MIMICS)
+            .build())
+        .setItemSpawnSettings(new ItemSpawnSettings.Builder()
+            .setRandomizeMode(ItemSpawnSettings.Preset.WHISKEY_AND_CIGARS)
             .build())
         .build();
 
     Installer installer = new Installer(s);
 
+    VoiceRandomizer vr = new VoiceRandomizer(s);
+    vr.randomize();
+    
+    BodyRandomizer br = new BodyRandomizer(s);
+    br.randomize();
+    
     LevelRandomizer lr = new LevelRandomizer(s)
-        .addFilter(new EnemyFilter(s));
+        .addFilter(new EnemyFilter(s))
+        .addFilter(new ItemSpawnFilter(s));
     lr.randomize();
     
     try {

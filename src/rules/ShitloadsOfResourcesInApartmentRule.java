@@ -2,7 +2,7 @@ package rules;
 
 import utils.XmlEntity;
 
-public class ShitloadsOfResourcesInApartmentRule extends BaseRule {
+public class ShitloadsOfResourcesInApartmentRule implements Rule {
 
   /*
    * 

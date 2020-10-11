@@ -15,12 +15,14 @@ public class Settings {
   Random rand;
   long seed;
   
+  ItemSpawnSettings iss;
   EnemySettings es;
   
-  private Settings(Path installDir, Path tempDir, Random r, long seed, EnemySettings es) {
+  private Settings(Path installDir, Path tempDir, Random r, long seed, EnemySettings es, ItemSpawnSettings iss) {
     this.installDir = installDir;
     this.tempDir = tempDir;
     this.es = es;
+    this.iss = iss;
     rand = new Random();
     seed = rand.nextLong();
     rand.setSeed(seed);
@@ -64,12 +66,17 @@ public class Settings {
     return es;
   }
   
+  public ItemSpawnSettings getItemSpawnSettings() {
+    return iss;
+  }
+  
   public static class Builder {
     private Path installDir;
     private Path tempDir;
     Random rand;
     long seed;
     EnemySettings es;
+    ItemSpawnSettings iss;
     
     public Builder() {
       installDir = Paths.get(".");
@@ -103,8 +110,13 @@ public class Settings {
       return this;
     }
     
+    public Builder setItemSpawnSettings(ItemSpawnSettings iss) {
+      this.iss = iss;
+      return this;
+    }
+    
     public Settings build() {
-      return new Settings(installDir, tempDir, rand, seed, es);
+      return new Settings(installDir, tempDir, rand, seed, es, iss);
     }
   }
 }

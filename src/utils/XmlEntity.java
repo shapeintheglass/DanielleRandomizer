@@ -126,12 +126,16 @@ public class XmlEntity {
   public Map<String, String> getKeys() {
     return keys;
   }
+  
+  public boolean hasKey(String key) {
+    return keys.containsKey(key);
+  }
 
-  public String getKey(String key) {
+  public String getValue(String key) {
     return keys.get(key);
   }
 
-  public void setKey(String key, String value) {
+  public void setValue(String key, String value) {
     keys.put(key, value);
   }
   
@@ -139,6 +143,11 @@ public class XmlEntity {
     return subEntityOrder;
   }
 
+  /**
+   * Retrieves the first subentity that goes by a particular tag name
+   * @param name
+   * @return
+   */
   public XmlEntity getSubEntityByTagName(String name) {
     for (XmlEntity x : subEntityOrder) {
       if (x.getTagName().equals(name)) {
@@ -148,9 +157,15 @@ public class XmlEntity {
     return null;
   }
 
+  /**
+   * Retrieves the first subentity that contains the given key value match
+   * @param key
+   * @param value
+   * @return
+   */
   public XmlEntity getSubEntityByKeyValue(String key, String value) {
     for (XmlEntity x : subEntityOrder) {
-      if (x.getKey(key).equals(value)) {
+      if (x.getValue(key).equals(value)) {
         return x;
       }
     }
