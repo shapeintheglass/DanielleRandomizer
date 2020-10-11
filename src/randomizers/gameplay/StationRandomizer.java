@@ -7,10 +7,6 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.MultiGraph;
-
 import graph.SimpleGraph;
 import randomizers.BaseRandomizer;
 import settings.Settings;
@@ -48,22 +44,6 @@ public class StationRandomizer extends BaseRandomizer {
     connect(Level.GUTS, Level.SBAY);
     connect(Level.CBAY, Level.LIFE);
     connect(Level.LIFE, Level.POWR);
-  }
-  
-  public void showStation() {
-    Graph displayGraph = new MultiGraph("Station Connectivity");
-    displayGraph.display();
-    
-    
-    for (Level l : station.getNodes()) {
-      Node n = displayGraph.addNode(l.name());
-      n.addAttribute("ui.label", l.name());
-    }
-    
-    Set<SimpleGraph.Edge<Level>> edges = station.getEdges();
-    for (SimpleGraph.Edge<Level> edge : edges) {
-      displayGraph.addEdge(edge.toString(), edge.getNode1(), edge.getNode2());
-    }
   }
   
   public boolean randomizeConnections() {
