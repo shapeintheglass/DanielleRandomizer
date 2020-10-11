@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Enumeration;
 import java.util.Stack;
@@ -22,6 +21,7 @@ import java.util.zip.ZipOutputStream;
 import settings.Settings;
 import utils.FileConsts;
 import utils.LevelConsts;
+import utils.Utils;
 
 /**
  * 
@@ -62,6 +62,10 @@ public class Installer {
     installPatchDir();
     backupLevelFiles();
     installLevelFiles();
+    
+    // Clean up temp dirs
+    Utils.deleteDirectory(s.getTempPatchDir().toFile());
+    Utils.deleteDirectory(s.getTempLevelDir().toFile());
   }
 
   private void installPatchDir() throws IOException {
@@ -165,10 +169,12 @@ public class Installer {
       Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
       Path levelPakBackup = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir)
           .resolve(BACKUP_LEVEL_PAK_NAME);
-      try {
-        Files.move(levelPakBackup, levelPak, StandardCopyOption.REPLACE_EXISTING);
-      } catch (IOException e) {
-        e.printStackTrace();
+      if (levelPakBackup.toFile().exists()) {
+        try {
+          Files.move(levelPakBackup, levelPak, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
   }

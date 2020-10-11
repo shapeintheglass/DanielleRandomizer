@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -83,5 +84,14 @@ public class Utils {
       }
     }
     return null;
+  }
+  
+  public static void deleteDirectory(File dir) {
+    if (dir.isDirectory()) {
+      for (File f : dir.listFiles()) {
+        deleteDirectory(f);
+      }
+    }
+    dir.delete();
   }
 }
