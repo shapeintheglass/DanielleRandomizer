@@ -1,26 +1,17 @@
 package filters;
 
+import settings.Settings;
 
 public class EnemyFilter extends BaseFilter {
 
-  
-  public EnemyFilter() {
-    super("EnemyFilter");
+  /**
+   * Pre-made combination of rules that specifically filters enemies in certain settings.
+   */
+  public EnemyFilter(Settings s) {
+    super("EnemyFilter", s);
+    
+    // TODO: Use settings to determine what kind of rule to add
   }
 
-  public enum Options {
-    NO_LOGIC, // Randomize with no regard for type, including humans
-    WITHIN_TYPE, // Randomize within type (robot, alien, human)
-    ALL_NIGHTMARES,
-  }
-  
-  public enum EnemyType {
-    NIGHTMARE,
-  }
-  
-  public enum SpawnRarity {
-    PLENTIFUL, // 20% chance
-    SPARSE,    // 5% chance
-    NONE,      // 0% chance
-  }
+
 }

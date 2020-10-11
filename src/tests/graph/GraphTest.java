@@ -1,6 +1,6 @@
 package tests.graph;
 
-import graph.Graph;
+import graph.SimpleGraph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,11 +20,11 @@ public class GraphTest {
   private static final String NODE_4 = "bop";
   
   
-  Graph<String> g;
+  SimpleGraph<String> g;
 
   @Before
   public void setup() {
-    g = new Graph<>();
+    g = new SimpleGraph<>();
   }
 
   @Test
@@ -44,7 +44,7 @@ public class GraphTest {
     
     Assert.assertEquals(expectedNodes, g.getNodes());
     Assert.assertTrue(g.areConnected(NODE_1, NODE_2));
-    Assert.assertEquals(expectedEdges, g.getEdges());
+    Assert.assertEquals(expectedEdges, g.getEdgesAsStrings());
     Assert.assertEquals(expectedDegrees, g.getDegrees());
   }
 

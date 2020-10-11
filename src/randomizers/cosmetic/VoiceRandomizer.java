@@ -1,26 +1,23 @@
 package randomizers.cosmetic;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import randomizers.BaseRandomizer;
+import settings.Settings;
 import utils.FileConsts;
 
 /**
@@ -33,64 +30,52 @@ public class VoiceRandomizer extends BaseRandomizer {
   private static final String DIALOG_ID_PATTERN = "dialog=\"([0-9]*)\"";
   private static final String VOICES_ID_PATTERN = "id=\"([0-9]*)\"";
 
-  private static final String PATCH_NAME_ZIP = "patch_randomvoicelines.zip";
-
   private static Map<String, String> DIALOG_TO_CHARACTER = new HashMap<String, String>();
   private static Map<String, List<String>> CHARACTER_TO_DIALOG = new HashMap<String, List<String>>();
   private static Map<String, String> SWAPPED_LINES_MAP = new HashMap<String, String>();
-
-  private Path tempPatchDir;
   
-  public VoiceRandomizer(Random r, Path tempPatchDir) {
-    super(r);
-    this.tempPatchDir = tempPatchDir;
+  public VoiceRandomizer(Settings s) {
+    super("VoiceRandomizer", s);
   }
 
   /**
-   * Randomizes voice lines and installs into game directory
+   * Randomizes voice lines and installs into temp directory
    */
   public void randomize() {
-    // Zip file containing patch changes
-    File zipFile = tempPatchDir.resolve(PATCH_NAME_ZIP).toFile();
-    zipFile.deleteOnExit();
-    try {
-      zipFile.createNewFile();
-    } catch (IOException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
-    }
+    Path outputDir = settings.getTempPatchDir().resolve("ark/dialog/dialoglogic");
 
-    try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(
-        new FileOutputStream(zipFile)))) {
+    try {
       getDialogIds();
-      randomizeAndAddToZip(new File(FileConsts.DIALOGIC_PATH),
-          Paths.get("ark/dialog/dialoglogic"), zos);
-    } catch (Exception e) {
+      randomizeAndWrite(new File(FileConsts.DIALOGIC_PATH), outputDir);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
 
-  // Randomizes the given file and adds it into the given output stream
-  private void randomizeAndAddToZip(File dir, Path parent, ZipOutputStream zos)
+  // Randomizes the given file and adds it into the given output dir
+  private void randomizeAndWrite(File srcDir, Path outDir)
       throws FileNotFoundException, IOException {
-    for (File file : dir.listFiles()) {
+    outDir.toFile().mkdirs();
+    for (File file : srcDir.listFiles()) {
       String fileName = file.getName();
-      System.out.printf("Parsing %s\n", fileName);
+      logger.info(String.format("Parsing %s\n", fileName));
       if (file.isDirectory()) {
         // Call recursively
-        randomizeAndAddToZip(file, parent.resolve(fileName), zos);
+        randomizeAndWrite(file, outDir.resolve(fileName));
       } else {
         // Create and randomize new file
-        randomizeDialog(file, parent.resolve(fileName).toString(), zos);
+        randomizeDialog(file, outDir.resolve(fileName).toFile());
       }
     }
   }
 
   // Writes a randomized version of the in file to the out file.
-  private void randomizeDialog(File in, String filename, ZipOutputStream zos)
+  private void randomizeDialog(File in, File out)
       throws FileNotFoundException, IOException {
-    StringBuilder buffer = new StringBuilder();
-    try (BufferedReader br = new BufferedReader(new FileReader(in));) {
+    out.createNewFile();
+    try (BufferedReader br = new BufferedReader(new FileReader(in));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
       String line = br.readLine();
       while (line != null) {
         Matcher m = Pattern.compile(DIALOG_ID_PATTERN).matcher(line);
@@ -106,8 +91,8 @@ public class VoiceRandomizer extends BaseRandomizer {
             List<String> dialoglines = CHARACTER_TO_DIALOG.get(characterFile);
 
             String newDialog = dialoglines.remove(0);
-            System.out.printf("Mapping %s --> %s, remaining IDs %s\n",
-                oldDialog, newDialog, dialoglines.size());
+            logger.info(String.format("Mapping %s --> %s, remaining IDs %s\n",
+                oldDialog, newDialog, dialoglines.size()));
 
             CHARACTER_TO_DIALOG.put(characterFile, dialoglines);
             SWAPPED_LINES_MAP.put(oldDialog, newDialog);
@@ -116,15 +101,13 @@ public class VoiceRandomizer extends BaseRandomizer {
           line = line.replaceFirst(DIALOG_ID_PATTERN,
               String.format("dialog=\"%s\"", SWAPPED_LINES_MAP.get(oldDialog)));
         }
-        buffer.append(line);
-        buffer.append('\n');
+        
+        bw.append(line);
+        bw.append('\n');
+
         line = br.readLine();
       }
     }
-    byte[] bytes = buffer.toString().getBytes();
-    zos.putNextEntry(new ZipEntry(filename));
-    zos.write(bytes, 0, bytes.length);
-    zos.closeEntry();
   }
 
   // Populates maps for dialog IDs.
@@ -144,7 +127,7 @@ public class VoiceRandomizer extends BaseRandomizer {
           line = br.readLine();
         }
       }
-      Collections.shuffle(voiceLineIds, r);
+      Collections.shuffle(voiceLineIds, settings.getRandom());
       CHARACTER_TO_DIALOG.put(fileName, voiceLineIds);
     }
   }

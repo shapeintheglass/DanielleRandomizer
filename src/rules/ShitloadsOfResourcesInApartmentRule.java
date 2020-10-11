@@ -48,13 +48,13 @@ public class ShitloadsOfResourcesInApartmentRule extends BaseRule {
   }
 
   @Override
-  public boolean trigger(XmlEntity e, String levelDir) {
+  public boolean trigger(XmlEntity e) {
     // TODO Auto-generated method stub
     return false;
   }
 
   @Override
-  public void apply(XmlEntity e, String levelDir) {
+  public void apply(XmlEntity e) {
     // TODO Auto-generated method stub
 
   }

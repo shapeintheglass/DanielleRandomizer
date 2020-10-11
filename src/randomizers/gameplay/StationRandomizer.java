@@ -7,20 +7,25 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import graph.Graph;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
+
+import graph.SimpleGraph;
 import randomizers.BaseRandomizer;
+import settings.Settings;
 
 public class StationRandomizer extends BaseRandomizer {
 
-  Graph<Level> station;
-
+  public SimpleGraph<Level> station;
+  
   public enum Level {
     LOB, NDIV, PSY, HWLB, SBAY, ARB, LIFE, POWR, CBAY, EXT, GUTS, DSTO, CREW, BRDG,
   }
 
-  public StationRandomizer(String installDir) {
-    super(installDir, "randomstation");
-    station = new Graph<>();
+  public StationRandomizer(Settings s) {
+    super("randomstation", s);
+    station = new SimpleGraph<>();
     
     connect(Level.LOB, Level.NDIV);
     connect(Level.LOB, Level.PSY);
@@ -45,9 +50,25 @@ public class StationRandomizer extends BaseRandomizer {
     connect(Level.LIFE, Level.POWR);
   }
   
-  private boolean randomizeConnections() {
+  public void showStation() {
+    Graph displayGraph = new MultiGraph("Station Connectivity");
+    displayGraph.display();
+    
+    
+    for (Level l : station.getNodes()) {
+      Node n = displayGraph.addNode(l.name());
+      n.addAttribute("ui.label", l.name());
+    }
+    
+    Set<SimpleGraph.Edge<Level>> edges = station.getEdges();
+    for (SimpleGraph.Edge<Level> edge : edges) {
+      displayGraph.addEdge(edge.toString(), edge.getNode1(), edge.getNode2());
+    }
+  }
+  
+  public boolean randomizeConnections() {
     // Save the degrees for each part of the station
-    Map<Level, Set<String>> edges = station.getEdges();
+    Map<Level, Set<String>> edges = station.getEdgesAsStrings();
     logger.info(edges.toString());
     station.clear();
 
@@ -80,25 +101,9 @@ public class StationRandomizer extends BaseRandomizer {
     }
     return true;
   }
-  
+
   private void connect(Level m1, Level m2) {
     station.addEdge(m1, m2);
-  }
-
-  public static void main(String[] args) {
-    StationRandomizer sr = new StationRandomizer("foo");
-    System.out.println(sr.station);
-    System.out.println(sr.station.isConnected());
-    System.out.println(sr.station.getDegrees());
-    
-    while(!sr.randomizeConnections()) {
-      System.out.println(sr.station);
-      System.out.println(sr.station.isConnected());
-      System.out.println(sr.station.getDegrees());
-    }
-    System.out.println(sr.station);
-    System.out.println(sr.station.isConnected());
-    System.out.println(sr.station.getDegrees());
   }
 
   @Override

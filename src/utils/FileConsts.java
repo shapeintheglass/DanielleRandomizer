@@ -19,7 +19,7 @@ public class FileConsts {
 
   public static final String HUMANS_FINAL_DIR = "data/humansfinal/";
 
-  public static final Path LOCAL_LEVELS = Paths.get("data/levels");
+  public static final Path DATA_LEVELS = Paths.get("data/levels");
   
 
   public enum Archetype {

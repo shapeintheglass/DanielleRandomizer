@@ -1,19 +1,33 @@
 package randomizers;
 
+import java.nio.file.Path;
 import java.util.Random;
 import java.util.logging.Logger;
 
-public abstract class BaseRandomizer {
+import settings.Settings;
 
+/**
+ * Represents the interface for a randomizer.
+ * @author Kida
+ *
+ */
+public abstract class BaseRandomizer {
+  // Logger
   protected Logger logger;
 
-  protected Random r;
+  String name;
+  
+  protected Settings settings;
 
-  public BaseRandomizer(Random r) {
-    this.r = r;
+  public BaseRandomizer(String name, Settings s) {
+    this.settings = s;
     this.logger = Logger.getGlobal();
+    this.name = name;
   }
   
+  /**
+   * Do randomization and write output into temp directory.
+   */
   public abstract void randomize();
 
 }

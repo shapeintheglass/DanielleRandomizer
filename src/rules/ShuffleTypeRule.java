@@ -18,6 +18,7 @@ public class ShuffleTypeRule extends BaseRule {
   // Ex: If an item has both tag "A" and "B", and this is {"A", "B"}, the item
   // will be shuffled with another item of tag "A".
   private List<String> tagsToShuffle;
+  
   // Set of tags to be ignored at all costs. If an item has any tag in this set,
   // it is ignored.
   private Set<String> tagsToIgnore;
@@ -47,13 +48,13 @@ public class ShuffleTypeRule extends BaseRule {
   }
 
   @Override
-  public boolean trigger(XmlEntity x, String levelDir) {
+  public boolean trigger(XmlEntity x) {
     // Return true if this archetype is supported
     return (getSupportedTag(x) != null);
   }
 
   @Override
-  public void apply(XmlEntity x, String levelDir) {
+  public void apply(XmlEntity x) {
     String tag = getSupportedTag(x);
 
     // Swap with a random entity in the same tag, but not in the ignored tags

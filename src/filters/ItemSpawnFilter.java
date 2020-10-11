@@ -1,12 +1,16 @@
 package filters;
 
 import rules.ShuffleTypeRule;
+import settings.Settings;
 
 
 public class ItemSpawnFilter extends BaseFilter {
 
-  public ItemSpawnFilter() {
-    super("ItemSpawnFilter");
+  /**
+   * Pre-made combination of rules that specifically filters enemies in certain settings.
+   */
+  public ItemSpawnFilter(Settings s) {
+    super("ItemSpawnFilter", s);
     rules.add(new ShuffleTypeRule());
   }
 

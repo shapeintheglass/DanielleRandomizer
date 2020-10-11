@@ -1,51 +1,41 @@
 package randomizers.gameplay;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
 
+import filters.BaseFilter;
 import randomizers.BaseRandomizer;
+import settings.Settings;
 import utils.FileConsts;
 import utils.LevelConsts;
 import utils.XmlEntity;
-import filters.BaseFilter;
-import filters.EnemyFilter;
-import filters.ItemSpawnFilter;
 
+/**
+ * A special kind of randomizer that requires a series of filters in order to process level files.
+ * @author Kida
+ *
+ */
 public class LevelRandomizer extends BaseRandomizer {
 
   private static final int READ_AHEAD_LIMIT = 10000;
   private static final String ENTITY_NAME_START = "<Entity Name=";
-  ItemSpawnFilter isf;
-  EnemyFilter ef;
 
-  List<BaseFilter> filterList;
+  private List<BaseFilter> filterList;
 
-  public static final String LEVEL_PAK_NAME = "level.pak";
-  public static final String TEMP_ZIP_NAME = "level.zip";
-  public static final String BACKUP_LEVEL_PAK_NAME = "level_backup.pak";
-  public static final String MISSION_FILE_NAME = "mission_mission0.xml";
+  private static final String MISSION_FILE_NAME = "mission_mission0.xml";
 
-  public static final String[] LONG_ENTITY_CLASSES = { "TagPoint", "ArkMarker",
+  private static final String[] LONG_ENTITY_CLASSES = { "TagPoint", "ArkMarker",
       "FlowgraphEntity", "GeomEntity", "ArkInteractiveObject" };
 
-  public LevelRandomizer(Random r, Path tempLevelDir) {
-    super(r);
+  public LevelRandomizer(Settings s) {
+    super("LevelRandomizer", s);
     filterList = new LinkedList<>();
     Arrays.sort(LONG_ENTITY_CLASSES);
   }
@@ -58,29 +48,19 @@ public class LevelRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      Path inputWorkingDir = FileConsts.LOCAL_LEVELS.resolve(levelDir);
-      Path tempWorkingDir = tempDirPath.resolve(levelDir);
-
-      // XML file that defines the level
-      File missionFile = inputWorkingDir.resolve(MISSION_FILE_NAME).toFile();
-      // Pre-made zip file that just needs the level def
-      File preMadeZipFile = inputWorkingDir.resolve(TEMP_ZIP_NAME).toFile();
-      // Zip file in temp working dir to write results to
-      File zipTempFile = tempWorkingDir.resolve(TEMP_ZIP_NAME).toFile();
+      File in = FileConsts.DATA_LEVELS
+          .resolve(levelDir)
+          .resolve(MISSION_FILE_NAME).toFile();
+      File outDir = settings.getTempLevelDir()
+          .resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).toFile();
+      outDir.mkdirs();
+      File out = outDir.toPath()
+          .resolve(MISSION_FILE_NAME).toFile();
 
       try {
-        // Create temporary file for filtered zip
-        tempWorkingDir.toFile().mkdirs();
-        zipTempFile.createNewFile();
-
-        // Add level file into zip
-        filterLevelFileAndAddToZip(levelDir, missionFile, preMadeZipFile,
-            zipTempFile);
-
-        // Copy zip into install dir as a pak
-        Files.copy(zipTempFile.toPath(),
-            Paths.get(installDir).resolve(LevelConsts.PREFIX).resolve(levelDir)
-                .resolve(LEVEL_PAK_NAME), StandardCopyOption.REPLACE_EXISTING);
+        logger.info(String.format("filtering: %s --> %s", in, out));
+        filterMissionFile(in, out);
       } catch (IOException e1) {
         e1.printStackTrace();
         return;
@@ -88,72 +68,45 @@ public class LevelRandomizer extends BaseRandomizer {
     }
   }
 
-  /*
+  /**
    * Copies level def into temp directory, while filtering.
+   * @param inputDir Location of input files
+   * @param missionFile Path for mission file
+   * @param outputDir Location for output files
+   * @throws IOException
    */
-  private void filterLevelFileAndAddToZip(String levelDir, File missionFile,
-      File preMadeZipFile, File zipTempFile) throws IOException {
-
-    logger
-        .info(String.format("filtering: %s, %s, %s", levelDir,
-            missionFile.getName(), preMadeZipFile.getName(),
-            zipTempFile.getName()));
-
-    ZipOutputStream newZip = new ZipOutputStream(new FileOutputStream(
-        zipTempFile));
-    ZipFile originalZip = new ZipFile(preMadeZipFile.getCanonicalPath());
-    // Copy existing entries from original zip into new zip
-    Enumeration<? extends ZipEntry> entries = originalZip.entries();
-    while (entries.hasMoreElements()) {
-      ZipEntry e = entries.nextElement();
-      newZip.putNextEntry(new ZipEntry(e.getName()));
-      if (!e.isDirectory()) {
-        copyStreams(originalZip.getInputStream(e), newZip);
-      }
-      newZip.closeEntry();
-    }
-
-    // Create new entry for the mission file
-    ZipEntry e = new ZipEntry(missionFile.getName());
-    e.setSize(missionFile.getTotalSpace());
-    newZip.putNextEntry(e);
-
-    logger.info(String.format("Creating zip entry %s", missionFile.getName()));
-
+  private void filterMissionFile(File in, File out) throws IOException {
     // Copy individual lines of mission file into new zip entry
-    try (BufferedReader br = new BufferedReader(new FileReader(missionFile))) {
-
+    try (BufferedReader br = new BufferedReader(new FileReader(in));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
       String line = "";
       br.mark(READ_AHEAD_LIMIT);
       while ((line = br.readLine()) != null) {
         // Scan until we see the start of an entity definition
-        byte[] toWrite;
+        String toWrite;
         if (line.contains(ENTITY_NAME_START)) {
           // Rewind to the mark
           br.reset();
           // Parse into an xml entity
           XmlEntity x = new XmlEntity(br);
           // Perform filtering
-          filterEntityXml(x, levelDir);
-          toWrite = x.toString().getBytes();
+          filterEntityXml(x);
+          toWrite = x.toString();
         } else {
           // Pass through all non-entity lines
-          toWrite = line.getBytes();
+          toWrite = line;
         }
-        newZip.write(toWrite);
-        newZip.write('\n');
+        bw.write(toWrite);
+        bw.write('\n');
         br.mark(READ_AHEAD_LIMIT);
       }
     }
-    newZip.closeEntry();
-    newZip.close();
-    originalZip.close();
   }
 
   // Filters the xml representation of an entity
-  private void filterEntityXml(XmlEntity x, String levelDir) {
+  private void filterEntityXml(XmlEntity x) {
     for (BaseFilter filter : filterList) {
-      filter.filterEntity(x, levelDir);
+      filter.filterEntity(x);
     }
   }
 }

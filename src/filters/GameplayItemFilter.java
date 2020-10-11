@@ -1,9 +1,14 @@
 package filters;
 
+import settings.Settings;
+
 public class GameplayItemFilter extends BaseFilter {
 
-  public GameplayItemFilter() {
-    super("GameplayItemFilter");
+  /**
+   * Pre-made combination of rules that specifically filters enemies in certain settings.
+   */
+  public GameplayItemFilter(Settings s) {
+    super("GameplayItemFilter", s);
     // TODO Auto-generated constructor stub
   }
 

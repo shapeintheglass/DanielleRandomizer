@@ -8,6 +8,11 @@ import java.util.Set;
 import utils.Utils;
 import utils.XmlEntity;
 
+/**
+ * Interface for a basic database of xml entities.
+ * @author Kida
+ *
+ */
 public abstract class Database {
 
   // Map of string tag to a list of entities
