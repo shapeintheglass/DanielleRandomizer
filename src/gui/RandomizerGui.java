@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,19 +67,46 @@ public class RandomizerGui {
   }
 
   private void setup() {
-    mainFrame = new JFrame("Java SWING Examples");
-    mainFrame.setSize(800, 800);
-    mainFrame.setLayout(new GridLayout(5, 1));
-
+    mainFrame = new JFrame("Prey Randomizer");
+    mainFrame.setSize(600, 300);
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent windowEvent) {
         System.exit(0);
       }
     });
 
+    JPanel mainPanel = new JPanel();
+    mainFrame.add(mainPanel);
+    mainPanel.setLayout(new GridBagLayout());
+
+    GridBagConstraints c = new GridBagConstraints();
+    c.fill = GridBagConstraints.HORIZONTAL;
+
+    JPanel headerPanel = new JPanel();
+    c.gridx = 0;
+    c.gridy = 0;
+    mainPanel.add(headerPanel, c);
+    JPanel getInstallDirPanel = new JPanel();
+    c.gridx = 0;
+    c.gridy = 1;
+    mainPanel.add(getInstallDirPanel, c);
+    JPanel cosmeticsPanel = new JPanel();
+    c.gridx = 0;
+    c.gridy = 2;
+    mainPanel.add(cosmeticsPanel, c);
+    JPanel gameplayPanel = new JPanel();
+    c.gridx = 0;
+    c.gridy = 3;
+    mainPanel.add(gameplayPanel, c);
+    JPanel buttonsPanel = new JPanel();
+    c.gridx = 0;
+    c.gridy = 4;
+    mainPanel.add(buttonsPanel, c);
+
     /** HEADER */
     JLabel headerLabel = new JLabel("Prey Randomizer", JLabel.LEFT);
-    JPanel headerPanel = new JPanel();
+    headerLabel.setSize(600, 10);
+
     headerPanel.setLayout(new FlowLayout());
     headerPanel.add(headerLabel);
     headerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -87,14 +116,14 @@ public class RandomizerGui {
     fileChooser = new JFileChooser(installDir);
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fileChooser.setMultiSelectionEnabled(false);
-    JLabel currentFileLabel = new JLabel("Install location:");
+    JLabel currentFileLabel = new JLabel("Prey folder location:");
 
     currentFile = new JLabel(installDir);
+    currentFile.setBorder(BorderFactory.createRaisedSoftBevelBorder());
     JButton changeInstall = new JButton("Change");
     changeInstall.setActionCommand("changeInstallDir");
     changeInstall.addActionListener(new OnChangeDirClick());
 
-    JPanel getInstallDirPanel = new JPanel();
     getInstallDirPanel.setLayout(new FlowLayout());
     getInstallDirPanel.add(currentFileLabel);
     getInstallDirPanel.add(currentFile);
@@ -106,16 +135,17 @@ public class RandomizerGui {
     bodiesCheckBox = new JCheckBox("Randomize NPC bodies", false);
     bodiesCheckBox.addItemListener(new OnCheckBoxClick());
 
-    JPanel cosmeticsPanel = new JPanel();
     cosmeticsPanel.setLayout(new FlowLayout());
     cosmeticsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
     cosmeticsPanel.add(voiceLinesCheckBox);
     cosmeticsPanel.add(bodiesCheckBox);
 
     /** GAMEPLAY */
-    JPanel gameplayPanel = new JPanel();
+
     JPanel itemSpawnPanel = new JPanel();
+    itemSpawnPanel.setLayout(new GridLayout(0, 1));
     JPanel enemySpawnPanel = new JPanel();
+    enemySpawnPanel.setLayout(new GridLayout(0, 1));
 
     JLabel itemSpawnLabel = new JLabel("Item spawn presets");
     ActionListener itemSpawnActionListener = new OnItemSpawnRadioClick();
@@ -179,7 +209,6 @@ public class RandomizerGui {
     JButton closeButton = new JButton("Close");
     closeButton.setActionCommand("close");
     closeButton.addActionListener(new OnCloseClick());
-    JPanel buttonsPanel = new JPanel();
     buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     buttonsPanel.add(statusLabel);
     buttonsPanel.add(installButton);
@@ -187,14 +216,10 @@ public class RandomizerGui {
     buttonsPanel.add(closeButton);
     buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-    mainFrame.add(headerPanel);
-    mainFrame.add(getInstallDirPanel);
-    mainFrame.add(cosmeticsPanel);
-    mainFrame.add(gameplayPanel);
-    mainFrame.add(buttonsPanel);
   }
 
   public void start() {
+    mainFrame.pack();
     mainFrame.setVisible(true);
   }
 
@@ -252,11 +277,6 @@ public class RandomizerGui {
     @Override
     public void actionPerformed(ActionEvent arg0) {
       statusLabel.setText("Installing...");
-
-      // Uninstall previous version if it exists
-      if (installer != null || settings != null) {
-        uninstall();
-      }
 
       EnemySettings enemySettings = new EnemySettings.Builder().setRandomizeMode(enemySpawnPreset).build();
       ItemSpawnSettings itemSpawnSettings = new ItemSpawnSettings.Builder().setRandomizeMode(itemSpawnPreset).build();

@@ -1,5 +1,7 @@
 package settings;
 
+import java.util.Set;
+
 /**
  * Describes how enemy spawns should be applied
  * @author Kida
@@ -17,6 +19,10 @@ public class EnemySettings {
   }
 
   private Preset preset;
+  
+  private Set<String> customInputTags;
+  private Set<String> customOutputTags;
+  private Set<String> customIgnoreTags;
   
   /**
    * Describes how enemy spawn rates should be applied
