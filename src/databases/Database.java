@@ -1,6 +1,5 @@
 package databases;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -19,20 +18,19 @@ public abstract class Database {
   // Map of string tag to a list of entities
   protected Map<String, List<String>> tagToNameList;
   protected Map<String, XmlEntity> nameToXmlEntity;
-  private Random r;
+  protected Random r;
   
   // Initializes with a specific entity database.
   // Visible for testing.
   public Database(Map<String, List<String>> tagToNameList,
       Map<String, XmlEntity> nameToXmlEntity) {
-    // TODO: Have a single source of randomness
     r = new Random();
     this.tagToNameList = tagToNameList;
     this.nameToXmlEntity = nameToXmlEntity;
   }
   
-  public Database() {
-    r = new Random();
+  public Database(Random r) {
+    this.r = r;
     populateDatabase();
   }
   

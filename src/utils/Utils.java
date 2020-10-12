@@ -3,10 +3,10 @@ package utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,16 +68,7 @@ public class Utils {
     return arr[arr.length];
   }
   
-  public static String getCommonElement(Set<String> s1, Set<String> s2) {
-    for(String s : s1) {
-      if (s2.contains(s)) {
-        return s;
-      }
-    }
-    return null;
-  }
-  
-  public static String getCommonElement(List<String> s1, List<String> s2) {
+  public static String getCommonElement(Collection<String> s1, Collection<String> s2) {
     for(String s : s1) {
       if (s2.contains(s)) {
         return s;

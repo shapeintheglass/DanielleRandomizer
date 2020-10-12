@@ -27,7 +27,9 @@ public class Settings {
     seed = rand.nextLong();
     rand.setSeed(seed);
     tempLevelDir = createTempDir(tempDir, "level");
+    tempLevelDir.toFile().deleteOnExit();
     tempPatchDir = createTempDir(tempDir, "patch");
+    tempLevelDir.toFile().deleteOnExit();
   }
   
   private Path createTempDir(Path tempDir, String name) {

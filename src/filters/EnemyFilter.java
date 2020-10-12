@@ -1,6 +1,6 @@
 package filters;
 
-import databases.TagHelper;
+import rules.CustomRuleHelper;
 import rules.NpcSpawnerSwapRule;
 import settings.Settings;
 
@@ -12,26 +12,8 @@ public class EnemyFilter extends BaseFilter {
   public EnemyFilter(Settings s) {
     super("EnemyFilter", s);
     
-    switch(s.getEnemySettings().getPreset()) {
-      case NO_LOGIC:
-        rules.add(new NpcSpawnerSwapRule()
-            .setInputTags(TagHelper.TYPHON_TAG)
-            .setOutputTags(TagHelper.TYPHON_TAG));
-        break;
-      case WITHIN_TYPE:
-        break;
-      case ALL_NIGHTMARES:
-        rules.add(new NpcSpawnerSwapRule()
-            .setInputTags(TagHelper.TYPHON_TAG)
-            .setOutputTags(TagHelper.NIGHTMARE_TAG));
-        break;
-      case ALL_MIMICS:
-        rules.add(new NpcSpawnerSwapRule()
-            .setInputTags(TagHelper.TYPHON_TAG)
-            .setOutputTags(TagHelper.BASE_MIMIC_TAG));
-        break;
-      default:
-        break;
+    for (CustomRuleHelper crh : s.getEnemySettings().getCustomRuleHelpers()) {
+      rules.add(new NpcSpawnerSwapRule(crh));
     }
   }
 

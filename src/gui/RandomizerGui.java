@@ -62,6 +62,17 @@ public class RandomizerGui {
   private ItemSpawnSettings.Preset itemSpawnPreset = ItemSpawnSettings.Preset.NONE;
   private EnemySettings.Preset enemySpawnPreset = EnemySettings.Preset.NONE;
 
+  private JButton uninstallButton;
+
+  private static final String[] ITEM_SPAWN_PRESET_NAMES = { "Do not randomize", "Randomize all", "Whiskey and cigars" };
+  private static final ItemSpawnSettings.Preset[] ITEM_SPAWN_PRESETS = { ItemSpawnSettings.Preset.NONE,
+      ItemSpawnSettings.Preset.NO_LOGIC, ItemSpawnSettings.Preset.WHISKEY_AND_CIGARS };
+
+  private static final String[] ENEMY_SPAWN_PRESET_NAMES = { "Do not randomize", "Randomize all typhon",
+      "All nightmares" };
+  private static final EnemySettings.Preset[] ENEMY_SPAWN_PRESETS = { EnemySettings.Preset.NONE,
+      EnemySettings.Preset.NO_LOGIC, EnemySettings.Preset.ALL_NIGHTMARES };
+
   public RandomizerGui() {
     setup();
   }
@@ -149,47 +160,34 @@ public class RandomizerGui {
 
     JLabel itemSpawnLabel = new JLabel("Item spawn presets");
     ActionListener itemSpawnActionListener = new OnItemSpawnRadioClick();
-    JRadioButton itemSpawnNoRandom = new JRadioButton("Do not randomize");
-    itemSpawnNoRandom.setActionCommand(ItemSpawnSettings.Preset.NONE.toString());
-    itemSpawnNoRandom.addActionListener(itemSpawnActionListener);
-    itemSpawnNoRandom.setSelected(true);
-    JRadioButton itemSpawnRandomizeAll = new JRadioButton("Randomize all");
-    itemSpawnRandomizeAll.setActionCommand(ItemSpawnSettings.Preset.NO_LOGIC.toString());
-    itemSpawnRandomizeAll.addActionListener(itemSpawnActionListener);
-    JRadioButton itemSpawnWhiskeyAndCigars = new JRadioButton("Whiskey and cigars");
-    itemSpawnWhiskeyAndCigars.setActionCommand(ItemSpawnSettings.Preset.WHISKEY_AND_CIGARS.toString());
-    itemSpawnWhiskeyAndCigars.addActionListener(itemSpawnActionListener);
     ButtonGroup itemSpawnGroup = new ButtonGroup();
-    itemSpawnGroup.add(itemSpawnNoRandom);
-    itemSpawnGroup.add(itemSpawnRandomizeAll);
-    itemSpawnGroup.add(itemSpawnWhiskeyAndCigars);
-
     itemSpawnPanel.add(itemSpawnLabel);
-    itemSpawnPanel.add(itemSpawnNoRandom);
-    itemSpawnPanel.add(itemSpawnRandomizeAll);
-    itemSpawnPanel.add(itemSpawnWhiskeyAndCigars);
+    for (int i = 0; i < ITEM_SPAWN_PRESET_NAMES.length; i++) {
+      JRadioButton itemSpawnOption = new JRadioButton(ITEM_SPAWN_PRESET_NAMES[i]);
+      itemSpawnOption.setActionCommand(ITEM_SPAWN_PRESETS[i].toString());
+      itemSpawnOption.addActionListener(itemSpawnActionListener);
+      itemSpawnGroup.add(itemSpawnOption);
+      itemSpawnPanel.add(itemSpawnOption);
+      if (i == 0) {
+        itemSpawnOption.setSelected(true);
+      }
+    }
 
     JLabel enemySpawnLabel = new JLabel("Enemy spawn presets");
     ActionListener enemySpawnActionListener = new OnEnemySpawnRadioClick();
-    JRadioButton enemySpawnNoRandom = new JRadioButton("Do not randomize");
-    enemySpawnNoRandom.setActionCommand(EnemySettings.Preset.NONE.toString());
-    enemySpawnNoRandom.addActionListener(enemySpawnActionListener);
-    enemySpawnNoRandom.setSelected(true);
-    JRadioButton enemySpawnRandomizeTyphon = new JRadioButton("Randomize all typhon");
-    enemySpawnRandomizeTyphon.setActionCommand(EnemySettings.Preset.NO_LOGIC.toString());
-    enemySpawnRandomizeTyphon.addActionListener(enemySpawnActionListener);
-    JRadioButton enemySpawnAllNightmare = new JRadioButton("All nightmares");
-    enemySpawnAllNightmare.setActionCommand(EnemySettings.Preset.ALL_NIGHTMARES.toString());
-    enemySpawnAllNightmare.addActionListener(enemySpawnActionListener);
     ButtonGroup enemySpawnGroup = new ButtonGroup();
-    enemySpawnGroup.add(enemySpawnNoRandom);
-    enemySpawnGroup.add(enemySpawnRandomizeTyphon);
-    enemySpawnGroup.add(enemySpawnAllNightmare);
 
     enemySpawnPanel.add(enemySpawnLabel);
-    enemySpawnPanel.add(enemySpawnNoRandom);
-    enemySpawnPanel.add(enemySpawnRandomizeTyphon);
-    enemySpawnPanel.add(enemySpawnAllNightmare);
+    for (int i = 0; i < ENEMY_SPAWN_PRESET_NAMES.length; i++) {
+      JRadioButton enemySpawnOption = new JRadioButton(ENEMY_SPAWN_PRESET_NAMES[i]);
+      enemySpawnOption.setActionCommand(ENEMY_SPAWN_PRESETS[i].toString());
+      enemySpawnOption.addActionListener(enemySpawnActionListener);
+      enemySpawnGroup.add(enemySpawnOption);
+      enemySpawnPanel.add(enemySpawnOption);
+      if (i == 0) {
+        enemySpawnOption.setSelected(true);
+      }
+    }
 
     gameplayPanel.setLayout(new GridLayout(1, 2));
     gameplayPanel.add(itemSpawnPanel);
@@ -203,7 +201,7 @@ public class RandomizerGui {
     JButton installButton = new JButton("Install");
     installButton.setActionCommand("install");
     installButton.addActionListener(new OnInstallClick());
-    JButton uninstallButton = new JButton("Uninstall");
+    uninstallButton = new JButton("Uninstall");
     uninstallButton.setActionCommand("uninstall");
     uninstallButton.addActionListener(new OnUninstallClick());
     JButton closeButton = new JButton("Close");
@@ -276,9 +274,17 @@ public class RandomizerGui {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
+      uninstallButton.setEnabled(false);
       statusLabel.setText("Installing...");
 
-      EnemySettings enemySettings = new EnemySettings.Builder().setRandomizeMode(enemySpawnPreset).build();
+      if (enemySpawnPreset == EnemySettings.Preset.NONE && itemSpawnPreset == ItemSpawnSettings.Preset.NONE
+          && !randomizeVoices && !randomizeBodies) {
+        statusLabel.setText("Nothing to install.");
+        uninstallButton.setEnabled(true);
+        return;
+      }
+
+      EnemySettings enemySettings = new EnemySettings.Builder().setPreset(enemySpawnPreset).build();
       ItemSpawnSettings itemSpawnSettings = new ItemSpawnSettings.Builder().setRandomizeMode(itemSpawnPreset).build();
 
       settings = new Settings.Builder().setInstallDir(Paths.get(installDir)).setItemSpawnSettings(itemSpawnSettings)
@@ -286,16 +292,35 @@ public class RandomizerGui {
 
       installer = new Installer(settings);
 
+      if (!installer.verifyExeDir()) {
+        statusLabel.setText("Could not find data/ folder in exe directory.");
+        uninstallButton.setEnabled(true);
+        return;
+      }
+      if (!installer.verifyInstallDir()) {
+        statusLabel.setText("Prey install directory not valid.");
+        uninstallButton.setEnabled(true);
+        return;
+      }
+
       if (randomizeVoices) {
+        statusLabel.setText("Randomizing voices...");
         new VoiceRandomizer(settings).randomize();
+        statusLabel.setText("Done randomizing voices.");
       }
       if (randomizeBodies) {
+        statusLabel.setText("Randomizing bodies...");
         new BodyRandomizer(settings).randomize();
+        statusLabel.setText("Done randomizing bodies.");
       }
-      LevelRandomizer lr = new LevelRandomizer(settings);
-      lr.addFilter(new ItemSpawnFilter(settings));
-      lr.addFilter(new EnemyFilter(settings));
-      lr.randomize();
+
+      if (enemySpawnPreset != EnemySettings.Preset.NONE || itemSpawnPreset != ItemSpawnSettings.Preset.NONE) {
+        statusLabel.setText("Randomizing levels...");
+        LevelRandomizer lr = new LevelRandomizer(settings).addFilter(new ItemSpawnFilter(settings))
+            .addFilter(new EnemyFilter(settings));
+        lr.randomize();
+        statusLabel.setText("Done randomizing levels.");
+      }
 
       try {
         installer.install();
@@ -303,6 +328,7 @@ public class RandomizerGui {
       } catch (IOException e) {
         statusLabel.setText("Error occurred during install.");
       }
+      uninstallButton.setEnabled(true);
     }
   }
 

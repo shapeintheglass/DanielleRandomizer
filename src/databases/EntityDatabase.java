@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import utils.FileConsts;
@@ -30,9 +31,9 @@ public class EntityDatabase extends Database {
   private static final int READ_AHEAD = 10000;
 
   // Creates or returns singleton instance.
-  public static EntityDatabase getInstance() {
+  public static EntityDatabase getInstance(Random r) {
     if (database == null) {
-      database = new EntityDatabase();
+      database = new EntityDatabase(r);
     }
     return database;
   }
@@ -43,8 +44,8 @@ public class EntityDatabase extends Database {
     super(tagToNameList, nameToXmlEntity);
   }
 
-  public EntityDatabase() {
-    super();
+  public EntityDatabase(Random r) {
+    super(r);
   }
 
   protected void populateDatabase() {

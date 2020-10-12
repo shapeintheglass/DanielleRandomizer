@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Enumeration;
 import java.util.Stack;
@@ -66,6 +67,15 @@ public class Installer {
     // Clean up temp dirs
     Utils.deleteDirectory(s.getTempPatchDir().toFile());
     Utils.deleteDirectory(s.getTempLevelDir().toFile());
+    s.getTempDir().resolve(PATCH_ZIP_NAME).toFile().deleteOnExit();
+  }
+  
+  public boolean verifyInstallDir() {
+    return s.getInstallDir().resolve(INSTALL_LOCATION).toFile().exists() && s.getInstallDir().resolve(LevelConsts.PREFIX).toFile().exists();
+  }
+  
+  public boolean verifyExeDir() {
+    return Paths.get("data").toFile().exists();
   }
 
   private void installPatchDir() throws IOException {
