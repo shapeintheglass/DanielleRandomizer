@@ -26,6 +26,7 @@ import javax.swing.JRadioButton;
 
 import filters.EnemyFilter;
 import filters.ItemSpawnFilter;
+import filters.MorgansApartmentFilter;
 import installers.Installer;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
@@ -317,7 +318,9 @@ public class RandomizerGui {
 
       if (enemySpawnPreset != EnemySettings.Preset.NONE || itemSpawnPreset != ItemSpawnSettings.Preset.NONE) {
         statusLabel.setText("Randomizing levels...");
-        LevelRandomizer lr = new LevelRandomizer(settings).addFilter(new ItemSpawnFilter(settings))
+        LevelRandomizer lr = new LevelRandomizer(settings)
+            .addFilter(new MorgansApartmentFilter(settings))
+            .addFilter(new ItemSpawnFilter(settings))
             .addFilter(new EnemyFilter(settings));
         lr.randomize();
         LootTableRandomizer ltr = new LootTableRandomizer(settings);

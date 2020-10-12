@@ -34,7 +34,6 @@ public class MorgansApartmentSettings {
    */
   
   public enum Options {
-    START_ON_2ND_DAY,
     PSYCHOSCOPE, // Replace champagne w/ psychoscope
     ARTAX, // Replace note w/ jetpack
     FAB_PLANS, // Place every fab plan in nightstand left
