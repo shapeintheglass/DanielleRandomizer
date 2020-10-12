@@ -39,6 +39,7 @@ public abstract class BaseFilter {
     for (Rule r : rules) {
       if (r.trigger(x)) {
         r.apply(x);
+        return;
       }
     }
   }

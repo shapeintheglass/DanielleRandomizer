@@ -30,6 +30,7 @@ import installers.Installer;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
+import randomizers.gameplay.LootTableRandomizer;
 import settings.EnemySettings;
 import settings.ItemSpawnSettings;
 import settings.Settings;
@@ -319,6 +320,8 @@ public class RandomizerGui {
         LevelRandomizer lr = new LevelRandomizer(settings).addFilter(new ItemSpawnFilter(settings))
             .addFilter(new EnemyFilter(settings));
         lr.randomize();
+        LootTableRandomizer ltr = new LootTableRandomizer(settings);
+        ltr.randomize();
         statusLabel.setText("Done randomizing levels.");
       }
 

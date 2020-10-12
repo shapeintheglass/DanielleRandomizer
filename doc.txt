@@ -6,10 +6,7 @@ v2 - Support station randomization, snark premade, bad translation premade
 
 
 Current known issues:
- - Item shuffler has some bugs- blacklist doesn't appear to ignore keycards
- - Item shuffler does not handle npc spawns
  - Allow item shuffler to distinguish between physics props and immovable objects
- - Need support to coordinate changes across multiple files
 
 Presets:
 	Recommended - Randomizes items, enemies, neuromod tree, operator dispensers
@@ -61,7 +58,10 @@ Basic:
 			Option- No O2 stations
 			Option- Shuffle operator dispensers
 			Option- No operator dispensers (but keep January's)
-
+		"Fair" spawn rates - set fairer spawn rates by map (ex. limit to 1 nightmare per map)
+		Randomize percentages (ex. damage resistance)
+		Randomize by shuffle, or pure random
+		Randomize gun ammo (ex. shotgun uses qbeam cells, shoots gloo) (change animations, effects?) (effectively turn it into a new weapon based on existing effects)
 	Other
 		Bad google translate - Puts all localized english text other than subtitles through a bad google translate filter
 		Snark - Makes text on all loading screens and research entries slightly snarkier
