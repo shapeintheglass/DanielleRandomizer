@@ -15,7 +15,7 @@ public class UnlockApartmentRule implements Rule {
   @Override
   public void apply(XmlEntity e) {
     XmlEntity properties = e.getSubEntityByTagName("Properties2");
-    properties.setValue("bLocked", "1");
+    properties.setValue("bLocked", "0");
   }
 
 }

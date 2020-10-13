@@ -1,5 +1,6 @@
 package rules;
 
+import utils.CustomRuleHelper;
 import utils.XmlEntity;
 
 /**
@@ -34,7 +35,7 @@ public class NpcSpawnerSwapRule implements Rule {
 
   @Override
   public void apply(XmlEntity e) {
-    String toSwapStr = crh.getEntityToSwap();
+    String toSwapStr = crh.getEntityToSwapStr();
     XmlEntity properties = e.getSubEntityByTagName("Properties");
     properties.setValue("sNpcArchetype", toSwapStr);
   }

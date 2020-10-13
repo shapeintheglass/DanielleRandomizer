@@ -69,16 +69,34 @@ public class Utils {
     }
     return arr[arr.length];
   }
-  
+
+  public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights, Random r) {
+    int sum = weights.stream().reduce(0, Integer::sum);
+    if (sum == 0) {
+      return null;
+    }
+
+    int index = r.nextInt(sum);
+
+    int prev = 0;
+    for (int i = 0; i < arr.size(); i++) {
+      if (index >= prev && index < prev + weights.get(i)) {
+        return arr.get(i);
+      }
+      prev += weights.get(i);
+    }
+    return arr.get(arr.size() - 1);
+  }
+
   public static String getCommonElement(Collection<String> s1, Collection<String> s2) {
-    for(String s : s1) {
+    for (String s : s1) {
       if (s2.contains(s)) {
         return s;
       }
     }
     return null;
   }
-  
+
   public static void deleteDirectory(File dir) {
     if (dir.isDirectory()) {
       for (File f : dir.listFiles()) {
@@ -87,7 +105,7 @@ public class Utils {
     }
     dir.delete();
   }
-  
+
   public static Set<String> getTags(XmlEntity e) {
     Set<String> tags = new HashSet<>();
     // Split name on dots
@@ -97,5 +115,14 @@ public class Utils {
     tags.add(e.getValue("Class"));
     tags.add(e.getValue("Library"));
     return tags;
+  }
+  
+  public static String getNameForEntity(XmlEntity e) {
+    return String.format("%s.%s", e.getValue("Library"), e.getValue("Name"));
+  }
+  
+  public static String stripPrefix(String s) {
+    int dotIndex = s.indexOf('.');
+    return s.substring(dotIndex + 1);
   }
 }

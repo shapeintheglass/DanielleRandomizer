@@ -1,8 +1,8 @@
 package filters;
 
-import rules.CustomRuleHelper;
 import rules.NpcSpawnerSwapRule;
 import settings.Settings;
+import utils.CustomRuleHelper;
 
 public class EnemyFilter extends BaseFilter {
 

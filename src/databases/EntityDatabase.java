@@ -94,13 +94,15 @@ public class EntityDatabase extends TaggedDatabase {
     List<String> validTags = new ArrayList<>();
     d.allTags.stream().forEach(s -> validTags.add(s));
     Collections.sort(validTags);
-    
-    
-    validTags.stream().forEach(s -> System.out.println(s));
+
+    validTags.stream().forEach(s -> {
+      List<String> entries = d.getAllForTag(s);
+      System.out.printf("%s\t%d\n",s, entries.size());
+    });
     System.out.println(validTags.size());
-    
+
     Scanner s = new Scanner(System.in);
-    while(s.hasNext()) {
+    while (s.hasNext()) {
       String line = s.nextLine();
       List<String> entries = d.getAllForTag(line);
       if (entries == null) {
@@ -109,7 +111,7 @@ public class EntityDatabase extends TaggedDatabase {
         Collections.sort(entries);
         System.out.println(entries);
       }
-      
+
     }
     s.close();
   }

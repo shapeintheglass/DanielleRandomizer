@@ -1,4 +1,4 @@
-package rules;
+package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import utils.FileConsts.Archetype;
-import utils.Utils;
-import utils.XmlEntity;
 import databases.EntityDatabase;
 
 /**
@@ -36,17 +33,18 @@ public class CustomRuleHelper {
   private List<String> inputTags;
   // Tags to pull randomly from
   private List<String> outputTags;
+  // Relative weights to assign to the spawn rates for these tags
+  private List<Integer> outputTagsWeights;
   // Tags not to filter on. Takes priority.
   private List<String> doNotTouchTags;
   // Tags not to output. Takes priority.
   private List<String> doNotOutputTags;
-  
+
   GiveUpBehaviour gub = GiveUpBehaviour.RETURN_BEST_MATCH;
-  
+
   // Defines what to do if we can't find a valid match
   public enum GiveUpBehaviour {
-    RETURN_BEST_MATCH,
-    RETURN_NULL
+    RETURN_BEST_MATCH, RETURN_NULL
   }
 
   public CustomRuleHelper(Random r) {
@@ -54,6 +52,7 @@ public class CustomRuleHelper {
     this.r = r;
     this.inputTags = new ArrayList<>();
     this.outputTags = new ArrayList<>();
+    this.outputTagsWeights = new ArrayList<>();
     this.doNotTouchTags = new ArrayList<>();
     this.doNotOutputTags = new ArrayList<>();
     Arrays.sort(PREFIXES);
@@ -68,26 +67,31 @@ public class CustomRuleHelper {
     return name;
   }
 
-  public CustomRuleHelper setInputTags(String... inputTags) {
+  public CustomRuleHelper addInputTags(String... inputTags) {
     this.inputTags.addAll(Arrays.asList(inputTags));
     return this;
   }
 
-  public CustomRuleHelper setOutputTags(String... outputTags) {
+  public CustomRuleHelper addOutputTags(String... outputTags) {
     this.outputTags.addAll(Arrays.asList(outputTags));
     return this;
   }
 
-  public CustomRuleHelper setDoNotTouchTags(String... doNotTouchTags) {
+  public CustomRuleHelper addOutputTagsWeights(Integer... outputTagsWeights) {
+    this.outputTagsWeights.addAll(Arrays.asList(outputTagsWeights));
+    return this;
+  }
+
+  public CustomRuleHelper addDoNotTouchTags(String... doNotTouchTags) {
     this.doNotTouchTags.addAll(Arrays.asList(doNotTouchTags));
     return this;
   }
 
-  public CustomRuleHelper setDoNotOutputTags(String... doNotOutputTags) {
+  public CustomRuleHelper addDoNotOutputTags(String... doNotOutputTags) {
     this.doNotOutputTags.addAll(Arrays.asList(doNotOutputTags));
     return this;
   }
-  
+
   public CustomRuleHelper setGiveUpBehaviour(GiveUpBehaviour gub) {
     this.gub = gub;
     return this;
@@ -102,7 +106,7 @@ public class CustomRuleHelper {
   public boolean trigger(String entityName) {
     // Remove prefix
     int dotIndex = entityName.indexOf('.');
-    entityName = entityName.substring(dotIndex + 1); 
+    entityName = entityName.substring(dotIndex + 1);
 
     List<String> tags = getTagsForEntity(entityName);
     if (tags == null) {
@@ -116,28 +120,34 @@ public class CustomRuleHelper {
    * 
    * @return
    */
-  public String getEntityToSwap() {
+  public String getEntityToSwapStr() {
+    return Utils.getNameForEntity(getEntityToSwap());
+  }
+
+  /**
+   * Retrieves a random entity name that matches the given conditions.
+   * 
+   * @return
+   */
+  public XmlEntity getEntityToSwap() {
     int numAttempts = 0;
     // Set a maximum on the number of attempts in case the tag block lists are
     // mutually exclusive
-    String toSwapStr = null;
+    XmlEntity toSwap = null;
     while (numAttempts < MAX_ATTEMPTS) {
-      int index = r.nextInt(outputTags.size());
-      XmlEntity toSwap = database.getRandomEntityByTag(outputTags.get(index));
-      Archetype a = toSwap.getArchetype();
+      toSwap = database.getRandomEntityByTag(outputTags, outputTagsWeights);
       Set<String> tags = Utils.getTags(toSwap);
 
       // Check that this doesn't match one of the "do not output" tags
       if (Utils.getCommonElement(tags, doNotOutputTags) == null) {
-        // Prepend with prefix
-        return String.format("%s.%s", toSwap.getValue("Library"), toSwap.getValue("Name"));
+        return toSwap;
       }
     }
 
-    switch(gub) {
+    switch (gub) {
       default:
       case RETURN_BEST_MATCH:
-        return toSwapStr;
+        return toSwap;
       case RETURN_NULL:
         return null;
     }
@@ -153,7 +163,7 @@ public class CustomRuleHelper {
     if (fullEntity == null) {
       return null;
     }
-    
+
     ArrayList<String> tags = new ArrayList<>();
     tags.addAll(Utils.getTags(fullEntity));
     return tags;

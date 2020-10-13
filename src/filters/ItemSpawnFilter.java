@@ -1,8 +1,8 @@
 package filters;
 
-import rules.CustomRuleHelper;
 import rules.ArchetypeSwapRule;
 import settings.Settings;
+import utils.CustomRuleHelper;
 
 public class ItemSpawnFilter extends BaseFilter {
   /**

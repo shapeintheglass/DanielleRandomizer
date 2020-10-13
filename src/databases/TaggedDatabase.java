@@ -1,5 +1,6 @@
 package databases;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -10,6 +11,7 @@ import utils.XmlEntity;
 
 /**
  * Interface for a basic database of xml entities.
+ * 
  * @author Kida
  *
  */
@@ -21,14 +23,14 @@ public abstract class TaggedDatabase {
   protected Set<String> allTags;
   public static final String GLOBAL_TAG = "GLOBAL";
   protected Random r;
-  
+
   public TaggedDatabase(Random r) {
     this.r = r;
     populateDatabase();
   }
-  
+
   protected abstract void populateDatabase();
-  
+
   public XmlEntity getEntityByName(String name) {
     return nameToXmlEntity.get(name);
   }
@@ -41,20 +43,26 @@ public abstract class TaggedDatabase {
   }
 
   /*
-   * Returns a random item with the given tag
+   * Returns a random item with the given tag.
    */
   public XmlEntity getRandomEntityByTag(String tag) {
+    XmlEntity e = getEntityByName(tag);
+    if (e != null) {
+      return e;
+    }
     return getRandomEntityFromList(tagToNameList.get(tag));
   }
 
   /*
    * Returns a random item within the given tags
    */
-  public XmlEntity getRandomEntityByTag(String... tags) {
+  public XmlEntity getRandomEntityByTag(List<String> tags, List<Integer> weights) {
     // Choose a random tag, weighted by the number of elements in that tag
-    int[] weights = new int[tags.length];
-    for (int i = 0; i < tags.length; i++) {
-      weights[i] = tagToNameList.get(tags[i]).size();
+    if (weights == null || weights.size() != tags.size()) {
+      weights = new ArrayList<>(tags.size());
+      for (int i = 0; i < tags.size(); i++) {
+        weights.add(1);
+      }
     }
     String tag = Utils.getRandomWeighted(tags, weights, r);
     return getRandomEntityByTag(tag);

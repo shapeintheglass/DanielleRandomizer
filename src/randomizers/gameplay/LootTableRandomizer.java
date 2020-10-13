@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import randomizers.BaseRandomizer;
-import rules.CustomRuleHelper;
 import settings.Settings;
+import utils.CustomRuleHelper;
 import utils.Utils;
 
 public class LootTableRandomizer extends BaseRandomizer {
@@ -23,6 +23,8 @@ public class LootTableRandomizer extends BaseRandomizer {
   public LootTableRandomizer(Settings s) {
     super("LootTableRandomizer", s);
   }
+  
+  
 
   @Override
   public void randomize() {
@@ -66,8 +68,10 @@ public class LootTableRandomizer extends BaseRandomizer {
     String oldArchetype = keys.get("Archetype");
     List<CustomRuleHelper> rules = settings.getItemSpawnSettings().getCustomRuleHelpers();
     for (CustomRuleHelper crh : rules) {
+      // Explicitly prevent physics props from appearing in loot tables
+      crh.addDoNotOutputTags("ArkPhysicsProps");
       if (crh.trigger(oldArchetype)) {
-        String newArchetype = crh.getEntityToSwap();
+        String newArchetype = crh.getEntityToSwapStr();
         return line.replace(oldArchetype, newArchetype);
       }
     }

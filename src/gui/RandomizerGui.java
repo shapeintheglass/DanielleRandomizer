@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import filters.EnemyFilter;
+import filters.FlowgraphFilter;
 import filters.ItemSpawnFilter;
 import filters.MorgansApartmentFilter;
 import installers.Installer;
@@ -278,6 +279,8 @@ public class RandomizerGui {
     public void actionPerformed(ActionEvent arg0) {
       uninstallButton.setEnabled(false);
       statusLabel.setText("Installing...");
+      
+      // TODO: Add check to assert that Prey is not currently running.
 
       if (enemySpawnPreset == EnemySettings.Preset.NONE && itemSpawnPreset == ItemSpawnSettings.Preset.NONE
           && !randomizeVoices && !randomizeBodies) {
@@ -318,10 +321,9 @@ public class RandomizerGui {
 
       if (enemySpawnPreset != EnemySettings.Preset.NONE || itemSpawnPreset != ItemSpawnSettings.Preset.NONE) {
         statusLabel.setText("Randomizing levels...");
-        LevelRandomizer lr = new LevelRandomizer(settings)
-            .addFilter(new MorgansApartmentFilter(settings))
-            .addFilter(new ItemSpawnFilter(settings))
-            .addFilter(new EnemyFilter(settings));
+        LevelRandomizer lr = new LevelRandomizer(settings).addFilter(new MorgansApartmentFilter(settings))
+            .addFilter(new ItemSpawnFilter(settings)).addFilter(new EnemyFilter(settings))
+            .addFilter(new FlowgraphFilter(settings));
         lr.randomize();
         LootTableRandomizer ltr = new LootTableRandomizer(settings);
         ltr.randomize();
@@ -333,6 +335,7 @@ public class RandomizerGui {
         statusLabel.setText("Done installing.");
       } catch (IOException e) {
         statusLabel.setText("Error occurred during install.");
+        e.printStackTrace();
       }
       uninstallButton.setEnabled(true);
     }

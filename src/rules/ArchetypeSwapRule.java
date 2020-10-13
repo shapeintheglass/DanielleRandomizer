@@ -1,5 +1,7 @@
 package rules;
 
+import utils.CustomRuleHelper;
+import utils.Utils;
 import utils.XmlEntity;
 
 /**
@@ -17,7 +19,7 @@ public class ArchetypeSwapRule implements Rule {
   @Override
   public boolean trigger(XmlEntity e) {
     // Check if input tag matches
-    if (e.hasKey("Archetype")) {
+    if (e.hasKey("Archetype") && e.hasKey("EntityClass")) {
       return crh.trigger(e.getValue("Archetype"));
     } else {
       return false;
@@ -26,6 +28,7 @@ public class ArchetypeSwapRule implements Rule {
 
   @Override
   public void apply(XmlEntity e) {
-    e.setValue("Archetype", crh.getEntityToSwap());
+    XmlEntity toSwap = crh.getEntityToSwap();
+    e.setValue("Archetype", Utils.getNameForEntity(toSwap));
   }
 }

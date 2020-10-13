@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import rules.CustomRuleHelper;
+import utils.CustomRuleHelper;
 
 /**
  * Describes how enemy spawns should be applied
@@ -24,6 +24,24 @@ public class EnemySettings {
 
   List<CustomRuleHelper> customRuleHelpers;
 
+  private static final String[] OUTPUT_FRIENDLY_NPCS = {
+      /* Easy */
+      "Mimic", "BasePhantom", "Cystoids", "ApexTentacle",
+      /* Medium */
+      "EliteMimic", "ArkPoltergeist", "Operators\\Generic\\Corrupted", "Phantoms", "Named Phantoms",
+      /* Hard */
+      "ArkNightmare", "Overseers" };
+  private static final Integer[] OUTPUT_WEIGHTS = {
+      /* Easy */
+      10, 10, 10, 10,
+      /* Medium */
+      5, 5, 5, 5, 5,
+      /* Hard */
+      1, 3 };
+
+  private static final String[] DO_NOT_OUTPUT = { "Tentacle_Large_Guard", "Tentacle_Medium_Guard",
+      "Tentacle_Small_Guard", "FakeTechnopath", "Cystoid_IgnorePlayer" };
+
   /**
    * Describes how enemy spawn rates should be applied
    */
@@ -31,30 +49,19 @@ public class EnemySettings {
     customRuleHelpers = new ArrayList<>();
 
     switch (p) {
-    case NO_LOGIC:
-      customRuleHelpers
-          .add(new CustomRuleHelper(r)
-              .setInputTags("ArkNpcs")
-              .setOutputTags("ApexTentacle", "ArkNightmare", "ArkPoltergeist",
-                  "Cystoids", "Mimics", "Overseers", "Phantoms",
-                  "Named Phantoms")
-              .setDoNotOutputTags("Tentacle_Large_Guard",
-                  "Tentacle_Medium_Guard", "Tentacle_Small_Guard",
-                  "FakeTechnopath", "Cystoid_IgnorePlayer"));
-      break;
-    case WITHIN_TYPE:
-      break;
-    case ALL_NIGHTMARES:
-      customRuleHelpers.add(new CustomRuleHelper(r).setInputTags("ArkNpcs")
-          .setOutputTags("ArkNightmare"));
-      break;
-    case ALL_MIMICS:
-      customRuleHelpers.add(new CustomRuleHelper(r).setInputTags("ArkNpcs")
-          .setOutputTags("Mimics"));
-      break;
-    default:
-    case NONE:
-      break;
+      case NO_LOGIC:
+        customRuleHelpers.add(new CustomRuleHelper(r).addInputTags("ArkNpcs").addOutputTags(OUTPUT_FRIENDLY_NPCS)
+            .addDoNotOutputTags(DO_NOT_OUTPUT).addOutputTagsWeights(OUTPUT_WEIGHTS));
+        break;
+      case ALL_NIGHTMARES:
+        customRuleHelpers.add(new CustomRuleHelper(r).addInputTags("ArkNpcs").addOutputTags("ArkNightmare"));
+        break;
+      case ALL_MIMICS:
+        customRuleHelpers.add(new CustomRuleHelper(r).addInputTags("ArkNpcs").addOutputTags("Mimics"));
+        break;
+      default:
+      case NONE:
+        break;
     }
   }
 
