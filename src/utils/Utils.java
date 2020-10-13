@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,5 +86,16 @@ public class Utils {
       }
     }
     dir.delete();
+  }
+  
+  public static Set<String> getTags(XmlEntity e) {
+    Set<String> tags = new HashSet<>();
+    // Split name on dots
+    String name = e.getValue("Name");
+    String[] nameTags = name.split("\\.");
+    Arrays.stream(nameTags).forEach(s -> tags.add(s));
+    tags.add(e.getValue("Class"));
+    tags.add(e.getValue("Library"));
+    return tags;
   }
 }

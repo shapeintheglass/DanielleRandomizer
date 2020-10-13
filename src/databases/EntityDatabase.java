@@ -3,14 +3,17 @@ package databases;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 import utils.FileConsts;
 import utils.FileConsts.Archetype;
+import utils.Utils;
 import utils.XmlEntity;
 
 /**
@@ -23,7 +26,7 @@ import utils.XmlEntity;
  * only contain nightmares.
  *
  */
-public class EntityDatabase extends Database {
+public class EntityDatabase extends TaggedDatabase {
 
   // Singleton
   private static EntityDatabase database;
@@ -38,25 +41,15 @@ public class EntityDatabase extends Database {
     return database;
   }
 
-  // Initializes with a specific entity database.
-  // Visible for testing.
-  public EntityDatabase(Map<String, List<String>> tagToNameList, Map<String, XmlEntity> nameToXmlEntity) {
-    super(tagToNameList, nameToXmlEntity);
-  }
-
-  public EntityDatabase(Random r) {
+  private EntityDatabase(Random r) {
     super(r);
   }
 
   protected void populateDatabase() {
     tagToNameList = new HashMap<>();
     nameToXmlEntity = new HashMap<>();
-    // Pre-populate valid tags
-    for (String[] tagList : TagHelper.TAG_LIST_LIST) {
-      for (String tag : tagList) {
-        tagToNameList.put(tag, new ArrayList<String>());
-      }
-    }
+    allTags = new HashSet<>();
+
     for (Archetype a : Archetype.values()) {
       getEntitiesFromFile(a);
     }
@@ -72,13 +65,14 @@ public class EntityDatabase extends Database {
           br.reset();
 
           XmlEntity x = new XmlEntity(br).setArchetype(a);
+          Set<String> tags = Utils.getTags(x);
+          tags.add(GLOBAL_TAG);
           String name = x.getValue("Name");
-          Set<String> tags = TagHelper.getTags(name, a);
           for (String tag : tags) {
-            if (!tagToNameList.containsKey(tag)) {
-              throw new IllegalAccessError("Unknown tag: " + tag);
+            if (!allTags.contains(tag)) {
+              allTags.add(tag);
+              tagToNameList.put(tag, new ArrayList<String>());
             }
-
             tagToNameList.get(tag).add(name);
           }
           if (nameToXmlEntity.containsKey(name)) {
@@ -94,4 +88,29 @@ public class EntityDatabase extends Database {
     }
   }
 
+  public static void main(String[] args) {
+    Random r = new Random();
+    EntityDatabase d = getInstance(r);
+    List<String> validTags = new ArrayList<>();
+    d.allTags.stream().forEach(s -> validTags.add(s));
+    Collections.sort(validTags);
+    
+    
+    validTags.stream().forEach(s -> System.out.println(s));
+    System.out.println(validTags.size());
+    
+    Scanner s = new Scanner(System.in);
+    while(s.hasNext()) {
+      String line = s.nextLine();
+      List<String> entries = d.getAllForTag(line);
+      if (entries == null) {
+        System.out.println("invalid tag");
+      } else {
+        Collections.sort(entries);
+        System.out.println(entries);
+      }
+      
+    }
+    s.close();
+  }
 }

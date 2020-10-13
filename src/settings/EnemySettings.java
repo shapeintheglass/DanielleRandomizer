@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import databases.TagHelper;
 import rules.CustomRuleHelper;
 
 /**
@@ -32,23 +31,30 @@ public class EnemySettings {
     customRuleHelpers = new ArrayList<>();
 
     switch (p) {
-      case NO_LOGIC:
-        customRuleHelpers
-            .add(new CustomRuleHelper(r).setInputTags(TagHelper.TYPHON_TAG).setOutputTags(TagHelper.TYPHON_TAG));
-        break;
-      case WITHIN_TYPE:
-        break;
-      case ALL_NIGHTMARES:
-        customRuleHelpers
-            .add(new CustomRuleHelper(r).setInputTags(TagHelper.TYPHON_TAG).setOutputTags(TagHelper.NIGHTMARE_TAG));
-        break;
-      case ALL_MIMICS:
-        customRuleHelpers
-            .add(new CustomRuleHelper(r).setInputTags(TagHelper.TYPHON_TAG).setOutputTags(TagHelper.BASE_MIMIC_TAG));
-        break;
-      default:
-      case NONE:
-        break;
+    case NO_LOGIC:
+      customRuleHelpers
+          .add(new CustomRuleHelper(r)
+              .setInputTags("ArkNpcs")
+              .setOutputTags("ApexTentacle", "ArkNightmare", "ArkPoltergeist",
+                  "Cystoids", "Mimics", "Overseers", "Phantoms",
+                  "Named Phantoms")
+              .setDoNotOutputTags("Tentacle_Large_Guard",
+                  "Tentacle_Medium_Guard", "Tentacle_Small_Guard",
+                  "FakeTechnopath", "Cystoid_IgnorePlayer"));
+      break;
+    case WITHIN_TYPE:
+      break;
+    case ALL_NIGHTMARES:
+      customRuleHelpers.add(new CustomRuleHelper(r).setInputTags("ArkNpcs")
+          .setOutputTags("ArkNightmare"));
+      break;
+    case ALL_MIMICS:
+      customRuleHelpers.add(new CustomRuleHelper(r).setInputTags("ArkNpcs")
+          .setOutputTags("Mimics"));
+      break;
+    default:
+    case NONE:
+      break;
     }
   }
 

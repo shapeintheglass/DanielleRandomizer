@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import databases.EntityDatabase;
-import databases.TagHelper;
 import utils.FileConsts.Archetype;
 import utils.Utils;
 import utils.XmlEntity;
+import databases.EntityDatabase;
 
 /**
  * Low-level rule that allows getting a random entity given a series of
@@ -126,7 +125,7 @@ public class CustomRuleHelper {
       int index = r.nextInt(outputTags.size());
       XmlEntity toSwap = database.getRandomEntityByTag(outputTags.get(index));
       Archetype a = toSwap.getArchetype();
-      Set<String> tags = TagHelper.getTags(toSwap.getValue("Name"), a);
+      Set<String> tags = Utils.getTags(toSwap);
 
       // Check that this doesn't match one of the "do not output" tags
       if (Utils.getCommonElement(tags, doNotOutputTags) == null) {
@@ -154,10 +153,9 @@ public class CustomRuleHelper {
     if (fullEntity == null) {
       return null;
     }
-    Archetype a = fullEntity.getArchetype();
     
     ArrayList<String> tags = new ArrayList<>();
-    tags.addAll(TagHelper.getTags(entityName, a));
+    tags.addAll(Utils.getTags(fullEntity));
     return tags;
   }
 }
