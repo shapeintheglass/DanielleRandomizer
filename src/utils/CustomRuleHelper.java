@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Set;
 
 import databases.EntityDatabase;
+import databases.TaggedDatabase;
 
 /**
  * Low-level rule that allows getting a random entity given a series of
@@ -68,26 +69,49 @@ public class CustomRuleHelper {
   }
 
   public CustomRuleHelper addInputTags(String... inputTags) {
+    if (inputTags == null) {
+      return this;
+    }
     this.inputTags.addAll(Arrays.asList(inputTags));
     return this;
   }
 
   public CustomRuleHelper addOutputTags(String... outputTags) {
+    if (outputTags == null) {
+      return this;
+    }
     this.outputTags.addAll(Arrays.asList(outputTags));
     return this;
   }
 
   public CustomRuleHelper addOutputTagsWeights(Integer... outputTagsWeights) {
+    if (outputTagsWeights == null) {
+      return this;
+    }
     this.outputTagsWeights.addAll(Arrays.asList(outputTagsWeights));
     return this;
   }
 
+  public CustomRuleHelper addOutputTagsWeights(String... outputTagsWeights) {
+    if (outputTagsWeights == null) {
+      return this;
+    }
+    Arrays.stream(outputTagsWeights).forEach(s -> this.outputTagsWeights.add(Integer.parseInt(s)));
+    return this;
+  }
+
   public CustomRuleHelper addDoNotTouchTags(String... doNotTouchTags) {
+    if (doNotTouchTags == null) {
+      return this;
+    }
     this.doNotTouchTags.addAll(Arrays.asList(doNotTouchTags));
     return this;
   }
 
   public CustomRuleHelper addDoNotOutputTags(String... doNotOutputTags) {
+    if (doNotOutputTags == null) {
+      return this;
+    }
     this.doNotOutputTags.addAll(Arrays.asList(doNotOutputTags));
     return this;
   }
@@ -103,12 +127,12 @@ public class CustomRuleHelper {
    * @param entityName
    * @return
    */
-  public boolean trigger(String entityName) {
+  public boolean trigger(TaggedDatabase database, String entityName) {
     // Remove prefix
     int dotIndex = entityName.indexOf('.');
     entityName = entityName.substring(dotIndex + 1);
 
-    List<String> tags = getTagsForEntity(entityName);
+    List<String> tags = getTagsForEntity(database, entityName);
     if (tags == null) {
       return false;
     }
@@ -120,8 +144,8 @@ public class CustomRuleHelper {
    * 
    * @return
    */
-  public String getEntityToSwapStr() {
-    return Utils.getNameForEntity(getEntityToSwap());
+  public String getEntityToSwapStr(TaggedDatabase database) {
+    return Utils.getNameForEntity(getEntityToSwap(database));
   }
 
   /**
@@ -129,7 +153,7 @@ public class CustomRuleHelper {
    * 
    * @return
    */
-  public XmlEntity getEntityToSwap() {
+  public XmlEntity getEntityToSwap(TaggedDatabase database) {
     int numAttempts = 0;
     // Set a maximum on the number of attempts in case the tag block lists are
     // mutually exclusive
@@ -158,7 +182,7 @@ public class CustomRuleHelper {
     return name;
   }
 
-  private ArrayList<String> getTagsForEntity(String entityName) {
+  private ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
     XmlEntity fullEntity = database.getEntityByName(entityName);
     if (fullEntity == null) {
       return null;

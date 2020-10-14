@@ -1,5 +1,6 @@
 package rules;
 
+import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
 import utils.XmlEntity;
 
@@ -11,9 +12,11 @@ import utils.XmlEntity;
  */
 public class NpcSpawnerSwapRule implements Rule {
 
+  TaggedDatabase database;
   private CustomRuleHelper crh;
 
-  public NpcSpawnerSwapRule(CustomRuleHelper crh) {
+  public NpcSpawnerSwapRule(TaggedDatabase database, CustomRuleHelper crh) {
+    this.database = database;
     this.crh = crh;
   }
 
@@ -27,7 +30,7 @@ public class NpcSpawnerSwapRule implements Rule {
         return false;
       }
       String spawnedEntityName = properties.getValue("sNpcArchetype");
-      return crh.trigger(spawnedEntityName);
+      return crh.trigger(database, spawnedEntityName);
     } else {
       return false;
     }
@@ -35,7 +38,7 @@ public class NpcSpawnerSwapRule implements Rule {
 
   @Override
   public void apply(XmlEntity e) {
-    String toSwapStr = crh.getEntityToSwapStr();
+    String toSwapStr = crh.getEntityToSwapStr(database);
     XmlEntity properties = e.getSubEntityByTagName("Properties");
     properties.setValue("sNpcArchetype", toSwapStr);
   }

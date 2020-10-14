@@ -1,5 +1,6 @@
 package rules;
 
+import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
 import utils.Utils;
 import utils.XmlEntity;
@@ -11,8 +12,11 @@ import utils.XmlEntity;
  */
 public class ArchetypeSwapRule implements Rule {
   private CustomRuleHelper crh;
-
-  public ArchetypeSwapRule(CustomRuleHelper crh) {
+  
+  TaggedDatabase database;
+  
+  public ArchetypeSwapRule(TaggedDatabase database, CustomRuleHelper crh) {
+    this.database = database;
     this.crh = crh;
   }
 
@@ -20,7 +24,7 @@ public class ArchetypeSwapRule implements Rule {
   public boolean trigger(XmlEntity e) {
     // Check if input tag matches
     if (e.hasKey("Archetype") && e.hasKey("EntityClass")) {
-      return crh.trigger(e.getValue("Archetype"));
+      return crh.trigger(database, e.getValue("Archetype"));
     } else {
       return false;
     }
@@ -28,7 +32,7 @@ public class ArchetypeSwapRule implements Rule {
 
   @Override
   public void apply(XmlEntity e) {
-    XmlEntity toSwap = crh.getEntityToSwap();
+    XmlEntity toSwap = crh.getEntityToSwap(database);
     e.setValue("Archetype", Utils.getNameForEntity(toSwap));
   }
 }

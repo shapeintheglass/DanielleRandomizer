@@ -1,0 +1,102 @@
+{
+  "item_spawn_settings": [
+    {
+      "name": "No randomization",
+      "desc": "Do not randomize items"
+    },
+    {
+      "name": "Randomize all",
+      "desc": "Randomize all items",
+      "filters": [
+        {
+          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
+      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic"],
+          "output_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
+      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "output_weights": [ 1, 1, 1, 1, 1, 1, 1, 2, 8, 10, 5, 30, 2, 2, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 1, 1, 1 ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
+      "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures",
+      "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+        }
+      ]
+    },
+    {
+      "name": "Whiskey and cigars",
+      "desc": "For nightly gatherings",
+      "filters": [
+        {
+          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
+      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "output_tags": [ "Bourbon", "UsedCigar" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
+      "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures",
+      "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+        }
+      ]
+    },
+    {
+      "name": "More mimics",
+      "desc": "Changes physics props to mimics, randomizes pickups",
+      "filters": [
+        {
+          "input_tags": [ "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office",
+      "Kitchen", "Chairs", "Bathroom", "Garden", "Gym" ],
+          "output_tags": [ "Mimics" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
+      "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ]
+        },
+        {
+          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
+      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "output_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
+      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "output_weights": [ 1, 1, 1, 1, 1, 1, 1, 2, 8, 10, 5, 30, 2, 2, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 1, 1, 1 ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
+      "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures",
+      "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+        }
+      ]
+    }
+  ],
+  "enemy_spawn_settings": [
+    {
+      "name": "No randomization",
+      "desc": "Do not randomize enemies"
+    },
+    {
+      "name": "Randomize all",
+      "desc": "Randomize all enemies",
+      "filters": [
+        {
+          "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
+          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "ApexTentacle", "EliteMimic", "ArkPoltergeist", "Operators\\Generic\\Corrupted", "Phantoms", "Named Phantoms", "ArkNightmare", "Overseers" ],
+          "output_weights": [ 10, 10, 10, 10, 5, 5, 5, 5, 5, 1, 3 ],
+          "do_not_output_tags": [ "Tentacle_Large_Guard", "Tentacle_Medium_Guard", "Tentacle_Small_Guard", "FakeTechnopath", "Cystoid_IgnorePlayer" ]
+        }
+      ]
+    },
+    {
+      "name": "All nightmares",
+      "desc": "Everything is nightmares",
+      "filters": [
+        {
+          "input_tags": [ "ArkNpcs" ],
+          "output_tags": [ "ArkNightmare" ]
+        }
+      ]
+    },
+    {
+      "name": "All mimics",
+      "desc": "Everything is mimics",
+      "filters": [
+        {
+          "input_tags": [ "ArkNpcs" ],
+          "output_tags": [ "Mimics" ]
+        }
+      ]
+    }
+  ]
+}

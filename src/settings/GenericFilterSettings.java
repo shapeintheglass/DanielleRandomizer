@@ -9,16 +9,16 @@ import json.GenericSpawnSettingsJson;
 import utils.CustomRuleHelper;
 
 /**
- * Describes how enemy spawns should be applied
+ * Describes how randomized spawns should be applied
  * 
  * @author Kida
  *
  */
-public class EnemySettings {
+public class GenericFilterSettings {
 
   List<CustomRuleHelper> customRuleHelpers;
 
-  public EnemySettings(Random r, GenericSpawnSettingsJson jsonSettings) {
+  public GenericFilterSettings(Random r, GenericSpawnSettingsJson jsonSettings) {
     customRuleHelpers = new ArrayList<>();
     if (jsonSettings == null || jsonSettings.getFilters() == null) {
       return;

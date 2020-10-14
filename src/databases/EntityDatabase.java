@@ -1,7 +1,11 @@
 package databases;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -93,14 +97,35 @@ public class EntityDatabase extends TaggedDatabase {
     EntityDatabase d = getInstance(r);
     List<String> validTags = new ArrayList<>();
     d.allTags.stream().forEach(s -> validTags.add(s));
+    List<String> validEntities = d.getAllForTag(GLOBAL_TAG);
     Collections.sort(validTags);
+    Collections.sort(validEntities);
+    
+    File tagsFileCsv = new File("tagstoentities.csv");
+    File entitiesFileCsv = new File("entitiestotags.csv");
 
-    validTags.stream().forEach(s -> {
-      List<String> entries = d.getAllForTag(s);
-      System.out.printf("%s\t%d\n",s, entries.size());
-    });
-    System.out.println(validTags.size());
-
+    try (BufferedWriter tagsWriter = new BufferedWriter(new FileWriter(tagsFileCsv));
+        BufferedWriter entitiesWriter = new BufferedWriter(new FileWriter(entitiesFileCsv))) {
+      tagsWriter.write("tag,entries\n");
+      entitiesWriter.write("entity,tags\n");
+      
+      for (String s : validTags) {
+        List<String> entries = d.getAllForTag(s);
+        Collections.sort(entries);
+        tagsWriter.write(String.format("%s,\"%s\"\n", s, entries));
+      };
+      
+      for (String s : validEntities) {
+        XmlEntity entity = d.getEntityByName(s);
+        List<String> tags = new ArrayList<>();
+        tags.addAll(Utils.getTags(entity));
+        Collections.sort(tags);
+        entitiesWriter.write(String.format("%s,\"%s\"\n", s, tags));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
     Scanner s = new Scanner(System.in);
     while (s.hasNext()) {
       String line = s.nextLine();

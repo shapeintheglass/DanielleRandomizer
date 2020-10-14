@@ -1,5 +1,7 @@
 package filters;
 
+import databases.EntityDatabase;
+import databases.TaggedDatabase;
 import rules.ArchetypeSwapRule;
 import settings.Settings;
 import utils.CustomRuleHelper;
@@ -11,9 +13,11 @@ public class ItemSpawnFilter extends BaseFilter {
    */
   public ItemSpawnFilter(Settings s) {
     super("ItemSpawnFilter", s);
+    
+    TaggedDatabase database = EntityDatabase.getInstance(s.getRandom());
 
     for (CustomRuleHelper crh : s.getItemSpawnSettings().getCustomRuleHelpers()) {
-      rules.add(new ArchetypeSwapRule(crh));
+      rules.add(new ArchetypeSwapRule(database, crh));
     }
   }
 }
