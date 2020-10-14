@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -38,15 +37,11 @@ public class EntityDatabase extends TaggedDatabase {
   private static final int READ_AHEAD = 10000;
 
   // Creates or returns singleton instance.
-  public static EntityDatabase getInstance(Random r) {
+  public static EntityDatabase getInstance() {
     if (database == null) {
-      database = new EntityDatabase(r);
+      database = new EntityDatabase();
     }
     return database;
-  }
-
-  private EntityDatabase(Random r) {
-    super(r);
   }
 
   protected void populateDatabase() {
@@ -68,21 +63,10 @@ public class EntityDatabase extends TaggedDatabase {
         if (line.contains("<EntityPrototype ")) {
           br.reset();
 
-          XmlEntity x = new XmlEntity(br).setArchetype(a);
+          XmlEntity x = new XmlEntity(br);
           Set<String> tags = Utils.getTags(x);
-          tags.add(GLOBAL_TAG);
-          String name = x.getValue("Name");
-          for (String tag : tags) {
-            if (!allTags.contains(tag)) {
-              allTags.add(tag);
-              tagToNameList.put(tag, new ArrayList<String>());
-            }
-            tagToNameList.get(tag).add(name);
-          }
-          if (nameToXmlEntity.containsKey(name)) {
-            throw new IllegalAccessError("Duplicate name: " + name);
-          }
-          nameToXmlEntity.put(name, x);
+
+          addToDatabase(x, tags);
         }
 
         br.mark(READ_AHEAD);
@@ -93,14 +77,13 @@ public class EntityDatabase extends TaggedDatabase {
   }
 
   public static void main(String[] args) {
-    Random r = new Random();
-    EntityDatabase d = getInstance(r);
+    EntityDatabase d = getInstance();
     List<String> validTags = new ArrayList<>();
     d.allTags.stream().forEach(s -> validTags.add(s));
     List<String> validEntities = d.getAllForTag(GLOBAL_TAG);
     Collections.sort(validTags);
     Collections.sort(validEntities);
-    
+
     File tagsFileCsv = new File("tagstoentities.csv");
     File entitiesFileCsv = new File("entitiestotags.csv");
 
@@ -108,13 +91,14 @@ public class EntityDatabase extends TaggedDatabase {
         BufferedWriter entitiesWriter = new BufferedWriter(new FileWriter(entitiesFileCsv))) {
       tagsWriter.write("tag,entries\n");
       entitiesWriter.write("entity,tags\n");
-      
+
       for (String s : validTags) {
         List<String> entries = d.getAllForTag(s);
         Collections.sort(entries);
         tagsWriter.write(String.format("%s,\"%s\"\n", s, entries));
-      };
-      
+      }
+      ;
+
       for (String s : validEntities) {
         XmlEntity entity = d.getEntityByName(s);
         List<String> tags = new ArrayList<>();
@@ -125,7 +109,7 @@ public class EntityDatabase extends TaggedDatabase {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
     Scanner s = new Scanner(System.in);
     while (s.hasNext()) {
       String line = s.nextLine();

@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import filters.BaseFilter;
 import randomizers.BaseRandomizer;
+import randomizers.gameplay.level.filters.BaseFilter;
 import settings.Settings;
 import utils.FileConsts;
 import utils.LevelConsts;

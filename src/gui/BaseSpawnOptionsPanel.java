@@ -38,6 +38,7 @@ public class BaseSpawnOptionsPanel extends JPanel {
     this.header = header;
     this.prefix = prefix;
     this.listener = listener;
+    this.add(headerLabel);
   }
 
   public void setHeaderLabel(String header) {

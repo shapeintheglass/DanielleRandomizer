@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import randomizers.BaseRandomizer;
 import settings.Settings;
@@ -21,14 +20,14 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   private static final String SOURCE = "data/ark/loottables.xml";
   private static final String OUTPUT = "ark/items/loottables.xml";
-  
+
   TaggedDatabase database;
 
-  public LootTableRandomizer(Settings s) {
+  public LootTableRandomizer(TaggedDatabase database, Settings s) {
     super("LootTableRandomizer", s);
-    this.database = EntityDatabase.getInstance(s.getRandom());
+    this.database = database;
   }
-  
+
   @Override
   public void randomize() {
     File in = new File(SOURCE);
@@ -40,10 +39,10 @@ public class LootTableRandomizer extends BaseRandomizer {
       // TODO Auto-generated catch block
       e1.printStackTrace();
     }
-    
+
     try (BufferedReader br = new BufferedReader(new FileReader(in));
         BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
-      
+
       String line = br.readLine();
 
       while (line != null) {
@@ -74,7 +73,7 @@ public class LootTableRandomizer extends BaseRandomizer {
       // Explicitly prevent physics props from appearing in loot tables
       crh.addDoNotOutputTags("ArkPhysicsProps");
       if (crh.trigger(database, oldArchetype)) {
-        String newArchetype = crh.getEntityToSwapStr(database);
+        String newArchetype = crh.getEntityToSwapStr(database, settings.getRandom());
         return line.replace(oldArchetype, newArchetype);
       }
     }

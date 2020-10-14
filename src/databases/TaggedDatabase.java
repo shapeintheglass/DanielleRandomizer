@@ -3,10 +3,8 @@ package databases;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
-import utils.Utils;
 import utils.XmlEntity;
 
 /**
@@ -22,63 +20,34 @@ public abstract class TaggedDatabase {
   protected Map<String, XmlEntity> nameToXmlEntity;
   protected Set<String> allTags;
   public static final String GLOBAL_TAG = "GLOBAL";
-  protected Random r;
 
-  public TaggedDatabase(Random r) {
-    this.r = r;
+  public TaggedDatabase() {
     populateDatabase();
   }
 
   protected abstract void populateDatabase();
+  
+  protected void addToDatabase(XmlEntity x, Set<String> tags) {
+    tags.add(GLOBAL_TAG);
+    String name = x.getValue("Name");
+    for (String tag : tags) {
+      if (!allTags.contains(tag)) {
+        allTags.add(tag);
+        tagToNameList.put(tag, new ArrayList<String>());
+      }
+      tagToNameList.get(tag).add(name);
+    }
+    if (nameToXmlEntity.containsKey(name)) {
+      throw new IllegalAccessError("Duplicate name: " + name);
+    }
+    nameToXmlEntity.put(name, x);
+  }
 
   public XmlEntity getEntityByName(String name) {
     return nameToXmlEntity.get(name);
   }
-
-  /*
-   * Returns a random item from the entire database
-   */
-  public XmlEntity getRandomEntity() {
-    return getRandomEntityFromList(tagToNameList.get(GLOBAL_TAG));
-  }
-
-  /*
-   * Returns a random item with the given tag.
-   */
-  public XmlEntity getRandomEntityByTag(String tag) {
-    XmlEntity e = getEntityByName(tag);
-    if (e != null) {
-      return e;
-    }
-    return getRandomEntityFromList(tagToNameList.get(tag));
-  }
-
-  /*
-   * Returns a random item within the given tags
-   */
-  public XmlEntity getRandomEntityByTag(List<String> tags, List<Integer> weights) {
-    // Choose a random tag, weighted by the number of elements in that tag
-    if (weights == null || weights.size() != tags.size()) {
-      weights = new ArrayList<>(tags.size());
-      for (int i = 0; i < tags.size(); i++) {
-        weights.add(1);
-      }
-    }
-    String tag = Utils.getRandomWeighted(tags, weights, r);
-    return getRandomEntityByTag(tag);
-  }
-
-  private XmlEntity getRandomEntityFromList(List<String> list) {
-    if (list == null || list.isEmpty()) {
-      return null;
-    }
-    int index = r.nextInt(list.size());
-    String name = list.get(index);
-    return nameToXmlEntity.get(name);
-  }
-
+  
   public List<String> getAllForTag(String tag) {
     return tagToNameList.get(tag);
   }
-
 }

@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import utils.FileConsts.Archetype;
-
 public class XmlEntity {
   // Name of the tag defining this xml entity
   private String tagName = "";
@@ -21,7 +19,6 @@ public class XmlEntity {
   // Sub entities, in order
   private List<XmlEntity> subEntityOrder = new ArrayList<>();
   private int indentation = 0;
-  private Archetype archetype;
 
   private static final String END_TAG_PATTERN = "</%s>";
 
@@ -58,16 +55,6 @@ public class XmlEntity {
     this.keys = keys;
     this.indentation = indentation;
     this.keyOrder = keyOrder;
-  }
-
-  // Used to remember file archetype, if applicable
-  public XmlEntity setArchetype(Archetype a) {
-    this.archetype = a;
-    return this;
-  }
-
-  public Archetype getArchetype() {
-    return archetype;
   }
 
   public XmlEntity addSubEntity(XmlEntity subEntity) {

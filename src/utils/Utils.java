@@ -52,6 +52,11 @@ public class Utils {
     return keyOrder;
   }
 
+  public static <T> T getRandom(List<T> arr, Random r) {
+    int index = r.nextInt(arr.size());
+    return arr.get(index);
+  }
+
   public static <T> T getRandomWeighted(T[] arr, int[] weights, Random r) {
     int sum = Arrays.stream(weights).reduce(0, Integer::sum);
     if (sum == 0) {
@@ -116,11 +121,11 @@ public class Utils {
     tags.add(e.getValue("Library"));
     return tags;
   }
-  
+
   public static String getNameForEntity(XmlEntity e) {
     return String.format("%s.%s", e.getValue("Library"), e.getValue("Name"));
   }
-  
+
   public static String stripPrefix(String s) {
     int dotIndex = s.indexOf('.');
     return s.substring(dotIndex + 1);

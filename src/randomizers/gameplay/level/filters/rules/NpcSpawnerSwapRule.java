@@ -1,4 +1,6 @@
-package rules;
+package randomizers.gameplay.level.filters.rules;
+
+import java.util.Random;
 
 import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
@@ -12,11 +14,13 @@ import utils.XmlEntity;
  */
 public class NpcSpawnerSwapRule implements Rule {
 
-  TaggedDatabase database;
+  private TaggedDatabase database;
+  private Random r;
   private CustomRuleHelper crh;
 
-  public NpcSpawnerSwapRule(TaggedDatabase database, CustomRuleHelper crh) {
+  public NpcSpawnerSwapRule(TaggedDatabase database, Random r, CustomRuleHelper crh) {
     this.database = database;
+    this.r = r;
     this.crh = crh;
   }
 
@@ -38,7 +42,7 @@ public class NpcSpawnerSwapRule implements Rule {
 
   @Override
   public void apply(XmlEntity e) {
-    String toSwapStr = crh.getEntityToSwapStr(database);
+    String toSwapStr = crh.getEntityToSwapStr(database, r);
     XmlEntity properties = e.getSubEntityByTagName("Properties");
     properties.setValue("sNpcArchetype", toSwapStr);
   }

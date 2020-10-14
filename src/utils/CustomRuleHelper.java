@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import databases.EntityDatabase;
 import databases.TaggedDatabase;
 
 /**
@@ -17,9 +16,6 @@ import databases.TaggedDatabase;
  *
  */
 public class CustomRuleHelper {
-
-  EntityDatabase database;
-  Random r;
 
   // Number of attempts to make at getting a valid tag before giving up.
   private static final int MAX_ATTEMPTS = 10;
@@ -48,9 +44,7 @@ public class CustomRuleHelper {
     RETURN_BEST_MATCH, RETURN_NULL
   }
 
-  public CustomRuleHelper(Random r) {
-    this.database = EntityDatabase.getInstance(r);
-    this.r = r;
+  public CustomRuleHelper() {
     this.inputTags = new ArrayList<>();
     this.outputTags = new ArrayList<>();
     this.outputTagsWeights = new ArrayList<>();
@@ -144,8 +138,8 @@ public class CustomRuleHelper {
    * 
    * @return
    */
-  public String getEntityToSwapStr(TaggedDatabase database) {
-    return Utils.getNameForEntity(getEntityToSwap(database));
+  public String getEntityToSwapStr(TaggedDatabase database, Random r) {
+    return Utils.getNameForEntity(getEntityToSwap(database, r));
   }
 
   /**
@@ -153,13 +147,13 @@ public class CustomRuleHelper {
    * 
    * @return
    */
-  public XmlEntity getEntityToSwap(TaggedDatabase database) {
+  public XmlEntity getEntityToSwap(TaggedDatabase database, Random r) {
     int numAttempts = 0;
     // Set a maximum on the number of attempts in case the tag block lists are
     // mutually exclusive
     XmlEntity toSwap = null;
     while (numAttempts < MAX_ATTEMPTS) {
-      toSwap = database.getRandomEntityByTag(outputTags, outputTagsWeights);
+      toSwap = DatabaseUtils.getRandomEntityByTags(database, r, outputTags, outputTagsWeights);
       Set<String> tags = Utils.getTags(toSwap);
 
       // Check that this doesn't match one of the "do not output" tags

@@ -1,4 +1,4 @@
-package rules;
+package randomizers.gameplay.level.filters.rules;
 
 import utils.XmlEntity;
 

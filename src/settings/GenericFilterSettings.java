@@ -24,7 +24,7 @@ public class GenericFilterSettings {
       return;
     }
     for (FilterJson filter : jsonSettings.getFilters()) {
-      customRuleHelpers.add(new CustomRuleHelper(r).addInputTags(filter.getInputTags())
+      customRuleHelpers.add(new CustomRuleHelper().addInputTags(filter.getInputTags())
           .addOutputTags(filter.getOutputTags()).addOutputTagsWeights(filter.getOutputWeights())
           .addDoNotTouchTags(filter.getDoNotTouchTags()).addDoNotOutputTags(filter.getDoNotOutputTags()));
     }

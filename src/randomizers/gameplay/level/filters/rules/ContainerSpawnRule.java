@@ -1,11 +1,10 @@
-package rules;
+package randomizers.gameplay.level.filters.rules;
 
 import java.util.List;
 import java.util.Random;
 
-import databases.EntityDatabase;
 import databases.TaggedDatabase;
-import utils.CustomRuleHelper;
+import utils.DatabaseUtils;
 import utils.Utils;
 import utils.XmlEntity;
 
@@ -19,12 +18,12 @@ public class ContainerSpawnRule implements Rule {
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
-  CustomRuleHelper crh;
-  TaggedDatabase database;
+  private TaggedDatabase database;
+  private Random r;
 
-  public ContainerSpawnRule(CustomRuleHelper crh, Random r) {
-    this.crh = crh;
-    database = EntityDatabase.getInstance(r);
+  public ContainerSpawnRule(TaggedDatabase database, Random r) {
+    this.database = database;
+    this.r = r;
   }
 
   public boolean trigger(XmlEntity e) {
@@ -57,8 +56,8 @@ public class ContainerSpawnRule implements Rule {
         }
         // Replace with something of the same type
         String tag = fullEntity.getValue("Class");
-        XmlEntity toSwap = database.getRandomEntityByTag(tag);
-        
+        XmlEntity toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
+
         inputs.setValue("archetype", Utils.getNameForEntity(toSwap));
         inputs.setValue("quantity", "1");
       }

@@ -31,10 +31,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import filters.EnemyFilter;
-import filters.FlowgraphFilter;
-import filters.ItemSpawnFilter;
-import filters.MorgansApartmentFilter;
+import databases.EntityDatabase;
+import databases.TaggedDatabase;
 import installers.Installer;
 import json.GenericSpawnSettingsJson;
 import json.SettingsJson;
@@ -42,6 +40,10 @@ import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
+import randomizers.gameplay.level.filters.EnemyFilter;
+import randomizers.gameplay.level.filters.FlowgraphFilter;
+import randomizers.gameplay.level.filters.ItemSpawnFilter;
+import randomizers.gameplay.level.filters.MorgansApartmentFilter;
 import settings.GenericFilterSettings;
 import settings.Settings;
 
@@ -59,6 +61,7 @@ public class RandomizerGui {
   private String installDir = DEFAULT_INSTALL_DIR;
 
   private Settings settings = null;
+  private TaggedDatabase database = null;
   private Installer installer = null;
 
   private JFrame mainFrame;
@@ -91,7 +94,7 @@ public class RandomizerGui {
 
   private int itemSpawnIndex = 0;
   private int enemySpawnIndex = 0;
-  
+
   private Random r;
   private long seed;
   private JTextField seedField;
@@ -99,7 +102,7 @@ public class RandomizerGui {
   public RandomizerGui() {
     r = new Random();
     seed = r.nextLong();
-    
+
     mainFrame = new JFrame("Prey Randomizer");
     mainFrame.setSize(600, 300);
     mainFrame.addWindowListener(new WindowAdapter() {
@@ -159,7 +162,7 @@ public class RandomizerGui {
     JButton changeInstall = new JButton("Change");
     changeInstall.setActionCommand("changeInstallDir");
     changeInstall.addActionListener(new OnChangeDirClick());
-    
+
     JLabel seedLabel = new JLabel("Seed:");
     seedField = new JTextField(Long.toString(seed), 15);
     seedField.setHorizontalAlignment(JLabel.RIGHT);
@@ -290,9 +293,10 @@ public class RandomizerGui {
       statusLabel.setText("Installing...");
 
       // TODO: Add check to assert that Prey is not currently running.
-      
+
       try {
-        r.setSeed(Long.parseLong(seedField.getText()));
+        seed = Long.parseLong(seedField.getText());
+        r.setSeed(seed);
       } catch (NumberFormatException e) {
         statusLabel.setText("Failed to parse seed.");
         uninstallButton.setEnabled(true);
@@ -305,14 +309,18 @@ public class RandomizerGui {
         return;
       }
 
-
       GenericFilterSettings itemSpawnSettings = new GenericFilterSettings(r,
           itemSpawnPanel.getSettingsForId(itemSpawnIndex));
       GenericFilterSettings enemySettings = new GenericFilterSettings(r,
           enemySpawnPanel.getSettingsForId(enemySpawnIndex));
 
-      settings = new Settings.Builder().setInstallDir(Paths.get(DEFAULT_INSTALL_DIR))
-          .setItemSpawnSettings(itemSpawnSettings).setEnemySettings(enemySettings).setRand(r).build();
+      database = EntityDatabase.getInstance();
+      settings = new Settings.Builder()
+          .setInstallDir(Paths.get(DEFAULT_INSTALL_DIR))
+          .setItemSpawnSettings(itemSpawnSettings)
+          .setEnemySettings(enemySettings)
+          .setRand(r)
+          .build();
 
       installer = new Installer(settings);
 
@@ -329,11 +337,13 @@ public class RandomizerGui {
 
       if (randomizeVoices) {
         statusLabel.setText("Randomizing voices...");
+        r.setSeed(seed);
         new VoiceRandomizer(settings).randomize();
         statusLabel.setText("Done randomizing voices.");
       }
       if (randomizeBodies) {
         statusLabel.setText("Randomizing bodies...");
+        r.setSeed(seed);
         new BodyRandomizer(settings).randomize();
         statusLabel.setText("Done randomizing bodies.");
       }
@@ -341,10 +351,12 @@ public class RandomizerGui {
       if (itemSpawnIndex != 0 || enemySpawnIndex != 0) {
         statusLabel.setText("Randomizing levels...");
         LevelRandomizer lr = new LevelRandomizer(settings).addFilter(new MorgansApartmentFilter(settings))
-            .addFilter(new ItemSpawnFilter(settings)).addFilter(new EnemyFilter(settings))
-            .addFilter(new FlowgraphFilter(settings));
+            .addFilter(new ItemSpawnFilter(database, settings)).addFilter(new EnemyFilter(database, settings))
+            .addFilter(new FlowgraphFilter(database, settings));
+        r.setSeed(seed);
         lr.randomize();
-        LootTableRandomizer ltr = new LootTableRandomizer(settings);
+        LootTableRandomizer ltr = new LootTableRandomizer(database, settings);
+        r.setSeed(seed);
         ltr.randomize();
         statusLabel.setText("Done randomizing levels.");
       }

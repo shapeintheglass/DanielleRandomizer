@@ -38,6 +38,10 @@ public class Settings {
     newTempDir.toFile().mkdirs();
     return newTempDir;
   }
+  
+  public void resetSeed() {
+    rand.setSeed(seed);
+  }
 
   public long getSeed() {
     return seed;
@@ -82,7 +86,6 @@ public class Settings {
     public Builder() {
       installDir = Paths.get(".");
       tempDir = Paths.get(".");
-      seed = rand.nextLong();
     }
 
     public Builder setInstallDir(Path installDir) {
