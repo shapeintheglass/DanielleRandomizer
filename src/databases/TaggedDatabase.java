@@ -8,8 +8,8 @@ import java.util.Set;
 import utils.XmlEntity;
 
 /**
- * Interface for a basic database of xml entities.
- * 
+ * Interface for a basic database where objects are assigned string tags
+ *
  * @author Kida
  *
  */
@@ -25,6 +25,9 @@ public abstract class TaggedDatabase {
     populateDatabase();
   }
 
+  /**
+   * Adds all entries to database
+   */
   protected abstract void populateDatabase();
   
   protected void addToDatabase(XmlEntity x, Set<String> tags) {

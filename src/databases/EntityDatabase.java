@@ -24,10 +24,6 @@ import utils.XmlEntity;
  * Rough "database" implementation that can ingest entities from their
  * entityprototype definition files, tag them, and allow retrieval by tag.
  * 
- * The database is also mutable, so entities within a particular tag can be
- * modified. This allows features such as overriding the "typhon" category to
- * only contain nightmares.
- *
  */
 public class EntityDatabase extends TaggedDatabase {
 

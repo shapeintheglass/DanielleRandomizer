@@ -9,10 +9,8 @@
       "desc": "Randomize all items",
       "filters": [
         {
-          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
-      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic"],
-          "output_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
-      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic"],
+          "output_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
           "output_weights": [ 1, 1, 1, 1, 1, 1, 1, 2, 8, 10, 5, 30, 2, 2, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 1, 1, 1 ],
           "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
       "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ],
@@ -26,8 +24,7 @@
       "desc": "For nightly gatherings",
       "filters": [
         {
-          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
-      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
           "output_tags": [ "Bourbon", "UsedCigar" ],
           "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
       "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ],
@@ -41,15 +38,13 @@
       "desc": "Changes physics props to mimics, randomizes pickups",
       "filters": [
         {
-          "input_tags": [ "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office",
-      "Kitchen", "Chairs", "Bathroom", "Garden", "Gym" ],
+          "input_tags": [ "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym" ],
           "output_tags": [ "Mimics" ],
           "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
       "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Player.Psychoscope" ]
         },
         {
-          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
-      "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "input_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
           "output_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden",
       "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
           "output_weights": [ 1, 1, 1, 1, 1, 1, 1, 2, 8, 10, 5, 30, 2, 2, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 1, 1, 1 ],
