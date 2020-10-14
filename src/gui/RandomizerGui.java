@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -88,8 +91,15 @@ public class RandomizerGui {
 
   private int itemSpawnIndex = 0;
   private int enemySpawnIndex = 0;
+  
+  private Random r;
+  private long seed;
+  private JTextField seedField;
 
   public RandomizerGui() {
+    r = new Random();
+    seed = r.nextLong();
+    
     mainFrame = new JFrame("Prey Randomizer");
     mainFrame.setSize(600, 300);
     mainFrame.addWindowListener(new WindowAdapter() {
@@ -149,11 +159,18 @@ public class RandomizerGui {
     JButton changeInstall = new JButton("Change");
     changeInstall.setActionCommand("changeInstallDir");
     changeInstall.addActionListener(new OnChangeDirClick());
+    
+    JLabel seedLabel = new JLabel("Seed:");
+    seedField = new JTextField(Long.toString(seed), 15);
+    seedField.setHorizontalAlignment(JLabel.RIGHT);
 
     installDirPanel.setLayout(new FlowLayout());
     installDirPanel.add(currentFileLabel);
     installDirPanel.add(currentFile);
     installDirPanel.add(changeInstall);
+    installDirPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+    installDirPanel.add(seedLabel);
+    installDirPanel.add(seedField);
     installDirPanel.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
@@ -273,6 +290,14 @@ public class RandomizerGui {
       statusLabel.setText("Installing...");
 
       // TODO: Add check to assert that Prey is not currently running.
+      
+      try {
+        r.setSeed(Long.parseLong(seedField.getText()));
+      } catch (NumberFormatException e) {
+        statusLabel.setText("Failed to parse seed.");
+        uninstallButton.setEnabled(true);
+        return;
+      }
 
       if (itemSpawnIndex == 0 && enemySpawnIndex == 0 && !randomizeVoices && !randomizeBodies) {
         statusLabel.setText("Nothing to install.");
@@ -280,7 +305,6 @@ public class RandomizerGui {
         return;
       }
 
-      Random r = new Random();
 
       GenericFilterSettings itemSpawnSettings = new GenericFilterSettings(r,
           itemSpawnPanel.getSettingsForId(itemSpawnIndex));

@@ -24,8 +24,7 @@ public class Settings {
     this.tempDir = tempDir;
     this.es = es;
     this.iss = iss;
-    rand = new Random();
-    seed = rand.nextLong();
+    this.rand = r;
     rand.setSeed(seed);
     tempLevelDir = createTempDir(tempDir, "level");
     tempLevelDir.toFile().deleteOnExit();
@@ -83,7 +82,6 @@ public class Settings {
     public Builder() {
       installDir = Paths.get(".");
       tempDir = Paths.get(".");
-      rand = new Random();
       seed = rand.nextLong();
     }
 
