@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.w3c.dom.Element;
+
 public class Utils {
   private static final String KEY_PATTERN = "([^ ]*?)=\"(.*?)\"";
   private static final String TAG_PATTERN = "<(.*?)[ />]";
@@ -75,7 +77,8 @@ public class Utils {
     return arr[arr.length];
   }
 
-  public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights, Random r) {
+  public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights,
+      Random r) {
     int sum = weights.stream().reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
@@ -93,7 +96,8 @@ public class Utils {
     return arr.get(arr.size() - 1);
   }
 
-  public static String getCommonElement(Collection<String> s1, Collection<String> s2) {
+  public static String getCommonElement(Collection<String> s1,
+      Collection<String> s2) {
     for (String s : s1) {
       if (s2.contains(s)) {
         return s;
@@ -111,19 +115,20 @@ public class Utils {
     dir.delete();
   }
 
-  public static Set<String> getTags(XmlEntity e) {
+  public static Set<String> getTags(Element e) {
     Set<String> tags = new HashSet<>();
     // Split name on dots
-    String name = e.getValue("Name");
+    String name = e.getAttribute("Name");
     String[] nameTags = name.split("\\.");
     Arrays.stream(nameTags).forEach(s -> tags.add(s));
-    tags.add(e.getValue("Class"));
-    tags.add(e.getValue("Library"));
+    tags.add(e.getAttribute("Class"));
+    tags.add(e.getAttribute("Library"));
     return tags;
   }
 
-  public static String getNameForEntity(XmlEntity e) {
-    return String.format("%s.%s", e.getValue("Library"), e.getValue("Name"));
+  public static String getNameForEntity(Element e) {
+    return String.format("%s.%s", e.getAttribute("Library"),
+        e.getAttribute("Name"));
   }
 
   public static String stripPrefix(String s) {

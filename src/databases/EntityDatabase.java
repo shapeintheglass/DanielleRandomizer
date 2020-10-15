@@ -1,9 +1,7 @@
 package databases;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,10 +12,18 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import utils.FileConsts;
 import utils.FileConsts.Archetype;
 import utils.Utils;
-import utils.XmlEntity;
 
 /**
  * 
@@ -26,14 +32,12 @@ import utils.XmlEntity;
  * 
  */
 public class EntityDatabase extends TaggedDatabase {
-
   // Singleton
   private static EntityDatabase database;
 
-  private static final int READ_AHEAD = 10000;
-
   // Creates or returns singleton instance.
   public static EntityDatabase getInstance() {
+
     if (database == null) {
       database = new EntityDatabase();
     }
@@ -42,33 +46,29 @@ public class EntityDatabase extends TaggedDatabase {
 
   protected void populateDatabase() {
     tagToNameList = new HashMap<>();
-    nameToXmlEntity = new HashMap<>();
+    nameToElement = new HashMap<>();
     allTags = new HashSet<>();
 
+    // Iterate through every entity archetype file
     for (Archetype a : Archetype.values()) {
-      getEntitiesFromFile(a);
-    }
-  }
-
-  private void getEntitiesFromFile(Archetype a) {
-    String file = FileConsts.getFileForArchetype(a);
-    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-      br.mark(READ_AHEAD);
-      String line;
-      while ((line = br.readLine()) != null) {
-        if (line.contains("<EntityPrototype ")) {
-          br.reset();
-
-          XmlEntity x = new XmlEntity(br);
-          Set<String> tags = Utils.getTags(x);
-
-          addToDatabase(x, tags);
+      String file = FileConsts.getFileForArchetype(a);
+      try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(file);
+        doc.getDocumentElement().normalize();
+        NodeList nodeList = doc.getElementsByTagName("EntityPrototype");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+          Element e = (Element) nodeList.item(i);
+          Set<String> tags = Utils.getTags(e);
+          addToDatabase(e, tags);
         }
 
-        br.mark(READ_AHEAD);
+      } catch (ParserConfigurationException | SAXException | IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+
     }
   }
 
@@ -83,8 +83,10 @@ public class EntityDatabase extends TaggedDatabase {
     File tagsFileCsv = new File("tagstoentities.csv");
     File entitiesFileCsv = new File("entitiestotags.csv");
 
-    try (BufferedWriter tagsWriter = new BufferedWriter(new FileWriter(tagsFileCsv));
-        BufferedWriter entitiesWriter = new BufferedWriter(new FileWriter(entitiesFileCsv))) {
+    try (BufferedWriter tagsWriter = new BufferedWriter(new FileWriter(
+        tagsFileCsv));
+        BufferedWriter entitiesWriter = new BufferedWriter(new FileWriter(
+            entitiesFileCsv))) {
       tagsWriter.write("tag,entries\n");
       entitiesWriter.write("entity,tags\n");
 
@@ -96,12 +98,14 @@ public class EntityDatabase extends TaggedDatabase {
       ;
 
       for (String s : validEntities) {
-        XmlEntity entity = d.getEntityByName(s);
+        Element entity = d.getEntityByName(s);
         List<String> tags = new ArrayList<>();
         tags.addAll(Utils.getTags(entity));
         Collections.sort(tags);
         entitiesWriter.write(String.format("%s,\"%s\"\n", s, tags));
       }
+      System.out.printf("Wrote to %s, %s", tagsFileCsv.getCanonicalPath(),
+          entitiesFileCsv.getCanonicalPath());
     } catch (IOException e) {
       e.printStackTrace();
     }

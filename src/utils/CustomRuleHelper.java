@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.w3c.dom.Element;
+
 import databases.TaggedDatabase;
 
 /**
@@ -21,8 +23,10 @@ public class CustomRuleHelper {
   private static final int MAX_ATTEMPTS = 10;
 
   // Known prefixes at the start of entity names.
-  private static final String[] PREFIXES = { "ArkGameplayArchitecture", "ArkHumans", "ArkNpcs", "ArkPhysicsProps",
-      "ArkPickups", "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons", "ArkInteractiveReadable" };
+  private static final String[] PREFIXES = { "ArkGameplayArchitecture",
+      "ArkHumans", "ArkNpcs", "ArkPhysicsProps", "ArkPickups",
+      "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons",
+      "ArkInteractiveReadable" };
 
   // Arbitrary name to assign to this rule.
   private String name;
@@ -90,7 +94,8 @@ public class CustomRuleHelper {
     if (outputTagsWeights == null) {
       return this;
     }
-    Arrays.stream(outputTagsWeights).forEach(s -> this.outputTagsWeights.add(Integer.parseInt(s)));
+    Arrays.stream(outputTagsWeights).forEach(
+        s -> this.outputTagsWeights.add(Integer.parseInt(s)));
     return this;
   }
 
@@ -130,7 +135,8 @@ public class CustomRuleHelper {
     if (tags == null) {
       return false;
     }
-    return Utils.getCommonElement(tags, inputTags) != null && Utils.getCommonElement(tags, doNotTouchTags) == null;
+    return Utils.getCommonElement(tags, inputTags) != null
+        && Utils.getCommonElement(tags, doNotTouchTags) == null;
   }
 
   /**
@@ -147,13 +153,14 @@ public class CustomRuleHelper {
    * 
    * @return
    */
-  public XmlEntity getEntityToSwap(TaggedDatabase database, Random r) {
+  public Element getEntityToSwap(TaggedDatabase database, Random r) {
     int numAttempts = 0;
     // Set a maximum on the number of attempts in case the tag block lists are
     // mutually exclusive
-    XmlEntity toSwap = null;
+    Element toSwap = null;
     while (numAttempts < MAX_ATTEMPTS) {
-      toSwap = DatabaseUtils.getRandomEntityByTags(database, r, outputTags, outputTagsWeights);
+      toSwap = DatabaseUtils.getRandomEntityByTags(database, r, outputTags,
+          outputTagsWeights);
       Set<String> tags = Utils.getTags(toSwap);
 
       // Check that this doesn't match one of the "do not output" tags
@@ -163,11 +170,11 @@ public class CustomRuleHelper {
     }
 
     switch (gub) {
-      default:
-      case RETURN_BEST_MATCH:
-        return toSwap;
-      case RETURN_NULL:
-        return null;
+    default:
+    case RETURN_BEST_MATCH:
+      return toSwap;
+    case RETURN_NULL:
+      return null;
     }
   }
 
@@ -176,8 +183,9 @@ public class CustomRuleHelper {
     return name;
   }
 
-  private ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
-    XmlEntity fullEntity = database.getEntityByName(entityName);
+  private ArrayList<String> getTagsForEntity(TaggedDatabase database,
+      String entityName) {
+    Element fullEntity = database.getEntityByName(entityName);
     if (fullEntity == null) {
       return null;
     }
