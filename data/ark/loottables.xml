@@ -1757,5 +1757,29 @@
     </ArkLootSlot>
    </Slots>
   </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentWeaponsNightstand">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.Wrench" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Player.Psychoscope" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Player.ZeroGSuit" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Player.Neuromod" Weight="1" CountMin="99" CountMax="99"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
  </Tables>
 </ArkLootTables>

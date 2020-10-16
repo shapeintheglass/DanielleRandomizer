@@ -70,7 +70,6 @@ public class LevelRandomizer extends BaseRandomizer {
    * @throws JDOMException
    */
   private void filterMissionFile(File in, File out) throws IOException, JDOMException {
-    // Copy individual lines of mission file into new zip entry
     SAXBuilder saxBuilder = new SAXBuilder();
     Document document = saxBuilder.build(in);
     Element root = document.getRootElement();
@@ -81,7 +80,6 @@ public class LevelRandomizer extends BaseRandomizer {
     }
     
     XMLOutputter xmlOutput = new XMLOutputter();
-
     xmlOutput.setFormat(Format.getPrettyFormat());
     xmlOutput.output(document, new FileOutputStream(out));
 

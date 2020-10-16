@@ -1,14 +1,17 @@
 package randomizers.gameplay;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import databases.TaggedDatabase;
 import randomizers.BaseRandomizer;
@@ -20,6 +23,8 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   private static final String SOURCE = "data/ark/loottables.xml";
   private static final String OUTPUT = "ark/items/loottables.xml";
+
+  private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
 
   TaggedDatabase database;
 
@@ -40,43 +45,49 @@ public class LootTableRandomizer extends BaseRandomizer {
       e1.printStackTrace();
     }
 
-    try (BufferedReader br = new BufferedReader(new FileReader(in));
-        BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
+    try {
+      SAXBuilder saxBuilder = new SAXBuilder();
+      Document document = saxBuilder.build(in);
+      Element root = document.getRootElement();
+      List<Element> lootTables = root.getChild("Tables").getChildren();
 
-      String line = br.readLine();
-
-      while (line != null) {
-        if (line.contains("ArkLootItem")) {
-          line = filterArkLootItemLine(line);
-        }
-
-        bw.write(line);
-        bw.write('\n');
-        line = br.readLine();
+      for (Element e : lootTables) {
+        filterLootTable(e);
       }
 
-    } catch (FileNotFoundException e) {
+      XMLOutputter xmlOutput = new XMLOutputter();
+      xmlOutput.setFormat(Format.getPrettyFormat());
+      xmlOutput.output(document, new FileOutputStream(out));
+    } catch (JDOMException | IOException e1) {
       // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      e1.printStackTrace();
     }
   }
 
-  private String filterArkLootItemLine(String line) {
-    // Parse the item archetype
-    Map<String, String> keys = Utils.getKeysFromLine(line);
-    String oldArchetype = keys.get("Archetype");
-    List<CustomRuleHelper> rules = settings.getItemSpawnSettings().getCustomRuleHelpers();
-    for (CustomRuleHelper crh : rules) {
-      // Explicitly prevent physics props from appearing in loot tables
-      crh.addDoNotOutputTags("ArkPhysicsProps");
-      if (crh.trigger(database, oldArchetype)) {
-        String newArchetype = crh.getEntityToSwapStr(database, settings.getRandom());
-        return line.replace(oldArchetype, newArchetype);
+  private void filterLootTable(Element lootTable) {
+    if (lootTable.getAttributeValue("Name").contains(DO_NOT_TOUCH_PREFIX)) {
+      return;
+    }
+    List<Element> slots = lootTable.getChild("Slots").getChildren();
+    for (Element slot : slots) {
+      // Randomize the percent
+      int percent = settings.getRandom().nextInt(100);
+      slot.setAttribute("Percent", Integer.toString(percent));
+
+      // Randomize the items
+      List<Element> items = slot.getChild("Items").getChildren();
+      for (Element item : items) {
+        String oldArchetype = item.getAttributeValue("Archetype");
+        List<CustomRuleHelper> rules = settings.getItemSpawnSettings().getCustomRuleHelpers();
+        for (CustomRuleHelper crh : rules) {
+          // Explicitly prevent physics props from appearing in loot tables
+          crh.addDoNotOutputTags("ArkPhysicsProps");
+          if (crh.trigger(database, oldArchetype)) {
+            String newArchetype = crh.getEntityToSwapStr(database, settings.getRandom());
+            item.setAttribute("Archetype", newArchetype);
+          }
+        }
       }
     }
-    return line;
   }
 }

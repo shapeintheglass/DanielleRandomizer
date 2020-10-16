@@ -1,5 +1,6 @@
 package randomizers.gameplay.level.filters;
 
+import randomizers.gameplay.level.filters.rules.ApartmentLootRule;
 import randomizers.gameplay.level.filters.rules.UnlockApartmentRule;
 import settings.Settings;
 
@@ -9,6 +10,7 @@ public class MorgansApartmentFilter extends BaseFilter {
     super("MorgansApartmentFilter", s);
 
     rules.add(new UnlockApartmentRule());
+    rules.add(new ApartmentLootRule());
   }
 
 }

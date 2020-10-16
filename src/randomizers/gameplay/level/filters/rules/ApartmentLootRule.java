@@ -6,14 +6,12 @@ public class ApartmentLootRule implements Rule {
 
   @Override
   public boolean trigger(Element e) {
-    // TODO Auto-generated method stub
-    return false;
+    return e.getAttributeValue("Name").equals("Containers/Small.Nightstand_A_Day1");
   }
 
   @Override
   public void apply(Element e) {
-    // TODO Auto-generated method stub
-
+    e.getChild("Properties2").setAttribute("loottable_ContainerLootTable", "RANDOMIZER_MorganApartmentWeaponsNightstand");
   }
 
 }
