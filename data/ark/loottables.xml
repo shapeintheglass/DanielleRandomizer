@@ -1761,7 +1761,71 @@
    <Slots>
     <ArkLootSlot Percent="100">
      <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.GooGun" Weight="1" CountMin="42" CountMax="42"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.InstaLaser" Weight="1" CountMin="100" CountMax="100"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.StunGunAmmo" Weight="1" CountMin="100" CountMax="100"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.ToyGunDarts" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.GooGun" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.Instalaser" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.StunGun" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.ToyGun" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentWeaponsNightstand2">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
       <ArkLootItem Archetype="ArkPickups.Weapons.Wrench" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.Pistol" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.PistolBullets" Weight="1" CountMin="90" CountMax="90"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Weapons.Shotgun" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.ShotgunShells" Weight="1" CountMin="48" CountMax="48"/>
      </Items>
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
@@ -1777,6 +1841,15 @@
     <ArkLootSlot Percent="100">
      <Items>
       <ArkLootItem Archetype="ArkPickups.Player.Neuromod" Weight="1" CountMin="99" CountMax="99"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentFridge">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.AlexStationKeyFabPlan" Weight="1"/>
      </Items>
     </ArkLootSlot>
    </Slots>
