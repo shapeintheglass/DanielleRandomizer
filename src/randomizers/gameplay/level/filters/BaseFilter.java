@@ -3,7 +3,7 @@ package randomizers.gameplay.level.filters;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.stream.events.StartElement;
+import org.jdom2.Element;
 
 import randomizers.gameplay.level.filters.rules.Rule;
 import settings.Settings;
@@ -36,10 +36,10 @@ public abstract class BaseFilter {
    * @param x
    * @param levelDir
    */
-  public void filterEntity(StartElement x) {
+  public void filterEntity(Element e) {
     for (Rule r : rules) {
-      if (r.trigger(x)) {
-        r.apply(x);
+      if (r.trigger(e)) {
+        r.apply(e);
         return;
       }
     }

@@ -2,9 +2,10 @@ package randomizers.gameplay.level.filters.rules;
 
 import java.util.Random;
 
+import org.jdom2.Element;
+
 import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
-import utils.XmlEntity;
 
 /**
  * Changes the archetype of the entity spawned by an ArkNpcSpawner.
@@ -25,15 +26,15 @@ public class NpcSpawnerSwapRule implements Rule {
   }
 
   @Override
-  public boolean trigger(XmlEntity e) {
+  public boolean trigger(Element e) {
     // Triggers on ArkNpcSpawners
-    if (e.hasKey("EntityClass") && e.getValue("EntityClass").equals("ArkNpcSpawner")) {
+    if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
       // Parse to get the spawned entity
-      XmlEntity properties = e.getSubEntityByTagName("Properties");
+      Element properties = e.getChild("Properties");
       if (properties == null) {
         return false;
       }
-      String spawnedEntityName = properties.getValue("sNpcArchetype");
+      String spawnedEntityName = properties.getAttributeValue("sNpcArchetype");
       return crh.trigger(database, spawnedEntityName);
     } else {
       return false;
@@ -41,9 +42,9 @@ public class NpcSpawnerSwapRule implements Rule {
   }
 
   @Override
-  public void apply(XmlEntity e) {
+  public void apply(Element e) {
     String toSwapStr = crh.getEntityToSwapStr(database, r);
-    XmlEntity properties = e.getSubEntityByTagName("Properties");
-    properties.setValue("sNpcArchetype", toSwapStr);
+    Element properties = e.getChild("Properties");
+    properties.setAttribute("sNpcArchetype", toSwapStr);
   }
 }

@@ -3,10 +3,11 @@ package randomizers.gameplay.level.filters.rules;
 import java.util.List;
 import java.util.Random;
 
+import org.jdom2.Element;
+
 import databases.TaggedDatabase;
 import utils.DatabaseUtils;
 import utils.Utils;
-import utils.XmlEntity;
 
 /**
  * Helper utility for modifying items that are spawned in containers.
@@ -26,53 +27,53 @@ public class ContainerSpawnRule implements Rule {
     this.r = r;
   }
 
-  public boolean trigger(XmlEntity e) {
+  public boolean trigger(Element e) {
     // Broadly apply to all flowgraph scripts
-    List<XmlEntity> nodes = getNodes(e);
+    List<Element> nodes = getNodes(e);
     if (nodes == null) {
       return false;
     }
-    for (XmlEntity n : nodes) {
-      if (n.getValue("Class").equals(ITEM_ADD_KEYWORD)) {
+    for (Element n : nodes) {
+      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
         return true;
       }
     }
     return false;
   }
 
-  public void apply(XmlEntity e) {
+  public void apply(Element e) {
     // Iterate through nodes until we find an item add node
-    List<XmlEntity> nodes = getNodes(e);
-    for (XmlEntity n : nodes) {
-      if (n.getValue("Class").equals(ITEM_ADD_KEYWORD)) {
-        XmlEntity inputs = n.getSubEntityByTagName("Inputs");
-        String archetypeStr = inputs.getValue("archetype");
+    List<Element> nodes = getNodes(e);
+    for (Element n : nodes) {
+      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
+        Element inputs = n.getChild("Inputs");
+        String archetypeStr = inputs.getAttributeValue("archetype");
         if (archetypeStr == null || archetypeStr.isEmpty()) {
           return;
         }
-        XmlEntity fullEntity = database.getEntityByName(Utils.stripPrefix(archetypeStr));
+        Element fullEntity = database.getEntityByName(Utils.stripPrefix(archetypeStr));
         if (fullEntity == null) {
           return;
         }
         // Replace with something of the same type
-        String tag = fullEntity.getValue("Class");
-        XmlEntity toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
+        String tag = fullEntity.getAttributeValue("Class");
+        Element toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
 
-        inputs.setValue("archetype", Utils.getNameForEntity(toSwap));
-        inputs.setValue("quantity", "1");
+        inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
+        inputs.setAttribute("quantity", "1");
       }
     }
   }
 
-  private List<XmlEntity> getNodes(XmlEntity e) {
-    XmlEntity flowGraph = e.getSubEntityByTagName("FlowGraph");
+  private List<Element> getNodes(Element e) {
+    Element flowGraph = e.getChild("FlowGraph");
     if (flowGraph == null) {
       return null;
     }
-    XmlEntity nodesContainer = flowGraph.getSubEntityByTagName("Nodes");
+    Element nodesContainer = flowGraph.getChild("Nodes");
     if (nodesContainer == null) {
       return null;
     }
-    return nodesContainer.getSubEntities();
+    return nodesContainer.getChildren();
   }
 }

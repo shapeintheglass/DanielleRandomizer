@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.dom.Element;
+import org.jdom2.Element;
 
 /**
  * Interface for a basic database where objects are assigned string tags
@@ -32,7 +32,7 @@ public abstract class TaggedDatabase {
 
   protected void addToDatabase(Element e, Set<String> tags) {
     tags.add(GLOBAL_TAG);
-    String name = e.getAttribute("Name");
+    String name = e.getAttributeValue("Name");
     if (name.isEmpty()) {
       throw new IllegalArgumentException("Could not find name for element "
           + e.toString());

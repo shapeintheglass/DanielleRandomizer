@@ -12,14 +12,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 import utils.FileConsts;
 import utils.FileConsts.Archetype;
@@ -53,20 +49,22 @@ public class EntityDatabase extends TaggedDatabase {
     for (Archetype a : Archetype.values()) {
       String file = FileConsts.getFileForArchetype(a);
       try {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(file);
-        doc.getDocumentElement().normalize();
-        NodeList nodeList = doc.getElementsByTagName("EntityPrototype");
-        for (int i = 0; i < nodeList.getLength(); i++) {
-          Element e = (Element) nodeList.item(i);
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(file);
+        Element root = document.getRootElement();
+        List<Element> entities = root.getChildren("EntityPrototype");
+
+        for (Element e : entities) {
           Set<String> tags = Utils.getTags(e);
           addToDatabase(e, tags);
         }
 
-      } catch (ParserConfigurationException | SAXException | IOException e) {
+      } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
+      } catch (JDOMException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
       }
 
     }

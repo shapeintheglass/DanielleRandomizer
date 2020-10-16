@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.w3c.dom.Element;
+import org.jdom2.Element;
 
 public class Utils {
   private static final String KEY_PATTERN = "([^ ]*?)=\"(.*?)\"";
@@ -118,17 +118,17 @@ public class Utils {
   public static Set<String> getTags(Element e) {
     Set<String> tags = new HashSet<>();
     // Split name on dots
-    String name = e.getAttribute("Name");
+    String name = e.getAttributeValue("Name");
     String[] nameTags = name.split("\\.");
     Arrays.stream(nameTags).forEach(s -> tags.add(s));
-    tags.add(e.getAttribute("Class"));
-    tags.add(e.getAttribute("Library"));
+    tags.add(e.getAttributeValue("Class"));
+    tags.add(e.getAttributeValue("Library"));
     return tags;
   }
 
   public static String getNameForEntity(Element e) {
-    return String.format("%s.%s", e.getAttribute("Library"),
-        e.getAttribute("Name"));
+    return String.format("%s.%s", e.getAttributeValue("Library"),
+        e.getAttributeValue("Name"));
   }
 
   public static String stripPrefix(String s) {

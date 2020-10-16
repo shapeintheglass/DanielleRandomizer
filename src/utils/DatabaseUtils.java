@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.w3c.dom.Element;
+import org.jdom2.Element;
 
 import databases.TaggedDatabase;
 
