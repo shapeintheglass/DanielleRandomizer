@@ -46,25 +46,4 @@ public class FileConsts {
       return "";
     }
   }
-
-  public static String archetypeToPrefix(Archetype a) {
-    switch (a) {
-    case HUMANS:
-      return "ArkHumans";
-    case TYPHON:
-      return "ArkNpcs";
-    case PHYSICS_PROPS:
-      return "ArkPhysicsProps";
-    case PICKUPS:
-      return "ArkPickups";
-    case PROJECTILES:
-      return "ArkProjectiles";
-    case ROBOTS:
-      return "ArkRobots";
-    case SPECIAL_WEAPONS:
-      return "ArkSpecialWeapons";
-    default:
-      return "";
-    }
-  }
 }

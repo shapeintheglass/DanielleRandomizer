@@ -47,12 +47,15 @@ public class Installer {
   /**
    * Initialize the installer.
    * 
-   * @param installDir Prey install location
-   * @param tempDir    Where to store temporary files
+   * @param installDir
+   *          Prey install location
+   * @param tempDir
+   *          Where to store temporary files
    */
   public Installer(Settings s) {
     this.s = s;
-    patchFile = s.getInstallDir().resolve(INSTALL_LOCATION).resolve(PATCH_NAME).toFile();
+    patchFile = s.getInstallDir().resolve(INSTALL_LOCATION).resolve(PATCH_NAME)
+        .toFile();
   }
 
   public void install() throws IOException {
@@ -63,17 +66,18 @@ public class Installer {
     installPatchDir();
     backupLevelFiles();
     installLevelFiles();
-    
+
     // Clean up temp dirs
     Utils.deleteDirectory(s.getTempPatchDir().toFile());
     Utils.deleteDirectory(s.getTempLevelDir().toFile());
     s.getTempDir().resolve(PATCH_ZIP_NAME).toFile().deleteOnExit();
   }
-  
+
   public boolean verifyInstallDir() {
-    return s.getInstallDir().resolve(INSTALL_LOCATION).toFile().exists() && s.getInstallDir().resolve(LevelConsts.PREFIX).toFile().exists();
+    return s.getInstallDir().resolve(INSTALL_LOCATION).toFile().exists()
+        && s.getInstallDir().resolve(LevelConsts.PREFIX).toFile().exists();
   }
-  
+
   public boolean verifyExeDir() {
     return Paths.get("data").toFile().exists();
   }
@@ -85,7 +89,8 @@ public class Installer {
     // Zip to temp zip file location
     if (zipFilesInDir(s.getTempPatchDir(), tempPatchFileAsZip)) {
       // Copy to pak destination as a pak
-      Files.copy(tempPatchFileAsZip, patchFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+      Files.copy(tempPatchFileAsZip, patchFile.toPath(),
+          StandardCopyOption.REPLACE_EXISTING);
     }
   }
 
@@ -97,9 +102,10 @@ public class Installer {
    */
   private void backupLevelFiles() throws IOException {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakNewName = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir)
-          .resolve(BACKUP_LEVEL_PAK_NAME);
+      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(LEVEL_PAK_NAME);
+      Path levelPakNewName = s.getInstallDir().resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
 
       // Create backup dir if necessary
       levelPak.toFile().mkdirs();
@@ -111,7 +117,8 @@ public class Installer {
 
       // If backup already exists, do not overwrite it!!
       if (!levelPakNewName.toFile().exists()) {
-        Files.copy(levelPak, levelPakNewName, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(levelPak, levelPakNewName,
+            StandardCopyOption.REPLACE_EXISTING);
       }
     }
   }
@@ -119,22 +126,28 @@ public class Installer {
   private void installLevelFiles() throws IOException {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
       // Premade zip file containing everything but the main mission def
-      Path preMadeZipFile = FileConsts.DATA_LEVELS.resolve(levelDir).resolve(LEVEL_ZIP_NAME);
+      Path preMadeZipFile = FileConsts.DATA_LEVELS.resolve(levelDir).resolve(
+          LEVEL_ZIP_NAME);
 
       // Location to copy into for combined zip
       s.getTempLevelDir().resolve(levelDir).toFile().mkdirs();
-      Path tempZipFile = s.getTempLevelDir().resolve(levelDir).resolve(LEVEL_ZIP_NAME);
+      Path tempZipFile = s.getTempLevelDir().resolve(levelDir)
+          .resolve(LEVEL_ZIP_NAME);
 
       // Location of the mission file
-      Path missionFile = s.getTempLevelDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(MISSION_FILE_NAME);
+      Path missionFile = s.getTempLevelDir().resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(MISSION_FILE_NAME);
 
       if (!missionFile.toFile().exists()) {
         continue;
       }
 
-      try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(tempZipFile.toString()));
-          ZipFile originalZip = new ZipFile(preMadeZipFile.toFile().getCanonicalPath());
-          FileInputStream missionFileStream = new FileInputStream(missionFile.toFile())) {
+      try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(
+          tempZipFile.toString()));
+          ZipFile originalZip = new ZipFile(preMadeZipFile.toFile()
+              .getCanonicalPath());
+          FileInputStream missionFileStream = new FileInputStream(
+              missionFile.toFile())) {
 
         // Copy existing entries from original zip into new zip
         Enumeration<? extends ZipEntry> entries = originalZip.entries();
@@ -154,13 +167,15 @@ public class Installer {
       }
 
       // Copy zip over to final destination
-      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
+      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(LEVEL_PAK_NAME);
       Files.copy(tempZipFile, levelPak, StandardCopyOption.REPLACE_EXISTING);
     }
   }
 
   // Copies contents of the input stream to the output stream
-  private void copyStreams(InputStream zin, ZipOutputStream out) throws IOException {
+  private void copyStreams(InputStream zin, ZipOutputStream out)
+      throws IOException {
     byte[] buf = new byte[1024];
     int len;
     while ((len = zin.read(buf)) > 0) {
@@ -176,12 +191,14 @@ public class Installer {
 
     // Overwrite level files with backup
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakBackup = s.getInstallDir().resolve(LevelConsts.PREFIX).resolve(levelDir)
-          .resolve(BACKUP_LEVEL_PAK_NAME);
+      Path levelPak = s.getInstallDir().resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(LEVEL_PAK_NAME);
+      Path levelPakBackup = s.getInstallDir().resolve(LevelConsts.PREFIX)
+          .resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
       if (levelPakBackup.toFile().exists()) {
         try {
-          Files.move(levelPakBackup, levelPak, StandardCopyOption.REPLACE_EXISTING);
+          Files.move(levelPakBackup, levelPak,
+              StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -196,17 +213,19 @@ public class Installer {
    * @param zipFileDest
    * @throws IOException
    */
-  private static boolean zipFilesInDir(Path dirToZip, Path zipFileDest) throws IOException {
+  private static boolean zipFilesInDir(Path dirToZip, Path zipFileDest)
+      throws IOException {
     // Return failure if there is nothing to zip
-    if (!dirToZip.toFile().exists() || (dirToZip.toFile().isDirectory() && dirToZip.toFile().listFiles().length == 0)) {
+    if (!dirToZip.toFile().exists()
+        || (dirToZip.toFile().isDirectory() && dirToZip.toFile().listFiles().length == 0)) {
       return false;
     }
 
     // Create the output zip file if it does not already exist
     zipFileDest.toFile().createNewFile();
     // Zip up all files in dir
-    try (ZipOutputStream zos = new ZipOutputStream(
-        new BufferedOutputStream(new FileOutputStream(zipFileDest.toString())))) {
+    try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(
+        new FileOutputStream(zipFileDest.toString())))) {
 
       Stack<File> dirsToSearch = new Stack<File>();
       dirsToSearch.push(dirToZip.toFile());
@@ -231,14 +250,17 @@ public class Installer {
   /**
    * Zips the given file to a zip under a given filename.
    * 
-   * @param in             File to zip
-   * @param outputFilename Name to give it in the zip
-   * @param zos            Output stream of the zip file
+   * @param in
+   *          File to zip
+   * @param outputFilename
+   *          Name to give it in the zip
+   * @param zos
+   *          Output stream of the zip file
    * @throws IOException
    * @throws FileNotFoundException
    */
-  private static void zipFile(File in, String outputFilename, ZipOutputStream zos)
-      throws FileNotFoundException, IOException {
+  private static void zipFile(File in, String outputFilename,
+      ZipOutputStream zos) throws FileNotFoundException, IOException {
     StringBuilder buffer = new StringBuilder();
     try (BufferedReader br = new BufferedReader(new FileReader(in));) {
       String line = br.readLine();

@@ -1,5 +1,7 @@
 package gui;
 
+import installers.Installer;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,13 +29,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import databases.EntityDatabase;
-import databases.TaggedDatabase;
-import installers.Installer;
 import json.GenericSpawnSettingsJson;
 import json.SettingsJson;
 import randomizers.cosmetic.BodyRandomizer;
@@ -46,6 +41,13 @@ import randomizers.gameplay.level.filters.ItemSpawnFilter;
 import randomizers.gameplay.level.filters.MorgansApartmentFilter;
 import settings.GenericFilterSettings;
 import settings.Settings;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import databases.EntityDatabase;
+import databases.TaggedDatabase;
 
 /**
  * Renders the GUI interface.
@@ -115,8 +117,10 @@ public class RandomizerGui {
     installDirPanel = new JPanel();
     cosmeticsPanel = new JPanel();
     gameplayPanel = new JPanel();
-    itemSpawnPanel = new BaseSpawnOptionsPanel("Item spawn options", "item", new OnRadioClick());
-    enemySpawnPanel = new BaseSpawnOptionsPanel("Enemy spawn options", "enemy", new OnRadioClick());
+    itemSpawnPanel = new BaseSpawnOptionsPanel("Item spawn options", "item",
+        new OnRadioClick());
+    enemySpawnPanel = new BaseSpawnOptionsPanel("Enemy spawn options", "enemy",
+        new OnRadioClick());
     gameplayPanel.setLayout(new GridLayout(1, 2));
     gameplayPanel.add(itemSpawnPanel);
     gameplayPanel.add(enemySpawnPanel);
@@ -137,7 +141,9 @@ public class RandomizerGui {
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(headerPanel);
     mainPanel.add(installDirPanel);
+    mainPanel.add(new JLabel("Cosmetics"));
     mainPanel.add(cosmeticsPanel);
+    mainPanel.add(new JLabel("Gameplay"));
     mainPanel.add(gameplayPanel);
     mainPanel.add(buttonsPanel);
   }
@@ -248,7 +254,7 @@ public class RandomizerGui {
         // TODO Auto-generated catch block
         installDir = "Error occurred while parsing install directory";
       }
-      currentFile.setText(DEFAULT_INSTALL_DIR);
+      currentFile.setText(installDir);
     }
 
   }
@@ -273,14 +279,14 @@ public class RandomizerGui {
     public void actionPerformed(ActionEvent e) {
       String[] tokens = e.getActionCommand().split("_");
       switch (tokens[0]) {
-        case "item":
-          itemSpawnIndex = Integer.parseInt(tokens[1]);
-          break;
-        case "enemy":
-          enemySpawnIndex = Integer.parseInt(tokens[1]);
-          break;
-        default:
-          break;
+      case "item":
+        itemSpawnIndex = Integer.parseInt(tokens[1]);
+        break;
+      case "enemy":
+        enemySpawnIndex = Integer.parseInt(tokens[1]);
+        break;
+      default:
+        break;
       }
     }
   }
@@ -303,7 +309,8 @@ public class RandomizerGui {
         return;
       }
 
-      if (itemSpawnIndex == 0 && enemySpawnIndex == 0 && !randomizeVoices && !randomizeBodies) {
+      if (itemSpawnIndex == 0 && enemySpawnIndex == 0 && !randomizeVoices
+          && !randomizeBodies) {
         statusLabel.setText("Nothing to install.");
         uninstallButton.setEnabled(true);
         return;
@@ -315,12 +322,9 @@ public class RandomizerGui {
           enemySpawnPanel.getSettingsForId(enemySpawnIndex));
 
       database = EntityDatabase.getInstance();
-      settings = new Settings.Builder()
-          .setInstallDir(Paths.get(DEFAULT_INSTALL_DIR))
+      settings = new Settings.Builder().setInstallDir(Paths.get(installDir))
           .setItemSpawnSettings(itemSpawnSettings)
-          .setEnemySettings(enemySettings)
-          .setRand(r)
-          .build();
+          .setEnemySettings(enemySettings).setRand(r).build();
 
       installer = new Installer(settings);
 
@@ -350,8 +354,10 @@ public class RandomizerGui {
 
       if (itemSpawnIndex != 0 || enemySpawnIndex != 0) {
         statusLabel.setText("Randomizing levels...");
-        LevelRandomizer lr = new LevelRandomizer(settings).addFilter(new MorgansApartmentFilter(settings))
-            .addFilter(new ItemSpawnFilter(database, settings)).addFilter(new EnemyFilter(database, settings))
+        LevelRandomizer lr = new LevelRandomizer(settings)
+            .addFilter(new MorgansApartmentFilter(settings))
+            .addFilter(new ItemSpawnFilter(database, settings))
+            .addFilter(new EnemyFilter(database, settings))
             .addFilter(new FlowgraphFilter(database, settings));
         r.setSeed(seed);
         lr.randomize();
@@ -378,8 +384,8 @@ public class RandomizerGui {
     if (!settingsFile.exists()) {
       throw new FileNotFoundException("Could not find settings.json file");
     }
-    SettingsJson settings = new ObjectMapper().readerFor(SettingsJson.class).readValue(settingsFile,
-        SettingsJson.class);
+    SettingsJson settings = new ObjectMapper().readerFor(SettingsJson.class)
+        .readValue(settingsFile, SettingsJson.class);
     return settings;
   }
 
@@ -393,7 +399,8 @@ public class RandomizerGui {
   private void uninstall() {
     statusLabel.setText("Uninstalling...");
     if (installer == null) {
-      settings = new Settings.Builder().setInstallDir(Paths.get(DEFAULT_INSTALL_DIR)).build();
+      settings = new Settings.Builder().setInstallDir(
+          Paths.get(DEFAULT_INSTALL_DIR)).build();
       installer = new Installer(settings);
     }
     installer.uninstall();
