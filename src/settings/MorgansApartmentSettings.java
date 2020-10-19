@@ -31,6 +31,8 @@ public class MorgansApartmentSettings {
    * Standing cabinet - 48 slots
    * 
    * 
+   * 
+   * 
    */
   
   public enum Options {

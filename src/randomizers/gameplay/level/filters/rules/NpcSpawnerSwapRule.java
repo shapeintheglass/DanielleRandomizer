@@ -1,6 +1,7 @@
 package randomizers.gameplay.level.filters.rules;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.jdom2.Element;
 
@@ -28,14 +29,16 @@ public class NpcSpawnerSwapRule implements Rule {
   @Override
   public boolean trigger(Element e) {
     // Triggers on ArkNpcSpawners
-    if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
+    if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass")
+                                                       .equals("ArkNpcSpawner")) {
       // Parse to get the spawned entity
       Element properties = e.getChild("Properties");
       if (properties == null) {
         return false;
       }
       String spawnedEntityName = properties.getAttributeValue("sNpcArchetype");
-      return crh.trigger(database, spawnedEntityName);
+      String entityLevelName = e.getAttributeValue("Name");
+      return crh.trigger(database, spawnedEntityName, entityLevelName);
     } else {
       return false;
     }
@@ -45,6 +48,9 @@ public class NpcSpawnerSwapRule implements Rule {
   public void apply(Element e) {
     String toSwapStr = crh.getEntityToSwapStr(database, r);
     Element properties = e.getChild("Properties");
+    String original = properties.getAttributeValue("sNpcArchetype");
     properties.setAttribute("sNpcArchetype", toSwapStr);
+    Logger.getGlobal()
+          .info(String.format("%s --> %s", original, toSwapStr));
   }
 }

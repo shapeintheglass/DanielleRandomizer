@@ -23,10 +23,8 @@ public class CustomRuleHelper {
   private static final int MAX_ATTEMPTS = 10;
 
   // Known prefixes at the start of entity names.
-  private static final String[] PREFIXES = { "ArkGameplayArchitecture",
-      "ArkHumans", "ArkNpcs", "ArkPhysicsProps", "ArkPickups",
-      "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons",
-      "ArkInteractiveReadable" };
+  private static final String[] PREFIXES = { "ArkGameplayArchitecture", "ArkHumans", "ArkNpcs", "ArkPhysicsProps",
+      "ArkPickups", "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons", "ArkInteractiveReadable" };
 
   // Arbitrary name to assign to this rule.
   private String name;
@@ -94,8 +92,8 @@ public class CustomRuleHelper {
     if (outputTagsWeights == null) {
       return this;
     }
-    Arrays.stream(outputTagsWeights).forEach(
-        s -> this.outputTagsWeights.add(Integer.parseInt(s)));
+    Arrays.stream(outputTagsWeights)
+          .forEach(s -> this.outputTagsWeights.add(Integer.parseInt(s)));
     return this;
   }
 
@@ -127,6 +125,16 @@ public class CustomRuleHelper {
    * @return
    */
   public boolean trigger(TaggedDatabase database, String entityName) {
+    return trigger(database, entityName, null);
+  }
+
+  /**
+   * Whether this rule should apply to the given entity
+   * 
+   * @param entityName
+   * @return
+   */
+  public boolean trigger(TaggedDatabase database, String entityName, String nameInLevel) {
     // Remove prefix
     int dotIndex = entityName.indexOf('.');
     entityName = entityName.substring(dotIndex + 1);
@@ -135,8 +143,12 @@ public class CustomRuleHelper {
     if (tags == null) {
       return false;
     }
-    return Utils.getCommonElement(tags, inputTags) != null
-        && Utils.getCommonElement(tags, doNotTouchTags) == null;
+
+    boolean entityInAllowlist = Utils.getCommonElement(tags, inputTags) != null;
+    boolean entityInBlocklist = Utils.getCommonElement(tags, doNotTouchTags) != null;
+    boolean nameInBlocklist = nameInLevel != null && doNotTouchTags.contains(nameInLevel);
+
+    return entityInAllowlist && !(entityInBlocklist || nameInBlocklist);
   }
 
   /**
@@ -159,8 +171,7 @@ public class CustomRuleHelper {
     // mutually exclusive
     Element toSwap = null;
     while (numAttempts < MAX_ATTEMPTS) {
-      toSwap = DatabaseUtils.getRandomEntityByTags(database, r, outputTags,
-          outputTagsWeights);
+      toSwap = DatabaseUtils.getRandomEntityByTags(database, r, outputTags, outputTagsWeights);
       Set<String> tags = Utils.getTags(toSwap);
 
       // Check that this doesn't match one of the "do not output" tags
@@ -170,11 +181,11 @@ public class CustomRuleHelper {
     }
 
     switch (gub) {
-    default:
-    case RETURN_BEST_MATCH:
-      return toSwap;
-    case RETURN_NULL:
-      return null;
+      default:
+      case RETURN_BEST_MATCH:
+        return toSwap;
+      case RETURN_NULL:
+        return null;
     }
   }
 
@@ -183,8 +194,7 @@ public class CustomRuleHelper {
     return name;
   }
 
-  private ArrayList<String> getTagsForEntity(TaggedDatabase database,
-      String entityName) {
+  private ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
     Element fullEntity = database.getEntityByName(entityName);
     if (fullEntity == null) {
       return null;

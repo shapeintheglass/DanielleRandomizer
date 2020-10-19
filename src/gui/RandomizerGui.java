@@ -195,7 +195,7 @@ public class RandomizerGui {
     voiceLinesCheckBox.addItemListener(listener);
     bodiesCheckBox = new JCheckBox("Randomize NPC bodies", false);
     bodiesCheckBox.addItemListener(listener);
-    apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's Apartment", false);
+    apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's apartment", false);
     apartmentLootCheckBox.addItemListener(listener);
     hardCodedLootCheckBox = new JCheckBox("Randomize loot tables", false);
     hardCodedLootCheckBox.addItemListener(listener);
@@ -388,9 +388,7 @@ public class RandomizerGui {
       if (randomizeVoices) {
         new VoiceRandomizer(settings).randomize();
       }
-      if (randomizeLootTables) {
-        new LootTableRandomizer(database, settings).randomize();
-      }
+
 
       LevelRandomizer levelRandomizer = new LevelRandomizer(settings).addFilter(new ItemSpawnFilter(database, settings))
                                                                      .addFilter(new FlowgraphFilter(database, settings))
@@ -402,6 +400,11 @@ public class RandomizerGui {
       }
 
       levelRandomizer.randomize();
+      
+      // TODO: Do NOT make this order dependent.
+      if (randomizeLootTables) {
+        new LootTableRandomizer(database, settings).randomize();
+      }
 
       try {
         installer.install();
