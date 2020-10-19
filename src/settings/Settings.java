@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Random;
+import java.util.logging.Logger;
 
 // Global settings context so that we can coordinate changes across multiple files
 public class Settings {
@@ -17,25 +18,28 @@ public class Settings {
 
   GenericFilterSettings iss;
   GenericFilterSettings es;
+  private Logger logger;
 
   private Settings(Path installDir, Path tempDir, Random r, long seed, GenericFilterSettings es,
       GenericFilterSettings iss) {
+    logger = Logger.getLogger("Settings");
     this.installDir = installDir;
     this.tempDir = tempDir;
     this.es = es;
     this.iss = iss;
     this.rand = r;
-    rand.setSeed(seed);
+    if (rand != null) {
+      rand.setSeed(seed);
+    }
     tempLevelDir = createTempDir(tempDir, "level");
-    tempLevelDir.toFile().deleteOnExit();
     tempPatchDir = createTempDir(tempDir, "patch");
-    tempLevelDir.toFile().deleteOnExit();
   }
 
   private Path createTempDir(Path tempDir, String name) {
     long now = new Date().getTime();
     Path newTempDir = tempDir.resolve(String.format("temp_%8d_%s", now, name));
     newTempDir.toFile().mkdirs();
+    logger.info(String.format("Created temp dir %s.", newTempDir));
     return newTempDir;
   }
   

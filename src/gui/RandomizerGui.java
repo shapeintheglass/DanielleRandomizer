@@ -1,7 +1,5 @@
 package gui;
 
-import installers.Installer;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,8 +13,10 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Paths;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -26,11 +26,19 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import json.GenericSpawnSettingsJson;
-import json.SettingsJson;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import databases.EntityDatabase;
+import databases.TaggedDatabase;
+import installers.Installer;
+import json.GenericSpawnPresetJson;
+import json.SpawnPresetsJson;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
@@ -39,15 +47,9 @@ import randomizers.gameplay.level.filters.EnemyFilter;
 import randomizers.gameplay.level.filters.FlowgraphFilter;
 import randomizers.gameplay.level.filters.ItemSpawnFilter;
 import randomizers.gameplay.level.filters.MorgansApartmentFilter;
+import randomizers.gameplay.level.filters.OpenStationFilter;
 import settings.GenericFilterSettings;
 import settings.Settings;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import databases.EntityDatabase;
-import databases.TaggedDatabase;
 
 /**
  * Renders the GUI interface.
@@ -59,12 +61,9 @@ public class RandomizerGui {
 
   private static final String DEFAULT_INSTALL_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
   private static final String JSON_SETTINGS_FILE = "settings.json";
+  private static final String LOG_OUTPUT_FILE = "log.txt";
 
   private String installDir = DEFAULT_INSTALL_DIR;
-
-  private Settings settings = null;
-  private TaggedDatabase database = null;
-  private Installer installer = null;
 
   private JFrame mainFrame;
 
@@ -74,25 +73,29 @@ public class RandomizerGui {
 
   private JCheckBox voiceLinesCheckBox;
   private JCheckBox bodiesCheckBox;
+  private JCheckBox apartmentLootCheckBox;
+  private JCheckBox hardCodedLootCheckBox;
 
-  private boolean randomizeVoices;
-  private boolean randomizeBodies;
+  private boolean randomizeVoices = false;
+  private boolean randomizeBodies = false;
+  private boolean addApartmentLoot = false;
+  private boolean randomizeLootTables = false;
 
   private JLabel statusLabel;
   private JButton uninstallButton;
 
-  private SettingsJson settingsJson;
+  private SpawnPresetsJson settingsJson;
 
   private JPanel mainPanel;
   private JPanel headerPanel;
   private JPanel installDirPanel;
-  private JPanel cosmeticsPanel;
-  private JPanel gameplayPanel;
-  private BaseSpawnOptionsPanel itemSpawnPanel;
-  private BaseSpawnOptionsPanel enemySpawnPanel;
+  private JPanel optionsPanel;
+  private BaseSpawnOptionsPanel<GenericSpawnPresetJson> itemSpawnPanel;
+  private BaseSpawnOptionsPanel<GenericSpawnPresetJson> enemySpawnPanel;
+  private JPanel otherGameplayOptionsPanel;
   private JPanel buttonsPanel;
-  private GenericSpawnSettingsJson[] itemSpawnSettings;
-  private GenericSpawnSettingsJson[] enemySpawnSettings;
+  private GenericSpawnPresetJson[] itemSpawnSettings;
+  private GenericSpawnPresetJson[] enemySpawnSettings;
 
   private int itemSpawnIndex = 0;
   private int enemySpawnIndex = 0;
@@ -101,10 +104,10 @@ public class RandomizerGui {
   private long seed;
   private JTextField seedField;
 
-  public RandomizerGui() {
-    r = new Random();
-    seed = r.nextLong();
+  PrintStream logStream;
+  private JButton installButton;
 
+  public RandomizerGui() {
     mainFrame = new JFrame("Prey Randomizer");
     mainFrame.setSize(600, 300);
     mainFrame.addWindowListener(new WindowAdapter() {
@@ -112,39 +115,36 @@ public class RandomizerGui {
         System.exit(0);
       }
     });
+
+    r = new Random();
+    seed = r.nextLong();
+
     mainPanel = new JPanel();
     headerPanel = new JPanel();
     installDirPanel = new JPanel();
-    cosmeticsPanel = new JPanel();
-    gameplayPanel = new JPanel();
-    itemSpawnPanel = new BaseSpawnOptionsPanel("Item spawn options", "item",
-        new OnRadioClick());
-    enemySpawnPanel = new BaseSpawnOptionsPanel("Enemy spawn options", "enemy",
-        new OnRadioClick());
-    gameplayPanel.setLayout(new GridLayout(1, 2));
-    gameplayPanel.add(itemSpawnPanel);
-    gameplayPanel.add(enemySpawnPanel);
+    optionsPanel = new JPanel();
     buttonsPanel = new JPanel();
+    statusLabel = new JLabel();
+
     mainFrame.add(mainPanel);
 
     setupMainPanel();
     setupHeaderPanel();
     setupInstallDirPanel();
-    setupCosmeticsPanel();
-    updateGameplayPanel();
+    setupOptionsPanel();
+    updateOptionsPanel();
     setupButtonsPanel();
 
     mainFrame.pack();
   }
+  
+
 
   private void setupMainPanel() {
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(headerPanel);
     mainPanel.add(installDirPanel);
-    mainPanel.add(new JLabel("Cosmetics"));
-    mainPanel.add(cosmeticsPanel);
-    mainPanel.add(new JLabel("Gameplay"));
-    mainPanel.add(gameplayPanel);
+    mainPanel.add(optionsPanel);
     mainPanel.add(buttonsPanel);
   }
 
@@ -183,19 +183,35 @@ public class RandomizerGui {
     installDirPanel.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
-  private void setupCosmeticsPanel() {
-    voiceLinesCheckBox = new JCheckBox("Randomize voice lines", false);
-    voiceLinesCheckBox.addItemListener(new OnCheckBoxClick());
-    bodiesCheckBox = new JCheckBox("Randomize NPC bodies", false);
-    bodiesCheckBox.addItemListener(new OnCheckBoxClick());
+  private void setupOptionsPanel() {
+    itemSpawnPanel = new BaseSpawnOptionsPanel<>("Item spawn presets", "item", new OnRadioClick());
+    enemySpawnPanel = new BaseSpawnOptionsPanel<>("NPC spawn presets", "enemy", new OnRadioClick());
+    otherGameplayOptionsPanel = new JPanel();
+    otherGameplayOptionsPanel.add(new JLabel("Other options"));
+    otherGameplayOptionsPanel.setLayout(new GridLayout(5, 1));
 
-    cosmeticsPanel.setLayout(new FlowLayout());
-    cosmeticsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-    cosmeticsPanel.add(voiceLinesCheckBox);
-    cosmeticsPanel.add(bodiesCheckBox);
+    ItemListener listener = new OnCheckBoxClick();
+    voiceLinesCheckBox = new JCheckBox("Randomize voice lines", false);
+    voiceLinesCheckBox.addItemListener(listener);
+    bodiesCheckBox = new JCheckBox("Randomize NPC bodies", false);
+    bodiesCheckBox.addItemListener(listener);
+    apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's Apartment", false);
+    apartmentLootCheckBox.addItemListener(listener);
+    hardCodedLootCheckBox = new JCheckBox("Randomize loot tables", false);
+    hardCodedLootCheckBox.addItemListener(listener);
+    otherGameplayOptionsPanel.add(voiceLinesCheckBox);
+    otherGameplayOptionsPanel.add(bodiesCheckBox);
+    otherGameplayOptionsPanel.add(apartmentLootCheckBox);
+    otherGameplayOptionsPanel.add(hardCodedLootCheckBox);
+
+    optionsPanel.setLayout(new GridLayout(1, 3));
+    optionsPanel.add(itemSpawnPanel);
+    optionsPanel.add(enemySpawnPanel);
+    optionsPanel.add(otherGameplayOptionsPanel);
+
   }
 
-  private void updateGameplayPanel() {
+  private void updateOptionsPanel() {
     try {
       settingsJson = getSettingsFromFile(JSON_SETTINGS_FILE);
 
@@ -206,7 +222,8 @@ public class RandomizerGui {
       enemySpawnPanel.setRadioLabels(enemySpawnSettings);
     } catch (Exception e) {
       statusLabel.setText("Error occurred while parsing " + JSON_SETTINGS_FILE);
-      e.printStackTrace();
+      JOptionPane.showMessageDialog(mainFrame,
+          String.format("An error occurred while parsing %s: %s", JSON_SETTINGS_FILE, e.getMessage()));
     }
   }
 
@@ -216,12 +233,12 @@ public class RandomizerGui {
     refreshSettings.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        updateGameplayPanel();
+        updateOptionsPanel();
         statusLabel.setText("Options refreshed.");
         mainFrame.revalidate();
       }
     });
-    JButton installButton = new JButton("Install");
+    installButton = new JButton("Install");
     installButton.setActionCommand("install");
     installButton.addActionListener(new OnInstallClick());
     uninstallButton = new JButton("Uninstall");
@@ -249,7 +266,8 @@ public class RandomizerGui {
     public void actionPerformed(ActionEvent e) {
       fileChooser.showOpenDialog(null);
       try {
-        installDir = fileChooser.getSelectedFile().getCanonicalPath();
+        installDir = fileChooser.getSelectedFile()
+                                .getCanonicalPath();
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         installDir = "Error occurred while parsing install directory";
@@ -269,6 +287,10 @@ public class RandomizerGui {
         randomizeVoices = !randomizeVoices;
       } else if (source == bodiesCheckBox) {
         randomizeBodies = !randomizeBodies;
+      } else if (source == apartmentLootCheckBox) {
+        addApartmentLoot = !addApartmentLoot;
+      } else if (source == hardCodedLootCheckBox) {
+        randomizeLootTables = !randomizeLootTables;
       }
     }
 
@@ -277,17 +299,30 @@ public class RandomizerGui {
   private class OnRadioClick implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-      String[] tokens = e.getActionCommand().split("_");
+      String[] tokens = e.getActionCommand()
+                         .split("_");
       switch (tokens[0]) {
-      case "item":
-        itemSpawnIndex = Integer.parseInt(tokens[1]);
-        break;
-      case "enemy":
-        enemySpawnIndex = Integer.parseInt(tokens[1]);
-        break;
-      default:
-        break;
+        case "item":
+          itemSpawnIndex = Integer.parseInt(tokens[1]);
+          break;
+        case "enemy":
+          enemySpawnIndex = Integer.parseInt(tokens[1]);
+          break;
+        default:
+          break;
       }
+    }
+  }
+
+  private void setupLogFile() {
+    try {
+      File loggerFile = new File(LOG_OUTPUT_FILE);
+      loggerFile.createNewFile();
+      PrintStream fileStream = new PrintStream(loggerFile);
+      System.setErr(fileStream);
+      System.setOut(fileStream);
+    } catch (IOException e1) {
+      e1.printStackTrace();
     }
   }
 
@@ -295,10 +330,14 @@ public class RandomizerGui {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
+      setupLogFile();
+
       uninstallButton.setEnabled(false);
       statusLabel.setText("Installing...");
 
-      // TODO: Add check to assert that Prey is not currently running.
+      // Validation checks
+
+      // TODO: Validate settings preset file.
 
       try {
         seed = Long.parseLong(seedField.getText());
@@ -309,27 +348,22 @@ public class RandomizerGui {
         return;
       }
 
-      if (itemSpawnIndex == 0 && enemySpawnIndex == 0 && !randomizeVoices
-          && !randomizeBodies) {
-        statusLabel.setText("Nothing to install.");
-        uninstallButton.setEnabled(true);
-        return;
-      }
-
       GenericFilterSettings itemSpawnSettings = new GenericFilterSettings(r,
           itemSpawnPanel.getSettingsForId(itemSpawnIndex));
       GenericFilterSettings enemySettings = new GenericFilterSettings(r,
           enemySpawnPanel.getSettingsForId(enemySpawnIndex));
 
-      database = EntityDatabase.getInstance();
-      settings = new Settings.Builder().setInstallDir(Paths.get(installDir))
-          .setItemSpawnSettings(itemSpawnSettings)
-          .setEnemySettings(enemySettings).setRand(r).build();
+      TaggedDatabase database = EntityDatabase.getInstance();
+      Settings settings = new Settings.Builder().setInstallDir(Paths.get(installDir))
+                                                .setItemSpawnSettings(itemSpawnSettings)
+                                                .setEnemySettings(enemySettings)
+                                                .setRand(r)
+                                                .build();
 
-      installer = new Installer(settings);
+      Installer installer = new Installer(settings);
 
-      if (!installer.verifyExeDir()) {
-        statusLabel.setText("Could not find data/ folder in exe directory.");
+      if (!installer.verifyDataExists()) {
+        statusLabel.setText("Could not find data/ folder");
         uninstallButton.setEnabled(true);
         return;
       }
@@ -338,73 +372,72 @@ public class RandomizerGui {
         uninstallButton.setEnabled(true);
         return;
       }
-
-      if (randomizeVoices) {
-        statusLabel.setText("Randomizing voices...");
-        r.setSeed(seed);
-        new VoiceRandomizer(settings).randomize();
-        statusLabel.setText("Done randomizing voices.");
+      if (!installer.testInstall()) {
+        statusLabel.setText("Unable to write to file. Is Prey running?");
+        uninstallButton.setEnabled(true);
+        return;
       }
+
+      // Randomization
+
+      // TODO: Use worker threads
+
       if (randomizeBodies) {
-        statusLabel.setText("Randomizing bodies...");
-        r.setSeed(seed);
         new BodyRandomizer(settings).randomize();
-        statusLabel.setText("Done randomizing bodies.");
+      }
+      if (randomizeVoices) {
+        new VoiceRandomizer(settings).randomize();
+      }
+      if (randomizeLootTables) {
+        new LootTableRandomizer(database, settings).randomize();
       }
 
-      if (itemSpawnIndex != 0 || enemySpawnIndex != 0) {
-        statusLabel.setText("Randomizing levels...");
-        LevelRandomizer lr = new LevelRandomizer(settings)
-            .addFilter(new MorgansApartmentFilter(settings))
-            .addFilter(new ItemSpawnFilter(database, settings))
-            .addFilter(new EnemyFilter(database, settings))
-            .addFilter(new FlowgraphFilter(database, settings));
-        r.setSeed(seed);
-        lr.randomize();
-        LootTableRandomizer ltr = new LootTableRandomizer(database, settings);
-        r.setSeed(seed);
-        ltr.randomize();
-        statusLabel.setText("Done randomizing levels.");
+      LevelRandomizer levelRandomizer = new LevelRandomizer(settings).addFilter(new ItemSpawnFilter(database, settings))
+                                                                     .addFilter(new FlowgraphFilter(database, settings))
+                                                                     .addFilter(new EnemyFilter(database, settings))
+                                                                     .addFilter(new OpenStationFilter(settings));
+
+      if (addApartmentLoot) {
+        levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter(settings));
       }
+
+      levelRandomizer.randomize();
 
       try {
         installer.install();
         statusLabel.setText("Done installing.");
-      } catch (IOException e) {
+      } catch (IOException | InterruptedException e) {
         statusLabel.setText("Error occurred during install.");
         e.printStackTrace();
       }
       uninstallButton.setEnabled(true);
     }
+
   }
 
-  private SettingsJson getSettingsFromFile(String settingsPath)
+  private SpawnPresetsJson getSettingsFromFile(String settingsPath)
       throws JsonParseException, JsonMappingException, IOException {
+    setupLogFile();
     File settingsFile = new File(settingsPath);
     if (!settingsFile.exists()) {
       throw new FileNotFoundException("Could not find settings.json file");
     }
-    SettingsJson settings = new ObjectMapper().readerFor(SettingsJson.class)
-        .readValue(settingsFile, SettingsJson.class);
+    SpawnPresetsJson settings = new ObjectMapper().readerFor(SpawnPresetsJson.class)
+                                                  .readValue(settingsFile, SpawnPresetsJson.class);
     return settings;
   }
 
   private class OnUninstallClick implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent arg0) {
-      uninstall();
-    }
-  }
+      setupLogFile();
+      statusLabel.setText("Uninstalling...");
+      installButton.setEnabled(false);
 
-  private void uninstall() {
-    statusLabel.setText("Uninstalling...");
-    if (installer == null) {
-      settings = new Settings.Builder().setInstallDir(
-          Paths.get(DEFAULT_INSTALL_DIR)).build();
-      installer = new Installer(settings);
+      Installer.uninstall(Paths.get(installDir), Logger.getGlobal());
+      statusLabel.setText("Done uninstalling.");
+      installButton.setEnabled(true);
     }
-    installer.uninstall();
-    statusLabel.setText("Done uninstalling.");
   }
 
   private class OnCloseClick implements ActionListener {

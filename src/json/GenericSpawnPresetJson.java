@@ -3,17 +3,17 @@ package json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GenericSpawnSettingsJson {
+public class GenericSpawnPresetJson {
   private String name;
   private String desc;
-  private FilterJson[] filters;
+  private GenericFilterJson[] filters;
 
 
   @JsonCreator
-  public GenericSpawnSettingsJson(
+  public GenericSpawnPresetJson(
       @JsonProperty("name") String name, 
       @JsonProperty("desc") String desc,
-      @JsonProperty("filters") FilterJson[] filters) {
+      @JsonProperty("filters") GenericFilterJson[] filters) {
     this.name = name;
     this.desc = desc;
     this.filters = filters;
@@ -35,11 +35,16 @@ public class GenericSpawnSettingsJson {
     this.desc = desc;
   }
 
-  public FilterJson[] getFilters() {
+  public GenericFilterJson[] getFilters() {
     return filters;
   }
 
-  public void setFilters(FilterJson[] filters) {
+  public void setFilters(GenericFilterJson[] filters) {
     this.filters = filters;
+  }
+  
+  @Override
+  public String toString() {
+    return name;
   }
 }

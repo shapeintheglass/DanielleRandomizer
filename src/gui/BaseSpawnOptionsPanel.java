@@ -12,15 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import json.GenericSpawnSettingsJson;
-
-public class BaseSpawnOptionsPanel extends JPanel {
+public class BaseSpawnOptionsPanel<T> extends JPanel {
 
   private static final long serialVersionUID = -1427304877583197708L;
 
   private JLabel headerLabel;
   private List<JRadioButton> radioButtons;
-  private List<GenericSpawnSettingsJson> settings;
+  private List<T> settings;
   private ButtonGroup buttonGroup;
 
   String header;
@@ -45,7 +43,7 @@ public class BaseSpawnOptionsPanel extends JPanel {
     this.headerLabel.setText(header);
   }
 
-  public void setRadioLabels(GenericSpawnSettingsJson[] newSettings) {
+  public void setRadioLabels(T[] newSettings) {
     // Remove old radio buttons, if they exist
     for (int i = 0; i < radioButtons.size(); i++) {
       this.remove(radioButtons.get(i));
@@ -55,7 +53,7 @@ public class BaseSpawnOptionsPanel extends JPanel {
 
     for (int i = 0; i < newSettings.length; i++) {
       String id = String.format("%s_%s", prefix, i);
-      JRadioButton btn = new JRadioButton(newSettings[i].getName());
+      JRadioButton btn = new JRadioButton(newSettings[i].toString());
       btn.addActionListener(listener);
       btn.setActionCommand(id);
       if (i == 0) {
@@ -68,7 +66,7 @@ public class BaseSpawnOptionsPanel extends JPanel {
     }
   }
 
-  public GenericSpawnSettingsJson getSettingsForId(int index) {
+  public T getSettingsForId(int index) {
     return settings.get(index);
   }
 }

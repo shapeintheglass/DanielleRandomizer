@@ -3,7 +3,7 @@ package json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class FilterJson {
+public class GenericFilterJson {
 
   private String[] inputTags;
   private String[] outputTags;
@@ -13,7 +13,7 @@ public class FilterJson {
   
   
   @JsonCreator
-  public FilterJson(
+  public GenericFilterJson(
       @JsonProperty("input_tags") String[] inputTags, 
       @JsonProperty("output_tags") String[] outputTags,
       @JsonProperty("output_weights") String[] outputWeights, 

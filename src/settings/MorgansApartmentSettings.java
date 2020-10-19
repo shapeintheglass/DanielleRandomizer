@@ -34,13 +34,12 @@ public class MorgansApartmentSettings {
    */
   
   public enum Options {
-    PSYCHOSCOPE, // Replace champagne w/ psychoscope
-    ARTAX, // Replace note w/ jetpack
-    FAB_PLANS, // Place every fab plan in nightstand left
-    WEAPONS, // Place weapons in fridge, ammo/charges in cabinets
-    CHIPSETS, // Place every chipset in nightstand right
-    NEUROMODS, // Place 377 neuromods in cabinet + psi hypos
-    MISC_ITEMS, // Place spare parts, weapon upgrade kits, suit upgrade kits in ???
-    KEYCARDS, // Place every keycard in the game in ???
+    NO_LOOT,
+    ALL_LOOT,
+    ENGINEER,
+    SECURITY,
+    SCIENTIST,
+    VOLUNTEER,
+    DIRECTOR
   }
 }

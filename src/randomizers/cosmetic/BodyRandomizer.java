@@ -17,13 +17,12 @@ import utils.FileConsts;
 
 public class BodyRandomizer extends BaseRandomizer {
 
+  public BodyRandomizer(Settings s) {
+    super(s);
+  }
+
   private static final String HUMANS_FINAL_OUT = "objects\\\\characters\\\\humansfinal";
   private static final String HUMANS_FILE_TEMPLATE = "objects\\characters\\humansfinal\\%s";
-  
-  public BodyRandomizer(Settings s) {
-    super("BodyRandomizer", s);
-    // TODO Auto-generated constructor stub
-  }
   
   public void randomize() {
     for (File f : new File(FileConsts.HUMANS_FINAL_DIR).listFiles()) {
@@ -42,8 +41,8 @@ public class BodyRandomizer extends BaseRandomizer {
   }
 
   private void randomizeBody(File in, File out) throws FileNotFoundException, IOException {
-    BodyConfig bc = new BodyConfig(settings.getRandom());
-    logger.info("Randomizing " + in.getName());
+    BodyConfig bc = new BodyConfig(r);
+    logger.info("Body randomizer: Parsing " + in.getName());
 
     boolean keepHair = false;
 
@@ -61,22 +60,22 @@ public class BodyRandomizer extends BaseRandomizer {
         } else if (lowerCase.contains(BodyConsts.MALE_BODY_TYPE)) {
           bc.setGender(BodyConfig.Gender.MALE);
         } else if (lowerCase.contains(BodyConsts.LARGE_MALE_BODY_TYPE)) {
-          logger.info("Skipping because this body type is not supported yet");
+          //logger.info("Skipping because this body type is not supported yet");
         }
 
         if (line.contains("CA_SKIN")) {
           if (lowerCase.contains("body_skin")
               || lowerCase.contains("aname=\"body\"")) {
             line = bc.generateRandomBody();
-            logger.info("Chose body type " + bc.bodyModel);
+            //logger.info("Chose body type " + bc.bodyModel);
           } else if (lowerCase.contains("head_skin")) {
             if (bc.generateRandomHeadAndHairForBody(line)) {
               line = bc.getHeadAndHair();
             } else {
               keepHair = true;
             }
-            logger.info("Chose head type " + bc.headModel + ", hair type "
-                + bc.hairModel + ", and hair color " + bc.hairColor);
+            //logger.info("Chose head type " + bc.headModel + ", hair type "
+            //    + bc.hairModel + ", and hair color " + bc.hairColor);
           } else if (lowerCase.contains("hair_skin")) {
             if (!keepHair) {
               line = "";
@@ -84,7 +83,7 @@ public class BodyRandomizer extends BaseRandomizer {
           } else {
             // If the type is not accounted for here, remove it
             line = "";
-            logger.info("Ignoring line: " + line);
+            //logger.info("Ignoring line: " + line);
           }
         }
 

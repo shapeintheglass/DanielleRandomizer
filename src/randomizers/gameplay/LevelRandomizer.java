@@ -33,7 +33,7 @@ public class LevelRandomizer extends BaseRandomizer {
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
 
   public LevelRandomizer(Settings s) {
-    super("LevelRandomizer", s);
+    super(s);
     filterList = new LinkedList<>();
   }
 
@@ -51,7 +51,7 @@ public class LevelRandomizer extends BaseRandomizer {
       File out = outDir.toPath().resolve(MISSION_FILE_NAME).toFile();
 
       try {
-        logger.info(String.format("filtering: %s --> %s", in, out));
+        logger.info(String.format("filtering level file: %s --> %s", in, out));
         filterMissionFile(in, out);
       } catch (IOException | JDOMException e1) {
         e1.printStackTrace();

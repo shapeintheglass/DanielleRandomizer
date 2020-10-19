@@ -37,9 +37,9 @@ public abstract class BaseFilter {
    * @param levelDir
    */
   public void filterEntity(Element e) {
-    for (Rule r : rules) {
-      if (r.trigger(e)) {
-        r.apply(e);
+    for (Rule rule : rules) {
+      if (rule.trigger(e)) {
+        rule.apply(e);
         return;
       }
     }
