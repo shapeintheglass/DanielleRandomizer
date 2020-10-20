@@ -74,12 +74,14 @@ public class RandomizerGui {
   private JCheckBox voiceLinesCheckBox;
   private JCheckBox bodiesCheckBox;
   private JCheckBox apartmentLootCheckBox;
-  private JCheckBox hardCodedLootCheckBox;
+  private JCheckBox lootTablesCheckBox;
+  private JCheckBox openStationCheckBox;
 
-  private boolean randomizeVoices = false;
-  private boolean randomizeBodies = false;
-  private boolean addApartmentLoot = false;
-  private boolean randomizeLootTables = false;
+  private boolean randomizeVoices = true;
+  private boolean randomizeBodies = true;
+  private boolean addApartmentLoot = true;
+  private boolean randomizeLootTables = true;
+  private boolean openUpStation = true;
 
   private JLabel statusLabel;
   private JButton uninstallButton;
@@ -137,8 +139,6 @@ public class RandomizerGui {
 
     mainFrame.pack();
   }
-  
-
 
   private void setupMainPanel() {
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -188,21 +188,24 @@ public class RandomizerGui {
     enemySpawnPanel = new BaseSpawnOptionsPanel<>("NPC spawn presets", "enemy", new OnRadioClick());
     otherGameplayOptionsPanel = new JPanel();
     otherGameplayOptionsPanel.add(new JLabel("Other options"));
-    otherGameplayOptionsPanel.setLayout(new GridLayout(5, 1));
+    otherGameplayOptionsPanel.setLayout(new GridLayout(6, 1));
 
     ItemListener listener = new OnCheckBoxClick();
-    voiceLinesCheckBox = new JCheckBox("Randomize voice lines", false);
+    voiceLinesCheckBox = new JCheckBox("Randomize voice lines", randomizeVoices);
     voiceLinesCheckBox.addItemListener(listener);
-    bodiesCheckBox = new JCheckBox("Randomize NPC bodies", false);
+    bodiesCheckBox = new JCheckBox("Randomize NPC bodies", randomizeBodies);
     bodiesCheckBox.addItemListener(listener);
-    apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's apartment", false);
+    apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's apartment", addApartmentLoot);
     apartmentLootCheckBox.addItemListener(listener);
-    hardCodedLootCheckBox = new JCheckBox("Randomize loot tables", false);
-    hardCodedLootCheckBox.addItemListener(listener);
+    lootTablesCheckBox = new JCheckBox("Randomize loot tables", randomizeLootTables);
+    lootTablesCheckBox.addItemListener(listener);
+    openStationCheckBox = new JCheckBox("Open up Talos I (WIP)", openUpStation);
+    openStationCheckBox.addItemListener(listener);
     otherGameplayOptionsPanel.add(voiceLinesCheckBox);
     otherGameplayOptionsPanel.add(bodiesCheckBox);
     otherGameplayOptionsPanel.add(apartmentLootCheckBox);
-    otherGameplayOptionsPanel.add(hardCodedLootCheckBox);
+    otherGameplayOptionsPanel.add(lootTablesCheckBox);
+    otherGameplayOptionsPanel.add(openStationCheckBox);
 
     optionsPanel.setLayout(new GridLayout(1, 3));
     optionsPanel.add(itemSpawnPanel);
@@ -289,8 +292,10 @@ public class RandomizerGui {
         randomizeBodies = !randomizeBodies;
       } else if (source == apartmentLootCheckBox) {
         addApartmentLoot = !addApartmentLoot;
-      } else if (source == hardCodedLootCheckBox) {
+      } else if (source == lootTablesCheckBox) {
         randomizeLootTables = !randomizeLootTables;
+      } else if (source == openStationCheckBox) {
+        openUpStation = !openUpStation;
       }
     }
 
@@ -341,7 +346,6 @@ public class RandomizerGui {
 
       try {
         seed = Long.parseLong(seedField.getText());
-        r.setSeed(seed);
       } catch (NumberFormatException e) {
         statusLabel.setText("Failed to parse seed.");
         uninstallButton.setEnabled(true);
@@ -358,6 +362,7 @@ public class RandomizerGui {
                                                 .setItemSpawnSettings(itemSpawnSettings)
                                                 .setEnemySettings(enemySettings)
                                                 .setRand(r)
+                                                .setSeed(seed)
                                                 .build();
 
       Installer installer = new Installer(settings);
@@ -389,21 +394,28 @@ public class RandomizerGui {
         new VoiceRandomizer(settings).randomize();
       }
 
-
       LevelRandomizer levelRandomizer = new LevelRandomizer(settings).addFilter(new ItemSpawnFilter(database, settings))
                                                                      .addFilter(new FlowgraphFilter(database, settings))
-                                                                     .addFilter(new EnemyFilter(database, settings))
-                                                                     .addFilter(new OpenStationFilter(settings));
+                                                                     .addFilter(new EnemyFilter(database, settings));
+
+      if (openUpStation) {
+        levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter(settings));
+      }
 
       if (addApartmentLoot) {
         levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter(settings));
       }
 
       levelRandomizer.randomize();
-      
-      // TODO: Do NOT make this order dependent.
+
       if (randomizeLootTables) {
         new LootTableRandomizer(database, settings).randomize();
+      } else {
+        try {
+          new LootTableRandomizer(database, settings).copyFile();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
 
       try {

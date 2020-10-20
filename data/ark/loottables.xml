@@ -1829,12 +1829,12 @@
    <Slots>
     <ArkLootSlot Percent="100">
      <Items>
-      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.AlexStationKeyFabPlan" Weight="1"/>
+      <ArkLootItem Archetype="ArkPickups.Misc.SpareParts" Weight="1" CountMin="10" CountMax="10"/>
      </Items>
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
      <Items>
-      <ArkLootItem Archetype="ArkPickups.Player.Neuromod" Weight="1" CountMin="400" CountMax="400"/>
+      <ArkLootItem Archetype="ArkPickups.Player.Neuromod" Weight="1" CountMin="451" CountMax="451"/>
      </Items>
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
@@ -1850,6 +1850,557 @@
     <ArkLootSlot Percent="100">
      <Items>
       <ArkLootItem Archetype="ArkPickups.Ammo.InstaLaser" Weight="1" CountMin="100" CountMax="100"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Medical.MedKit" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Medical.PsiHypo" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Weapon.WeaponUpgradeKit" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Player.SuitPatchKit" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.RecyclerGrenades" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.EMPGrenades" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.LureGrenades" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Ammo.NullwaveTransmitter" Weight="1" CountMin="10" CountMax="10"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentCabinet">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.AlexStationKeyFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.TreasureHuntModFabPlan_Good" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.TreasureHuntModFabPlan_Bad" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.WaterPressureRegulator" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.CoralScanModFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.WrenchModFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan_Cinematic" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Pharma.PharmaAntiBleedFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Pharma.PharmaAntiBurnFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Pharma.PharmaAntiConcussionFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Pharma.PharmaAntiCrippleFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Pharma.PharmaAntiRadFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Ammo.StunGunAmmoFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.OxygenFuseFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Ammo.PistolAmmoFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Charge.EMPGrenadesFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Charge.AlienLureFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Weapon.PistolFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.SuitMaint.SuitPatchKitFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Ammo.ToyGunAmmoFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Weapon.ToyGunFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.FabricationPlans.Weapon.TaserPistolFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.MorganStationKeyFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.WeaponKitFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Charge.RecyclerGrenadeFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.TurretFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.ArboretumFertilizerFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Weapon.WrenchFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.SuitMaint.OxygenBottleFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.NeuroModFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.PropulsionSystemFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Weapon.InstalaserFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Charge.NullwaveTransmitterFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Ammo.LaserAmmoFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Ammo.GooGunAmmoFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Ammo.ShotgunShellsFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.MedKitFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.PsiHypoFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Weapon.GooGunFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.Weapon.ShotgunFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentKitchenChipsetsA">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.HeavyMachineryAssist" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.PropulsionUpgrade_I" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.SpringStep" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.DecreaseTraumaChance" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.PropulsionUpgrade_II" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.EMP_Shielding" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.FlashlightDuration" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.ImprovedStamina" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.LastChance" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.LeverageAssist" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.SuitIntegrityBuff" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.WrenchKnockback" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.ResistEther" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.ResistFire" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.ResistElectric" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.ResistRad" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.NeverDrunk" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.SneakAttackRestoreHealth" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.OnRobotDeath" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.PlayerNotRecyclable" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.FallDamagesNPCs" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.SlidingReduceDamage" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.ReduceSpaceCrashDamage" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentKitchenChipsetsB">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.LaserShield" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.BacklashBuff" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.PhysicalDamageShield" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.RecyclerLootBonus" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Suit.RecyclerLootLimiter" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.EnhancedPSI" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.DecreaseScanningTime" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.CritChancePlus10_Wrench" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.CritChancePlus10_Shotgun" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.CritChancePlus10_Pistol" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.FasterPowersCooldown" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.DetectMimics" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.DetectEliteMimicAndPoltergeist" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.NullwaveShield" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.ThermalBlastBuff" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.KineticBlastBuff" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.PsychoshockBuff" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.ElectrostaticBuff" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.MarkedEnemiesDamage" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.CanScanCoral" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.FearResistance" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.PsychoshockResist" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.SpendHealthAsPSI" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_MorganApartmentKitchenChipsetsC">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.AbsorbCoral" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.SneakAttackRestoresPSI" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.FearBomb" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.BuffControlPowers" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.ReducePsiCostEnergy" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.ReducePsiCostMorph" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.ReducePsiCostTelepathic" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.FreePsiCast" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.BuffDamagePowers" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.PSIRegen" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+        <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.MechTechs" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.IncreaseScanningRange" Weight="1"/>
      </Items>
     </ArkLootSlot>
    </Slots>

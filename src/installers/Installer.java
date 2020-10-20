@@ -119,6 +119,16 @@ public class Installer {
 
   private void installPatchDir() throws IOException {
     logger.info("----INSTALLING PATCH FILE...----");
+
+    // Copy required files over
+    // TODO: Make this less of a hack
+    File npcGameEffectsDir = s.getTempPatchDir()
+                              .resolve("ark/npc")
+                              .toFile();
+    npcGameEffectsDir.mkdirs();
+    Files.copy(Paths.get("data/ark/npcgameeffects.xml"), npcGameEffectsDir.toPath()
+                                                                          .resolve("npcgameeffects.xml"));
+
     // Create temporary zip file in temp dir to store patch as a zip
     Path tempPatchFileAsZip = s.getTempDir()
                                .resolve(PATCH_ZIP_NAME);

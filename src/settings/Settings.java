@@ -42,10 +42,6 @@ public class Settings {
     logger.info(String.format("Created temp dir %s.", newTempDir));
     return newTempDir;
   }
-  
-  public void resetSeed() {
-    rand.setSeed(seed);
-  }
 
   public long getSeed() {
     return seed;

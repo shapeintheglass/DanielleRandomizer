@@ -1,7 +1,6 @@
 package randomizers.gameplay.level.filters.rules;
 
 import java.util.Random;
-import java.util.logging.Logger;
 
 import org.jdom2.Element;
 
@@ -48,9 +47,6 @@ public class NpcSpawnerSwapRule implements Rule {
   public void apply(Element e) {
     String toSwapStr = crh.getEntityToSwapStr(database, r);
     Element properties = e.getChild("Properties");
-    String original = properties.getAttributeValue("sNpcArchetype");
     properties.setAttribute("sNpcArchetype", toSwapStr);
-    Logger.getGlobal()
-          .info(String.format("%s --> %s", original, toSwapStr));
   }
 }

@@ -9,16 +9,6 @@ public class UnlockPsychotronicsRule implements Rule {
    * Door.Door_Decontamination_A1 Door.Door_Decontamination_A2
    * 
    * Door.ArkDoor_Sliding_Double_Default4 Door.ArkDoor_Sliding_Double_Default5
-   * 
-   * Door.Door_Sliding_Double_Default18 Door.Door_Sliding_Double_Default19
-   * Door.Door_Sliding_Double_Default20 Door.Door_Sliding_Double_Default22
-   * Door.Door_Sliding_Double_Default24 Door.Door_Sliding_Double_Default27
-   * Door.Door_Sliding_Double_Default28 Door.Door_Sliding_Double_Default32
-   * Door.Door_Sliding_Double_Default33
-   * 
-   * Door.Door_Sliding_Double_Large3
-   * 
-   * Door.BlastDoor_Medium2 Door.BlastDoor_Medium_NoAuto1
    */
 
   private static final String NAME_ATTRIBUTE = "Name";
@@ -42,7 +32,7 @@ public class UnlockPsychotronicsRule implements Rule {
   @Override
   public void apply(Element e) {
     e.getChild("Properties2")
-     .setAttribute("bLocked", "0");
+     .setAttribute("bStartsLocked", "0");
   }
 
 }

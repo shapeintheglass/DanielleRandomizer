@@ -1,17 +1,23 @@
 package randomizers.cosmetic;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import randomizers.BaseRandomizer;
 import settings.Settings;
 import utils.BodyConfig;
+import utils.BodyConfig.Gender;
 import utils.BodyConsts;
 import utils.FileConsts;
 
@@ -19,20 +25,29 @@ public class BodyRandomizer extends BaseRandomizer {
 
   public BodyRandomizer(Settings s) {
     super(s);
+    Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS);
+    Arrays.sort(BodyConsts.BODIES_WITH_BARE_HANDS);
+    Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR);
+    Arrays.sort(BodyConsts.ACCESSORY_COMPATIBLE_BODIES);
   }
 
   private static final String HUMANS_FINAL_OUT = "objects\\\\characters\\\\humansfinal";
   private static final String HUMANS_FILE_TEMPLATE = "objects\\characters\\humansfinal\\%s";
-  
+
   public void randomize() {
     for (File f : new File(FileConsts.HUMANS_FINAL_DIR).listFiles()) {
       Path out = settings.getTempPatchDir()
-          .resolve(String.format(HUMANS_FILE_TEMPLATE, f.getName()));
+                         .resolve(String.format(HUMANS_FILE_TEMPLATE, f.getName()));
+
       try {
-        settings.getTempPatchDir().resolve(HUMANS_FINAL_OUT).toFile().mkdirs();
-        out.toFile().createNewFile();
+        settings.getTempPatchDir()
+                .resolve(HUMANS_FINAL_OUT)
+                .toFile()
+                .mkdirs();
+        out.toFile()
+           .createNewFile();
         randomizeBody(f, out.toFile());
-      } catch (IOException e) {
+      } catch (IOException | JDOMException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
         return;
@@ -40,60 +55,32 @@ public class BodyRandomizer extends BaseRandomizer {
     }
   }
 
-  private void randomizeBody(File in, File out) throws FileNotFoundException, IOException {
-    BodyConfig bc = new BodyConfig(r);
-    logger.info("Body randomizer: Parsing " + in.getName());
+  private void randomizeBody(File in, File out) throws FileNotFoundException, IOException, JDOMException {
+    SAXBuilder saxBuilder = new SAXBuilder();
+    Document document = saxBuilder.build(in);
+    Element root = document.getRootElement();
 
-    boolean keepHair = false;
-
-    try (BufferedReader r = new BufferedReader(new FileReader(in));
-        BufferedWriter w = new BufferedWriter(new FileWriter(out))) {
-      String line = r.readLine();
-      while (line != null) {
-        String lowerCase = line.toLowerCase();
-
-        // Look for the first line of the character def, which decides whether
-        // this is a
-        // male or female body
-        if (lowerCase.contains(BodyConsts.FEMALE_BODY_TYPE)) {
-          bc.setGender(BodyConfig.Gender.FEMALE);
-        } else if (lowerCase.contains(BodyConsts.MALE_BODY_TYPE)) {
-          bc.setGender(BodyConfig.Gender.MALE);
-        } else if (lowerCase.contains(BodyConsts.LARGE_MALE_BODY_TYPE)) {
-          //logger.info("Skipping because this body type is not supported yet");
-        }
-
-        if (line.contains("CA_SKIN")) {
-          if (lowerCase.contains("body_skin")
-              || lowerCase.contains("aname=\"body\"")) {
-            line = bc.generateRandomBody();
-            //logger.info("Chose body type " + bc.bodyModel);
-          } else if (lowerCase.contains("head_skin")) {
-            if (bc.generateRandomHeadAndHairForBody(line)) {
-              line = bc.getHeadAndHair();
-            } else {
-              keepHair = true;
-            }
-            //logger.info("Chose head type " + bc.headModel + ", hair type "
-            //    + bc.hairModel + ", and hair color " + bc.hairColor);
-          } else if (lowerCase.contains("hair_skin")) {
-            if (!keepHair) {
-              line = "";
-            }
-          } else {
-            // If the type is not accounted for here, remove it
-            line = "";
-            //logger.info("Ignoring line: " + line);
-          }
-        }
-
-        w.append(line);
-        if (!line.equals("")) {
-          w.append('\n');
-        }
-        line = r.readLine();
-      }
+    String modelFile = root.getChild("Model")
+                           .getAttributeValue("File")
+                           .toLowerCase();
+    Gender gender = Gender.UNKNOWN;
+    if (modelFile.contains(BodyConsts.FEMALE_BODY_TYPE)) {
+      gender = BodyConfig.Gender.FEMALE;
+    } else if (modelFile.contains(BodyConsts.MALE_BODY_TYPE)) {
+      gender = BodyConfig.Gender.MALE;
+    } else {
+      // Body type not supported, do not overwrite
+      out.delete();
+      return;
     }
-  }
 
+    Element attachmentList = root.getChild("AttachmentList");
+
+    BodyConfig bc = new BodyConfig(in.getName(), gender, attachmentList, r);
+    bc.generateAttachmentsForGender();
+
+    XMLOutputter xmlOutput = new XMLOutputter();
+    xmlOutput.setFormat(Format.getPrettyFormat());
+    xmlOutput.output(document, new FileOutputStream(out));
+  }
 }

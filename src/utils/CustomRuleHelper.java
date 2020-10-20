@@ -22,10 +22,6 @@ public class CustomRuleHelper {
   // Number of attempts to make at getting a valid tag before giving up.
   private static final int MAX_ATTEMPTS = 10;
 
-  // Known prefixes at the start of entity names.
-  private static final String[] PREFIXES = { "ArkGameplayArchitecture", "ArkHumans", "ArkNpcs", "ArkPhysicsProps",
-      "ArkPickups", "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons", "ArkInteractiveReadable" };
-
   // Arbitrary name to assign to this rule.
   private String name;
   // Tags to filter on
@@ -39,83 +35,18 @@ public class CustomRuleHelper {
   // Tags not to output. Takes priority.
   private List<String> doNotOutputTags;
 
-  GiveUpBehaviour gub = GiveUpBehaviour.RETURN_BEST_MATCH;
-
-  // Defines what to do if we can't find a valid match
-  public enum GiveUpBehaviour {
-    RETURN_BEST_MATCH, RETURN_NULL
-  }
-
-  public CustomRuleHelper() {
-    this.inputTags = new ArrayList<>();
-    this.outputTags = new ArrayList<>();
-    this.outputTagsWeights = new ArrayList<>();
-    this.doNotTouchTags = new ArrayList<>();
-    this.doNotOutputTags = new ArrayList<>();
-    Arrays.sort(PREFIXES);
-  }
-
-  public CustomRuleHelper setName(String name) {
+  public CustomRuleHelper(String name, List<String> inputTags, List<String> outputTags, List<Integer> outputTagsWeights,
+      List<String> doNotTouchTags, List<String> doNotOutputTags) {
     this.name = name;
-    return this;
+    this.inputTags = inputTags;
+    this.outputTags = outputTags;
+    this.outputTagsWeights = outputTagsWeights;
+    this.doNotTouchTags = doNotTouchTags;
+    this.doNotOutputTags = doNotOutputTags;
   }
 
   public String getName() {
     return name;
-  }
-
-  public CustomRuleHelper addInputTags(String... inputTags) {
-    if (inputTags == null) {
-      return this;
-    }
-    this.inputTags.addAll(Arrays.asList(inputTags));
-    return this;
-  }
-
-  public CustomRuleHelper addOutputTags(String... outputTags) {
-    if (outputTags == null) {
-      return this;
-    }
-    this.outputTags.addAll(Arrays.asList(outputTags));
-    return this;
-  }
-
-  public CustomRuleHelper addOutputTagsWeights(Integer... outputTagsWeights) {
-    if (outputTagsWeights == null) {
-      return this;
-    }
-    this.outputTagsWeights.addAll(Arrays.asList(outputTagsWeights));
-    return this;
-  }
-
-  public CustomRuleHelper addOutputTagsWeights(String... outputTagsWeights) {
-    if (outputTagsWeights == null) {
-      return this;
-    }
-    Arrays.stream(outputTagsWeights)
-          .forEach(s -> this.outputTagsWeights.add(Integer.parseInt(s)));
-    return this;
-  }
-
-  public CustomRuleHelper addDoNotTouchTags(String... doNotTouchTags) {
-    if (doNotTouchTags == null) {
-      return this;
-    }
-    this.doNotTouchTags.addAll(Arrays.asList(doNotTouchTags));
-    return this;
-  }
-
-  public CustomRuleHelper addDoNotOutputTags(String... doNotOutputTags) {
-    if (doNotOutputTags == null) {
-      return this;
-    }
-    this.doNotOutputTags.addAll(Arrays.asList(doNotOutputTags));
-    return this;
-  }
-
-  public CustomRuleHelper setGiveUpBehaviour(GiveUpBehaviour gub) {
-    this.gub = gub;
-    return this;
   }
 
   /**
@@ -180,13 +111,7 @@ public class CustomRuleHelper {
       }
     }
 
-    switch (gub) {
-      default:
-      case RETURN_BEST_MATCH:
-        return toSwap;
-      case RETURN_NULL:
-        return null;
-    }
+    return toSwap;
   }
 
   @Override
@@ -203,5 +128,86 @@ public class CustomRuleHelper {
     ArrayList<String> tags = new ArrayList<>();
     tags.addAll(Utils.getTags(fullEntity));
     return tags;
+  }
+
+  public static class Builder {
+    // Arbitrary name to assign to this rule.
+    private String name;
+    // Tags to filter on
+    private List<String> inputTags;
+    // Tags to pull randomly from
+    private List<String> outputTags;
+    // Relative weights to assign to the spawn rates for these tags
+    private List<Integer> outputTagsWeights;
+    // Tags not to filter on. Takes priority.
+    private List<String> doNotTouchTags;
+    // Tags not to output. Takes priority.
+    private List<String> doNotOutputTags;
+
+    public Builder() {
+      inputTags = new ArrayList<>();
+      outputTags = new ArrayList<>();
+      outputTagsWeights = new ArrayList<>();
+      doNotTouchTags = new ArrayList<>();
+      doNotOutputTags = new ArrayList<>();
+    }
+
+    public Builder setName(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public Builder addInputTags(String... inputTags) {
+      if (inputTags == null) {
+        return this;
+      }
+      this.inputTags.addAll(Arrays.asList(inputTags));
+      return this;
+    }
+
+    public Builder addOutputTags(String... outputTags) {
+      if (outputTags == null) {
+        return this;
+      }
+      this.outputTags.addAll(Arrays.asList(outputTags));
+      return this;
+    }
+
+    public Builder addOutputTagsWeights(Integer... outputTagsWeights) {
+      if (outputTagsWeights == null) {
+        return this;
+      }
+      this.outputTagsWeights.addAll(Arrays.asList(outputTagsWeights));
+      return this;
+    }
+
+    public Builder addOutputTagsWeights(String... outputTagsWeights) {
+      if (outputTagsWeights == null) {
+        return this;
+      }
+      Arrays.stream(outputTagsWeights)
+            .forEach(s -> this.outputTagsWeights.add(Integer.parseInt(s)));
+      return this;
+    }
+
+    public Builder addDoNotTouchTags(String... doNotTouchTags) {
+      if (doNotTouchTags == null) {
+        return this;
+      }
+      this.doNotTouchTags.addAll(Arrays.asList(doNotTouchTags));
+      return this;
+    }
+
+    public Builder addDoNotOutputTags(String... doNotOutputTags) {
+      if (doNotOutputTags == null) {
+        return this;
+      }
+      this.doNotOutputTags.addAll(Arrays.asList(doNotOutputTags));
+      return this;
+    }
+
+    public CustomRuleHelper build() {
+      return new CustomRuleHelper(name, inputTags, outputTags, outputTagsWeights, doNotTouchTags, doNotOutputTags);
+    }
   }
 }

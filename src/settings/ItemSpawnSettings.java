@@ -17,9 +17,12 @@ public class ItemSpawnSettings {
       return;
     }
     for (GenericFilterJson filter : jsonSettings.getFilters()) {
-      customRuleHelpers.add(new CustomRuleHelper().addInputTags(filter.getInputTags())
-          .addOutputTags(filter.getOutputTags()).addOutputTagsWeights(filter.getOutputWeights())
-          .addDoNotTouchTags(filter.getDoNotTouchTags()).addDoNotOutputTags(filter.getDoNotOutputTags()));
+      customRuleHelpers.add(new CustomRuleHelper.Builder().addInputTags(filter.getInputTags())
+                                                          .addOutputTags(filter.getOutputTags())
+                                                          .addOutputTagsWeights(filter.getOutputWeights())
+                                                          .addDoNotTouchTags(filter.getDoNotTouchTags())
+                                                          .addDoNotOutputTags(filter.getDoNotOutputTags())
+                                                          .build());
     }
   }
 

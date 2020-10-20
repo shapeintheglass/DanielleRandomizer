@@ -9,10 +9,13 @@ public class BodyConsts {
   public static final String[] FEMALE_BODIES = { "corporate/corporate_genfemalebody01",
       "mechanic/mechanic_genfemalebody01", "plumber/plumber_genfemalebody01", "scientist/scientist_genfemalebody01",
       "security/security_genfemalebody01", "morgankarl/morgankarlgenderselect_genfemale" };
+  public static final Integer[] FEMALE_BODIES_WEIGHTS = { 5, 5, 1, 5, 5, 1 };
+
   public static final String[] MALE_BODIES = { "corporate/corporate_genmalebody01", "dahl/dahl_genmalebody01",
       "labcoat/labcoat_genmalebody01", "mechanic/mechanic_genmalebody01", "scientist/scientist_genmalebody01",
       "security/security_genmalebody01", "volunteer/volunteer_genmalebody01",
       "morgankarl/morgankarlgenderselect_genmale" };
+  public static final Integer[] MALE_BODIES_WEIGHTS = { 5, 1, 5, 5, 5, 5, 5, 1 };
 
   public static final String[] ACCESSORY_COMPATIBLE_BODIES = { "corporate/corporate_genfemalebody01",
       "mechanic/mechanic_genfemalebody01", "scientist/scientist_genfemalebody01", "security/security_genfemalebody01",
@@ -38,10 +41,10 @@ public class BodyConsts {
 
   public static final String[] HEADS_NOT_TO_MODIFY = { "husk/husk_genfemalehead01", "husk/husk_genmalehead01", };
   // Used to make sure that hands aren't mismatched with heads
-  public static final String[] HEADS_THAT_SHOULD_NOT_HAVE_WHITE_HANDS = { "drigwe/igwe_genmalehead01",
-      "genmale/genmale_head04", "husk/husk_genmalehead01", "saraelazar/saraelazar_genfemalehead01",
-      "genfemale/genfemale_head04" };
-  public static final String[] BODIES_WITH_WHITE_HANDS = { "volunteer/volunteer_genmalebody01",
+  public static final String[] HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS = { "husk/husk_genfemalehead01",
+      "husk/husk_genmalehead01", "drigwe/igwe_genmalehead01", "genmale/genmale_head04", "husk/husk_genmalehead01",
+      "saraelazar/saraelazar_genfemalehead01", "genfemale/genfemale_head04" };
+  public static final String[] BODIES_WITH_BARE_HANDS = { "volunteer/volunteer_genmalebody01",
       "morgankarl/morgankarlgenderselect_genmale", "morgankarl/morgankarlgenderselect_genfemale" };
 
   // Used to make sure that "complete" heads do not have hair
@@ -118,11 +121,8 @@ public class BodyConsts {
       + "  <Attachment Inheritable=\"0\" Type=\"CA_SKIN\" AName=\"hands\" Binding=\"objects/characters/humans/labcoat/labcoat_genmalehands01.skin\" Material=\"objects/characters/humans/scientist/scientist_genmalebody01.mtl\" Flags=\"0\"/>";
   public static final String FEMALE_LAB_COAT_LIMBS = "<Attachment Inheritable=\"0\" Type=\"CA_SKIN\" AName=\"legs_arms\" Binding=\"objects/characters/humans/labcoat/labcoat_genfemalelegsarms01.skin\" Material=\"objects/characters/humans/scientist/scientist_genfemalebody01.mtl\" Flags=\"0\"/>";
 
-  // (body_skin | head_skin | hair_skin), binding.skin, material.mtl, (0 | 1)
-  public static final String SKIN_PATTERN = "  <Attachment Inheritable=\"1\" Type=\"CA_SKIN\" AName=\"%s\" Binding=\"%s.skin\" Material=\"%s.mtl\" SkinJointsOverrideSkeleton=\"%d\" Flags=\"0\"/>";
-
-  public static final String PLUMBER_HAT = "objects/characters/humans/plumber/plumber_genfemalehat01";
-  public static final String PLUMBER_HAT_MTL = "objects/characters/humans/plumber/plumber_genfemalebody01";
+  public static final String PLUMBER_HAT = "plumber/plumber_genfemalehat01";
+  public static final String PLUMBER_HAT_MTL = "plumber/plumber_genfemalebody01";
 
   public static final String[] ACCESSORIES_FEMALE = {
       "objects/accessories/propulsionpack/propulsionpack3p_genfemale01" };

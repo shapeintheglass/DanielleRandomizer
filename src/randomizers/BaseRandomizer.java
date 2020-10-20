@@ -23,7 +23,6 @@ public abstract class BaseRandomizer {
     this.settings = s;
     this.r = settings.getRandom();
     this.logger = Logger.getGlobal();
-    r.setSeed(settings.getSeed());
   }
 
   /**
