@@ -126,6 +126,7 @@ public class BodyConfig {
     if (bodyModel.contains("labcoat_genmalebody01")) {
       // Legs/arms for lab coat body
       toAdd.add(createAttachment("legs", "labcoat/labcoat_genmalelegs01", "scientist/scientist_genmalebody01"));
+      toAdd.add(createAttachment("hands", "labcoat/labcoat_genmalehands01", "scientist/scientist_genmalebody01"));
     }
     if (bodyModel.contains("plumber/plumber_genfemalebody01")) {
       // Hat for plumber body
