@@ -17,14 +17,14 @@ Randomizes various entities in Prey 2017 via an external executable that overwri
 
 ### Running the randomizer
 
-1. Ensure danielle_randomizer.exe is in the same directory as the data/ folder and settings.json file.
+1. Ensure danielle_randomizer.exe is in the same directory as the included data/ folder and settings.json file.
 2. Run danielle_randomizer.exe to start up the GUI.
 3. Specify Prey install directory.
 4. Specify desired randomization settings.
 5. Click "Install" to generate randomized files and install them.
 6. Click "Uninstall" to revert any changes made by this randomizer.
 
-### Uninstalling
+### Uninstalling the randomizer
 
 * Ideally, use the "Uninstall" function within the randomizer GUI to uninstall any generated files before uninstalling. If this isn't possible, you can use the GOG or Steam client to redownload any missing or modified files.
 * Delete patch_randomizer.pak in Prey\GameSDK\Precache, if it exists.
@@ -52,15 +52,18 @@ If you change settings.json while the randomizer GUI is active, click "Refresh s
 
 ####Item spawn presets - Affects entities that are spawned directly in the level
 
-* Randomize all - Shuffles all items and replaces them with new items at a (mostly) sane spawn rate. Should not affect items that are essential for story progress.
-* Whiskey and cigars - Replaces ALL items with whiskey and cigars. Not tested.
-* More mimics - Shuffles some items, and replaces others with mimics. Not tested.
+* Randomize all - Randomizes all items and replaces them with new items at a (mostly) sane spawn rate. Should not affect items that are essential for story progress.
+* Randomize all, no story items - Same as randomize all, but does not spawn duplicates of critical story items (ex. you won't find arming keys randomly while walking around)
+* Whiskey and cigars - Replaces all items with whiskey and cigars.
+* All reployers - Replaces all items with reployers.
 
 ####NPC spawn presets - Affects entities that are spawned from an NPC spawner
 
-* Randomize all - Shuffles all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression.
-* All nightmares - Why would you use this setting? Not tested.
-* All mimics - Replaces all NPCs with mimics. Not tested.
+* Randomize all - Randomizes all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression.
+* All nightmares - Replaces all typhon with nightmares. Why would you use this setting? Who would think this is a good idea?
+* All mimics - Replaces all typhon with mimics.
+* Typhon to humans - Replaces all typhon with humans.
+* All Dahl - Replaces all typhon with Dahl.
 
 ####Other options
 
@@ -75,13 +78,15 @@ If you change settings.json while the randomizer GUI is active, click "Refresh s
 The ultimate goal of this option is to make all of Talos I accessible from the get-go (and keep it that way) so that connections between maps can eventually be randomized. Currently, this is what it does:
 
 * Neuromod Division - Unlocks the two neighboring doors in Morgan's apartment hallway (in case you can't get a wrench)
-* Lobby - Moves the lift Technopath from the Arboretum level to the Lobby near Alice Aiken's corpse. Make sure to kill it here so that you can unlock the lift early!
+* Lobby - Moves the lift Technopath from the Arboretum level of the Lobby to the tunnel between the Lobby and Neuromod Division. Make sure to kill it here so that you can unlock the lift early!
 * Psychotronics - Unlocks the second floor containment doors (in case you can't get psychoscope scans) and unlocks live exam doors (in case something goes wrong with the voltaic phantom encounter cutscene)
 
 ## Known issues
 
 * Items that are hard-coded to spawn in certain containers cannot be randomized (changing the class type of these items results in crashing the game).
 * Temporary directories will not be deleted if there was an issue during randomization/install. If these start to pile up, feel free to delete them manually.
+* Game can occasionally crash when quitting to menu.
+* If save files are not manually deleted before starting a new save slot, game can crash if old level files are left over from the previous save.
 
 ## Authors
 
@@ -91,6 +96,10 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
 
 * 0.0
     * Early prototyping/testing
+* 0.1
+    * Bug fixes with settings, log files
+    * Adjust presets
+    * Add tooltips to GUI
 
 ## Licensing info
 
