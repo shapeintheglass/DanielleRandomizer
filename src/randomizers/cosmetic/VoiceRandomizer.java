@@ -60,7 +60,6 @@ public class VoiceRandomizer extends BaseRandomizer {
           .mkdirs();
     for (File file : srcDir.listFiles()) {
       String fileName = file.getName();
-      logger.info(String.format("Voice randomizer: parsing %s\n", fileName));
       if (file.isDirectory()) {
         // Call recursively
         randomizeAndWrite(file, outDir.resolve(fileName));

@@ -1,18 +1,17 @@
 package json;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GenericSpawnPresetJson {
+public class GenericSpawnPresetJson implements NameAndDescription {
   private String name;
   private String desc;
   private GenericFilterJson[] filters;
 
-
   @JsonCreator
-  public GenericSpawnPresetJson(
-      @JsonProperty("name") String name, 
-      @JsonProperty("desc") String desc,
+  public GenericSpawnPresetJson(@JsonProperty("name") String name, @JsonProperty("desc") String desc,
       @JsonProperty("filters") GenericFilterJson[] filters) {
     this.name = name;
     this.desc = desc;
@@ -42,9 +41,9 @@ public class GenericSpawnPresetJson {
   public void setFilters(GenericFilterJson[] filters) {
     this.filters = filters;
   }
-  
+
   @Override
   public String toString() {
-    return name;
+    return String.format("Name: %s\tDesc: %s\tFilters: %s", name, desc, Arrays.toString(filters));
   }
 }

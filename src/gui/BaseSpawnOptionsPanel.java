@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class BaseSpawnOptionsPanel<T> extends JPanel {
+import json.NameAndDescription;
+
+public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel {
 
   private static final long serialVersionUID = -1427304877583197708L;
 
@@ -44,6 +46,7 @@ public class BaseSpawnOptionsPanel<T> extends JPanel {
   }
 
   public void setRadioLabels(T[] newSettings) {
+    settings = new ArrayList<>();
     // Remove old radio buttons, if they exist
     for (int i = 0; i < radioButtons.size(); i++) {
       this.remove(radioButtons.get(i));
@@ -53,9 +56,10 @@ public class BaseSpawnOptionsPanel<T> extends JPanel {
 
     for (int i = 0; i < newSettings.length; i++) {
       String id = String.format("%s_%s", prefix, i);
-      JRadioButton btn = new JRadioButton(newSettings[i].toString());
+      JRadioButton btn = new JRadioButton(newSettings[i].getName());
       btn.addActionListener(listener);
       btn.setActionCommand(id);
+      btn.setToolTipText(newSettings[i].getDesc());
       if (i == 0) {
         btn.setSelected(true);
       }

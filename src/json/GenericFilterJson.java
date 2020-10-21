@@ -1,5 +1,7 @@
 package json;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,14 +12,11 @@ public class GenericFilterJson {
   private String[] outputWeights;
   private String[] doNotTouchTags;
   private String[] doNotOutputTags;
-  
-  
+
   @JsonCreator
-  public GenericFilterJson(
-      @JsonProperty("input_tags") String[] inputTags, 
-      @JsonProperty("output_tags") String[] outputTags,
-      @JsonProperty("output_weights") String[] outputWeights, 
-      @JsonProperty("do_not_touch_tags") String[] doNotTouchTags, 
+  public GenericFilterJson(@JsonProperty("input_tags") String[] inputTags,
+      @JsonProperty("output_tags") String[] outputTags, @JsonProperty("output_weights") String[] outputWeights,
+      @JsonProperty("do_not_touch_tags") String[] doNotTouchTags,
       @JsonProperty("do_not_output_tags") String[] doNotOutputTags) {
     this.setInputTags(inputTags);
     this.setOutputTags(outputTags);
@@ -64,5 +63,11 @@ public class GenericFilterJson {
 
   public void setDoNotOutputTags(String[] doNotOutputTags) {
     this.doNotOutputTags = doNotOutputTags;
+  }
+
+  public String toString() {
+    return String.format("input tags: %s\noutput tags: %s\noutput weights: %s\ndo not touch: %s\ndo not output: %s",
+        Arrays.toString(inputTags), Arrays.toString(outputTags), Arrays.toString(outputWeights),
+        Arrays.toString(doNotTouchTags), Arrays.toString(doNotOutputTags));
   }
 }

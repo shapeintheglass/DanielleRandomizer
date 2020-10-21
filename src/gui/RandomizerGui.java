@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
+import json.GenericFilterJson;
 import json.GenericSpawnPresetJson;
 import json.SpawnPresetsJson;
 import randomizers.cosmetic.BodyRandomizer;
@@ -109,7 +110,11 @@ public class RandomizerGui {
   PrintStream logStream;
   private JButton installButton;
 
+  private Logger logger;
+  private PrintStream fileStream;
+
   public RandomizerGui() {
+    logger = Logger.getGlobal();
     mainFrame = new JFrame("Prey Randomizer");
     mainFrame.setSize(600, 300);
     mainFrame.addWindowListener(new WindowAdapter() {
@@ -162,6 +167,7 @@ public class RandomizerGui {
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fileChooser.setMultiSelectionEnabled(false);
     JLabel currentFileLabel = new JLabel("Prey folder location:");
+    currentFileLabel.setToolTipText("Game directory, ending in Prey/");
 
     currentFile = new JLabel(installDir);
     currentFile.setBorder(BorderFactory.createRaisedSoftBevelBorder());
@@ -192,14 +198,19 @@ public class RandomizerGui {
 
     ItemListener listener = new OnCheckBoxClick();
     voiceLinesCheckBox = new JCheckBox("Randomize voice lines", randomizeVoices);
+    voiceLinesCheckBox.setToolTipText("Shuffles voice lines within voice actor");
     voiceLinesCheckBox.addItemListener(listener);
     bodiesCheckBox = new JCheckBox("Randomize NPC bodies", randomizeBodies);
+    bodiesCheckBox.setToolTipText("Randomizes human NPC body parts");
     bodiesCheckBox.addItemListener(listener);
     apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's apartment", addApartmentLoot);
+    apartmentLootCheckBox.setToolTipText("Adds useful equipment in containers around Morgan's apartment");
     apartmentLootCheckBox.addItemListener(listener);
     lootTablesCheckBox = new JCheckBox("Randomize loot tables", randomizeLootTables);
+    lootTablesCheckBox.setToolTipText("Randomizes contents of loot tables according to item spawn settings");
     lootTablesCheckBox.addItemListener(listener);
     openStationCheckBox = new JCheckBox("Open up Talos I (WIP)", openUpStation);
+    openStationCheckBox.setToolTipText("Unlocks doors around Talos I to make traversal easier");
     openStationCheckBox.addItemListener(listener);
     otherGameplayOptionsPanel.add(voiceLinesCheckBox);
     otherGameplayOptionsPanel.add(bodiesCheckBox);
@@ -223,6 +234,8 @@ public class RandomizerGui {
 
       enemySpawnSettings = settingsJson.getEnemySpawnSettings();
       enemySpawnPanel.setRadioLabels(enemySpawnSettings);
+
+      validateSettings();
     } catch (Exception e) {
       statusLabel.setText("Error occurred while parsing " + JSON_SETTINGS_FILE);
       JOptionPane.showMessageDialog(mainFrame,
@@ -241,15 +254,19 @@ public class RandomizerGui {
         mainFrame.revalidate();
       }
     });
+    refreshSettings.setToolTipText("Updates item/NPC spawn options if you modified settings.json");
     installButton = new JButton("Install");
     installButton.setActionCommand("install");
     installButton.addActionListener(new OnInstallClick());
+    installButton.setToolTipText("Randomizes according to above settings and installs in game directory");
     uninstallButton = new JButton("Uninstall");
     uninstallButton.setActionCommand("uninstall");
     uninstallButton.addActionListener(new OnUninstallClick());
+    uninstallButton.setToolTipText("Removes any mods added by this randomizer, restoring game files to previous state");
     JButton closeButton = new JButton("Close");
     closeButton.setActionCommand("close");
     closeButton.addActionListener(new OnCloseClick());
+    closeButton.setToolTipText("Closes this GUI");
     buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     buttonsPanel.add(statusLabel);
     buttonsPanel.add(refreshSettings);
@@ -322,8 +339,12 @@ public class RandomizerGui {
   private void setupLogFile() {
     try {
       File loggerFile = new File(LOG_OUTPUT_FILE);
-      loggerFile.createNewFile();
-      PrintStream fileStream = new PrintStream(loggerFile);
+      if (!loggerFile.exists()) {
+        loggerFile.createNewFile();
+      }
+      if (fileStream == null) {
+        fileStream = new PrintStream(loggerFile);
+      }
       System.setErr(fileStream);
       System.setOut(fileStream);
     } catch (IOException e1) {
@@ -342,8 +363,6 @@ public class RandomizerGui {
 
       // Validation checks
 
-      // TODO: Validate settings preset file.
-
       try {
         seed = Long.parseLong(seedField.getText());
       } catch (NumberFormatException e) {
@@ -352,10 +371,10 @@ public class RandomizerGui {
         return;
       }
 
-      GenericFilterSettings itemSpawnSettings = new GenericFilterSettings(r,
-          itemSpawnPanel.getSettingsForId(itemSpawnIndex));
-      GenericFilterSettings enemySettings = new GenericFilterSettings(r,
-          enemySpawnPanel.getSettingsForId(enemySpawnIndex));
+      GenericSpawnPresetJson itemSettingsJson = itemSpawnPanel.getSettingsForId(itemSpawnIndex);
+      GenericFilterSettings itemSpawnSettings = new GenericFilterSettings(r, itemSettingsJson);
+      GenericSpawnPresetJson enemySettingsJson = enemySpawnPanel.getSettingsForId(enemySpawnIndex);
+      GenericFilterSettings enemySettings = new GenericFilterSettings(r, enemySettingsJson);
 
       TaggedDatabase database = EntityDatabase.getInstance();
       Settings settings = new Settings.Builder().setInstallDir(Paths.get(installDir))
@@ -364,6 +383,17 @@ public class RandomizerGui {
                                                 .setRand(r)
                                                 .setSeed(seed)
                                                 .build();
+
+      // Log settings info
+      logger.info(String.format("Install location: %s", installDir));
+      logger.info(String.format("Seed: %d", seed));
+      logger.info(String.format("Randomize voice lines: %b", randomizeVoices));
+      logger.info(String.format("Randomize bodies: %b", randomizeBodies));
+      logger.info(String.format("Apartment loot: %b", addApartmentLoot));
+      logger.info(String.format("Randomize loot tables: %b", randomizeLootTables));
+      logger.info(String.format("Open Talos I: %b", openUpStation));
+      logger.info(String.format("Item spawn settings: %s", itemSettingsJson));
+      logger.info(String.format("Enemy spawn settings: %s", enemySettingsJson));
 
       Installer installer = new Installer(settings);
 
@@ -461,5 +491,45 @@ public class RandomizerGui {
       System.exit(0);
     }
 
+  }
+
+  private void validateSettings() {
+    for (GenericSpawnPresetJson gspj : enemySpawnSettings) {
+      if (gspj.getFilters() == null) {
+        continue;
+      }
+      for (int i = 0; i < gspj.getFilters().length; i++) {
+        GenericFilterJson gfj = gspj.getFilters()[i];
+
+        if (gfj.getOutputTags() == null || gfj.getOutputWeights() == null) {
+          continue;
+        }
+
+        if (gfj.getOutputTags().length != gfj.getOutputWeights().length) {
+          logger.info(String.format(
+              "Invalid filter settings for enemy spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
+              gspj.getName(), i, gfj.getOutputTags().length, gfj.getOutputWeights().length));
+        }
+      }
+    }
+
+    for (GenericSpawnPresetJson gspj : itemSpawnSettings) {
+      if (gspj.getFilters() == null) {
+        continue;
+      }
+      for (int i = 0; i < gspj.getFilters().length; i++) {
+        GenericFilterJson gfj = gspj.getFilters()[i];
+
+        if (gfj.getOutputTags() == null || gfj.getOutputWeights() == null) {
+          continue;
+        }
+
+        if (gfj.getOutputTags().length != gfj.getOutputWeights().length) {
+          logger.info(String.format(
+              "Invalid filter settings for item spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
+              gspj.getName(), i, gfj.getOutputTags().length, gfj.getOutputWeights().length));
+        }
+      }
+    }
   }
 }

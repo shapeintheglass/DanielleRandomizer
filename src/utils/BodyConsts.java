@@ -31,13 +31,12 @@ public class BodyConsts {
   public static final String FEMALE_HEAD_HELMET = "objects/accessories/breather/breather3p/breather3p_genfemale01";
   public static final String FEMALE_HEAD_HELMET_MTL = "objects/accessories/breather/breather3p/breather1";
 
-  public static final String[] MALE_HEADS = { "aaroningram/aaroningram_genmale_head01", "dahl/dahl_genmalehead01",
-      "drcalvino/drcalvino_genmalehead01", "drigwe/igwe_genmalehead01", "genmale/genmale_head01",
-      "genmale/genmale_head01_psychoscope", "genmale/genmale_head01_psycho", "genmale/genmale_head02",
-      "genmale/genmale_head03", "genmale/genmale_head03_psychoscope", "genmale/genmale_head04",
-      "genmale/genmale_head05", "genmale/genmale_head06", "morgankarl/morgankarl_genmalehead01",
-      "volunteer/volunteer_genmalehead01", "volunteer/volunteer_genmalehead02", "volunteer/volunteer_genmalehead03",
-      "scientist/scientist_genmalehead01" };
+  public static final String[] MALE_HEADS = { "dahl/dahl_genmalehead01", "drcalvino/drcalvino_genmalehead01",
+      "drigwe/igwe_genmalehead01", "genmale/genmale_head01", "genmale/genmale_head01_psychoscope",
+      "genmale/genmale_head01_psycho", "genmale/genmale_head02", "genmale/genmale_head03",
+      "genmale/genmale_head03_psychoscope", "genmale/genmale_head04", "genmale/genmale_head05",
+      "genmale/genmale_head06", "morgankarl/morgankarl_genmalehead01", "volunteer/volunteer_genmalehead01",
+      "volunteer/volunteer_genmalehead02", "volunteer/volunteer_genmalehead03", "scientist/scientist_genmalehead01" };
 
   public static final String[] HEADS_NOT_TO_MODIFY = { "husk/husk_genfemalehead01", "husk/husk_genmalehead01", };
   // Used to make sure that hands aren't mismatched with heads
