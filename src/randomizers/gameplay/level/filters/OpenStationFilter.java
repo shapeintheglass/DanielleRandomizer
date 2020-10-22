@@ -3,13 +3,10 @@ package randomizers.gameplay.level.filters;
 import randomizers.gameplay.level.filters.rules.UnlockApartmentRule;
 import randomizers.gameplay.level.filters.rules.UnlockLobbyRule;
 import randomizers.gameplay.level.filters.rules.UnlockPsychotronicsRule;
-import settings.Settings;
 
 public class OpenStationFilter extends BaseFilter {
 
-  public OpenStationFilter(Settings s) {
-    super("OpenStationFilter", s);
-
+  public OpenStationFilter() {
     rules.add(new UnlockApartmentRule());
     rules.add(new UnlockPsychotronicsRule());
     rules.add(new UnlockLobbyRule());

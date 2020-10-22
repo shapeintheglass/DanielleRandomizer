@@ -3,7 +3,7 @@ package randomizers;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import settings.Settings;
+import json.SettingsJson;
 
 /**
  * Represents the interface for a randomizer.
@@ -14,14 +14,14 @@ import settings.Settings;
 public abstract class BaseRandomizer {
   String name;
 
-  protected Settings settings;
+  protected SettingsJson settings;
 
   protected Random r;
   protected Logger logger;
 
-  public BaseRandomizer(Settings s) {
+  public BaseRandomizer(SettingsJson s) {
     this.settings = s;
-    this.r = settings.getRandom();
+    this.r = new Random(s.getSeed());
     this.logger = Logger.getGlobal();
   }
 

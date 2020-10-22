@@ -1,8 +1,9 @@
 package randomizers.gameplay.level.filters;
 
 import databases.TaggedDatabase;
+import json.GenericRuleJson;
+import json.SettingsJson;
 import randomizers.gameplay.level.filters.rules.ArchetypeSwapRule;
-import settings.Settings;
 import utils.CustomRuleHelper;
 
 public class ItemSpawnFilter extends BaseFilter {
@@ -10,11 +11,18 @@ public class ItemSpawnFilter extends BaseFilter {
    * Pre-made combination of rules that specifically filters items in certain
    * settings.
    */
-  public ItemSpawnFilter(TaggedDatabase database, Settings s) {
-    super("ItemSpawnFilter", s);
+  public ItemSpawnFilter(TaggedDatabase database, SettingsJson s) {
+    if (s.getGameplaySettings()
+         .getItemSpawnSettings()
+         .getRules() == null) {
+      return;
+    }
 
-    for (CustomRuleHelper crh : s.getItemSpawnSettings().getCustomRuleHelpers()) {
-      rules.add(new ArchetypeSwapRule(database, s.getRandom(), crh));
+    for (GenericRuleJson grj : s.getGameplaySettings()
+                                .getItemSpawnSettings()
+                                .getRules()) {
+      CustomRuleHelper crh = new CustomRuleHelper(grj);
+      rules.add(new ArchetypeSwapRule(database, crh));
     }
   }
 }

@@ -2,51 +2,41 @@ package randomizers.gameplay.level.filters;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.jdom2.Element;
 
 import randomizers.gameplay.level.filters.rules.Rule;
-import settings.Settings;
 
 /**
- * Represents the implementation for a filter, which is a pre-made combination of rules.
+ * Represents the implementation for a filter, which is a pre-made combination
+ * of rules.
+ * 
  * @author Kida
  *
  */
 public abstract class BaseFilter {
 
-  List<Rule> rules;
+  protected List<Rule> rules;
 
-  String name;
-  Settings settings;
-
-  /**
-   * Initializes a filter with the given name and settings
-   * @param filterName
-   * @param s
-   */
-  public BaseFilter(String filterName, Settings s) {
-    this.name = filterName;
-    this.settings = s;
+  public BaseFilter() {
     rules = new ArrayList<>();
   }
 
   /**
    * Modifies the given entity in-place using a pre-built combination of rules.
-   * @param x
-   * @param levelDir
    */
-  public void filterEntity(Element e) {
+  public void filterEntity(Element e, Random r) {
     for (Rule rule : rules) {
-      if (rule.trigger(e)) {
-        rule.apply(e);
+      if (rule.trigger(e, r)) {
+        rule.apply(e, r);
         return;
       }
     }
   }
-  
-  public BaseFilter addRule(Rule r) {
-    rules.add(r);
+
+  public BaseFilter addRule(Rule rule) {
+    rules.add(rule);
     return this;
   }
 }

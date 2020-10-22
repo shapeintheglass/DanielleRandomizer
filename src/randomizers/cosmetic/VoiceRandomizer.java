@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import json.SettingsJson;
 import randomizers.BaseRandomizer;
-import settings.Settings;
 import utils.FileConsts;
 
 /**
@@ -34,16 +34,18 @@ public class VoiceRandomizer extends BaseRandomizer {
   private static Map<String, List<String>> CHARACTER_TO_DIALOG = new HashMap<String, List<String>>();
   private static Map<String, String> SWAPPED_LINES_MAP = new HashMap<String, String>();
 
-  public VoiceRandomizer(Settings s) {
+  private Path tempPatchDir;
+
+  public VoiceRandomizer(SettingsJson s, Path tempPatchDir) {
     super(s);
+    this.tempPatchDir = tempPatchDir;
   }
 
   /**
    * Randomizes voice lines and installs into temp directory
    */
   public void randomize() {
-    Path outputDir = settings.getTempPatchDir()
-                             .resolve("ark/dialog/dialoglogic");
+    Path outputDir = tempPatchDir.resolve("ark/dialog/dialoglogic");
 
     try {
       getDialogIds();
@@ -128,7 +130,7 @@ public class VoiceRandomizer extends BaseRandomizer {
           line = br.readLine();
         }
       }
-      Collections.shuffle(voiceLineIds, settings.getRandom());
+      Collections.shuffle(voiceLineIds, r);
       CHARACTER_TO_DIALOG.put(fileName, voiceLineIds);
     }
   }

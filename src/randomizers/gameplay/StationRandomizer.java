@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import graph.SimpleGraph;
+import json.SettingsJson;
 import randomizers.BaseRandomizer;
-import settings.Settings;
 
 public class StationRandomizer extends BaseRandomizer {
 
@@ -19,7 +19,7 @@ public class StationRandomizer extends BaseRandomizer {
     LOB, NDIV, PSY, HWLB, SBAY, ARB, LIFE, POWR, CBAY, EXT, GUTS, DSTO, CREW, BRDG,
   }
 
-  public StationRandomizer(Settings s) {
+  public StationRandomizer(SettingsJson s) {
     super(s);
     station = new SimpleGraph<>();
 

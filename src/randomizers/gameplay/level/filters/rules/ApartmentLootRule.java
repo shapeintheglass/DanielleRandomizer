@@ -1,6 +1,7 @@
 package randomizers.gameplay.level.filters.rules;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,13 +49,13 @@ public class ApartmentLootRule implements Rule {
                                                  .collect(Collectors.toMap(data -> data[0], data -> data[1]));
 
   @Override
-  public boolean trigger(Element e) {
+  public boolean trigger(Element e, Random r) {
     String name = e.getAttributeValue("Name");
     return name.equals(CONGRATS_NOTE_DAY_1) || name.equals(CONGRATS_NOTE_DAY_2) || NAME_TO_LOOT_TABLE.containsKey(name);
   }
 
   @Override
-  public void apply(Element e) {
+  public void apply(Element e, Random r) {
     String name = e.getAttributeValue("Name");
     if (NAME_TO_LOOT_TABLE.containsKey(name)) {
       e.getChild(PROPERTIES_ATTR)

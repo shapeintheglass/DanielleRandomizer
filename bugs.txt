@@ -1,0 +1,12 @@
+Bugs to fix
+
+Loot table does not copy over correctly
+
+Typhon to whitelist
+* Pool/cafeteria telepaths in Crew Quarters
+* Greenhouse telepath in Arboretum
+* Cargo bay typhon
+
+Things to unlock for open Talos
+* Power plant reactor
+* Deep Storage

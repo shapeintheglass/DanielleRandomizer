@@ -16,6 +16,8 @@ import json.NameAndDescription;
 
 public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel {
 
+  public static final String DELIMITER = ";";
+
   private static final long serialVersionUID = -1427304877583197708L;
 
   private JLabel headerLabel;
@@ -45,7 +47,7 @@ public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel 
     this.headerLabel.setText(header);
   }
 
-  public void setRadioLabels(T[] newSettings) {
+  public void setRadioLabels(T[] newSettings, String selected) {
     settings = new ArrayList<>();
     // Remove old radio buttons, if they exist
     for (int i = 0; i < radioButtons.size(); i++) {
@@ -55,12 +57,13 @@ public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel 
     radioButtons.clear();
 
     for (int i = 0; i < newSettings.length; i++) {
-      String id = String.format("%s_%s", prefix, i);
+      String id = String.format("%s%s%s", prefix, DELIMITER, newSettings[i].getName());
       JRadioButton btn = new JRadioButton(newSettings[i].getName());
       btn.addActionListener(listener);
       btn.setActionCommand(id);
       btn.setToolTipText(newSettings[i].getDesc());
-      if (i == 0) {
+      if (selected != null && newSettings[i].getName()
+                                            .equals(selected)) {
         btn.setSelected(true);
       }
       buttonGroup.add(btn);
@@ -70,7 +73,13 @@ public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel 
     }
   }
 
-  public T getSettingsForId(int index) {
-    return settings.get(index);
+  public T getSettingsByName(String name) {
+    for (T t : settings) {
+      if (t.getName()
+           .equals(name)) {
+        return t;
+      }
+    }
+    return null;
   }
 }

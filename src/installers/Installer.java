@@ -20,7 +20,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import settings.Settings;
 import utils.FileConsts;
 import utils.LevelConsts;
 import utils.Utils;
@@ -32,7 +31,6 @@ import utils.Utils;
  *
  */
 public class Installer {
-
   private static final String LEVEL_PAK_NAME = "level.pak";
   private static final String LEVEL_ZIP_NAME = "level.zip";
   private static final String BACKUP_LEVEL_PAK_NAME = "level_backup.pak";
@@ -42,9 +40,15 @@ public class Installer {
   private static final String PATCH_NAME = "patch_randomizer.pak";
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
 
-  private Settings s;
   private File patchFile;
   private Logger logger;
+
+  long now;
+
+  Path installDir;
+  Path tempDir;
+  Path tempPatchDir;
+  Path tempLevelDir;
 
   /**
    * Initialize the installer.
@@ -52,23 +56,24 @@ public class Installer {
    * @param installDir Prey install location
    * @param tempDir    Where to store temporary files
    */
-  public Installer(Settings s) {
-    this.s = s;
-    patchFile = s.getInstallDir()
-                 .resolve(INSTALL_LOCATION)
-                 .resolve(PATCH_NAME)
-                 .toFile();
+  public Installer(Path installDir, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
+    this.installDir = installDir;
+    this.tempDir = tempDir;
+    this.tempLevelDir = tempLevelDir;
+    this.tempPatchDir = tempPatchDir;
+
+    patchFile = installDir.resolve(INSTALL_LOCATION)
+                          .resolve(PATCH_NAME)
+                          .toFile();
     logger = Logger.getLogger("Installer");
   }
 
   public void install() throws IOException, InterruptedException {
     logger.info("Installer has begun!");
-    if (!s.getInstallDir()
-          .toFile()
-          .exists()) {
-      s.getInstallDir()
-       .toFile()
-       .mkdirs();
+    if (!installDir.toFile()
+                   .exists()) {
+      installDir.toFile()
+                .mkdirs();
     }
 
     installPatchDir();
@@ -76,27 +81,22 @@ public class Installer {
     installLevelFiles();
 
     logger.info("Deleting temporary install directories...");
-    Utils.deleteDirectory(s.getTempPatchDir()
-                           .toFile());
-    Utils.deleteDirectory(s.getTempLevelDir()
-                           .toFile());
-    s.getTempDir()
-     .resolve(PATCH_ZIP_NAME)
-     .toFile()
-     .deleteOnExit();
+    Utils.deleteDirectory(tempPatchDir.toFile());
+    Utils.deleteDirectory(tempLevelDir.toFile());
+    tempDir.resolve(PATCH_ZIP_NAME)
+           .toFile()
+           .deleteOnExit();
     logger.info("Done installing! Have a nice day.");
   }
 
   public boolean verifyInstallDir() {
     logger.info("Verifying install directory...");
-    return s.getInstallDir()
-            .resolve(INSTALL_LOCATION)
-            .toFile()
-            .exists()
-        && s.getInstallDir()
-            .resolve(LevelConsts.PREFIX)
-            .toFile()
-            .exists();
+    return installDir.resolve(INSTALL_LOCATION)
+                     .toFile()
+                     .exists()
+        && installDir.resolve(LevelConsts.PREFIX)
+                     .toFile()
+                     .exists();
   }
 
   public boolean verifyDataExists() {
@@ -122,19 +122,17 @@ public class Installer {
 
     // Copy required files over
     // TODO: Make this less of a hack
-    File npcGameEffectsDir = s.getTempPatchDir()
-                              .resolve("ark/npc")
-                              .toFile();
+    File npcGameEffectsDir = tempPatchDir.resolve("ark/npc")
+                                         .toFile();
     npcGameEffectsDir.mkdirs();
     Files.copy(Paths.get("data/ark/npcgameeffects.xml"), npcGameEffectsDir.toPath()
                                                                           .resolve("npcgameeffects.xml"));
 
     // Create temporary zip file in temp dir to store patch as a zip
-    Path tempPatchFileAsZip = s.getTempDir()
-                               .resolve(PATCH_ZIP_NAME);
+    Path tempPatchFileAsZip = tempDir.resolve(PATCH_ZIP_NAME);
 
     // Zip to temp zip file location
-    if (zipFilesInDir(s.getTempPatchDir(), tempPatchFileAsZip)) {
+    if (zipFilesInDir(tempPatchDir, tempPatchFileAsZip)) {
       // Copy to pak destination as a pak
       logger.info(String.format("Copying %s to %s", tempPatchFileAsZip, patchFile.toPath()));
       Files.copy(tempPatchFileAsZip, patchFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -152,14 +150,12 @@ public class Installer {
     logger.info("Backing up existing level files as level_backup.pak...");
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
-      Path levelPak = s.getInstallDir()
-                       .resolve(LevelConsts.PREFIX)
-                       .resolve(levelDir)
-                       .resolve(LEVEL_PAK_NAME);
-      Path levelPakNewName = s.getInstallDir()
-                              .resolve(LevelConsts.PREFIX)
-                              .resolve(levelDir)
-                              .resolve(BACKUP_LEVEL_PAK_NAME);
+      Path levelPak = installDir.resolve(LevelConsts.PREFIX)
+                                .resolve(levelDir)
+                                .resolve(LEVEL_PAK_NAME);
+      Path levelPakNewName = installDir.resolve(LevelConsts.PREFIX)
+                                       .resolve(levelDir)
+                                       .resolve(BACKUP_LEVEL_PAK_NAME);
 
       // Create backup dir if necessary
       levelPak.toFile()
@@ -194,19 +190,16 @@ public class Installer {
                                                   .resolve(LEVEL_ZIP_NAME);
 
       // Location to copy into for combined zip
-      s.getTempLevelDir()
-       .resolve(levelDir)
-       .toFile()
-       .mkdirs();
-      Path tempZipFile = s.getTempLevelDir()
-                          .resolve(levelDir)
-                          .resolve(LEVEL_ZIP_NAME);
+      tempLevelDir.resolve(levelDir)
+                  .toFile()
+                  .mkdirs();
+      Path tempZipFile = tempLevelDir.resolve(levelDir)
+                                     .resolve(LEVEL_ZIP_NAME);
 
       // Location of the mission file
-      Path missionFile = s.getTempLevelDir()
-                          .resolve(LevelConsts.PREFIX)
-                          .resolve(levelDir)
-                          .resolve(MISSION_FILE_NAME);
+      Path missionFile = tempLevelDir.resolve(LevelConsts.PREFIX)
+                                     .resolve(levelDir)
+                                     .resolve(MISSION_FILE_NAME);
 
       if (!missionFile.toFile()
                       .exists()) {
@@ -236,10 +229,9 @@ public class Installer {
       }
 
       // Copy zip over to final destination
-      Path levelPak = s.getInstallDir()
-                       .resolve(LevelConsts.PREFIX)
-                       .resolve(levelDir)
-                       .resolve(LEVEL_PAK_NAME);
+      Path levelPak = installDir.resolve(LevelConsts.PREFIX)
+                                .resolve(levelDir)
+                                .resolve(LEVEL_PAK_NAME);
       Files.copy(tempZipFile, levelPak, StandardCopyOption.REPLACE_EXISTING);
       logger.info(String.format("Installed level file %s (%d/%d)", levelPak, i + 1, LevelConsts.LEVEL_DIRS.length));
     }
@@ -258,7 +250,7 @@ public class Installer {
 
   // Remove files created by this installer
   public void uninstall() {
-    uninstall(s.getInstallDir(), logger);
+    uninstall(installDir, logger);
   }
 
   public static void uninstall(Path installDir, Logger logger) {

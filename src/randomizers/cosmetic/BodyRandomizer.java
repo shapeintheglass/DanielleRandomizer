@@ -14,8 +14,8 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import json.SettingsJson;
 import randomizers.BaseRandomizer;
-import settings.Settings;
 import utils.BodyConfig;
 import utils.BodyConfig.Gender;
 import utils.BodyConsts;
@@ -23,8 +23,11 @@ import utils.FileConsts;
 
 public class BodyRandomizer extends BaseRandomizer {
 
-  public BodyRandomizer(Settings s) {
+  Path tempPatchDir;
+
+  public BodyRandomizer(SettingsJson s, Path tempPatchDir) {
     super(s);
+    this.tempPatchDir = tempPatchDir;
     Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS);
     Arrays.sort(BodyConsts.BODIES_WITH_BARE_HANDS);
     Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR);
@@ -36,14 +39,12 @@ public class BodyRandomizer extends BaseRandomizer {
 
   public void randomize() {
     for (File f : new File(FileConsts.HUMANS_FINAL_DIR).listFiles()) {
-      Path out = settings.getTempPatchDir()
-                         .resolve(String.format(HUMANS_FILE_TEMPLATE, f.getName()));
+      Path out = tempPatchDir.resolve(String.format(HUMANS_FILE_TEMPLATE, f.getName()));
 
       try {
-        settings.getTempPatchDir()
-                .resolve(HUMANS_FINAL_OUT)
-                .toFile()
-                .mkdirs();
+        tempPatchDir.resolve(HUMANS_FINAL_OUT)
+                    .toFile()
+                    .mkdirs();
         out.toFile()
            .createNewFile();
         randomizeBody(f, out.toFile());

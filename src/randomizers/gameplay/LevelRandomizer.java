@@ -3,8 +3,10 @@ package randomizers.gameplay;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -13,9 +15,9 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import json.SettingsJson;
 import randomizers.BaseRandomizer;
 import randomizers.gameplay.level.filters.BaseFilter;
-import settings.Settings;
 import utils.FileConsts;
 import utils.LevelConsts;
 
@@ -28,13 +30,18 @@ import utils.LevelConsts;
  */
 public class LevelRandomizer extends BaseRandomizer {
 
-  private List<BaseFilter> filterList;
-
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
+  
+  private List<BaseFilter> filterList;
+  private Random r;
+  
+  private Path tempLevelDir;
 
-  public LevelRandomizer(Settings s) {
+  public LevelRandomizer(SettingsJson s, Path tempLevelDir) {
     super(s);
     filterList = new LinkedList<>();
+    r = new Random(s.getSeed());
+    this.tempLevelDir = tempLevelDir;
   }
 
   public LevelRandomizer addFilter(BaseFilter f) {
@@ -46,7 +53,7 @@ public class LevelRandomizer extends BaseRandomizer {
   public void randomize() {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
       File in = FileConsts.DATA_LEVELS.resolve(levelDir).resolve(MISSION_FILE_NAME).toFile();
-      File outDir = settings.getTempLevelDir().resolve(LevelConsts.PREFIX).resolve(levelDir).toFile();
+      File outDir = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir).toFile();
       outDir.mkdirs();
       File out = outDir.toPath().resolve(MISSION_FILE_NAME).toFile();
 
@@ -88,7 +95,7 @@ public class LevelRandomizer extends BaseRandomizer {
   // Filters the xml representation of an entity
   private void filterEntityXml(Element e) {
     for (BaseFilter filter : filterList) {
-      filter.filterEntity(e);
+      filter.filterEntity(e, r);
     }
   }
 }

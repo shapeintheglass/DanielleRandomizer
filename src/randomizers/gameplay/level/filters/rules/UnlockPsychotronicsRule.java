@@ -1,6 +1,7 @@
 package randomizers.gameplay.level.filters.rules;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import org.jdom2.Element;
 
@@ -23,14 +24,14 @@ public class UnlockPsychotronicsRule implements Rule {
   }
 
   @Override
-  public boolean trigger(Element e) {
+  public boolean trigger(Element e, Random r) {
     return Arrays.binarySearch(DOORS, e.getAttributeValue(NAME_ATTRIBUTE)) >= 0 && e.getAttributeValue("Layer")
                                                                                     .equals(
                                                                                         "Pyschotronics_DataAnalysis");
   }
 
   @Override
-  public void apply(Element e) {
+  public void apply(Element e, Random r) {
     e.getChild("Properties2")
      .setAttribute("bStartsLocked", "0");
   }

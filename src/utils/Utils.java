@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +16,15 @@ import java.util.Set;
 import org.jdom2.Element;
 
 public class Utils {
+  public static Path createTempDir(Path workingDir, String name) {
+    long now = new Date().getTime();
+    Path newTempDir = workingDir.resolve(String.format("temp_%8d_%s", now, name));
+    newTempDir.toFile()
+              .mkdirs();
+    newTempDir.toFile().deleteOnExit();
+    return newTempDir;
+  }
+
   public static <T> T getRandom(List<T> arr, Random r) {
     int index = r.nextInt(arr.size());
     return arr.get(index);
@@ -108,7 +118,9 @@ public class Utils {
   public static void copyDirectory(File fromDir, Path toDir) throws IOException {
     if (fromDir.isDirectory()) {
       for (File f : fromDir.listFiles()) {
-        toDir.resolve(f.getName()).toFile().mkdir();
+        toDir.resolve(f.getName())
+             .toFile()
+             .mkdir();
         copyDirectory(f, toDir.resolve(f.getName()));
       }
     } else {

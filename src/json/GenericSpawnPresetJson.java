@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GenericSpawnPresetJson implements NameAndDescription {
   private String name;
   private String desc;
-  private GenericFilterJson[] filters;
+  private GenericRuleJson[] rules;
 
   @JsonCreator
   public GenericSpawnPresetJson(@JsonProperty("name") String name, @JsonProperty("desc") String desc,
-      @JsonProperty("filters") GenericFilterJson[] filters) {
+      @JsonProperty("filters") GenericRuleJson[] rules) {
     this.name = name;
     this.desc = desc;
-    this.filters = filters;
+    this.rules = rules;
   }
 
   public String getName() {
@@ -34,16 +34,16 @@ public class GenericSpawnPresetJson implements NameAndDescription {
     this.desc = desc;
   }
 
-  public GenericFilterJson[] getFilters() {
-    return filters;
+  public GenericRuleJson[] getRules() {
+    return rules;
   }
 
-  public void setFilters(GenericFilterJson[] filters) {
-    this.filters = filters;
+  public void setRules(GenericRuleJson[] rules) {
+    this.rules = rules;
   }
 
   @Override
   public String toString() {
-    return String.format("Name: %s\tDesc: %s\tFilters: %s", name, desc, Arrays.toString(filters));
+    return String.format("Name: %s\tDesc: %s\tFilters: %s", name, desc, Arrays.toString(rules));
   }
 }

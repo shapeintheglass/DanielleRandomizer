@@ -16,17 +16,15 @@ import utils.CustomRuleHelper;
 public class NpcSpawnerSwapRule implements Rule {
 
   private TaggedDatabase database;
-  private Random r;
   private CustomRuleHelper crh;
 
-  public NpcSpawnerSwapRule(TaggedDatabase database, Random r, CustomRuleHelper crh) {
+  public NpcSpawnerSwapRule(TaggedDatabase database, CustomRuleHelper crh) {
     this.database = database;
-    this.r = r;
     this.crh = crh;
   }
 
   @Override
-  public boolean trigger(Element e) {
+  public boolean trigger(Element e, Random r) {
     // Triggers on ArkNpcSpawners
     if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass")
                                                        .equals("ArkNpcSpawner")) {
@@ -44,7 +42,7 @@ public class NpcSpawnerSwapRule implements Rule {
   }
 
   @Override
-  public void apply(Element e) {
+  public void apply(Element e, Random r) {
     String toSwapStr = crh.getEntityToSwapStr(database, r);
     Element properties = e.getChild("Properties");
     properties.setAttribute("sNpcArchetype", toSwapStr);

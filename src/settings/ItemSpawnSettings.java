@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import json.GenericFilterJson;
+import json.GenericRuleJson;
 import json.GenericSpawnPresetJson;
 import utils.CustomRuleHelper;
 
@@ -13,10 +13,10 @@ public class ItemSpawnSettings {
 
   public ItemSpawnSettings(Random r, GenericSpawnPresetJson jsonSettings) {
     customRuleHelpers = new ArrayList<>();
-    if (jsonSettings == null || jsonSettings.getFilters() == null) {
+    if (jsonSettings == null || jsonSettings.getRules() == null) {
       return;
     }
-    for (GenericFilterJson filter : jsonSettings.getFilters()) {
+    for (GenericRuleJson filter : jsonSettings.getRules()) {
       customRuleHelpers.add(new CustomRuleHelper.Builder().addInputTags(filter.getInputTags())
                                                           .addOutputTags(filter.getOutputTags())
                                                           .addOutputTagsWeights(filter.getOutputWeights())

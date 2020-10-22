@@ -6,6 +6,9 @@ import java.util.Random;
 import org.jdom2.Element;
 
 import databases.TaggedDatabase;
+import json.GenericRuleJson;
+import json.SettingsJson;
+import utils.CustomRuleHelper;
 import utils.DatabaseUtils;
 import utils.Utils;
 
@@ -20,35 +23,39 @@ public class ContainerSpawnRule implements Rule {
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
   private TaggedDatabase database;
-  private Random r;
+  private SettingsJson settings;
 
-  public ContainerSpawnRule(TaggedDatabase database, Random r) {
+  public ContainerSpawnRule(TaggedDatabase database, SettingsJson settings) {
     this.database = database;
-    this.r = r;
+    this.settings = settings;
   }
 
-  public boolean trigger(Element e) {
-    // Broadly apply to all flowgraph scripts
+  public boolean trigger(Element e, Random r) {
+    // Broadly apply to all flowgraph scripts that spawn an item matching the given
+    // rule
     List<Element> nodes = getNodes(e);
     if (nodes == null) {
       return false;
     }
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
-        return true;
+      if (n.getAttributeValue("Class")
+           .equals(ITEM_ADD_KEYWORD)) {
+        Element input = n.getChild("Inputs");
+        return triggerOnInput(input, e.getAttributeValue("Name"));
       }
     }
     return false;
   }
 
-  public void apply(Element e) {
+  public void apply(Element e, Random r) {
     // Iterate through nodes until we find an item add node
     List<Element> nodes = getNodes(e);
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
+      if (n.getAttributeValue("Class")
+           .equals(ITEM_ADD_KEYWORD)) {
         Element inputs = n.getChild("Inputs");
         String archetypeStr = inputs.getAttributeValue("archetype");
-        if (archetypeStr == null || archetypeStr.isEmpty()) {
+        if (archetypeStr == null || archetypeStr.isEmpty() || !triggerOnInput(inputs, e.getAttributeValue("Name"))) {
           return;
         }
         Element fullEntity = database.getEntityByName(Utils.stripPrefix(archetypeStr));
@@ -75,5 +82,23 @@ public class ContainerSpawnRule implements Rule {
       return null;
     }
     return nodesContainer.getChildren();
+  }
+
+  private boolean triggerOnInput(Element input, String name) {
+    String archetype = input.getAttributeValue("archetype");
+    if (settings.getGameplaySettings()
+                .getItemSpawnSettings()
+                .getRules() == null) {
+      return false;
+    }
+    for (GenericRuleJson grj : settings.getGameplaySettings()
+                                       .getItemSpawnSettings()
+                                       .getRules()) {
+      CustomRuleHelper crh = new CustomRuleHelper(grj);
+      if (crh.trigger(database, archetype, name)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

@@ -17,17 +17,15 @@ import utils.Utils;
 public class ArchetypeSwapRule implements Rule {
 
   private TaggedDatabase database;
-  private Random r;
   private CustomRuleHelper crh;
 
-  public ArchetypeSwapRule(TaggedDatabase database, Random r, CustomRuleHelper crh) {
+  public ArchetypeSwapRule(TaggedDatabase database, CustomRuleHelper crh) {
     this.database = database;
-    this.r = r;
     this.crh = crh;
   }
 
   @Override
-  public boolean trigger(Element e) {
+  public boolean trigger(Element e, Random r) {
     // Check if input tag matches
     if (e.getAttributeValue("Archetype") != null && e.getAttributeValue("EntityClass") != null) {
       return crh.trigger(database, e.getAttributeValue("Archetype"));
@@ -37,7 +35,7 @@ public class ArchetypeSwapRule implements Rule {
   }
 
   @Override
-  public void apply(Element e) {
+  public void apply(Element e, Random r) {
     Element toSwap = crh.getEntityToSwap(database, r);
     String newArchetype = Utils.getNameForEntity(toSwap);
     e.setAttribute("Archetype", newArchetype);

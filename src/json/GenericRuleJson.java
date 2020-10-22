@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GenericFilterJson {
+public class GenericRuleJson {
 
   private String[] inputTags;
   private String[] outputTags;
@@ -14,7 +14,7 @@ public class GenericFilterJson {
   private String[] doNotOutputTags;
 
   @JsonCreator
-  public GenericFilterJson(@JsonProperty("input_tags") String[] inputTags,
+  public GenericRuleJson(@JsonProperty("input_tags") String[] inputTags,
       @JsonProperty("output_tags") String[] outputTags, @JsonProperty("output_weights") String[] outputWeights,
       @JsonProperty("do_not_touch_tags") String[] doNotTouchTags,
       @JsonProperty("do_not_output_tags") String[] doNotOutputTags) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Set;
@@ -16,16 +17,18 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import databases.TaggedDatabase;
+import json.GenericRuleJson;
+import json.SettingsJson;
 import randomizers.BaseRandomizer;
-import settings.Settings;
 import utils.CustomRuleHelper;
 import utils.Utils;
 
 public class LootTableRandomizer extends BaseRandomizer {
 
   private static final String SOURCE = "data/ark/loottables.xml";
-  private static final String OUTPUT = "ark/items/loottables.xml";
-  
+  private static final String OUTPUT_DIR = "ark/items";
+  private static final String OUTPUT_NAME = "loottables.xml";
+
 //Offset to add to spawn chance, just so that spawns are more likely
   private static final int PERCENT_OFFSET = 50;
 
@@ -33,37 +36,43 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
 
-  TaggedDatabase database;
+  private TaggedDatabase database;
 
-  public LootTableRandomizer(TaggedDatabase database, Settings s) {
+  private File inputFile;
+  private File outputFile;
+
+  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir) throws IOException {
     super(s);
     this.database = database;
+
+    File outputDir = tempPatchDir.resolve(OUTPUT_DIR)
+                                 .toFile();
+    outputDir.mkdirs();
+
+    inputFile = new File(SOURCE);
+    outputFile = outputDir.toPath()
+                          .resolve(OUTPUT_NAME)
+                          .toFile();
+    outputFile.createNewFile();
   }
 
   public void copyFile() throws IOException {
-    Files.copy(new File(SOURCE).toPath(), settings.getTempPatchDir()
-                                                  .resolve(OUTPUT),
-        StandardCopyOption.REPLACE_EXISTING);
+    Files.copy(inputFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
   }
 
   @Override
   public void randomize() {
-    File in = new File(SOURCE);
-    File out = settings.getTempPatchDir()
-                       .resolve(OUTPUT)
-                       .toFile();
-    out.getParentFile()
-       .mkdirs();
+    outputFile.getParentFile()
+              .mkdirs();
     try {
-      out.createNewFile();
+      outputFile.createNewFile();
     } catch (IOException e1) {
-      // TODO Auto-generated catch block
       e1.printStackTrace();
     }
 
     try {
       SAXBuilder saxBuilder = new SAXBuilder();
-      Document document = saxBuilder.build(in);
+      Document document = saxBuilder.build(inputFile);
       Element root = document.getRootElement();
       List<Element> lootTables = root.getChild("Tables")
                                      .getChildren();
@@ -74,9 +83,8 @@ public class LootTableRandomizer extends BaseRandomizer {
 
       XMLOutputter xmlOutput = new XMLOutputter();
       xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(document, new FileOutputStream(out));
+      xmlOutput.output(document, new FileOutputStream(outputFile));
     } catch (JDOMException | IOException e1) {
-      // TODO Auto-generated catch block
       e1.printStackTrace();
     }
   }
@@ -98,9 +106,12 @@ public class LootTableRandomizer extends BaseRandomizer {
                                 .getChildren();
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
-        List<CustomRuleHelper> rules = settings.getItemSpawnSettings()
-                                               .getCustomRuleHelpers();
-        for (CustomRuleHelper crh : rules) {
+
+        for (GenericRuleJson grj : settings.getGameplaySettings()
+                                           .getItemSpawnSettings()
+                                           .getRules()) {
+          CustomRuleHelper crh = new CustomRuleHelper(grj);
+
           // Explicitly prevent physics props from appearing in loot tables
           for (int i = 0; i < MAX_ATTEMPTS; i++) {
             if (crh.trigger(database, oldArchetype)) {

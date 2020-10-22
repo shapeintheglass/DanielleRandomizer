@@ -9,6 +9,7 @@ import java.util.Set;
 import org.jdom2.Element;
 
 import databases.TaggedDatabase;
+import json.GenericRuleJson;
 
 /**
  * Low-level rule that allows getting a random entity given a series of
@@ -22,8 +23,6 @@ public class CustomRuleHelper {
   // Number of attempts to make at getting a valid tag before giving up.
   private static final int MAX_ATTEMPTS = 10;
 
-  // Arbitrary name to assign to this rule.
-  private String name;
   // Tags to filter on
   private List<String> inputTags;
   // Tags to pull randomly from
@@ -35,18 +34,25 @@ public class CustomRuleHelper {
   // Tags not to output. Takes priority.
   private List<String> doNotOutputTags;
 
+  public CustomRuleHelper(GenericRuleJson gfj) {
+    this.inputTags = Arrays.asList(gfj.getInputTags());
+    this.outputTags = Arrays.asList(gfj.getOutputTags());
+    this.outputTagsWeights = new ArrayList<>(gfj.getOutputWeights().length);
+    Arrays.stream(gfj.getOutputWeights())
+          .forEach(s -> {
+            outputTagsWeights.add(Integer.parseInt(s));
+          });
+    this.doNotTouchTags = Arrays.asList(gfj.getDoNotTouchTags());
+    this.doNotOutputTags = Arrays.asList(gfj.getDoNotOutputTags());
+  }
+
   public CustomRuleHelper(String name, List<String> inputTags, List<String> outputTags, List<Integer> outputTagsWeights,
       List<String> doNotTouchTags, List<String> doNotOutputTags) {
-    this.name = name;
     this.inputTags = inputTags;
     this.outputTags = outputTags;
     this.outputTagsWeights = outputTagsWeights;
     this.doNotTouchTags = doNotTouchTags;
     this.doNotOutputTags = doNotOutputTags;
-  }
-
-  public String getName() {
-    return name;
   }
 
   /**
@@ -66,9 +72,8 @@ public class CustomRuleHelper {
    * @return
    */
   public boolean trigger(TaggedDatabase database, String entityName, String nameInLevel) {
-    // Remove prefix
-    int dotIndex = entityName.indexOf('.');
-    entityName = entityName.substring(dotIndex + 1);
+    // TODO: Intelligently detect if this has a library prefix
+    entityName = Utils.stripPrefix(entityName);
 
     List<String> tags = getTagsForEntity(database, entityName);
     if (tags == null) {
@@ -112,11 +117,6 @@ public class CustomRuleHelper {
     }
 
     return toSwap;
-  }
-
-  @Override
-  public String toString() {
-    return name;
   }
 
   private ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
