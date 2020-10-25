@@ -573,9 +573,10 @@ public class RandomizerGui {
                          .isAddLootToApartment()) {
         levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
       }
-      
-      if (currentSettings.getGameplaySettings().isRandomizeStation()) {
-        levelRandomizer = levelRandomizer.addFilter(new StationConnectivityFilter(new Random()));
+
+      if (currentSettings.getGameplaySettings()
+                         .isRandomizeStation()) {
+        levelRandomizer = levelRandomizer.addFilter(new StationConnectivityFilter(currentSettings));
       }
 
       levelRandomizer.randomize();

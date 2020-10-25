@@ -1,0 +1,1125 @@
+Oct 25, 2020 1:22:56 AM gui.RandomizerGui$OnInstallClick actionPerformed
+INFO: Current settings:
+Oct 25, 2020 1:22:57 AM gui.RandomizerGui$OnInstallClick actionPerformed
+INFO: {"release_version":"0.2","install_dir":"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey","seed":4485706903164967556,"cosmetic_settings":{"randomize_bodies":true,"randomize_voicelines":true},"gameplay_settings":{"randomize_loot":false,"add_loot_to_apartment":true,"open_station":true,"randomize_neuromods":false,"enemy_spawn_settings":{"name":"Randomize all","desc":"Randomize all enemies","filters":[{"input_tags":["ArkNpcs","Operators\\Generic\\Corrupted"],"output_tags":["Mimic","BasePhantom","Cystoids","ApexTentacle","EliteMimic","ArkPoltergeist","Operators\\Generic\\Corrupted","Phantoms","Named Phantoms","ArkNightmare","Overseers"],"output_weights":[20,20,20,15,10,5,8,5,5,1,3],"do_not_touch_tags":["ArkNpcSpawner_Weaver6","ArkNpcSpawner_Weaver2","ArkNpcSpawner_Weaver4","ArkNpcSpawner_Technopath1","Spawner_GreenhouseTelepath"],"do_not_output_tags":["Tentacle_Large_Guard","Tentacle_Medium_Guard","Tentacle_Small_Guard","FakeTechnopath","Cystoid_IgnorePlayer"]}]},"item_spawn_settings":{"name":"Randomize all","desc":"Randomize all items","filters":[{"input_tags":["Neuromod_Calibration","Neuromod","MissionItems","FabricationPlans","ArkPsychoscope","ZeroGSuit","Weapons","Mods","Medical","Ammo","Crafting","Food","RecyclerJunk","SpareParts","SuitPatchKit","Misc","ArkBreakable","Science","Apartment","Luxury","Office","Kitchen","Chairs","Bathroom","Garden","Gym","Reployer","RecyclerTrap","Stickynote_Mimic"],"output_tags":["Neuromod","MissionItems","FabricationPlans","ArkPsychoscope","ZeroGSuit","Weapons","Mods","Medical","Ammo","Crafting","Food","RecyclerJunk","SpareParts","SuitPatchKit","Misc","ArkBreakable","Science","Apartment","Luxury","Office","Kitchen","Chairs","Bathroom","Garden","Gym","Reployer","Stickynote_Mimic"],"output_weights":[1,1,1,1,1,1,1,2,8,15,5,30,1,1,10,30,30,30,30,30,30,30,30,30,30,1,1],"do_not_touch_tags":["Data","MissionItems","BigNullwaveTransmitterFabPlan","AlexStationKeyFabPlan","MorganStationKeyFabPlan","PropulsionSystemFabPlan","Psychoscope","ZeroGSuit","Weapons.Wrench1"],"do_not_output_tags":["Architecture","Gameplay","Industrial","Light_Fixtures","Static_ArkLights","Shotgun_Golden","DoubleWrench"]}]},"unlock_all_scans":true,"randomize_station":true}}
+Oct 25, 2020 1:22:57 AM installers.Installer verifyDataExists
+INFO: Verifying existence of data/ folder...
+Oct 25, 2020 1:22:57 AM installers.Installer verifyInstallDir
+INFO: Verifying install directory...
+Oct 25, 2020 1:22:57 AM installers.Installer testInstall
+INFO: Verifying ability to install randomizer mod...
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 1 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 2 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 3 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 4 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 5 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 6 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 7 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 8 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 9 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 10 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 11 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 12 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 13 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 14 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 15 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 16 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 17 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 18 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 19 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Failed to find connection after 20 attempts
+java.lang.Exception: Could not find a valid connection!
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.createNewConnectivity(StationConnectivityFilter.java:202)
+	at randomizers.gameplay.level.filters.StationConnectivityFilter.<init>(StationConnectivityFilter.java:115)
+	at gui.RandomizerGui$OnInstallClick.actionPerformed(RandomizerGui.java:579)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: Found in 21 attempts
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.StationConnectivityFilter <init>
+INFO: executive/crewfacilities:
+	Door.Door_LevelTransition_Default1: engineering/lifesupport
+research/lobby:
+	LevelTransition_LifeSupport: executive/arboretum
+	LevelTransition_Psychotronics: research/shuttlebay
+	LevelTransition_Arboretum: engineering/lifesupport
+	LevelTransition_Hardware: research/prototype
+	LevelTransition_ShuttleBay: research/simulationlabs
+	LevelTransition_SimLabs: engineering/cargobay
+executive/corporateit:
+	Door.Door_LevelTransition_Default2: executive/arboretum
+engineering/cargobay:
+	Door.Door_LevelTransition_Default2: research/zerog_utilitytunnels
+	Door.Door_LevelTransition_Exterior1: research/lobby
+research/shuttlebay:
+	LTDoor_ToLobby: research/lobby
+	LTDoor_ToGUTs: research/psychotronics
+executive/bridge:
+	Door.Door_LevelTransition_Default1: research/zerog_utilitytunnels
+engineering/lifesupport:
+	Door.Door_LevelTransition_Default4: executive/crewfacilities
+	Door.Door_LevelTransition_Default5: research/lobby
+	Door.Door_LevelTransition_Default6: executive/arboretum
+research/zerog_utilitytunnels:
+	Door.Door_LevelTransition_Default1: engineering/cargobay
+	Door.Door_LevelTransition_Default2: research/psychotronics
+	Door.Door_LevelTransition_Default3: executive/bridge
+	Door.Door_LevelTransition_Exterior1: executive/arboretum
+executive/arboretum:
+	Door.Door_LevelTransition_Default1: executive/corporateit
+	Door.Door_LevelTransition_Default5: engineering/powersource
+	Door.Door_LevelTransition_Default3: research/zerog_utilitytunnels
+	Door.Door_LevelTransition_Default8: engineering/lifesupport
+	Door.Door_LevelTransition_Default6: research/lobby
+research/psychotronics:
+	Door.Door_LevelTransition_Default1: research/shuttlebay
+	Door.Door_LevelTransition_Default2: research/zerog_utilitytunnels
+engineering/powersource:
+	Door.Door_LevelTransition_Default1: executive/arboretum
+research/prototype:
+	LevelTransitionDoor_ToLobby: research/lobby
+research/simulationlabs:
+	Door.Door_LevelTransition_Default1: research/lobby
+
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\endgame\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\endgame\mission_mission0.xml
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\engineering\cargobay\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\engineering\cargobay\mission_mission0.xml
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: engineering/cargobay: Updating transition 4349723564886052417 to 1713490239377285936
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: engineering/cargobay: Updating transition 4349723564895209499 to 4349723564886052417
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\engineering\lifesupport\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\engineering\lifesupport\mission_mission0.xml
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: engineering/lifesupport: Updating transition 15659330456296333985 to 844024417252490146
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: engineering/lifesupport: Updating transition 1713490239377285936 to 1713490239377285936
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: engineering/lifesupport: Updating transition 6732635291182790112 to 1713490239386284818
+Oct 25, 2020 1:22:57 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\engineering\powersource\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\engineering\powersource\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.BlastDoor_Medium4
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: engineering/powersource: Updating transition 4349723564895209499 to 1713490239386284818
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\executive\arboretum\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\executive\arboretum\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/arboretum: Updating transition 844024417275035158 to 6732635291182790112
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/arboretum: Updating transition 4349723564886052417 to 4349723564886052417
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/arboretum: Updating transition 1713490239377738413 to 4349723564895209499
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/arboretum: Updating transition 844024417252490146 to 1713490239377738413
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/arboretum: Updating transition 1713490239377285936 to 1713490239377285936
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\executive\bridge\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\executive\bridge\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/bridge: Updating transition 1713490239386284818 to 4349723564886052417
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\executive\corporateit\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\executive\corporateit\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/corporateit: Updating transition 1713490239386284818 to 1713490239386284818
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\executive\crewfacilities\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\executive\crewfacilities\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: executive/crewfacilities: Updating transition 1713490239386284818 to 4349723564895209499
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\research\lobby\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\research\lobby\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/lobby: Updating transition 4349723564895209499 to 1713490239386284818
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/lobby: Updating transition 844024417263019221 to 844024417263019221
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking LevelTransition_ShuttleBay
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/lobby: Updating transition 1713490239386284988 to 12889009724983807463
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking LevelTransition_Psychotronics
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/lobby: Updating transition 11824555372632688907 to 1713490239386284988
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/lobby: Updating transition 12889009724983807463 to 15659330456296333985
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/lobby: Updating transition 1713490239386284818 to 4349723564895209499
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\research\prototype\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\research\prototype\mission_mission0.xml
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/prototype: Updating transition 1713490239377285936 to 1713490239377285936
+Oct 25, 2020 1:22:58 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\research\psychotronics\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\research\psychotronics\mission_mission0.xml
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/psychotronics: Updating transition 4349723564886052417 to 4349723564886052417
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default33
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default22
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default24
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Large3
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default20
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default19
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/psychotronics: Updating transition 1713490239377285936 to 1713490239386284988
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default18
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default28
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.BlastDoor_Medium_NoAuto1
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default27
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.Door_Sliding_Double_Default32
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.BlastDoor_Medium2
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\research\shuttlebay\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\research\shuttlebay\mission_mission0.xml
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/shuttlebay: Updating transition 4349723564886052417 to 11824555372632688907
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/shuttlebay: Updating transition 1713490239377285936 to 1713490239377285936
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\research\simulationlabs\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\research\simulationlabs\mission_mission0.xml
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/simulationlabs: Updating transition 1713490239377285936 to 1713490239377285936
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking ApartmentDoor_Fake1
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking ApartmentDoor_Fake3
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\research\zerog_utilitytunnels\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\research\zerog_utilitytunnels\mission_mission0.xml
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/zerog_utilitytunnels: Updating transition 1713490239386284988 to 11824555372632688907
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/zerog_utilitytunnels: Updating transition 11824555372632688907 to 15659330456296333985
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking KeycardReader.KeycardReader_Default2
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/zerog_utilitytunnels: Updating transition 1713490239386284818 to 844024417275035158
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.StationConnectivityRule apply
+INFO: research/zerog_utilitytunnels: Updating transition 15659330456296333985 to 1713490239386284818
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.level.filters.rules.BaseUnlockDoorsRule apply
+INFO: Unlocking Door.BlastDoor_Small6
+Oct 25, 2020 1:22:59 AM randomizers.gameplay.LevelRandomizer randomize
+INFO: filtering level file: data\levels\station\exterior\mission_mission0.xml --> .\temp_1603614177032_deleteme\level\gamesdk\levels\campaign\station\exterior\mission_mission0.xml
+Oct 25, 2020 1:22:59 AM installers.Installer install
+INFO: Installer has begun!
+Oct 25, 2020 1:22:59 AM installers.Installer installPatchDir
+INFO: ----INSTALLING PATCH FILE...----
+Oct 25, 2020 1:22:59 AM installers.Installer installPatchDir
+INFO: Copying .\temp_1603614177032_deleteme\patch_randomizer.zip to C:\Program Files (x86)\Steam\steamapps\common\Prey\GameSDK\Precache\patch_randomizer.pak
+Oct 25, 2020 1:22:59 AM installers.Installer installPatchDir
+INFO: ----DONE INSTALLING PATCH FILE!----
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Backing up existing level files as level_backup.pak...
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\endgame\level_backup.pak already exists, not overwriting. (1/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\engineering\cargobay\level_backup.pak already exists, not overwriting. (2/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\engineering\lifesupport\level_backup.pak already exists, not overwriting. (3/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\engineering\powersource\level_backup.pak already exists, not overwriting. (4/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\arboretum\level_backup.pak already exists, not overwriting. (5/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\bridge\level_backup.pak already exists, not overwriting. (6/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\corporateit\level_backup.pak already exists, not overwriting. (7/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\crewfacilities\level_backup.pak already exists, not overwriting. (8/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\lobby\level_backup.pak already exists, not overwriting. (9/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\prototype\level_backup.pak already exists, not overwriting. (10/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\psychotronics\level_backup.pak already exists, not overwriting. (11/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\shuttlebay\level_backup.pak already exists, not overwriting. (12/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\simulationlabs\level_backup.pak already exists, not overwriting. (13/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\zerog_utilitytunnels\level_backup.pak already exists, not overwriting. (14/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Level backup file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\station\exterior\level_backup.pak already exists, not overwriting. (15/15)
+Oct 25, 2020 1:22:59 AM installers.Installer backupLevelFiles
+INFO: Finished backing up level files.
+Oct 25, 2020 1:22:59 AM installers.Installer installLevelFiles
+INFO: ----INSTALLING NEW LEVEL FILES...----
+Oct 25, 2020 1:22:59 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\endgame\level.pak (1/15)
+Oct 25, 2020 1:23:00 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\engineering\cargobay\level.pak (2/15)
+Oct 25, 2020 1:23:00 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\engineering\lifesupport\level.pak (3/15)
+Oct 25, 2020 1:23:00 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\engineering\powersource\level.pak (4/15)
+Oct 25, 2020 1:23:01 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\arboretum\level.pak (5/15)
+Oct 25, 2020 1:23:01 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\bridge\level.pak (6/15)
+Oct 25, 2020 1:23:02 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\corporateit\level.pak (7/15)
+Oct 25, 2020 1:23:02 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\executive\crewfacilities\level.pak (8/15)
+Oct 25, 2020 1:23:02 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\lobby\level.pak (9/15)
+Oct 25, 2020 1:23:03 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\prototype\level.pak (10/15)
+Oct 25, 2020 1:23:03 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\psychotronics\level.pak (11/15)
+Oct 25, 2020 1:23:04 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\shuttlebay\level.pak (12/15)
+Oct 25, 2020 1:23:04 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\simulationlabs\level.pak (13/15)
+Oct 25, 2020 1:23:04 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\research\zerog_utilitytunnels\level.pak (14/15)
+Oct 25, 2020 1:23:05 AM installers.Installer installLevelFiles
+INFO: Installed level file C:\Program Files (x86)\Steam\steamapps\common\Prey\gamesdk\levels\campaign\station\exterior\level.pak (15/15)
+Oct 25, 2020 1:23:05 AM installers.Installer installLevelFiles
+INFO: ----DONE INSTALLING NEW LEVEL FILES!----
+Oct 25, 2020 1:23:05 AM installers.Installer install
+INFO: Deleting temporary install directories...
+Oct 25, 2020 1:23:05 AM installers.Installer install
+INFO: Done installing! Have a nice day.
