@@ -56,6 +56,7 @@ import randomizers.gameplay.level.filters.FlowgraphFilter;
 import randomizers.gameplay.level.filters.ItemSpawnFilter;
 import randomizers.gameplay.level.filters.MorgansApartmentFilter;
 import randomizers.gameplay.level.filters.OpenStationFilter;
+import randomizers.gameplay.level.filters.StationConnectivityFilter;
 import utils.Utils;
 
 /**
@@ -75,6 +76,7 @@ public class RandomizerGui {
   private static final boolean DEFAULT_RANDOMIZE_BODIES_VALUE = true;
   private static final boolean DEFAULT_RANDOMIZE_NEUROMODS_VALUE = true;
   private static final boolean DEFAULT_UNLOCK_ALL_SCANS_VALUE = true;
+  private static final boolean DEFAULT_RANDOMIZE_STATTION_VALUE = true;
 
   private static final String DEFAULT_INSTALL_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
 
@@ -96,6 +98,7 @@ public class RandomizerGui {
   private JCheckBox openStationCheckBox;
   private JCheckBox randomizeNeuromodsCheckBox;
   private JCheckBox unlockScansCheckBox;
+  private JCheckBox randomizeStationCheckBox;
 
   private JLabel statusLabel;
   private JButton installButton;
@@ -152,7 +155,7 @@ public class RandomizerGui {
         new CosmeticSettingsJson(DEFAULT_RANDOMIZE_BODIES_VALUE, DEFAULT_RANDOMIZE_VOICELINES_VALUE),
         new GameplaySettingsJson(DEFAULT_RANDOMIZE_LOOT_VALUE, DEFAULT_ADD_LOOT_TO_APARTMENT_VALUE,
             DEFAULT_OPEN_STATION_VALUE, DEFAULT_RANDOMIZE_NEUROMODS_VALUE, DEFAULT_UNLOCK_ALL_SCANS_VALUE,
-            defaultEnemySpawnPreset, defaultItemSpawnPreset));
+            DEFAULT_RANDOMIZE_STATTION_VALUE, defaultEnemySpawnPreset, defaultItemSpawnPreset));
     File lastUsedSettingsFile = new File(SAVED_SETTINGS_FILE);
     if (lastUsedSettingsFile.exists()) {
       try {
@@ -267,6 +270,11 @@ public class RandomizerGui {
     unlockScansCheckBox.addItemListener(listener);
     unlockScansCheckBox.setToolTipText("Removes scan requirement for all typhon neuromods");
 
+    randomizeStationCheckBox = new JCheckBox("Randomize station connections", currentSettings.getGameplaySettings()
+                                                                                             .isRandomizeStation());
+    randomizeStationCheckBox.addItemListener(listener);
+    randomizeStationCheckBox.setToolTipText("Shuffles connections between levels");
+
     otherGameplayOptionsPanel.add(voiceLinesCheckBox);
     otherGameplayOptionsPanel.add(bodiesCheckBox);
     otherGameplayOptionsPanel.add(apartmentLootCheckBox);
@@ -274,6 +282,7 @@ public class RandomizerGui {
     otherGameplayOptionsPanel.add(openStationCheckBox);
     otherGameplayOptionsPanel.add(randomizeNeuromodsCheckBox);
     otherGameplayOptionsPanel.add(unlockScansCheckBox);
+    otherGameplayOptionsPanel.add(randomizeStationCheckBox);
 
     optionsPanel.setLayout(new GridLayout(1, 3));
     optionsPanel.add(itemSpawnPanel);
@@ -308,8 +317,8 @@ public class RandomizerGui {
       mainFrame.pack();
     } catch (Exception e) {
       statusLabel.setText("Error occurred while parsing " + ALL_PRESETS_FILE);
-      JOptionPane.showMessageDialog(mainFrame,
-          String.format("An error occurred while parsing %s: %s", ALL_PRESETS_FILE, e.getMessage()));
+      JOptionPane.showMessageDialog(mainFrame, String.format("An error occurred while parsing %s: %s", ALL_PRESETS_FILE,
+          e.getMessage()));
     }
   }
 
@@ -422,6 +431,9 @@ public class RandomizerGui {
       } else if (source == unlockScansCheckBox) {
         currentSettings.getGameplaySettings()
                        .toggleUnlockAllScans();
+      } else if (source == randomizeStationCheckBox) {
+        currentSettings.getGameplaySettings()
+                       .toggleRandomizeStation();
       }
     }
 
@@ -542,10 +554,15 @@ public class RandomizerGui {
         new NeuromodTreeRandomizer(currentSettings, tempPatchDir).unlockAllScans();
       }
 
-      LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings,
-          tempLevelDir).addFilter(new ItemSpawnFilter(database, currentSettings))
-                       .addFilter(new FlowgraphFilter(database, currentSettings))
-                       .addFilter(new EnemyFilter(database, currentSettings));
+      LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, tempLevelDir).addFilter(
+          new ItemSpawnFilter(database, currentSettings))
+                                                                                          .addFilter(
+                                                                                              new FlowgraphFilter(
+                                                                                                  database,
+                                                                                                  currentSettings))
+                                                                                          .addFilter(new EnemyFilter(
+                                                                                              database,
+                                                                                              currentSettings));
 
       if (currentSettings.getGameplaySettings()
                          .isOpenStation()) {
@@ -555,6 +572,10 @@ public class RandomizerGui {
       if (currentSettings.getGameplaySettings()
                          .isAddLootToApartment()) {
         levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
+      }
+      
+      if (currentSettings.getGameplaySettings().isRandomizeStation()) {
+        levelRandomizer = levelRandomizer.addFilter(new StationConnectivityFilter(new Random()));
       }
 
       levelRandomizer.randomize();
@@ -582,8 +603,8 @@ public class RandomizerGui {
 
   }
 
-  private void writeLastUsedSettingsToFile(String lastUsedSettingsPath)
-      throws JsonGenerationException, JsonMappingException, IOException {
+  private void writeLastUsedSettingsToFile(String lastUsedSettingsPath) throws JsonGenerationException,
+      JsonMappingException, IOException {
     File lastUsedSettingsFile = new File(lastUsedSettingsPath);
     lastUsedSettingsFile.createNewFile();
     new ObjectMapper().writerFor(SettingsJson.class)
@@ -631,16 +652,14 @@ public class RandomizerGui {
         }
 
         if (gfj.getOutputWeights()
-               .size() != 0
-            && gfj.getOutputTags()
-                  .size() != gfj.getOutputWeights()
-                                .size()) {
+               .size() != 0 && gfj.getOutputTags()
+                                  .size() != gfj.getOutputWeights()
+                                                .size()) {
           logger.info(String.format(
               "Invalid filter settings for %s spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
               name, gspj.getName(), i, gfj.getOutputTags()
-                                          .size(),
-              gfj.getOutputWeights()
-                 .size()));
+                                          .size(), gfj.getOutputWeights()
+                                                      .size()));
         }
       }
     }

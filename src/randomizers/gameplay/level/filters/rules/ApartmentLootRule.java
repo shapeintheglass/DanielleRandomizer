@@ -50,6 +50,9 @@ public class ApartmentLootRule implements Rule {
 
   @Override
   public boolean trigger(Element e, Random r, String filename) {
+    if (!filename.equals("research/simulationlabs")) {
+      return false;
+    }
     String name = e.getAttributeValue("Name");
     return name.equals(CONGRATS_NOTE_DAY_1) || name.equals(CONGRATS_NOTE_DAY_2) || NAME_TO_LOOT_TABLE.containsKey(name);
   }

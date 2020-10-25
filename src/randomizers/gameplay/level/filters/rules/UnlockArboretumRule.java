@@ -7,6 +7,8 @@ import org.jdom2.Element;
 
 public class UnlockArboretumRule implements Rule {
 
+  // TODO: Make this spawn 10 Danielle Sho transcribes in front of the Deep Storage door
+
   private static final String[] TO_UNLOCK = { "Door.Door_LevelTransition_Close", "Door.Door_LevelTransition_Open" };
   private static final String DEEP_STORAGE_ID = "1713490239377738413";
 
@@ -16,6 +18,9 @@ public class UnlockArboretumRule implements Rule {
 
   @Override
   public boolean trigger(Element e, Random r, String filename) {
+    if (!filename.equals("executive/arboretum")) {
+      return false;
+    }
     return Arrays.binarySearch(TO_UNLOCK, e.getAttributeValue("Name")) >= 0;
   }
 

@@ -10,6 +10,6 @@ public class UnlockPsychotronicsRule extends BaseUnlockDoorsRule {
       "Door.BlastDoor_Medium_NoAuto1" };
 
   public UnlockPsychotronicsRule() {
-    super(TO_UNLOCK);
+    super(TO_UNLOCK, "research/psychotronics");
   }
 }

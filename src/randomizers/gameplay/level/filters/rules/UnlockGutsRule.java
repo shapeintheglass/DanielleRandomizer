@@ -6,6 +6,6 @@ public class UnlockGutsRule extends BaseUnlockDoorsRule {
       "KeycardReader.KeycardReader_Default2" };
 
   public UnlockGutsRule() {
-    super(TO_UNLOCK);
+    super(TO_UNLOCK, "research/zerog_utilitytunnels");
   }
 }

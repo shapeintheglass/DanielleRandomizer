@@ -12,14 +12,19 @@ public abstract class BaseUnlockDoorsRule implements Rule {
   private static final String B_STARTS_LOCKED = "bStartsLocked";
   private static final String PROPERTIES2 = "Properties2";
   private String[] toUnlock;
+  private String filename;
 
-  public BaseUnlockDoorsRule(String[] toUnlock) {
+  public BaseUnlockDoorsRule(String[] toUnlock, String filename) {
     this.toUnlock = toUnlock;
+    this.filename = filename;
     Arrays.sort(toUnlock);
   }
 
   @Override
   public boolean trigger(Element e, Random r, String filename) {
+    if (!filename.equals(this.filename)) {
+      return false;
+    }
     return Arrays.binarySearch(toUnlock, e.getAttributeValue(NAME)) >= 0;
   }
 

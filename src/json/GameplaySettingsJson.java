@@ -12,7 +12,7 @@ public class GameplaySettingsJson {
   private static final String ADD_LOOT_TO_APARTMENT = "add_loot_to_apartment";
   private static final String RANDOMIZE_LOOT = "randomize_loot";
   private static final String UNLOCK_ALL_SCANS = "unlock_all_scans";
-  private static final String SEPARATE_HUMAN_AND_TYPHON_NEUROMODS = "separate_human_and_typhon_neuromods";
+  private static final String RANDOMIZE_STATION = "randomize_station";
 
   @JsonProperty(RANDOMIZE_LOOT)
   private boolean randomizeLoot;
@@ -24,8 +24,8 @@ public class GameplaySettingsJson {
   private boolean randomizeNeuromods;
   @JsonProperty(UNLOCK_ALL_SCANS)
   private boolean unlockAllScans;
-  @JsonProperty(SEPARATE_HUMAN_AND_TYPHON_NEUROMODS)
-  private boolean separateHumanAndTyphonNeuromods;
+  @JsonProperty(RANDOMIZE_STATION)
+  private boolean randomizeStation;
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
   private SpawnPresetJson enemySpawnSettings;
   @JsonProperty(ITEM_SPAWN_SETTINGS)
@@ -34,7 +34,7 @@ public class GameplaySettingsJson {
   @JsonCreator
   public GameplaySettingsJson(@JsonProperty(RANDOMIZE_LOOT) boolean randomizeLoot,
       @JsonProperty(ADD_LOOT_TO_APARTMENT) boolean addLootToApartment, @JsonProperty(OPEN_STATION) boolean openStation,
-      @JsonProperty(RANDOMIZE_NEUROMODS) boolean randomizeNeuromods, boolean unlockScans,
+      @JsonProperty(RANDOMIZE_NEUROMODS) boolean randomizeNeuromods, boolean unlockScans, boolean randomizeStation,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
       @JsonProperty(ITEM_SPAWN_SETTINGS) SpawnPresetJson itemSpawnSettings) {
     this.randomizeLoot = randomizeLoot;
@@ -42,6 +42,7 @@ public class GameplaySettingsJson {
     this.openStation = openStation;
     this.randomizeNeuromods = randomizeNeuromods;
     this.unlockAllScans = unlockScans;
+    this.randomizeStation = randomizeStation;
     this.enemySpawnSettings = enemySpawnSettings;
     this.itemSpawnSettings = itemSpawnSettings;
   }
@@ -57,6 +58,8 @@ public class GameplaySettingsJson {
                                   .asBoolean();
     this.unlockAllScans = node.get(UNLOCK_ALL_SCANS)
                               .asBoolean();
+    this.randomizeStation = node.get(RANDOMIZE_STATION)
+                                .asBoolean();
     if (node.has(ENEMY_SPAWN_SETTINGS)) {
       this.enemySpawnSettings = new SpawnPresetJson(node.get(ENEMY_SPAWN_SETTINGS));
     }
@@ -141,15 +144,15 @@ public class GameplaySettingsJson {
     this.unlockAllScans = !unlockAllScans;
   }
 
-  public boolean isSeparateHumanAndTyphonNeuromods() {
-    return separateHumanAndTyphonNeuromods;
+  public boolean isRandomizeStation() {
+    return randomizeStation;
   }
 
-  public void setSeparateHumanAndTyphonNeuromods(boolean separateHumanAndTyphonNeuromods) {
-    this.separateHumanAndTyphonNeuromods = separateHumanAndTyphonNeuromods;
+  public void setRandomizeStation(boolean randomizeStation) {
+    this.randomizeStation = randomizeStation;
   }
 
-  public void toggleSeparateHumanAndTyphonNeuromods() {
-    this.separateHumanAndTyphonNeuromods = !separateHumanAndTyphonNeuromods;
+  public void toggleRandomizeStation() {
+    this.randomizeStation = !randomizeStation;
   }
 }

@@ -6,16 +6,18 @@ import org.jdom2.Element;
 
 public class UnlockLobbyRule extends BaseUnlockDoorsRule {
 
+  private static final String TECHNOPATH_COORDS = "348.90982,728.77325,487.64096";
+  private static final String ARK_NPC_SPAWNER_TECHNOPATH1 = "ArkNpcSpawner_Technopath1";
   private static final String[] TO_UNLOCK = { "LevelTransition_Psychotronics", "LevelTransition_ShuttleBay" };
 
   public UnlockLobbyRule() {
-    super(TO_UNLOCK);
+    super(TO_UNLOCK, "research/lobby");
   }
 
   @Override
   public boolean trigger(Element e, Random r, String filename) {
-    return super.trigger(e, r, filename) || e.getAttributeValue("Name")
-                                             .equals("ArkNpcSpawner_Technopath1");
+    return super.trigger(e, r, filename);// || e.getAttributeValue("Name")
+                                             //.equals(ARK_NPC_SPAWNER_TECHNOPATH1);
   }
 
   @Override
@@ -23,10 +25,9 @@ public class UnlockLobbyRule extends BaseUnlockDoorsRule {
     if (super.trigger(e, r, filename)) {
       super.apply(e, r, filename);
     } else {
-      // 318.54999,708.57501,901.27502 --> 348.90982,728.77325,487.64096
-      e.setAttribute("Pos", "348.90982,728.77325,487.64096");
-      e.getChild("Properties")
-       .setAttribute("sNpcArchetype", "ArkNpcs.Custom.FakeTechnopath");
+      //e.setAttribute("Pos", TECHNOPATH_COORDS);
+      //e.getChild("Properties")
+      // .setAttribute("sNpcArchetype", "ArkNpcs.Custom.FakeTechnopath");
     }
   }
 
