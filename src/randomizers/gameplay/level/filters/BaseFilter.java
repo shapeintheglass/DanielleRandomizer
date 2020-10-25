@@ -26,10 +26,10 @@ public abstract class BaseFilter {
   /**
    * Modifies the given entity in-place using a pre-built combination of rules.
    */
-  public void filterEntity(Element e, Random r) {
+  public void filterEntity(Element e, Random r, String filename) {
     for (Rule rule : rules) {
-      if (rule.trigger(e, r)) {
-        rule.apply(e, r);
+      if (rule.trigger(e, r, filename)) {
+        rule.apply(e, r, filename);
         return;
       }
     }

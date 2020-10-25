@@ -25,7 +25,7 @@ public class ArchetypeSwapRule implements Rule {
   }
 
   @Override
-  public boolean trigger(Element e, Random r) {
+  public boolean trigger(Element e, Random r, String filename) {
     // Check if input tag matches
     if (e.getAttributeValue("Archetype") != null && e.getAttributeValue("EntityClass") != null) {
       return crh.trigger(database, e.getAttributeValue("Archetype"));
@@ -35,7 +35,7 @@ public class ArchetypeSwapRule implements Rule {
   }
 
   @Override
-  public void apply(Element e, Random r) {
+  public void apply(Element e, Random r, String filename) {
     Element toSwap = crh.getEntityToSwap(database, r);
     String newArchetype = Utils.getNameForEntity(toSwap);
     e.setAttribute("Archetype", newArchetype);

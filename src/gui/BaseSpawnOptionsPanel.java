@@ -28,6 +28,8 @@ public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel 
   String header;
   String prefix;
   private ActionListener listener;
+  
+  private int currentIndex;
 
   public BaseSpawnOptionsPanel(String header, String prefix, ActionListener listener) {
     this.setLayout(new GridLayout(0, 1));
@@ -41,13 +43,25 @@ public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel 
     this.prefix = prefix;
     this.listener = listener;
     this.add(headerLabel);
+    currentIndex = 0;
+  }
+  
+  public int getCurrentIndex() {
+    return currentIndex;
+  }
+  
+  public void setCurrentIndex(int newIndex) {
+    radioButtons.get(currentIndex).setSelected(false);
+    radioButtons.get(newIndex).setSelected(true);
+    this.currentIndex = newIndex;
+    
   }
 
   public void setHeaderLabel(String header) {
     this.headerLabel.setText(header);
   }
 
-  public void setRadioLabels(T[] newSettings, String selected) {
+  public void setRadioLabels(List<T> newSettings, String selected) {
     settings = new ArrayList<>();
     // Remove old radio buttons, if they exist
     for (int i = 0; i < radioButtons.size(); i++) {
@@ -56,20 +70,20 @@ public class BaseSpawnOptionsPanel<T extends NameAndDescription> extends JPanel 
     }
     radioButtons.clear();
 
-    for (int i = 0; i < newSettings.length; i++) {
-      String id = String.format("%s%s%s", prefix, DELIMITER, newSettings[i].getName());
-      JRadioButton btn = new JRadioButton(newSettings[i].getName());
+    for (int i = 0; i < newSettings.size(); i++) {
+      String id = String.format("%s%s%s", prefix, DELIMITER, newSettings.get(i).getName());
+      JRadioButton btn = new JRadioButton(newSettings.get(i).getName());
       btn.addActionListener(listener);
       btn.setActionCommand(id);
-      btn.setToolTipText(newSettings[i].getDesc());
-      if (selected != null && newSettings[i].getName()
+      btn.setToolTipText(newSettings.get(i).getDesc());
+      if (selected != null && newSettings.get(i).getName()
                                             .equals(selected)) {
         btn.setSelected(true);
       }
       buttonGroup.add(btn);
       radioButtons.add(btn);
       this.add(btn);
-      settings.add(newSettings[i]);
+      settings.add(newSettings.get(i));
     }
   }
 

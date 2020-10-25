@@ -226,7 +226,7 @@
    <SignalModifiers/>
    <StatModifiers/>
   </ArkAbility>
-  <ArkAbility ID="10641886185852603001" Label="@loc_10641886185852603002" Description="@loc_10641886185852603003" Cost="0" NightmareHeat="0.0" RequireScanner="false" Name="Hacking V">
+  <ArkAbility ID="10641886185852603001" Label="@loc_10641886185852603002" Description="@loc_10641886185852603003" Cost="10" NightmareHeat="0.0" RequireScanner="false" Icon="ui_icon_ability_hacking_4"  Name="Hacking V">
    <Prereqs>
     <Prereq value="3149325216928600154"/>
    </Prereqs>

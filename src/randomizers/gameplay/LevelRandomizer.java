@@ -59,7 +59,7 @@ public class LevelRandomizer extends BaseRandomizer {
 
       try {
         logger.info(String.format("filtering level file: %s --> %s", in, out));
-        filterMissionFile(in, out);
+        filterMissionFile(in, out, levelDir);
       } catch (IOException | JDOMException e1) {
         e1.printStackTrace();
         return;
@@ -76,14 +76,14 @@ public class LevelRandomizer extends BaseRandomizer {
    * @throws IOException
    * @throws JDOMException
    */
-  private void filterMissionFile(File in, File out) throws IOException, JDOMException {
+  private void filterMissionFile(File in, File out, String levelDir) throws IOException, JDOMException {
     SAXBuilder saxBuilder = new SAXBuilder();
     Document document = saxBuilder.build(in);
     Element root = document.getRootElement();
     List<Element> entities = root.getChild("Objects").getChildren();
 
     for (Element e : entities) {
-      filterEntityXml(e);
+      filterEntityXml(e, levelDir);
     }
     
     XMLOutputter xmlOutput = new XMLOutputter();
@@ -93,9 +93,9 @@ public class LevelRandomizer extends BaseRandomizer {
   }
 
   // Filters the xml representation of an entity
-  private void filterEntityXml(Element e) {
+  private void filterEntityXml(Element e, String filename) {
     for (BaseFilter filter : filterList) {
-      filter.filterEntity(e, r);
+      filter.filterEntity(e, r, filename);
     }
   }
 }

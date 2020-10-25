@@ -15,6 +15,7 @@ import utils.CustomRuleHelper;
  */
 public class NpcSpawnerSwapRule implements Rule {
 
+  private static final String S_NPC_ARCHETYPE = "sNpcArchetype";
   private TaggedDatabase database;
   private CustomRuleHelper crh;
 
@@ -24,7 +25,7 @@ public class NpcSpawnerSwapRule implements Rule {
   }
 
   @Override
-  public boolean trigger(Element e, Random r) {
+  public boolean trigger(Element e, Random r, String filename) {
     // Triggers on ArkNpcSpawners
     if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass")
                                                        .equals("ArkNpcSpawner")) {
@@ -33,7 +34,7 @@ public class NpcSpawnerSwapRule implements Rule {
       if (properties == null) {
         return false;
       }
-      String spawnedEntityName = properties.getAttributeValue("sNpcArchetype");
+      String spawnedEntityName = properties.getAttributeValue(S_NPC_ARCHETYPE);
       String entityLevelName = e.getAttributeValue("Name");
       return crh.trigger(database, spawnedEntityName, entityLevelName);
     } else {
@@ -42,9 +43,11 @@ public class NpcSpawnerSwapRule implements Rule {
   }
 
   @Override
-  public void apply(Element e, Random r) {
+  public void apply(Element e, Random r, String filename) {
     String toSwapStr = crh.getEntityToSwapStr(database, r);
     Element properties = e.getChild("Properties");
-    properties.setAttribute("sNpcArchetype", toSwapStr);
+    //String originalArchetype = properties.getAttributeValue(S_NPC_ARCHETYPE);
+    properties.setAttribute(S_NPC_ARCHETYPE, toSwapStr);
+    //Logger.getGlobal().info(String.format("Npc swap: %s --> %s", originalArchetype, toSwapStr));
   }
 }

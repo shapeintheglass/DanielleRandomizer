@@ -49,13 +49,13 @@ public class ApartmentLootRule implements Rule {
                                                  .collect(Collectors.toMap(data -> data[0], data -> data[1]));
 
   @Override
-  public boolean trigger(Element e, Random r) {
+  public boolean trigger(Element e, Random r, String filename) {
     String name = e.getAttributeValue("Name");
     return name.equals(CONGRATS_NOTE_DAY_1) || name.equals(CONGRATS_NOTE_DAY_2) || NAME_TO_LOOT_TABLE.containsKey(name);
   }
 
   @Override
-  public void apply(Element e, Random r) {
+  public void apply(Element e, Random r, String filename) {
     String name = e.getAttributeValue("Name");
     if (NAME_TO_LOOT_TABLE.containsKey(name)) {
       e.getChild(PROPERTIES_ATTR)

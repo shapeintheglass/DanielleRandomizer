@@ -89,7 +89,6 @@ public class StationRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
-    // TODO Auto-generated method stub
-
+    // Generate randomized station
   }
 }

@@ -1,7 +1,6 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -35,24 +34,17 @@ public class CustomRuleHelper {
   private List<String> doNotOutputTags;
 
   public CustomRuleHelper(GenericRuleJson gfj) {
-    this.inputTags = Arrays.asList(gfj.getInputTags());
-    this.outputTags = Arrays.asList(gfj.getOutputTags());
-    this.outputTagsWeights = new ArrayList<>(gfj.getOutputWeights().length);
-    Arrays.stream(gfj.getOutputWeights())
-          .forEach(s -> {
-            outputTagsWeights.add(Integer.parseInt(s));
-          });
-    this.doNotTouchTags = Arrays.asList(gfj.getDoNotTouchTags());
-    this.doNotOutputTags = Arrays.asList(gfj.getDoNotOutputTags());
-  }
-
-  public CustomRuleHelper(String name, List<String> inputTags, List<String> outputTags, List<Integer> outputTagsWeights,
-      List<String> doNotTouchTags, List<String> doNotOutputTags) {
-    this.inputTags = inputTags;
-    this.outputTags = outputTags;
-    this.outputTagsWeights = outputTagsWeights;
-    this.doNotTouchTags = doNotTouchTags;
-    this.doNotOutputTags = doNotOutputTags;
+    this.inputTags = gfj.getInputTags();
+    this.outputTags = gfj.getOutputTags();
+    if (gfj.getOutputWeights() != null) {
+      this.outputTagsWeights = gfj.getOutputWeights();
+    }
+    if (gfj.getDoNotTouchTags() != null) {
+      this.doNotTouchTags = gfj.getDoNotTouchTags();
+    }
+    if (gfj.getDoNotOutputTags() != null) {
+      this.doNotOutputTags = gfj.getDoNotOutputTags();
+    }
   }
 
   /**
@@ -128,86 +120,5 @@ public class CustomRuleHelper {
     ArrayList<String> tags = new ArrayList<>();
     tags.addAll(Utils.getTags(fullEntity));
     return tags;
-  }
-
-  public static class Builder {
-    // Arbitrary name to assign to this rule.
-    private String name;
-    // Tags to filter on
-    private List<String> inputTags;
-    // Tags to pull randomly from
-    private List<String> outputTags;
-    // Relative weights to assign to the spawn rates for these tags
-    private List<Integer> outputTagsWeights;
-    // Tags not to filter on. Takes priority.
-    private List<String> doNotTouchTags;
-    // Tags not to output. Takes priority.
-    private List<String> doNotOutputTags;
-
-    public Builder() {
-      inputTags = new ArrayList<>();
-      outputTags = new ArrayList<>();
-      outputTagsWeights = new ArrayList<>();
-      doNotTouchTags = new ArrayList<>();
-      doNotOutputTags = new ArrayList<>();
-    }
-
-    public Builder setName(String name) {
-      this.name = name;
-      return this;
-    }
-
-    public Builder addInputTags(String... inputTags) {
-      if (inputTags == null) {
-        return this;
-      }
-      this.inputTags.addAll(Arrays.asList(inputTags));
-      return this;
-    }
-
-    public Builder addOutputTags(String... outputTags) {
-      if (outputTags == null) {
-        return this;
-      }
-      this.outputTags.addAll(Arrays.asList(outputTags));
-      return this;
-    }
-
-    public Builder addOutputTagsWeights(Integer... outputTagsWeights) {
-      if (outputTagsWeights == null) {
-        return this;
-      }
-      this.outputTagsWeights.addAll(Arrays.asList(outputTagsWeights));
-      return this;
-    }
-
-    public Builder addOutputTagsWeights(String... outputTagsWeights) {
-      if (outputTagsWeights == null) {
-        return this;
-      }
-      Arrays.stream(outputTagsWeights)
-            .forEach(s -> this.outputTagsWeights.add(Integer.parseInt(s)));
-      return this;
-    }
-
-    public Builder addDoNotTouchTags(String... doNotTouchTags) {
-      if (doNotTouchTags == null) {
-        return this;
-      }
-      this.doNotTouchTags.addAll(Arrays.asList(doNotTouchTags));
-      return this;
-    }
-
-    public Builder addDoNotOutputTags(String... doNotOutputTags) {
-      if (doNotOutputTags == null) {
-        return this;
-      }
-      this.doNotOutputTags.addAll(Arrays.asList(doNotOutputTags));
-      return this;
-    }
-
-    public CustomRuleHelper build() {
-      return new CustomRuleHelper(name, inputTags, outputTags, outputTagsWeights, doNotTouchTags, doNotOutputTags);
-    }
   }
 }

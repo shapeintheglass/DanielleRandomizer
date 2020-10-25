@@ -30,7 +30,7 @@ public class ContainerSpawnRule implements Rule {
     this.settings = settings;
   }
 
-  public boolean trigger(Element e, Random r) {
+  public boolean trigger(Element e, Random r, String filename) {
     // Broadly apply to all flowgraph scripts that spawn an item matching the given
     // rule
     List<Element> nodes = getNodes(e);
@@ -47,7 +47,7 @@ public class ContainerSpawnRule implements Rule {
     return false;
   }
 
-  public void apply(Element e, Random r) {
+  public void apply(Element e, Random r, String filename) {
     // Iterate through nodes until we find an item add node
     List<Element> nodes = getNodes(e);
     for (Element n : nodes) {
