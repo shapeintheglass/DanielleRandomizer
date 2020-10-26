@@ -1,343 +1,353 @@
 package randomizers.gameplay.level.filters;
 
-import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.Stack;
 import java.util.logging.Logger;
 
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.MultiGraph;
+import javax.imageio.ImageIO;
+
+import org.jgrapht.Graph;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.ext.JGraphXAdapter;
+import org.jgrapht.graph.guava.ImmutableNetworkAdapter;
+import org.jgrapht.graph.guava.MutableGraphAdapter;
+import org.jgrapht.graph.guava.MutableNetworkAdapter;
+
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.common.graph.EndpointPair;
+import com.google.common.graph.GraphBuilder;
+import com.google.common.graph.Graphs;
+import com.google.common.graph.ImmutableNetwork;
+import com.google.common.graph.MutableGraph;
+import com.google.common.graph.MutableNetwork;
+import com.google.common.graph.NetworkBuilder;
+import com.mxgraph.layout.mxFastOrganicLayout;
+import com.mxgraph.layout.mxIGraphLayout;
+import com.mxgraph.util.mxCellRenderer;
 
 import json.SettingsJson;
 import randomizers.gameplay.level.filters.rules.StationConnectivityRule;
-import utils.HackyQueue;
+import utils.StationConnectivityConsts;
+import utils.StationConnectivityConsts.Door;
+import utils.StationConnectivityConsts.Level;
 
 public class StationConnectivityFilter extends BaseFilter {
 
+  private static final int UNLOCK_ATTEMPTS = 10;
+  private static final String STATION_CONNECTIVITY_2_PNG = "station_connectivity_2.png";
+  private static final String STATION_CONNECTIVITY_PNG = "station_connectivity.png";
   private static final int MAX_ATTEMPTS = 100;
-  private static final String DELIMITER = ";";
+  // Map of filename to door name to location id
+  private Map<String, Map<String, String>> doorConnectivity;
+  // Map of filename to spawn name to destination name
+  private Map<String, Map<String, String>> spawnConnectivity;
 
-  // None of these should connect with any of the others
-  private static final String[] SINGLE_CONNECTIONS = { "research/simulationlabs;Door.Door_LevelTransition_Default1",
-      "research/prototype;LevelTransitionDoor_ToLobby", "executive/crewfacilities;Door.Door_LevelTransition_Default1",
-      "executive/corporateit;Door.Door_LevelTransition_Default2", "executive/bridge;Door.Door_LevelTransition_Default1",
-      "engineering/powersource;Door.Door_LevelTransition_Default1" };
-
-  // These can only be matched with lift connections from a non-lobby side
-  private static final String[] LIFT_LOBBY_SIDE = { "research/lobby;LevelTransition_LifeSupport",
-      "research/lobby;LevelTransition_Arboretum" };
-  // These can only be matched with lift connections from the lobby side
-  private static final String[] LIFT_NOT_LOBBY_SIDE = { "engineering/lifesupport;Door.Door_LevelTransition_Default5",
-      "executive/arboretum;Door.Door_LevelTransition_Default6" };
-
-  private static final String[] APEX_LOCKED_KILL_WALL = { "research/lobby;LevelTransition_Hardware",
-      "executive/arboretum;Door.Door_LevelTransition_Default8" };
-  private static final String[] APEX_LOCKED_NO_KILL_WALL = { "research/prototype;LevelTransitionDoor_ToLobby",
-      "executive/corporateit;Door.Door_LevelTransition_Default2" };
-
-  private static final String[] DEFAULT_CONNECTIVITY = {
-      "research/simulationlabs;Door.Door_LevelTransition_Default1;1713490239377285936", // lobby
-      "research/lobby;LevelTransition_LifeSupport;4349723564895209499",
-      "research/lobby;LevelTransition_Hardware;844024417263019221",
-      "research/lobby;LevelTransition_ShuttleBay;1713490239386284988", // locked by 15659330456309530410
-      "research/lobby;LevelTransition_Psychotronics;11824555372632688907", // locked by 15659330456309530410
-      "research/lobby;LevelTransition_SimLabs;12889009724983807463",
-      "research/lobby;LevelTransition_Arboretum;1713490239386284818",
-      "research/prototype;LevelTransitionDoor_ToLobby;1713490239377285936", // lobby
-      "research/psychotronics;Door.Door_LevelTransition_Default2;4349723564886052417", // guts
-      "research/psychotronics;Door.Door_LevelTransition_Default1;1713490239377285936", // lobby
-      "research/shuttlebay;LTDoor_ToGUTs;4349723564886052417", // guts, locked by 761057047955908816
-      "research/shuttlebay;LTDoor_ToLobby;1713490239377285936", // lobby
-      "research/zerog_utilitytunnels;Door.Door_LevelTransition_Default2;1713490239386284988", // shuttle bay, locked by
-                                                                                              // 761057047955908816
-      "research/zerog_utilitytunnels;Door.Door_LevelTransition_Default1;11824555372632688907", // psychotronics
-      "research/zerog_utilitytunnels;Door.Door_LevelTransition_Default3;1713490239386284818", // arboretum
-      "research/zerog_utilitytunnels;Door.Door_LevelTransition_Exterior1;15659330456296333985", // cargo bay
-
-      "executive/arboretum;Door.Door_LevelTransition_Default5;844024417275035158", // bridge
-      "executive/arboretum;Door.Door_LevelTransition_Default3;4349723564886052417", // guts
-      "executive/arboretum;Door.Door_LevelTransition_Default8;1713490239377738413", // deep storage
-      "executive/arboretum;Door.Door_LevelTransition_Default1;844024417252490146", // crew quarters, locked by
-                                                                                   // 844024417269161838
-      "executive/arboretum;Door.Door_LevelTransition_Default6;1713490239377285936", // lobby
-      "executive/crewfacilities;Door.Door_LevelTransition_Default1;1713490239386284818", // arboretum
-      "executive/corporateit;Door.Door_LevelTransition_Default2;1713490239386284818", // arboretum
-      "executive/bridge;Door.Door_LevelTransition_Default1;1713490239386284818", // arboretum
-      "engineering/cargobay;Door.Door_LevelTransition_Exterior1;4349723564886052417", // guts
-      "engineering/cargobay;Door.Door_LevelTransition_Default2;4349723564895209499", // life support
-      "engineering/lifesupport;Door.Door_LevelTransition_Default4;15659330456296333985", // cargo bay
-      "engineering/lifesupport;Door.Door_LevelTransition_Default5;1713490239377285936", // lobby
-      "engineering/lifesupport;Door.Door_LevelTransition_Default6;6732635291182790112", // power plant
-      "engineering/powersource;Door.Door_LevelTransition_Default1;4349723564895209499", // lifesupport
-  };
-
-  private static final String[] LEVEL_NAME_TO_LOCATION_ID = { "engineering/cargobay;15659330456296333985",
-      "engineering/lifesupport;4349723564895209499", "engineering/powersource;6732635291182790112",
-      "executive/arboretum;1713490239386284818", "executive/bridge;844024417275035158",
-      "executive/corporateit;1713490239377738413", "executive/crewfacilities;844024417252490146",
-      "research/lobby;1713490239377285936", "research/prototype;844024417263019221",
-      "research/psychotronics;11824555372632688907", "research/shuttlebay;1713490239386284988",
-      "research/simulationlabs;12889009724983807463", "research/zerog_utilitytunnels;4349723564886052417",
-      "station/exterior;1713490239386284337" };
-
-  // Map of level name to doors to locations
-  private Map<String, Map<String, String>> oldConnectivity;
-  private Map<String, Map<String, String>> newConnectivity;
-  private Map<String, String> levelNameToId;
-  private Map<String, String> idToLevelName;
-  private Set<String> allConnections;
-
-  private Graph graph;
-  private Random r;
+  private Logger logger;
 
   public StationConnectivityFilter(SettingsJson s) {
-    Arrays.sort(SINGLE_CONNECTIONS);
-    Arrays.sort(LIFT_LOBBY_SIDE);
-    Arrays.sort(LIFT_NOT_LOBBY_SIDE);
-    r = new Random(s.getSeed());
+    this(s.getSeed());
+  }
 
-    buildLevelToId();
-    buildConnectivity();
+  public StationConnectivityFilter(long seed) {
+    Random r = new Random(seed);
+    logger = Logger.getLogger("StationConnectivity");
 
     int numAttempts = 0;
     while (numAttempts++ < MAX_ATTEMPTS) {
       try {
-        graph = new MultiGraph("StationConnectivity");
-        createNewConnectivity();
-        if (isConnected(newConnectivity)) {
-          Logger.getGlobal()
-                .info(String.format("Found in %s attempts", numAttempts));
-          Logger.getGlobal()
-                .info(connectivityToString());
-          graph.display();
-          break;
+        logger.info(String.format("Attempt #%d", numAttempts));
+        ImmutableNetwork<Level, Door> network = createNewConnectivity(r);
+        if (!validate(network)) {
+          throw new IllegalStateException("Configuration invalid! (not connected)");
         }
-      } catch (Exception e) {
-        Logger.getGlobal()
-              .info(String.format("Failed to find connection after %s attempts", numAttempts));
+
+        visualize(network);
+        networkToConnectivity(network);
+        rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
+        logger.info(connectivityToString());
+        break;
+      } catch (IllegalStateException e) {
+        logger.info(String.format("Failed to find connection after %s attempts", numAttempts));
+        e.printStackTrace();
+      } catch (IOException e) {
+        logger.info(String.format("I/O error occurred when writing station connectivity", numAttempts));
         e.printStackTrace();
       }
     }
-
-    rules.add(new StationConnectivityRule(newConnectivity));
   }
 
   private String connectivityToString() {
-    StringBuilder result = new StringBuilder();
-    for (String filename : newConnectivity.keySet()) {
-      result.append(String.format("%s:\n", filename));
-      for (String door : newConnectivity.get(filename)
-                                        .keySet()) {
-        result.append(String.format("\t%s: %s\n", door, idToLevelName.get(newConnectivity.get(filename)
-                                                                                         .get(door))));
+    StringBuilder sb = new StringBuilder();
+    sb.append("CONNECTIVITY DEBUG DATA:\n");
+    for (Level l : Level.values()) {
+      String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);
+      for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
+        String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
+        String spawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(d);
+        String doorValue = doorConnectivity.get(levelName).get(doorName);
+        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+            .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d))
+            .toString();
+        String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
+        sb.append(String.format("%s:\tDoor to %s now leads to %s. Debug data: %s --> %s, Spawn %s --> %s\n", l,
+            oldDoorValueReadable, doorValueReadable, doorName, doorValue, spawnName, spawnValue));
       }
     }
-    return result.toString();
+
+    return sb.toString();
   }
 
-  private void buildConnectivity() {
-    oldConnectivity = new HashMap<String, Map<String, String>>();
-    allConnections = new HashSet<>();
-    for (String connection : DEFAULT_CONNECTIVITY) {
-      String[] tokens = connection.split(DELIMITER);
+  private void networkToConnectivity(ImmutableNetwork<Level, Door> network) {
+    doorConnectivity = new HashMap<String, Map<String, String>>();
+    spawnConnectivity = new HashMap<String, Map<String, String>>();
+    // Initialize with blank maps
+    for (Level l : Level.values()) {
+      doorConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
+      spawnConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
+    }
 
-      // Add level (node) if it doesn't already exist
-      if (!oldConnectivity.containsKey(tokens[0])) {
-        oldConnectivity.put(tokens[0], new HashMap<String, String>());
+    for (Level fromLevel : Level.values()) {
+      // Destination name coming from this level
+      String fromDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(fromLevel);
+      // Location ID of this level
+      String fromLocationId = StationConnectivityConsts.LEVELS_TO_IDS.get(fromLevel);
+
+      // Iterate through all of its neighbors
+      for (Level toLevel : network.successors(fromLevel)) {
+        // Door from current level to the neighboring level
+        Door fromDoor = network.edgeConnectingOrNull(fromLevel, toLevel);
+        String fromDoorName = StationConnectivityConsts.DOORS_TO_NAMES.get(fromDoor);
+        // Door from neighboring level, to the current level
+        Door toDoor = network.edgeConnectingOrNull(toLevel, fromLevel);
+        String toDoorName = StationConnectivityConsts.DOORS_TO_NAMES.get(toDoor);
+
+        // Shorthand destination name to use when spawning from the neighbor
+        String toDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(toLevel);
+        // Location ID of the neighbor
+        String toLocationId = StationConnectivityConsts.LEVELS_TO_IDS.get(toLevel);
+
+        // Spawn point name in this level
+        String fromLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(fromDoor);
+        // Spawn point name in the neighbor
+        String toLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(toDoor);
+
+        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel)).put(fromDoorName, toLocationId);
+        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel)).put(toDoorName, fromLocationId);
+
+        spawnConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
+            .put(fromLevelSpawnName, toDestName);
+        spawnConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel))
+            .put(toLevelSpawnName, fromDestName);
       }
-
-      // Set door (edge) if it doesn't already exist
-      oldConnectivity.get(tokens[0])
-                     .put(tokens[1], tokens[2]);
-      allConnections.add(String.format("%s;%s", tokens[0], tokens[1]));
     }
   }
 
-  private void buildLevelToId() {
-    levelNameToId = new HashMap<String, String>();
-    idToLevelName = new HashMap<String, String>();
-    for (String entry : LEVEL_NAME_TO_LOCATION_ID) {
-      String[] tokens = entry.split(DELIMITER);
-      levelNameToId.put(tokens[0], tokens[1]);
-      idToLevelName.put(tokens[1], tokens[0]);
+  private ImmutableNetwork<Level, Door> createNewConnectivity(Random r) throws IllegalStateException {
+    MutableNetwork<Level, Door> station = NetworkBuilder.directed()
+        .allowsParallelEdges(true)
+        .allowsSelfLoops(false)
+        .build();
+
+    for (Level l : Level.values()) {
+      station.addNode(l);
     }
-  }
 
-  public void createNewConnectivity() throws Exception {
-    newConnectivity = new HashMap<String, Map<String, String>>();
-
-    HackyQueue<String> connectionsToProcess = new HackyQueue<String>();
+    ArrayDeque<Door> connectionsToProcess = new ArrayDeque<Door>();
     // Enqueue special cases first
-    Arrays.stream(LIFT_LOBBY_SIDE)
-          .forEach(connectionsToProcess::add);
-    Arrays.stream(LIFT_NOT_LOBBY_SIDE)
-          .forEach(connectionsToProcess::add);
-    Arrays.stream(SINGLE_CONNECTIONS)
-          .forEach(connectionsToProcess::add);
-    // Enqueue remaining cases (duplicates are skipped)
-    connectionsToProcess.addAll(allConnections);
+    connectionsToProcess.addAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
+    connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
+    connectionsToProcess.addAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
+    Arrays.stream(Door.values()).forEach(door -> {
+      if (!connectionsToProcess.contains(door)) {
+        connectionsToProcess.add(door);
+      }
+    });
 
     while (!connectionsToProcess.isEmpty()) {
-      String connection = connectionsToProcess.removeFirst();
+      Door fromDoor = connectionsToProcess.removeFirst();
 
-      List<String> validConnections = new ArrayList<>();
-      validConnections.addAll(getValidConnections(connection, connectionsToProcess, newConnectivity));
+      ImmutableSet<Door> remainingConnections = ImmutableSet.copyOf(connectionsToProcess);
+      List<Door> validConnections = getValidConnections(fromDoor, remainingConnections, station);
 
       // Pick a random valid connection
-      String newConnection;
+      Door toDoor;
       if (validConnections.size() > 1) {
-        newConnection = validConnections.get(r.nextInt(validConnections.size()));
+        toDoor = validConnections.get(r.nextInt(validConnections.size()));
       } else if (validConnections.size() == 1) {
-        newConnection = validConnections.get(0);
+        toDoor = validConnections.get(0);
       } else {
-        throw new Exception("Could not find a valid connection!");
+        throw new IllegalStateException("Could not find a valid connection!");
       }
-      connectionsToProcess.remove(newConnection);
+      connectionsToProcess.remove(toDoor);
 
-      connect(connection, newConnection, newConnectivity);
+      Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(fromDoor));
+      Level toLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(toDoor));
+
+      station.addEdge(fromLevel, toLevel, fromDoor);
+      station.addEdge(toLevel, fromLevel, toDoor);
     }
+
+    return ImmutableNetwork.copyOf(station);
   }
 
-  private Set<String> getValidConnections(String connection, HackyQueue<String> remainingConnections,
-      Map<String, Map<String, String>> currentConnectivity) {
-    String[] tokens = connection.split(DELIMITER);
-
-    // Figure out what other connections are valid
-    Set<String> validConnections = swapBetween(LIFT_LOBBY_SIDE, LIFT_NOT_LOBBY_SIDE, connection, remainingConnections);
-    if (validConnections != null) {
-      return validConnections;
+  private List<Door> getValidConnections(Door door, ImmutableSet<Door> remainingConnections,
+      MutableNetwork<Level, Door> station) {
+    // Start with special cases that can only be matched with each other
+    if (StationConnectivityConsts.LIFT_LOBBY_SIDE.contains(door)) {
+      return Lists.newArrayList(Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE));
     }
-    validConnections = swapBetween(APEX_LOCKED_KILL_WALL, APEX_LOCKED_NO_KILL_WALL, connection, remainingConnections);
-    if (validConnections != null) {
-      return validConnections;
+    if (StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE.contains(door)) {
+      return Lists.newArrayList(Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_LOBBY_SIDE));
+    }
+    if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(door)) {
+      return Lists.newArrayList(Sets.intersection(remainingConnections,
+          StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE));
+    }
+    if (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(door)) {
+      return Lists.newArrayList(Sets.intersection(remainingConnections,
+          StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE));
     }
 
-    validConnections = new HashSet<>();
-    validConnections.addAll(remainingConnections);
-    Arrays.stream(LIFT_NOT_LOBBY_SIDE)
-          .forEach(validConnections::remove);
-    Arrays.stream(LIFT_LOBBY_SIDE)
-          .forEach(validConnections::remove);
-    Arrays.stream(APEX_LOCKED_KILL_WALL)
-          .forEach(validConnections::remove);
-    Arrays.stream(APEX_LOCKED_NO_KILL_WALL)
-          .forEach(validConnections::remove);
+    Set<Door> validConnections = Sets.newHashSet(remainingConnections);
+    validConnections.removeAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
+    validConnections.removeAll(StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE);
+    validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
+    validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE);
 
     // If this is a "single" type connection, invalidate all other single type
     // connections
-    if (Arrays.binarySearch(SINGLE_CONNECTIONS, connection) >= 0) {
-      for (String s : SINGLE_CONNECTIONS) {
-        validConnections.remove(s);
+    if (StationConnectivityConsts.SINGLE_CONNECTIONS.contains(door)) {
+      validConnections.removeAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
+    }
+
+    // Remove all connections leading from itself
+    Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(door));
+    validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(fromLevel));
+    // Remove all connections to levels that this is already connected to
+    Set<Level> existingConnections = station.adjacentNodes(fromLevel);
+    for (Level l : existingConnections) {
+      validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(l));
+    }
+
+    return Lists.newArrayList(validConnections);
+  }
+
+  private void visualize(ImmutableNetwork<Level, Door> network) throws IOException {
+    MutableGraph<String> graph = GraphBuilder.undirected().build();
+
+    // Attach every level to its doors
+    for (Level l : Level.values()) {
+      graph.addNode(l.toString());
+      for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
+        graph.addNode(d.toString());
+        graph.putEdge(l.toString(), d.toString());
+      }
+    }
+    // Attach every door to its new door
+    for (Door d : Door.values()) {
+      for (Door neighbor : network.adjacentEdges(d)) {
+        graph.putEdge(d.toString(), neighbor.toString());
       }
     }
 
-    // Remove all connections leading from itself, and from nodes that this node
-    // already leads to
-    Collection<String> connectedNodes = new ArrayList<>();
-    connectedNodes.add(tokens[0]);
-    if (currentConnectivity.containsKey(tokens[0])) {
-      currentConnectivity.get(tokens[0])
-                         .values()
-                         .forEach(levelId -> connectedNodes.add(idToLevelName.get(levelId)));
-    }
+    ImmutableNetworkAdapter<Level, Door> ina = new ImmutableNetworkAdapter<>(network);
+    Graph<String, EndpointPair<String>> jg = new MutableGraphAdapter<>(graph);
 
-    for (String levelName : connectedNodes) {
-      Set<String> connectionsToRemove = oldConnectivity.get(levelName)
-                                                       .keySet();
-      for (String doorName : connectionsToRemove) {
-        validConnections.remove(String.format("%s;%s", levelName, doorName));
+    JGraphXAdapter<String, EndpointPair<String>> graphAdapter = new JGraphXAdapter<>(jg);
+    graphAdapter.setLabelsClipped(true);
+    mxIGraphLayout layout = new mxFastOrganicLayout(graphAdapter);
+    layout.execute(graphAdapter.getDefaultParent());
+
+    BufferedImage image = mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
+    File imgFile = new File(STATION_CONNECTIVITY_PNG);
+    ImageIO.write(image, "PNG", imgFile);
+
+    JGraphXAdapter<Level, Door> networkAdapter = new JGraphXAdapter<>(ina);
+    networkAdapter.setLabelsClipped(true);
+
+    layout = new mxFastOrganicLayout(networkAdapter);
+    layout.execute(networkAdapter.getDefaultParent());
+    image = mxCellRenderer.createBufferedImage(networkAdapter, null, 2, Color.WHITE, true, null);
+    imgFile = new File(STATION_CONNECTIVITY_2_PNG);
+    ImageIO.write(image, "PNG", imgFile);
+  }
+
+  private boolean validate(ImmutableNetwork<Level, Door> network) {
+    // Assert that everything can be unlocked
+    boolean hasGeneralKeycard = false;
+    boolean hasFuelStorageKeycard = false;
+    boolean hasTranscribeRecordings = false;
+    int numAttempts = 0;
+
+    // Remove locked connections
+    Set<Door> toRemove = new HashSet<>();
+    StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.values().stream().forEach(toRemove::addAll);
+
+    // See how much of the station we can unlock w/o getting the lift
+    while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard
+        && hasTranscribeRecordings)) {
+      if (!hasGeneralKeycard && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
+        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
+        hasGeneralKeycard = true;
+      }
+      if (!hasFuelStorageKeycard && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
+        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
+        hasFuelStorageKeycard = true;
+      }
+      if (!hasTranscribeRecordings && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.CREW_QUARTERS)) {
+        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.CREW_QUARTERS));
+        hasTranscribeRecordings = true;
       }
     }
 
-    return validConnections;
+    if (!hasGeneralKeycard) {
+      logger.warning("Unable to obtain general access keycard!");
+    }
+
+    if (!hasFuelStorageKeycard) {
+      logger.warning("Unable to obtain fuel storage keycard!");
+    }
+
+    if (!hasTranscribeRecordings) {
+      logger.warning("Unable to obtain transcribe recordings!");
+    }
+
+    return isConnected(network, toRemove);
   }
 
-  private Set<String> swapBetween(String[] sortedArr1, String[] sortedArr2, String connection,
-      HackyQueue<String> remainingConnections) {
-    Set<String> validConnections = new HashSet<>();
-    if (Arrays.binarySearch(sortedArr1, connection) >= 0) {
-      Arrays.stream(sortedArr2)
-            .forEach(s -> {
-              if (remainingConnections.contains(s)) {
-                validConnections.add(s);
-              }
-            });
-      return validConnections;
-    }
-    if (Arrays.binarySearch(sortedArr2, connection) >= 0) {
-      Arrays.stream(sortedArr1)
-            .forEach(s -> {
-              if (remainingConnections.contains(s)) {
-                validConnections.add(s);
-              }
-            });
-      return validConnections;
-    }
-    return null;
+  private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove, Level from, Level to) {
+    MutableNetwork<Level, Door> network = Graphs.copyOf(networkToCopy);
+    toRemove.stream().forEach(network::removeEdge);
+
+    MutableNetworkAdapter<Level, Door> ina = new MutableNetworkAdapter<>(network);
+    ConnectivityInspector<Level, Door> connectivityInspector = new ConnectivityInspector<>(ina);
+    return connectivityInspector.pathExists(from, to);
   }
 
-  private void connect(String connection1, String connection2, Map<String, Map<String, String>> c) {
-    String[] connection1Tokens = connection1.split(DELIMITER);
-    String[] connection2Tokens = connection2.split(DELIMITER);
+  private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove) {
+    MutableNetwork<Level, Door> network = Graphs.copyOf(networkToCopy);
+    toRemove.stream().forEach(network::removeEdge);
 
-    if (!c.containsKey(connection1Tokens[0])) {
-      c.put(connection1Tokens[0], new HashMap<String, String>());
-      Node n = graph.addNode(connection1Tokens[0]);
-      n.setAttribute("ui.label", connection1Tokens[0]);
-    }
-    if (!c.containsKey(connection2Tokens[0])) {
-      c.put(connection2Tokens[0], new HashMap<String, String>());
-      Node n = graph.addNode(connection2Tokens[0]);
-      n.setAttribute("ui.label", connection2Tokens[0]);
-    }
-
-    String connection1Id = levelNameToId.get(connection1Tokens[0]);
-    String connection2Id = levelNameToId.get(connection2Tokens[0]);
-
-    c.get(connection1Tokens[0])
-     .put(connection1Tokens[1], connection2Id);
-    c.get(connection2Tokens[0])
-     .put(connection2Tokens[1], connection1Id);
-
-    Edge e = graph.addEdge(String.format("%s -> %s", connection1, connection2), connection1Tokens[0],
-        connection2Tokens[0]);
-    String edgeName = String.format("%s -> %s", connection1Tokens[1], connection2Tokens[1]);
-    e.setAttribute("ui.label", edgeName);
+    MutableNetworkAdapter<Level, Door> ina = new MutableNetworkAdapter<>(network);
+    ConnectivityInspector<Level, Door> connectivityInspector = new ConnectivityInspector<>(ina);
+    return connectivityInspector.isConnected();
   }
 
-  // Returns whether entire graph is connected
-  private boolean isConnected(Map<String, Map<String, String>> c) {
-    Set<String> visited = new HashSet<>();
-    Stack<String> toVisit = new Stack<>();
-    toVisit.add("research/simulationlabs");
-
-    while (!toVisit.isEmpty()) {
-      if (visited.equals(c.keySet())) {
-        return true;
-      }
-
-      String node = toVisit.pop();
-      visited.add(node);
-
-      c.get(node)
-       .values()
-       .forEach(id -> {
-         String levelName = idToLevelName.get(id);
-         if (!visited.contains(levelName)) {
-           toVisit.add(levelName);
-         }
-       });
-    }
-
-    return false;
+  public static void main(String[] args) {
+    new StationConnectivityFilter(0);
   }
 }

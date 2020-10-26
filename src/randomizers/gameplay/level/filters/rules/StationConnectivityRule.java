@@ -7,34 +7,60 @@ import java.util.logging.Logger;
 
 import org.jdom2.Element;
 
-public class StationConnectivityRule implements Rule {
-  Map<String, Map<String, String>> connectivity;
+import utils.StationConnectivityConsts;
 
-  public StationConnectivityRule(Map<String, Map<String, String>> connectivity) {
-    this.connectivity = connectivity;
+public class StationConnectivityRule implements Rule {
+  private static final String PROPERTIES = "Properties";
+  private static final String DESTINATION_NAME = "destinationName";
+  private static final String PROPERTIES2 = "Properties2";
+  private static final String LOCATION_DESTINATION = "location_Destination";
+  private static final String NAME = "Name";
+  Map<String, Map<String, String>> doorConnectivity;
+  Map<String, Map<String, String>> spawnConnectivity;
+
+  public StationConnectivityRule(Map<String, Map<String, String>> doorConnectivity,
+      Map<String, Map<String, String>> spawnConnectivity) {
+    this.doorConnectivity = doorConnectivity;
+    this.spawnConnectivity = spawnConnectivity;
   }
 
   @Override
   public boolean trigger(Element e, Random r, String filename) {
-    // Trigger if door is in filename list
-    if (!connectivity.containsKey(filename)) {
+    // Trigger if entity is in either filename list
+    if (!doorConnectivity.containsKey(filename) && !spawnConnectivity.containsKey(filename)) {
       return false;
     }
-    Set<String> validDoors = connectivity.get(filename)
-                                         .keySet();
-    return validDoors.contains(e.getAttributeValue("Name"));
+    Set<String> validDoors = doorConnectivity.get(filename).keySet();
+    Set<String> validSpawns = spawnConnectivity.get(filename).keySet();
+    String name = e.getAttributeValue(NAME);
+    return validDoors.contains(name) || validSpawns.contains(name);
   }
 
   @Override
   public void apply(Element e, Random r, String filename) {
-    // Substitute door from connectivity list
-    String newLocation = connectivity.get(filename)
-                                     .get(e.getAttributeValue("Name"));
-    Element properties = e.getChild("Properties2");
-    String originalLocation = properties.getAttributeValue("location_Destination");
-    properties.setAttribute("location_Destination", newLocation);
-    Logger.getGlobal()
-          .info(String.format("%s: Updating transition %s to %s", filename, originalLocation, newLocation));
+    String name = e.getAttributeValue(NAME);
+    Logger.getGlobal().info("Processing element " + name);
+
+    String newLocation = doorConnectivity.get(filename).get(name);
+    String newSpawn = spawnConnectivity.get(filename).get(name);
+
+    if (newLocation != null) {
+      Element properties2Element = e.getChild(PROPERTIES2);
+      String originalLocation = properties2Element.getAttributeValue(LOCATION_DESTINATION);
+      StationConnectivityConsts.Level originalLevel = StationConnectivityConsts.LEVELS_TO_IDS.inverse()
+          .get(originalLocation);
+      StationConnectivityConsts.Level newLevel = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(newLocation);
+      properties2Element.setAttribute(LOCATION_DESTINATION, newLocation);
+      Logger.getGlobal()
+          .info(String.format("%s: Updating connection to %s to go to %s instead", filename, originalLevel, newLevel));
+    } else if (newSpawn != null) {
+      Element propertiesElement = e.getChild(PROPERTIES);
+      String originalSpawn = propertiesElement.getAttributeValue(DESTINATION_NAME);
+      propertiesElement.setAttribute(DESTINATION_NAME, newSpawn);
+      Logger.getGlobal().info(String.format("%s: Updating spawn %s to %s", filename, originalSpawn, newSpawn));
+    } else {
+      Logger.getGlobal().info("Couldn't match to any location or spawn. =[");
+    }
   }
 
 }

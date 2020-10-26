@@ -55,12 +55,27 @@
 			<artifactId>jdom2</artifactId>
 			<version>2.0.6</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.graphstream/gs-core -->
+		<!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
 		<dependency>
-			<groupId>org.graphstream</groupId>
-			<artifactId>gs-core</artifactId>
-			<version>1.1.1</version>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-core</artifactId>
+			<version>1.2.0</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-guava -->
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-guava</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-ext</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.0-jre</version>
+		</dependency>
 	</dependencies>
 </project>
