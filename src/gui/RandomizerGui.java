@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -36,6 +36,9 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableList;
 
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
@@ -76,14 +79,22 @@ public class RandomizerGui {
   private static final boolean DEFAULT_RANDOMIZE_BODIES_VALUE = true;
   private static final boolean DEFAULT_RANDOMIZE_NEUROMODS_VALUE = true;
   private static final boolean DEFAULT_UNLOCK_ALL_SCANS_VALUE = true;
-  private static final boolean DEFAULT_RANDOMIZE_STATTION_VALUE = true;
+  private static final boolean DEFAULT_RANDOMIZE_STATION_VALUE = true;
 
   private static final String DEFAULT_INSTALL_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
 
   private static final String LOG_OUTPUT_FILE = "log.txt";
 
-  private static final String SAVED_SETTINGS_FILE = "last_used_settings.json";
+  private static final String SAVED_SETTINGS_FILE = "saved_settings.json";
   private static final String ALL_PRESETS_FILE = "settings.json";
+
+  private static final ImmutableList<String> GAMEPLAY_CHECKBOXES = ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT,
+      GameplaySettingsJson.ADD_LOOT_TO_APARTMENT, GameplaySettingsJson.RANDOMIZE_STATION,
+      GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_NEUROMODS,
+      GameplaySettingsJson.UNLOCK_ALL_SCANS);
+
+  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList.of(
+      CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
 
   private JFrame mainFrame;
 
@@ -91,14 +102,7 @@ public class RandomizerGui {
   private JFileChooser fileChooser;
   private JTextField seedField;
 
-  private JCheckBox voiceLinesCheckBox;
-  private JCheckBox bodiesCheckBox;
-  private JCheckBox apartmentLootCheckBox;
-  private JCheckBox lootTablesCheckBox;
-  private JCheckBox openStationCheckBox;
-  private JCheckBox randomizeNeuromodsCheckBox;
-  private JCheckBox unlockScansCheckBox;
-  private JCheckBox randomizeStationCheckBox;
+  private BiMap<String, JCheckBox> checkBoxHolder;
 
   private JLabel statusLabel;
   private JButton installButton;
@@ -108,12 +112,10 @@ public class RandomizerGui {
   private AllPresetsJson allPresets;
 
   private JPanel mainPanel;
-  private JPanel headerPanel;
-  private JPanel installDirPanel;
+  private JPanel topPanel;
   private JPanel optionsPanel;
-  private BaseSpawnOptionsPanel<SpawnPresetJson> itemSpawnPanel;
-  private BaseSpawnOptionsPanel<SpawnPresetJson> enemySpawnPanel;
-  private JPanel otherGameplayOptionsPanel;
+  private BaseRadioOptionsPanel<SpawnPresetJson> itemSpawnPanel;
+  private BaseRadioOptionsPanel<SpawnPresetJson> enemySpawnPanel;
   private JPanel buttonsPanel;
   private List<SpawnPresetJson> itemSpawnSettings;
   private List<SpawnPresetJson> enemySpawnSettings;
@@ -127,6 +129,7 @@ public class RandomizerGui {
     setupLogFile();
 
     database = EntityDatabase.getInstance();
+    checkBoxHolder = HashBiMap.create();
 
     logger = Logger.getGlobal();
     mainFrame = new JFrame("Prey Randomizer");
@@ -142,20 +145,18 @@ public class RandomizerGui {
 
     try {
       allPresets = new AllPresetsJson(ALL_PRESETS_FILE);
-      defaultEnemySpawnPreset = allPresets.getEnemySpawnSettings()
-                                          .get(0);
-      defaultItemSpawnPreset = allPresets.getItemSpawnSettings()
-                                         .get(0);
+      defaultEnemySpawnPreset = allPresets.getEnemySpawnSettings().get(0);
+      defaultItemSpawnPreset = allPresets.getItemSpawnSettings().get(0);
     } catch (IOException e1) {
       logger.warning("failed to parse presets file " + ALL_PRESETS_FILE);
       e1.printStackTrace();
     }
 
-    currentSettings = new SettingsJson(RELEASE_VER, DEFAULT_INSTALL_DIR, new Random().nextLong(),
-        new CosmeticSettingsJson(DEFAULT_RANDOMIZE_BODIES_VALUE, DEFAULT_RANDOMIZE_VOICELINES_VALUE),
-        new GameplaySettingsJson(DEFAULT_RANDOMIZE_LOOT_VALUE, DEFAULT_ADD_LOOT_TO_APARTMENT_VALUE,
-            DEFAULT_OPEN_STATION_VALUE, DEFAULT_RANDOMIZE_NEUROMODS_VALUE, DEFAULT_UNLOCK_ALL_SCANS_VALUE,
-            DEFAULT_RANDOMIZE_STATTION_VALUE, defaultEnemySpawnPreset, defaultItemSpawnPreset));
+    currentSettings = new SettingsJson(RELEASE_VER, DEFAULT_INSTALL_DIR, getNewSeed(), new CosmeticSettingsJson(
+        DEFAULT_RANDOMIZE_BODIES_VALUE, DEFAULT_RANDOMIZE_VOICELINES_VALUE), new GameplaySettingsJson(
+            DEFAULT_RANDOMIZE_LOOT_VALUE, DEFAULT_ADD_LOOT_TO_APARTMENT_VALUE, DEFAULT_OPEN_STATION_VALUE,
+            DEFAULT_RANDOMIZE_NEUROMODS_VALUE, DEFAULT_UNLOCK_ALL_SCANS_VALUE, DEFAULT_RANDOMIZE_STATION_VALUE,
+            defaultEnemySpawnPreset, defaultItemSpawnPreset));
     File lastUsedSettingsFile = new File(SAVED_SETTINGS_FILE);
     if (lastUsedSettingsFile.exists()) {
       try {
@@ -168,8 +169,7 @@ public class RandomizerGui {
     }
 
     mainPanel = new JPanel();
-    headerPanel = new JPanel();
-    installDirPanel = new JPanel();
+    topPanel = new JPanel();
     optionsPanel = new JPanel();
     buttonsPanel = new JPanel();
     statusLabel = new JLabel();
@@ -177,8 +177,7 @@ public class RandomizerGui {
     mainFrame.add(mainPanel);
 
     setupMainPanel();
-    setupHeaderPanel();
-    setupInstallDirPanel();
+    setupTopPanel();
     setupOptionsPanel();
     updateOptionsPanel();
     setupButtonsPanel();
@@ -187,24 +186,22 @@ public class RandomizerGui {
 
   }
 
+  private long getNewSeed() {
+    return new Random().nextLong();
+  }
+
   private void setupMainPanel() {
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    mainPanel.add(headerPanel);
-    mainPanel.add(installDirPanel);
+    mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    mainPanel.add(topPanel);
+    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
     mainPanel.add(optionsPanel);
+    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
     mainPanel.add(buttonsPanel);
   }
 
-  private void setupHeaderPanel() {
-    JLabel headerLabel = new JLabel("Prey Randomizer", JLabel.LEFT);
-    headerLabel.setSize(600, 10);
-
-    headerPanel.setLayout(new FlowLayout());
-    headerPanel.add(headerLabel);
-    headerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-  }
-
-  private void setupInstallDirPanel() {
+  private void setupTopPanel() {
     fileChooser = new JFileChooser(currentSettings.getInstallDir());
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fileChooser.setMultiSelectionEnabled(false);
@@ -212,79 +209,96 @@ public class RandomizerGui {
     currentFileLabel.setToolTipText("Game directory, ending in Prey/");
 
     currentFile = new JLabel(currentSettings.getInstallDir());
-    currentFile.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+    currentFile.setBorder(BorderFactory.createLoweredBevelBorder());
     JButton changeInstall = new JButton("Change");
     changeInstall.setActionCommand("changeInstallDir");
     changeInstall.addActionListener(new OnChangeDirClick());
 
-    JLabel seedLabel = new JLabel("Seed:");
-    seedField = new JTextField(Long.toString(currentSettings.getSeed()), 15);
-    seedField.setHorizontalAlignment(JLabel.RIGHT);
-
-    // TODO: Add "new seed" button
-
+    JPanel installDirPanel = new JPanel();
     installDirPanel.setLayout(new FlowLayout());
+    installDirPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
     installDirPanel.add(currentFileLabel);
     installDirPanel.add(currentFile);
     installDirPanel.add(changeInstall);
-    installDirPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-    installDirPanel.add(seedLabel);
-    installDirPanel.add(seedField);
-    installDirPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+    installDirPanel.setBorder(BorderFactory.createEtchedBorder());
+
+    JLabel seedLabel = new JLabel("Seed:");
+    seedField = new JTextField(15);
+    seedField.setHorizontalAlignment(JLabel.RIGHT);
+    updateSeedField();
+
+    JButton newSeedButton = new JButton("New seed");
+    newSeedButton.setToolTipText("Generate a new seed");
+    newSeedButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        currentSettings.setSeed(getNewSeed());
+        updateSeedField();
+      }
+    });
+    JPanel seedPanel = new JPanel();
+    seedPanel.add(seedLabel);
+    seedPanel.add(seedField);
+    seedPanel.add(newSeedButton);
+    seedPanel.setBorder(BorderFactory.createEtchedBorder());
+
+    topPanel.add(installDirPanel);
+    topPanel.add(seedPanel);
+  }
+
+  private void updateSeedField() {
+    seedField.setText(Long.toString(currentSettings.getSeed()));
   }
 
   private void setupOptionsPanel() {
-    itemSpawnPanel = new BaseSpawnOptionsPanel<>("Item spawn presets", "item", new OnRadioClick());
-    enemySpawnPanel = new BaseSpawnOptionsPanel<>("NPC spawn presets", "enemy", new OnRadioClick());
-    otherGameplayOptionsPanel = new JPanel();
-    otherGameplayOptionsPanel.add(new JLabel("Other options"));
-    otherGameplayOptionsPanel.setLayout(new GridLayout(6, 1));
+    itemSpawnPanel = new BaseRadioOptionsPanel<>("Item spawn presets", "item", new OnRadioClick());
+    enemySpawnPanel = new BaseRadioOptionsPanel<>("NPC spawn presets", "enemy", new OnRadioClick());
+    JPanel otherGameplayOptionsPanel = new JPanel();
+    otherGameplayOptionsPanel.setLayout(new BoxLayout(otherGameplayOptionsPanel, BoxLayout.Y_AXIS));
+    otherGameplayOptionsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-    ItemListener listener = new OnCheckBoxClick();
-    voiceLinesCheckBox = new JCheckBox("Randomize voice lines", currentSettings.getCosmeticSettings()
-                                                                               .isRandomizeVoicelines());
-    voiceLinesCheckBox.setToolTipText("Shuffles voice lines within voice actor");
-    voiceLinesCheckBox.addItemListener(listener);
-    bodiesCheckBox = new JCheckBox("Randomize NPC bodies", currentSettings.getCosmeticSettings()
-                                                                          .isRandomizeBodies());
-    bodiesCheckBox.setToolTipText("Randomizes human NPC body parts");
-    bodiesCheckBox.addItemListener(listener);
-    apartmentLootCheckBox = new JCheckBox("Add loot to Morgan's apartment", currentSettings.getGameplaySettings()
-                                                                                           .isAddLootToApartment());
-    apartmentLootCheckBox.setToolTipText("Adds useful equipment in containers around Morgan's apartment");
-    apartmentLootCheckBox.addItemListener(listener);
-    lootTablesCheckBox = new JCheckBox("Randomize loot tables", currentSettings.getGameplaySettings()
-                                                                               .isRandomizeLoot());
-    lootTablesCheckBox.setToolTipText("Randomizes contents of loot tables according to item spawn settings");
-    lootTablesCheckBox.addItemListener(listener);
-    openStationCheckBox = new JCheckBox("Open up Talos I (WIP)", currentSettings.getGameplaySettings()
-                                                                                .isOpenStation());
-    openStationCheckBox.setToolTipText("Unlocks doors around Talos I to make traversal easier");
-    openStationCheckBox.addItemListener(listener);
-    randomizeNeuromodsCheckBox = new JCheckBox("Randomize Neuromod upgrade tree", currentSettings.getGameplaySettings()
-                                                                                                 .isRandomizeNeuromods());
-    randomizeNeuromodsCheckBox.addItemListener(listener);
-    randomizeNeuromodsCheckBox.setToolTipText("Shuffles the neuromods in the skill upgrade tree");
-    unlockScansCheckBox = new JCheckBox("Unlock all neuromods scans", currentSettings.getGameplaySettings()
-                                                                                     .isUnlockAllScans());
-    unlockScansCheckBox.addItemListener(listener);
-    unlockScansCheckBox.setToolTipText("Removes scan requirement for all typhon neuromods");
+    JPanel cosmeticCheckboxes = new JPanel();
+    cosmeticCheckboxes.setLayout(new BoxLayout(cosmeticCheckboxes, BoxLayout.Y_AXIS));
+    cosmeticCheckboxes.setAlignmentX(Component.LEFT_ALIGNMENT);
+    cosmeticCheckboxes.setAlignmentY(Component.TOP_ALIGNMENT);
+    cosmeticCheckboxes.add(new JLabel("Cosmetic options"));
+    cosmeticCheckboxes.add(Box.createRigidArea(new Dimension(0, 10)));
 
-    randomizeStationCheckBox = new JCheckBox("Randomize station connections", currentSettings.getGameplaySettings()
-                                                                                             .isRandomizeStation());
-    randomizeStationCheckBox.addItemListener(listener);
-    randomizeStationCheckBox.setToolTipText("Shuffles connections between levels");
+    ItemListener cosmeticListener = new CosmeticCheckboxListener();
+    for (String s : COSMETIC_CHECKBOXES) {
+      BaseCheckbox info = CosmeticSettingsJson.ALL_OPTIONS.get(s);
+      JCheckBox checkbox = new JCheckBox(info.getName());
+      checkbox.setSelected(currentSettings.getCosmeticSettings().getOption(s));
+      checkbox.setToolTipText(info.getDesc());
+      checkbox.addItemListener(cosmeticListener);
+      checkBoxHolder.put(s, checkbox);
+      cosmeticCheckboxes.add(checkbox);
+    }
 
-    otherGameplayOptionsPanel.add(voiceLinesCheckBox);
-    otherGameplayOptionsPanel.add(bodiesCheckBox);
-    otherGameplayOptionsPanel.add(apartmentLootCheckBox);
-    otherGameplayOptionsPanel.add(lootTablesCheckBox);
-    otherGameplayOptionsPanel.add(openStationCheckBox);
-    otherGameplayOptionsPanel.add(randomizeNeuromodsCheckBox);
-    otherGameplayOptionsPanel.add(unlockScansCheckBox);
-    otherGameplayOptionsPanel.add(randomizeStationCheckBox);
+    JPanel gameplayCheckboxes = new JPanel();
+    gameplayCheckboxes.setLayout(new BoxLayout(gameplayCheckboxes, BoxLayout.Y_AXIS));
+    gameplayCheckboxes.setAlignmentX(Component.LEFT_ALIGNMENT);
+    gameplayCheckboxes.add(new JLabel("Gameplay options"));
+    gameplayCheckboxes.add(Box.createRigidArea(new Dimension(0, 10)));
 
-    optionsPanel.setLayout(new GridLayout(1, 3));
+    ItemListener gameplayListener = new GameplayCheckboxListener();
+    for (String s : GAMEPLAY_CHECKBOXES) {
+      BaseCheckbox info = GameplaySettingsJson.ALL_OPTIONS.get(s);
+      JCheckBox checkbox = new JCheckBox(info.getName());
+      checkbox.setSelected(currentSettings.getGameplaySettings().getOption(s));
+      checkbox.setToolTipText(info.getDesc());
+      checkbox.addItemListener(gameplayListener);
+      checkBoxHolder.put(s, checkbox);
+      gameplayCheckboxes.add(checkbox);
+    }
+
+    otherGameplayOptionsPanel.add(cosmeticCheckboxes);
+    otherGameplayOptionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+    otherGameplayOptionsPanel.add(gameplayCheckboxes);
+
+    optionsPanel.setLayout(new GridLayout(0, 3));
+    optionsPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+    optionsPanel.setBorder(BorderFactory.createEtchedBorder());
     optionsPanel.add(itemSpawnPanel);
     optionsPanel.add(enemySpawnPanel);
     optionsPanel.add(otherGameplayOptionsPanel);
@@ -296,22 +310,20 @@ public class RandomizerGui {
 
       itemSpawnSettings = allPresets.getItemSpawnSettings();
       itemSpawnPanel.setRadioLabels(itemSpawnSettings, currentSettings.getGameplaySettings()
-                                                                      .getItemSpawnSettings()
-                                                                      .getName());
+          .getItemSpawnSettings()
+          .getName());
 
       enemySpawnSettings = allPresets.getEnemySpawnSettings();
       enemySpawnPanel.setRadioLabels(enemySpawnSettings, currentSettings.getGameplaySettings()
-                                                                        .getEnemySpawnSettings()
-                                                                        .getName());
+          .getEnemySpawnSettings()
+          .getName());
 
       // Update current settings in case presets have changed underneath
       int itemSpawnIndex = itemSpawnPanel.getCurrentIndex();
       int enemySpawnIndex = enemySpawnPanel.getCurrentIndex();
 
-      currentSettings.getGameplaySettings()
-                     .setItemSpawnSettings(itemSpawnSettings.get(itemSpawnIndex));
-      currentSettings.getGameplaySettings()
-                     .setEnemySpawnSettings(enemySpawnSettings.get(enemySpawnIndex));
+      currentSettings.getGameplaySettings().setItemSpawnSettings(itemSpawnSettings.get(itemSpawnIndex));
+      currentSettings.getGameplaySettings().setEnemySpawnSettings(enemySpawnSettings.get(enemySpawnIndex));
 
       validateSettings();
       mainFrame.pack();
@@ -323,9 +335,6 @@ public class RandomizerGui {
   }
 
   private void setupButtonsPanel() {
-
-    // TODO: Split into two panels, add "clear saved settings" option
-
     statusLabel = new JLabel("", JLabel.LEFT);
     JButton saveButton = new JButton("Save settings");
     saveButton.addActionListener(new ActionListener() {
@@ -349,15 +358,13 @@ public class RandomizerGui {
         // Reset indeces to 0
         itemSpawnPanel.setCurrentIndex(0);
         enemySpawnPanel.setCurrentIndex(0);
-        currentSettings.getGameplaySettings()
-                       .setItemSpawnSettings(itemSpawnSettings.get(0));
-        currentSettings.getGameplaySettings()
-                       .setEnemySpawnSettings(enemySpawnSettings.get(0));
+        currentSettings.getGameplaySettings().setItemSpawnSettings(itemSpawnSettings.get(0));
+        currentSettings.getGameplaySettings().setEnemySpawnSettings(enemySpawnSettings.get(0));
         statusLabel.setText("Options refreshed.");
         mainFrame.revalidate();
       }
     });
-    refreshSettings.setToolTipText("Updates item/NPC spawn options if you modified settings.json");
+    refreshSettings.setToolTipText("Updates item/NPC spawn options if you modified " + ALL_PRESETS_FILE);
     installButton = new JButton("Install");
     installButton.setActionCommand("install");
     installButton.addActionListener(new OnInstallClick());
@@ -378,7 +385,6 @@ public class RandomizerGui {
     buttonsPanel.add(installButton);
     buttonsPanel.add(uninstallButton);
     buttonsPanel.add(closeButton);
-    buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
   }
 
   public void start() {
@@ -392,8 +398,7 @@ public class RandomizerGui {
       fileChooser.showOpenDialog(null);
       String installDir = "Error occurred while parsing install directory";
       try {
-        installDir = fileChooser.getSelectedFile()
-                                .getCanonicalPath();
+        installDir = fileChooser.getSelectedFile().getCanonicalPath();
         currentSettings.setInstallDir(installDir);
       } catch (IOException e1) {
         logger.warning("Unable to get canonical path for Prey install dir: " + e1.getMessage());
@@ -404,39 +409,24 @@ public class RandomizerGui {
 
   }
 
-  private class OnCheckBoxClick implements ItemListener {
+  private class CosmeticCheckboxListener implements ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent e) {
       Object source = e.getItemSelectable();
-
-      if (source == voiceLinesCheckBox) {
-        currentSettings.getCosmeticSettings()
-                       .toggleRandomizeVoicelines();
-      } else if (source == bodiesCheckBox) {
-        currentSettings.getCosmeticSettings()
-                       .toggleRandomizeBodies();
-      } else if (source == apartmentLootCheckBox) {
-        currentSettings.getGameplaySettings()
-                       .toggleAddLootToApartment();
-      } else if (source == lootTablesCheckBox) {
-        currentSettings.getGameplaySettings()
-                       .toggleRandomizeLoot();
-      } else if (source == openStationCheckBox) {
-        currentSettings.getGameplaySettings()
-                       .toggleOpenStation();
-      } else if (source == randomizeNeuromodsCheckBox) {
-        currentSettings.getGameplaySettings()
-                       .toggleRandomizeNeuromods();
-      } else if (source == unlockScansCheckBox) {
-        currentSettings.getGameplaySettings()
-                       .toggleUnlockAllScans();
-      } else if (source == randomizeStationCheckBox) {
-        currentSettings.getGameplaySettings()
-                       .toggleRandomizeStation();
-      }
+      String name = checkBoxHolder.inverse().get(source);
+      currentSettings.getCosmeticSettings().toggleOption(name);
     }
+  }
 
+  private class GameplayCheckboxListener implements ItemListener {
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+      Object source = e.getItemSelectable();
+      String name = checkBoxHolder.inverse().get(source);
+      currentSettings.getGameplaySettings().toggleOption(name);
+    }
   }
 
   private class OnRadioClick implements ActionListener {
@@ -445,16 +435,13 @@ public class RandomizerGui {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      String[] tokens = e.getActionCommand()
-                         .split(BaseSpawnOptionsPanel.DELIMITER);
+      String[] tokens = e.getActionCommand().split(BaseRadioOptionsPanel.DELIMITER);
       switch (tokens[0]) {
         case ITEM_SPAWN_OPTIONS_PREFIX:
-          currentSettings.getGameplaySettings()
-                         .setItemSpawnSettings(itemSpawnPanel.getSettingsByName(tokens[1]));
+          currentSettings.getGameplaySettings().setItemSpawnSettings(itemSpawnPanel.getSettingsByName(tokens[1]));
           break;
         case ENEMY_SPAWN_OPTIONS_PREFIX:
-          currentSettings.getGameplaySettings()
-                         .setEnemySpawnSettings(enemySpawnPanel.getSettingsByName(tokens[1]));
+          currentSettings.getGameplaySettings().setEnemySpawnSettings(enemySpawnPanel.getSettingsByName(tokens[1]));
           break;
         default:
           break;
@@ -506,7 +493,6 @@ public class RandomizerGui {
       try {
         logger.info(new ObjectMapper().writeValueAsString(currentSettings));
       } catch (JsonProcessingException e1) {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
 
@@ -536,54 +522,39 @@ public class RandomizerGui {
 
       // Randomization
 
-      // TODO: Use worker threads
-
-      if (currentSettings.getCosmeticSettings()
-                         .isRandomizeBodies()) {
+      if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
         new BodyRandomizer(currentSettings, tempPatchDir).randomize();
       }
-      if (currentSettings.getCosmeticSettings()
-                         .isRandomizeVoicelines()) {
+      if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
         new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
       }
-      if (currentSettings.getGameplaySettings()
-                         .isRandomizeNeuromods()) {
+      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
         new NeuromodTreeRandomizer(currentSettings, tempPatchDir).randomize();
-      } else if (currentSettings.getGameplaySettings()
-                                .isUnlockAllScans()) {
+      } else if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS)) {
         new NeuromodTreeRandomizer(currentSettings, tempPatchDir).unlockAllScans();
       }
 
       LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, tempLevelDir).addFilter(
           new ItemSpawnFilter(database, currentSettings))
-                                                                                          .addFilter(
-                                                                                              new FlowgraphFilter(
-                                                                                                  database,
-                                                                                                  currentSettings))
-                                                                                          .addFilter(new EnemyFilter(
-                                                                                              database,
-                                                                                              currentSettings));
+          .addFilter(new FlowgraphFilter(database, currentSettings))
+          .addFilter(new EnemyFilter(database, currentSettings));
 
-      if (currentSettings.getGameplaySettings()
-                         .isOpenStation()) {
+      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)) {
         levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
       }
 
-      if (currentSettings.getGameplaySettings()
-                         .isAddLootToApartment()) {
+      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.ADD_LOOT_TO_APARTMENT)) {
         levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
       }
 
-      if (currentSettings.getGameplaySettings()
-                         .isRandomizeStation()) {
+      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
         levelRandomizer = levelRandomizer.addFilter(new StationConnectivityFilter(currentSettings));
       }
 
       levelRandomizer.randomize();
 
       try {
-        if (currentSettings.getGameplaySettings()
-                           .isRandomizeLoot()) {
+        if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_LOOT)) {
           new LootTableRandomizer(database, currentSettings, tempPatchDir).randomize();
         } else {
           new LootTableRandomizer(database, currentSettings, tempPatchDir).copyFile();
@@ -608,8 +579,7 @@ public class RandomizerGui {
       JsonMappingException, IOException {
     File lastUsedSettingsFile = new File(lastUsedSettingsPath);
     lastUsedSettingsFile.createNewFile();
-    new ObjectMapper().writerFor(SettingsJson.class)
-                      .writeValue(lastUsedSettingsFile, currentSettings);
+    new ObjectMapper().writerFor(SettingsJson.class).writeValue(lastUsedSettingsFile, currentSettings);
   }
 
   private class OnUninstallClick implements ActionListener {
@@ -643,24 +613,17 @@ public class RandomizerGui {
       if (gspj.getRules() == null) {
         continue;
       }
-      for (int i = 0; i < gspj.getRules()
-                              .size(); i++) {
-        GenericRuleJson gfj = gspj.getRules()
-                                  .get(i);
+      for (int i = 0; i < gspj.getRules().size(); i++) {
+        GenericRuleJson gfj = gspj.getRules().get(i);
 
         if (gfj.getOutputTags() == null || gfj.getOutputWeights() == null) {
           continue;
         }
 
-        if (gfj.getOutputWeights()
-               .size() != 0 && gfj.getOutputTags()
-                                  .size() != gfj.getOutputWeights()
-                                                .size()) {
+        if (gfj.getOutputWeights().size() != 0 && gfj.getOutputTags().size() != gfj.getOutputWeights().size()) {
           logger.info(String.format(
               "Invalid filter settings for %s spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
-              name, gspj.getName(), i, gfj.getOutputTags()
-                                          .size(), gfj.getOutputWeights()
-                                                      .size()));
+              name, gspj.getName(), i, gfj.getOutputTags().size(), gfj.getOutputWeights().size()));
         }
       }
     }

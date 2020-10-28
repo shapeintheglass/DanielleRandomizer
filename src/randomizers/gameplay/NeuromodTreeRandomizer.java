@@ -19,6 +19,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
 
@@ -57,21 +58,18 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private Map<String, Element> abilityIdToElement;
   private static final String ID_PREREQ_FORMAT = "%s;%s";
 
-  private static final boolean[][] LAYOUT_ONE = { { true, false, false, false, false, false },
-      { false, true, false, false, false, false }, { false, false, true, false, false, false },
-      { false, false, false, true, false, false }, { false, false, false, false, true, false },
-      { false, false, false, false, false, true }, };
+  private static final boolean[][] LAYOUT_ONE = { { true, false, false, false, false, false }, { false, true, false,
+      false, false, false }, { false, false, true, false, false, false }, { false, false, false, true, false, false }, {
+          false, false, false, false, true, false }, { false, false, false, false, false, true }, };
 
-  private static final boolean[][] LAYOUT_TWO = { { true, false, false, true, false, false },
-      { false, false, true, true, false, false }, { false, true, false, false, true, false },
-      { false, false, true, false, true, false } };
+  private static final boolean[][] LAYOUT_TWO = { { true, false, false, true, false, false }, { false, false, true,
+      true, false, false }, { false, true, false, false, true, false }, { false, false, true, false, true, false } };
 
-  private static final boolean[][] LAYOUT_THREE = { { true, false, true, false, true, false },
-      { false, true, false, true, false, true }, { false, true, true, false, true, false },
-      { false, true, false, true, true, false } };
+  private static final boolean[][] LAYOUT_THREE = { { true, false, true, false, true, false }, { false, true, false,
+      true, false, true }, { false, true, true, false, true, false }, { false, true, false, true, true, false } };
 
-  private static final boolean[][] LAYOUT_FOUR = { { false, true, true, true, true, false },
-      { true, true, true, true, false, false }, { true, false, true, true, false, true } };
+  private static final boolean[][] LAYOUT_FOUR = { { false, true, true, true, true, false }, { true, true, true, true,
+      false, false }, { true, false, true, true, false, true } };
 
   private static final boolean[][] LAYOUT_FIVE = { { true, true, true, true, true, false } };
 
@@ -80,26 +78,18 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
   public NeuromodTreeRandomizer(SettingsJson s, Path tempPatchDir) {
     super(s);
-    unlockAllScans = s.getGameplaySettings()
-                      .isUnlockAllScans();
+    unlockAllScans = s.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS);
     abilityIds = new ArrayList<>();
     abilityIdToElement = new HashMap<>();
     Path arkDir = new File(FILES_DIR).toPath();
-    abilitiesFileIn = arkDir.resolve(ABILITIES_FILE)
-                            .toFile();
-    layoutFileIn = arkDir.resolve(PDA_LAYOUT_FILE)
-                         .toFile();
-    researchFileIn = arkDir.resolve(RESEARCH_TOPICS_FILE)
-                           .toFile();
+    abilitiesFileIn = arkDir.resolve(ABILITIES_FILE).toFile();
+    layoutFileIn = arkDir.resolve(PDA_LAYOUT_FILE).toFile();
+    researchFileIn = arkDir.resolve(RESEARCH_TOPICS_FILE).toFile();
     Path outDir = tempPatchDir.resolve(OUTPUT_PATH);
-    outDir.toFile()
-          .mkdirs();
-    abilitiesFileOut = outDir.resolve(ABILITIES_FILE)
-                             .toFile();
-    layoutFileOut = outDir.resolve(PDA_LAYOUT_FILE)
-                          .toFile();
-    researchFileOut = outDir.resolve(RESEARCH_TOPICS_FILE)
-                            .toFile();
+    outDir.toFile().mkdirs();
+    abilitiesFileOut = outDir.resolve(ABILITIES_FILE).toFile();
+    layoutFileOut = outDir.resolve(PDA_LAYOUT_FILE).toFile();
+    researchFileOut = outDir.resolve(RESEARCH_TOPICS_FILE).toFile();
 
     try {
       populateAbilitiesMap();
@@ -112,8 +102,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     SAXBuilder saxBuilder = new SAXBuilder();
     abilitiesDoc = saxBuilder.build(abilitiesFileIn);
     Element abilitiesRoot = abilitiesDoc.getRootElement();
-    List<Element> allAbilities = abilitiesRoot.getChild("Abilities")
-                                              .getChildren();
+    List<Element> allAbilities = abilitiesRoot.getChild("Abilities").getChildren();
     for (Element ability : allAbilities) {
       String id = ability.getAttributeValue("ID");
       abilityIds.add(new Ability(id));
@@ -131,7 +120,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         e.printStackTrace();
       }
     }
-    
+
     Collections.shuffle(abilityIds, r);
 
     try {
@@ -140,8 +129,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       Document layoutDoc = saxBuilder.build(layoutFileIn);
 
       Element layoutRoot = layoutDoc.getRootElement();
-      List<Element> allCategories = layoutRoot.getChild("Categories")
-                                              .getChildren();
+      List<Element> allCategories = layoutRoot.getChild("Categories").getChildren();
       int abilityIdIndex = 0;
       for (int categoryIndex = 0; categoryIndex < NUM_CATEGORIES; categoryIndex++) {
         // Generate a new layout using the next N ability IDs
@@ -150,8 +138,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         Ability[][] layout = createLayout(abilitiesToAdd, r);
 
         // Delete all existing rows
-        Element rowsElement = allCategories.get(categoryIndex)
-                                           .getChild("Rows");
+        Element rowsElement = allCategories.get(categoryIndex).getChild("Rows");
         rowsElement.removeContent();
         // Add 6 rows, 4 columns per row
         for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
@@ -164,13 +151,9 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
           rowsElement.addContent(abilityRow);
         }
 
-        List<Element> rows = allCategories.get(categoryIndex)
-                                          .getChild("Rows")
-                                          .getChildren();
+        List<Element> rows = allCategories.get(categoryIndex).getChild("Rows").getChildren();
         for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
-          List<Element> columns = rows.get(rowIndex)
-                                      .getChild("Abilities")
-                                      .getChildren();
+          List<Element> columns = rows.get(rowIndex).getChild("Abilities").getChildren();
           for (int columnIndex = 0; columnIndex < NUM_COLUMNS; columnIndex++) {
             Element ability = columns.get(columnIndex);
 
@@ -191,14 +174,12 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       for (Ability a : abilityIds) {
         Element e = abilityIdToElement.get(a.getId());
         // Remove any pre-existing prereqs
-        e.getChild("Prereqs")
-         .removeChildren("Prereq");
+        e.getChild("Prereqs").removeChildren("Prereq");
         if (a.getPrereq() != null) {
           // Generate and add new prereq
           Element prereqElement = new Element("Prereq");
           prereqElement.setAttribute("value", a.getPrereq());
-          e.getChild("Prereqs")
-           .addContent(prereqElement);
+          e.getChild("Prereqs").addContent(prereqElement);
         }
         if (unlockAllScans) {
           e.setAttribute(REQUIRE_SCANNER, FALSE);
@@ -216,7 +197,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     }
   }
 
-  public void unlockAllScans()  {
+  public void unlockAllScans() {
     // Update prereqs and other requirements for all abilities
 
     try {
@@ -235,7 +216,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
   }
 
   private void removeScanRequirementInResearchTopics() throws JDOMException, IOException {
@@ -244,11 +225,9 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     Document researchDoc = saxBuilder.build(researchFileIn);
     Element researchRoot = researchDoc.getRootElement();
     // Iterate over every research topic
-    for (Element topic : researchRoot.getChild("Topics")
-                                     .getChildren()) {
+    for (Element topic : researchRoot.getChild("Topics").getChildren()) {
       // Iterate over every ability group
-      for (Element abilityGroup : topic.getChild("AbilityGroups")
-                                       .getChildren()) {
+      for (Element abilityGroup : topic.getChild("AbilityGroups").getChildren()) {
         // Set required scans to 0
         abilityGroup.setAttribute("scansRequired", "0");
       }

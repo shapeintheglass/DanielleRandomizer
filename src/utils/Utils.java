@@ -19,8 +19,7 @@ public class Utils {
   public static Path createTempDir(Path workingDir, String name) {
     long now = new Date().getTime();
     Path newTempDir = workingDir.resolve(String.format("temp_%8d_%s", now, name));
-    newTempDir.toFile()
-              .mkdirs();
+    newTempDir.toFile().mkdirs();
     newTempDir.toFile().deleteOnExit();
     return newTempDir;
   }
@@ -69,8 +68,7 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(T[] arr, Integer[] weights, Random r) {
-    int sum = Arrays.stream(weights)
-                    .reduce(0, Integer::sum);
+    int sum = Arrays.stream(weights).reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -88,8 +86,7 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights, Random r) {
-    int sum = weights.stream()
-                     .reduce(0, Integer::sum);
+    int sum = weights.stream().reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -118,9 +115,7 @@ public class Utils {
   public static void copyDirectory(File fromDir, Path toDir) throws IOException {
     if (fromDir.isDirectory()) {
       for (File f : fromDir.listFiles()) {
-        toDir.resolve(f.getName())
-             .toFile()
-             .mkdir();
+        toDir.resolve(f.getName()).toFile().mkdir();
         copyDirectory(f, toDir.resolve(f.getName()));
       }
     } else {
@@ -142,11 +137,54 @@ public class Utils {
     // Split name on dots
     String name = e.getAttributeValue("Name");
     String[] nameTags = name.split("\\.");
-    Arrays.stream(nameTags)
-          .forEach(s -> tags.add(s));
+    Arrays.stream(nameTags).forEach(s -> tags.add(s));
     tags.add(e.getAttributeValue("Class"));
     tags.add(e.getAttributeValue("Library"));
+
+    Element properties = e.getChild("Properties");
+    addTagForBoolean(tags, properties, "bIsCarryable", "_CARRYABLE");
+    addTagForBoolean(tags, properties, "bIsMimicable", "_MIMICABLE");
+    addTagForBoolean(tags, properties, "bUsable", "_USABLE");
+    addTagForBoolean(tags, properties, "bConsumable", "_CONSUMABLE");
+    addTagForBoolean(tags, properties, "bConsumable", "_CONSUMABLE");
+    addTagForBoolean(tags, properties, "bIsTrash", "_TRASH");
+    addTagForBoolean(tags, properties, "bImportant", "_IMPORTANT");
+    addTagForBoolean(tags, properties, "bIsPlotCritical", "_PLOT_CRITICAL");
+    addTagForBoolean(tags, properties, "bIsRandom", "_RANDOM");
+    addTagForBoolean(tags, properties, "bSurvivalMode", "_SURVIVAL");
+    addCarryRequirementTag(tags, properties);
+
     return tags;
+  }
+
+  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName, String tagName) {
+    if (properties == null || properties.getAttributeValue(propertyName) == null) {
+      return;
+    }
+
+    if (properties.getAttributeValue(propertyName).equals("1")) {
+      tags.add(tagName);
+    }
+  }
+
+  private static void addCarryRequirementTag(Set<String> tags, Element properties) {
+    String carryReq = properties.getAttributeValue("ability_CarryRequirement");
+    
+    if (carryReq == null) {
+      return;
+    }
+    
+    switch (carryReq) {
+      case "3149325216928599448":
+        tags.add("_LEVERAGE_I");
+        return;
+      case "3149325216928599824":
+        tags.add("_LEVERAGE_II");
+        return;
+      case "3149325216933436173":
+        tags.add("_LEVERAGE_III");
+        return;
+    }
   }
 
   public static String getNameForEntity(Element e) {

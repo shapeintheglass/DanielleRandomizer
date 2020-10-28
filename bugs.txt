@@ -3,7 +3,6 @@ Bugs to fix
 Loot table does not copy over correctly
 
 Typhon to whitelist
-* Pool/cafeteria telepaths in Crew Quarters
 * Greenhouse telepath in Arboretum
 * Cargo bay typhon
 
@@ -11,5 +10,5 @@ Things to unlock for open Talos
 * Power plant reactor
 * Deep Storage
 
-Arboretum GUTS entrance (or psychotronics exit) may be bugged
 Figure out a way to skip scan requirement for psychotronics door
+Use level/global vars

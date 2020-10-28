@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -16,6 +15,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
+import com.google.common.collect.LinkedListMultimap;
 
 import utils.FileConsts;
 import utils.FileConsts.Archetype;
@@ -41,9 +42,8 @@ public class EntityDatabase extends TaggedDatabase {
   }
 
   protected void populateDatabase() {
-    tagToNameList = new HashMap<>();
+    tagToName = LinkedListMultimap.create();
     nameToElement = new HashMap<>();
-    allTags = new HashSet<>();
 
     // Iterate through every entity archetype file
     for (Archetype a : Archetype.values()) {
@@ -70,10 +70,25 @@ public class EntityDatabase extends TaggedDatabase {
     }
   }
 
+  private void addToDatabase(Element e, Set<String> tags) {
+    tags.add(GLOBAL_TAG);
+    String name = e.getAttributeValue("Name");
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Could not find name for element " + e.toString());
+    }
+    for (String tag : tags) {
+      tagToName.put(tag, name);
+    }
+    if (nameToElement.containsKey(name)) {
+      throw new IllegalArgumentException("Duplicate name: " + name);
+    }
+    nameToElement.put(name, e);
+  }
+
   public static void main(String[] args) {
     EntityDatabase d = getInstance();
     List<String> validTags = new ArrayList<>();
-    d.allTags.stream().forEach(s -> validTags.add(s));
+    d.tagToName.keySet().stream().forEach(s -> validTags.add(s));
     List<String> validEntities = d.getAllForTag(GLOBAL_TAG);
     Collections.sort(validTags);
     Collections.sort(validEntities);
@@ -81,10 +96,8 @@ public class EntityDatabase extends TaggedDatabase {
     File tagsFileCsv = new File("tagstoentities.csv");
     File entitiesFileCsv = new File("entitiestotags.csv");
 
-    try (BufferedWriter tagsWriter = new BufferedWriter(new FileWriter(
-        tagsFileCsv));
-        BufferedWriter entitiesWriter = new BufferedWriter(new FileWriter(
-            entitiesFileCsv))) {
+    try (BufferedWriter tagsWriter = new BufferedWriter(new FileWriter(tagsFileCsv));
+        BufferedWriter entitiesWriter = new BufferedWriter(new FileWriter(entitiesFileCsv))) {
       tagsWriter.write("tag,entries\n");
       entitiesWriter.write("entity,tags\n");
 
@@ -102,8 +115,7 @@ public class EntityDatabase extends TaggedDatabase {
         Collections.sort(tags);
         entitiesWriter.write(String.format("%s,\"%s\"\n", s, tags));
       }
-      System.out.printf("Wrote to %s, %s", tagsFileCsv.getCanonicalPath(),
-          entitiesFileCsv.getCanonicalPath());
+      System.out.printf("Wrote to %s, %s", tagsFileCsv.getCanonicalPath(), entitiesFileCsv.getCanonicalPath());
     } catch (IOException e) {
       e.printStackTrace();
     }
