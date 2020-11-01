@@ -1,4 +1,4 @@
-# Danielle Randomizer v0.0
+# Danielle Randomizer v0.2 (beta)
 
 A simple randomizer for Prey 2017 (code-named "Danielle").
 
@@ -22,7 +22,9 @@ Randomizes various entities in Prey 2017 via an external executable that overwri
 3. Specify Prey install directory.
 4. Specify desired randomization settings.
 5. Click "Install" to generate randomized files and install them.
-6. Click "Uninstall" to revert any changes made by this randomizer.
+6. Start a new randomized game!
+
+When done with your randomized game, use the "Uninstall" button to revert any changes made by this randomizer. Note that once the mod is uninstalled, all save files created while the randomizer was in effect will become unplayable.
 
 ### Uninstalling the randomizer
 
@@ -54,12 +56,14 @@ If you change settings.json while the randomizer GUI is active, click "Refresh s
 
 * Randomize all - Randomizes all items and replaces them with new items at a (mostly) sane spawn rate. Should not affect items that are essential for story progress.
 * Randomize all, no story items - Same as randomize all, but does not spawn duplicates of critical story items (ex. you won't find arming keys randomly while walking around)
+* Randomize within type - An experimental setting where objects are randomized within their type. Ex. weapons are replaced with other weapons, food is replaced with other food, fab plans are replaced with other fab plans, etc. Physics props are also replaced with a prop of the same leverage type.
 * Whiskey and cigars - Replaces all items with whiskey and cigars.
 * All reployers - Replaces all items with reployers.
 
 ####NPC spawn presets - Affects entities that are spawned from an NPC spawner
 
 * Randomize all - Randomizes all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression.
+* Randomize all, no tentacles - Randomizes all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression. Does not spawn unkillable giant tentacles.
 * All nightmares - Replaces all typhon with nightmares. Why would you use this setting? Who would think this is a good idea?
 * All mimics - Replaces all typhon with mimics.
 * Typhon to humans - Replaces all typhon with humans.
@@ -69,24 +73,33 @@ If you change settings.json while the randomizer GUI is active, click "Refresh s
 
 * Randomize voice lines - Shuffles voices lines by voice actor
 * Randomize NPC bodies - Scrambles body parts for every human NPC. If you see anything wrong with an NPC (ex. missing heads, bodies), let me know.
+* Start on 2nd day - Starts the game at the beginning of the 2nd day of the intro. There is a known bug where the HUD will be invisible at first. To fix this, open and close the inventory menu.
 * Add loot to Morgan's apartment - Adds some starting loot to various containers in Morgan's apartment (nightstands on either side of the bed, three kitchen cabinets, refrigerator, large kitchen cabinet)
 * Randomize loot tables - Scrambles items that can show up as loot in various containers.
+* Unlock all neuromod scans - Removes research requirements for all typhon neuromods. You'll still have to purchase them via neuromods though!
+* Randomize Neuromod upgrade tree - Scrambles the neuromod skill tree so that the order of unlocking every neuromod will be a little different.
 * Open up Talos I (WIP) - Unlocks various doors. See next section for more details.
+* Randomize station connections - Scrambles connections between maps. Basic checks are done to ensure that the game is still completable, but this is still undergoing testing.
 
 ####Open up Talos I effects
 
-The ultimate goal of this option is to make all of Talos I accessible from the get-go (and keep it that way) so that connections between maps can eventually be randomized. Currently, this is what it does:
+This option can help skip around the station a little easier, but doesn't have everything taken into account yet. Currently, this is what it does:
 
-* Neuromod Division - Unlocks the two neighboring doors in Morgan's apartment hallway (in case you can't get a wrench)
-* Lobby - Moves the lift Technopath from the Arboretum level of the Lobby to the tunnel between the Lobby and Neuromod Division. Make sure to kill it here so that you can unlock the lift early!
-* Psychotronics - Unlocks the second floor containment doors (in case you can't get psychoscope scans) and unlocks live exam doors (in case something goes wrong with the voltaic phantom encounter cutscene)
+* Neuromod Division - Unlocks the neighboring apartment doors in Morgan's apartment (as a failsafe in case a wrench doesn't spawn)
+* Psychotronics - Unlocks the live exam and psychoscope calibration doors (on the second floor)
+* Lobby - Unlocks the level transitions to Psychotronics and Shuttle Bay. No longer messes with the lift or the spawn location of the lift technopath.
+* Power Plant - Unlocks the reactor door.
+* GUTS - Unlocks the maintenance tunnel door (allows skipping the magnetosphere sequence)
+* Exterior - Unlocks all airlocks
 
 ## Known issues
 
+* If save files are not manually deleted before starting a new save slot, game can crash if old level files are left over from the previous save.
 * Items that are hard-coded to spawn in certain containers cannot be randomized (changing the class type of these items results in crashing the game).
 * Temporary directories will not be deleted if there was an issue during randomization/install. If these start to pile up, feel free to delete them manually.
 * Game can occasionally crash when quitting to menu.
-* If save files are not manually deleted before starting a new save slot, game can crash if old level files are left over from the previous save.
+* If starting on the 2nd day, lighting may be a little strange and the HUD may disappear.
+
 
 ## Authors
 
@@ -100,11 +113,21 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
     * Bug fixes with settings, log files
     * Adjust presets
     * Add tooltips to GUI
+* 0.2
+    * Fix bug with multiple custom filters
+    * Adjust presets
+    * Add neuromod randomization
+    * Add station randomization
+    * Add "start on 2nd day"
+    * Add game token override support
+    * Add save settings support
+    * Add "new seed" support
 
 ## Licensing info
 
-This project uses Jackson for json parsing, which is licensed under the Apache License.
+This project uses Jackson for json parsing, which is licensed under the Apache license.
 This project uses JDOM for xml parsing, which is licensed under the JDOM license.
+This project uses Guava, which is licensed under the Apache license.
 
 ## Acknowledgments
 
