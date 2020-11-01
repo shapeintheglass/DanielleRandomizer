@@ -62,11 +62,9 @@ public class BodyConfig {
       String type = child.getAttributeValue("Type");
       // Remove all "skin" type attachments, unless they're a husk head
       if (type.equals("CA_SKIN")) {
-        boolean isHuskHead = child.getAttributeValue("AName")
-                                  .contains("husk")
-            || child.getAttributeValue("Binding")
-                    .toLowerCase()
-                    .contains("husk");
+        boolean isHuskHead = child.getAttributeValue("AName").contains("husk") || child.getAttributeValue("Binding")
+            .toLowerCase()
+            .contains("husk");
         if (isHuskHead) {
           continue;
         } else {
@@ -145,8 +143,9 @@ public class BodyConfig {
           mtl = Utils.getRandom(BodyConsts.ACCESSORIES_FEMALE_MTL, r);
           break;
         case MALE:
-          cdf = Utils.getRandom(BodyConsts.ACCESSORIES_MALE, r);
-          mtl = Utils.getRandom(BodyConsts.ACCESSORIES_MALE_MTL, r);
+          int index = r.nextInt(BodyConsts.ACCESSORIES_MALE.length);
+          cdf = BodyConsts.ACCESSORIES_MALE[index];
+          mtl = BodyConsts.ACCESSORIES_MALE_MTL[index];
           break;
         case UNKNOWN:
         default:
@@ -158,9 +157,7 @@ public class BodyConfig {
 
   private void addHeadAndHair(Element originalHead) {
     // Return husked head unchanged
-    if (originalHead.getAttributeValue("Binding")
-                    .toLowerCase()
-                    .contains("husk")) {
+    if (originalHead.getAttributeValue("Binding").toLowerCase().contains("husk")) {
       return;
     }
 
@@ -199,8 +196,8 @@ public class BodyConfig {
   }
 
   private void addHairForHead() {
-    if (Arrays.binarySearch(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR, headModel) >= 0
-        || headModel.equals(BodyConsts.FEMALE_HEAD_HELMET)) {
+    if (Arrays.binarySearch(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR, headModel) >= 0 || headModel.equals(
+        BodyConsts.FEMALE_HEAD_HELMET)) {
       return;
     }
 
@@ -295,8 +292,7 @@ public class BodyConfig {
             BodyConsts.FEMALE_HAIR_SARA, r);
         break;
       default:
-        Logger.getGlobal()
-              .info(name + ": Could not find hair for head " + headModel);
+        Logger.getGlobal().info(name + ": Could not find hair for head " + headModel);
     }
     return createAttachment("hair_skin", hairModelShort, getColorForHairFemale(hairModelShort, r));
   }
@@ -336,8 +332,7 @@ public class BodyConfig {
       default:
         break;
     }
-    Logger.getGlobal()
-          .info(name + ": Could not find a hair color for hair model " + hairModelShort);
+    Logger.getGlobal().info(name + ": Could not find a hair color for hair model " + hairModelShort);
     return "";
   }
 
@@ -403,8 +398,7 @@ public class BodyConfig {
         hairModelShort = BodyConsts.MALE_HAIRS_V03[0];
         break;
       default:
-        Logger.getGlobal()
-              .info(name + ": Could not find hair for head " + headModel);
+        Logger.getGlobal().info(name + ": Could not find hair for head " + headModel);
     }
     return createAttachment("hair_skin", hairModelShort, getColorForHairMale(hairModelShort, r));
   }
@@ -445,8 +439,7 @@ public class BodyConfig {
       case "drcalvino/drcalvino_genmalehead01_hair01":
         return BodyConsts.MALE_HAIR_CALVINO_COLOR[0];
       default:
-        Logger.getGlobal()
-              .info(name + ": Could not find a hair color for hair model " + hairModelShort);
+        Logger.getGlobal().info(name + ": Could not find a hair color for hair model " + hairModelShort);
     }
     return "";
   }

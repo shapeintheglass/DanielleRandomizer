@@ -10,13 +10,13 @@ import com.google.common.collect.ImmutableMap;
 
 import gui.BaseCheckbox;
 
-public class CosmeticSettingsJson {
+public class CosmeticSettingsJson implements HasOptions {
   public static final String RANDOMIZE_BODIES = "randomize_bodies";
   public static final String RANDOMIZE_VOICELINES = "randomize_voicelines";
 
   public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS = ImmutableMap.of(RANDOMIZE_BODIES,
-      new BaseCheckbox("Randomize bodies", "Randomizes the appearance of all human NPCs"), RANDOMIZE_VOICELINES,
-      new BaseCheckbox("Randomize voicelines", "Shuffles all voice lines by voice actor"));
+      new BaseCheckbox("Randomize bodies", "Randomizes the appearance of all human NPCs", true), RANDOMIZE_VOICELINES,
+      new BaseCheckbox("Randomize voicelines", "Shuffles all voice lines by voice actor", true));
 
   private Map<String, Boolean> booleanSettings;
 
@@ -26,6 +26,13 @@ public class CosmeticSettingsJson {
     booleanSettings = new HashMap<>();
     booleanSettings.put(RANDOMIZE_BODIES, randomizeBodies);
     booleanSettings.put(RANDOMIZE_VOICELINES, randomizeVoicelines);
+  }
+  
+  public CosmeticSettingsJson() {
+    booleanSettings = new HashMap<>();
+    for (String s : ALL_OPTIONS.keySet()) {
+      booleanSettings.put(s, ALL_OPTIONS.get(s).getDefaultValue());
+    }
   }
 
   public CosmeticSettingsJson(JsonNode node) {

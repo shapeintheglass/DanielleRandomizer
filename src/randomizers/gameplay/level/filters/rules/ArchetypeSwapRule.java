@@ -28,7 +28,7 @@ public class ArchetypeSwapRule implements Rule {
   public boolean trigger(Element e, Random r, String filename) {
     // Check if input tag matches
     if (e.getAttributeValue("Archetype") != null && e.getAttributeValue("EntityClass") != null) {
-      return crh.trigger(database, e.getAttributeValue("Archetype"));
+      return crh.trigger(database, e.getAttributeValue("Archetype"), e.getAttributeValue("Name"));
     } else {
       return false;
     }

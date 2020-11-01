@@ -1,21 +1,28 @@
 package json;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
 
 import gui.BaseCheckbox;
 
-public class GameplaySettingsJson {
+public class GameplaySettingsJson implements HasOptions {
   public static final String ITEM_SPAWN_SETTINGS = "item_spawn_settings";
   public static final String ENEMY_SPAWN_SETTINGS = "enemy_spawn_settings";
 
+  public static final String GAME_TOKEN_VALUES = "game_token_values";
+  private static final String DELIMITER = "=";
+
   public static final String RANDOMIZE_LOOT = "randomize_loot";
   public static final String ADD_LOOT_TO_APARTMENT = "add_loot_to_apartment";
+  public static final String START_ON_2ND_DAY = "start_on_2nd_day";
   public static final String OPEN_STATION = "open_station";
   public static final String RANDOMIZE_NEUROMODS = "randomize_neuromods";
   public static final String UNLOCK_ALL_SCANS = "unlock_all_scans";
@@ -23,16 +30,20 @@ public class GameplaySettingsJson {
 
   public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS = new ImmutableMap.Builder<String, BaseCheckbox>()
       .put(RANDOMIZE_LOOT, new BaseCheckbox("Randomize loot tables",
-          "Randomizes contents of loot tables according to item spawn settings"))
+          "Randomizes contents of loot tables according to item spawn settings", true))
       .put(ADD_LOOT_TO_APARTMENT, new BaseCheckbox("Add loot to Morgan's apartment",
-          "Adds useful equipment in containers around Morgan's apartment"))
+          "Adds useful equipment in containers around Morgan's apartment", true))
       .put(OPEN_STATION, new BaseCheckbox("Open up Talos I (WIP)",
-          "Unlocks doors around Talos I to make traversal easier"))
+          "Unlocks various doors around Talos I to make traversal easier.", false))
       .put(RANDOMIZE_NEUROMODS, new BaseCheckbox("Randomize Neuromod upgrade tree",
-          "Shuffles the neuromods in the skill upgrade tree"))
+          "Shuffles the neuromods in the skill upgrade tree", false))
       .put(UNLOCK_ALL_SCANS, new BaseCheckbox("Unlock all neuromods scans",
-          "Removes scan requirement for all typhon neuromods"))
-      .put(RANDOMIZE_STATION, new BaseCheckbox("Randomize station connections", "Shuffles connections between levels"))
+          "Removes scan requirement for all typhon neuromods", true))
+      .put(RANDOMIZE_STATION, new BaseCheckbox("Randomize station connections",
+          "Shuffles connections between levels. Strongly recommended to use 'Open up Talos I' with this option.",
+          false))
+      .put(START_ON_2ND_DAY, new BaseCheckbox("Start on 2nd day",
+          "Skips to the 2nd day of the intro. HUD may be invisible until you open your transcribe.", true))
       .build();
 
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
@@ -40,12 +51,15 @@ public class GameplaySettingsJson {
   @JsonProperty(ITEM_SPAWN_SETTINGS)
   private SpawnPresetJson itemSpawnSettings;
 
+  private Map<String, String> gameTokenValues;
   private Map<String, Boolean> booleanSettings;
 
   @JsonCreator
   public GameplaySettingsJson(@JsonProperty(RANDOMIZE_LOOT) boolean randomizeLoot,
       @JsonProperty(ADD_LOOT_TO_APARTMENT) boolean addLootToApartment, @JsonProperty(OPEN_STATION) boolean openStation,
-      @JsonProperty(RANDOMIZE_NEUROMODS) boolean randomizeNeuromods, boolean unlockScans, boolean randomizeStation,
+      @JsonProperty(RANDOMIZE_NEUROMODS) boolean randomizeNeuromods,
+      @JsonProperty(UNLOCK_ALL_SCANS) boolean unlockScans, @JsonProperty(RANDOMIZE_STATION) boolean randomizeStation,
+      @JsonProperty(START_ON_2ND_DAY) boolean startOnSecondDay, List<String> gameTokenValues,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
       @JsonProperty(ITEM_SPAWN_SETTINGS) SpawnPresetJson itemSpawnSettings) {
     booleanSettings = new HashMap<>();
@@ -55,19 +69,31 @@ public class GameplaySettingsJson {
     booleanSettings.put(RANDOMIZE_NEUROMODS, randomizeNeuromods);
     booleanSettings.put(UNLOCK_ALL_SCANS, unlockScans);
     booleanSettings.put(RANDOMIZE_STATION, randomizeStation);
+    booleanSettings.put(START_ON_2ND_DAY, startOnSecondDay);
+
+    setGameTokenValues(gameTokenValues);
 
     this.enemySpawnSettings = enemySpawnSettings;
     this.itemSpawnSettings = itemSpawnSettings;
   }
 
+  public GameplaySettingsJson() {
+    booleanSettings = new HashMap<>();
+    for (String s : ALL_OPTIONS.keySet()) {
+      booleanSettings.put(s, ALL_OPTIONS.get(s).getDefaultValue());
+    }
+    setGameTokenValues(null);
+    this.enemySpawnSettings = new SpawnPresetJson("", "", new ArrayList<>());
+    this.itemSpawnSettings = new SpawnPresetJson("", "", new ArrayList<>());
+  }
+
   public GameplaySettingsJson(JsonNode node) {
     booleanSettings = new HashMap<>();
-    booleanSettings.put(RANDOMIZE_LOOT, node.get(RANDOMIZE_LOOT).asBoolean());
-    booleanSettings.put(ADD_LOOT_TO_APARTMENT, node.get(ADD_LOOT_TO_APARTMENT).asBoolean());
-    booleanSettings.put(OPEN_STATION, node.get(OPEN_STATION).asBoolean());
-    booleanSettings.put(RANDOMIZE_NEUROMODS, node.get(RANDOMIZE_NEUROMODS).asBoolean());
-    booleanSettings.put(UNLOCK_ALL_SCANS, node.get(UNLOCK_ALL_SCANS).asBoolean());
-    booleanSettings.put(RANDOMIZE_STATION, node.get(RANDOMIZE_STATION).asBoolean());
+    for (String s : ALL_OPTIONS.keySet()) {
+      if (node.has(s)) {
+        booleanSettings.put(s, node.get(s).asBoolean());
+      }
+    }
 
     if (node.has(ENEMY_SPAWN_SETTINGS)) {
       this.enemySpawnSettings = new SpawnPresetJson(node.get(ENEMY_SPAWN_SETTINGS));
@@ -78,7 +104,7 @@ public class GameplaySettingsJson {
   }
 
   public boolean getOption(String name) {
-    return booleanSettings.get(name);
+    return booleanSettings.containsKey(name) ? booleanSettings.get(name) : ALL_OPTIONS.get(name).getDefaultValue();
   }
 
   public void toggleOption(String name) {
@@ -115,6 +141,11 @@ public class GameplaySettingsJson {
     return booleanSettings.get(RANDOMIZE_STATION);
   }
 
+  @JsonProperty(START_ON_2ND_DAY)
+  public boolean getStartOn2ndDay() {
+    return booleanSettings.get(START_ON_2ND_DAY);
+  }
+
   public SpawnPresetJson getEnemySpawnSettings() {
     return enemySpawnSettings;
   }
@@ -129,5 +160,36 @@ public class GameplaySettingsJson {
 
   public void setItemSpawnSettings(SpawnPresetJson itemSpawnSettings) {
     this.itemSpawnSettings = itemSpawnSettings;
+  }
+
+  @JsonProperty(GAME_TOKEN_VALUES)
+  public List<String> getGameTokenValues() {
+    if (gameTokenValues == null) {
+      return null;
+    }
+
+    List<String> stringValues = new ArrayList<>(gameTokenValues.size());
+    for (String s : gameTokenValues.keySet()) {
+      stringValues.add(String.format("%s%s%s", s, DELIMITER, gameTokenValues.get(s)));
+    }
+    return stringValues;
+  }
+
+  @JsonIgnore
+  public Map<String, String> getGameTokenValuesAsMap() {
+    return gameTokenValues;
+  }
+
+  public void setGameTokenValues(List<String> stringValues) {
+    this.gameTokenValues = new HashMap<>();
+
+    if (stringValues == null) {
+      return;
+    }
+
+    for (String s : stringValues) {
+      String[] tokens = s.split(DELIMITER);
+      gameTokenValues.put(tokens[0].trim(), tokens[1].trim());
+    }
   }
 }

@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import json.NameAndDescription;
 
 public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel {
+  private static final int MAX_NUM_OPTIONS = 100;
 
   public static final String DELIMITER = ";";
 
@@ -74,6 +75,9 @@ public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel 
     radioButtons.clear();
 
     for (int i = 0; i < newSettings.size(); i++) {
+      if (i >= MAX_NUM_OPTIONS) {
+        break;
+      }
       String id = String.format("%s%s%s", prefix, DELIMITER, newSettings.get(i).getName());
       JRadioButton btn = new JRadioButton(newSettings.get(i).getName());
       btn.addActionListener(listener);

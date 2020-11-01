@@ -2,14 +2,27 @@
   "item_spawn_settings": [
     {
       "name": "Randomize all",
-      "desc": "Randomize all items",
+      "desc": "Randomize all items. Has a chance of spawning additional plot progression items.",
       "filters": [
         {
-          "input_tags": [ "Neuromod_Calibration", "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic"],
-          "output_tags": [ "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "Stickynote_Mimic" ],
-          "output_weights": [ 1, 1, 1, 1, 1, 1, 1, 2, 10, 15, 15, 50, 1, 1, 10, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 1, 1],
-          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1" ],
-          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Neuromod", "FabricationPlans", "Mods", "Medical", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 10, 10, 10, 10, 50, 50, 200, 500],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+        }
+      ]
+    },
+    {
+      "name": "Randomize all, no story items",
+      "desc": "Randomize all items, but do not spawn additional plot progression items",
+      "filters": [
+        {
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "Stickynote_Mimic", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Neuromod", "FabricationPlans", "Mods", "Medical", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 5, 5, 5, 5, 10, 10, 10, 10, 50, 50, 200, 500],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
         }
       ]
     },
@@ -18,39 +31,96 @@
       "desc": "Do not randomize items"
     },
     {
-      "name": "Whiskey and cigars",
-      "desc": "For nightly gatherings",
+      "name": "Randomize within type",
+      "desc": "Randomize items within their type. Weapons can become other weapons, fab plans can become other fab plans, etc.",
       "filters": [
         {
-          "input_tags": [ "Neuromod_Calibration", "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
-          "output_tags": [ "Bourbon", "UsedCigar" ],
-          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1" ],
-          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+          "input_tags": [ "Weapons" ],
+          "output_tags": [ "Weapons" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "FabricationPlans" ],
+          "output_tags": [ "FabricationPlans" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "Mods" ],
+          "output_tags": [ "Mods" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "Medical" ],
+          "output_tags": [ "Medical" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "Ammo" ],
+          "output_tags": [ "Ammo" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "Food" ],
+          "output_tags": [ "Food" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "Ingredients" ],
+          "output_tags": [ "Ingredients" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "RecyclerJunk" ],
+          "output_tags": [ "RecyclerJunk" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "_LEVERAGE_I" ],
+          "output_tags": [ "_LEVERAGE_I" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "_LEVERAGE_II" ],
+          "output_tags": [ "_LEVERAGE_II" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
+        },
+        {
+          "input_tags": [ "_LEVERAGE_III" ],
+          "output_tags": [ "_LEVERAGE_III" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ],
+          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "MissionItems", "_PLOT_CRITICAL" ]
         }
       ]
     },
     {
-      "name": "Randomize all, no story items",
-      "desc": "Randomize all items, but do not spawn story critical items",
+      "name": "Whiskey and cigars",
+      "desc": "For nightly gatherings.",
       "filters": [
         {
-          "input_tags": [ "Neuromod_Calibration", "Neuromod", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic"],
-          "output_tags": [ "Neuromod", "FabricationPlans", "Weapons", "Mods", "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "Stickynote_Mimic" ],
-          "output_weights": [ 1, 1, 1, 1, 1, 1, 10, 10, 50, 1, 1, 1, 1, 50, 50, 50, 50, 50, 50, 50, 50, 50, 1, 1],
-          "do_not_touch_tags": [ "Weapons.Wrench1", "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "BigNullwaveTransmitterFabPlan_Cinematic", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit",  "TreasureHuntModFabPlan_Good", "Crafting.FabricationPlans.CoralScanModFabPlan", "Mods.Psychoscope.CanScanCoral" ],
-          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "BigNullwaveTransmitterFabPlan_Cinematic", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "TreasureHuntModFabPlan_Good", "Crafting.FabricationPlans.CoralScanModFabPlan", "Mods.Psychoscope.CanScanCoral" ]
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "Bourbon", "UsedCigar" ],
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ]
         }
       ]
     },
     {
       "name": "All reployers",
-      "desc": "All items are reployers",
+      "desc": "All items are reployers.",
       "filters": [
         {
-          "input_tags": [ "Neuromod_Calibration", "Neuromod", "MissionItems", "FabricationPlans", "ArkPsychoscope", "ZeroGSuit", "Weapons", "Mods",  "Medical", "Ammo", "Crafting", "Food", "RecyclerJunk", "SpareParts", "SuitPatchKit", "Misc", "ArkBreakable", "Science", "Apartment", "Luxury", "Office", "Kitchen", "Chairs", "Bathroom", "Garden", "Gym", "Reployer", "RecyclerTrap", "Stickynote_Mimic" ],
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
           "output_tags": [ "Reployer" ],
-          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1" ],
-          "do_not_output_tags": [ "Architecture", "Gameplay", "Industrial", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench" ]
+          "do_not_touch_tags": [ "Data", "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit", "Weapons.Wrench1", "_PLOT_CRITICAL", "ArkRobots" ]
         }
       ]
     }
@@ -62,8 +132,21 @@
       "filters": [
         {
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
-          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "ApexTentacle", "EliteMimic", "ArkPoltergeist", "Operators\\Generic\\Corrupted", "Phantoms", "Named Phantoms", "ArkNightmare", "Overseers" ],
-          "output_weights": [ 20, 20, 20, 15, 10, 5, 8, 5, 5, 1, 3 ],
+          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "ApexTentacle", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare" ],
+          "output_weights": [ 20, 20, 20, 15, 10, 8, 5, 5, 5, 3, 1 ],
+          "do_not_output_tags": [ "Tentacle_Large", "Tentacle_Large_Guard", "Tentacle_Medium_Guard", "Tentacle_Small_Guard", "FakeTechnopath", "Cystoid_IgnorePlayer" ],
+          "do_not_touch_tags": [ "ArkNpcSpawner_Weaver6", "ArkNpcSpawner_Weaver2", "ArkNpcSpawner_Weaver4", "ArkNpcSpawner_Technopath1", "Spawner_GreenhouseTelepath", "ArkNpcSpawner16", "ArkNpcSpawner_Telepath2", "ArkNpcSpawner_Technopath1" ]
+        }
+      ]
+    },
+    {
+      "name": "Randomize all, no tentacles",
+      "desc": "Randomize all enemies, but don't spawn unkillable giant tentacles.",
+      "filters": [
+        {
+          "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
+          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare" ],
+          "output_weights": [ 20, 20, 20, 10, 8, 5, 5, 5, 3, 1 ],
           "do_not_output_tags": [ "Tentacle_Large_Guard", "Tentacle_Medium_Guard", "Tentacle_Small_Guard", "FakeTechnopath", "Cystoid_IgnorePlayer" ],
           "do_not_touch_tags": [ "ArkNpcSpawner_Weaver6", "ArkNpcSpawner_Weaver2", "ArkNpcSpawner_Weaver4", "ArkNpcSpawner_Technopath1", "Spawner_GreenhouseTelepath", "ArkNpcSpawner16", "ArkNpcSpawner_Telepath2", "ArkNpcSpawner_Technopath1" ]
         }

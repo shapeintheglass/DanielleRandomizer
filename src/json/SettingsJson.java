@@ -10,13 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SettingsJson {
   private static final String GAMEPLAY_SETTINGS = "gameplay_settings";
-
   private static final String COSMETIC_SETTINGS = "cosmetic_settings";
-
   private static final String SEED_NAME = "seed";
-
   private static final String INSTALL_DIR = "install_dir";
-
   private static final String RELEASE_VERSION = "release_version";
 
   @JsonProperty(RELEASE_VERSION)

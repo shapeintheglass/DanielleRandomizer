@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
@@ -47,6 +49,7 @@ import json.AllPresetsJson;
 import json.CosmeticSettingsJson;
 import json.GameplaySettingsJson;
 import json.GenericRuleJson;
+import json.HasOptions;
 import json.SettingsJson;
 import json.SpawnPresetJson;
 import randomizers.cosmetic.BodyRandomizer;
@@ -72,15 +75,6 @@ public class RandomizerGui {
 
   private static final String RELEASE_VER = "0.2";
 
-  private static final boolean DEFAULT_OPEN_STATION_VALUE = true;
-  private static final boolean DEFAULT_ADD_LOOT_TO_APARTMENT_VALUE = true;
-  private static final boolean DEFAULT_RANDOMIZE_LOOT_VALUE = true;
-  private static final boolean DEFAULT_RANDOMIZE_VOICELINES_VALUE = true;
-  private static final boolean DEFAULT_RANDOMIZE_BODIES_VALUE = true;
-  private static final boolean DEFAULT_RANDOMIZE_NEUROMODS_VALUE = true;
-  private static final boolean DEFAULT_UNLOCK_ALL_SCANS_VALUE = true;
-  private static final boolean DEFAULT_RANDOMIZE_STATION_VALUE = true;
-
   private static final String DEFAULT_INSTALL_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
 
   private static final String LOG_OUTPUT_FILE = "log.txt";
@@ -88,10 +82,16 @@ public class RandomizerGui {
   private static final String SAVED_SETTINGS_FILE = "saved_settings.json";
   private static final String ALL_PRESETS_FILE = "settings.json";
 
-  private static final ImmutableList<String> GAMEPLAY_CHECKBOXES = ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT,
-      GameplaySettingsJson.ADD_LOOT_TO_APARTMENT, GameplaySettingsJson.RANDOMIZE_STATION,
-      GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_NEUROMODS,
-      GameplaySettingsJson.UNLOCK_ALL_SCANS);
+  private static final ImmutableList<String> STARTING_CHECKBOXES = ImmutableList.of(
+      GameplaySettingsJson.START_ON_2ND_DAY, GameplaySettingsJson.ADD_LOOT_TO_APARTMENT);
+
+  private static final ImmutableList<String> ITEMS_CHECKBOXES = ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT);
+
+  private static final ImmutableList<String> CONNECTIVITY_CHECKBOXES = ImmutableList.of(
+      GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_STATION);
+
+  private static final ImmutableList<String> NEUROMODS_CHECKBOXES = ImmutableList.of(
+      GameplaySettingsJson.UNLOCK_ALL_SCANS, GameplaySettingsJson.RANDOMIZE_NEUROMODS);
 
   private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList.of(
       CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
@@ -140,27 +140,26 @@ public class RandomizerGui {
       }
     });
 
-    SpawnPresetJson defaultEnemySpawnPreset = new SpawnPresetJson("", "", new ArrayList<>());
-    SpawnPresetJson defaultItemSpawnPreset = new SpawnPresetJson("", "", new ArrayList<>());
+    List<String> gameTokenValues = new ArrayList<>();
+
+    currentSettings = new SettingsJson(RELEASE_VER, DEFAULT_INSTALL_DIR, getNewSeed(), new CosmeticSettingsJson(),
+        new GameplaySettingsJson());
 
     try {
       allPresets = new AllPresetsJson(ALL_PRESETS_FILE);
-      defaultEnemySpawnPreset = allPresets.getEnemySpawnSettings().get(0);
-      defaultItemSpawnPreset = allPresets.getItemSpawnSettings().get(0);
+      currentSettings.getGameplaySettings().setEnemySpawnSettings(allPresets.getEnemySpawnSettings().get(0));
+      currentSettings.getGameplaySettings().setItemSpawnSettings(allPresets.getItemSpawnSettings().get(0));
+      currentSettings.getGameplaySettings().setGameTokenValues(allPresets.getGameTokenValues());
     } catch (IOException e1) {
       logger.warning("failed to parse presets file " + ALL_PRESETS_FILE);
       e1.printStackTrace();
     }
 
-    currentSettings = new SettingsJson(RELEASE_VER, DEFAULT_INSTALL_DIR, getNewSeed(), new CosmeticSettingsJson(
-        DEFAULT_RANDOMIZE_BODIES_VALUE, DEFAULT_RANDOMIZE_VOICELINES_VALUE), new GameplaySettingsJson(
-            DEFAULT_RANDOMIZE_LOOT_VALUE, DEFAULT_ADD_LOOT_TO_APARTMENT_VALUE, DEFAULT_OPEN_STATION_VALUE,
-            DEFAULT_RANDOMIZE_NEUROMODS_VALUE, DEFAULT_UNLOCK_ALL_SCANS_VALUE, DEFAULT_RANDOMIZE_STATION_VALUE,
-            defaultEnemySpawnPreset, defaultItemSpawnPreset));
     File lastUsedSettingsFile = new File(SAVED_SETTINGS_FILE);
     if (lastUsedSettingsFile.exists()) {
       try {
         currentSettings = new SettingsJson(SAVED_SETTINGS_FILE);
+        currentSettings.getGameplaySettings().setGameTokenValues(gameTokenValues);
       } catch (IOException e) {
         logger.info(String.format("An error occurred while parsing %s: %s. Falling back to default settings.",
             SAVED_SETTINGS_FILE, e.getMessage()));
@@ -257,44 +256,29 @@ public class RandomizerGui {
     otherGameplayOptionsPanel.setLayout(new BoxLayout(otherGameplayOptionsPanel, BoxLayout.Y_AXIS));
     otherGameplayOptionsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-    JPanel cosmeticCheckboxes = new JPanel();
-    cosmeticCheckboxes.setLayout(new BoxLayout(cosmeticCheckboxes, BoxLayout.Y_AXIS));
-    cosmeticCheckboxes.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cosmeticCheckboxes.setAlignmentY(Component.TOP_ALIGNMENT);
-    cosmeticCheckboxes.add(new JLabel("Cosmetic options"));
-    cosmeticCheckboxes.add(Box.createRigidArea(new Dimension(0, 10)));
-
     ItemListener cosmeticListener = new CosmeticCheckboxListener();
-    for (String s : COSMETIC_CHECKBOXES) {
-      BaseCheckbox info = CosmeticSettingsJson.ALL_OPTIONS.get(s);
-      JCheckBox checkbox = new JCheckBox(info.getName());
-      checkbox.setSelected(currentSettings.getCosmeticSettings().getOption(s));
-      checkbox.setToolTipText(info.getDesc());
-      checkbox.addItemListener(cosmeticListener);
-      checkBoxHolder.put(s, checkbox);
-      cosmeticCheckboxes.add(checkbox);
-    }
-
-    JPanel gameplayCheckboxes = new JPanel();
-    gameplayCheckboxes.setLayout(new BoxLayout(gameplayCheckboxes, BoxLayout.Y_AXIS));
-    gameplayCheckboxes.setAlignmentX(Component.LEFT_ALIGNMENT);
-    gameplayCheckboxes.add(new JLabel("Gameplay options"));
-    gameplayCheckboxes.add(Box.createRigidArea(new Dimension(0, 10)));
+    JPanel cosmeticCheckboxes = createCheckboxPanel("Cosmetic Options", COSMETIC_CHECKBOXES,
+        CosmeticSettingsJson.ALL_OPTIONS, cosmeticListener, currentSettings.getCosmeticSettings());
 
     ItemListener gameplayListener = new GameplayCheckboxListener();
-    for (String s : GAMEPLAY_CHECKBOXES) {
-      BaseCheckbox info = GameplaySettingsJson.ALL_OPTIONS.get(s);
-      JCheckBox checkbox = new JCheckBox(info.getName());
-      checkbox.setSelected(currentSettings.getGameplaySettings().getOption(s));
-      checkbox.setToolTipText(info.getDesc());
-      checkbox.addItemListener(gameplayListener);
-      checkBoxHolder.put(s, checkbox);
-      gameplayCheckboxes.add(checkbox);
-    }
+    JPanel apartmentCheckboxes = createCheckboxPanel("Apartment Intro Options", STARTING_CHECKBOXES,
+        GameplaySettingsJson.ALL_OPTIONS, gameplayListener, currentSettings.getGameplaySettings());
+    JPanel neuromodsCheckboxes = createCheckboxPanel("Neuromod Options", NEUROMODS_CHECKBOXES,
+        GameplaySettingsJson.ALL_OPTIONS, gameplayListener, currentSettings.getGameplaySettings());
+    JPanel connectivityCheckboxes = createCheckboxPanel("Connectivity Options", CONNECTIVITY_CHECKBOXES,
+        GameplaySettingsJson.ALL_OPTIONS, gameplayListener, currentSettings.getGameplaySettings());
+    JPanel itemsCheckboxes = createCheckboxPanel("Item Options", ITEMS_CHECKBOXES, GameplaySettingsJson.ALL_OPTIONS,
+        gameplayListener, currentSettings.getGameplaySettings());
 
     otherGameplayOptionsPanel.add(cosmeticCheckboxes);
     otherGameplayOptionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-    otherGameplayOptionsPanel.add(gameplayCheckboxes);
+    otherGameplayOptionsPanel.add(apartmentCheckboxes);
+    otherGameplayOptionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+    otherGameplayOptionsPanel.add(itemsCheckboxes);
+    otherGameplayOptionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+    otherGameplayOptionsPanel.add(neuromodsCheckboxes);
+    otherGameplayOptionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+    otherGameplayOptionsPanel.add(connectivityCheckboxes);
 
     optionsPanel.setLayout(new GridLayout(0, 3));
     optionsPanel.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -302,6 +286,27 @@ public class RandomizerGui {
     optionsPanel.add(itemSpawnPanel);
     optionsPanel.add(enemySpawnPanel);
     optionsPanel.add(otherGameplayOptionsPanel);
+  }
+
+  private JPanel createCheckboxPanel(String sectionName, List<String> checkboxes,
+      Map<String, BaseCheckbox> checkboxInfo, ItemListener listener, HasOptions optionsGetter) {
+    JPanel checkboxSection = new JPanel();
+    checkboxSection.setLayout(new BoxLayout(checkboxSection, BoxLayout.Y_AXIS));
+    checkboxSection.setAlignmentX(Component.LEFT_ALIGNMENT);
+    checkboxSection.setAlignmentY(Component.TOP_ALIGNMENT);
+    checkboxSection.add(new JLabel(sectionName));
+    checkboxSection.add(Box.createRigidArea(new Dimension(0, 10)));
+
+    for (String s : checkboxes) {
+      BaseCheckbox info = checkboxInfo.get(s);
+      JCheckBox checkbox = new JCheckBox(info.getName());
+      checkbox.setSelected(optionsGetter.getOption(s));
+      checkbox.setToolTipText(info.getDesc());
+      checkbox.addItemListener(listener);
+      checkBoxHolder.put(s, checkbox);
+      checkboxSection.add(checkbox);
+    }
+    return checkboxSection;
   }
 
   private void updateOptionsPanel() {
@@ -551,6 +556,11 @@ public class RandomizerGui {
         levelRandomizer = levelRandomizer.addFilter(new StationConnectivityFilter(currentSettings));
       }
 
+      if (currentSettings.getGameplaySettings().getGameTokenValuesAsMap() != null) {
+        levelRandomizer = levelRandomizer.addGameTokenValues(currentSettings.getGameplaySettings()
+            .getGameTokenValuesAsMap());
+      }
+
       levelRandomizer.randomize();
 
       try {
@@ -579,7 +589,8 @@ public class RandomizerGui {
       JsonMappingException, IOException {
     File lastUsedSettingsFile = new File(lastUsedSettingsPath);
     lastUsedSettingsFile.createNewFile();
-    new ObjectMapper().writerFor(SettingsJson.class).writeValue(lastUsedSettingsFile, currentSettings);
+    ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    mapper.writerFor(SettingsJson.class).writeValue(lastUsedSettingsFile, currentSettings);
   }
 
   private class OnUninstallClick implements ActionListener {

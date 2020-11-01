@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.jdom2.Document;
@@ -31,17 +33,32 @@ import utils.LevelConsts;
 public class LevelRandomizer extends BaseRandomizer {
 
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
-  
+  private static final String TOKENS_FOLDER_NAME = "gametokens";
+
   private List<BaseFilter> filterList;
   private Random r;
-  
+
   private Path tempLevelDir;
+
+  private Map<String, String> gameTokenValues;
 
   public LevelRandomizer(SettingsJson s, Path tempLevelDir) {
     super(s);
     filterList = new LinkedList<>();
     r = new Random(s.getSeed());
     this.tempLevelDir = tempLevelDir;
+    this.gameTokenValues = new HashMap<>();
+
+    // Use the settings to determine required level game tokens
+    if (s.getGameplaySettings().getUnlockAllScans()) {
+      gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_GAME_TOKENS);
+    }
+    if (s.getGameplaySettings().getOpenStation()) {
+      gameTokenValues.putAll(LevelConsts.UNLOCK_STATION_GAME_TOKENS);
+    }
+    if (s.getGameplaySettings().getStartOn2ndDay()) {
+      gameTokenValues.putAll(LevelConsts.START_2ND_DAY_GAME_TOKENS);
+    }
   }
 
   public LevelRandomizer addFilter(BaseFilter f) {
@@ -49,17 +66,33 @@ public class LevelRandomizer extends BaseRandomizer {
     return this;
   }
 
+  public LevelRandomizer addGameTokenValues(Map<String, String> values) {
+    this.gameTokenValues.putAll(values);
+    return this;
+  }
+
   @Override
   public void randomize() {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      File in = FileConsts.DATA_LEVELS.resolve(levelDir).resolve(MISSION_FILE_NAME).toFile();
-      File outDir = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir).toFile();
-      outDir.mkdirs();
-      File out = outDir.toPath().resolve(MISSION_FILE_NAME).toFile();
+      Path levelDirIn = FileConsts.DATA_LEVELS.resolve(levelDir);
+      Path levelDirOut = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir);
+      levelDirOut.toFile().mkdirs();
+
+      File missionIn = levelDirIn.resolve(MISSION_FILE_NAME).toFile();
+      File missionOut = levelDirOut.resolve(MISSION_FILE_NAME).toFile();
+      File gameTokensIn = levelDirIn.resolve(TOKENS_FOLDER_NAME).toFile();
+      Path gameTokensOut = levelDirOut.resolve(TOKENS_FOLDER_NAME);
+      gameTokensOut.toFile().mkdirs();
 
       try {
-        logger.info(String.format("filtering level file: %s --> %s", in, out));
-        filterMissionFile(in, out, levelDir);
+        logger.info(String.format("filtering level file: %s --> %s", missionIn, missionOut));
+        filterMissionFile(missionIn, missionOut, levelDir);
+
+        for (File gameTokenFile : gameTokensIn.listFiles()) {
+          logger.info(String.format("filtering tokens file: %s", gameTokenFile));
+          filterTokensFile(gameTokenFile, gameTokensOut.resolve(gameTokenFile.getName()).toFile(), levelDir);
+        }
+
       } catch (IOException | JDOMException e1) {
         e1.printStackTrace();
         return;
@@ -85,11 +118,10 @@ public class LevelRandomizer extends BaseRandomizer {
     for (Element e : entities) {
       filterEntityXml(e, levelDir);
     }
-    
+
     XMLOutputter xmlOutput = new XMLOutputter();
     xmlOutput.setFormat(Format.getPrettyFormat());
     xmlOutput.output(document, new FileOutputStream(out));
-
   }
 
   // Filters the xml representation of an entity
@@ -97,5 +129,26 @@ public class LevelRandomizer extends BaseRandomizer {
     for (BaseFilter filter : filterList) {
       filter.filterEntity(e, r, filename);
     }
+  }
+
+  private void filterTokensFile(File in, File out, String levelDir) throws JDOMException, IOException {
+    SAXBuilder saxBuilder = new SAXBuilder();
+    Document document = saxBuilder.build(in);
+    Element root = document.getRootElement();
+    List<Element> entities = root.getChildren();
+
+    for (Element e : entities) {
+      String name = e.getAttributeValue("Name");
+      if (name != null && this.gameTokenValues.containsKey(name)) {
+        String value = gameTokenValues.get(name);
+        String oldValue = e.getAttributeValue("Value");
+        e.setAttribute("Value", value);
+        logger.info(String.format("Updating game token %s from %s to %s", name, oldValue, value));
+      }
+    }
+
+    XMLOutputter xmlOutput = new XMLOutputter();
+    xmlOutput.setFormat(Format.getPrettyFormat());
+    xmlOutput.output(document, new FileOutputStream(out));
   }
 }

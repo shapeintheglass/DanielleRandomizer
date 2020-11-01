@@ -11,7 +11,7 @@ public class SpawnPresetJson implements NameAndDescription {
   private static final String FILTERS = "filters";
   private static final String DESC2 = "desc";
   private static final String NAME2 = "name";
-  
+
   @JsonProperty(NAME2)
   private String name;
   @JsonProperty(DESC2)
@@ -28,14 +28,11 @@ public class SpawnPresetJson implements NameAndDescription {
   }
 
   public SpawnPresetJson(JsonNode node) {
-    this.name = node.get(NAME2)
-                    .textValue();
-    this.desc = node.get(DESC2)
-                    .textValue();
+    this.name = node.get(NAME2).textValue();
+    this.desc = node.get(DESC2).textValue();
     this.rules = new ArrayList<>();
     if (node.has(FILTERS)) {
-      node.get(FILTERS)
-          .forEach(rule -> rules.add(new GenericRuleJson(rule)));
+      node.get(FILTERS).forEach(rule -> rules.add(new GenericRuleJson(rule)));
     }
   }
 

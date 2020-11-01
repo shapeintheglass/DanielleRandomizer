@@ -74,16 +74,13 @@ public class StationConnectivityFilter extends BaseFilter {
           throw new IllegalStateException("Configuration invalid! (not connected)");
         }
 
-        visualize(network);
+        //visualize(network);
         networkToConnectivity(network);
         rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
         logger.info(connectivityToString());
         break;
       } catch (IllegalStateException e) {
         logger.info(String.format("Failed to find connection after %s attempts", numAttempts));
-        e.printStackTrace();
-      } catch (IOException e) {
-        logger.info(String.format("I/O error occurred when writing station connectivity", numAttempts));
         e.printStackTrace();
       }
     }
