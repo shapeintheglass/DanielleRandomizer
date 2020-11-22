@@ -19,6 +19,10 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.primitives.ImmutableIntArray;
+
 import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
@@ -26,8 +30,8 @@ import randomizers.BaseRandomizer;
 /**
  * Randomizes the neuromod upgrade tree.
  * 
- * Notes - Preserve the original structure of the tree - Ensure that neuromods
- * must still be unlocked in order
+ * Notes - Preserve the original structure of the tree - Ensure that neuromods must still be
+ * unlocked in order
  * 
  */
 public class NeuromodTreeRandomizer extends BaseRandomizer {
@@ -58,22 +62,35 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private Map<String, Element> abilityIdToElement;
   private static final String ID_PREREQ_FORMAT = "%s;%s";
 
-  private static final boolean[][] LAYOUT_ONE = { { true, false, false, false, false, false }, { false, true, false,
-      false, false, false }, { false, false, true, false, false, false }, { false, false, false, true, false, false }, {
-          false, false, false, false, true, false }, { false, false, false, false, false, true }, };
+  private static final boolean[][] LAYOUT_ONE =
+      {{true, false, false, false, false, false}, {false, true, false, false, false, false},
+          {false, false, true, false, false, false}, {false, false, false, true, false, false},
+          {false, false, false, false, true, false}, {false, false, false, false, false, true},};
 
-  private static final boolean[][] LAYOUT_TWO = { { true, false, false, true, false, false }, { false, false, true,
-      true, false, false }, { false, true, false, false, true, false }, { false, false, true, false, true, false } };
+  private static final boolean[][] LAYOUT_TWO =
+      {{true, false, false, true, false, false}, {false, false, true, true, false, false},
+          {false, true, false, false, true, false}, {false, false, true, false, true, false}};
 
-  private static final boolean[][] LAYOUT_THREE = { { true, false, true, false, true, false }, { false, true, false,
-      true, false, true }, { false, true, true, false, true, false }, { false, true, false, true, true, false } };
+  private static final boolean[][] LAYOUT_THREE =
+      {{true, false, true, false, true, false}, {false, true, false, true, false, true},
+          {false, true, true, false, true, false}, {false, true, false, true, true, false}};
 
-  private static final boolean[][] LAYOUT_FOUR = { { false, true, true, true, true, false }, { true, true, true, true,
-      false, false }, { true, false, true, true, false, true } };
+  private static final boolean[][] LAYOUT_FOUR = {{false, true, true, true, true, false},
+      {true, true, true, true, false, false}, {true, false, true, true, false, true}};
 
-  private static final boolean[][] LAYOUT_FIVE = { { true, true, true, true, true, false } };
+  private static final boolean[][] LAYOUT_FIVE = {{true, true, true, true, true, false}};
 
-  private static final boolean[][] LAYOUT_SIX = { { true, true, true, true, true, true } };
+  private static final boolean[][] LAYOUT_SIX = {{true, true, true, true, true, true}};
+
+  // If we recalculate neuromod costs, pull a random int from the appropriate set.
+  // TODO: Finish this implementation
+  private static final ImmutableIntArray COLUMN_ONE_COSTS = ImmutableIntArray.of(1, 1, 2, 2, 3);
+  private static final ImmutableIntArray COLUMN_TWO_COSTS = ImmutableIntArray.of(3, 4, 5);
+  private static final ImmutableIntArray COLUMN_THREE_COSTS = ImmutableIntArray.of(5, 6, 7);
+  private static final ImmutableIntArray COLUMN_FOUR_COSTS = ImmutableIntArray.of(8, 9, 10);
+  private static final ImmutableList<ImmutableIntArray> COLUMN_COSTS =
+      ImmutableList.of(COLUMN_ONE_COSTS, COLUMN_TWO_COSTS, COLUMN_THREE_COSTS, COLUMN_FOUR_COSTS);
+
   private Document abilitiesDoc;
 
   public NeuromodTreeRandomizer(SettingsJson s, Path tempPatchDir) {
@@ -133,7 +150,8 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       int abilityIdIndex = 0;
       for (int categoryIndex = 0; categoryIndex < NUM_CATEGORIES; categoryIndex++) {
         // Generate a new layout using the next N ability IDs
-        List<Ability> abilitiesToAdd = abilityIds.subList(abilityIdIndex, abilityIdIndex + ABILITIES_PER_CATEGORY);
+        List<Ability> abilitiesToAdd =
+            abilityIds.subList(abilityIdIndex, abilityIdIndex + ABILITIES_PER_CATEGORY);
         abilityIdIndex += ABILITIES_PER_CATEGORY;
         Ability[][] layout = createLayout(abilitiesToAdd, r);
 
@@ -256,7 +274,8 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     // Third column- 4-5
     elementsPerColumn[2] = 4 + r.nextInt(2);
     // Fourth column- remainder
-    elementsPerColumn[3] = ABILITIES_PER_CATEGORY - elementsPerColumn[0] - elementsPerColumn[1] - elementsPerColumn[2];
+    elementsPerColumn[3] =
+        ABILITIES_PER_CATEGORY - elementsPerColumn[0] - elementsPerColumn[1] - elementsPerColumn[2];
 
     for (int columnIndex = 0; columnIndex < NUM_COLUMNS; columnIndex++) {
       // Decide column layout depending on number of elements
@@ -281,8 +300,9 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
           columnLayout = LAYOUT_SIX[r.nextInt(LAYOUT_SIX.length)];
           break;
         default:
-          throw new UnexpectedException(String.format("Unhandled number of abilities in column %d: %d", columnIndex,
-              elementsPerColumn[columnIndex]));
+          throw new UnexpectedException(
+              String.format("Unhandled number of abilities in column %d: %d", columnIndex,
+                  elementsPerColumn[columnIndex]));
       }
 
       // Populate the column depending on layout
@@ -310,6 +330,11 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
               }
             }
           }
+          // Generate a new cost for this ability based on its new column
+          ImmutableIntArray columnCosts = COLUMN_COSTS.get(columnIndex);
+          int newCost = columnCosts.get(r.nextInt(columnCosts.length()));
+          nextAbility.setCost(newCost);
+
           layout[rowIndex][columnIndex] = nextAbility;
         } else {
           layout[rowIndex][columnIndex] = null;
@@ -324,9 +349,12 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
     private String prereq;
 
+    private int cost;
+
     public Ability(String id) {
       this.id = id;
       this.prereq = null;
+      this.cost = 0;
     }
 
     public String getId() {
@@ -339,6 +367,14 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
     public void setPrereq(String prereq) {
       this.prereq = prereq;
+    }
+
+    public int getCost() {
+      return cost;
+    }
+
+    public void setCost(int cost) {
+      this.cost = cost;
     }
 
     public String toString() {

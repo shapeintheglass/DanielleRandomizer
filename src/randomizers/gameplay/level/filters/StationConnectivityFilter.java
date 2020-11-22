@@ -74,7 +74,7 @@ public class StationConnectivityFilter extends BaseFilter {
           throw new IllegalStateException("Configuration invalid! (not connected)");
         }
 
-        //visualize(network);
+        // visualize(network);
         networkToConnectivity(network);
         rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
         logger.info(connectivityToString());
@@ -95,12 +95,13 @@ public class StationConnectivityFilter extends BaseFilter {
         String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
         String spawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(d);
         String doorValue = doorConnectivity.get(levelName).get(doorName);
-        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String doorValueReadable =
+            StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
-            .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d))
-            .toString();
+            .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d)).toString();
         String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
-        sb.append(String.format("%s:\tDoor to %s now leads to %s. Debug data: %s --> %s, Spawn %s --> %s\n", l,
+        sb.append(String.format(
+            "%s:\tDoor to %s now leads to %s. Debug data: %s --> %s, Spawn %s --> %s\n", l,
             oldDoorValueReadable, doorValueReadable, doorName, doorValue, spawnName, spawnValue));
       }
     }
@@ -142,8 +143,10 @@ public class StationConnectivityFilter extends BaseFilter {
         // Spawn point name in the neighbor
         String toLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(toDoor);
 
-        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel)).put(fromDoorName, toLocationId);
-        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel)).put(toDoorName, fromLocationId);
+        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
+            .put(fromDoorName, toLocationId);
+        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel)).put(toDoorName,
+            fromLocationId);
 
         spawnConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
             .put(fromLevelSpawnName, toDestName);
@@ -153,11 +156,10 @@ public class StationConnectivityFilter extends BaseFilter {
     }
   }
 
-  private ImmutableNetwork<Level, Door> createNewConnectivity(Random r) throws IllegalStateException {
-    MutableNetwork<Level, Door> station = NetworkBuilder.directed()
-        .allowsParallelEdges(true)
-        .allowsSelfLoops(false)
-        .build();
+  private ImmutableNetwork<Level, Door> createNewConnectivity(Random r)
+      throws IllegalStateException {
+    MutableNetwork<Level, Door> station =
+        NetworkBuilder.directed().allowsParallelEdges(true).allowsSelfLoops(false).build();
 
     for (Level l : Level.values()) {
       station.addNode(l);
@@ -166,7 +168,7 @@ public class StationConnectivityFilter extends BaseFilter {
     ArrayDeque<Door> connectionsToProcess = new ArrayDeque<Door>();
     // Enqueue special cases first
     connectionsToProcess.addAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
-    connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
+    // connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
     Arrays.stream(Door.values()).forEach(door -> {
       if (!connectionsToProcess.contains(door)) {
@@ -191,8 +193,10 @@ public class StationConnectivityFilter extends BaseFilter {
       }
       connectionsToProcess.remove(toDoor);
 
-      Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(fromDoor));
-      Level toLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(toDoor));
+      Level fromLevel = Iterables
+          .getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(fromDoor));
+      Level toLevel =
+          Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(toDoor));
 
       station.addEdge(fromLevel, toLevel, fromDoor);
       station.addEdge(toLevel, fromLevel, toDoor);
@@ -205,25 +209,27 @@ public class StationConnectivityFilter extends BaseFilter {
       MutableNetwork<Level, Door> station) {
     // Start with special cases that can only be matched with each other
     if (StationConnectivityConsts.LIFT_LOBBY_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE));
+      return Lists.newArrayList(
+          Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE));
     }
     if (StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_LOBBY_SIDE));
+      return Lists.newArrayList(
+          Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_LOBBY_SIDE));
     }
-    if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections,
-          StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE));
-    }
-    if (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections,
-          StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE));
-    }
+    /*
+     * if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(door)) { return
+     * Lists.newArrayList( Sets.intersection(remainingConnections,
+     * StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE)); } if
+     * (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(door)) { return
+     * Lists.newArrayList( Sets.intersection(remainingConnections,
+     * StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE)); }
+     */
 
     Set<Door> validConnections = Sets.newHashSet(remainingConnections);
     validConnections.removeAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
     validConnections.removeAll(StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE);
-    validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
-    validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE);
+    // validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
+    // validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE);
 
     // If this is a "single" type connection, invalidate all other single type
     // connections
@@ -232,7 +238,8 @@ public class StationConnectivityFilter extends BaseFilter {
     }
 
     // Remove all connections leading from itself
-    Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(door));
+    Level fromLevel =
+        Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(door));
     validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(fromLevel));
     // Remove all connections to levels that this is already connected to
     Set<Level> existingConnections = station.adjacentNodes(fromLevel);
@@ -243,7 +250,14 @@ public class StationConnectivityFilter extends BaseFilter {
     return Lists.newArrayList(validConnections);
   }
 
-  private void visualize(ImmutableNetwork<Level, Door> network) throws IOException {
+  // Generates an image file representing the station
+  private void visualize() {
+
+  }
+
+  @SuppressWarnings("unused")
+  @Deprecated
+  private void visualizeDeprecated(ImmutableNetwork<Level, Door> network) throws IOException {
     MutableGraph<String> graph = GraphBuilder.undirected().build();
 
     // Attach every level to its doors
@@ -269,7 +283,8 @@ public class StationConnectivityFilter extends BaseFilter {
     mxIGraphLayout layout = new mxFastOrganicLayout(graphAdapter);
     layout.execute(graphAdapter.getDefaultParent());
 
-    BufferedImage image = mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
+    BufferedImage image =
+        mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
     File imgFile = new File(STATION_CONNECTIVITY_PNG);
     ImageIO.write(image, "PNG", imgFile);
 
@@ -295,18 +310,24 @@ public class StationConnectivityFilter extends BaseFilter {
     StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.values().stream().forEach(toRemove::addAll);
 
     // See how much of the station we can unlock w/o getting the lift
-    while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard
-        && hasTranscribeRecordings)) {
-      if (!hasGeneralKeycard && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
-        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
+    while (numAttempts++ < UNLOCK_ATTEMPTS
+        && !(hasGeneralKeycard && hasFuelStorageKeycard && hasTranscribeRecordings)) {
+      if (!hasGeneralKeycard
+          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
+        toRemove
+            .removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
         hasGeneralKeycard = true;
       }
-      if (!hasFuelStorageKeycard && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
-        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
+      if (!hasFuelStorageKeycard
+          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
+        toRemove
+            .removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
         hasFuelStorageKeycard = true;
       }
-      if (!hasTranscribeRecordings && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.CREW_QUARTERS)) {
-        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.CREW_QUARTERS));
+      if (!hasTranscribeRecordings
+          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.CREW_QUARTERS)) {
+        toRemove
+            .removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.CREW_QUARTERS));
         hasTranscribeRecordings = true;
       }
     }
@@ -326,7 +347,8 @@ public class StationConnectivityFilter extends BaseFilter {
     return isConnected(network, toRemove);
   }
 
-  private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove, Level from, Level to) {
+  private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove,
+      Level from, Level to) {
     MutableNetwork<Level, Door> network = Graphs.copyOf(networkToCopy);
     toRemove.stream().forEach(network::removeEdge);
 

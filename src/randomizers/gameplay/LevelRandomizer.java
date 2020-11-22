@@ -20,12 +20,12 @@ import org.jdom2.output.XMLOutputter;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
 import randomizers.gameplay.level.filters.BaseFilter;
+import randomizers.gameplay.level.filters.rules.GameTokenRule;
 import utils.FileConsts;
 import utils.LevelConsts;
 
 /**
- * A special kind of randomizer that requires a series of filters in order to
- * process level files.
+ * A special kind of randomizer that requires a series of filters in order to process level files.
  * 
  * @author Kida
  *
@@ -42,6 +42,8 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private Map<String, String> gameTokenValues;
 
+  private GameTokenRule gameTokenRule;
+
   public LevelRandomizer(SettingsJson s, Path tempLevelDir) {
     super(s);
     filterList = new LinkedList<>();
@@ -51,14 +53,22 @@ public class LevelRandomizer extends BaseRandomizer {
 
     // Use the settings to determine required level game tokens
     if (s.getGameplaySettings().getUnlockAllScans()) {
-      gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
     if (s.getGameplaySettings().getOpenStation()) {
-      gameTokenValues.putAll(LevelConsts.UNLOCK_STATION_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.UNLOCK_PSYCHOTRONICS_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.UNLOCK_LIFT_GAME_TOKENS);
+    }
+    if (s.getGameplaySettings().getRandomizeStation()) {
+      gameTokenValues.putAll(LevelConsts.UNLOCK_PSYCHOTRONICS_GAME_TOKENS);
     }
     if (s.getGameplaySettings().getStartOn2ndDay()) {
       gameTokenValues.putAll(LevelConsts.START_2ND_DAY_GAME_TOKENS);
     }
+
+    gameTokenRule = new GameTokenRule(gameTokenValues);
   }
 
   public LevelRandomizer addFilter(BaseFilter f) {
@@ -90,7 +100,8 @@ public class LevelRandomizer extends BaseRandomizer {
 
         for (File gameTokenFile : gameTokensIn.listFiles()) {
           logger.info(String.format("filtering tokens file: %s", gameTokenFile));
-          filterTokensFile(gameTokenFile, gameTokensOut.resolve(gameTokenFile.getName()).toFile(), levelDir);
+          filterTokensFile(gameTokenFile, gameTokensOut.resolve(gameTokenFile.getName()).toFile(),
+              levelDir);
         }
 
       } catch (IOException | JDOMException e1) {
@@ -103,13 +114,14 @@ public class LevelRandomizer extends BaseRandomizer {
   /**
    * Copies level def into temp directory, while filtering.
    * 
-   * @param inputDir    Location of input files
+   * @param inputDir Location of input files
    * @param missionFile Path for mission file
-   * @param outputDir   Location for output files
+   * @param outputDir Location for output files
    * @throws IOException
    * @throws JDOMException
    */
-  private void filterMissionFile(File in, File out, String levelDir) throws IOException, JDOMException {
+  private void filterMissionFile(File in, File out, String levelDir)
+      throws IOException, JDOMException {
     SAXBuilder saxBuilder = new SAXBuilder();
     Document document = saxBuilder.build(in);
     Element root = document.getRootElement();
@@ -131,19 +143,16 @@ public class LevelRandomizer extends BaseRandomizer {
     }
   }
 
-  private void filterTokensFile(File in, File out, String levelDir) throws JDOMException, IOException {
+  private void filterTokensFile(File in, File out, String levelDir)
+      throws JDOMException, IOException {
     SAXBuilder saxBuilder = new SAXBuilder();
     Document document = saxBuilder.build(in);
     Element root = document.getRootElement();
     List<Element> entities = root.getChildren();
 
     for (Element e : entities) {
-      String name = e.getAttributeValue("Name");
-      if (name != null && this.gameTokenValues.containsKey(name)) {
-        String value = gameTokenValues.get(name);
-        String oldValue = e.getAttributeValue("Value");
-        e.setAttribute("Value", value);
-        logger.info(String.format("Updating game token %s from %s to %s", name, oldValue, value));
+      if (gameTokenRule.trigger(e, r, in.getName())) {
+        gameTokenRule.apply(e, r, in.getName());
       }
     }
 

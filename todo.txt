@@ -1,0 +1,32 @@
+Typhon to whitelist
+* Greenhouse telepath in Arboretum
+* Cargo bay typhon
+
+Separate required doors for open Talos and randomized station
+Create option for "do not override required item/enemy spawns"
+
+Things to unlock for open Talos
+* Fix doors unlocked in Psychotronics
+* Power plant coolant chamber
+
+Blocking V0.2 release
+* Randomized station - remove dependency on open Talos
+	 - Fix spawn of Deep Storage / Hardware Labs
+	 - Output visualization file
+
+
+V0.3 features
+* Station randomization - move key items around
+* Weapon projectile randomization
+* Built-in "all keycodes are 1111" "all passwords are passwords"
+* Built-in player model customization (dropdown list?)
+* No gravity
+
+
+Feature requests
+* More mimics
+* More typhon (more frequent spawns?)
+* Randomized neuromods - Adjust neuromod costs
+* Sliders for settings (nightmare ratio, spawn frequency?)
+* Third person
+* Silly hats 

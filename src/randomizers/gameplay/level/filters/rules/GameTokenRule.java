@@ -6,8 +6,12 @@ import java.util.logging.Logger;
 
 import org.jdom2.Element;
 
+/**
+ * Update game tokens to the specified state.
+ */
 public class GameTokenRule implements Rule {
 
+  // Map of key names to desired values.
   Map<String, String> gameTokenValues;
 
   public GameTokenRule(Map<String, String> values) {
