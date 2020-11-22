@@ -83,7 +83,6 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private static final boolean[][] LAYOUT_SIX = {{true, true, true, true, true, true}};
 
   // If we recalculate neuromod costs, pull a random int from the appropriate set.
-  // TODO: Finish this implementation
   private static final ImmutableIntArray COLUMN_ONE_COSTS = ImmutableIntArray.of(1, 1, 2, 2, 3);
   private static final ImmutableIntArray COLUMN_TWO_COSTS = ImmutableIntArray.of(3, 4, 5);
   private static final ImmutableIntArray COLUMN_THREE_COSTS = ImmutableIntArray.of(5, 6, 7);
@@ -202,6 +201,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         if (unlockAllScans) {
           e.setAttribute(REQUIRE_SCANNER, FALSE);
         }
+        e.setAttribute("Cost", Integer.toString(a.getCost()));
       }
 
       XMLOutputter xmlOutput = new XMLOutputter();

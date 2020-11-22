@@ -28,7 +28,7 @@ public class UnlockEverythingRule implements Rule {
     }
 
     for (String key : DESIRED_STATE.keySet()) {
-      if (!properties.getAttributeValue(key).equals(DESIRED_STATE.get(key))) {
+      if (properties.getAttributeValue(key) != null && !properties.getAttributeValue(key).equals(DESIRED_STATE.get(key))) {
         return true;
       }
     }
@@ -40,7 +40,7 @@ public class UnlockEverythingRule implements Rule {
     Element properties = e.getChild(PROPERTIES2);
 
     for (String key : DESIRED_STATE.keySet()) {
-      if (!properties.getAttributeValue(key).equals(DESIRED_STATE.get(key))) {
+      if (properties.getAttributeValue(key) != null && !properties.getAttributeValue(key).equals(DESIRED_STATE.get(key))) {
         properties.setAttribute(key, DESIRED_STATE.get(key));
       }
     }
