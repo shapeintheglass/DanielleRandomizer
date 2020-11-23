@@ -57,6 +57,7 @@ import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
+import randomizers.gameplay.WorkstationRandomizer;
 import randomizers.gameplay.level.filters.EnemyFilter;
 import randomizers.gameplay.level.filters.FlowgraphFilter;
 import randomizers.gameplay.level.filters.ItemSpawnFilter;
@@ -75,26 +76,28 @@ public class RandomizerGui {
 
   private static final String RELEASE_VER = "0.2";
 
-  private static final String DEFAULT_INSTALL_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
+  private static final String DEFAULT_INSTALL_DIR =
+      "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
 
   private static final String LOG_OUTPUT_FILE = "log.txt";
 
   private static final String SAVED_SETTINGS_FILE = "saved_settings.json";
   private static final String ALL_PRESETS_FILE = "settings.json";
 
-  private static final ImmutableList<String> STARTING_CHECKBOXES = ImmutableList.of(
-      GameplaySettingsJson.START_ON_2ND_DAY, GameplaySettingsJson.ADD_LOOT_TO_APARTMENT);
+  private static final ImmutableList<String> STARTING_CHECKBOXES = ImmutableList
+      .of(GameplaySettingsJson.START_ON_2ND_DAY, GameplaySettingsJson.ADD_LOOT_TO_APARTMENT);
 
-  private static final ImmutableList<String> ITEMS_CHECKBOXES = ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT);
+  private static final ImmutableList<String> ITEMS_CHECKBOXES =
+      ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT);
 
-  private static final ImmutableList<String> CONNECTIVITY_CHECKBOXES = ImmutableList.of(
-      GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_STATION);
+  private static final ImmutableList<String> CONNECTIVITY_CHECKBOXES =
+      ImmutableList.of(GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_STATION);
 
-  private static final ImmutableList<String> NEUROMODS_CHECKBOXES = ImmutableList.of(
-      GameplaySettingsJson.UNLOCK_ALL_SCANS, GameplaySettingsJson.RANDOMIZE_NEUROMODS);
+  private static final ImmutableList<String> NEUROMODS_CHECKBOXES = ImmutableList
+      .of(GameplaySettingsJson.UNLOCK_ALL_SCANS, GameplaySettingsJson.RANDOMIZE_NEUROMODS);
 
-  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList.of(
-      CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
+  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList
+      .of(CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
 
   private JFrame mainFrame;
 
@@ -142,13 +145,15 @@ public class RandomizerGui {
 
     List<String> gameTokenValues = new ArrayList<>();
 
-    currentSettings = new SettingsJson(RELEASE_VER, DEFAULT_INSTALL_DIR, getNewSeed(), new CosmeticSettingsJson(),
-        new GameplaySettingsJson());
+    currentSettings = new SettingsJson(RELEASE_VER, DEFAULT_INSTALL_DIR, getNewSeed(),
+        new CosmeticSettingsJson(), new GameplaySettingsJson());
 
     try {
       allPresets = new AllPresetsJson(ALL_PRESETS_FILE);
-      currentSettings.getGameplaySettings().setEnemySpawnSettings(allPresets.getEnemySpawnSettings().get(0));
-      currentSettings.getGameplaySettings().setItemSpawnSettings(allPresets.getItemSpawnSettings().get(0));
+      currentSettings.getGameplaySettings()
+          .setEnemySpawnSettings(allPresets.getEnemySpawnSettings().get(0));
+      currentSettings.getGameplaySettings()
+          .setItemSpawnSettings(allPresets.getItemSpawnSettings().get(0));
       currentSettings.getGameplaySettings().setGameTokenValues(allPresets.getGameTokenValues());
     } catch (IOException e1) {
       logger.warning("failed to parse presets file " + ALL_PRESETS_FILE);
@@ -161,7 +166,8 @@ public class RandomizerGui {
         currentSettings = new SettingsJson(SAVED_SETTINGS_FILE);
         currentSettings.getGameplaySettings().setGameTokenValues(gameTokenValues);
       } catch (IOException e) {
-        logger.info(String.format("An error occurred while parsing %s: %s. Falling back to default settings.",
+        logger.info(String.format(
+            "An error occurred while parsing %s: %s. Falling back to default settings.",
             SAVED_SETTINGS_FILE, e.getMessage()));
         e.printStackTrace();
       }
@@ -265,10 +271,11 @@ public class RandomizerGui {
         GameplaySettingsJson.ALL_OPTIONS, gameplayListener, currentSettings.getGameplaySettings());
     JPanel neuromodsCheckboxes = createCheckboxPanel("Neuromod Options", NEUROMODS_CHECKBOXES,
         GameplaySettingsJson.ALL_OPTIONS, gameplayListener, currentSettings.getGameplaySettings());
-    JPanel connectivityCheckboxes = createCheckboxPanel("Connectivity Options", CONNECTIVITY_CHECKBOXES,
+    JPanel connectivityCheckboxes = createCheckboxPanel("Connectivity Options",
+        CONNECTIVITY_CHECKBOXES, GameplaySettingsJson.ALL_OPTIONS, gameplayListener,
+        currentSettings.getGameplaySettings());
+    JPanel itemsCheckboxes = createCheckboxPanel("Item Options", ITEMS_CHECKBOXES,
         GameplaySettingsJson.ALL_OPTIONS, gameplayListener, currentSettings.getGameplaySettings());
-    JPanel itemsCheckboxes = createCheckboxPanel("Item Options", ITEMS_CHECKBOXES, GameplaySettingsJson.ALL_OPTIONS,
-        gameplayListener, currentSettings.getGameplaySettings());
 
     otherGameplayOptionsPanel.add(cosmeticCheckboxes);
     otherGameplayOptionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -314,28 +321,28 @@ public class RandomizerGui {
       allPresets = new AllPresetsJson(ALL_PRESETS_FILE);
 
       itemSpawnSettings = allPresets.getItemSpawnSettings();
-      itemSpawnPanel.setRadioLabels(itemSpawnSettings, currentSettings.getGameplaySettings()
-          .getItemSpawnSettings()
-          .getName());
+      itemSpawnPanel.setRadioLabels(itemSpawnSettings,
+          currentSettings.getGameplaySettings().getItemSpawnSettings().getName());
 
       enemySpawnSettings = allPresets.getEnemySpawnSettings();
-      enemySpawnPanel.setRadioLabels(enemySpawnSettings, currentSettings.getGameplaySettings()
-          .getEnemySpawnSettings()
-          .getName());
+      enemySpawnPanel.setRadioLabels(enemySpawnSettings,
+          currentSettings.getGameplaySettings().getEnemySpawnSettings().getName());
 
       // Update current settings in case presets have changed underneath
       int itemSpawnIndex = itemSpawnPanel.getCurrentIndex();
       int enemySpawnIndex = enemySpawnPanel.getCurrentIndex();
 
-      currentSettings.getGameplaySettings().setItemSpawnSettings(itemSpawnSettings.get(itemSpawnIndex));
-      currentSettings.getGameplaySettings().setEnemySpawnSettings(enemySpawnSettings.get(enemySpawnIndex));
+      currentSettings.getGameplaySettings()
+          .setItemSpawnSettings(itemSpawnSettings.get(itemSpawnIndex));
+      currentSettings.getGameplaySettings()
+          .setEnemySpawnSettings(enemySpawnSettings.get(enemySpawnIndex));
 
       validateSettings();
       mainFrame.pack();
     } catch (Exception e) {
       statusLabel.setText("Error occurred while parsing " + ALL_PRESETS_FILE);
-      JOptionPane.showMessageDialog(mainFrame, String.format("An error occurred while parsing %s: %s", ALL_PRESETS_FILE,
-          e.getMessage()));
+      JOptionPane.showMessageDialog(mainFrame, String
+          .format("An error occurred while parsing %s: %s", ALL_PRESETS_FILE, e.getMessage()));
     }
   }
 
@@ -354,7 +361,8 @@ public class RandomizerGui {
         }
       }
     });
-    saveButton.setToolTipText("Saves the current settings so that they'll be the default next time you load this GUI.");
+    saveButton.setToolTipText(
+        "Saves the current settings so that they'll be the default next time you load this GUI.");
     JButton refreshSettings = new JButton("Refresh options");
     refreshSettings.addActionListener(new ActionListener() {
       @Override
@@ -369,15 +377,18 @@ public class RandomizerGui {
         mainFrame.revalidate();
       }
     });
-    refreshSettings.setToolTipText("Updates item/NPC spawn options if you modified " + ALL_PRESETS_FILE);
+    refreshSettings
+        .setToolTipText("Updates item/NPC spawn options if you modified " + ALL_PRESETS_FILE);
     installButton = new JButton("Install");
     installButton.setActionCommand("install");
     installButton.addActionListener(new OnInstallClick());
-    installButton.setToolTipText("Randomizes according to above settings and installs in game directory");
+    installButton
+        .setToolTipText("Randomizes according to above settings and installs in game directory");
     uninstallButton = new JButton("Uninstall");
     uninstallButton.setActionCommand("uninstall");
     uninstallButton.addActionListener(new OnUninstallClick());
-    uninstallButton.setToolTipText("Removes any mods added by this randomizer, restoring game files to previous state");
+    uninstallButton.setToolTipText(
+        "Removes any mods added by this randomizer, restoring game files to previous state");
     JButton closeButton = new JButton("Close");
     closeButton.setActionCommand("close");
     closeButton.addActionListener(new OnCloseClick());
@@ -443,10 +454,12 @@ public class RandomizerGui {
       String[] tokens = e.getActionCommand().split(BaseRadioOptionsPanel.DELIMITER);
       switch (tokens[0]) {
         case ITEM_SPAWN_OPTIONS_PREFIX:
-          currentSettings.getGameplaySettings().setItemSpawnSettings(itemSpawnPanel.getSettingsByName(tokens[1]));
+          currentSettings.getGameplaySettings()
+              .setItemSpawnSettings(itemSpawnPanel.getSettingsByName(tokens[1]));
           break;
         case ENEMY_SPAWN_OPTIONS_PREFIX:
-          currentSettings.getGameplaySettings().setEnemySpawnSettings(enemySpawnPanel.getSettingsByName(tokens[1]));
+          currentSettings.getGameplaySettings()
+              .setEnemySpawnSettings(enemySpawnPanel.getSettingsByName(tokens[1]));
           break;
         default:
           break;
@@ -530,25 +543,35 @@ public class RandomizerGui {
       if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
         new BodyRandomizer(currentSettings, tempPatchDir).randomize();
       }
-      if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
+      if (currentSettings.getCosmeticSettings()
+          .getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
         new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
       }
-      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
+      if (currentSettings.getGameplaySettings()
+          .getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
         new NeuromodTreeRandomizer(currentSettings, tempPatchDir).randomize();
-      } else if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS)) {
+      } else if (currentSettings.getGameplaySettings()
+          .getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS)) {
         new NeuromodTreeRandomizer(currentSettings, tempPatchDir).unlockAllScans();
       }
 
-      LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, tempLevelDir).addFilter(
-          new ItemSpawnFilter(database, currentSettings))
+      LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, tempLevelDir)
+          .addFilter(new ItemSpawnFilter(database, currentSettings))
           .addFilter(new FlowgraphFilter(database, currentSettings))
           .addFilter(new EnemyFilter(database, currentSettings));
+
+      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)
+          || currentSettings.getGameplaySettings()
+              .getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
+        new WorkstationRandomizer(currentSettings, tempPatchDir).randomize();
+      }
 
       if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)) {
         levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
       }
 
-      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.ADD_LOOT_TO_APARTMENT)) {
+      if (currentSettings.getGameplaySettings()
+          .getOption(GameplaySettingsJson.ADD_LOOT_TO_APARTMENT)) {
         levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
       }
 
@@ -557,8 +580,8 @@ public class RandomizerGui {
       }
 
       if (currentSettings.getGameplaySettings().getGameTokenValuesAsMap() != null) {
-        levelRandomizer = levelRandomizer.addGameTokenValues(currentSettings.getGameplaySettings()
-            .getGameTokenValuesAsMap());
+        levelRandomizer = levelRandomizer
+            .addGameTokenValues(currentSettings.getGameplaySettings().getGameTokenValuesAsMap());
       }
 
       levelRandomizer.randomize();
@@ -585,8 +608,8 @@ public class RandomizerGui {
 
   }
 
-  private void writeLastUsedSettingsToFile(String lastUsedSettingsPath) throws JsonGenerationException,
-      JsonMappingException, IOException {
+  private void writeLastUsedSettingsToFile(String lastUsedSettingsPath)
+      throws JsonGenerationException, JsonMappingException, IOException {
     File lastUsedSettingsFile = new File(lastUsedSettingsPath);
     lastUsedSettingsFile.createNewFile();
     ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
@@ -631,7 +654,8 @@ public class RandomizerGui {
           continue;
         }
 
-        if (gfj.getOutputWeights().size() != 0 && gfj.getOutputTags().size() != gfj.getOutputWeights().size()) {
+        if (gfj.getOutputWeights().size() != 0
+            && gfj.getOutputTags().size() != gfj.getOutputWeights().size()) {
           logger.info(String.format(
               "Invalid filter settings for %s spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
               name, gspj.getName(), i, gfj.getOutputTags().size(), gfj.getOutputWeights().size()));

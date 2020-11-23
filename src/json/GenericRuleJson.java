@@ -28,7 +28,8 @@ public class GenericRuleJson {
 
   @JsonCreator
   public GenericRuleJson(@JsonProperty(INPUT_TAGS) List<String> inputTags,
-      @JsonProperty(OUTPUT_TAGS) List<String> outputTags, @JsonProperty(OUTPUT_WEIGHTS) List<Integer> outputWeights,
+      @JsonProperty(OUTPUT_TAGS) List<String> outputTags,
+      @JsonProperty(OUTPUT_WEIGHTS) List<Integer> outputWeights,
       @JsonProperty(DO_NOT_TOUCH_TAGS) List<String> doNotTouchTags,
       @JsonProperty(DO_NOT_OUTPUT_TAGS) List<String> doNotOutputTags) {
     this.inputTags = inputTags;
@@ -46,24 +47,19 @@ public class GenericRuleJson {
     this.doNotOutputTags = new ArrayList<>();
 
     if (node.has(INPUT_TAGS)) {
-      node.get(INPUT_TAGS)
-          .forEach(s -> inputTags.add(s.textValue()));
+      node.get(INPUT_TAGS).forEach(s -> inputTags.add(s.textValue()));
     }
     if (node.has(OUTPUT_TAGS)) {
-      node.get(OUTPUT_TAGS)
-          .forEach(s -> outputTags.add(s.textValue()));
+      node.get(OUTPUT_TAGS).forEach(s -> outputTags.add(s.textValue()));
     }
     if (node.has(OUTPUT_WEIGHTS)) {
-      node.get(OUTPUT_WEIGHTS)
-          .forEach(s -> outputWeights.add(s.asInt(1)));
+      node.get(OUTPUT_WEIGHTS).forEach(s -> outputWeights.add(s.asInt(1)));
     }
     if (node.has(DO_NOT_TOUCH_TAGS)) {
-      node.get(DO_NOT_TOUCH_TAGS)
-          .forEach(s -> doNotTouchTags.add(s.textValue()));
+      node.get(DO_NOT_TOUCH_TAGS).forEach(s -> doNotTouchTags.add(s.textValue()));
     }
     if (node.has(DO_NOT_OUTPUT_TAGS)) {
-      node.get(DO_NOT_OUTPUT_TAGS)
-          .forEach(s -> doNotOutputTags.add(s.textValue()));
+      node.get(DO_NOT_OUTPUT_TAGS).forEach(s -> doNotOutputTags.add(s.textValue()));
     }
   }
 
@@ -91,12 +87,24 @@ public class GenericRuleJson {
     this.outputWeights = outputWeights;
   }
 
+  public void addDoNotTouchTags(List<String> doNotTouch) {
+    if (doNotTouchTags != null) {
+      doNotTouchTags.addAll(doNotTouch);
+    }
+  }
+
   public List<String> getDoNotTouchTags() {
     return doNotTouchTags;
   }
 
   public void setDoNotTouchTags(List<String> doNotTouchTags) {
     this.doNotTouchTags = doNotTouchTags;
+  }
+
+  public void addDoNotOutputTags(List<String> doNotOutput) {
+    if (doNotOutputTags != null) {
+      doNotOutputTags.addAll(doNotOutput);
+    }
   }
 
   public List<String> getDoNotOutputTags() {
@@ -108,7 +116,8 @@ public class GenericRuleJson {
   }
 
   public String toString() {
-    return String.format("input tags: %s\noutput tags: %s\noutput weights: %s\ndo not touch: %s\ndo not output: %s",
+    return String.format(
+        "input tags: %s\noutput tags: %s\noutput weights: %s\ndo not touch: %s\ndo not output: %s",
         inputTags, outputTags, outputWeights, doNotTouchTags, doNotOutputTags);
   }
 }

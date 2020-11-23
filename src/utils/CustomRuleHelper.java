@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
+import java.util.logging.Logger;
 import org.jdom2.Element;
 
 import databases.TaggedDatabase;
 import json.GenericRuleJson;
 
 /**
- * Low-level rule that allows getting a random entity given a series of
- * input/output tags.
+ * Low-level rule that allows getting a random entity given a series of input/output tags.
  * 
  * @author Kida
  *
@@ -45,16 +44,6 @@ public class CustomRuleHelper {
     if (gfj.getDoNotOutputTags() != null) {
       this.doNotOutputTags = gfj.getDoNotOutputTags();
     }
-  }
-
-  /**
-   * Whether this rule should apply to the given entity
-   * 
-   * @param entityName
-   * @return
-   */
-  public boolean trigger(TaggedDatabase database, String entityName) {
-    return trigger(database, entityName, null);
   }
 
   /**
@@ -107,11 +96,10 @@ public class CustomRuleHelper {
         return toSwap;
       }
     }
-
     return toSwap;
   }
 
-  private ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
+  private static ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
     Element fullEntity = database.getEntityByName(entityName);
     if (fullEntity == null) {
       return null;

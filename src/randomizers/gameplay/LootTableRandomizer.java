@@ -114,7 +114,7 @@ public class LootTableRandomizer extends BaseRandomizer {
 
           // Explicitly prevent physics props from appearing in loot tables
           for (int i = 0; i < MAX_ATTEMPTS; i++) {
-            if (crh.trigger(database, oldArchetype)) {
+            if (crh.trigger(database, oldArchetype, null)) {
               Element newArchetype = crh.getEntityToSwap(database, r);
 
               Set<String> tags = Utils.getTags(newArchetype);

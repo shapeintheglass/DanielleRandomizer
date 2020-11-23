@@ -1,5 +1,7 @@
 package randomizers.gameplay;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,18 +13,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
+import javax.imageio.ImageIO;
+import javax.swing.SwingConstants;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
+import org.jgraph.graph.DefaultEdge;
+import org.jgrapht.Graph;
+import org.jgrapht.ext.JGraphXAdapter;
+import org.jgrapht.graph.SimpleGraph;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.primitives.ImmutableIntArray;
-
+import com.mxgraph.layout.mxIGraphLayout;
+import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.util.mxCellRenderer;
 import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
@@ -35,6 +42,7 @@ import randomizers.BaseRandomizer;
  * 
  */
 public class NeuromodTreeRandomizer extends BaseRandomizer {
+  private static final String NEUROMOD_OUTPUT_PNG = "neuromod_output.png";
   private static final String FALSE = "false";
   private static final String REQUIRE_SCANNER = "RequireScanner";
   private static final int NUM_COLUMNS = 4;
@@ -120,8 +128,9 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     Element abilitiesRoot = abilitiesDoc.getRootElement();
     List<Element> allAbilities = abilitiesRoot.getChild("Abilities").getChildren();
     for (Element ability : allAbilities) {
+      String name = ability.getAttributeValue("Name");
       String id = ability.getAttributeValue("ID");
-      abilityIds.add(new Ability(id));
+      abilityIds.add(new Ability(name, id));
       abilityIdToElement.put(id, ability);
     }
   }
@@ -208,11 +217,43 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       xmlOutput.setFormat(Format.getPrettyFormat());
       xmlOutput.output(abilitiesDoc, new FileOutputStream(abilitiesFileOut));
       xmlOutput.output(layoutDoc, new FileOutputStream(layoutFileOut));
-
+      visualize();
     } catch (JDOMException | IOException e) {
       e.printStackTrace();
       return;
     }
+  }
+
+  private void visualize() throws IOException {
+    Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+    
+    // First pass to add all vertex names
+    for (Ability a : abilityIds) {
+      graph.addVertex(String.format("\t%s (%d)\t", a.getName(), a.getCost()));
+    }
+
+    // Second pass to add all edges
+    for (Ability a : abilityIds) {
+      String newNodeName = String.format("\t%s (%d)\t", a.getName(), a.getCost());
+
+      if (a.getPrereq() != null) {
+        Element e = abilityIdToElement.get(a.getPrereq());
+        String prereqName =  String.format("\t%s (%s)\t", e.getAttributeValue("Name"), e.getAttributeValue("Cost"));
+        graph.addEdge(prereqName, newNodeName);
+
+      }
+    }
+
+    File output = new File(NEUROMOD_OUTPUT_PNG);
+    output.createNewFile();
+
+    JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
+    mxIGraphLayout graphLayout = new mxHierarchicalLayout(graphAdapter, SwingConstants.WEST);
+    graphLayout.execute(graphAdapter.getDefaultParent());
+
+    BufferedImage img =
+        mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
+    ImageIO.write(img, "PNG", output);
   }
 
   public void unlockAllScans() {
@@ -345,16 +386,20 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   }
 
   private static class Ability {
+    private String name;
     private String id;
-
     private String prereq;
-
     private int cost;
 
-    public Ability(String id) {
+    public Ability(String name, String id) {
+      this.name = name;
       this.id = id;
       this.prereq = null;
       this.cost = 0;
+    }
+
+    public String getName() {
+      return name;
     }
 
     public String getId() {

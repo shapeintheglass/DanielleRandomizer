@@ -10,6 +10,7 @@ import json.GenericRuleJson;
 import json.SettingsJson;
 import utils.CustomRuleHelper;
 import utils.DatabaseUtils;
+import utils.LevelConsts;
 import utils.Utils;
 
 /**
@@ -38,8 +39,7 @@ public class ContainerSpawnRule implements Rule {
       return false;
     }
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class")
-           .equals(ITEM_ADD_KEYWORD)) {
+      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
         Element input = n.getChild("Inputs");
         return triggerOnInput(input, e.getAttributeValue("Name"));
       }
@@ -51,11 +51,11 @@ public class ContainerSpawnRule implements Rule {
     // Iterate through nodes until we find an item add node
     List<Element> nodes = getNodes(e);
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class")
-           .equals(ITEM_ADD_KEYWORD)) {
+      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
         Element inputs = n.getChild("Inputs");
         String archetypeStr = inputs.getAttributeValue("archetype");
-        if (archetypeStr == null || archetypeStr.isEmpty() || !triggerOnInput(inputs, e.getAttributeValue("Name"))) {
+        if (archetypeStr == null || archetypeStr.isEmpty() || !triggerOnInput(inputs,
+            filename + LevelConsts.DELIMITER + e.getAttributeValue("Name"))) {
           return;
         }
         Element fullEntity = database.getEntityByName(Utils.stripPrefix(archetypeStr));
@@ -86,14 +86,10 @@ public class ContainerSpawnRule implements Rule {
 
   private boolean triggerOnInput(Element input, String name) {
     String archetype = input.getAttributeValue("archetype");
-    if (settings.getGameplaySettings()
-                .getItemSpawnSettings()
-                .getRules() == null) {
+    if (settings.getGameplaySettings().getItemSpawnSettings().getRules() == null) {
       return false;
     }
-    for (GenericRuleJson grj : settings.getGameplaySettings()
-                                       .getItemSpawnSettings()
-                                       .getRules()) {
+    for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings().getRules()) {
       CustomRuleHelper crh = new CustomRuleHelper(grj);
       if (crh.trigger(database, archetype, name)) {
         return true;

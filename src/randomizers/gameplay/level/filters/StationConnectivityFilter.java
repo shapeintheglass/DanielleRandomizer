@@ -13,31 +13,26 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
-
+import org.jgraph.graph.DefaultEdge;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.guava.ImmutableNetworkAdapter;
-import org.jgrapht.graph.guava.MutableGraphAdapter;
+import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.graph.guava.MutableNetworkAdapter;
-
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.common.graph.EndpointPair;
-import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.Graphs;
 import com.google.common.graph.ImmutableNetwork;
-import com.google.common.graph.MutableGraph;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.util.mxCellRenderer;
-
+import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxStyleUtils;
 import json.SettingsJson;
 import randomizers.gameplay.level.filters.rules.StationConnectivityRule;
 import utils.StationConnectivityConsts;
@@ -47,7 +42,6 @@ import utils.StationConnectivityConsts.Level;
 public class StationConnectivityFilter extends BaseFilter {
 
   private static final int UNLOCK_ATTEMPTS = 10;
-  private static final String STATION_CONNECTIVITY_2_PNG = "station_connectivity_2.png";
   private static final String STATION_CONNECTIVITY_PNG = "station_connectivity.png";
   private static final int MAX_ATTEMPTS = 100;
   // Map of filename to door name to location id
@@ -73,13 +67,12 @@ public class StationConnectivityFilter extends BaseFilter {
         if (!validate(network)) {
           throw new IllegalStateException("Configuration invalid! (not connected)");
         }
-
-        // visualize(network);
+        visualize(network);
         networkToConnectivity(network);
         rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
         logger.info(connectivityToString());
         break;
-      } catch (IllegalStateException e) {
+      } catch (IllegalStateException | IOException e) {
         logger.info(String.format("Failed to find connection after %s attempts", numAttempts));
         e.printStackTrace();
       }
@@ -250,51 +243,34 @@ public class StationConnectivityFilter extends BaseFilter {
     return Lists.newArrayList(validConnections);
   }
 
-  // Generates an image file representing the station
-  private void visualize() {
-
-  }
-
-  @SuppressWarnings("unused")
-  @Deprecated
-  private void visualizeDeprecated(ImmutableNetwork<Level, Door> network) throws IOException {
-    MutableGraph<String> graph = GraphBuilder.undirected().build();
-
-    // Attach every level to its doors
-    for (Level l : Level.values()) {
-      graph.addNode(l.toString());
-      for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
-        graph.addNode(d.toString());
-        graph.putEdge(l.toString(), d.toString());
+  private void visualize(ImmutableNetwork<Level, Door> network) throws IOException {
+    Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+    for (Level l : network.nodes()) {
+      if (!graph.containsVertex(l.name())) {
+        graph.addVertex(l.name());
+      }
+      for (Level neighbor : network.adjacentNodes(l)) {
+        if (!graph.containsVertex(neighbor.name())) {
+          graph.addVertex(neighbor.name());
+        }
+        if (!graph.containsEdge(l.name(), neighbor.name())) {
+          graph.addEdge(l.name(), neighbor.name());
+        }
       }
     }
-    // Attach every door to its new door
-    for (Door d : Door.values()) {
-      for (Door neighbor : network.adjacentEdges(d)) {
-        graph.putEdge(d.toString(), neighbor.toString());
-      }
-    }
+    graph.addVertex("HARDWARE_LABS");
+    graph.addVertex("DEEP_STORAGE");
+    graph.addEdge("LOBBY", "HARDWARE_LABS");
+    graph.addEdge("ARBORETUM", "DEEP_STORAGE");
 
-    ImmutableNetworkAdapter<Level, Door> ina = new ImmutableNetworkAdapter<>(network);
-    Graph<String, EndpointPair<String>> jg = new MutableGraphAdapter<>(graph);
-
-    JGraphXAdapter<String, EndpointPair<String>> graphAdapter = new JGraphXAdapter<>(jg);
-    graphAdapter.setLabelsClipped(true);
-    mxIGraphLayout layout = new mxFastOrganicLayout(graphAdapter);
-    layout.execute(graphAdapter.getDefaultParent());
+    JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
+    mxIGraphLayout graphLayout = new mxFastOrganicLayout(graphAdapter);
+    graphLayout.execute(graphAdapter.getDefaultParent());
 
     BufferedImage image =
         mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
     File imgFile = new File(STATION_CONNECTIVITY_PNG);
-    ImageIO.write(image, "PNG", imgFile);
-
-    JGraphXAdapter<Level, Door> networkAdapter = new JGraphXAdapter<>(ina);
-    networkAdapter.setLabelsClipped(true);
-
-    layout = new mxFastOrganicLayout(networkAdapter);
-    layout.execute(networkAdapter.getDefaultParent());
-    image = mxCellRenderer.createBufferedImage(networkAdapter, null, 2, Color.WHITE, true, null);
-    imgFile = new File(STATION_CONNECTIVITY_2_PNG);
+    imgFile.createNewFile();
     ImageIO.write(image, "PNG", imgFile);
   }
 
@@ -302,7 +278,6 @@ public class StationConnectivityFilter extends BaseFilter {
     // Assert that everything can be unlocked
     boolean hasGeneralKeycard = false;
     boolean hasFuelStorageKeycard = false;
-    boolean hasTranscribeRecordings = false;
     int numAttempts = 0;
 
     // Remove locked connections
@@ -310,25 +285,18 @@ public class StationConnectivityFilter extends BaseFilter {
     StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.values().stream().forEach(toRemove::addAll);
 
     // See how much of the station we can unlock w/o getting the lift
-    while (numAttempts++ < UNLOCK_ATTEMPTS
-        && !(hasGeneralKeycard && hasFuelStorageKeycard && hasTranscribeRecordings)) {
+    while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard)) {
+      // If we can get to the Lobby, we can get the General Access keycard.
       if (!hasGeneralKeycard
-          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
-        toRemove
-            .removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
+          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.LOBBY)) {
+        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.LOBBY));
         hasGeneralKeycard = true;
       }
+      // If we can get to the GUTS, we can get the Fuel Storage keycard.
       if (!hasFuelStorageKeycard
-          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.HARDWARE_LABS)) {
-        toRemove
-            .removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.HARDWARE_LABS));
+          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.GUTS)) {
+        toRemove.removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.GUTS));
         hasFuelStorageKeycard = true;
-      }
-      if (!hasTranscribeRecordings
-          && isConnected(network, toRemove, Level.NEUROMOD_DIVISION, Level.CREW_QUARTERS)) {
-        toRemove
-            .removeAll(StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.get(Level.CREW_QUARTERS));
-        hasTranscribeRecordings = true;
       }
     }
 
@@ -338,10 +306,6 @@ public class StationConnectivityFilter extends BaseFilter {
 
     if (!hasFuelStorageKeycard) {
       logger.warning("Unable to obtain fuel storage keycard!");
-    }
-
-    if (!hasTranscribeRecordings) {
-      logger.warning("Unable to obtain transcribe recordings!");
     }
 
     return isConnected(network, toRemove);

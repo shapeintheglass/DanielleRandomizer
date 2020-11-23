@@ -37,7 +37,7 @@ public class GameplaySettingsJson implements HasOptions {
               new BaseCheckbox("Add loot to Morgan's apartment",
                   "Adds useful equipment in containers around Morgan's apartment", true))
           .put(OPEN_STATION,
-              new BaseCheckbox("Open up Talos I (WIP)",
+              new BaseCheckbox("Unlock everything (WIP)",
                   "Unlocks various doors around Talos I to make traversal easier.", false))
           .put(RANDOMIZE_NEUROMODS,
               new BaseCheckbox("Randomize Neuromod upgrade tree",

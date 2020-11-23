@@ -6,6 +6,7 @@ import org.jdom2.Element;
 
 import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
+import utils.LevelConsts;
 import utils.Utils;
 
 /**
@@ -28,7 +29,7 @@ public class ArchetypeSwapRule implements Rule {
   public boolean trigger(Element e, Random r, String filename) {
     // Check if input tag matches
     if (e.getAttributeValue("Archetype") != null && e.getAttributeValue("EntityClass") != null) {
-      return crh.trigger(database, e.getAttributeValue("Archetype"), e.getAttributeValue("Name"));
+      return crh.trigger(database, e.getAttributeValue("Archetype"), filename + LevelConsts.DELIMITER + e.getAttributeValue("Name"));
     } else {
       return false;
     }
