@@ -16,11 +16,13 @@ Blocking V0.2 release
 	 - Spawn backups of key items in fixed locations
 * Make default item/enemy randomization behavior avoid plot critical entities...done
 
-V0.3 features
-* Station randomization - move key items around
-* Weapon projectile randomization
-* Built-in "all keycodes are 1111" "all passwords are password"
-* Built-in player model customization (dropdown list?)
+V0.3 planned features
+* Randomized key item locations
+* Weapon cosmetic, projectile randomization
+* Incorporate existing mods: "all keycodes are 1111", "all passwords are password", player model overrides, etc
+* Fix NPC body randomization - debug bald female npcs, add female prototype psychoscope, randomize alex/luka's models
+
+
 * No gravity
  - fix bald female npcs
  <Attachment Inheritable="1" Type="CA_SKIN" AName="hair_skin" Binding="objects/characters/humans/genfemale/genfemale_head01_hair01.skin" Material="objects/characters/humans/genfemale/genfemale_hair01_black.mtl" Flags="0" />
@@ -35,10 +37,14 @@ Feature requests
 * Sliders for settings (nightmare ratio, spawn frequency?)
 * Third person
 * Silly hats 
+* Final stats screen
 
 
 Last run feedback:
  - unlock all of alex's workstation stuff at once
  - put key items in fixed places
- - fix keycard/keycode doors (current implementation doesn't unlock them, only removes the key)
- - make neuromods slightly more plentiful
+ - make neuromods sliiiightly less plentiful
+ - make weapon upgrade kits more plentiful
+ - where the heck is the gloo gun
+ - arming keys not appearing?
+ - Do not force unlock Alex's bunker

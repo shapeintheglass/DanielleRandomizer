@@ -43,12 +43,6 @@ public class LevelConsts {
       new ImmutableMap.Builder<String, String>()
           .put("CrewFacility.VoiceSampleProcessingPercent", "100").build();
 
-  // Unlocks doors in psychotronics
-  public static final ImmutableMap<String, String> UNLOCK_PSYCHOTRONICS_GAME_TOKENS =
-      new ImmutableMap.Builder<String, String>()
-          .put("WorldState.PsychoscopeCalibrationComplete", "true")
-          .put("Psychotronics_Decontamination.Lockdown_Active", "false").build();
-
   // Intended to unlock the main lift.
   public static final ImmutableMap<String, String> UNLOCK_LIFT_GAME_TOKENS =
       new ImmutableMap.Builder<String, String>().put("Lobby.ElevatorUsedForFirstTime", "true")

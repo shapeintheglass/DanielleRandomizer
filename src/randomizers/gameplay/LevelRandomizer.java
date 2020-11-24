@@ -58,11 +58,10 @@ public class LevelRandomizer extends BaseRandomizer {
     if (s.getGameplaySettings().getOpenStation()) {
       gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
-      gameTokenValues.putAll(LevelConsts.UNLOCK_PSYCHOTRONICS_GAME_TOKENS);
-      gameTokenValues.putAll(LevelConsts.UNLOCK_LIFT_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
     if (s.getGameplaySettings().getRandomizeStation()) {
-      gameTokenValues.putAll(LevelConsts.UNLOCK_PSYCHOTRONICS_GAME_TOKENS);
+      gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
     if (s.getGameplaySettings().getStartOn2ndDay()) {
       gameTokenValues.putAll(LevelConsts.START_2ND_DAY_GAME_TOKENS);

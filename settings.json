@@ -6,8 +6,8 @@
       "filters": [
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE", "Cystoids" ],
-          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "Cystoids", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 10, 10, 10, 10, 10, 50, 50, 200, 500]
+          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "PsiHypo", "Cystoids", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 50, 50, 200, 500]
 		}
       ]
     },
@@ -17,9 +17,9 @@
       "filters": [
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE", "Cystoids" ],
-          "output_tags": [ "Stickynote_Mimic", "ArkPsychoscope", "ZeroGSuit", "Cystoids", "Weapons", "FabricationPlans", "Mods", "Medical", "Neuromod", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 1, 5, 5, 5, 5, 10, 10, 10, 10, 10, 50, 50, 200, 500],
-          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL" ]
+          "output_tags": [ "Stickynote_Mimic", "ArkPsychoscope", "ZeroGSuit", "PsiHypo", "Cystoids", "Weapons", "FabricationPlans", "Mods", "Medical", "Neuromod", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 50, 50, 200, 500],
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan" ]
         }
       ]
     },
@@ -118,7 +118,7 @@
       "filters": [
         {
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
-          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "ApexTentacle", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare", "ArkTurret", "Operators\Generic" ],
+          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "ApexTentacle", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare", "ArkTurret", "Operators\\Generic" ],
           "output_weights": [ 20, 20, 20, 15, 10, 8, 5, 5, 5, 3, 1, 1, 1 ]
         }
       ]
@@ -131,7 +131,7 @@
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
           "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare" ],
           "output_weights": [ 20, 20, 20, 10, 8, 5, 5, 5, 3, 1 ],
-          "do_not_output_tags": [ "Tentacle_Large", "Tentacle_Medium", "Tentacle_Small" ]
+          "do_not_output_tags": [ "ApexTentacle" ]
         }
       ]
     },

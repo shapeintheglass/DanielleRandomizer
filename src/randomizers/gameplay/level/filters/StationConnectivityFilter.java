@@ -31,10 +31,10 @@ import com.google.common.graph.NetworkBuilder;
 import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.util.mxCellRenderer;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxStyleUtils;
 import json.SettingsJson;
 import randomizers.gameplay.level.filters.rules.StationConnectivityRule;
+import randomizers.gameplay.level.filters.rules.UnlockPowerPlantRule;
+import randomizers.gameplay.level.filters.rules.UnlockPsychotronicsRule;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
@@ -70,6 +70,8 @@ public class StationConnectivityFilter extends BaseFilter {
         visualize(network);
         networkToConnectivity(network);
         rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
+        rules.add(new UnlockPsychotronicsRule());
+        rules.add(new UnlockPowerPlantRule());
         logger.info(connectivityToString());
         break;
       } catch (IllegalStateException | IOException e) {

@@ -1,20 +1,15 @@
 package randomizers.gameplay.level.filters.rules;
 
-import java.util.Random;
-import org.jdom2.Element;
+public class UnlockPsychotronicsRule extends BaseUnlockDoorsRule {
+  private static final String[] TO_UNLOCK =
+      {
+          "Door.ArkDoor_Sliding_Double_Default5", // Decontamination airlock, grav shaft side
+          "Door.ArkDoor_Sliding_Double_Default4", // Decontamination airlock, locker room side
+          "Door.Door_Sliding_Double_Default18", // Live exam morgue
+          "Door.Door_Sliding_Double_Default32" // Material extraction
+      };
 
-public class UnlockPsychotronicsRule implements Rule {
-
-  @Override
-  public boolean trigger(Element e, Random r, String filename) {
-    // TODO Auto-generated method stub
-    return false;
+  public UnlockPsychotronicsRule() {
+    super(TO_UNLOCK, "research/psychotronics");
   }
-
-  @Override
-  public void apply(Element e, Random r, String filename) {
-    // TODO Auto-generated method stub
-    
-  }
-
 }

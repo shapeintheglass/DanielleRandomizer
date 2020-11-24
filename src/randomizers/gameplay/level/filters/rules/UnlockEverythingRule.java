@@ -13,7 +13,7 @@ public class UnlockEverythingRule implements Rule {
   private static final ImmutableMap<String, String> DESIRED_STATE =
       new ImmutableMap.Builder<String, String>().put("bStartsUnlocked", "1")
           .put("bStartsLocked", "0").put("bLocked", "0").put("bStartsPoweredOn", "1")
-          .put("bUseKeycardReaders", "0").put("bUseFreeExitButton", "1").put("bStartsOpen", "1")
+          .put("bUseFreeExitButton", "1").put("bStartsOpen", "1")
           .build();
 
   private static final String PROPERTIES2 = "Properties2";
