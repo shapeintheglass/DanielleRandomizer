@@ -27,7 +27,7 @@ public class LevelConsts {
       "research/psychotronics;ArkNpcSpawner_Weaver6",
       "research/psychotronics;ArkNpcSpawner_Weaver2",
       "research/psychotronics;ArkNpcSpawner_Weaver4", "research/lobby;ArkNpcSpawner_Technopath1",
-      "executive/arboretum;ArkNpcSpawner_Telepath1",
+      "research/lobby;ArkNpcSpawner_BasePhantom5", "executive/arboretum;ArkNpcSpawner_Telepath1",
       "executive/arboretum;Spawner_GreenhouseTelepath", "executive/crewfacilities;ArkNpcSpawner16",
       "executive/crewfacilities;ArkNpcSpawner_Telepath2",
       "engineering/lifesupport;ArkNpcSpawner_Technopath1",

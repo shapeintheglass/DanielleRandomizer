@@ -48,3 +48,10 @@ Last run feedback:
  - where the heck is the gloo gun
  - arming keys not appearing?
  - Do not force unlock Alex's bunker
+ 
+ 
+ Last run feedback (randomized station)
+  - Unlock arboretum --> crew quarters door?
+  - Possible to use items that are locked w/ necropsy
+  - Whitelist lift phantom
+  - GUTS crash?

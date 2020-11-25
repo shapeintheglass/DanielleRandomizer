@@ -71,7 +71,7 @@ public class LevelFinderUtil {
     try (Scanner s = new Scanner(System.in)) {
 
       Map<String, Vector> nameToPos =
-          readLevel("data/levels/research/psychotronics/mission_mission0.xml");
+          readLevel("data/levels/executive/crewfacilities/mission_mission0.xml");
 
       while (s.hasNextLine()) {
         // x y z r
