@@ -13,7 +13,12 @@ import org.jdom2.input.SAXBuilder;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class LevelFinderTool {
+/**
+ * 
+ * Helper utility for locating entities near a certain coordinate in a level.
+ *
+ */
+public class LevelFinderUtil {
 
   private static final String POS = "Pos";
 

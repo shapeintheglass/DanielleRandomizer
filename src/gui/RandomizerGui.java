@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -32,7 +31,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -41,7 +39,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
-
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
@@ -57,7 +54,6 @@ import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
-import randomizers.gameplay.WorkstationRandomizer;
 import randomizers.gameplay.level.filters.EnemyFilter;
 import randomizers.gameplay.level.filters.FlowgraphFilter;
 import randomizers.gameplay.level.filters.ItemSpawnFilter;
@@ -559,12 +555,6 @@ public class RandomizerGui {
           .addFilter(new ItemSpawnFilter(database, currentSettings))
           .addFilter(new FlowgraphFilter(database, currentSettings))
           .addFilter(new EnemyFilter(database, currentSettings));
-
-      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)
-          || currentSettings.getGameplaySettings()
-              .getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
-        new WorkstationRandomizer(currentSettings, tempPatchDir).randomize();
-      }
 
       if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)) {
         levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());

@@ -6,8 +6,9 @@
       "filters": [
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE", "Cystoids" ],
-          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "PsiHypo", "Cystoids", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 50, 50, 200, 500]
+          "output_tags": [ "Cystoids", "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "WeaponUpgradeKit", "SuitPatchKit", "Weapon", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "PsiHypo", "SpareParts",  "Ammo", "Ingredients", "Food", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 25, 25, 50, 200, 500 ],
+		  "do_not_output_tags": [ "Cystoid_IgnorePlayer" ]
 		}
       ]
     },
@@ -17,9 +18,9 @@
       "filters": [
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE", "Cystoids" ],
-          "output_tags": [ "Stickynote_Mimic", "ArkPsychoscope", "ZeroGSuit", "PsiHypo", "Cystoids", "Weapons", "FabricationPlans", "Mods", "Medical", "Neuromod", "Ammo", "SpareParts", "SuitPatchKit", "Food", "Ingredients", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 1, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 50, 50, 200, 500],
-          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan" ]
+          "output_tags": [ "Cystoids", "Stickynote_Mimic", "WeaponUpgradeKit", "SuitPatchKit",  "Weapon", "Weapons", "FabricationPlans", "Mods", "Medical", "PsiHypo", "Neuromod", "SpareParts", "Ammo", "Ingredients", "Food", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 25, 25, 50, 200, 500],
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
         }
       ]
     },
