@@ -2,31 +2,45 @@
   "item_spawn_settings": [
     {
       "name": "Randomize all",
-      "desc": "Randomize all items. Has a chance of spawning additional plot progression items.",
+      "desc": "Randomize all items. Does not spawn story items early.",
       "filters": [
-        {
-          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE", "Cystoids" ],
-          "output_tags": [ "Cystoids", "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "WeaponUpgradeKit", "SuitPatchKit", "Weapon", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "PsiHypo", "SpareParts",  "Ammo", "Ingredients", "Food", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 25, 25, 50, 200, 500 ],
-		  "do_not_output_tags": [ "Cystoid_IgnorePlayer" ]
-		}
-      ]
-    },
-    {
-      "name": "Randomize all, no story items",
-      "desc": "Randomize all items, but do not spawn additional plot progression items",
-      "filters": [
-        {
-          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE", "Cystoids" ],
-          "output_tags": [ "Cystoids", "Stickynote_Mimic", "WeaponUpgradeKit", "SuitPatchKit",  "Weapon", "Weapons", "FabricationPlans", "Mods", "Medical", "PsiHypo", "Neuromod", "SpareParts", "Ammo", "Ingredients", "Food", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 25, 25, 50, 200, 500],
+	    {
+          "input_tags": [ "_LEVERAGE_II" ],
+          "output_tags": [ "_LEVERAGE_II" ],
           "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
+        },
+        {
+          "input_tags": [ "_LEVERAGE_III" ],
+          "output_tags": [ "_LEVERAGE_III" ],
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
+        },
+        {
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "Stickynote_Mimic", "MedKit", "PsiHypo", "Ingredients", "WeaponUpgradeKit", "SuitPatchKit",  "Weapon", "Weapons", "FabricationPlans", "Mods", "Medical", "Neuromod", "SpareParts", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 25, 50, 300, 700],
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer", "_LEVERAGE_II", "_LEVERAGE_III" ]
         }
       ]
     },
     {
-      "name": "No randomization",
-      "desc": "Do not randomize items"
+      "name": "Randomize all (chaotic)",
+      "desc": "Randomize all items. Has a chance of spawning story progression items early (such as arming keys), and extra enemies.",
+      "filters": [
+	  	{
+          "input_tags": [ "_LEVERAGE_II" ],
+          "output_tags": [ "_LEVERAGE_II" ]
+        },
+        {
+          "input_tags": [ "_LEVERAGE_III" ],
+          "output_tags": [ "_LEVERAGE_III" ]
+        },
+        {
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "MedKit", "PsiHypo", "Ingredients", "WeaponUpgradeKit", "SuitPatchKit", "Weapon", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "Operators\\Generic", "ArkTurret", "ArkNpcs", "SpareParts", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 25, 50, 300, 700 ],
+		  "do_not_output_tags": [ "Cystoid_IgnorePlayer", "ApexTentacle", "_LEVERAGE_II", "_LEVERAGE_III" ]
+		}
+      ]
     },
     {
       "name": "Randomize within type",
@@ -91,6 +105,10 @@
         }
       ]
     },
+	{
+      "name": "No randomization",
+      "desc": "Do not randomize items"
+    },
     {
       "name": "Whiskey and cigars",
       "desc": "For nightly gatherings.",
@@ -110,6 +128,16 @@
           "output_tags": [ "Reployer" ]
         }
       ]
+    },
+	{
+      "name": "Oops! All eels",
+      "desc": "All items are eels.",
+      "filters": [
+        {
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "ArkEel" ]
+        }
+      ]
     }
   ],
   "enemy_spawn_settings": [
@@ -119,20 +147,50 @@
       "filters": [
         {
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
-          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "ApexTentacle", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare", "ArkTurret", "Operators\\Generic" ],
-          "output_weights": [ 20, 20, 20, 15, 10, 8, 5, 5, 5, 3, 1, 1, 1 ]
+          "output_tags": [ "Mimic", "BasePhantom", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare" ],
+          "output_weights": [ 15, 15, 10, 8, 5, 5, 5, 5, 3 ],
+		  "do_not_touch_tags": [ "Named Phantoms" ]
         }
       ]
     },
     {
-      "name": "Randomize all, no tentacles",
-      "desc": "Randomize all enemies, but don't spawn unkillable giant tentacles.",
+      "name": "Randomize all (chaotic)",
+      "desc": "Randomize all enemies. Has a chance of spawning unkillable entities like cystoids, tentacles, or turrets.",
       "filters": [
         {
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
-          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "EliteMimic", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare" ],
-          "output_weights": [ 20, 20, 20, 10, 8, 5, 5, 5, 3, 1 ],
-          "do_not_output_tags": [ "ApexTentacle" ]
+          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "EliteMimic", "ApexTentacle", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare", "ArkTurret", "Operators\\Generic" ],
+          "output_weights": [ 20, 20, 20, 15, 10, 8, 5, 5, 5, 5, 3, 1, 1 ],
+		  "do_not_touch_tags": [ "Named Phantoms" ],
+		  "do_not_output_tags": [ "Tentacle_Large" ]
+        },
+		{
+		  "input_tags": [ "EngineeringOperator", "MedicalOperator", "ScienceOperator" ],
+          "output_tags": [ "EngineeringOperator", "MedicalOperator", "ScienceOperator" ]
+		}
+      ]
+    },
+	{
+      "name": "Randomize within type",
+      "desc": "Randomize enemies within their type. Easy enemies can become other easy enemies, tough enemies can become other tough enemies, etc.",
+      "filters": [
+	    {
+          "input_tags": [ "Mimic", "BasePhantom" ],
+          "output_tags": [ "Mimic", "BasePhantom" ]
+        },
+		{
+          "input_tags": [ "Operators\\Generic\\Corrupted", "MilitaryOperator" ],
+          "output_tags": [ "Operators\\Generic\\Corrupted", "MilitaryOperator" ]
+        },
+		{
+          "input_tags": [ "EliteMimic", "ArkPoltergeist", "EthericPhantom", "VoltaicPhantom", "ThermalPhantom" ],
+          "output_tags": [ "EliteMimic", "ArkPoltergeist", "EthericPhantom", "VoltaicPhantom", "ThermalPhantom" ],
+		  "output_weights": [ 5, 3, 5, 5, 5 ]
+        },
+		{
+          "input_tags": [ "Overseers", "ArkNightmare" ],
+          "output_tags": [ "Overseers", "ArkNightmare" ],
+		  "output_weights": [ 4, 1 ]
         }
       ]
     },

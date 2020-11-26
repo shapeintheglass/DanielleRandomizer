@@ -33,6 +33,7 @@ import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.util.mxCellRenderer;
 import json.SettingsJson;
 import randomizers.gameplay.level.filters.rules.KeyFabPlansInCrewQuartersRule;
+import randomizers.gameplay.level.filters.rules.KeyItemsInBridgeRule;
 import randomizers.gameplay.level.filters.rules.StationConnectivityRule;
 import randomizers.gameplay.level.filters.rules.UnlockPowerPlantRule;
 import randomizers.gameplay.level.filters.rules.UnlockPsychotronicsRule;
@@ -74,6 +75,7 @@ public class StationConnectivityFilter extends BaseFilter {
         rules.add(new UnlockPsychotronicsRule());
         rules.add(new UnlockPowerPlantRule());
         rules.add(new KeyFabPlansInCrewQuartersRule());
+        rules.add(new KeyItemsInBridgeRule());
         logger.info(connectivityToString());
         break;
       } catch (IllegalStateException | IOException e) {
@@ -90,8 +92,18 @@ public class StationConnectivityFilter extends BaseFilter {
       String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);
       for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
         String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
+        if (doorName == null) {
+          logger.warning(String.format("Door name not found for door %s", d.toString()));
+        }
         String spawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(d);
+        if (spawnName == null) {
+          logger.warning(String.format("Spawn name not found for door %s", d.toString()));
+        }
         String doorValue = doorConnectivity.get(levelName).get(doorName);
+        if (doorValue == null) {
+          logger.warning(
+              String.format("Door value not found for door %s, level %s", d.toString(), levelName));
+        }
         String doorValueReadable =
             StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
@@ -264,8 +276,10 @@ public class StationConnectivityFilter extends BaseFilter {
     }
     graph.addVertex("HARDWARE_LABS");
     graph.addVertex("DEEP_STORAGE");
+    graph.addVertex("CREW_QUARTERS");
     graph.addEdge("LOBBY", "HARDWARE_LABS");
     graph.addEdge("ARBORETUM", "DEEP_STORAGE");
+    graph.addEdge("ARBORETUM", "CREW_QUARTERS");
 
     JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
     mxIGraphLayout graphLayout = new mxFastOrganicLayout(graphAdapter);
@@ -335,6 +349,6 @@ public class StationConnectivityFilter extends BaseFilter {
   }
 
   public static void main(String[] args) {
-    new StationConnectivityFilter(0);
+    new StationConnectivityFilter(8537243929839358018L);
   }
 }

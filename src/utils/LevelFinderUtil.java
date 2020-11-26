@@ -20,6 +20,7 @@ import com.google.common.collect.Maps;
  */
 public class LevelFinderUtil {
 
+  private static final String MISSION_FILE = "data/levels/executive/bridge/mission_mission0.xml";
   private static final String POS = "Pos";
 
   private static Map<String, Vector> readLevel(String levelFile) throws JDOMException, IOException {
@@ -70,8 +71,7 @@ public class LevelFinderUtil {
   public static void main(String[] args) {
     try (Scanner s = new Scanner(System.in)) {
 
-      Map<String, Vector> nameToPos =
-          readLevel("data/levels/executive/crewfacilities/mission_mission0.xml");
+      Map<String, Vector> nameToPos = readLevel(MISSION_FILE);
 
       while (s.hasNextLine()) {
         // x y z r

@@ -2405,5 +2405,29 @@
     </ArkLootSlot>
    </Slots>
   </ArkLootTable>
+  <ArkLootTable Name="RANDOMIZER_BridgeKeyItems">
+   <Slots>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.AlexStationKeyFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+    <ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Crafting.FabricationPlans.MorganStationKeyFabPlan" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+	<ArkLootSlot Percent="100">
+     <Items>
+      <ArkLootItem Archetype="ArkPickups.Mods.Psychoscope.CanScanCoral" Weight="1"/>
+     </Items>
+    </ArkLootSlot>
+   </Slots>
+  </ArkLootTable>
  </Tables>
 </ArkLootTables>

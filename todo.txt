@@ -21,9 +21,7 @@ V0.3 planned features
 * Weapon cosmetic, projectile randomization
 * Incorporate existing mods: "all keycodes are 1111", "all passwords are password", player model overrides, etc
 * Fix NPC body randomization - debug bald female npcs, add female prototype psychoscope, randomize alex/luka's models
-
-
-* No gravity
+* Add fabricators, recyclers, operator stations, explosives to the randomizer
  - fix bald female npcs
  <Attachment Inheritable="1" Type="CA_SKIN" AName="hair_skin" Binding="objects/characters/humans/genfemale/genfemale_head01_hair01.skin" Material="objects/characters/humans/genfemale/genfemale_hair01_black.mtl" Flags="0" />
  <Attachment Inheritable="1" Type="CA_SKIN" AName="hair_skin" Binding="objects/characters/humans/genfemale/genfemale_head06_hair02.skin" Material="objects/characters/humans/genfemale/genfemale_hair02_gray.mtl" Flags="0" />
@@ -38,20 +36,29 @@ Feature requests
 * Third person
 * Silly hats 
 * Final stats screen
+* No gravity
+* Shuffle within level - items/enemies can only be shuffled from within the same level
 
-
-Last run feedback:
+Unactionable feedback:
  - unlock all of alex's workstation stuff at once
- - put key items in fixed places
- - make neuromods sliiiightly less plentiful
- - make weapon upgrade kits more plentiful
- - where the heck is the gloo gun
- - arming keys not appearing?
- - Do not force unlock Alex's bunker
- 
- 
- Last run feedback (randomized station)
-  - Unlock arboretum --> crew quarters door?
+   - Unlock arboretum --> crew quarters door?
   - Possible to use items that are locked w/ necropsy
-  - Whitelist lift phantom
   - GUTS crash?
+
+Addressed feedback:
+ - put key items in fixed places
+ - Do not force unlock Alex's bunker
+  - Done Whitelist lift phantom
+  - Put plot items in the bridge
+  - No large furniture
+  - Three variations of "random": "Mostly sane" (items will be swapped for an item of the same type), "Crazy but not game breaking" (avoid spawning items that will wreck the game), and "Just fuck my shit up"
+  - Remove large tentacles
+
+Todo feedback:
+  - Double check the spawn point defs (throw exception if spawn def is null)
+  - Do not spawn cystoid nests (super annoying)
+  - Shuttle bay <--> GUTS keycard?
+  - Overseers not spawning?
+  - Remove junk, large objects
+  - Crew quarters exit blocked by apex
+ 

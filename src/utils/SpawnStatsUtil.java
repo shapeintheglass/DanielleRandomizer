@@ -70,6 +70,7 @@ public class SpawnStatsUtil {
       if (rule.trigger(e, r, LEVEL_FILE)) {
         modified = true;
         rule.apply(e, r, LEVEL_FILE);
+        break;
       }
     }
     if (modified) {
@@ -145,11 +146,9 @@ public class SpawnStatsUtil {
     }
   }
 
-  public static Multiset<String> describeOriginalState() throws JDOMException, IOException {
+  public static Multiset<String> getOriginalState() throws JDOMException, IOException {
     Element root = getEntitiesFromLevel(
         Paths.get(LEVEL_DIR).resolve(LEVEL_FILE).resolve(LEVEL_FILE_NAME).toFile());
-    System.out.println("Original State");
-    System.out.println("No randomization");
 
     Multiset<String> tagsSet = HashMultiset.create();
 
@@ -157,25 +156,11 @@ public class SpawnStatsUtil {
     long seed = r.nextLong();
     System.out.printf("Seed: %d\n", seed);
     r.setSeed(seed);
-    int numModified = 0;
-    int total = 0;
     for (Element e : root.getChildren()) {
       List<String> tags = getTagsForEntity(e);
       if (tags != null) {
         tagsSet.addAll(tags);
-        numModified++;
       }
-      total++;
-    }
-
-    List<String> tags = Lists.newArrayList();
-    tags.addAll(tagsSet.elementSet());
-    Collections.sort(tags);
-
-    System.out.printf("%d/%d entities modified.\n", numModified, total);
-    for (String s : tags) {
-      System.out.printf("%s,%d,%.2f%%\n", s, tagsSet.count(s),
-          (float) tagsSet.count(s) / numModified * 100);
     }
     return tagsSet;
   }
@@ -186,7 +171,7 @@ public class SpawnStatsUtil {
       database = EntityDatabase.getInstance();
       AllPresetsJson allPresets = new AllPresetsJson(PRESETS_FILE);
 
-      Multiset<String> originalTags = describeOriginalState();
+      Multiset<String> originalTags = getOriginalState();
 
       for (SpawnPresetJson j : allPresets.getItemSpawnSettings()) {
         List<Rule> rulesList = createItemRulesList(j.getRules());

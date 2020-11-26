@@ -14,14 +14,15 @@ public class LevelConsts {
       "research/prototype", "research/psychotronics", "research/shuttlebay",
       "research/simulationlabs", "research/zerog_utilitytunnels", "station/exterior"};
 
-  public static final List<String> DO_NOT_TOUCH_ITEM_TAGS = Lists.newArrayList("Data",
-      "MissionItems", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan",
-      "MorganStationKeyFabPlan", "PropulsionSystemFabPlan", "Psychoscope", "ZeroGSuit",
-      "_PLOT_CRITICAL", "ArkRobots", "ArkLight", "research/simulationlabs;Weapons.Wrench1");
+  public static final List<String> DO_NOT_TOUCH_ITEM_TAGS =
+      Lists.newArrayList("Data", "MissionItems", "BigNullwaveTransmitterFabPlan",
+          "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan",
+          "Psychoscope", "ZeroGSuit", "_PLOT_CRITICAL", "ArkRobots", "ArkLight",
+          "research/simulationlabs;Weapons.Wrench1", "MedKit_Wall_Mounted");
 
-  public static final List<String> DO_NOT_OUTPUT_ITEM_TAGS =
-      Lists.newArrayList("Architecture", "Gameplay", "Industrial", "Space", "Light_Fixtures",
-          "Static_ArkLights", "Shotgun_Golden", "DoubleWrench", "Mimic_Placeholder");
+  public static final List<String> DO_NOT_OUTPUT_ITEM_TAGS = Lists.newArrayList("Architecture",
+      "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden",
+      "DoubleWrench", "Mimic_Placeholder", "OperatorGrenade", "ShotgunPreorderFabPlan");
 
   public static final List<String> DO_NOT_TOUCH_NPC_TAGS = Lists.newArrayList(
       "research/psychotronics;ArkNpcSpawner_Weaver6",

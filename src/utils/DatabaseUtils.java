@@ -3,7 +3,7 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.util.logging.Logger;
 import org.jdom2.Element;
 
 import databases.TaggedDatabase;
@@ -15,6 +15,9 @@ public class DatabaseUtils {
    */
   public static Element getRandomEntityByTag(TaggedDatabase database, Random r, String tag) {
     List<String> entities = database.getAllForTag(tag);
+    if (entities.isEmpty()) {
+      Logger.getGlobal().warning(String.format("Tag has 0 matches: %s", tag));
+    }
     String selected = Utils.getRandom(entities, r);
     return database.getEntityByName(selected);
   }
