@@ -62,6 +62,7 @@ public class LevelRandomizer extends BaseRandomizer {
     }
     if (s.getGameplaySettings().getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
+      gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
     }
     if (s.getGameplaySettings().getStartOn2ndDay()) {
       gameTokenValues.putAll(LevelConsts.START_2ND_DAY_GAME_TOKENS);

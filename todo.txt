@@ -16,6 +16,14 @@ Blocking V0.2 release
 	 - Spawn backups of key items in fixed locations
 * Make default item/enemy randomization behavior avoid plot critical entities...done
 
+Tips
+ - Pick up as much as possible, scavenge in areas where you know many items exist
+ - Open up shortcuts wherever possible (ex. the lift, airlocks).
+ - First stop should be Deep Storage, to get Morgan's Arming Key and kick off the plot
+ - The Hardware Labs tutorial is necessary in order to get through the Psychotronics and Shuttle Bay doors of the Lobby
+ - Make sure to pick up the Fuel Storage keycard in the GUTS.
+ - Make sure to pick up the Crew Quarters keycard in the Arboretum.
+
 V0.3 planned features
 * Randomized key item locations
 * Weapon cosmetic, projectile randomization
@@ -45,6 +53,7 @@ Unactionable feedback:
    - Unlock arboretum --> crew quarters door?
   - Possible to use items that are locked w/ necropsy
   - GUTS crash?
+   - Calvino will not spawn unless you have his quest
 
 Addressed feedback:
  - put key items in fixed places
@@ -60,9 +69,13 @@ Addressed feedback:
   - Overseers not spawning?
   - Remove junk, large objects
   - Crew quarters exit blocked by apex
-
-Last run feedback:
- - Calvino will not spawn unless you have his quest
  - Nightmare not pursuing the player
  - Take stock of how frequently certain connections happen
+ 
+ Last run feedback:
+  - Prototype nullwave spawned in a container??
+  - Unlock weaver chamber in psychotronics
+  - Broken spawn: psychotronics_guts --> lobby_psychotronics (might be happening because "From_Psychotronics" isn't getting set due to not having the zero g suit)
+  - jovan keeps having great stuff
+  - add lock buttons to morgan's/alex's offices
  
