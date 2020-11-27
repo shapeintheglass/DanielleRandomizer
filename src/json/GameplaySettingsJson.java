@@ -43,8 +43,8 @@ public class GameplaySettingsJson implements HasOptions {
               new BaseCheckbox("Randomize Neuromod upgrade tree",
                   "Shuffles the neuromods in the skill upgrade tree", false))
           .put(UNLOCK_ALL_SCANS,
-              new BaseCheckbox("Unlock all neuromods scans",
-                  "Removes scan requirement for all typhon neuromods", true))
+              new BaseCheckbox("Remove scan requirement for typhon neuromods",
+                  "Unlocks all neuromod abilities so you don't have to scan typhon for them", true))
           .put(RANDOMIZE_STATION,
               new BaseCheckbox("Randomize station connections",
                   "Shuffles connections between levels.", false))

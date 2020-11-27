@@ -20,7 +20,7 @@ import com.google.common.collect.Maps;
  */
 public class LevelFinderUtil {
 
-  private static final String MISSION_FILE = "data/levels/executive/bridge/mission_mission0.xml";
+  private static final String MISSION_FILE = "data/levels/station/exterior/mission_mission0.xml";
   private static final String POS = "Pos";
 
   private static Map<String, Vector> readLevel(String levelFile) throws JDOMException, IOException {

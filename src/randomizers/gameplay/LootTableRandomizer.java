@@ -29,7 +29,7 @@ public class LootTableRandomizer extends BaseRandomizer {
   private static final String OUTPUT_DIR = "ark/items";
   private static final String OUTPUT_NAME = "loottables.xml";
 
-//Offset to add to spawn chance, just so that spawns are more likely
+  // Offset to add to spawn chance, just so that spawns are more likely
   private static final int PERCENT_OFFSET = 50;
 
   private static final int MAX_ATTEMPTS = 10;
@@ -41,18 +41,16 @@ public class LootTableRandomizer extends BaseRandomizer {
   private File inputFile;
   private File outputFile;
 
-  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir) throws IOException {
+  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir)
+      throws IOException {
     super(s);
     this.database = database;
 
-    File outputDir = tempPatchDir.resolve(OUTPUT_DIR)
-                                 .toFile();
+    File outputDir = tempPatchDir.resolve(OUTPUT_DIR).toFile();
     outputDir.mkdirs();
 
     inputFile = new File(SOURCE);
-    outputFile = outputDir.toPath()
-                          .resolve(OUTPUT_NAME)
-                          .toFile();
+    outputFile = outputDir.toPath().resolve(OUTPUT_NAME).toFile();
     outputFile.createNewFile();
   }
 
@@ -62,8 +60,7 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
-    outputFile.getParentFile()
-              .mkdirs();
+    outputFile.getParentFile().mkdirs();
     try {
       outputFile.createNewFile();
     } catch (IOException e1) {
@@ -74,8 +71,7 @@ public class LootTableRandomizer extends BaseRandomizer {
       SAXBuilder saxBuilder = new SAXBuilder();
       Document document = saxBuilder.build(inputFile);
       Element root = document.getRootElement();
-      List<Element> lootTables = root.getChild("Tables")
-                                     .getChildren();
+      List<Element> lootTables = root.getChild("Tables").getChildren();
 
       for (Element e : lootTables) {
         filterLootTable(e);
@@ -90,35 +86,31 @@ public class LootTableRandomizer extends BaseRandomizer {
   }
 
   private void filterLootTable(Element lootTable) {
-    if (lootTable.getAttributeValue("Name")
-                 .contains(DO_NOT_TOUCH_PREFIX)) {
+    if (lootTable.getAttributeValue("Name").contains(DO_NOT_TOUCH_PREFIX)) {
       return;
     }
-    List<Element> slots = lootTable.getChild("Slots")
-                                   .getChildren();
+    List<Element> slots = lootTable.getChild("Slots").getChildren();
     for (Element slot : slots) {
       // Randomize the percent
       int percent = r.nextInt(100 - PERCENT_OFFSET) + PERCENT_OFFSET;
       slot.setAttribute("Percent", Integer.toString(percent));
 
       // Randomize the items
-      List<Element> items = slot.getChild("Items")
-                                .getChildren();
+      List<Element> items = slot.getChild("Items").getChildren();
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
 
-        for (GenericRuleJson grj : settings.getGameplaySettings()
-                                           .getItemSpawnSettings()
-                                           .getRules()) {
+        for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings()
+            .getRules()) {
           CustomRuleHelper crh = new CustomRuleHelper(grj);
 
-          // Explicitly prevent physics props from appearing in loot tables
+          // Explicitly prevent non-pickup items from appearing in loot tables
           for (int i = 0; i < MAX_ATTEMPTS; i++) {
             if (crh.trigger(database, oldArchetype, null)) {
               Element newArchetype = crh.getEntityToSwap(database, r);
 
               Set<String> tags = Utils.getTags(newArchetype);
-              if (!tags.contains("ArkPhysicsProps")) {
+              if (tags.contains("ArkPickups")) {
                 item.setAttribute("Archetype", Utils.getNameForEntity(newArchetype));
                 break;
               }

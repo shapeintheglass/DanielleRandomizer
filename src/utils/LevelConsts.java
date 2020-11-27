@@ -61,4 +61,6 @@ public class LevelConsts {
       "SimLab.Apartment_2ndDay", "true", "SimLab.Apartment_PlayerHasFirstDay2Objective", "true");
   public static final ImmutableMap<String, String> PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS =
       ImmutableMap.of("WorldState.PsychoscopeCalibrationComplete", "true");
+  public static final ImmutableMap<String, String> ENABLE_NIGHTMARE_TOKENS =
+      ImmutableMap.of("Arboretum.NightmareSpawnedInArboretum", "true");
 }

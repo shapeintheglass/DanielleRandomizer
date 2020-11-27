@@ -67,7 +67,6 @@ public class ContainerSpawnRule implements Rule {
         Element toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
 
         inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
-        inputs.setAttribute("quantity", "1");
       }
     }
   }

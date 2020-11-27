@@ -566,7 +566,13 @@ public class RandomizerGui {
       }
 
       if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
-        levelRandomizer = levelRandomizer.addFilter(new StationConnectivityFilter(currentSettings));
+        StationConnectivityFilter connectivity = new StationConnectivityFilter(currentSettings);
+        try {
+          connectivity.visualize();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        levelRandomizer = levelRandomizer.addFilter(connectivity);
       }
 
       if (currentSettings.getGameplaySettings().getGameTokenValuesAsMap() != null) {

@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.logging.Logger;
 import org.jdom2.Element;
 
 public class Utils {
@@ -157,7 +156,8 @@ public class Utils {
     return tags;
   }
 
-  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName, String tagName) {
+  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName,
+      String tagName) {
     if (properties == null || properties.getAttributeValue(propertyName) == null) {
       return;
     }
@@ -169,11 +169,11 @@ public class Utils {
 
   private static void addCarryRequirementTag(Set<String> tags, Element properties) {
     String carryReq = properties.getAttributeValue("ability_CarryRequirement");
-    
+
     if (carryReq == null) {
       return;
     }
-    
+
     switch (carryReq) {
       case "3149325216928599448":
         tags.add("_LEVERAGE_I");

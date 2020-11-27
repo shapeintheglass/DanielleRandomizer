@@ -155,7 +155,7 @@
     },
     {
       "name": "Randomize all (chaotic)",
-      "desc": "Randomize all enemies. Has a chance of spawning unkillable entities like cystoids, tentacles, or turrets.",
+      "desc": "Randomize all enemies. Has a chance of spawning unkillable entities like tentacles or turrets.",
       "filters": [
         {
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],

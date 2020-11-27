@@ -50,6 +50,8 @@ public class StationConnectivityFilter extends BaseFilter {
   private Map<String, Map<String, String>> doorConnectivity;
   // Map of filename to spawn name to destination name
   private Map<String, Map<String, String>> spawnConnectivity;
+  // Human readable version of connectivity
+  private ImmutableNetwork<Level, Door> network;
 
   private Logger logger;
 
@@ -65,11 +67,10 @@ public class StationConnectivityFilter extends BaseFilter {
     while (numAttempts++ < MAX_ATTEMPTS) {
       try {
         logger.info(String.format("Attempt #%d", numAttempts));
-        ImmutableNetwork<Level, Door> network = createNewConnectivity(r);
+        network = createNewConnectivity(r);
         if (!validate(network)) {
           throw new IllegalStateException("Configuration invalid! (not connected)");
         }
-        visualize(network);
         networkToConnectivity(network);
         rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
         rules.add(new UnlockPsychotronicsRule());
@@ -78,11 +79,15 @@ public class StationConnectivityFilter extends BaseFilter {
         rules.add(new KeyItemsInBridgeRule());
         logger.info(connectivityToString());
         break;
-      } catch (IllegalStateException | IOException e) {
+      } catch (IllegalStateException e) {
         logger.info(String.format("Failed to find connection after %s attempts", numAttempts));
         e.printStackTrace();
       }
     }
+  }
+
+  public ImmutableNetwork<Level, Door> getNetwork() {
+    return network;
   }
 
   private String connectivityToString() {
@@ -259,7 +264,7 @@ public class StationConnectivityFilter extends BaseFilter {
     return Lists.newArrayList(validConnections);
   }
 
-  private void visualize(ImmutableNetwork<Level, Door> network) throws IOException {
+  public void visualize() throws IOException {
     Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
     for (Level l : network.nodes()) {
       if (!graph.containsVertex(l.name())) {

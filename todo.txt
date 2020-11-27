@@ -27,6 +27,7 @@ V0.3 planned features
  <Attachment Inheritable="1" Type="CA_SKIN" AName="hair_skin" Binding="objects/characters/humans/genfemale/genfemale_head06_hair02.skin" Material="objects/characters/humans/genfemale/genfemale_hair02_gray.mtl" Flags="0" />
  - add prototype psychoscope for female npcs
  - randomize alex/luka's model
+ - swap hardware labs / crew quarters?
 
 Feature requests
 * More mimics
@@ -53,12 +54,15 @@ Addressed feedback:
   - No large furniture
   - Three variations of "random": "Mostly sane" (items will be swapped for an item of the same type), "Crazy but not game breaking" (avoid spawning items that will wreck the game), and "Just fuck my shit up"
   - Remove large tentacles
-
-Todo feedback:
   - Double check the spawn point defs (throw exception if spawn def is null)
   - Do not spawn cystoid nests (super annoying)
   - Shuttle bay <--> GUTS keycard?
   - Overseers not spawning?
   - Remove junk, large objects
   - Crew quarters exit blocked by apex
+
+Last run feedback:
+ - Calvino will not spawn unless you have his quest
+ - Nightmare not pursuing the player
+ - Take stock of how frequently certain connections happen
  
