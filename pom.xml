@@ -77,10 +77,5 @@
 			<artifactId>guava</artifactId>
 			<version>28.0-jre</version>
 		</dependency>
-		<dependency>
-			<groupId>org.xerial</groupId>
-			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.16.1</version>
-		</dependency>
 	</dependencies>
 </project>

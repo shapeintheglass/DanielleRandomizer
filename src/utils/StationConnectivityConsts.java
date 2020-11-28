@@ -8,11 +8,43 @@ import com.google.common.collect.ImmutableSet;
 public final class StationConnectivityConsts {
 
   public static enum Level {
-    NEUROMOD_DIVISION, LOBBY, PSYCHOTRONICS, SHUTTLE_BAY, GUTS, ARBORETUM, BRIDGE, CARGO_BAY, LIFE_SUPPORT, POWER_PLANT
+    NEUROMOD_DIVISION,
+    LOBBY,
+    // PSYCHOTRONICS,
+    SHUTTLE_BAY,
+    GUTS,
+    ARBORETUM,
+    BRIDGE,
+    CARGO_BAY,
+    LIFE_SUPPORT,
+    POWER_PLANT
   }
 
   public static enum Door {
-    NEUROMOD_DIVISION_LOBBY_EXIT, LOBBY_NEUROMOD_DIVISION_EXIT, LOBBY_SHUTTLE_BAY_EXIT, LOBBY_PSYCHOTRONICS_EXIT, LOBBY_ARBORETUM_EXIT, LOBBY_LIFE_SUPPORT_EXIT, PSYCHOTRONICS_LOBBY_EXIT, PSYCHOTRONICS_GUTS_EXIT, SHUTTLE_BAY_LOBBY_EXIT, SHUTTLE_BAY_GUTS_EXIT, GUTS_PSYCHOTRONICS_EXIT, GUTS_SHUTTLE_BAY_EXIT, GUTS_CARGO_BAY_EXIT, GUTS_ARBORETUM_EXIT, ARBORETUM_GUTS_EXIT, ARBORETUM_BRIDGE_EXIT, ARBORETUM_LOBBY_EXIT, BRIDGE_ARBORETUM_EXIT, CARGO_BAY_GUTS_EXIT, CARGO_BAY_LIFE_SUPPORT_EXIT, LIFE_SUPPORT_CARGO_BAY_EXIT, LIFE_SUPPORT_LOBBY_EXIT, LIFE_SUPPORT_POWER_PLANT_EXIT, POWER_PLANT_LIFE_SUPPORT_EXIT
+    NEUROMOD_DIVISION_LOBBY_EXIT,
+    LOBBY_NEUROMOD_DIVISION_EXIT,
+    LOBBY_SHUTTLE_BAY_EXIT,
+    // LOBBY_PSYCHOTRONICS_EXIT,
+    LOBBY_ARBORETUM_EXIT,
+    LOBBY_LIFE_SUPPORT_EXIT,
+    // PSYCHOTRONICS_LOBBY_EXIT,
+    // PSYCHOTRONICS_GUTS_EXIT,
+    SHUTTLE_BAY_LOBBY_EXIT,
+    SHUTTLE_BAY_GUTS_EXIT,
+    // GUTS_PSYCHOTRONICS_EXIT,
+    GUTS_SHUTTLE_BAY_EXIT,
+    GUTS_CARGO_BAY_EXIT,
+    GUTS_ARBORETUM_EXIT,
+    ARBORETUM_GUTS_EXIT,
+    ARBORETUM_BRIDGE_EXIT,
+    ARBORETUM_LOBBY_EXIT,
+    BRIDGE_ARBORETUM_EXIT,
+    CARGO_BAY_GUTS_EXIT,
+    CARGO_BAY_LIFE_SUPPORT_EXIT,
+    LIFE_SUPPORT_CARGO_BAY_EXIT,
+    LIFE_SUPPORT_LOBBY_EXIT,
+    LIFE_SUPPORT_POWER_PLANT_EXIT,
+    POWER_PLANT_LIFE_SUPPORT_EXIT
   }
 
   public static final ImmutableMap<Level, ImmutableSet<Door>> DOORS_UNLOCKED_BY_LEVEL =
@@ -20,50 +52,59 @@ public final class StationConnectivityConsts {
           .put(Level.ARBORETUM,
               ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT,
                   Door.LIFE_SUPPORT_LOBBY_EXIT))
-          .put(Level.LOBBY,
-              ImmutableSet.of(Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT))
+          .put(Level.LOBBY, ImmutableSet.of(Door.LOBBY_SHUTTLE_BAY_EXIT))
           .put(Level.GUTS, ImmutableSet.of(Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT))
           .build();
 
   // Map of level to level id
   public static final ImmutableBiMap<Level, String> LEVELS_TO_NAMES =
       new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "executive/arboretum")
-          .put(Level.BRIDGE, "executive/bridge").put(Level.CARGO_BAY, "engineering/cargobay")
+          .put(Level.BRIDGE, "executive/bridge")
+          .put(Level.CARGO_BAY, "engineering/cargobay")
           // .put(Level.CREW_QUARTERS, "executive/crewfacilities")
           // .put(Level.DEEP_STORAGE, "executive/corporateit")
           .put(Level.GUTS, "research/zerog_utilitytunnels")
           // .put(Level.HARDWARE_LABS, "research/prototype")
-          .put(Level.LIFE_SUPPORT, "engineering/lifesupport").put(Level.LOBBY, "research/lobby")
+          .put(Level.LIFE_SUPPORT, "engineering/lifesupport")
+          .put(Level.LOBBY, "research/lobby")
           .put(Level.NEUROMOD_DIVISION, "research/simulationlabs")
           .put(Level.POWER_PLANT, "engineering/powersource")
-          .put(Level.PSYCHOTRONICS, "research/psychotronics")
-          .put(Level.SHUTTLE_BAY, "research/shuttlebay").build();
+          //.put(Level.PSYCHOTRONICS, "research/psychotronics")
+          .put(Level.SHUTTLE_BAY, "research/shuttlebay")
+          .build();
 
   // Map of level to level id
   public static final ImmutableBiMap<Level, String> LEVELS_TO_IDS =
       new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "1713490239386284818")
-          .put(Level.BRIDGE, "844024417275035158").put(Level.CARGO_BAY, "15659330456296333985")
+          .put(Level.BRIDGE, "844024417275035158")
+          .put(Level.CARGO_BAY, "15659330456296333985")
           // .put(Level.CREW_QUARTERS, "844024417252490146")
           // .put(Level.DEEP_STORAGE, "1713490239377738413")
           .put(Level.GUTS, "4349723564886052417")
           // .put(Level.HARDWARE_LABS, "844024417263019221")
-          .put(Level.LIFE_SUPPORT, "4349723564895209499").put(Level.LOBBY, "1713490239377285936")
+          .put(Level.LIFE_SUPPORT, "4349723564895209499")
+          .put(Level.LOBBY, "1713490239377285936")
           .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
           .put(Level.POWER_PLANT, "6732635291182790112")
-          .put(Level.PSYCHOTRONICS, "11824555372632688907")
-          .put(Level.SHUTTLE_BAY, "1713490239386284988").build();
+          //.put(Level.PSYCHOTRONICS, "11824555372632688907")
+          .put(Level.SHUTTLE_BAY, "1713490239386284988")
+          .build();
 
   // Map of level to associated spawn name
   public static final ImmutableBiMap<Level, String> LEVELS_TO_DESTINATIONS =
       new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "From_Arboretum")
-          .put(Level.BRIDGE, "From_Bridge").put(Level.CARGO_BAY, "From_CargoBay")
+          .put(Level.BRIDGE, "From_Bridge")
+          .put(Level.CARGO_BAY, "From_CargoBay")
           // .put(Level.CREW_QUARTERS, "From_CrewFacilities")
           // .put(Level.DEEP_STORAGE, "From_CorporateIT")
           .put(Level.GUTS, "From_ZeroG_UtilityTunnels")
           // .put(Level.HARDWARE_LABS, "From_Prototype")
-          .put(Level.LIFE_SUPPORT, "From_LifeSupport").put(Level.LOBBY, "From_Lobby")
-          .put(Level.NEUROMOD_DIVISION, "From_Apartment").put(Level.POWER_PLANT, "From_PowerSource")
-          .put(Level.PSYCHOTRONICS, "From_Psychotronics").put(Level.SHUTTLE_BAY, "From_ShuttleBay")
+          .put(Level.LIFE_SUPPORT, "From_LifeSupport")
+          .put(Level.LOBBY, "From_Lobby")
+          .put(Level.NEUROMOD_DIVISION, "From_Apartment")
+          .put(Level.POWER_PLANT, "From_PowerSource")
+          //.put(Level.PSYCHOTRONICS, "From_Psychotronics")
+          .put(Level.SHUTTLE_BAY, "From_ShuttleBay")
           .build();
 
   // Map of door to door name
@@ -77,11 +118,11 @@ public final class StationConnectivityConsts {
           .put(Door.BRIDGE_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default1")
           .put(Door.CARGO_BAY_GUTS_EXIT, "Door.Door_LevelTransition_Exterior1")
           .put(Door.CARGO_BAY_LIFE_SUPPORT_EXIT, "Door.Door_LevelTransition_Default2")
-          //.put(Door.CREW_QUARTERS_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default1")
+          // .put(Door.CREW_QUARTERS_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default1")
           // .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default2")
           .put(Door.GUTS_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default3")
           .put(Door.GUTS_CARGO_BAY_EXIT, "Door.Door_LevelTransition_Exterior1")
-          .put(Door.GUTS_PSYCHOTRONICS_EXIT, "Door.Door_LevelTransition_Default1")
+          //.put(Door.GUTS_PSYCHOTRONICS_EXIT, "Door.Door_LevelTransition_Default1")
           .put(Door.GUTS_SHUTTLE_BAY_EXIT, "Door.Door_LevelTransition_Default2")
           // .put(Door.HARDWARE_LABS_LOBBY_EXIT, "LevelTransitionDoor_ToLobby")
           .put(Door.LIFE_SUPPORT_CARGO_BAY_EXIT, "Door.Door_LevelTransition_Default4")
@@ -91,14 +132,15 @@ public final class StationConnectivityConsts {
           // .put(Door.LOBBY_HARDWARE_LABS_EXIT, "LevelTransition_Hardware")
           .put(Door.LOBBY_LIFE_SUPPORT_EXIT, "LevelTransition_LifeSupport")
           .put(Door.LOBBY_NEUROMOD_DIVISION_EXIT, "LevelTransition_SimLabs")
-          .put(Door.LOBBY_PSYCHOTRONICS_EXIT, "LevelTransition_Psychotronics")
+          //.put(Door.LOBBY_PSYCHOTRONICS_EXIT, "LevelTransition_Psychotronics")
           .put(Door.LOBBY_SHUTTLE_BAY_EXIT, "LevelTransition_ShuttleBay")
           .put(Door.NEUROMOD_DIVISION_LOBBY_EXIT, "Door.Door_LevelTransition_Default1")
           .put(Door.POWER_PLANT_LIFE_SUPPORT_EXIT, "Door.Door_LevelTransition_Default1")
-          .put(Door.PSYCHOTRONICS_GUTS_EXIT, "Door.Door_LevelTransition_Default2")
-          .put(Door.PSYCHOTRONICS_LOBBY_EXIT, "Door.Door_LevelTransition_Default1")
+          //.put(Door.PSYCHOTRONICS_GUTS_EXIT, "Door.Door_LevelTransition_Default2")
+          //.put(Door.PSYCHOTRONICS_LOBBY_EXIT, "Door.Door_LevelTransition_Default1")
           .put(Door.SHUTTLE_BAY_GUTS_EXIT, "LTDoor_ToGUTs;4349723564886052417")
-          .put(Door.SHUTTLE_BAY_LOBBY_EXIT, "LTDoor_ToLobby").build();
+          .put(Door.SHUTTLE_BAY_LOBBY_EXIT, "LTDoor_ToLobby")
+          .build();
 
   public static final ImmutableMap<Door, String> DOORS_TO_SPAWNS =
       new ImmutableMap.Builder<Door, String>().put(Door.ARBORETUM_BRIDGE_EXIT, "SpawnFromLobby2")
@@ -109,10 +151,11 @@ public final class StationConnectivityConsts {
           .put(Door.BRIDGE_ARBORETUM_EXIT, "SpawnPoint1")
           .put(Door.CARGO_BAY_GUTS_EXIT, "SpawnPoint11")
           .put(Door.CARGO_BAY_LIFE_SUPPORT_EXIT, "SpawnPoint3")
-          //.put(Door.CREW_QUARTERS_ARBORETUM_EXIT, "SpawnPoint1")
+          // .put(Door.CREW_QUARTERS_ARBORETUM_EXIT, "SpawnPoint1")
           // .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, "switch")
-          .put(Door.GUTS_ARBORETUM_EXIT, "SpawnPoint2").put(Door.GUTS_CARGO_BAY_EXIT, "SpawnPoint4")
-          .put(Door.GUTS_PSYCHOTRONICS_EXIT, "SpawnPoint5")
+          .put(Door.GUTS_ARBORETUM_EXIT, "SpawnPoint2")
+          .put(Door.GUTS_CARGO_BAY_EXIT, "SpawnPoint4")
+          //.put(Door.GUTS_PSYCHOTRONICS_EXIT, "SpawnPoint5")
           .put(Door.GUTS_SHUTTLE_BAY_EXIT, "SpawnPoint8")
           // .put(Door.HARDWARE_LABS_LOBBY_EXIT, "SpawnPoint1")
           .put(Door.LIFE_SUPPORT_CARGO_BAY_EXIT, "SpawnPoint6")
@@ -122,14 +165,15 @@ public final class StationConnectivityConsts {
           // .put(Door.LOBBY_HARDWARE_LABS_EXIT, "SpawnPoint2")
           .put(Door.LOBBY_LIFE_SUPPORT_EXIT, "SpawnPoint9")
           .put(Door.LOBBY_NEUROMOD_DIVISION_EXIT, "SpawnPoint8")
-          .put(Door.LOBBY_PSYCHOTRONICS_EXIT, "SpawnPoint4")
+          //.put(Door.LOBBY_PSYCHOTRONICS_EXIT, "SpawnPoint4")
           .put(Door.LOBBY_SHUTTLE_BAY_EXIT, "SpawnPoint6")
           .put(Door.NEUROMOD_DIVISION_LOBBY_EXIT, "SpawnPoint5")
           .put(Door.POWER_PLANT_LIFE_SUPPORT_EXIT, "SpawnPoint1")
-          .put(Door.PSYCHOTRONICS_GUTS_EXIT, "SpawnPoint2")
-          .put(Door.PSYCHOTRONICS_LOBBY_EXIT, "SpawnPoint4")
+          //.put(Door.PSYCHOTRONICS_GUTS_EXIT, "SpawnPoint2")
+          //.put(Door.PSYCHOTRONICS_LOBBY_EXIT, "SpawnPoint4")
           .put(Door.SHUTTLE_BAY_GUTS_EXIT, "SpawnPoint4")
-          .put(Door.SHUTTLE_BAY_LOBBY_EXIT, "SpawnPoint3").build();
+          .put(Door.SHUTTLE_BAY_LOBBY_EXIT, "SpawnPoint3")
+          .build();
 
   // Map of level to doors within them
   public static final ImmutableMultimap<Level, Door> LEVELS_TO_DOORS =
@@ -143,8 +187,10 @@ public final class StationConnectivityConsts {
           .put(Level.CARGO_BAY, Door.CARGO_BAY_LIFE_SUPPORT_EXIT)
           // .put(Level.CREW_QUARTERS, Door.CREW_QUARTERS_ARBORETUM_EXIT)
           // .put(Level.DEEP_STORAGE, Door.DEEP_STORAGE_ARBORETUM_EXIT)
-          .put(Level.GUTS, Door.GUTS_ARBORETUM_EXIT).put(Level.GUTS, Door.GUTS_CARGO_BAY_EXIT)
-          .put(Level.GUTS, Door.GUTS_PSYCHOTRONICS_EXIT).put(Level.GUTS, Door.GUTS_SHUTTLE_BAY_EXIT)
+          .put(Level.GUTS, Door.GUTS_ARBORETUM_EXIT)
+          .put(Level.GUTS, Door.GUTS_CARGO_BAY_EXIT)
+          //.put(Level.GUTS, Door.GUTS_PSYCHOTRONICS_EXIT)
+          .put(Level.GUTS, Door.GUTS_SHUTTLE_BAY_EXIT)
           // .put(Level.HARDWARE_LABS, Door.HARDWARE_LABS_LOBBY_EXIT)
           .put(Level.LIFE_SUPPORT, Door.LIFE_SUPPORT_CARGO_BAY_EXIT)
           .put(Level.LIFE_SUPPORT, Door.LIFE_SUPPORT_LOBBY_EXIT)
@@ -153,14 +199,15 @@ public final class StationConnectivityConsts {
           // .put(Level.LOBBY, Door.LOBBY_HARDWARE_LABS_EXIT)
           .put(Level.LOBBY, Door.LOBBY_LIFE_SUPPORT_EXIT)
           .put(Level.LOBBY, Door.LOBBY_NEUROMOD_DIVISION_EXIT)
-          .put(Level.LOBBY, Door.LOBBY_PSYCHOTRONICS_EXIT)
+          //.put(Level.LOBBY, Door.LOBBY_PSYCHOTRONICS_EXIT)
           .put(Level.LOBBY, Door.LOBBY_SHUTTLE_BAY_EXIT)
           .put(Level.NEUROMOD_DIVISION, Door.NEUROMOD_DIVISION_LOBBY_EXIT)
           .put(Level.POWER_PLANT, Door.POWER_PLANT_LIFE_SUPPORT_EXIT)
-          .put(Level.PSYCHOTRONICS, Door.PSYCHOTRONICS_GUTS_EXIT)
-          .put(Level.PSYCHOTRONICS, Door.PSYCHOTRONICS_LOBBY_EXIT)
+          //.put(Level.PSYCHOTRONICS, Door.PSYCHOTRONICS_GUTS_EXIT)
+          //.put(Level.PSYCHOTRONICS, Door.PSYCHOTRONICS_LOBBY_EXIT)
           .put(Level.SHUTTLE_BAY, Door.SHUTTLE_BAY_GUTS_EXIT)
-          .put(Level.SHUTTLE_BAY, Door.SHUTTLE_BAY_LOBBY_EXIT).build();
+          .put(Level.SHUTTLE_BAY, Door.SHUTTLE_BAY_LOBBY_EXIT)
+          .build();
 
   // Map of door to level mapping (old connectivity)
   public static final ImmutableBiMap<Door, Door> DEFAULT_CONNECTIVITY =
@@ -177,7 +224,7 @@ public final class StationConnectivityConsts {
           // .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT)
           .put(Door.GUTS_ARBORETUM_EXIT, Door.ARBORETUM_GUTS_EXIT)
           .put(Door.GUTS_CARGO_BAY_EXIT, Door.CARGO_BAY_GUTS_EXIT)
-          .put(Door.GUTS_PSYCHOTRONICS_EXIT, Door.PSYCHOTRONICS_GUTS_EXIT)
+          //.put(Door.GUTS_PSYCHOTRONICS_EXIT, Door.PSYCHOTRONICS_GUTS_EXIT)
           .put(Door.GUTS_SHUTTLE_BAY_EXIT, Door.SHUTTLE_BAY_GUTS_EXIT)
           // .put(Door.HARDWARE_LABS_LOBBY_EXIT, Door.LOBBY_HARDWARE_LABS_EXIT)
           .put(Door.LIFE_SUPPORT_CARGO_BAY_EXIT, Door.CARGO_BAY_LIFE_SUPPORT_EXIT)
@@ -187,14 +234,15 @@ public final class StationConnectivityConsts {
           // .put(Door.LOBBY_HARDWARE_LABS_EXIT, Door.HARDWARE_LABS_LOBBY_EXIT)
           .put(Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT)
           .put(Door.LOBBY_NEUROMOD_DIVISION_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT)
-          .put(Door.LOBBY_PSYCHOTRONICS_EXIT, Door.PSYCHOTRONICS_LOBBY_EXIT)
+          //.put(Door.LOBBY_PSYCHOTRONICS_EXIT, Door.PSYCHOTRONICS_LOBBY_EXIT)
           .put(Door.LOBBY_SHUTTLE_BAY_EXIT, Door.SHUTTLE_BAY_LOBBY_EXIT)
           .put(Door.NEUROMOD_DIVISION_LOBBY_EXIT, Door.LOBBY_NEUROMOD_DIVISION_EXIT)
           .put(Door.POWER_PLANT_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_POWER_PLANT_EXIT)
-          .put(Door.PSYCHOTRONICS_GUTS_EXIT, Door.GUTS_PSYCHOTRONICS_EXIT)
-          .put(Door.PSYCHOTRONICS_LOBBY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT)
+          //.put(Door.PSYCHOTRONICS_GUTS_EXIT, Door.GUTS_PSYCHOTRONICS_EXIT)
+          //.put(Door.PSYCHOTRONICS_LOBBY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT)
           .put(Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT)
-          .put(Door.SHUTTLE_BAY_LOBBY_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT).build();
+          .put(Door.SHUTTLE_BAY_LOBBY_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT)
+          .build();
 
   public static final ImmutableSet<Door> SINGLE_CONNECTIONS =
       ImmutableSet.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,

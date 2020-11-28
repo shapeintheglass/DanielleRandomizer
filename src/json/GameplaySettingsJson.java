@@ -37,14 +37,14 @@ public class GameplaySettingsJson implements HasOptions {
               new BaseCheckbox("Add loot to Morgan's apartment",
                   "Adds useful equipment in containers around Morgan's apartment", true))
           .put(OPEN_STATION,
-              new BaseCheckbox("Unlock everything (WIP)",
-                  "Unlocks various doors around Talos I to make traversal easier.", false))
+              new BaseCheckbox("Unlock everything",
+                  "Unlocks various doors, workstations, etc around Talos I to make traversal easier.", false))
           .put(RANDOMIZE_NEUROMODS,
               new BaseCheckbox("Randomize Neuromod upgrade tree",
                   "Shuffles the neuromods in the skill upgrade tree", false))
           .put(UNLOCK_ALL_SCANS,
               new BaseCheckbox("Remove scan requirement for typhon neuromods",
-                  "Unlocks all neuromod abilities so you don't have to scan typhon for them", true))
+                  "Unlocks all neuromod abilities so you don't have to scan typhon for them", false))
           .put(RANDOMIZE_STATION,
               new BaseCheckbox("Randomize station connections",
                   "Shuffles connections between levels.", false))

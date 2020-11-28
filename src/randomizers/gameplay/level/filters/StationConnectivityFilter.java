@@ -104,16 +104,20 @@ public class StationConnectivityFilter extends BaseFilter {
         if (spawnName == null) {
           logger.warning(String.format("Spawn name not found for door %s", d.toString()));
         }
-        String doorValue = doorConnectivity.get(levelName).get(doorName);
+        String doorValue = doorConnectivity.get(levelName)
+            .get(doorName);
         if (doorValue == null) {
           logger.warning(
               String.format("Door value not found for door %s, level %s", d.toString(), levelName));
         }
-        String doorValueReadable =
-            StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse()
+            .get(doorValue)
+            .toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
-            .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d)).toString();
-        String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
+            .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d))
+            .toString();
+        String spawnValue = spawnConnectivity.get(levelName)
+            .get(spawnName);
         sb.append(String.format(
             "%s:\tDoor to %s now leads to %s. Debug data: %s --> %s, Spawn %s --> %s\n", l,
             oldDoorValueReadable, doorValueReadable, doorName, doorValue, spawnName, spawnValue));
@@ -159,8 +163,8 @@ public class StationConnectivityFilter extends BaseFilter {
 
         doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
             .put(fromDoorName, toLocationId);
-        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel)).put(toDoorName,
-            fromLocationId);
+        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel))
+            .put(toDoorName, fromLocationId);
 
         spawnConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
             .put(fromLevelSpawnName, toDestName);
@@ -172,8 +176,10 @@ public class StationConnectivityFilter extends BaseFilter {
 
   private ImmutableNetwork<Level, Door> createNewConnectivity(Random r)
       throws IllegalStateException {
-    MutableNetwork<Level, Door> station =
-        NetworkBuilder.directed().allowsParallelEdges(true).allowsSelfLoops(false).build();
+    MutableNetwork<Level, Door> station = NetworkBuilder.directed()
+        .allowsParallelEdges(true)
+        .allowsSelfLoops(false)
+        .build();
 
     for (Level l : Level.values()) {
       station.addNode(l);
@@ -184,11 +190,12 @@ public class StationConnectivityFilter extends BaseFilter {
     connectionsToProcess.addAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
     // connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
-    Arrays.stream(Door.values()).forEach(door -> {
-      if (!connectionsToProcess.contains(door)) {
-        connectionsToProcess.add(door);
-      }
-    });
+    Arrays.stream(Door.values())
+        .forEach(door -> {
+          if (!connectionsToProcess.contains(door)) {
+            connectionsToProcess.add(door);
+          }
+        });
 
     while (!connectionsToProcess.isEmpty()) {
       Door fromDoor = connectionsToProcess.removeFirst();
@@ -207,10 +214,10 @@ public class StationConnectivityFilter extends BaseFilter {
       }
       connectionsToProcess.remove(toDoor);
 
-      Level fromLevel = Iterables
-          .getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(fromDoor));
-      Level toLevel =
-          Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(toDoor));
+      Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+          .get(fromDoor));
+      Level toLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+          .get(toDoor));
 
       station.addEdge(fromLevel, toLevel, fromDoor);
       station.addEdge(toLevel, fromLevel, toDoor);
@@ -252,8 +259,8 @@ public class StationConnectivityFilter extends BaseFilter {
     }
 
     // Remove all connections leading from itself
-    Level fromLevel =
-        Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(door));
+    Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+        .get(door));
     validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(fromLevel));
     // Remove all connections to levels that this is already connected to
     Set<Level> existingConnections = station.adjacentNodes(fromLevel);
@@ -282,9 +289,12 @@ public class StationConnectivityFilter extends BaseFilter {
     graph.addVertex("HARDWARE_LABS");
     graph.addVertex("DEEP_STORAGE");
     graph.addVertex("CREW_QUARTERS");
+    graph.addVertex("PSYCHOTRONICS");
     graph.addEdge("LOBBY", "HARDWARE_LABS");
     graph.addEdge("ARBORETUM", "DEEP_STORAGE");
     graph.addEdge("ARBORETUM", "CREW_QUARTERS");
+    graph.addEdge("PSYCHOTRONICS", "LOBBY");
+    graph.addEdge("PSYCHOTRONICS", "GUTS");
 
     JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
     mxIGraphLayout graphLayout = new mxFastOrganicLayout(graphAdapter);
@@ -305,7 +315,9 @@ public class StationConnectivityFilter extends BaseFilter {
 
     // Remove locked connections
     Set<Door> toRemove = new HashSet<>();
-    StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.values().stream().forEach(toRemove::addAll);
+    StationConnectivityConsts.DOORS_UNLOCKED_BY_LEVEL.values()
+        .stream()
+        .forEach(toRemove::addAll);
 
     // See how much of the station we can unlock w/o getting the lift
     while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard)) {
@@ -337,7 +349,8 @@ public class StationConnectivityFilter extends BaseFilter {
   private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove,
       Level from, Level to) {
     MutableNetwork<Level, Door> network = Graphs.copyOf(networkToCopy);
-    toRemove.stream().forEach(network::removeEdge);
+    toRemove.stream()
+        .forEach(network::removeEdge);
 
     MutableNetworkAdapter<Level, Door> ina = new MutableNetworkAdapter<>(network);
     ConnectivityInspector<Level, Door> connectivityInspector = new ConnectivityInspector<>(ina);
@@ -346,7 +359,8 @@ public class StationConnectivityFilter extends BaseFilter {
 
   private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove) {
     MutableNetwork<Level, Door> network = Graphs.copyOf(networkToCopy);
-    toRemove.stream().forEach(network::removeEdge);
+    toRemove.stream()
+        .forEach(network::removeEdge);
 
     MutableNetworkAdapter<Level, Door> ina = new MutableNetworkAdapter<>(network);
     ConnectivityInspector<Level, Door> connectivityInspector = new ConnectivityInspector<>(ina);
@@ -354,6 +368,7 @@ public class StationConnectivityFilter extends BaseFilter {
   }
 
   public static void main(String[] args) {
-    new StationConnectivityFilter(8537243929839358018L);
+    Random r = new Random();
+    new StationConnectivityFilter(r.nextLong());
   }
 }

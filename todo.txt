@@ -19,6 +19,7 @@ Blocking V0.2 release
 Tips
  - Pick up as much as possible, scavenge in areas where you know many items exist
  - Open up shortcuts wherever possible (ex. the lift, airlocks).
+ - 
  - First stop should be Deep Storage, to get Morgan's Arming Key and kick off the plot
  - The Hardware Labs tutorial is necessary in order to get through the Psychotronics and Shuttle Bay doors of the Lobby
  - Make sure to pick up the Fuel Storage keycard in the GUTS.
