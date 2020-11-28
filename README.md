@@ -71,7 +71,7 @@ Filters are processed sequentially for each level entity. If an entity can be tr
 
 If you change settings.json while the randomizer GUI is active, click "Refresh settings" to see your changes.
 
-###Item spawn presets - Affects entities that are spawned directly in the level
+### Item spawn presets - Affects entities that are spawned directly in the level
 
 * Randomize all - Randomizes all items and replaces them with new items at a (mostly) sane spawn rate. Should not affect items that are essential for story progress.
 * Randomize all (chaotic)- Similar to randomize all, but has a chance of spawning story progression items (ex. the arming keys) early, as well as turning items into enemies.
@@ -80,7 +80,7 @@ If you change settings.json while the randomizer GUI is active, click "Refresh s
 * All reployers - Replaces all items with reployers.
 * Oops! All eels - Replaces all items with eels
 
-###NPC spawn presets - Affects entities that are spawned from an NPC spawner
+### NPC spawn presets - Affects entities that are spawned from an NPC spawner
 
 * Randomize all - Randomizes all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression.
 * Randomize all (chaotic) - Similar to randomize all, but has a chance of spawning unkillable entities such as tentacles and turrets.
@@ -90,7 +90,7 @@ If you change settings.json while the randomizer GUI is active, click "Refresh s
 * Typhon to humans - Replaces all typhon with humans.
 * All Dahl - Replaces all typhon with Dahl.
 
-###Other options
+### Other options
 
 * Randomize voice lines - Shuffles voices lines by voice actor
 * Randomize NPC bodies - Scrambles body parts for every human NPC.
