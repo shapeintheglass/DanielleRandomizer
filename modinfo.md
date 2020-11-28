@@ -37,7 +37,7 @@ This is because unfortunately Prey does not always cleanly delete old files befo
 
 [list]
 [*]Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded)
-[*]Must have Java for Windows installed
+[*]Must have [url=http://java.com/download]Java for Windows[/url] installed
 [/list]
 
 [size=4]Running the randomizer[/size]
@@ -386,7 +386,7 @@ Also feel free to share your ideas on how to expand the mod! Here are some featu
 
 [size=4]Authors[/size]
 
-Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass] /u/Shape_in_the_Glass[/url]﻿ or Tsundereployer ([url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿), or leave a post here.
+Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or Tsundereployer ([url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿), or leave a post here.
 
 Source code can be found on [url=https://github.com/shapeintheglass/DanielleRandomizer]GitHub[/url]﻿.
 

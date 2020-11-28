@@ -2,9 +2,7 @@ package randomizers.gameplay.level.filters.rules;
 
 import java.util.List;
 import java.util.Random;
-
 import org.jdom2.Element;
-
 import databases.TaggedDatabase;
 import json.GenericRuleJson;
 import json.SettingsJson;
@@ -20,6 +18,8 @@ import utils.Utils;
  *
  */
 public class ContainerSpawnRule implements Rule {
+
+  private static final int MAX_ATTEMPTS = 100;
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
@@ -39,7 +39,8 @@ public class ContainerSpawnRule implements Rule {
       return false;
     }
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
+      if (n.getAttributeValue("Class")
+          .equals(ITEM_ADD_KEYWORD)) {
         Element input = n.getChild("Inputs");
         return triggerOnInput(input, e.getAttributeValue("Name"));
       }
@@ -51,7 +52,8 @@ public class ContainerSpawnRule implements Rule {
     // Iterate through nodes until we find an item add node
     List<Element> nodes = getNodes(e);
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
+      if (n.getAttributeValue("Class")
+          .equals(ITEM_ADD_KEYWORD)) {
         Element inputs = n.getChild("Inputs");
         String archetypeStr = inputs.getAttributeValue("archetype");
         if (archetypeStr == null || archetypeStr.isEmpty() || !triggerOnInput(inputs,
@@ -64,9 +66,28 @@ public class ContainerSpawnRule implements Rule {
         }
         // Replace with something of the same type
         String tag = fullEntity.getAttributeValue("Class");
-        Element toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
 
-        inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
+        // Try different items until we find something valid
+        // TODO: Make this less dumb
+        for (int i = 0; i < MAX_ATTEMPTS; i++) {
+          Element toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
+          boolean isValid = true;
+          List<GenericRuleJson> itemSpawnRules = settings.getGameplaySettings()
+              .getItemSpawnSettings()
+              .getRules();
+          for (GenericRuleJson grj : itemSpawnRules) {
+            if (!CustomRuleHelper.generatedElementIsValid(toSwap, grj.getDoNotOutputTags())) {
+              isValid = false;
+              break;
+            }
+          }
+          if (!isValid) {
+            continue;
+          }
+          inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
+          break;
+        }
+
       }
     }
   }
@@ -85,10 +106,14 @@ public class ContainerSpawnRule implements Rule {
 
   private boolean triggerOnInput(Element input, String name) {
     String archetype = input.getAttributeValue("archetype");
-    if (settings.getGameplaySettings().getItemSpawnSettings().getRules() == null) {
+    if (settings.getGameplaySettings()
+        .getItemSpawnSettings()
+        .getRules() == null) {
       return false;
     }
-    for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings().getRules()) {
+    for (GenericRuleJson grj : settings.getGameplaySettings()
+        .getItemSpawnSettings()
+        .getRules()) {
       CustomRuleHelper crh = new CustomRuleHelper(grj);
       if (crh.trigger(database, archetype, name)) {
         return true;

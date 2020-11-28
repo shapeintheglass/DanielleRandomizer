@@ -87,14 +87,18 @@ public class CustomRuleHelper {
     Element toSwap = null;
     while (numAttempts < MAX_ATTEMPTS) {
       toSwap = DatabaseUtils.getRandomEntityByTags(database, r, outputTags, outputTagsWeights);
-      Set<String> tags = Utils.getTags(toSwap);
 
       // Check that this doesn't match one of the "do not output" tags
-      if (Utils.getCommonElement(tags, doNotOutputTags) == null) {
+      if (generatedElementIsValid(toSwap, doNotOutputTags)) {
         return toSwap;
       }
     }
     return toSwap;
+  }
+
+  public static boolean generatedElementIsValid(Element toSwap, List<String> doNotOutputTags) {
+    Set<String> tags = Utils.getTags(toSwap);
+    return Utils.getCommonElement(tags, doNotOutputTags) == null;
   }
 
   private static ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {

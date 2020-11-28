@@ -1,4 +1,4 @@
-# Danielle Randomizer v0.2 (beta)
+# Danielle Randomizer v0.2
 
 A simple randomizer for Prey 2017 (code-named "Danielle").
 
@@ -30,8 +30,8 @@ Other features:
 
 ### Dependencies
 
-* Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded)
-* Must have Java for Windows installed.
+* Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded).
+* Must have [Java for Windows](http://java.com/download) installed.
 
 ### Running the randomizer
 
