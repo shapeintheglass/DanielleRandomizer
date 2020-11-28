@@ -1,4 +1,4 @@
-# Danielle Randomizer v0.2
+# Danielle Randomizer
 
 A simple randomizer for Prey 2017 (code-named "Danielle").
 
@@ -6,7 +6,7 @@ A simple randomizer for Prey 2017 (code-named "Danielle").
 
 Randomizes various entities in Prey 2017 via an external executable that overwrites the level files and generates a patch_randomizer.pak. Before overwriting, level files are backed up in the same directory as "level_backup.pak".
 
-Randomizer features:
+### Randomizer features:
 
 * Randomized item/physics prop spawns
 * Randomized enemy/NPC spawns
@@ -16,7 +16,7 @@ Randomizer features:
 * Randomized neuromod upgrade tree
 * Randomized station connectivity
 
-Other features:
+### Other features:
 
 * Start on 2nd day
 * Add loot to Morgan's apartment
@@ -52,6 +52,10 @@ If the randomizer spends a long time at the "Installing..." step, check the gene
 * Ideally, use the "Uninstall" function within the randomizer GUI to uninstall any generated files before uninstalling. If this isn't possible, you can use the GOG or Steam client to redownload any missing or modified files.
 * Delete patch_randomizer.pak in Prey\GameSDK\Precache, if it exists.
 * To uninstall the randomizer, delete danielle_randomizer.exe and its associated files.
+
+## Customization and presets
+
+This randomizer offers certain presets, but some of them can be customized.
 
 ### Configuring custom randomizer settings
 
