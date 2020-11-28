@@ -10,6 +10,7 @@ public abstract class BaseUnlockDoorsRule implements Rule {
 
   private static final String NAME = "Name";
   private static final String B_STARTS_LOCKED = "bStartsLocked";
+  private static final String B_USE_FREE_EXIT_BUTTON = "bUseFreeExitButton";
   private static final String PROPERTIES2 = "Properties2";
   private String[] toUnlock;
   private String filename;
@@ -33,6 +34,7 @@ public abstract class BaseUnlockDoorsRule implements Rule {
     Logger.getGlobal()
           .info("Unlocking " + e.getAttributeValue(NAME));
     e.getChild(PROPERTIES2)
-     .setAttribute(B_STARTS_LOCKED, "0");
+     .setAttribute(B_STARTS_LOCKED, "0")
+     .setAttribute(B_USE_FREE_EXIT_BUTTON, "1");
   }
 }

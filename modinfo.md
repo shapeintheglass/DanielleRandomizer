@@ -13,7 +13,7 @@ What this is currently capable of randomizing:
 [*]Voice lines
 [*]Human NPC appearance
 [*](new in v0.2) Neuromod skill tree (Note: If you get a tiered neuromod out of order such as Hacking II without Hacking I, that means you can ONLY open Hacking II workstations with it. Same applies for Leverage, Repair, etc.)
-[*](new in v0.2) Station connectivity
+[*](new in v0.2) Station connectivity (Shuffles connections between various parts of the station)
 [/list]
 
 Additional useful options:
@@ -40,12 +40,12 @@ This is because unfortunately Prey does not always cleanly delete old files befo
 [*]Must have [url=http://java.com/download]Java for Windows[/url] installed
 [/list]
 
-[size=4]Running the randomizer[/size]
+[size=4]Installation[/size]
 
-The installer will directly modify the game files so that any new save files created while the randomized levels are in effect will be randomized. Uninstalling the randomized mod (via the "Uninstall" button) is not recommended until you are done with your randomized playthrough. Existing save slots will not be affected unless you try to load them.
+This randomizer will directly modify the Prey 2017 level files. Any new save slots created while the randomized levels are in effect will be randomized. Uninstalling the randomized mod (via the "Uninstall" button) is not recommended unless you are done with your randomized playthrough. Existing save slots will not be affected unless you try to load them.
 
 [list=1]
-[*]Unzip the files anywhere. Ensure danielle_randomizer.exe is in the same directory as the included data/ folder and settings.json file.
+[*]Unzip danielle_randomizer.zip anywhere. Ensure danielle_randomizer.exe is in the same directory as the included data/ folder and settings.json file.
 [*]Run danielle_randomizer.exe to start up the GUI.
 [*]Specify Prey install directory.
 [*]Specify desired randomization settings.
@@ -53,7 +53,6 @@ The installer will directly modify the game files so that any new save files cre
 [*]Start up Prey and begin a new randomized game!
 [*]To revert the changes made by this mod, click "Uninstall". Note that any save slots created while the mod was in effect will be in a bad state as a result of this (attempting to load those again may crash the game, or be in a weird state of partly randomized partly not randomized).
 [/list]
-
 If the randomizer spends a long time at the "Installing..." step, check the generated log.txt file to see if it encountered any errors. Sometimes it can just take a long time to generate the first time around.
 
 [size=4]Uninstalling[/size]
@@ -303,6 +302,7 @@ Some entities are not randomized:
 [*]Some items that are scripted to spawn in certain containers/locations cannot be randomized (changing the class type of these items results in crashing the game, so they can only be replaced with a different entity of the same class (ex. Food will be replaced with other food)).
 [*]Voice lines in certain cutscenes are not randomized.
 [*]Certain items/NPCs required for progression are hard coded to not be randomized to avoid messing with the game scripting, such as Patricia Varma's wrench and the lift technopath.
+[*]Certain station connections are left as-is to prevent soft lock situations.
 [/list]
 
 Sidequest related issues:
@@ -386,7 +386,7 @@ Also feel free to share your ideas on how to expand the mod! Here are some featu
 
 [size=4]Authors[/size]
 
-Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or Tsundereployer ([url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿), or leave a post here.
+Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or ([url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿, or leave a post here.
 
 Source code can be found on [url=https://github.com/shapeintheglass/DanielleRandomizer]GitHub[/url]﻿.
 
@@ -395,7 +395,7 @@ Source code can be found on [url=https://github.com/shapeintheglass/DanielleRan
 0.0 - Early prototyping/testing
 0.1 - Quick bug fixes, adjusted presets to remove potentially game breaking scenarios
 0.2 (beta) - Bug fixes, adjusted presets, save settings, neuromod randomization, station randomization
-0.2 - Fixed issues from beta
+0.2 - Fixed issues from 0.2 beta
 
 [size=4]Acknowledgments[/size]
 Thanks to fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure. Also big thanks to the Prey reddit and discord communities for being pretty swell and listening to my terrible ideas. Biggest thanks to Arkane Studios for being cool folks who make cool games. =]

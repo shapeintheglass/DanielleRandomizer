@@ -48,6 +48,9 @@ Feature requests
 * Final stats screen
 * No gravity
 * Shuffle within level - items/enemies can only be shuffled from within the same level
+  - Randomized station - Unlock weaver chamber in psychotronics
+  - Randomized station - add lock buttons to morgan's/alex's offices
+ 
 
 Unactionable feedback:
  - unlock all of alex's workstation stuff at once
@@ -73,10 +76,7 @@ Addressed feedback:
  - Nightmare not pursuing the player
  - Take stock of how frequently certain connections happen
  - Broken spawn: psychotronics_guts --> lobby_psychotronics (might be happening because "From_Psychotronics" isn't getting set due to not having the zero g suit)
+  - Prototype nullwave spawned in a container?? Why does Jovan keep getting mission items??
+
  
  Last run feedback:
-  - Prototype nullwave spawned in a container?? Why does Jovan keep getting mission items??
-  - Unlock weaver chamber in psychotronics
-  - jovan keeps having great stuff
-  - add lock buttons to morgan's/alex's offices
- 

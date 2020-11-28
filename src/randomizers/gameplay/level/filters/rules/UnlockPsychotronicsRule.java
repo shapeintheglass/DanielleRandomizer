@@ -6,7 +6,8 @@ public class UnlockPsychotronicsRule extends BaseUnlockDoorsRule {
           "Door.ArkDoor_Sliding_Double_Default5", // Decontamination airlock, grav shaft side
           "Door.ArkDoor_Sliding_Double_Default4", // Decontamination airlock, locker room side
           "Door.Door_Sliding_Double_Default18", // Live exam morgue
-          "Door.Door_Sliding_Double_Default32" // Material extraction
+          "Door.Door_Sliding_Double_Default32", // Material extraction
+          "Door.BlastDoor_Medium_NoAuto1" // Containment chamber
       };
 
   public UnlockPsychotronicsRule() {

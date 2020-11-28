@@ -10,14 +10,10 @@
           "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
         },
         {
-          "input_tags": [ "_LEVERAGE_III" ],
-          "output_tags": [ "_LEVERAGE_III" ],
-          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
-        },
-        {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
           "output_tags": [ "Stickynote_Mimic", "MedKit", "PsiHypo", "Ingredients", "WeaponUpgradeKit", "SuitPatchKit",  "Weapon", "Weapons", "FabricationPlans", "Mods", "Medical", "Neuromod", "SpareParts", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE"],
           "output_weights": [ 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 25, 50, 300, 700],
+		  "do_not_touch_tags": [ "_LEVERAGE_II", "_LEVERAGE_III" ], 
           "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer", "_LEVERAGE_II", "_LEVERAGE_III" ]
         }
       ]
@@ -26,13 +22,15 @@
       "name": "Randomize all (chaotic)",
       "desc": "Randomize all items. Has a chance of spawning story progression items early (such as arming keys), and extra enemies.",
       "filters": [
-	  	{
+	    {
           "input_tags": [ "_LEVERAGE_II" ],
-          "output_tags": [ "_LEVERAGE_II" ]
+          "output_tags": [ "_LEVERAGE_II" ],
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
         },
-        {
+		{
           "input_tags": [ "_LEVERAGE_III" ],
-          "output_tags": [ "_LEVERAGE_III" ]
+          "output_tags": [ "_LEVERAGE_III" ],
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer" ]
         },
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
@@ -86,7 +84,7 @@
         {
           "input_tags": [ "RecyclerJunk" ],
           "output_tags": [ "RecyclerJunk" ],
-          "do_not_output_tags": [ "_PLOT_CRITICAL" ]
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL" ]
         },
         {
           "input_tags": [ "_LEVERAGE_I" ],
