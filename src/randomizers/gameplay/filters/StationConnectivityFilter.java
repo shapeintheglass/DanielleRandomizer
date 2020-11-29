@@ -1,4 +1,4 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -32,11 +32,11 @@ import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.util.mxCellRenderer;
 import json.SettingsJson;
-import randomizers.gameplay.level.filters.rules.KeyFabPlansInCrewQuartersRule;
-import randomizers.gameplay.level.filters.rules.KeyItemsInBridgeRule;
-import randomizers.gameplay.level.filters.rules.StationConnectivityRule;
-import randomizers.gameplay.level.filters.rules.UnlockPowerPlantRule;
-import randomizers.gameplay.level.filters.rules.UnlockPsychotronicsRule;
+import randomizers.gameplay.filters.rules.KeyFabPlansInCrewQuartersRule;
+import randomizers.gameplay.filters.rules.KeyItemsInBridgeRule;
+import randomizers.gameplay.filters.rules.StationConnectivityRule;
+import randomizers.gameplay.filters.rules.UnlockPowerPlantRule;
+import randomizers.gameplay.filters.rules.UnlockPsychotronicsRule;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;

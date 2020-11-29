@@ -1,8 +1,8 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
 import databases.TaggedDatabase;
 import json.SettingsJson;
-import randomizers.gameplay.level.filters.rules.ContainerSpawnRule;
+import randomizers.gameplay.filters.rules.ContainerSpawnRule;
 
 public class FlowgraphFilter extends BaseFilter {
 

@@ -19,8 +19,8 @@ import org.jdom2.output.XMLOutputter;
 
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
-import randomizers.gameplay.level.filters.BaseFilter;
-import randomizers.gameplay.level.filters.rules.GameTokenRule;
+import randomizers.gameplay.filters.BaseFilter;
+import randomizers.gameplay.filters.rules.GameTokenRule;
 import utils.FileConsts;
 import utils.LevelConsts;
 
@@ -52,19 +52,23 @@ public class LevelRandomizer extends BaseRandomizer {
     this.gameTokenValues = new HashMap<>();
 
     // Use the settings to determine required level game tokens
-    if (s.getGameplaySettings().getUnlockAllScans()) {
+    if (s.getGameplaySettings()
+        .getUnlockAllScans()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getGameplaySettings().getOpenStation()) {
+    if (s.getGameplaySettings()
+        .getOpenStation()) {
       gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getGameplaySettings().getRandomizeStation()) {
+    if (s.getGameplaySettings()
+        .getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
       gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
     }
-    if (s.getGameplaySettings().getStartOn2ndDay()) {
+    if (s.getGameplaySettings()
+        .getStartOn2ndDay()) {
       gameTokenValues.putAll(LevelConsts.START_2ND_DAY_GAME_TOKENS);
     }
 
@@ -85,14 +89,20 @@ public class LevelRandomizer extends BaseRandomizer {
   public void randomize() {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
       Path levelDirIn = FileConsts.DATA_LEVELS.resolve(levelDir);
-      Path levelDirOut = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir);
-      levelDirOut.toFile().mkdirs();
+      Path levelDirOut = tempLevelDir.resolve(LevelConsts.PREFIX)
+          .resolve(levelDir);
+      levelDirOut.toFile()
+          .mkdirs();
 
-      File missionIn = levelDirIn.resolve(MISSION_FILE_NAME).toFile();
-      File missionOut = levelDirOut.resolve(MISSION_FILE_NAME).toFile();
-      File gameTokensIn = levelDirIn.resolve(TOKENS_FOLDER_NAME).toFile();
+      File missionIn = levelDirIn.resolve(MISSION_FILE_NAME)
+          .toFile();
+      File missionOut = levelDirOut.resolve(MISSION_FILE_NAME)
+          .toFile();
+      File gameTokensIn = levelDirIn.resolve(TOKENS_FOLDER_NAME)
+          .toFile();
       Path gameTokensOut = levelDirOut.resolve(TOKENS_FOLDER_NAME);
-      gameTokensOut.toFile().mkdirs();
+      gameTokensOut.toFile()
+          .mkdirs();
 
       try {
         logger.info(String.format("filtering level file: %s --> %s", missionIn, missionOut));
@@ -100,8 +110,8 @@ public class LevelRandomizer extends BaseRandomizer {
 
         for (File gameTokenFile : gameTokensIn.listFiles()) {
           logger.info(String.format("filtering tokens file: %s", gameTokenFile));
-          filterTokensFile(gameTokenFile, gameTokensOut.resolve(gameTokenFile.getName()).toFile(),
-              levelDir);
+          filterTokensFile(gameTokenFile, gameTokensOut.resolve(gameTokenFile.getName())
+              .toFile(), levelDir);
         }
 
       } catch (IOException | JDOMException e1) {
@@ -113,19 +123,14 @@ public class LevelRandomizer extends BaseRandomizer {
 
   /**
    * Copies level def into temp directory, while filtering.
-   * 
-   * @param inputDir Location of input files
-   * @param missionFile Path for mission file
-   * @param outputDir Location for output files
-   * @throws IOException
-   * @throws JDOMException
    */
   private void filterMissionFile(File in, File out, String levelDir)
       throws IOException, JDOMException {
     SAXBuilder saxBuilder = new SAXBuilder();
     Document document = saxBuilder.build(in);
     Element root = document.getRootElement();
-    List<Element> entities = root.getChild("Objects").getChildren();
+    List<Element> entities = root.getChild("Objects")
+        .getChildren();
 
     for (Element e : entities) {
       filterEntityXml(e, levelDir);

@@ -51,15 +51,17 @@ import json.SettingsJson;
 import json.SpawnPresetJson;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
+import randomizers.gameplay.EntityArchetypesRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
-import randomizers.gameplay.level.filters.EnemyFilter;
-import randomizers.gameplay.level.filters.FlowgraphFilter;
-import randomizers.gameplay.level.filters.ItemSpawnFilter;
-import randomizers.gameplay.level.filters.MorgansApartmentFilter;
-import randomizers.gameplay.level.filters.OpenStationFilter;
-import randomizers.gameplay.level.filters.StationConnectivityFilter;
+import randomizers.gameplay.filters.WeaponProjectileFilter;
+import randomizers.gameplay.filters.EnemyFilter;
+import randomizers.gameplay.filters.FlowgraphFilter;
+import randomizers.gameplay.filters.ItemSpawnFilter;
+import randomizers.gameplay.filters.MorgansApartmentFilter;
+import randomizers.gameplay.filters.OpenStationFilter;
+import randomizers.gameplay.filters.StationConnectivityFilter;
 import utils.Utils;
 
 /**
@@ -70,7 +72,7 @@ import utils.Utils;
  */
 public class RandomizerGui {
 
-  private static final String RELEASE_VER = "0.2";
+  private static final String RELEASE_VER = "0.3";
 
   private static final String DEFAULT_INSTALL_DIR =
       "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
@@ -92,8 +94,9 @@ public class RandomizerGui {
   private static final ImmutableList<String> NEUROMODS_CHECKBOXES = ImmutableList
       .of(GameplaySettingsJson.UNLOCK_ALL_SCANS, GameplaySettingsJson.RANDOMIZE_NEUROMODS);
 
-  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList
-      .of(CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
+  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList.of(
+      CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES,
+      CosmeticSettingsJson.RANDOMIZE_WEAPON_APPEARANCE);
 
   private JFrame mainFrame;
 
@@ -147,10 +150,13 @@ public class RandomizerGui {
     try {
       allPresets = new AllPresetsJson(ALL_PRESETS_FILE);
       currentSettings.getGameplaySettings()
-          .setEnemySpawnSettings(allPresets.getEnemySpawnSettings().get(0));
+          .setEnemySpawnSettings(allPresets.getEnemySpawnSettings()
+              .get(0));
       currentSettings.getGameplaySettings()
-          .setItemSpawnSettings(allPresets.getItemSpawnSettings().get(0));
-      currentSettings.getGameplaySettings().setGameTokenValues(allPresets.getGameTokenValues());
+          .setItemSpawnSettings(allPresets.getItemSpawnSettings()
+              .get(0));
+      currentSettings.getGameplaySettings()
+          .setGameTokenValues(allPresets.getGameTokenValues());
     } catch (IOException e1) {
       logger.warning("failed to parse presets file " + ALL_PRESETS_FILE);
       e1.printStackTrace();
@@ -160,7 +166,8 @@ public class RandomizerGui {
     if (lastUsedSettingsFile.exists()) {
       try {
         currentSettings = new SettingsJson(SAVED_SETTINGS_FILE);
-        currentSettings.getGameplaySettings().setGameTokenValues(gameTokenValues);
+        currentSettings.getGameplaySettings()
+            .setGameTokenValues(gameTokenValues);
       } catch (IOException e) {
         logger.info(String.format(
             "An error occurred while parsing %s: %s. Falling back to default settings.",
@@ -317,12 +324,14 @@ public class RandomizerGui {
       allPresets = new AllPresetsJson(ALL_PRESETS_FILE);
 
       itemSpawnSettings = allPresets.getItemSpawnSettings();
-      itemSpawnPanel.setRadioLabels(itemSpawnSettings,
-          currentSettings.getGameplaySettings().getItemSpawnSettings().getName());
+      itemSpawnPanel.setRadioLabels(itemSpawnSettings, currentSettings.getGameplaySettings()
+          .getItemSpawnSettings()
+          .getName());
 
       enemySpawnSettings = allPresets.getEnemySpawnSettings();
-      enemySpawnPanel.setRadioLabels(enemySpawnSettings,
-          currentSettings.getGameplaySettings().getEnemySpawnSettings().getName());
+      enemySpawnPanel.setRadioLabels(enemySpawnSettings, currentSettings.getGameplaySettings()
+          .getEnemySpawnSettings()
+          .getName());
 
       // Update current settings in case presets have changed underneath
       int itemSpawnIndex = itemSpawnPanel.getCurrentIndex();
@@ -367,8 +376,10 @@ public class RandomizerGui {
         // Reset indeces to 0
         itemSpawnPanel.setCurrentIndex(0);
         enemySpawnPanel.setCurrentIndex(0);
-        currentSettings.getGameplaySettings().setItemSpawnSettings(itemSpawnSettings.get(0));
-        currentSettings.getGameplaySettings().setEnemySpawnSettings(enemySpawnSettings.get(0));
+        currentSettings.getGameplaySettings()
+            .setItemSpawnSettings(itemSpawnSettings.get(0));
+        currentSettings.getGameplaySettings()
+            .setEnemySpawnSettings(enemySpawnSettings.get(0));
         statusLabel.setText("Options refreshed.");
         mainFrame.revalidate();
       }
@@ -410,7 +421,8 @@ public class RandomizerGui {
       fileChooser.showOpenDialog(null);
       String installDir = "Error occurred while parsing install directory";
       try {
-        installDir = fileChooser.getSelectedFile().getCanonicalPath();
+        installDir = fileChooser.getSelectedFile()
+            .getCanonicalPath();
         currentSettings.setInstallDir(installDir);
       } catch (IOException e1) {
         logger.warning("Unable to get canonical path for Prey install dir: " + e1.getMessage());
@@ -426,8 +438,10 @@ public class RandomizerGui {
     @Override
     public void itemStateChanged(ItemEvent e) {
       Object source = e.getItemSelectable();
-      String name = checkBoxHolder.inverse().get(source);
-      currentSettings.getCosmeticSettings().toggleOption(name);
+      String name = checkBoxHolder.inverse()
+          .get(source);
+      currentSettings.getCosmeticSettings()
+          .toggleOption(name);
     }
   }
 
@@ -436,8 +450,10 @@ public class RandomizerGui {
     @Override
     public void itemStateChanged(ItemEvent e) {
       Object source = e.getItemSelectable();
-      String name = checkBoxHolder.inverse().get(source);
-      currentSettings.getGameplaySettings().toggleOption(name);
+      String name = checkBoxHolder.inverse()
+          .get(source);
+      currentSettings.getGameplaySettings()
+          .toggleOption(name);
     }
   }
 
@@ -447,7 +463,8 @@ public class RandomizerGui {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      String[] tokens = e.getActionCommand().split(BaseRadioOptionsPanel.DELIMITER);
+      String[] tokens = e.getActionCommand()
+          .split(BaseRadioOptionsPanel.DELIMITER);
       switch (tokens[0]) {
         case ITEM_SPAWN_OPTIONS_PREFIX:
           currentSettings.getGameplaySettings()
@@ -536,12 +553,19 @@ public class RandomizerGui {
 
       // Randomization
 
-      if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
+      if (currentSettings.getCosmeticSettings()
+          .getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
         new BodyRandomizer(currentSettings, tempPatchDir).randomize();
       }
       if (currentSettings.getCosmeticSettings()
           .getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
         new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
+      }
+      if (currentSettings.getCosmeticSettings()
+          .getOption(CosmeticSettingsJson.RANDOMIZE_WEAPON_APPEARANCE)) {
+        new EntityArchetypesRandomizer(currentSettings, tempPatchDir)
+            .addFilter(new WeaponProjectileFilter())
+            .randomize();
       }
       if (currentSettings.getGameplaySettings()
           .getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
@@ -556,7 +580,8 @@ public class RandomizerGui {
           .addFilter(new FlowgraphFilter(database, currentSettings))
           .addFilter(new EnemyFilter(database, currentSettings));
 
-      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)) {
+      if (currentSettings.getGameplaySettings()
+          .getOption(GameplaySettingsJson.OPEN_STATION)) {
         levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
       }
 
@@ -565,7 +590,8 @@ public class RandomizerGui {
         levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
       }
 
-      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
+      if (currentSettings.getGameplaySettings()
+          .getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
         StationConnectivityFilter connectivity = new StationConnectivityFilter(currentSettings);
         try {
           connectivity.visualize();
@@ -575,15 +601,17 @@ public class RandomizerGui {
         levelRandomizer = levelRandomizer.addFilter(connectivity);
       }
 
-      if (currentSettings.getGameplaySettings().getGameTokenValuesAsMap() != null) {
-        levelRandomizer = levelRandomizer
-            .addGameTokenValues(currentSettings.getGameplaySettings().getGameTokenValuesAsMap());
+      if (currentSettings.getGameplaySettings()
+          .getGameTokenValuesAsMap() != null) {
+        levelRandomizer = levelRandomizer.addGameTokenValues(currentSettings.getGameplaySettings()
+            .getGameTokenValuesAsMap());
       }
 
       levelRandomizer.randomize();
 
       try {
-        if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_LOOT)) {
+        if (currentSettings.getGameplaySettings()
+            .getOption(GameplaySettingsJson.RANDOMIZE_LOOT)) {
           new LootTableRandomizer(database, currentSettings, tempPatchDir).randomize();
         } else {
           new LootTableRandomizer(database, currentSettings, tempPatchDir).copyFile();
@@ -609,7 +637,8 @@ public class RandomizerGui {
     File lastUsedSettingsFile = new File(lastUsedSettingsPath);
     lastUsedSettingsFile.createNewFile();
     ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    mapper.writerFor(SettingsJson.class).writeValue(lastUsedSettingsFile, currentSettings);
+    mapper.writerFor(SettingsJson.class)
+        .writeValue(lastUsedSettingsFile, currentSettings);
   }
 
   private class OnUninstallClick implements ActionListener {
@@ -643,18 +672,26 @@ public class RandomizerGui {
       if (gspj.getRules() == null) {
         continue;
       }
-      for (int i = 0; i < gspj.getRules().size(); i++) {
-        GenericRuleJson gfj = gspj.getRules().get(i);
+      for (int i = 0; i < gspj.getRules()
+          .size(); i++) {
+        GenericRuleJson gfj = gspj.getRules()
+            .get(i);
 
         if (gfj.getOutputTags() == null || gfj.getOutputWeights() == null) {
           continue;
         }
 
-        if (gfj.getOutputWeights().size() != 0
-            && gfj.getOutputTags().size() != gfj.getOutputWeights().size()) {
+        if (gfj.getOutputWeights()
+            .size() != 0
+            && gfj.getOutputTags()
+                .size() != gfj.getOutputWeights()
+                    .size()) {
           logger.info(String.format(
               "Invalid filter settings for %s spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
-              name, gspj.getName(), i, gfj.getOutputTags().size(), gfj.getOutputWeights().size()));
+              name, gspj.getName(), i, gfj.getOutputTags()
+                  .size(),
+              gfj.getOutputWeights()
+                  .size()));
         }
       }
     }

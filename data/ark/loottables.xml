@@ -1874,22 +1874,22 @@
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
      <Items>
-      <ArkLootItem Archetype="ArkPickups.Ammo.RecyclerGrenades" Weight="1" CountMin="10" CountMax="10"/>
+      <ArkLootItem Archetype="ArkPickups.Ammo.RecyclerGrenades" Weight="1" CountMin="10" CountMax="100"/>
      </Items>
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
      <Items>
-      <ArkLootItem Archetype="ArkPickups.Ammo.EMPGrenades" Weight="1" CountMin="10" CountMax="10"/>
+      <ArkLootItem Archetype="ArkPickups.Ammo.EMPGrenades" Weight="1" CountMin="10" CountMax="100"/>
      </Items>
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
      <Items>
-      <ArkLootItem Archetype="ArkPickups.Ammo.LureGrenades" Weight="1" CountMin="10" CountMax="10"/>
+      <ArkLootItem Archetype="ArkPickups.Ammo.LureGrenades" Weight="1" CountMin="10" CountMax="100"/>
      </Items>
     </ArkLootSlot>
     <ArkLootSlot Percent="100">
      <Items>
-      <ArkLootItem Archetype="ArkPickups.Ammo.NullwaveTransmitter" Weight="1" CountMin="10" CountMax="10"/>
+      <ArkLootItem Archetype="ArkPickups.Ammo.NullwaveTransmitter" Weight="1" CountMin="10" CountMax="100"/>
      </Items>
     </ArkLootSlot>
    </Slots>

@@ -1,4 +1,4 @@
-package randomizers.gameplay.level.filters.rules;
+package randomizers.gameplay.filters.rules;
 
 public class UnlockPowerPlantRule extends BaseUnlockDoorsRule {
 

@@ -13,14 +13,27 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import org.jdom2.Element;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 
 public class Utils {
   public static Path createTempDir(Path workingDir, String name) {
     long now = new Date().getTime();
     Path newTempDir = workingDir.resolve(String.format("temp_%8d_%s", now, name));
-    newTempDir.toFile().mkdirs();
-    newTempDir.toFile().deleteOnExit();
+    newTempDir.toFile()
+        .mkdirs();
+    newTempDir.toFile()
+        .deleteOnExit();
     return newTempDir;
+  }
+
+  public static <T> T getRandom(ImmutableCollection<T> arr, Random r) {
+    return getRandom(arr.asList(), r);
+  }
+
+  public static <T> T getRandom(ImmutableList<T> arr, Random r) {
+    int index = r.nextInt(arr.size());
+    return arr.get(index);
   }
 
   public static <T> T getRandom(List<T> arr, Random r) {
@@ -67,7 +80,8 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(T[] arr, Integer[] weights, Random r) {
-    int sum = Arrays.stream(weights).reduce(0, Integer::sum);
+    int sum = Arrays.stream(weights)
+        .reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -85,7 +99,8 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights, Random r) {
-    int sum = weights.stream().reduce(0, Integer::sum);
+    int sum = weights.stream()
+        .reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -114,7 +129,9 @@ public class Utils {
   public static void copyDirectory(File fromDir, Path toDir) throws IOException {
     if (fromDir.isDirectory()) {
       for (File f : fromDir.listFiles()) {
-        toDir.resolve(f.getName()).toFile().mkdir();
+        toDir.resolve(f.getName())
+            .toFile()
+            .mkdir();
         copyDirectory(f, toDir.resolve(f.getName()));
       }
     } else {
@@ -136,7 +153,8 @@ public class Utils {
     // Split name on dots
     String name = e.getAttributeValue("Name");
     String[] nameTags = name.split("\\.");
-    Arrays.stream(nameTags).forEach(s -> tags.add(s));
+    Arrays.stream(nameTags)
+        .forEach(s -> tags.add(s));
     tags.add(e.getAttributeValue("Class"));
     tags.add(e.getAttributeValue("Library"));
 
@@ -162,7 +180,8 @@ public class Utils {
       return;
     }
 
-    if (properties.getAttributeValue(propertyName).equals("1")) {
+    if (properties.getAttributeValue(propertyName)
+        .equals("1")) {
       tags.add(tagName);
     }
   }

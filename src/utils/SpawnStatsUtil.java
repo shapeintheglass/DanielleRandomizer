@@ -18,9 +18,9 @@ import databases.TaggedDatabase;
 import json.AllPresetsJson;
 import json.GenericRuleJson;
 import json.SpawnPresetJson;
-import randomizers.gameplay.level.filters.rules.ArchetypeSwapRule;
-import randomizers.gameplay.level.filters.rules.NpcSpawnerSwapRule;
-import randomizers.gameplay.level.filters.rules.Rule;
+import randomizers.gameplay.filters.rules.ArchetypeSwapRule;
+import randomizers.gameplay.filters.rules.NpcSpawnerSwapRule;
+import randomizers.gameplay.filters.rules.Rule;
 
 /**
  * 

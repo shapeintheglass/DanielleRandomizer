@@ -136,6 +136,16 @@
           "output_tags": [ "ArkEel" ]
         }
       ]
+    },
+	{
+      "name": "All weapons",
+      "desc": "All items are weapons or ammo.",
+      "filters": [
+        {
+          "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+          "output_tags": [ "Weapons", "Ammo", "AlienOrganSmall" ]
+        }
+      ]
     }
   ],
   "enemy_spawn_settings": [

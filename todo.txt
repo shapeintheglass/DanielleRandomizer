@@ -1,34 +1,22 @@
-Typhon to whitelist
-* Greenhouse telepath in Arboretum
-* Cargo bay typhon
+More guns:
+* Create new ammo types for new projectile types (borrow from typhon plasma, typhon guts, mimic tumors, typhon cortex, typhon ganglion)
+* Add new weapons that use new projectile types to the loot/spawn pool
+* Psychic rounds
+* Kinetic rounds
+* Voltaic rounds
+* Nightmare rounds
+* Tracer rounds?
+* Mimic rounds?
+* Eel rounds?
+* Each weapon will have a new variant for each ammo type (ex. Psychic shotgun, Recycler shotgun, EMP shotgun, etc)
 
-Separate required doors for open Talos and randomized station
-Create option for "do not override required item/enemy spawns"
-
-Things to unlock for open Talos
-* Fix doors unlocked in Psychotronics
-* Power plant coolant chamber
-
-Blocking V0.2 release
-* Randomized station - remove dependency on open Talos
-	 - Fix spawn of Deep Storage / Hardware Labs...done
-	 - Output visualization files for neuromods and maps...done
-	 - Spawn backups of key items in fixed locations
-* Make default item/enemy randomization behavior avoid plot critical entities...done
-
-Tips
- - Pick up as much as possible, scavenge in areas where you know many items exist
- - Open up shortcuts wherever possible (ex. the lift, airlocks).
- - 
- - First stop should be Deep Storage, to get Morgan's Arming Key and kick off the plot
- - The Hardware Labs tutorial is necessary in order to get through the Psychotronics and Shuttle Bay doors of the Lobby
- - Make sure to pick up the Fuel Storage keycard in the GUTS.
- - Make sure to pick up the Crew Quarters keycard in the Arboretum.
+ - Technopathic, more like Tech-no-good
+ - Pellet is underwhelming
 
 V0.3 planned features
 * Randomized key item locations
 * Weapon cosmetic, projectile randomization
-* Incorporate existing mods: "all keycodes are 1111", "all passwords are password", player model overrides, etc
+* Incorporate existing mods: "all keycodes are 1111", "all passwords are password", player model overrides, friendly typhon, etc
 * Fix NPC body randomization - debug bald female npcs, add female prototype psychoscope, randomize alex/luka's models
 * Add fabricators, recyclers, operator stations, explosives to the randomizer
  - fix bald female npcs
@@ -37,6 +25,10 @@ V0.3 planned features
  - add prototype psychoscope for female npcs
  - randomize alex/luka's model
  - swap hardware labs / crew quarters?
+ - GUI - progress bar, better sanity checks if files are missing
+ - Fix greenhouse telepath, calvino, cargo bay typhon
+ - Randomized station - add lock buttons to morgan's/alex's offices
+
 
 Feature requests
 * More mimics
@@ -48,35 +40,13 @@ Feature requests
 * Final stats screen
 * No gravity
 * Shuffle within level - items/enemies can only be shuffled from within the same level
-  - Randomized station - Unlock weaver chamber in psychotronics
-  - Randomized station - add lock buttons to morgan's/alex's offices
+* Store data files in sql table for faster access, smaller download size
  
-
 Unactionable feedback:
  - unlock all of alex's workstation stuff at once
-   - Unlock arboretum --> crew quarters door?
   - Possible to use items that are locked w/ necropsy
   - GUTS crash?
    - Calvino will not spawn unless you have his quest
-
-Addressed feedback:
- - put key items in fixed places
- - Do not force unlock Alex's bunker
-  - Done Whitelist lift phantom
-  - Put plot items in the bridge
-  - No large furniture
-  - Three variations of "random": "Mostly sane" (items will be swapped for an item of the same type), "Crazy but not game breaking" (avoid spawning items that will wreck the game), and "Just fuck my shit up"
-  - Remove large tentacles
-  - Double check the spawn point defs (throw exception if spawn def is null)
-  - Do not spawn cystoid nests (super annoying)
-  - Shuttle bay <--> GUTS keycard?
-  - Overseers not spawning?
-  - Remove junk, large objects
-  - Crew quarters exit blocked by apex
  - Nightmare not pursuing the player
- - Take stock of how frequently certain connections happen
- - Broken spawn: psychotronics_guts --> lobby_psychotronics (might be happening because "From_Psychotronics" isn't getting set due to not having the zero g suit)
-  - Prototype nullwave spawned in a container?? Why does Jovan keep getting mission items??
-
  
  Last run feedback:

@@ -1,9 +1,9 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
 import databases.TaggedDatabase;
 import json.GenericRuleJson;
 import json.SettingsJson;
-import randomizers.gameplay.level.filters.rules.ArchetypeSwapRule;
+import randomizers.gameplay.filters.rules.ArchetypeSwapRule;
 import utils.CustomRuleHelper;
 import utils.LevelConsts;
 

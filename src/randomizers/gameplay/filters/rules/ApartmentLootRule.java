@@ -1,4 +1,4 @@
-package randomizers.gameplay.level.filters.rules;
+package randomizers.gameplay.filters.rules;
 
 import java.util.Random;
 import org.jdom2.Element;

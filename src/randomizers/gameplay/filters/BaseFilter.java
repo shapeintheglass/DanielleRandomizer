@@ -1,16 +1,14 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.jdom2.Element;
-
-import randomizers.gameplay.level.filters.rules.Rule;
+import randomizers.gameplay.filters.rules.Rule;
 
 /**
- * Represents the implementation for a filter, which is a pre-made combination
- * of rules.
+ * Represents the implementation for a filter, which is a pre-made combination of rules.
  * 
  * @author Kida
  *

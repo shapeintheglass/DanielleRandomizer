@@ -10,7 +10,7 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.graph.EndpointPair;
 import com.google.common.graph.ImmutableNetwork;
-import randomizers.gameplay.level.filters.StationConnectivityFilter;
+import randomizers.gameplay.filters.StationConnectivityFilter;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
 

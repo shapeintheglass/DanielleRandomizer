@@ -1,4 +1,4 @@
-package randomizers.gameplay.level.filters.rules;
+package randomizers.gameplay.filters.rules;
 
 public class UnlockPsychotronicsRule extends BaseUnlockDoorsRule {
   private static final String[] TO_UNLOCK =

@@ -1,4 +1,4 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
 import java.util.Map;
 

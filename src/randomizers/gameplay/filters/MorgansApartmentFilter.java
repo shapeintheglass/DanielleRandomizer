@@ -1,6 +1,6 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
-import randomizers.gameplay.level.filters.rules.ApartmentLootRule;
+import randomizers.gameplay.filters.rules.ApartmentLootRule;
 
 public class MorgansApartmentFilter extends BaseFilter {
 

@@ -1,6 +1,6 @@
-package randomizers.gameplay.level.filters;
+package randomizers.gameplay.filters;
 
-import randomizers.gameplay.level.filters.rules.UnlockEverythingRule;
+import randomizers.gameplay.filters.rules.UnlockEverythingRule;
 
 public class OpenStationFilter extends BaseFilter {
 
