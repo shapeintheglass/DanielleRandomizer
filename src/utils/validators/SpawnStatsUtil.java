@@ -1,4 +1,4 @@
-package utils;
+package utils.validators;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,8 @@ import json.SpawnPresetJson;
 import randomizers.gameplay.filters.rules.ArchetypeSwapRule;
 import randomizers.gameplay.filters.rules.NpcSpawnerSwapRule;
 import randomizers.gameplay.filters.rules.Rule;
+import utils.CustomRuleHelper;
+import utils.LevelConsts;
 
 /**
  * 

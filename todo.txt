@@ -1,22 +1,18 @@
-More guns:
-* Create new ammo types for new projectile types (borrow from typhon plasma, typhon guts, mimic tumors, typhon cortex, typhon ganglion)
-* Add new weapons that use new projectile types to the loot/spawn pool
-* Psychic rounds
-* Kinetic rounds
-* Voltaic rounds
-* Nightmare rounds
-* Tracer rounds?
-* Mimic rounds?
-* Eel rounds?
-* Each weapon will have a new variant for each ammo type (ex. Psychic shotgun, Recycler shotgun, EMP shotgun, etc)
-
- - Technopathic, more like Tech-no-good
- - Pellet is underwhelming
+To do:
+* Better genesis
+* New projectiles: Mimic, eel, morgan, medkits (healing), flamethrower, corrosive
+* Add option to add/remove new guns/enemies/abilities to/from the pool
+* Mark typhon organs as not trash
+* Make unarmed humans wander (add wander node to their AI tree)
+* Expanded genesis - turn objects into other inanimate objects
+* Let all npcs "follow the leader"
+* Shuffle within level
+* Improve container spawn randomization
 
 V0.3 planned features
 * Randomized key item locations
 * Weapon cosmetic, projectile randomization
-* Incorporate existing mods: "all keycodes are 1111", "all passwords are password", player model overrides, friendly typhon, etc
+* Incorporate existing mods: "all keycodes are 1111", player model overrides, friendly typhon, etc
 * Fix NPC body randomization - debug bald female npcs, add female prototype psychoscope, randomize alex/luka's models
 * Add fabricators, recyclers, operator stations, explosives to the randomizer
  - fix bald female npcs
@@ -28,19 +24,26 @@ V0.3 planned features
  - GUI - progress bar, better sanity checks if files are missing
  - Fix greenhouse telepath, calvino, cargo bay typhon
  - Randomized station - add lock buttons to morgan's/alex's offices
+ * Alternative wrenches - Toilet paper, garden trowel, video game console, banana, shoe
 
 
 Feature requests
-* More mimics
+* More mimicked items (slider?) (see FlowgraphEntity_AtriumMimics for simple example, or Lobby First Visit)
 * More typhon (more frequent spawns?)
-* Randomized neuromods - Adjust neuromod costs
 * Sliders for settings (nightmare ratio, spawn frequency?)
 * Third person
 * Silly hats 
 * Final stats screen
-* No gravity
+* No gravity / variable gravity
 * Shuffle within level - items/enemies can only be shuffled from within the same level
 * Store data files in sql table for faster access, smaller download size
+* Menus don't pause time? (make this a chipset?)
+* New chipsets, pharmas/implants? (statuesque in playerconfig)
+* Add bend time?
+* Make apex kill walls not kill? (apex volume config)
+* Global scripts to trigger remote events like unlocking the lift?
+* Everything can mimic
+
  
 Unactionable feedback:
  - unlock all of alex's workstation stuff at once

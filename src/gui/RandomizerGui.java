@@ -51,11 +51,9 @@ import json.SettingsJson;
 import json.SpawnPresetJson;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
-import randomizers.gameplay.EntityArchetypesRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
-import randomizers.gameplay.filters.WeaponProjectileFilter;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
@@ -86,7 +84,7 @@ public class RandomizerGui {
       .of(GameplaySettingsJson.START_ON_2ND_DAY, GameplaySettingsJson.ADD_LOOT_TO_APARTMENT);
 
   private static final ImmutableList<String> ITEMS_CHECKBOXES =
-      ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT);
+      ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT, GameplaySettingsJson.MORE_GUNS);
 
   private static final ImmutableList<String> CONNECTIVITY_CHECKBOXES =
       ImmutableList.of(GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_STATION);
@@ -94,9 +92,8 @@ public class RandomizerGui {
   private static final ImmutableList<String> NEUROMODS_CHECKBOXES = ImmutableList
       .of(GameplaySettingsJson.UNLOCK_ALL_SCANS, GameplaySettingsJson.RANDOMIZE_NEUROMODS);
 
-  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList.of(
-      CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES,
-      CosmeticSettingsJson.RANDOMIZE_WEAPON_APPEARANCE);
+  private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList
+      .of(CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
 
   private JFrame mainFrame;
 
@@ -560,12 +557,6 @@ public class RandomizerGui {
       if (currentSettings.getCosmeticSettings()
           .getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
         new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
-      }
-      if (currentSettings.getCosmeticSettings()
-          .getOption(CosmeticSettingsJson.RANDOMIZE_WEAPON_APPEARANCE)) {
-        new EntityArchetypesRandomizer(currentSettings, tempPatchDir)
-            .addFilter(new WeaponProjectileFilter())
-            .randomize();
       }
       if (currentSettings.getGameplaySettings()
           .getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {

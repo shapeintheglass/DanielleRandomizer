@@ -1,4 +1,4 @@
-package utils;
+package utils.generators;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +19,7 @@ import com.google.common.collect.Maps;
 public class MoreGunGenerator {
 
   private static final String SOURCE = "data/entityarchetypes/arkpickups_backup.xml";
+  private static final String DEST = "data/entityarchetypes/arkpickups.xml";
 
   private static final ImmutableMap<String, String> WEAPON_NAME_TO_READABLE_NAME =
       new ImmutableMap.Builder<String, String>().put("Weapons.Shotgun", "Shotgun")
@@ -41,6 +42,18 @@ public class MoreGunGenerator {
           .put("ArkProjectiles.Gloo.GlooShot", "GLOO")
           .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
           .put("ArkProjectiles.Bullets.ToygunDart_Default", "Foam")
+          .build();
+
+  private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_MATERIAL =
+      new ImmutableMap.Builder<String, String>()
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default",
+              "Objects\\characters\\Aliens\\AlienCorpses\\AlienCorpsePiece")
+          .put("ArkProjectiles.AlienPowers.TelepathProjectile",
+              "Objects\\characters\\Aliens\\Telepath\\Telepath01")
+          .put("ArkProjectiles.AlienPowers.NightmareProjectile",
+              "Objects\\characters\\Aliens\\Phantom\\PhantomElite01")
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP",
+              "Objects\\characters\\Player\\EtherDuplicate_00")
           .build();
 
   private static Map<String, Element> getSupportedWeapons(Element root) {
@@ -85,7 +98,8 @@ public class MoreGunGenerator {
         if (newIdLong < 0L) {
           newIdLong = -1 * newIdLong;
         }
-        String newUUID = String.format("{%s}", UUID.randomUUID()).toUpperCase();
+        String newUUID = String.format("{%s}", UUID.randomUUID())
+            .toUpperCase();
         clone.setAttribute("Name", newName);
         clone.setAttribute("ArchetypeId", Long.toString(newIdLong));
         clone.setAttribute("Id", newUUID);
@@ -96,11 +110,18 @@ public class MoreGunGenerator {
         clone.getChild("Properties")
             .getChild("Weapon")
             .setAttribute("archetype_ammo", projectileName);
+        if (PROJECTILE_NAME_TO_MATERIAL.containsKey(projectileName)) {
+          String material = PROJECTILE_NAME_TO_MATERIAL.get(projectileName);
+          clone.getChild("Properties")
+              .setAttribute("material_MaterialFP", material);
+          clone.getChild("Properties")
+              .setAttribute("material_MaterialTP", material);
+        }
         originalRoot.addContent(clone);
       }
     }
 
-    File out = new File("moregun.txt");
+    File out = new File(DEST);
     XMLOutputter xmlOutput = new XMLOutputter();
     xmlOutput.setFormat(Format.getPrettyFormat());
     try {

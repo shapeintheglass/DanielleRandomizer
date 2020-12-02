@@ -13,7 +13,6 @@ import gui.BaseCheckbox;
 public class CosmeticSettingsJson implements HasOptions {
   public static final String RANDOMIZE_BODIES = "randomize_bodies";
   public static final String RANDOMIZE_VOICELINES = "randomize_voicelines";
-  public static final String RANDOMIZE_WEAPON_APPEARANCE = "randomize_weapon_appearance";
 
   public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS =
       new ImmutableMap.Builder<String, BaseCheckbox>()
@@ -23,9 +22,6 @@ public class CosmeticSettingsJson implements HasOptions {
           .put(RANDOMIZE_VOICELINES,
               new BaseCheckbox("Randomize voicelines", "Shuffles all voice lines by voice actor",
                   true))
-          .put(RANDOMIZE_WEAPON_APPEARANCE,
-              new BaseCheckbox("Randomize weapon appearance",
-                  "Randomizes what weapons can look like", false))
           .build();
 
 
@@ -33,12 +29,10 @@ public class CosmeticSettingsJson implements HasOptions {
 
   @JsonCreator
   public CosmeticSettingsJson(@JsonProperty(RANDOMIZE_BODIES) boolean randomizeBodies,
-      @JsonProperty(RANDOMIZE_VOICELINES) boolean randomizeVoicelines,
-      @JsonProperty(RANDOMIZE_WEAPON_APPEARANCE) boolean randomizeWeaponAppearance) {
+      @JsonProperty(RANDOMIZE_VOICELINES) boolean randomizeVoicelines) {
     booleanSettings = Maps.newHashMap();
     booleanSettings.put(RANDOMIZE_BODIES, randomizeBodies);
     booleanSettings.put(RANDOMIZE_VOICELINES, randomizeVoicelines);
-    booleanSettings.put(RANDOMIZE_WEAPON_APPEARANCE, randomizeWeaponAppearance);
   }
 
   public CosmeticSettingsJson() {
@@ -54,8 +48,6 @@ public class CosmeticSettingsJson implements HasOptions {
     booleanSettings.put(RANDOMIZE_BODIES, node.get(RANDOMIZE_BODIES)
         .asBoolean());
     booleanSettings.put(RANDOMIZE_VOICELINES, node.get(RANDOMIZE_VOICELINES)
-        .asBoolean());
-    booleanSettings.put(RANDOMIZE_WEAPON_APPEARANCE, node.get(RANDOMIZE_WEAPON_APPEARANCE)
         .asBoolean());
   }
 
@@ -75,10 +67,5 @@ public class CosmeticSettingsJson implements HasOptions {
   @JsonProperty(RANDOMIZE_VOICELINES)
   public boolean getRandomizeVoiceLines() {
     return getOption(RANDOMIZE_VOICELINES);
-  }
-
-  @JsonProperty(RANDOMIZE_WEAPON_APPEARANCE)
-  public boolean getRandomizeWeaponAppearance() {
-    return getOption(RANDOMIZE_WEAPON_APPEARANCE);
   }
 }
