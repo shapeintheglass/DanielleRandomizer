@@ -144,6 +144,9 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
 	* Change "open talos" option to "unlock everything"
 	* Update item/enemy spawn presets to have a "recommended", "chaotic", and "lite" option
 	* Various minor bug fixes, refactors, and improvements
+* 0.21
+	* Quick fix for randomized station, where Shuttle Bay --> GUTS door was not getting properly setting
+	* Added "More guns" option
 
 ## Dependencies info
 

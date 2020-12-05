@@ -90,7 +90,7 @@ public class MoreGunGenerator {
         Element clone = weapons.get(weaponName)
             .clone();
         String readableProjectileName = PROJECTILE_NAME_TO_READABLE_NAME.get(projectileName);
-        String newName = weaponName + readableProjectileName;
+        String newName = weaponName + readableProjectileName + ".Randomizer";
         String newReadableName = readableProjectileName + " " + readableWeaponName;
         String newDescription =
             String.format("A %s with %s projectiles.", readableWeaponName, readableProjectileName);

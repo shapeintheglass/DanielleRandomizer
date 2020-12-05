@@ -31,6 +31,7 @@ import utils.LevelConsts;
  */
 public class SpawnStatsUtil {
 
+  private static final long SEED = -1738138057449994609L;
   public static final String LEVEL_DIR = "data/levels";
   public static final String LEVEL_FILE = "research/lobby";
   public static final String LEVEL_FILE_NAME = "mission_mission0.xml";
@@ -119,7 +120,7 @@ public class SpawnStatsUtil {
     Multiset<String> tagsSet = HashMultiset.create();
 
     Random r = new Random();
-    long seed = r.nextLong();
+    long seed = SEED;
     System.out.printf("Seed: %d\n", seed);
     r.setSeed(seed);
     int numModified = 0;
@@ -154,10 +155,6 @@ public class SpawnStatsUtil {
 
     Multiset<String> tagsSet = HashMultiset.create();
 
-    Random r = new Random();
-    long seed = r.nextLong();
-    System.out.printf("Seed: %d\n", seed);
-    r.setSeed(seed);
     for (Element e : root.getChildren()) {
       List<String> tags = getTagsForEntity(e);
       if (tags != null) {

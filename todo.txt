@@ -7,7 +7,7 @@ To do:
 * Expanded genesis - turn objects into other inanimate objects
 * Let all npcs "follow the leader"
 * Shuffle within level
-* Improve container spawn randomization
+* Improve container spawn randomization 
 
 V0.3 planned features
 * Randomized key item locations
@@ -53,3 +53,6 @@ Unactionable feedback:
  - Nightmare not pursuing the player
  
  Last run feedback:
+ - Shuttle Bay --> GUTS exit reverted back to GUTS
+ - Prototype nullwave fab plan ended up in two places where it wasn't supposed to be (Lobby, and Crew Quarters outside of Alex's room)
+ - Special weapons not spawning

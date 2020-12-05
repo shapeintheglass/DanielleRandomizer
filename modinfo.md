@@ -24,7 +24,9 @@ Additional useful options:
 [*]Unlock various doors throughout the station to make progress easier
 [*](new in v0.2) Remove scan requirements for all typhon neuromods
 [*](new in v0.2) Start on second day (HUD will be invisible at first- to fix this, open and close the inventory menu)
+[*](new in v0.21) More guns - Adds [url=https://www.nexusmods.com/prey2017/mods/69]guns with randomized projectiles[/url]﻿ into the item spawn pool 
 [/list]
+The current version is v0.21, which fixes a bug in v0.2 if you selected "Randomized station". The connection from Shuttle Bay --> GUTS was not being set correctly. It also adds a "More guns" option (since I was already working on it for v0.3 and was too lazy to remove it).
 
 [size=5]Getting Started[/size]
 

@@ -138,7 +138,7 @@ public final class StationConnectivityConsts {
           .put(Door.POWER_PLANT_LIFE_SUPPORT_EXIT, "Door.Door_LevelTransition_Default1")
           //.put(Door.PSYCHOTRONICS_GUTS_EXIT, "Door.Door_LevelTransition_Default2")
           //.put(Door.PSYCHOTRONICS_LOBBY_EXIT, "Door.Door_LevelTransition_Default1")
-          .put(Door.SHUTTLE_BAY_GUTS_EXIT, "LTDoor_ToGUTs;4349723564886052417")
+          .put(Door.SHUTTLE_BAY_GUTS_EXIT, "LTDoor_ToGUTs")
           .put(Door.SHUTTLE_BAY_LOBBY_EXIT, "LTDoor_ToLobby")
           .build();
 

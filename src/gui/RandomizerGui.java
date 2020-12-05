@@ -70,7 +70,7 @@ import utils.Utils;
  */
 public class RandomizerGui {
 
-  private static final String RELEASE_VER = "0.3";
+  private static final String RELEASE_VER = "0.21";
 
   private static final String DEFAULT_INSTALL_DIR =
       "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
