@@ -1,12 +1,9 @@
 To do:
 * Better genesis
-* New projectiles: Mimic, eel, morgan, medkits (healing), flamethrower, corrosive
 * Add option to add/remove new guns/enemies/abilities to/from the pool
 * Mark typhon organs as not trash
 * Make unarmed humans wander (add wander node to their AI tree)
-* Expanded genesis - turn objects into other inanimate objects
 * Let all npcs "follow the leader"
-* Shuffle within level
 * Improve container spawn randomization 
 
 V0.3 planned features
@@ -43,6 +40,8 @@ Feature requests
 * Make apex kill walls not kill? (apex volume config)
 * Global scripts to trigger remote events like unlocking the lift?
 * Everything can mimic
+* New projectiles: Mimic, eel, morgan, medkits (healing), flamethrower, corrosive
+* Shuffle within level
 
  
 Unactionable feedback:

@@ -32,7 +32,6 @@ import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.util.mxCellRenderer;
 import json.SettingsJson;
-import randomizers.gameplay.filters.rules.KeyFabPlansInCrewQuartersRule;
 import randomizers.gameplay.filters.rules.KeyItemsInBridgeRule;
 import randomizers.gameplay.filters.rules.StationConnectivityRule;
 import randomizers.gameplay.filters.rules.UnlockPowerPlantRule;
@@ -75,7 +74,6 @@ public class StationConnectivityFilter extends BaseFilter {
         rules.add(new StationConnectivityRule(doorConnectivity, spawnConnectivity));
         rules.add(new UnlockPsychotronicsRule());
         rules.add(new UnlockPowerPlantRule());
-        rules.add(new KeyFabPlansInCrewQuartersRule());
         rules.add(new KeyItemsInBridgeRule());
         logger.info(connectivityToString());
         break;

@@ -24,7 +24,9 @@ public class FileConsts {
     PICKUPS,
     PROJECTILES,
     ROBOTS,
-    SPECIAL_WEAPONS
+    SPECIAL_WEAPONS,
+    GAMEPLAY_ARCHITECTURE,
+    GAMEPLAY_OBJECTS,
   }
 
   public static final ImmutableMap<Archetype, String> ARCHETYPE_TO_FILENAME =
@@ -35,6 +37,8 @@ public class FileConsts {
           .put(Archetype.PROJECTILES, "arkprojectiles.xml")
           .put(Archetype.ROBOTS, "arkrobots.xml")
           .put(Archetype.SPECIAL_WEAPONS, "arkspecialweapons.xml")
+          .put(Archetype.GAMEPLAY_ARCHITECTURE, "arkgameplayarchitecture.xml")
+          .put(Archetype.GAMEPLAY_OBJECTS, "arkgameplayobjects.xml")
           .build();
 
   public static final ImmutableMap<Archetype, String> ARCHETYPE_TO_LIBRARY_NAME =
@@ -45,6 +49,8 @@ public class FileConsts {
           .put(Archetype.PROJECTILES, "ArkProjectiles")
           .put(Archetype.ROBOTS, "ArkRobots")
           .put(Archetype.SPECIAL_WEAPONS, "ArkSpecialWeapons")
+          .put(Archetype.GAMEPLAY_ARCHITECTURE, "ArkGameplayArchitecture")
+          .put(Archetype.GAMEPLAY_OBJECTS, "ArkGameplayObjects")
           .build();
 
   public static String getFileForArchetype(Archetype a) {
