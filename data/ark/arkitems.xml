@@ -27,8 +27,6 @@
   <projectile name="ArkProjectiles.AlienPowers.TelepathProjectile"/>
   <projectile name="ArkProjectiles.AlienPowers.NightmareProjectile"/>
   <projectile name="ArkProjectiles.AlienPowers.PhantomProjectile_EMP"/>
-  <projectile name="ArkProjectiles.AlienPowers.TechnopathElectricalHazard_1g"/>
-  <projectile name="ArkProjectiles.AlienPowers.TechnopathElectricalHazard_0g"/>
  </item>
  <item name="ArkSuitPatch" script="Scripts/Entities/Ark/Pickups/ArkPharma.lua"/>
  <item name="ArkSuperFood" script="Scripts/Entities/Ark/Pickups/ArkSuperFood.lua"/>

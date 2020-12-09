@@ -2,12 +2,10 @@ package randomizers.gameplay.filters.rules;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import org.jdom2.Element;
 import databases.TaggedDatabase;
-import json.GenericRuleJson;
-import json.SettingsJson;
 import utils.CustomRuleHelper;
-import utils.DatabaseUtils;
 import utils.LevelConsts;
 import utils.Utils;
 
@@ -24,11 +22,11 @@ public class ContainerSpawnRule implements Rule {
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
   private TaggedDatabase database;
-  private SettingsJson settings;
+  private CustomRuleHelper crh;
 
-  public ContainerSpawnRule(TaggedDatabase database, SettingsJson settings) {
+  public ContainerSpawnRule(TaggedDatabase database, CustomRuleHelper crh) {
     this.database = database;
-    this.settings = settings;
+    this.crh = crh;
   }
 
   public boolean trigger(Element e, Random r, String filename) {
@@ -64,30 +62,20 @@ public class ContainerSpawnRule implements Rule {
         if (fullEntity == null) {
           return;
         }
-        // Replace with something of the same type
-        String tag = fullEntity.getAttributeValue("Class");
 
-        // Try different items until we find something valid
+        // Try different items until we get a valid pickup item
         // TODO: Make this less dumb
         for (int i = 0; i < MAX_ATTEMPTS; i++) {
-          Element toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
-          boolean isValid = true;
-          List<GenericRuleJson> itemSpawnRules = settings.getGameplaySettings()
-              .getItemSpawnSettings()
-              .getRules();
-          for (GenericRuleJson grj : itemSpawnRules) {
-            if (!CustomRuleHelper.generatedElementIsValid(toSwap, grj.getDoNotOutputTags())) {
-              isValid = false;
-              break;
-            }
-          }
-          if (!isValid) {
-            continue;
-          }
-          inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
-          break;
-        }
+          Element toSwap = crh.getEntityToSwap(database, r);
 
+          // Ensure that this has the tag "ArkPickups" to represent that it can be added to an
+          // inventory
+          Set<String> tags = Utils.getTags(toSwap);
+          if (tags.contains("ArkPickups")) {
+            inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
+            break;
+          }
+        }
       }
     }
   }
@@ -106,19 +94,6 @@ public class ContainerSpawnRule implements Rule {
 
   private boolean triggerOnInput(Element input, String name) {
     String archetype = input.getAttributeValue("archetype");
-    if (settings.getGameplaySettings()
-        .getItemSpawnSettings()
-        .getRules() == null) {
-      return false;
-    }
-    for (GenericRuleJson grj : settings.getGameplaySettings()
-        .getItemSpawnSettings()
-        .getRules()) {
-      CustomRuleHelper crh = new CustomRuleHelper(grj);
-      if (crh.trigger(database, archetype, name)) {
-        return true;
-      }
-    }
-    return false;
+    return crh.trigger(database, archetype, name);
   }
 }

@@ -138,12 +138,13 @@
       ]
     },
 	{
-      "name": "All weapons",
-      "desc": "All items are weapons or ammo.",
+      "name": "All weapons and neuromods",
+      "desc": "All items are weapons, neuromods, or ammo.",
       "filters": [
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
-          "output_tags": [ "Weapons", "Ammo", "AlienOrganSmall" ]
+          "output_tags": [ "Weapons", "Ammo", "AlienOrganSmall", "Neuromod", "PsiHypo" ],
+		  "output_weights": [ 10, 10, 10, 5, 5 ]
         }
       ]
     }

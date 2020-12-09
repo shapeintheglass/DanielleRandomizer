@@ -1,17 +1,21 @@
 To do:
-* Better genesis
 * Add option to add/remove new guns/enemies/abilities to/from the pool
 * Mark typhon organs as not trash
 * Make unarmed humans wander (add wander node to their AI tree)
-* Let all npcs "follow the leader"
-* Improve container spawn randomization 
+* Add fabricators, recyclers, operator stations, explosives to the randomizer
+* Don't randomize containers, but if spawning a container, set a loot table
+* Attempt to swap essential NPCs with killable NPCs
+* Add various types of wrenches with alternate models to the loot pool
+* Update neuromod descriptive text when randomizing neuromods
+* Fab plans for new guns, ammo
+* Make saved_settings.json forward compatible
+* Randomized turrets
 
 V0.3 planned features
 * Randomized key item locations
 * Weapon cosmetic, projectile randomization
 * Incorporate existing mods: "all keycodes are 1111", player model overrides, friendly typhon, etc
 * Fix NPC body randomization - debug bald female npcs, add female prototype psychoscope, randomize alex/luka's models
-* Add fabricators, recyclers, operator stations, explosives to the randomizer
  - fix bald female npcs
  <Attachment Inheritable="1" Type="CA_SKIN" AName="hair_skin" Binding="objects/characters/humans/genfemale/genfemale_head01_hair01.skin" Material="objects/characters/humans/genfemale/genfemale_hair01_black.mtl" Flags="0" />
  <Attachment Inheritable="1" Type="CA_SKIN" AName="hair_skin" Binding="objects/characters/humans/genfemale/genfemale_head06_hair02.skin" Material="objects/characters/humans/genfemale/genfemale_hair02_gray.mtl" Flags="0" />
@@ -42,7 +46,12 @@ Feature requests
 * Everything can mimic
 * New projectiles: Mimic, eel, morgan, medkits (healing), flamethrower, corrosive
 * Shuffle within level
+* Let all npcs "follow the leader" (note: this seems to break for overseers)
 
+Fixed feedback:
+ - Shuttle Bay --> GUTS exit reverted back to GUTS
+ - Prototype nullwave fab plan ended up in two places where it wasn't supposed to be (Lobby, and Crew Quarters outside of Alex's room)
+ - Special weapons not spawning
  
 Unactionable feedback:
  - unlock all of alex's workstation stuff at once
@@ -52,6 +61,9 @@ Unactionable feedback:
  - Nightmare not pursuing the player
  
  Last run feedback:
- - Shuttle Bay --> GUTS exit reverted back to GUTS
- - Prototype nullwave fab plan ended up in two places where it wasn't supposed to be (Lobby, and Crew Quarters outside of Alex's room)
- - Special weapons not spawning
+ - Don't randomize containers - the EP101 suitcase in ND disappeared
+ - Safe contents seemingly not randomized
+ - Mark typhon organs as not junk
+ - Fix ammo situation on typhon weapons
+ - Let all humans mimic
+ - Better genesis

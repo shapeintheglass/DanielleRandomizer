@@ -41,8 +41,12 @@ public class Installer {
   private static final String PATCH_NAME = "patch_randomizer.pak";
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
 
-  private static final ImmutableMap<String, String> MORE_STUFF_DEPENDENCIES = ImmutableMap
-      .of("data/entityarchetypes/arkpickups.xml", "libs/entityarchetypes/arkpickups.xml");
+  private static final ImmutableMap<String, String> DEPENDENCIES = ImmutableMap.of(
+      "data/entityarchetypes/arkpickups.xml", "libs/entityarchetypes/arkpickups.xml",
+      "data/ark/arkitems.xml", "ark/items/arkitems.xml",
+      "data/aitrees/ArmedHumanAiTree.xml", "ark/ai/aitrees/ArmedHumanAiTree.xml",
+      "data/aitrees/HumanAiTree.xml", "ark/ai/aitrees/HumanAiTree.xml",
+      "data/aitrees/UnarmedHumanAiTree.xml", "ark/ai/aitrees/UnarmedHumanAiTree.xml");
 
   private File patchFile;
   private Logger logger;
@@ -72,10 +76,11 @@ public class Installer {
     logger = Logger.getLogger("Installer");
 
     // Copy over dependencies files
-    for (String key : MORE_STUFF_DEPENDENCIES.keySet()) {
+    for (String key : DEPENDENCIES.keySet()) {
       Path in = Paths.get(key);
-      Path out = tempPatchDir.resolve(MORE_STUFF_DEPENDENCIES.get(key));
-      out.toFile().mkdirs();
+      Path out = tempPatchDir.resolve(DEPENDENCIES.get(key));
+      out.toFile()
+          .mkdirs();
       try {
         Files.copy(in, out, StandardCopyOption.REPLACE_EXISTING);
       } catch (IOException e) {
