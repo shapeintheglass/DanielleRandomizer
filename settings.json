@@ -14,7 +14,7 @@
           "output_tags": [ "Stickynote_Mimic", "MedKit", "PsiHypo", "Ingredients", "WeaponUpgradeKit", "SuitPatchKit",  "Weapon", "Weapons", "FabricationPlans", "Mods", "Medical", "Neuromod", "SpareParts", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE"],
           "output_weights": [ 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 25, 50, 300, 700],
 		  "do_not_touch_tags": [ "_LEVERAGE_II", "_LEVERAGE_III" ], 
-          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer", "_LEVERAGE_II", "_LEVERAGE_III" ]
+          "do_not_output_tags": [ "MissionItems", "_PLOT_CRITICAL", "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "Cystoid_IgnorePlayer", "_LEVERAGE_II", "_LEVERAGE_III", "ArkAreaHazard" ]
         }
       ]
     },
@@ -143,8 +143,8 @@
       "filters": [
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
-          "output_tags": [ "Weapons", "Ammo", "AlienOrganSmall", "Neuromod", "PsiHypo" ],
-		  "output_weights": [ 10, 10, 10, 5, 5 ]
+          "output_tags": [ "DoubleWrench", "Weapons", "Ammo", "AlienOrganSmall", "Neuromod", "PsiHypo", "MedKit" ],
+		  "output_weights": [ 100, 10, 10, 10, 5, 5, 5 ]
         }
       ]
     }

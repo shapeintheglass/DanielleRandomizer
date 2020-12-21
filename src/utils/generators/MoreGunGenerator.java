@@ -68,21 +68,8 @@ public class MoreGunGenerator {
     }
     return toReturn;
   }
-
-  public static void main(String[] args) {
-    File file = new File(SOURCE);
-    SAXBuilder saxBuilder = new SAXBuilder();
-    Document document;
-    try {
-      document = saxBuilder.build(file);
-    } catch (JDOMException | IOException e1) {
-      e1.printStackTrace();
-      return;
-    }
-    Element originalRoot = document.getRootElement();
-
-    Random r = new Random();
-
+  
+  private static void addMoreGuns(Element originalRoot, Random r) {
     Map<String, Element> weapons = getSupportedWeapons(originalRoot);
     for (String weaponName : WEAPON_NAME_TO_READABLE_NAME.keySet()) {
       String readableWeaponName = WEAPON_NAME_TO_READABLE_NAME.get(weaponName);
@@ -120,6 +107,22 @@ public class MoreGunGenerator {
         originalRoot.addContent(clone);
       }
     }
+  }
+
+  public static void main(String[] args) {
+    File file = new File(SOURCE);
+    SAXBuilder saxBuilder = new SAXBuilder();
+    Document document;
+    try {
+      document = saxBuilder.build(file);
+    } catch (JDOMException | IOException e1) {
+      e1.printStackTrace();
+      return;
+    }
+    Element originalRoot = document.getRootElement();
+
+    Random r = new Random();
+    addMoreGuns(originalRoot, r);
 
     File out = new File(DEST);
     XMLOutputter xmlOutput = new XMLOutputter();

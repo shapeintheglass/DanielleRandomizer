@@ -1,15 +1,10 @@
 To do:
-* Add option to add/remove new guns/enemies/abilities to/from the pool
-* Mark typhon organs as not trash
-* Make unarmed humans wander (add wander node to their AI tree)
 * Add fabricators, recyclers, operator stations, explosives to the randomizer
-* Don't randomize containers, but if spawning a container, set a loot table
 * Attempt to swap essential NPCs with killable NPCs
-* Add various types of wrenches with alternate models to the loot pool
 * Update neuromod descriptive text when randomizing neuromods
 * Fab plans for new guns, ammo
 * Make saved_settings.json forward compatible
-* Randomized turrets
+
 
 V0.3 planned features
 * Randomized key item locations
@@ -26,6 +21,9 @@ V0.3 planned features
  - Fix greenhouse telepath, calvino, cargo bay typhon
  - Randomized station - add lock buttons to morgan's/alex's offices
  * Alternative wrenches - Toilet paper, garden trowel, video game console, banana, shoe
+ * Add option to add/remove new guns/enemies/abilities to/from the pool
+* Mark typhon organs as not trash
+* Make unarmed humans wander (add wander node to their AI tree)
 
 
 Feature requests
@@ -47,6 +45,10 @@ Feature requests
 * New projectiles: Mimic, eel, morgan, medkits (healing), flamethrower, corrosive
 * Shuffle within level
 * Let all npcs "follow the leader" (note: this seems to break for overseers)
+* Randomized turrets
+* Enemy difficulty scaling by level (use distance from neuromod division for scale)
+* Randomized enemies
+* "Chunk" levels and assign props by chunk theme
 
 Fixed feedback:
  - Shuttle Bay --> GUTS exit reverted back to GUTS
