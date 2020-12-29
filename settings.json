@@ -20,7 +20,7 @@
     },
     {
       "name": "Randomize all (chaotic)",
-      "desc": "Randomize all items. Has a chance of spawning story progression items early (such as arming keys), and extra enemies.",
+      "desc": "Randomize all items. Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking.",
       "filters": [
 	    {
           "input_tags": [ "_LEVERAGE_II" ],
@@ -34,8 +34,8 @@
         },
         {
           "input_tags": [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
-          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "MedKit", "PsiHypo", "Ingredients", "WeaponUpgradeKit", "SuitPatchKit", "Weapon", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "Operators\\Generic", "ArkTurret", "ArkNpcs", "SpareParts", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE"],
-          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 25, 50, 300, 700 ],
+          "output_tags": [ "Stickynote_Mimic", "MissionItems", "ArkPsychoscope", "ZeroGSuit", "MedKit", "PsiHypo", "Ingredients", "WeaponUpgradeKit", "SuitPatchKit", "Weapon", "Weapons", "FabricationPlans", "Mods", "Neuromod", "Medical", "SpareParts", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE"],
+          "output_weights": [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 25, 50, 300, 700 ],
 		  "do_not_output_tags": [ "Cystoid_IgnorePlayer", "ApexTentacle", "_LEVERAGE_II", "_LEVERAGE_III" ]
 		}
       ]
@@ -164,24 +164,20 @@
     },
     {
       "name": "Randomize all (chaotic)",
-      "desc": "Randomize all enemies. Has a chance of spawning unkillable entities like tentacles or turrets.",
+      "desc": "Randomize all enemies. Has a chance of spawning unkillable entities like tentacles and turrets.",
       "filters": [
         {
           "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
-          "output_tags": [ "Mimic", "BasePhantom", "Cystoids", "EliteMimic", "ApexTentacle", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare", "ArkTurret", "Operators\\Generic" ],
-          "output_weights": [ 20, 20, 20, 15, 10, 8, 5, 5, 5, 5, 3, 1, 1 ],
+          "output_tags": [ "Mimic", "BasePhantom", "EliteMimic", "ApexTentacle", "Operators\\Generic\\Corrupted", "ArkPoltergeist", "Phantoms", "Named Phantoms", "Overseers", "ArkNightmare", "ArkTurret" ],
+          "output_weights": [ 20, 20, 15, 10, 8, 5, 5, 5, 5, 3, 1, 1 ],
 		  "do_not_touch_tags": [ "Named Phantoms" ],
 		  "do_not_output_tags": [ "Tentacle_Large" ]
-        },
-		{
-		  "input_tags": [ "EngineeringOperator", "MedicalOperator", "ScienceOperator" ],
-          "output_tags": [ "EngineeringOperator", "MedicalOperator", "ScienceOperator" ]
-		}
+        }
       ]
     },
 	{
       "name": "Randomize within type",
-      "desc": "Randomize enemies within their type. Easy enemies can become other easy enemies, tough enemies can become other tough enemies, etc.",
+      "desc": "Randomize enemies within their type. Easy enemies can become other easy enemies, tough enemies can become other tough enemies, etc. Friendly operators are also randomized.",
       "filters": [
 	    {
           "input_tags": [ "Mimic", "BasePhantom" ],
@@ -200,7 +196,11 @@
           "input_tags": [ "Overseers", "ArkNightmare" ],
           "output_tags": [ "Overseers", "ArkNightmare" ],
 		  "output_weights": [ 4, 1 ]
-        }
+        },
+		{
+		  "input_tags": [ "EngineeringOperator", "MedicalOperator", "ScienceOperator" ],
+          "output_tags": [ "EngineeringOperator", "MedicalOperator", "ScienceOperator" ]
+		}
       ]
     },
     {
@@ -247,6 +247,16 @@
           "output_tags": [ "Commander Dahl" ]
         }
       ]
-    }
+    },
+	{
+	  "name": "All Alex/Luka",
+      "desc": "Replaces all typhon with Alex/Luka",
+      "filters": [
+        {
+          "input_tags": [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
+          "output_tags": [ "Alex Karl", "Alex Karl Variant", "Luka Golubkin" ]
+        }
+      ]
+	}
   ]
 }

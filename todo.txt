@@ -24,6 +24,8 @@ V0.3 planned features
  * Add option to add/remove new guns/enemies/abilities to/from the pool
 * Mark typhon organs as not trash
 * Make unarmed humans wander (add wander node to their AI tree)
+* Fix neuromod pickups being impossible to complete
+* Adjust quantities for ammo, materials, nonammo/nonmaterials
 
 
 Feature requests

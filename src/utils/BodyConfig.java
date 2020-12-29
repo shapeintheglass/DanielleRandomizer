@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
-
 import org.jdom2.Element;
 
 /**
@@ -23,7 +22,7 @@ public class BodyConfig {
   private static final int BALD_PERCENT_CHANCE = 15; // out of 100
 
   public enum Gender {
-    MALE, FEMALE, UNKNOWN,
+    MALE, FEMALE, LARGE_MALE, UNKNOWN,
   }
 
   private String name;
@@ -103,6 +102,9 @@ public class BodyConfig {
       case MALE:
         bodyModel = Utils.getRandomWeighted(BodyConsts.MALE_BODIES, BodyConsts.MALE_BODIES_WEIGHTS, r);
         break;
+      case LARGE_MALE:
+        bodyModel = BodyConsts.LARGE_MALE_BODIES[0];
+        break;
       case UNKNOWN:
       default:
         return;
@@ -116,6 +118,11 @@ public class BodyConfig {
     }
     if (bodyModel.contains("morgankarlgenderselect_genmale")) {
       bodyMtl = "morgankarl/morgan_genmalebody01_cut_scene";
+    }
+    
+    // Override for large male mtl
+    if (g == Gender.LARGE_MALE) {
+      bodyMtl = Utils.getRandom(BodyConsts.LARGE_MALE_MTLS, r);
     }
 
     toAdd.add(createAttachment("body_skin", bodyModel, bodyMtl));
@@ -147,6 +154,7 @@ public class BodyConfig {
           cdf = BodyConsts.ACCESSORIES_MALE[index];
           mtl = BodyConsts.ACCESSORIES_MALE_MTL[index];
           break;
+        case LARGE_MALE:
         case UNKNOWN:
         default:
           return;
@@ -211,6 +219,11 @@ public class BodyConfig {
           toAdd.add(maleHairOrNull);
         }
         break;
+      case LARGE_MALE:
+        maleHairOrNull = generateHairForHeadLargeMale(headModel, r);
+        if (maleHairOrNull != null) {
+          toAdd.add(maleHairOrNull);
+        }
       default:
         break;
     }
@@ -222,6 +235,8 @@ public class BodyConfig {
         return Utils.getRandom(BodyConsts.FEMALE_HEADS, r);
       case MALE:
         return Utils.getRandom(BodyConsts.MALE_HEADS, r);
+      case LARGE_MALE:
+        return Utils.getRandom(BodyConsts.LARGE_MALE_HEADS, r);
       case UNKNOWN:
       default:
         return null;
@@ -444,4 +459,20 @@ public class BodyConfig {
     return "";
   }
 
+  private Element generateHairForHeadLargeMale(String headModel, Random r) {
+    if (isBald) {
+      return null;
+    }
+    String hairModel = "";
+    switch (headModel) {
+      case "Luka/Luka_LargeMaleHead01":
+        hairModel = "Luka/Luka_LargeMaleHead01_Hair01";
+        break;
+      case "alexlikarl/alexlikarl_largemalehead01":
+      case "alexlikarl/alexlikarl_largemalehead01_variant":
+        hairModel = Utils.getRandom(BodyConsts.ALEX_HAIRS, r);
+        break;
+    }
+    return createAttachment("hair_skin", hairModel, hairModel);
+  }
 }

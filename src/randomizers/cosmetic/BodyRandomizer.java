@@ -69,6 +69,8 @@ public class BodyRandomizer extends BaseRandomizer {
       gender = BodyConfig.Gender.FEMALE;
     } else if (modelFile.contains(BodyConsts.MALE_BODY_TYPE)) {
       gender = BodyConfig.Gender.MALE;
+    } else if (modelFile.contains(BodyConsts.LARGE_MALE_BODY_TYPE)) {
+      gender = BodyConfig.Gender.LARGE_MALE;
     } else {
       // Body type not supported, do not overwrite
       out.delete();
