@@ -120,20 +120,16 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
       statusLabel.setText(Consts.INSTALL_STATUS_COMPLETE_TEXT);
 
     } catch (Exception e) {
-      logger.severe(e.getMessage());
+      e.printStackTrace();
       statusLabel.setText(Consts.INSTALL_STATUS_FAILED_TEXT);
     } finally {
       installButton.setEnabled(true);
       uninstallButton.setEnabled(true);
+      if (tempDir.toFile().exists()) {
+        Utils.deleteDirectory(tempDir.toFile());
+      }
     }
     return null;
-  }
-
-  @Override
-  protected void done() {
-    if (tempDir.toFile().exists()) {
-      Utils.deleteDirectory(tempDir.toFile());
-    }
   }
 
   private Optional<Installer> initInstaller(SettingsJson currentSettings, Path tempDir, Path tempLevelDir,

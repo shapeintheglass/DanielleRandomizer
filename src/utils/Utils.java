@@ -20,11 +20,17 @@ public class Utils {
   public static Path createTempDir(Path workingDir, String name) {
     long now = new Date().getTime();
     Path newTempDir = workingDir.resolve(String.format("temp_%8d_%s", now, name));
-    newTempDir.toFile()
-        .mkdirs();
-    newTempDir.toFile()
-        .deleteOnExit();
+    newTempDir.toFile().mkdirs();
     return newTempDir;
+  }
+
+  public static int getRandomBetween(int lowerBound, int upperBound, Random r) {
+    if (lowerBound >= upperBound) {
+      return lowerBound;
+    }
+
+    int diff = upperBound - lowerBound + 1;
+    return r.nextInt(diff + lowerBound);
   }
 
   public static <T> T getRandom(ImmutableCollection<T> arr, Random r) {
@@ -80,8 +86,7 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(T[] arr, Integer[] weights, Random r) {
-    int sum = Arrays.stream(weights)
-        .reduce(0, Integer::sum);
+    int sum = Arrays.stream(weights).reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -99,8 +104,7 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights, Random r) {
-    int sum = weights.stream()
-        .reduce(0, Integer::sum);
+    int sum = weights.stream().reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -129,9 +133,7 @@ public class Utils {
   public static void copyDirectory(File fromDir, Path toDir) throws IOException {
     if (fromDir.isDirectory()) {
       for (File f : fromDir.listFiles()) {
-        toDir.resolve(f.getName())
-            .toFile()
-            .mkdir();
+        toDir.resolve(f.getName()).toFile().mkdir();
         copyDirectory(f, toDir.resolve(f.getName()));
       }
     } else {
@@ -153,8 +155,7 @@ public class Utils {
     // Split name on dots
     String name = e.getAttributeValue("Name");
     String[] nameTags = name.split("\\.");
-    Arrays.stream(nameTags)
-        .forEach(s -> tags.add(s));
+    Arrays.stream(nameTags).forEach(s -> tags.add(s));
     tags.add(e.getAttributeValue("Class"));
     tags.add(e.getAttributeValue("Library"));
 
@@ -174,14 +175,12 @@ public class Utils {
     return tags;
   }
 
-  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName,
-      String tagName) {
+  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName, String tagName) {
     if (properties == null || properties.getAttributeValue(propertyName) == null) {
       return;
     }
 
-    if (properties.getAttributeValue(propertyName)
-        .equals("1")) {
+    if (properties.getAttributeValue(propertyName).equals("1")) {
       tags.add(tagName);
     }
   }

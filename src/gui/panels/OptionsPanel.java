@@ -74,6 +74,8 @@ public class OptionsPanel extends JPanel {
         GameplaySettingsJson.OPEN_STATION, GameplaySettingsJson.RANDOMIZE_STATION);
     private static final ImmutableList<String> NEUROMODS_CHECKBOXES = ImmutableList.of(
         GameplaySettingsJson.UNLOCK_ALL_SCANS, GameplaySettingsJson.RANDOMIZE_NEUROMODS);
+    private static final ImmutableList<String> OTHER_CHECKBOXES = ImmutableList.of(
+        GameplaySettingsJson.WANDERING_HUMANS);
     private static final ImmutableList<String> COSMETIC_CHECKBOXES = ImmutableList.of(
         CosmeticSettingsJson.RANDOMIZE_BODIES, CosmeticSettingsJson.RANDOMIZE_VOICELINES);
 
@@ -97,6 +99,8 @@ public class OptionsPanel extends JPanel {
           CONNECTIVITY_CHECKBOXES, GameplaySettingsJson.ALL_OPTIONS, gameplaySettingsJson, checkBoxHolder);
       CheckboxPanel itemsCheckboxes = new CheckboxPanel(Consts.ITEM_OPTIONS_HEADER, ITEMS_CHECKBOXES,
           GameplaySettingsJson.ALL_OPTIONS, gameplaySettingsJson, checkBoxHolder);
+      CheckboxPanel otherCheckboxes = new CheckboxPanel(Consts.OTHER_OPTIONS_HEADER, OTHER_CHECKBOXES,
+          GameplaySettingsJson.ALL_OPTIONS, gameplaySettingsJson, checkBoxHolder);
 
       this.add(cosmeticCheckboxes);
       this.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -107,6 +111,8 @@ public class OptionsPanel extends JPanel {
       this.add(neuromodsCheckboxes);
       this.add(Box.createRigidArea(new Dimension(0, 20)));
       this.add(connectivityCheckboxes);
+      this.add(Box.createRigidArea(new Dimension(0, 20)));
+      this.add(otherCheckboxes);
     }
 
     public boolean isChecked(String name) {

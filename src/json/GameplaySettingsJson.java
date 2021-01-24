@@ -43,8 +43,8 @@ public class GameplaySettingsJson implements HasOptions {
       .put(START_ON_2ND_DAY, new BaseCheckbox("Start on 2nd day",
           "Skips to the 2nd day of the intro. HUD may be invisible until you open your transcribe.", true))
       .put(MORE_GUNS, new BaseCheckbox("More guns", "Add more guns to the loot pool", false))
-      .put(WANDERING_HUMANS, new BaseCheckbox("Wandering humans",
-          "Makes all humans walk around rather than stand in place. Intended for the \"all typhon are humans\" preset to add some realism.",
+      .put(WANDERING_HUMANS, new BaseCheckbox("Make humans wander",
+          "Lets all humans walk around rather than stand in place. Intended for the \"all typhon are humans\" preset to add some realism.",
           false))
       .build();
 

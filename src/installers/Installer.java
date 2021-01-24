@@ -19,12 +19,12 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+
 import com.google.common.collect.ImmutableMap;
 
 import json.SettingsJson;
 import utils.FileConsts;
 import utils.LevelConsts;
-import utils.Utils;
 
 /**
  * 
@@ -114,10 +114,6 @@ public class Installer {
     backupLevelFiles();
     installLevelFiles();
 
-    logger.info("Deleting temporary install directories...");
-    Utils.deleteDirectory(tempPatchDir.toFile());
-    Utils.deleteDirectory(tempLevelDir.toFile());
-    tempDir.resolve(PATCH_ZIP_NAME).toFile().deleteOnExit();
     logger.info("Done installing! Have a nice day.");
   }
 

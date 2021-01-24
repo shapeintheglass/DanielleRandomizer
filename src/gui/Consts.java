@@ -27,6 +27,7 @@ public class Consts {
   public static String NEUROMOD_OPTIONS_HEADER = "Neuromod Options";
   public static String CONNECTIVITY_OPTIONS_HEADER = "Connectivity Options";
   public static String ITEM_OPTIONS_HEADER = "Item Options";
+  public static String OTHER_OPTIONS_HEADER = "Other Options";
 
   /* BUTTONS PANEL */
   public static String SAVE_BUTTON_LABEL = "Save settings";

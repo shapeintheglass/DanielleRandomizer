@@ -6,6 +6,7 @@ import java.util.Set;
 import org.jdom2.Element;
 import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
+import utils.ItemMultiplierHelper;
 import utils.LevelConsts;
 import utils.Utils;
 
@@ -73,6 +74,8 @@ public class ContainerSpawnRule implements Rule {
           Set<String> tags = Utils.getTags(toSwap);
           if (tags.contains("ArkPickups")) {
             inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
+            int multiplier = ItemMultiplierHelper.getMultiplierForEntity(tags, r);
+            inputs.setAttribute("quantity", Integer.toString(multiplier));
             break;
           }
         }

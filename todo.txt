@@ -1,16 +1,13 @@
 
 Bugs:
-* GUI freezes during install
 * GUI leaves artifacts, folders behind
-* Crashes if saved_settings is not compatible
+* New weapon skins have bad LOD, no ammo indicator
 
 To do:
 * Add fabricators, recyclers, operator stations, explosives to the randomizer
 * Attempt to swap essential NPCs with killable NPCs
 * Update neuromod descriptive text when randomizing neuromods
 * Fab plans for new guns, ammo
-* Make saved_settings.json forward compatible
-
 
 V0.3 planned features
 * Randomized key item locations

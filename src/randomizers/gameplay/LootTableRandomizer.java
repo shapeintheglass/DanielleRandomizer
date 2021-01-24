@@ -21,6 +21,8 @@ import json.GenericRuleJson;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
 import utils.CustomRuleHelper;
+import utils.ItemMultiplierHelper;
+import utils.ItemMultiplierHelper.Tier;
 import utils.Utils;
 
 public class LootTableRandomizer extends BaseRandomizer {
@@ -41,8 +43,7 @@ public class LootTableRandomizer extends BaseRandomizer {
   private File inputFile;
   private File outputFile;
 
-  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir)
-      throws IOException {
+  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir) throws IOException {
     super(s);
     this.database = database;
 
@@ -100,18 +101,22 @@ public class LootTableRandomizer extends BaseRandomizer {
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
 
-        for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings()
-            .getRules()) {
+        for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings().getRules()) {
           CustomRuleHelper crh = new CustomRuleHelper(grj);
 
           // Explicitly prevent non-pickup items from appearing in loot tables
           for (int i = 0; i < MAX_ATTEMPTS; i++) {
             if (crh.trigger(database, oldArchetype, null)) {
               Element newArchetype = crh.getEntityToSwap(database, r);
-
               Set<String> tags = Utils.getTags(newArchetype);
               if (tags.contains("ArkPickups")) {
                 item.setAttribute("Archetype", Utils.getNameForEntity(newArchetype));
+
+                Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
+                if (t == Tier.FUCK_IT) {
+                  item.setAttribute("CountMin", Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
+                  item.setAttribute("CountMax", Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
+                }
                 break;
               }
             }
