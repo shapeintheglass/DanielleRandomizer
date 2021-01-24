@@ -2,8 +2,11 @@ package gui.panels;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -12,6 +15,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import com.google.common.collect.Maps;
 
 import json.NameAndDescription;
 
@@ -22,84 +26,63 @@ public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel 
 
   private static final long serialVersionUID = -1427304877583197708L;
 
-  private JLabel headerLabel;
   private List<JRadioButton> radioButtons;
-  private List<T> settings;
   private ButtonGroup buttonGroup;
+  private String selected;
+  private Map<String, T> nameToValue;
+  private T defaultValue;
 
-  String header;
-  String prefix;
+  public BaseRadioOptionsPanel(String header, List<T> values, String selected) {
+    defaultValue = values.get(0);
 
-  private int currentIndex;
-
-  public BaseRadioOptionsPanel(String header, String prefix) {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setAlignmentY(Component.TOP_ALIGNMENT);
-    headerLabel = new JLabel(header);
+    JLabel headerLabel = new JLabel(header);
     radioButtons = new ArrayList<>();
-    settings = new ArrayList<>();
     buttonGroup = new ButtonGroup();
+    nameToValue = Maps.newHashMap();
 
-    this.header = header;
-    this.prefix = prefix;
     this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     this.add(headerLabel);
     this.add(Box.createRigidArea(new Dimension(0, 10)));
-    currentIndex = 0;
+    setRadioLabels(values, selected);
   }
 
-  public int getCurrentIndex() {
-    return currentIndex;
-  }
-  
-  public T getCurrentOption() {
-    return settings.get(currentIndex);
+  public T getValue() {
+    return nameToValue.containsKey(selected) ? nameToValue.get(selected) : defaultValue;
   }
 
-  public void setCurrentIndex(int newIndex) {
-    radioButtons.get(currentIndex).setSelected(false);
-    radioButtons.get(newIndex).setSelected(true);
-    this.currentIndex = newIndex;
-  }
-
-  public void setHeaderLabel(String header) {
-    this.headerLabel.setText(header);
-  }
-
-  public void setRadioLabels(List<T> newSettings, String selected) {
-    settings = new ArrayList<>();
-    // Remove old radio buttons, if they exist
-    for (int i = 0; i < radioButtons.size(); i++) {
-      this.remove(radioButtons.get(i));
-      buttonGroup.remove(radioButtons.get(i));
-    }
-    radioButtons.clear();
-
-    for (int i = 0; i < newSettings.size(); i++) {
+  private void setRadioLabels(List<T> values, String selected) {
+    ActionListener radioListener = new OnRadioClick();
+    for (int i = 0; i < values.size(); i++) {
       if (i >= MAX_NUM_OPTIONS) {
         break;
       }
-      String id = String.format("%s%s%s", prefix, DELIMITER, newSettings.get(i).getName());
-      JRadioButton btn = new JRadioButton(newSettings.get(i).getName());
-      btn.setActionCommand(id);
-      btn.setToolTipText(newSettings.get(i).getDesc());
-      if (selected != null && newSettings.get(i).getName().equals(selected)) {
+      String name = values.get(i).getName();
+      String desc = values.get(i).getDesc();
+
+      if (nameToValue.containsKey(name)) {
+        continue;
+      }
+      nameToValue.put(name, values.get(i));
+
+      JRadioButton btn = new JRadioButton(name);
+      btn.setActionCommand(name);
+      btn.setToolTipText(desc);
+      btn.addActionListener(radioListener);
+      if (selected != null && name.equals(selected)) {
         btn.setSelected(true);
-        currentIndex = i;
       }
       buttonGroup.add(btn);
       radioButtons.add(btn);
       this.add(btn);
-      settings.add(newSettings.get(i));
     }
   }
 
-  public T getSettingsByName(String name) {
-    for (T t : settings) {
-      if (t.getName().equals(name)) {
-        return t;
-      }
+  private class OnRadioClick implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      selected = e.getActionCommand();
     }
-    return null;
   }
 }

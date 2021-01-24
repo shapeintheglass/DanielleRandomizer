@@ -33,14 +33,11 @@ public class OptionsPanel extends JPanel {
 
   public OptionsPanel(AllPresetsJson allPresets, GameplaySettingsJson gameplaySettingsJson,
       CosmeticSettingsJson cosmeticSettingsJson) {
-    itemSpawnPanel = new BaseRadioOptionsPanel<>(Consts.ITEM_SPAWN_PRESETS_LABEL, "item");
-    enemySpawnPanel = new BaseRadioOptionsPanel<>(Consts.NPC_SPAWN_PRESETS_LABEL, "enemy");
+    itemSpawnPanel = new BaseRadioOptionsPanel<>(Consts.ITEM_SPAWN_PRESETS_LABEL, allPresets.getItemSpawnSettings(),
+        gameplaySettingsJson.getItemSpawnSettings().getName());
+    enemySpawnPanel = new BaseRadioOptionsPanel<>(Consts.NPC_SPAWN_PRESETS_LABEL, allPresets.getEnemySpawnSettings(),
+        gameplaySettingsJson.getEnemySpawnSettings().getName());
     otherOptionsPanel = new OtherOptionsPanel(gameplaySettingsJson, cosmeticSettingsJson);
-
-    itemSpawnPanel.setRadioLabels(allPresets.getItemSpawnSettings(), gameplaySettingsJson.getItemSpawnSettings()
-        .getName());
-    enemySpawnPanel.setRadioLabels(allPresets.getEnemySpawnSettings(), gameplaySettingsJson.getEnemySpawnSettings()
-        .getName());
 
     this.setLayout(new GridLayout(0, 3));
     this.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -62,8 +59,7 @@ public class OptionsPanel extends JPanel {
         otherOptionsPanel.isChecked(GameplaySettingsJson.UNLOCK_ALL_SCANS), otherOptionsPanel.isChecked(
             GameplaySettingsJson.RANDOMIZE_STATION), otherOptionsPanel.isChecked(GameplaySettingsJson.START_ON_2ND_DAY),
         otherOptionsPanel.isChecked(GameplaySettingsJson.MORE_GUNS), otherOptionsPanel.isChecked(
-            GameplaySettingsJson.WANDERING_HUMANS), enemySpawnPanel.getCurrentOption(), itemSpawnPanel
-                .getCurrentOption());
+            GameplaySettingsJson.WANDERING_HUMANS), enemySpawnPanel.getValue(), itemSpawnPanel.getValue());
   }
 
   public static class OtherOptionsPanel extends JPanel {

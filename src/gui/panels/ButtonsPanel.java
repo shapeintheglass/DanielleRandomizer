@@ -30,14 +30,13 @@ public class ButtonsPanel extends JPanel {
   private InstallButton installButton;
 
   public ButtonsPanel(TopPanel topPanel, OptionsPanel optionsPanel) {
-    JButton uninstallButton = new UninstallButton(topPanel);
     statusLabel = new JLabel("", JLabel.LEFT);
-    installButton = new InstallButton(topPanel, optionsPanel, uninstallButton);
-    
+    JButton uninstallButton = new UninstallButton(topPanel);
+    installButton = new InstallButton(uninstallButton, statusLabel, topPanel, optionsPanel);
 
     this.setLayout(new FlowLayout(FlowLayout.RIGHT));
     this.add(statusLabel);
-    this.add(new SaveButton(topPanel, optionsPanel));
+    this.add(new SaveButton(topPanel, optionsPanel, statusLabel));
     this.add(installButton);
     this.add(uninstallButton);
     this.add(new CloseButton());
@@ -49,12 +48,14 @@ public class ButtonsPanel extends JPanel {
     // Used for getting the current state of the GUI
     private TopPanel topPanelInner;
     private OptionsPanel optionsPanelInner;
+    private JLabel statusLabelInner;
 
-    public SaveButton(TopPanel topPanel, OptionsPanel optionsPanel) {
+    public SaveButton(TopPanel topPanel, OptionsPanel optionsPanel, JLabel statusLabel) {
       super(Consts.SAVE_BUTTON_LABEL);
 
       this.topPanelInner = topPanel;
       this.optionsPanelInner = optionsPanel;
+      this.statusLabelInner = statusLabel;
 
       this.addActionListener(new ActionListener() {
         @Override
@@ -62,6 +63,7 @@ public class ButtonsPanel extends JPanel {
           try {
             SettingsJson toSave = MainPanel.getSettingsFromGui(topPanelInner, optionsPanelInner);
             writeLastUsedSettingsToFile(RandomizerGui.SAVED_SETTINGS_FILE, toSave);
+            statusLabelInner.setText(Consts.SAVE_STATUS_COMPLETE);
           } catch (IOException e) {
             e.printStackTrace();
           }
@@ -82,24 +84,20 @@ public class ButtonsPanel extends JPanel {
   public class InstallButton extends JButton {
     private static final long serialVersionUID = 4475030086297300751L;
 
-    public InstallButton(TopPanel topPanel, OptionsPanel optionsPanel, JButton uninstallButton) {
-      super("Install");
-
-      this.setActionCommand("install");
-      this.addActionListener(new InstallActionListener(uninstallButton, statusLabel, topPanel, optionsPanel));
-      this.setToolTipText("Randomizes according to above settings and installs in game directory");
+    public InstallButton(JButton uninstallButton, JLabel statusLabel, TopPanel topPanel, OptionsPanel optionsPanel) {
+      super(Consts.INSTALL_BUTTON_LABEL);
+      this.addActionListener(new InstallActionListener(this, uninstallButton, statusLabel, topPanel, optionsPanel));
+      this.setToolTipText(Consts.INSTALL_BUTTON_TTT);
     }
-
   }
 
   public class UninstallButton extends JButton {
     private static final long serialVersionUID = 4288469916977513838L;
 
     public UninstallButton(TopPanel topPanel) {
-      super("Uninstall");
-      this.setActionCommand("uninstall");
+      super(Consts.UNINSTALL_BUTTON_LABEL);
       this.addActionListener(new OnUninstallClick(topPanel));
-      this.setToolTipText("Removes any mods added by this randomizer, restoring game files to previous state");
+      this.setToolTipText(Consts.UNINSTALL_BUTTON_TTT);
     }
   }
 
@@ -112,11 +110,11 @@ public class ButtonsPanel extends JPanel {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-      statusLabel.setText("Uninstalling...");
+      statusLabel.setText(Consts.UNINSTALLING_STATUS_TEXT);
       installButton.setEnabled(false);
 
       Installer.uninstall(Paths.get(topPanel.installDirPanel.getInstallDir()), Logger.getGlobal());
-      statusLabel.setText("Done uninstalling.");
+      statusLabel.setText(Consts.UNINSTALLING_STATUS_COMPLETE_TEXT);
       installButton.setEnabled(true);
     }
   }
@@ -125,10 +123,9 @@ public class ButtonsPanel extends JPanel {
     private static final long serialVersionUID = -1455745998460122616L;
 
     public CloseButton() {
-      super("Close");
-      this.setActionCommand("close");
+      super(Consts.CLOSE_BUTTON_LABEL);
       this.addActionListener(new OnCloseClick());
-      this.setToolTipText("Closes this GUI");
+      this.setToolTipText(Consts.CLOSE_BUTTON_TTT);
     }
   }
 

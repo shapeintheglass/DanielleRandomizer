@@ -7,6 +7,8 @@ public class Consts {
   /* ERROR MESSAGES */
   public static String ERROR_COULD_NOT_PARSE_FILE = "Failed to parse file: ";
   public static String WARNING_SAVED_SETTINGS_VERSION_MISMATCH = "Found saved settings at version %s. This application is only compatible with version %s. Falling back to default settings.";
+  public static String ERROR_COULD_NOT_PARSE_GUI = "Failed to process input.";
+  public static String ERROR_COULD_NOT_PARSE_JSON = "Failed to parse json settings!";
 
   /* TOP PANEL */
   public static String CURRENT_FILE_LABEL = "Prey folder location:";
@@ -29,4 +31,28 @@ public class Consts {
   /* BUTTONS PANEL */
   public static String SAVE_BUTTON_LABEL = "Save settings";
   public static String SAVE_BUTTON_TTT = "Saves the current settings so that they'll be the default next time you load this GUI.";
+  public static String SAVE_STATUS_COMPLETE = "Current settings saved.";
+  public static String INSTALL_BUTTON_LABEL = "Install";
+  public static String INSTALL_BUTTON_TTT = "Randomizes according to above settings and installs in game directory";
+  public static String UNINSTALL_BUTTON_LABEL = "Uninstall";
+  public static String UNINSTALL_BUTTON_TTT = "Removes any mods added by this randomizer, restoring game files to previous state";
+  public static String UNINSTALLING_STATUS_TEXT = "Uninstalling...";
+  public static String UNINSTALLING_STATUS_COMPLETE_TEXT = "Done uninstalling.";
+  public static String CLOSE_BUTTON_LABEL = "Close";
+  public static String CLOSE_BUTTON_TTT = "Close";
+
+  /* INSTALLATION */
+  public static String INSTALL_STATUS_TEXT = "Installing...";
+  public static String INSTALL_STATUS_COMPLETE_TEXT = "Done installing.";
+  public static String INSTALL_STATUS_FAILED_TEXT = "Install failed. See log for more info.";
+  public static String INSTALL_ERROR_DATA_NOT_FOUND = "Could not find data/ folder";
+  public static String INSTALL_ERROR_INVALID_INSTALL_FOLDER = "Prey install directory not valid.";
+  public static String INSTALL_ERROR_CANNOT_WRITE = "Unable to write to file. Is Prey running?";
+
+  public static String INSTALL_PROGRESS_BODIES = "Randomizing bodies...";
+  public static String INSTALL_PROGRESS_VOICELINES = "Randomizing voicelines...";
+  public static String INSTALL_PROGRESS_NEUROMOD = "Randomizing neuromod upgrade tree...";
+  public static String INSTALL_PROGRESS_LOOT = "Randomizing loot tables...";
+  public static String INSTALL_PROGRESS_LEVELS = "Processing level data...";
+  public static String INSTALL_PROGRESS_WRITING = "Copying mod files to game directory...";
 }
