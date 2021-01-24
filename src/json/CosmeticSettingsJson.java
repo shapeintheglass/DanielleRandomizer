@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import gui.BaseCheckbox;
+
+import gui.panels.BaseCheckbox;
 
 public class CosmeticSettingsJson implements HasOptions {
   public static final String RANDOMIZE_BODIES = "randomize_bodies";

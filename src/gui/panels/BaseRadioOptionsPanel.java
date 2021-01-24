@@ -1,8 +1,7 @@
-package gui;
+package gui.panels;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +29,10 @@ public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel 
 
   String header;
   String prefix;
-  private ActionListener listener;
 
   private int currentIndex;
 
-  public BaseRadioOptionsPanel(String header, String prefix, ActionListener listener) {
+  public BaseRadioOptionsPanel(String header, String prefix) {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setAlignmentY(Component.TOP_ALIGNMENT);
     headerLabel = new JLabel(header);
@@ -44,7 +42,6 @@ public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel 
 
     this.header = header;
     this.prefix = prefix;
-    this.listener = listener;
     this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     this.add(headerLabel);
     this.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -53,6 +50,10 @@ public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel 
 
   public int getCurrentIndex() {
     return currentIndex;
+  }
+  
+  public T getCurrentOption() {
+    return settings.get(currentIndex);
   }
 
   public void setCurrentIndex(int newIndex) {
@@ -80,7 +81,6 @@ public class BaseRadioOptionsPanel<T extends NameAndDescription> extends JPanel 
       }
       String id = String.format("%s%s%s", prefix, DELIMITER, newSettings.get(i).getName());
       JRadioButton btn = new JRadioButton(newSettings.get(i).getName());
-      btn.addActionListener(listener);
       btn.setActionCommand(id);
       btn.setToolTipText(newSettings.get(i).getDesc());
       if (selected != null && newSettings.get(i).getName().equals(selected)) {

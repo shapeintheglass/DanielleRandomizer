@@ -82,24 +82,4 @@ public class SettingsJson {
   public GameplaySettingsJson getGameplaySettings() {
     return gameplaySettings;
   }
-
-  public void setReleaseVersion(String releaseVersion) {
-    this.releaseVersion = releaseVersion;
-  }
-
-  public void setInstallDir(String installDir) {
-    this.installDir = installDir;
-  }
-
-  public void setSeed(long seed) {
-    this.seed = seed;
-  }
-
-  public void setCosmeticSettings(CosmeticSettingsJson cosmeticSettings) {
-    this.cosmeticSettings = cosmeticSettings;
-  }
-
-  public void setGameplaySettings(GameplaySettingsJson gameplaySettings) {
-    this.gameplaySettings = gameplaySettings;
-  }
 }

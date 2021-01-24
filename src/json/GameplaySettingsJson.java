@@ -1,24 +1,21 @@
- package json;
+package json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
 
-import gui.BaseCheckbox;
+import gui.panels.BaseCheckbox;
 
 public class GameplaySettingsJson implements HasOptions {
   public static final String ITEM_SPAWN_SETTINGS = "item_spawn_settings";
   public static final String ENEMY_SPAWN_SETTINGS = "enemy_spawn_settings";
 
   public static final String GAME_TOKEN_VALUES = "game_token_values";
-  private static final String DELIMITER = "=";
 
   public static final String RANDOMIZE_LOOT = "randomize_loot";
   public static final String ADD_LOOT_TO_APARTMENT = "add_loot_to_apartment";
@@ -28,49 +25,43 @@ public class GameplaySettingsJson implements HasOptions {
   public static final String UNLOCK_ALL_SCANS = "unlock_all_scans";
   public static final String RANDOMIZE_STATION = "randomize_station";
   public static final String MORE_GUNS = "more_guns";
+  public static final String WANDERING_HUMANS = "wandering_humans";
 
-  public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS =
-      new ImmutableMap.Builder<String, BaseCheckbox>()
-          .put(RANDOMIZE_LOOT,
-              new BaseCheckbox("Randomize loot tables",
-                  "Randomizes contents of loot tables according to item spawn settings", true))
-          .put(ADD_LOOT_TO_APARTMENT,
-              new BaseCheckbox("Add loot to Morgan's apartment",
-                  "Adds useful equipment in containers around Morgan's apartment", true))
-          .put(OPEN_STATION, new BaseCheckbox("Unlock everything",
-              "Unlocks various doors, workstations, etc around Talos I to make traversal easier.",
-              false))
-          .put(RANDOMIZE_NEUROMODS,
-              new BaseCheckbox("Randomize Neuromod upgrade tree",
-                  "Shuffles the neuromods in the skill upgrade tree", false))
-          .put(UNLOCK_ALL_SCANS, new BaseCheckbox("Remove scan requirement for typhon neuromods",
-              "Unlocks all neuromod abilities so you don't have to scan typhon for them", false))
-          .put(RANDOMIZE_STATION,
-              new BaseCheckbox("Randomize station connections",
-                  "Shuffles connections between levels.", false))
-          .put(START_ON_2ND_DAY, new BaseCheckbox("Start on 2nd day",
-              "Skips to the 2nd day of the intro. HUD may be invisible until you open your transcribe.",
-              true))
-          .put(MORE_GUNS, new BaseCheckbox("More guns", "Add more guns to the loot pool", false))
-          .build();
+  public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS = new ImmutableMap.Builder<String, BaseCheckbox>()
+      .put(RANDOMIZE_LOOT, new BaseCheckbox("Randomize loot tables",
+          "Randomizes contents of loot tables according to item spawn settings", true))
+      .put(ADD_LOOT_TO_APARTMENT, new BaseCheckbox("Add loot to Morgan's apartment",
+          "Adds useful equipment in containers around Morgan's apartment", true))
+      .put(OPEN_STATION, new BaseCheckbox("Unlock everything",
+          "Unlocks various doors, workstations, etc around Talos I to make traversal easier.", false))
+      .put(RANDOMIZE_NEUROMODS, new BaseCheckbox("Randomize Neuromod upgrade tree",
+          "Shuffles the neuromods in the skill upgrade tree", false))
+      .put(UNLOCK_ALL_SCANS, new BaseCheckbox("Remove scan requirement for typhon neuromods",
+          "Unlocks all neuromod abilities so you don't have to scan typhon for them", false))
+      .put(RANDOMIZE_STATION, new BaseCheckbox("Randomize station connections", "Shuffles connections between levels.",
+          false))
+      .put(START_ON_2ND_DAY, new BaseCheckbox("Start on 2nd day",
+          "Skips to the 2nd day of the intro. HUD may be invisible until you open your transcribe.", true))
+      .put(MORE_GUNS, new BaseCheckbox("More guns", "Add more guns to the loot pool", false))
+      .put(WANDERING_HUMANS, new BaseCheckbox("Wandering humans",
+          "Makes all humans walk around rather than stand in place. Intended for the \"all typhon are humans\" preset to add some realism.",
+          false))
+      .build();
 
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
   private SpawnPresetJson enemySpawnSettings;
   @JsonProperty(ITEM_SPAWN_SETTINGS)
   private SpawnPresetJson itemSpawnSettings;
 
-  private Map<String, String> gameTokenValues;
   private Map<String, Boolean> booleanSettings;
 
   @JsonCreator
   public GameplaySettingsJson(@JsonProperty(RANDOMIZE_LOOT) boolean randomizeLoot,
-      @JsonProperty(ADD_LOOT_TO_APARTMENT) boolean addLootToApartment,
-      @JsonProperty(OPEN_STATION) boolean openStation,
+      @JsonProperty(ADD_LOOT_TO_APARTMENT) boolean addLootToApartment, @JsonProperty(OPEN_STATION) boolean openStation,
       @JsonProperty(RANDOMIZE_NEUROMODS) boolean randomizeNeuromods,
-      @JsonProperty(UNLOCK_ALL_SCANS) boolean unlockScans,
-      @JsonProperty(RANDOMIZE_STATION) boolean randomizeStation,
-      @JsonProperty(START_ON_2ND_DAY) boolean startOnSecondDay,
-      @JsonProperty(MORE_GUNS) boolean moreGuns, List<String> gameTokenValues,
+      @JsonProperty(UNLOCK_ALL_SCANS) boolean unlockScans, @JsonProperty(RANDOMIZE_STATION) boolean randomizeStation,
+      @JsonProperty(START_ON_2ND_DAY) boolean startOnSecondDay, @JsonProperty(MORE_GUNS) boolean moreGuns,
+      @JsonProperty(WANDERING_HUMANS) boolean wanderingHumans,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
       @JsonProperty(ITEM_SPAWN_SETTINGS) SpawnPresetJson itemSpawnSettings) {
     booleanSettings = new HashMap<>();
@@ -82,30 +73,28 @@ public class GameplaySettingsJson implements HasOptions {
     booleanSettings.put(RANDOMIZE_STATION, randomizeStation);
     booleanSettings.put(START_ON_2ND_DAY, startOnSecondDay);
     booleanSettings.put(MORE_GUNS, moreGuns);
-
-    setGameTokenValues(gameTokenValues);
+    booleanSettings.put(WANDERING_HUMANS, wanderingHumans);
 
     this.enemySpawnSettings = enemySpawnSettings;
     this.itemSpawnSettings = itemSpawnSettings;
   }
 
-  public GameplaySettingsJson() {
+  public GameplaySettingsJson(SpawnPresetJson enemySpawnSettings, SpawnPresetJson itemSpawnSettings) {
     booleanSettings = new HashMap<>();
     for (String s : ALL_OPTIONS.keySet()) {
-      booleanSettings.put(s, ALL_OPTIONS.get(s)
-          .getDefaultValue());
+      booleanSettings.put(s, ALL_OPTIONS.get(s).getDefaultValue());
     }
-    setGameTokenValues(null);
-    this.enemySpawnSettings = new SpawnPresetJson("", "", new ArrayList<>());
-    this.itemSpawnSettings = new SpawnPresetJson("", "", new ArrayList<>());
+    this.enemySpawnSettings = enemySpawnSettings == null ? new SpawnPresetJson("", "", new ArrayList<>())
+        : enemySpawnSettings;
+    this.itemSpawnSettings = itemSpawnSettings == null ? new SpawnPresetJson("", "", new ArrayList<>())
+        : itemSpawnSettings;
   }
 
   public GameplaySettingsJson(JsonNode node) {
     booleanSettings = new HashMap<>();
     for (String s : ALL_OPTIONS.keySet()) {
       if (node.has(s)) {
-        booleanSettings.put(s, node.get(s)
-            .asBoolean());
+        booleanSettings.put(s, node.get(s).asBoolean());
       }
     }
 
@@ -118,9 +107,7 @@ public class GameplaySettingsJson implements HasOptions {
   }
 
   public boolean getOption(String name) {
-    return booleanSettings.containsKey(name) ? booleanSettings.get(name)
-        : ALL_OPTIONS.get(name)
-            .getDefaultValue();
+    return booleanSettings.containsKey(name) ? booleanSettings.get(name) : ALL_OPTIONS.get(name).getDefaultValue();
   }
 
   public void toggleOption(String name) {
@@ -167,50 +154,16 @@ public class GameplaySettingsJson implements HasOptions {
     return booleanSettings.get(MORE_GUNS);
   }
 
+  @JsonProperty(WANDERING_HUMANS)
+  public boolean getWanderingHumans() {
+    return booleanSettings.get(WANDERING_HUMANS);
+  }
+
   public SpawnPresetJson getEnemySpawnSettings() {
     return enemySpawnSettings;
   }
 
-  public void setEnemySpawnSettings(SpawnPresetJson enemySpawnSettings) {
-    this.enemySpawnSettings = enemySpawnSettings;
-  }
-
   public SpawnPresetJson getItemSpawnSettings() {
     return itemSpawnSettings;
-  }
-
-  public void setItemSpawnSettings(SpawnPresetJson itemSpawnSettings) {
-    this.itemSpawnSettings = itemSpawnSettings;
-  }
-
-  @JsonProperty(GAME_TOKEN_VALUES)
-  public List<String> getGameTokenValues() {
-    if (gameTokenValues == null) {
-      return null;
-    }
-
-    List<String> stringValues = new ArrayList<>(gameTokenValues.size());
-    for (String s : gameTokenValues.keySet()) {
-      stringValues.add(String.format("%s%s%s", s, DELIMITER, gameTokenValues.get(s)));
-    }
-    return stringValues;
-  }
-
-  @JsonIgnore
-  public Map<String, String> getGameTokenValuesAsMap() {
-    return gameTokenValues;
-  }
-
-  public void setGameTokenValues(List<String> stringValues) {
-    this.gameTokenValues = new HashMap<>();
-
-    if (stringValues == null) {
-      return;
-    }
-
-    for (String s : stringValues) {
-      String[] tokens = s.split(DELIMITER);
-      gameTokenValues.put(tokens[0].trim(), tokens[1].trim());
-    }
   }
 }

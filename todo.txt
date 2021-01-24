@@ -1,3 +1,9 @@
+
+Bugs:
+* GUI freezes during install
+* GUI leaves artifacts, folders behind
+* Crashes if saved_settings is not compatible
+
 To do:
 * Add fabricators, recyclers, operator stations, explosives to the randomizer
 * Attempt to swap essential NPCs with killable NPCs
@@ -27,6 +33,10 @@ V0.3 planned features
 * Fix neuromod pickups being impossible to complete
 * Adjust quantities for ammo, materials, nonammo/nonmaterials
 
+
+Investigations:
+* Mimic ability is intrinsic to mimics, cannot be applied to other NPCs
+* Follow ability only works for mimics/phantoms, cannot be applied to overseers
 
 Feature requests
 * More mimicked items (slider?) (see FlowgraphEntity_AtriumMimics for simple example, or Lobby First Visit)
