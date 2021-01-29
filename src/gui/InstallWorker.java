@@ -3,6 +3,8 @@ package gui;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -32,6 +34,7 @@ import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
+import randomizers.gameplay.filters.StartOutsideApartmentFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
 import utils.Utils;
 
@@ -44,8 +47,7 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
 
   private Path tempDir;
 
-  private JButton installButton;
-  private JButton uninstallButton;
+  private List<JButton> toDisable;
   private JLabel statusLabel;
 
   private Logger logger;
@@ -54,10 +56,8 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
   private TopPanel topPanel;
   private OptionsPanel optionsPanel;
 
-  public InstallWorker(JButton installButton, JButton uninstallButton, JLabel statusLabel, TopPanel topPanel,
-      OptionsPanel optionsPanel) {
-    this.installButton = installButton;
-    this.uninstallButton = uninstallButton;
+  public InstallWorker(List<JButton> toDisable, JLabel statusLabel, TopPanel topPanel, OptionsPanel optionsPanel) {
+    this.toDisable = toDisable;
     this.statusLabel = statusLabel;
     this.topPanel = topPanel;
     this.optionsPanel = optionsPanel;
@@ -67,10 +67,9 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
 
   @Override
   protected Void doInBackground() throws Exception {
-
+    Date startTime = new Date();
     statusLabel.setText(Consts.INSTALL_STATUS_TEXT);
-    installButton.setEnabled(false);
-    uninstallButton.setEnabled(false);
+    enableButtons(toDisable, false);
 
     // Finalize settings
     SettingsJson currentSettings = null;
@@ -78,8 +77,7 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
       currentSettings = MainPanel.getSettingsFromGui(topPanel, optionsPanel);
     } catch (Exception e) {
       statusLabel.setText(Consts.ERROR_COULD_NOT_PARSE_GUI);
-      installButton.setEnabled(true);
-      uninstallButton.setEnabled(true);
+      enableButtons(toDisable, true);
       e.printStackTrace();
       return null;
     }
@@ -91,8 +89,7 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
     } catch (JsonProcessingException e1) {
       logger.warning(Consts.ERROR_COULD_NOT_PARSE_JSON);
       e1.printStackTrace();
-      installButton.setEnabled(true);
-      uninstallButton.setEnabled(true);
+      enableButtons(toDisable, true);
     }
 
     Path workingDir = Paths.get(DEFAULT_WORKING_DIR);
@@ -117,19 +114,26 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
         e.printStackTrace();
       }
 
-      statusLabel.setText(Consts.INSTALL_STATUS_COMPLETE_TEXT);
+      Date endTime = new Date();
+      long secondsElapsed = endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
+      statusLabel.setText(String.format(Consts.INSTALL_STATUS_COMPLETE_TEXT, secondsElapsed));
 
     } catch (Exception e) {
       e.printStackTrace();
       statusLabel.setText(Consts.INSTALL_STATUS_FAILED_TEXT);
     } finally {
-      installButton.setEnabled(true);
-      uninstallButton.setEnabled(true);
+      enableButtons(toDisable, true);
       if (tempDir.toFile().exists()) {
         Utils.deleteDirectory(tempDir.toFile());
       }
     }
     return null;
+  }
+
+  private static void enableButtons(List<JButton> buttons, boolean enable) {
+    for (JButton b : buttons) {
+      b.setEnabled(enable);
+    }
   }
 
   private Optional<Installer> initInstaller(SettingsJson currentSettings, Path tempDir, Path tempLevelDir,
@@ -197,6 +201,10 @@ public class InstallWorker extends SwingWorker<Void, Integer> {
 
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.ADD_LOOT_TO_APARTMENT)) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
+    }
+
+    if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.START_OUTSIDE_LOBBY)) {
+      levelRandomizer = levelRandomizer.addFilter(new StartOutsideApartmentFilter());
     }
 
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {

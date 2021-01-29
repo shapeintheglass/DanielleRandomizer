@@ -2,6 +2,7 @@
 Bugs:
 * GUI leaves artifacts, folders behind
 * New weapon skins have bad LOD, no ammo indicator
+* Double check GUTS --> Cargo Bay door lock
 
 To do:
 * Add fabricators, recyclers, operator stations, explosives to the randomizer
@@ -30,8 +31,7 @@ V0.3 planned features
 * Fix neuromod pickups being impossible to complete
 * Adjust quantities for ammo, materials, nonammo/nonmaterials
 
-
-Investigations:
+Investigation results:
 * Mimic ability is intrinsic to mimics, cannot be applied to other NPCs
 * Follow ability only works for mimics/phantoms, cannot be applied to overseers
 

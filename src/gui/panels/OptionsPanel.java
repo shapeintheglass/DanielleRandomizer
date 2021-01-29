@@ -59,7 +59,8 @@ public class OptionsPanel extends JPanel {
         otherOptionsPanel.isChecked(GameplaySettingsJson.UNLOCK_ALL_SCANS), otherOptionsPanel.isChecked(
             GameplaySettingsJson.RANDOMIZE_STATION), otherOptionsPanel.isChecked(GameplaySettingsJson.START_ON_2ND_DAY),
         otherOptionsPanel.isChecked(GameplaySettingsJson.MORE_GUNS), otherOptionsPanel.isChecked(
-            GameplaySettingsJson.WANDERING_HUMANS), enemySpawnPanel.getValue(), itemSpawnPanel.getValue());
+            GameplaySettingsJson.WANDERING_HUMANS), otherOptionsPanel.isChecked(
+                GameplaySettingsJson.START_OUTSIDE_LOBBY), enemySpawnPanel.getValue(), itemSpawnPanel.getValue());
   }
 
   public static class OtherOptionsPanel extends JPanel {
@@ -67,7 +68,8 @@ public class OptionsPanel extends JPanel {
     private static final long serialVersionUID = 6623786136413466883L;
 
     private static final ImmutableList<String> STARTING_CHECKBOXES = ImmutableList.of(
-        GameplaySettingsJson.START_ON_2ND_DAY, GameplaySettingsJson.ADD_LOOT_TO_APARTMENT);
+        GameplaySettingsJson.START_ON_2ND_DAY, GameplaySettingsJson.ADD_LOOT_TO_APARTMENT,
+        GameplaySettingsJson.START_OUTSIDE_LOBBY);
     private static final ImmutableList<String> ITEMS_CHECKBOXES = ImmutableList.of(GameplaySettingsJson.RANDOMIZE_LOOT,
         GameplaySettingsJson.MORE_GUNS);
     private static final ImmutableList<String> CONNECTIVITY_CHECKBOXES = ImmutableList.of(

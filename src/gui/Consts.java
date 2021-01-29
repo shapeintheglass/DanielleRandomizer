@@ -9,6 +9,7 @@ public class Consts {
   public static String WARNING_SAVED_SETTINGS_VERSION_MISMATCH = "Found saved settings at version %s. This application is only compatible with version %s. Falling back to default settings.";
   public static String ERROR_COULD_NOT_PARSE_GUI = "Failed to process input.";
   public static String ERROR_COULD_NOT_PARSE_JSON = "Failed to parse json settings!";
+  public static String ERROR_COULD_NOT_RUN_PREY = "Error occurred when launching Prey.";
 
   /* TOP PANEL */
   public static String CURRENT_FILE_LABEL = "Prey folder location:";
@@ -30,9 +31,11 @@ public class Consts {
   public static String OTHER_OPTIONS_HEADER = "Other Options";
 
   /* BUTTONS PANEL */
+  public static String RUN_BUTTON_LABEL = "Run Prey";
+  public static String RUN_BUTTON_TTT = "Starts Prey using the file location provided";
   public static String SAVE_BUTTON_LABEL = "Save settings";
   public static String SAVE_BUTTON_TTT = "Saves the current settings so that they'll be the default next time you load this GUI.";
-  public static String SAVE_STATUS_COMPLETE = "Current settings saved.";
+  public static String SAVE_STATUS_COMPLETE = "Current settings saved to %s.";
   public static String INSTALL_BUTTON_LABEL = "Install";
   public static String INSTALL_BUTTON_TTT = "Randomizes according to above settings and installs in game directory";
   public static String UNINSTALL_BUTTON_LABEL = "Uninstall";
@@ -40,11 +43,11 @@ public class Consts {
   public static String UNINSTALLING_STATUS_TEXT = "Uninstalling...";
   public static String UNINSTALLING_STATUS_COMPLETE_TEXT = "Done uninstalling.";
   public static String CLOSE_BUTTON_LABEL = "Close";
-  public static String CLOSE_BUTTON_TTT = "Close";
+  public static String CLOSE_BUTTON_TTT = "Closes this GUI";
 
   /* INSTALLATION */
   public static String INSTALL_STATUS_TEXT = "Installing...";
-  public static String INSTALL_STATUS_COMPLETE_TEXT = "Done installing.";
+  public static String INSTALL_STATUS_COMPLETE_TEXT = "Finished installing in %d seconds.";
   public static String INSTALL_STATUS_FAILED_TEXT = "Install failed. See log for more info.";
   public static String INSTALL_ERROR_DATA_NOT_FOUND = "Could not find data/ folder";
   public static String INSTALL_ERROR_INVALID_INSTALL_FOLDER = "Prey install directory not valid.";

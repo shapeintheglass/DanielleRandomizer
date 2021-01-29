@@ -281,7 +281,6 @@ public class Installer {
     }
 
     // Overwrite level files with backup
-
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
       Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);

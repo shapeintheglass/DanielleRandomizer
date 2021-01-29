@@ -26,6 +26,7 @@ public class GameplaySettingsJson implements HasOptions {
   public static final String RANDOMIZE_STATION = "randomize_station";
   public static final String MORE_GUNS = "more_guns";
   public static final String WANDERING_HUMANS = "wandering_humans";
+  public static final String START_OUTSIDE_LOBBY = "start_outside_lobby";
 
   public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS = new ImmutableMap.Builder<String, BaseCheckbox>()
       .put(RANDOMIZE_LOOT, new BaseCheckbox("Randomize loot tables",
@@ -46,6 +47,8 @@ public class GameplaySettingsJson implements HasOptions {
       .put(WANDERING_HUMANS, new BaseCheckbox("Make humans wander",
           "Lets all humans walk around rather than stand in place. Intended for the \"all typhon are humans\" preset to add some realism.",
           false))
+      .put(START_OUTSIDE_LOBBY, new BaseCheckbox("Start outside apartment",
+          "Moves the initial spawn point to the neuromod division exit", false))
       .build();
 
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
@@ -62,6 +65,7 @@ public class GameplaySettingsJson implements HasOptions {
       @JsonProperty(UNLOCK_ALL_SCANS) boolean unlockScans, @JsonProperty(RANDOMIZE_STATION) boolean randomizeStation,
       @JsonProperty(START_ON_2ND_DAY) boolean startOnSecondDay, @JsonProperty(MORE_GUNS) boolean moreGuns,
       @JsonProperty(WANDERING_HUMANS) boolean wanderingHumans,
+      @JsonProperty(START_OUTSIDE_LOBBY) boolean startOutsideLobby,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
       @JsonProperty(ITEM_SPAWN_SETTINGS) SpawnPresetJson itemSpawnSettings) {
     booleanSettings = new HashMap<>();
@@ -74,6 +78,7 @@ public class GameplaySettingsJson implements HasOptions {
     booleanSettings.put(START_ON_2ND_DAY, startOnSecondDay);
     booleanSettings.put(MORE_GUNS, moreGuns);
     booleanSettings.put(WANDERING_HUMANS, wanderingHumans);
+    booleanSettings.put(START_OUTSIDE_LOBBY, startOutsideLobby);
 
     this.enemySpawnSettings = enemySpawnSettings;
     this.itemSpawnSettings = itemSpawnSettings;
@@ -157,6 +162,11 @@ public class GameplaySettingsJson implements HasOptions {
   @JsonProperty(WANDERING_HUMANS)
   public boolean getWanderingHumans() {
     return booleanSettings.get(WANDERING_HUMANS);
+  }
+  
+  @JsonProperty(START_OUTSIDE_LOBBY)
+  public boolean getStartOutsideLobby() {
+    return booleanSettings.get(START_OUTSIDE_LOBBY);
   }
 
   public SpawnPresetJson getEnemySpawnSettings() {

@@ -50,7 +50,7 @@ public class RandomizerGui {
     setupLogFile();
 
     logger = Logger.getLogger("randomizer_gui");
-    mainFrame = new JFrame(Consts.WINDOW_TITLE);
+    mainFrame = new JFrame(Consts.WINDOW_TITLE + " " + RELEASE_VER);
     mainFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     mainFrame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent windowEvent) {

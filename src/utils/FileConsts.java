@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import com.google.common.collect.ImmutableMap;
 
 public class FileConsts {
+  public static final String BINARY_PATH = "Binaries\\Danielle\\x64\\Release\\Prey.exe";
+  
   public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "data/entityarchetypes/";
   public static final String ENTITY_ARCHETYPES_DEST_DIR = "libs/entityarchetypes/";
 

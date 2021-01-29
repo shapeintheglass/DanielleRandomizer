@@ -1,25 +1,25 @@
-package gui.panels;
+package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import gui.InstallWorker;
+import gui.panels.OptionsPanel;
+import gui.panels.TopPanel;
 
 public class InstallActionListener implements ActionListener {
 
-  private JButton installButton;
-  private JButton uninstallButton;
+  private List<JButton> toDisable;
   private JLabel statusLabel;
   private TopPanel topPanel;
   private OptionsPanel optionsPanel;
 
-  public InstallActionListener(JButton installButton, JButton uninstallButton, JLabel statusLabel, TopPanel topPanel,
+  public InstallActionListener(List<JButton> toDisable, JLabel statusLabel, TopPanel topPanel,
       OptionsPanel optionsPanel) {
-    this.installButton = installButton;
-    this.uninstallButton = uninstallButton;
+    this.toDisable = toDisable;
     this.statusLabel = statusLabel;
     this.topPanel = topPanel;
     this.optionsPanel = optionsPanel;
@@ -27,7 +27,7 @@ public class InstallActionListener implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent arg0) {
-    new InstallWorker(installButton, uninstallButton, statusLabel, topPanel, optionsPanel).execute();
+    new InstallWorker(toDisable, statusLabel, topPanel, optionsPanel).execute();
   }
 
 }

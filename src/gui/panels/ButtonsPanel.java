@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -16,11 +18,14 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.collect.Lists;
 
 import gui.Consts;
+import gui.InstallActionListener;
 import gui.RandomizerGui;
 import installers.Installer;
 import json.SettingsJson;
+import utils.FileConsts;
 
 public class ButtonsPanel extends JPanel {
 
@@ -31,15 +36,54 @@ public class ButtonsPanel extends JPanel {
 
   public ButtonsPanel(TopPanel topPanel, OptionsPanel optionsPanel) {
     statusLabel = new JLabel("", JLabel.LEFT);
-    JButton uninstallButton = new UninstallButton(topPanel);
-    installButton = new InstallButton(uninstallButton, statusLabel, topPanel, optionsPanel);
+    SaveButton saveButton = new SaveButton(topPanel, optionsPanel, statusLabel);
+    RunButton runButton = new RunButton(topPanel, statusLabel);
+    UninstallButton uninstallButton = new UninstallButton(topPanel);
+    CloseButton closeButton = new CloseButton();
+
+    List<JButton> toDisable = Lists.newArrayList(saveButton, runButton, uninstallButton, closeButton);
+
+    installButton = new InstallButton(toDisable, statusLabel, topPanel, optionsPanel);
 
     this.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
     this.add(statusLabel);
-    this.add(new SaveButton(topPanel, optionsPanel, statusLabel));
+    // this.add(runButton);
+    this.add(saveButton);
     this.add(installButton);
     this.add(uninstallButton);
-    this.add(new CloseButton());
+    this.add(closeButton);
+  }
+
+  public static class RunButton extends JButton {
+    private static final long serialVersionUID = 5484007977067147208L;
+
+    // Used for getting the current state of the GUI
+    private TopPanel topPanelInner;
+
+    private JLabel statusLabelInner;
+
+    public RunButton(TopPanel topPanel, JLabel statusLabel) {
+      super(Consts.RUN_BUTTON_LABEL);
+
+      this.topPanelInner = topPanel;
+      this.statusLabelInner = statusLabel;
+
+      this.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+          try {
+            Path binaryPath = Paths.get(topPanelInner.installDirPanel.getInstallDir()).resolve(FileConsts.BINARY_PATH);
+            Runtime.getRuntime().exec(binaryPath.toString());
+            statusLabelInner.setText(binaryPath.toString());
+          } catch (Exception e) {
+            e.printStackTrace();
+            statusLabelInner.setText(Consts.ERROR_COULD_NOT_RUN_PREY);
+          }
+        }
+      });
+      this.setToolTipText(Consts.RUN_BUTTON_TTT);
+    }
   }
 
   public static class SaveButton extends JButton {
@@ -63,7 +107,7 @@ public class ButtonsPanel extends JPanel {
           try {
             SettingsJson toSave = MainPanel.getSettingsFromGui(topPanelInner, optionsPanelInner);
             writeLastUsedSettingsToFile(RandomizerGui.SAVED_SETTINGS_FILE, toSave);
-            statusLabelInner.setText(Consts.SAVE_STATUS_COMPLETE);
+            statusLabelInner.setText(String.format(Consts.SAVE_STATUS_COMPLETE, RandomizerGui.SAVED_SETTINGS_FILE));
           } catch (IOException e) {
             e.printStackTrace();
           }
@@ -84,9 +128,10 @@ public class ButtonsPanel extends JPanel {
   public class InstallButton extends JButton {
     private static final long serialVersionUID = 4475030086297300751L;
 
-    public InstallButton(JButton uninstallButton, JLabel statusLabel, TopPanel topPanel, OptionsPanel optionsPanel) {
+    public InstallButton(List<JButton> toDisable, JLabel statusLabel, TopPanel topPanel, OptionsPanel optionsPanel) {
       super(Consts.INSTALL_BUTTON_LABEL);
-      this.addActionListener(new InstallActionListener(this, uninstallButton, statusLabel, topPanel, optionsPanel));
+      toDisable.add(this);
+      this.addActionListener(new InstallActionListener(toDisable, statusLabel, topPanel, optionsPanel));
       this.setToolTipText(Consts.INSTALL_BUTTON_TTT);
     }
   }
