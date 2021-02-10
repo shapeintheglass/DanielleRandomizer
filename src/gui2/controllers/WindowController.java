@@ -2,6 +2,7 @@ package gui2.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,6 +13,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Optional;
 
 import gui2.Gui2Consts;
+import gui2.InstallHelper;
+import installers.Installer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -273,15 +276,19 @@ public class WindowController {
   @FXML
   protected void handleInstallClicked(ActionEvent event) {
     SettingsJson finalSettings = getSettings();
-    outputWindow.appendText("Install button clicked. Settings:\n");
-    outputWindow.appendText(finalSettings.toString());
-    // TODO: Make this actually install
+    try {
+      writeLastUsedSettingsToFile(Gui2Consts.LAST_USED_SETTINGS_FILE, finalSettings);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    InstallHelper installHelper = new InstallHelper(outputWindow, finalSettings);
+    installHelper.doInstall();
   }
 
   @FXML
   protected void onUninstallClicked(ActionEvent event) {
-    outputWindow.appendText("Uninstall clicked\n");
-    // TODO: Make this actually uninstall
+    Installer.uninstall(Paths.get(directoryText.getText()), logger);
+    outputWindow.appendText("Uninstall complete.");
   }
 
   @FXML

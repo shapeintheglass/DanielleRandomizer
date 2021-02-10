@@ -4,5 +4,6 @@
 *_deleteme
 log.txt
 saved_settings.json
+last_used_settings.json
 *.png
 release/
