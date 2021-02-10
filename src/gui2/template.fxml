@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="mainWindow" prefHeight="451.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui2.controllers.WindowController">
+  <children>
+      <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="900.0">
+         <children>
+            <Label layoutX="624.0" layoutY="6.0" text="Seed:" />
+            <Button layoutX="541.0" layoutY="3.0" mnemonicParsing="false" onAction="#onChangeDirClicked" prefHeight="25.0" prefWidth="70.0" text="Change" />
+            <Label layoutX="14.0" layoutY="6.0" text="Prey directory:" />
+            <Button layoutX="825.0" layoutY="3.0" mnemonicParsing="false" onAction="#onNewSeedClicked" text="New Seed" />
+            <TextField fx:id="directoryText" layoutX="103.0" layoutY="3.0" prefHeight="25.0" prefWidth="426.0" />
+            <TextField fx:id="seedText" layoutX="665.0" layoutY="3.0" />
+         </children>
+      </AnchorPane>
+      <SplitPane dividerPositions="0.7068965517241379" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="391.0" prefWidth="902.0">
+        <items>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Presets">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Pick a preset to start! When you pick a preset, check out the other tabs for more customization." />
+                              <Button layoutX="26.0" layoutY="59.0" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Recommended" />
+                              <Button layoutX="26.0" layoutY="105.0" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
+                              <Button layoutX="26.0" layoutY="149.0" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="Lite" />
+                              <Label layoutX="144.0" layoutY="63.0" text="A balance of randomized options that keeps gameplay somewhat fair and stable." />
+                              <Label layoutX="144.0" layoutY="109.0" text="For people who like to live dangerously. Potential sequence breaking / soft locks." />
+                              <Label layoutX="144.0" layoutY="153.0" text="Very light randomization over the original design." />
+                              <Label layoutX="15.0" layoutY="180.0" prefHeight="81.0" prefWidth="603.0" text="If you already have a randomized game in progress, make sure not to install a new seed/settings until you are finished, or else you may not be able to load your old saves." wrapText="true" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Cosmetic">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="633.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="These options affect the look of the game but do not affect gameplay." />
+                              <Label layoutX="229.0" layoutY="50.0" text="Generates new appearances for every human NPC." />
+                              <Label layoutX="229.0" layoutY="83.0" text="Randomizes voice lines by voice actor (except for certain cutscenes)." />
+                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="215.0" spacing="15.0">
+                                 <children>
+                                    <CheckBox fx:id="cosmeticCheckboxBodies" mnemonicParsing="false" text="Randomize human bodies" />
+                                    <CheckBox fx:id="cosmeticCheckboxVoices" mnemonicParsing="false" text="Randomize voice lines" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Item Spawns">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Options for item/prop spawns. Mouse over an option for a description." />
+                              <CheckBox fx:id="itemsCheckboxMoreGuns" layoutX="440.0" layoutY="50.0" mnemonicParsing="false" text="More guns" />
+                              <CheckBox fx:id="itemsCheckboxLootTables" layoutX="440.0" layoutY="77.0" mnemonicParsing="false" text="Randomize loot tables" />
+                              <Separator layoutX="414.0" layoutY="40.0" orientation="VERTICAL" prefHeight="317.0" prefWidth="13.0" />
+                              <ScrollPane layoutX="12.0" layoutY="50.0" prefHeight="297.0" prefWidth="383.0">
+                                 <content>
+                                    <VBox fx:id="itemsOptions" prefHeight="290.0" prefWidth="325.0" spacing="15.0" />
+                                 </content>
+                              </ScrollPane>
+                              <Label layoutX="440.0" layoutY="21.0" text="Other options:" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="NPC Spawns">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Options for NPC spawns. Mouse over an option for a description." />
+                              <ScrollPane layoutX="12.0" layoutY="50.0" prefHeight="297.0" prefWidth="383.0">
+                                 <content>
+                                    <VBox fx:id="enemiesOptions" prefHeight="290.0" prefWidth="325.0" spacing="15.0">
+                              </VBox>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Starting Equipment">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Settings for starting the game and choosing loadouts." />
+                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="261.0" spacing="15.0">
+                                 <children>
+                                    <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
+                                    <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
+                                 </children>
+                              </VBox>
+                              <Label layoutX="289.0" layoutY="50.0" prefHeight="17.0" prefWidth="170.0" text="Skips intro to the 2nd day." />
+                              <Label layoutX="289.0" layoutY="82.0" prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Neuromods">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Options for the neuromod skill tree." />
+                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="237.0" spacing="15.0">
+                                 <children>
+                                    <CheckBox fx:id="neuromodsCheckboxRandomize" mnemonicParsing="false" text="Randomize neuromod skill tree" />
+                                 </children>
+                              </VBox>
+                              <Label layoutX="289.0" layoutY="50.0" text="Shuffles the upgrade tree and reevaluates skill point cost." />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Story/Progression">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Options that can affect the story progression of the game." />
+                              <Label layoutX="289.0" layoutY="50.0" text="Shuffles connections between levels." />
+                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="232.0" spacing="15.0">
+                                 <children>
+                                    <CheckBox fx:id="storyCheckboxRandomStation" mnemonicParsing="false" text="Randomize station connectivity" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Cheats">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="633.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Miscellaneous/experimental options and cheats." />
+                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="307.0" spacing="15.0">
+                                 <children>
+                                    <CheckBox fx:id="cheatsCheckboxUnlockAll" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
+                                    <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
+                                    <CheckBox fx:id="cheatsCheckboxWander" mnemonicParsing="false" text="Make humans wander" />
+                                 </children>
+                              </VBox>
+                              <Label layoutX="335.0" layoutY="50.0" text="Unlocks (almost) everything except for scripted locks." />
+                              <Label layoutX="335.0" layoutY="82.0" text="Allows installing typhon neuromods without research." />
+                              <Label layoutX="335.0" layoutY="113.0" text="Makes humans walk around rather than stand in place." />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+          <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="261.0">
+               <children>
+                  <TextArea fx:id="outputWindow" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="261.0" />
+                  <Label layoutX="14.0" layoutY="6.0" text="Output" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="900.0">
+         <children>
+            <Button alignment="CENTER" layoutX="399.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleInstallClicked" prefHeight="25.0" prefWidth="87.0" text="Install" />
+            <Button alignment="CENTER" layoutX="523.0" layoutY="2.0" mnemonicParsing="false" onAction="#onUninstallClicked" prefHeight="25.0" prefWidth="87.0" text="Uninstall" />
+            <Button alignment="CENTER" layoutX="663.0" layoutY="2.0" mnemonicParsing="false" onAction="#onClearClicked" prefHeight="25.0" prefWidth="87.0" text="Clear" />
+            <Button layoutX="274.0" layoutY="2.0" mnemonicParsing="false" onAction="#onSaveSettingsClicked" text="Save Settings" />
+            <Button alignment="CENTER" layoutX="786.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseClicked" prefHeight="25.0" prefWidth="87.0" text="Close" />
+         </children>
+      </AnchorPane>
+  </children>
+</VBox>

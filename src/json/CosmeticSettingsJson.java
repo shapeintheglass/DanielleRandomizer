@@ -19,10 +19,10 @@ public class CosmeticSettingsJson implements HasOptions {
       new ImmutableMap.Builder<String, BaseCheckbox>()
           .put(RANDOMIZE_BODIES,
               new BaseCheckbox("Randomize bodies", "Randomizes the appearance of all human NPCs",
-                  true))
+                  false))
           .put(RANDOMIZE_VOICELINES,
               new BaseCheckbox("Randomize voicelines", "Shuffles all voice lines by voice actor",
-                  true))
+                  false))
           .build();
 
 

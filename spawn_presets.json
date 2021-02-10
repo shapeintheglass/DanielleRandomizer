@@ -1,8 +1,12 @@
 {
   "item_spawn_settings": [
     {
-      "name": "Randomize all",
-      "desc": "Randomize all items. Does not spawn story items early.",
+      "name": "No item randomization",
+      "desc": "Do not randomize items."
+    },
+    {
+      "name": "Randomize items",
+      "desc": "The most balanced item randomization. Does not spawn story items early, to avoid sequence breaking.",
       "filters": [
         {
           "input_tags": [
@@ -100,8 +104,8 @@
       ]
     },
     {
-      "name": "Randomize all (chaotic)",
-      "desc": "Randomize all items. Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking.",
+      "name": "Randomize items (chaotic)",
+      "desc": "Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking.",
       "filters": [
         {
           "input_tags": [
@@ -197,7 +201,7 @@
       ]
     },
     {
-      "name": "Randomize all (lite)",
+      "name": "Randomize items within type",
       "desc": "Randomize items within their type. Weapons can become other weapons, fab plans can become other fab plans, etc. Does not spawn story items early.",
       "filters": [
         {
@@ -335,12 +339,8 @@
       ]
     },
     {
-      "name": "No randomization",
-      "desc": "Do not randomize items"
-    },
-    {
       "name": "Whiskey and cigars",
-      "desc": "For nightly gatherings.",
+      "desc": "Replaces all items with whiskey and cigars. For nightly gatherings.",
       "filters": [
         {
           "input_tags": [
@@ -358,8 +358,8 @@
       ]
     },
     {
-      "name": "All reployers",
-      "desc": "All items are reployers.",
+      "name": "All items are reployers",
+      "desc": "What do they do, anyway?",
       "filters": [
         {
           "input_tags": [
@@ -394,7 +394,7 @@
       ]
     },
     {
-      "name": "All weapons and neuromods",
+      "name": "All items are weapons and neuromods",
       "desc": "All items are weapons, neuromods, ammo, or explosive canisters.",
       "filters": [
         {
@@ -428,8 +428,8 @@
         }
       ]
     },
-        {
-      "name": "All explosive canisters",
+    {
+      "name": "All items are explosive canisters",
       "desc": "All items are explosive canisters.",
       "filters": [
         {
@@ -449,8 +449,12 @@
   ],
   "enemy_spawn_settings": [
     {
-      "name": "Randomize all",
-      "desc": "Randomize all enemies",
+      "name": "No NPC randomization",
+      "desc": "Do not randomize NPCs."
+    },
+    {
+      "name": "Randomize enemies",
+      "desc": "The most balanced enemy randomization. Does not spawn unkillable entities that could lead to soft locks.",
       "filters": [
         {
           "input_tags": [
@@ -486,8 +490,8 @@
       ]
     },
     {
-      "name": "Randomize all (chaotic)",
-      "desc": "Randomize all enemies. Has a chance of spawning unkillable entities like tentacles and turrets, and also randomizes named phantoms.",
+      "name": "Randomize enemies (chaotic)",
+      "desc": "Has a chance of spawning unkillable entities like tentacles and turrets.",
       "filters": [
         {
           "input_tags": [
@@ -527,7 +531,7 @@
       ]
     },
     {
-      "name": "Randomize all (lite)",
+      "name": "Randomize enemies within type",
       "desc": "Randomize enemies within their type. Easy enemies can become other easy enemies, tough enemies can become other tough enemies, etc. Friendly operators are also randomized.",
       "filters": [
         {
@@ -602,10 +606,6 @@
       ]
     },
     {
-      "name": "No randomization",
-      "desc": "Do not randomize enemies"
-    },
-    {
       "name": "All nightmares",
       "desc": "Why would you pick this? Why would you think this is a good idea?",
       "filters": [
@@ -622,7 +622,7 @@
     },
     {
       "name": "All mimics",
-      "desc": "Everything is mimics",
+      "desc": "All typhon and corrupted operators are mimics.",
       "filters": [
         {
           "input_tags": [
@@ -637,7 +637,7 @@
     },
     {
       "name": "Typhon to humans",
-      "desc": "Replaces all typhon with humans",
+      "desc": "Replaces all typhon and corrupted operators with humans",
       "filters": [
         {
           "input_tags": [
@@ -656,7 +656,7 @@
     },
     {
       "name": "All Dahl",
-      "desc": "Replaces all typhon with Dahl",
+      "desc": "Replaces all typhon and corrupted operators with Dahl",
       "filters": [
         {
           "input_tags": [
@@ -671,7 +671,7 @@
     },
     {
       "name": "All Simmons",
-      "desc": "Replaces all typhon, humans, and robots with Simmons. This will definitely break your game.",
+      "desc": "Replaces all typhon, humans, and robots with Simmons. This will certainly break your game.",
       "filters": [
         {
           "input_tags": [

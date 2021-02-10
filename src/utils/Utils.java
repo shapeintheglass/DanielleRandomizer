@@ -213,4 +213,8 @@ public class Utils {
     int dotIndex = s.indexOf('.');
     return s.substring(dotIndex + 1);
   }
+
+  public static long getNewSeed() {
+    return new Random().nextLong();
+  }
 }

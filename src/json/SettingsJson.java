@@ -42,18 +42,15 @@ public class SettingsJson {
     // TODO: Add validation if these settings are incomplete
     JsonNode node = new ObjectMapper().readTree(new File(filename));
     if (node.has(INSTALL_DIR)) {
-      this.installDir = node.get(INSTALL_DIR)
-                            .textValue();
+      this.installDir = node.get(INSTALL_DIR).textValue();
     } else {
       throw new IOException("Install dir not specified in " + filename);
     }
     if (node.has(RELEASE_VERSION)) {
-      this.releaseVersion = node.get(RELEASE_VERSION)
-                                .textValue();
+      this.releaseVersion = node.get(RELEASE_VERSION).textValue();
     }
     if (node.has(SEED_NAME)) {
-      this.seed = node.get(SEED_NAME)
-                      .asLong();
+      this.seed = node.get(SEED_NAME).asLong();
     }
     if (node.has(COSMETIC_SETTINGS)) {
       this.cosmeticSettings = new CosmeticSettingsJson(node.get(COSMETIC_SETTINGS));
@@ -81,5 +78,82 @@ public class SettingsJson {
 
   public GameplaySettingsJson getGameplaySettings() {
     return gameplaySettings;
+  }
+
+  public String toString() {
+    StringBuilder s = new StringBuilder();
+    boolean atLeastOneSetting = false;
+    // Cosmetic
+    if (this.getCosmeticSettings() != null) {
+      if (this.getCosmeticSettings().getRandomizeBodies()) {
+        s.append(" * Randomize bodies\n");
+        atLeastOneSetting = true;
+      }
+      if (this.getCosmeticSettings().getRandomizeVoiceLines()) {
+        s.append(" * Randomize voicelines\n");
+        atLeastOneSetting = true;
+      }
+    }
+
+    if (this.getGameplaySettings() != null) {
+      GameplaySettingsJson gsj = this.getGameplaySettings();
+
+      // Item
+      if (gsj.getItemSpawnSettings() != null) {
+        s.append(" * " + gsj.getItemSpawnSettings().getName() + "\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getMoreGuns()) {
+        s.append(" * More guns\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getRandomizeLoot()) {
+        s.append(" * Randomize loot tables\n");
+        atLeastOneSetting = true;
+      }
+
+      // Enemy
+      if (gsj.getEnemySpawnSettings() != null) {
+        s.append(" * " + gsj.getEnemySpawnSettings().getName() + "\n");
+        atLeastOneSetting = true;
+      }
+      // Starting equipment
+      if (gsj.getStartOn2ndDay()) {
+        s.append(" * Start on 2nd day\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getAddLootToApartment()) {
+        s.append(" * Add loot to Morgan's apartment\n");
+        atLeastOneSetting = true;
+      }
+      // Neuromod
+      if (gsj.getRandomizeNeuromods()) {
+        s.append(" * Randomize neuromods\n");
+        atLeastOneSetting = true;
+      }
+      // Story/progression
+      if (gsj.getRandomizeStation()) {
+        s.append(" * Randomize station\n");
+        atLeastOneSetting = true;
+      }
+      // Cheats
+      if (gsj.getOpenStation()) {
+        s.append(" * Unlock all doors/safes/workstations\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getUnlockAllScans()) {
+        s.append(" * Unlock all typhon neuromods\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getWanderingHumans()) {
+        s.append(" * Make humans wander\n");
+        atLeastOneSetting = true;
+      }
+    }
+
+    if (!atLeastOneSetting) {
+      s.append("None\n");
+    }
+    return s.toString();
   }
 }
