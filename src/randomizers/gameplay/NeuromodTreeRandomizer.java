@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import javax.imageio.ImageIO;
 import javax.swing.SwingConstants;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -25,28 +28,29 @@ import org.jgraph.graph.DefaultEdge;
 import org.jgrapht.Graph;
 import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.SimpleGraph;
+
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.primitives.ImmutableIntArray;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.util.mxCellRenderer;
+
 import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
 
 /**
  * Randomizes the neuromod upgrade tree.
- * 
- * Notes - Preserve the original structure of the tree - Ensure that neuromods must still be
- * unlocked in order
- * 
  */
 public class NeuromodTreeRandomizer extends BaseRandomizer {
   private static final String NEUROMOD_OUTPUT_PNG = "neuromod_output.png";
   private static final String FALSE = "false";
   private static final String REQUIRE_SCANNER = "RequireScanner";
   private static final int NUM_COLUMNS = 4;
-  private static final int NUM_ROWS = 6;
+  private static final int NUM_ROWS = 7;
   private static final int NUM_CATEGORIES = 6;
   private static final String FILES_DIR = "data/ark";
   private static final String ABILITIES_FILE = "abilities.xml";
@@ -64,47 +68,55 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
   private boolean unlockAllScans;
 
-  private static final int ABILITIES_PER_CATEGORY = 16;
-
-  private List<Ability> abilityIds;
+  private Map<String, Ability> abilityIdToAbility;
   private Map<String, Element> abilityIdToElement;
-  private static final String ID_PREREQ_FORMAT = "%s;%s";
+  private Multimap<String, String> categoryToAbilityId;
+  private List<String> categoryOrder;
 
-  private static final boolean[][] LAYOUT_ONE =
-      {{true, false, false, false, false, false}, {false, true, false, false, false, false},
-          {false, false, true, false, false, false}, {false, false, false, true, false, false},
-          {false, false, false, false, true, false}, {false, false, false, false, false, true},};
+  private static final boolean[][] LAYOUT_ZERO = { { false, false, false, false, false, false, false } };
 
-  private static final boolean[][] LAYOUT_TWO =
-      {{true, false, false, true, false, false}, {false, false, true, true, false, false},
-          {false, true, false, false, true, false}, {false, false, true, false, true, false}};
+  private static final boolean[][] LAYOUT_ONE = { { true, false, false, false, false, false, false }, { false, true,
+      false, false, false, false, false }, { false, false, true, false, false, false, false }, { false, false, false,
+          true, false, false, false }, { false, false, false, false, true, false, false }, { false, false, false, false,
+              false, true, false }, { false, false, false, false, false, false, true }, };
 
-  private static final boolean[][] LAYOUT_THREE =
-      {{true, false, true, false, true, false}, {false, true, false, true, false, true},
-          {false, true, true, false, true, false}, {false, true, false, true, true, false}};
+  private static final boolean[][] LAYOUT_TWO = { { true, false, false, true, false, false, false }, { false, false,
+      true, true, false, false, false }, { false, true, false, false, true, false, false }, { false, false, true, false,
+          true, false, false } };
 
-  private static final boolean[][] LAYOUT_FOUR = {{false, true, true, true, true, false},
-      {true, true, true, true, false, false}, {true, false, true, true, false, true}};
+  private static final boolean[][] LAYOUT_THREE = { { true, false, true, false, true, false, false }, { false, true,
+      false, true, false, true, false }, { false, true, true, false, true, false, false }, { false, true, false, true,
+          true, false, false } };
 
-  private static final boolean[][] LAYOUT_FIVE = {{true, true, true, true, true, false}};
+  private static final boolean[][] LAYOUT_FOUR = { { false, true, true, true, true, false, false }, { true, true, true,
+      true, false, false, false }, { true, false, true, true, false, true, false } };
 
-  private static final boolean[][] LAYOUT_SIX = {{true, true, true, true, true, true}};
+  private static final boolean[][] LAYOUT_FIVE = { { true, true, true, true, true, false, false }, { false, true, true,
+      true, true, true, false } };
+
+  private static final boolean[][] LAYOUT_SIX = { { true, true, true, true, true, true, false }, { false, true, true,
+      true, true, true, true } };
+
+  private static final boolean[][] LAYOUT_SEVEN = { { true, true, true, true, true, true, true } };
 
   // If we recalculate neuromod costs, pull a random int from the appropriate set.
   private static final ImmutableIntArray COLUMN_ONE_COSTS = ImmutableIntArray.of(1, 1, 2, 2, 3);
   private static final ImmutableIntArray COLUMN_TWO_COSTS = ImmutableIntArray.of(3, 4, 5);
   private static final ImmutableIntArray COLUMN_THREE_COSTS = ImmutableIntArray.of(5, 6, 7);
   private static final ImmutableIntArray COLUMN_FOUR_COSTS = ImmutableIntArray.of(8, 9, 10);
-  private static final ImmutableList<ImmutableIntArray> COLUMN_COSTS =
-      ImmutableList.of(COLUMN_ONE_COSTS, COLUMN_TWO_COSTS, COLUMN_THREE_COSTS, COLUMN_FOUR_COSTS);
+  private static final ImmutableList<ImmutableIntArray> COLUMN_COSTS = ImmutableList.of(COLUMN_ONE_COSTS,
+      COLUMN_TWO_COSTS, COLUMN_THREE_COSTS, COLUMN_FOUR_COSTS);
 
   private Document abilitiesDoc;
+  private Document layoutDoc;
 
   public NeuromodTreeRandomizer(SettingsJson s, Path tempPatchDir) {
     super(s);
     unlockAllScans = s.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS);
-    abilityIds = new ArrayList<>();
+    abilityIdToAbility = new HashMap<>();
     abilityIdToElement = new HashMap<>();
+    categoryToAbilityId = HashMultimap.create();
+    categoryOrder = Lists.newArrayList();
     Path arkDir = new File(FILES_DIR).toPath();
     abilitiesFileIn = arkDir.resolve(ABILITIES_FILE).toFile();
     layoutFileIn = arkDir.resolve(PDA_LAYOUT_FILE).toFile();
@@ -130,8 +142,25 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     for (Element ability : allAbilities) {
       String name = ability.getAttributeValue("Name");
       String id = ability.getAttributeValue("ID");
-      abilityIds.add(new Ability(name, id));
+      abilityIdToAbility.put(id, new Ability(name, id));
       abilityIdToElement.put(id, ability);
+    }
+
+    layoutDoc = saxBuilder.build(layoutFileIn);
+    Element layoutRoot = layoutDoc.getRootElement();
+    List<Element> categories = layoutRoot.getChild("Categories").getChildren();
+    for (Element arkAbilityCategory : categories) {
+      String categoryName = arkAbilityCategory.getAttributeValue("Name");
+      categoryOrder.add(categoryName);
+      List<Element> rows = arkAbilityCategory.getChild("Rows").getChildren();
+      for (Element abilityRow : rows) {
+        for (Element ability : abilityRow.getChild("Abilities").getChildren()) {
+          String abilityValue = ability.getAttributeValue("Value");
+          if (abilityValue != null) {
+            categoryToAbilityId.put(categoryName, abilityValue);
+          }
+        }
+      }
     }
   }
 
@@ -141,27 +170,21 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       try {
         removeScanRequirementInResearchTopics();
       } catch (JDOMException | IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
 
-    Collections.shuffle(abilityIds, r);
-
     try {
-      SAXBuilder saxBuilder = new SAXBuilder();
-
-      Document layoutDoc = saxBuilder.build(layoutFileIn);
-
       Element layoutRoot = layoutDoc.getRootElement();
       List<Element> allCategories = layoutRoot.getChild("Categories").getChildren();
-      int abilityIdIndex = 0;
       for (int categoryIndex = 0; categoryIndex < NUM_CATEGORIES; categoryIndex++) {
-        // Generate a new layout using the next N ability IDs
-        List<Ability> abilitiesToAdd =
-            abilityIds.subList(abilityIdIndex, abilityIdIndex + ABILITIES_PER_CATEGORY);
-        abilityIdIndex += ABILITIES_PER_CATEGORY;
-        Ability[][] layout = createLayout(abilitiesToAdd, r);
+        // Generate a new layout using the next category's ability IDs
+        String categoryName = categoryOrder.get(categoryIndex);
+        List<String> abilityIdsInCategory = new ArrayList<String>(categoryToAbilityId.get(categoryName));
+        // Sort to ensure consistency when randomizing
+        Collections.sort(abilityIdsInCategory);
+        Collections.shuffle(abilityIdsInCategory, r);
+        Ability[][] layout = createLayout(abilityIdsInCategory, r);
 
         // Delete all existing rows
         Element rowsElement = allCategories.get(categoryIndex).getChild("Rows");
@@ -197,7 +220,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       }
 
       // Update prereqs and other requirements for all abilities
-      for (Ability a : abilityIds) {
+      for (Ability a : abilityIdToAbility.values()) {
         Element e = abilityIdToElement.get(a.getId());
         // Remove any pre-existing prereqs
         e.getChild("Prereqs").removeChildren("Prereq");
@@ -218,7 +241,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       xmlOutput.output(abilitiesDoc, new FileOutputStream(abilitiesFileOut));
       xmlOutput.output(layoutDoc, new FileOutputStream(layoutFileOut));
       visualize();
-    } catch (JDOMException | IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
       return;
     }
@@ -226,21 +249,20 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
   private void visualize() throws IOException {
     Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-    
+
     // First pass to add all vertex names
-    for (Ability a : abilityIds) {
+    for (Ability a : abilityIdToAbility.values()) {
       graph.addVertex(String.format("\t%s (%d)\t", a.getName(), a.getCost()));
     }
 
     // Second pass to add all edges
-    for (Ability a : abilityIds) {
+    for (Ability a : abilityIdToAbility.values()) {
       String newNodeName = String.format("\t%s (%d)\t", a.getName(), a.getCost());
 
       if (a.getPrereq() != null) {
         Element e = abilityIdToElement.get(a.getPrereq());
-        String prereqName =  String.format("\t%s (%s)\t", e.getAttributeValue("Name"), e.getAttributeValue("Cost"));
+        String prereqName = String.format("\t%s (%s)\t", e.getAttributeValue("Name"), e.getAttributeValue("Cost"));
         graph.addEdge(prereqName, newNodeName);
-
       }
     }
 
@@ -251,8 +273,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     mxIGraphLayout graphLayout = new mxHierarchicalLayout(graphAdapter, SwingConstants.WEST);
     graphLayout.execute(graphAdapter.getDefaultParent());
 
-    BufferedImage img =
-        mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
+    BufferedImage img = mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
     ImageIO.write(img, "PNG", output);
   }
 
@@ -260,7 +281,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     // Update prereqs and other requirements for all abilities
 
     try {
-      for (Ability a : abilityIds) {
+      for (Ability a : abilityIdToAbility.values()) {
         Element e = abilityIdToElement.get(a.getId());
         e.setAttribute(REQUIRE_SCANNER, FALSE);
       }
@@ -272,7 +293,6 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     } catch (IOException e) {
       e.printStackTrace();
     } catch (JDOMException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
@@ -302,26 +322,29 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   }
 
   // Creates a single page layout
-  private Ability[][] createLayout(List<Ability> ids, Random r) throws UnexpectedException {
+  private Ability[][] createLayout(List<String> ids, Random r) throws UnexpectedException {
     Ability[][] layout = new Ability[NUM_ROWS][NUM_COLUMNS];
-    int idsIndex = 0;
 
     int[] elementsPerColumn = new int[NUM_COLUMNS];
     // Decide how many abilities will be in each column
-    // First column- 2-4
-    elementsPerColumn[0] = 2 + r.nextInt(3);
-    // Second column- 6
-    elementsPerColumn[1] = 6;
-    // Third column- 4-5
-    elementsPerColumn[2] = 4 + r.nextInt(2);
+    // First column: 3-4
+    elementsPerColumn[0] = 3 + r.nextInt(2);
+    // Second column: 1st + 0-2
+    elementsPerColumn[1] = elementsPerColumn[0] + 1 + r.nextInt(3);
+    int remainder = ids.size() - elementsPerColumn[0] - elementsPerColumn[1];
+    // Third column: 4-7
+    elementsPerColumn[2] = Math.min(remainder, 4 + r.nextInt(4));
     // Fourth column- remainder
-    elementsPerColumn[3] =
-        ABILITIES_PER_CATEGORY - elementsPerColumn[0] - elementsPerColumn[1] - elementsPerColumn[2];
-
+    remainder = ids.size() - elementsPerColumn[0] - elementsPerColumn[1] - elementsPerColumn[2];
+    elementsPerColumn[3] = Math.max(remainder, 0);
+    int idsIndex = 0;
     for (int columnIndex = 0; columnIndex < NUM_COLUMNS; columnIndex++) {
       // Decide column layout depending on number of elements
-      boolean[] columnLayout = new boolean[6];
+      boolean[] columnLayout = new boolean[NUM_COLUMNS];
       switch (elementsPerColumn[columnIndex]) {
+        case 0:
+          columnLayout = LAYOUT_ZERO[r.nextInt(LAYOUT_ZERO.length)];
+          break;
         case 1:
           columnLayout = LAYOUT_ONE[r.nextInt(LAYOUT_ONE.length)];
           break;
@@ -340,17 +363,20 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         case 6:
           columnLayout = LAYOUT_SIX[r.nextInt(LAYOUT_SIX.length)];
           break;
+        case 7:
+          columnLayout = LAYOUT_SEVEN[r.nextInt(LAYOUT_SEVEN.length)];
+          break;
         default:
-          throw new UnexpectedException(
-              String.format("Unhandled number of abilities in column %d: %d", columnIndex,
-                  elementsPerColumn[columnIndex]));
+          throw new UnexpectedException(String.format("Unhandled number of abilities in column %d: %d", columnIndex,
+              elementsPerColumn[columnIndex]));
       }
 
       // Populate the column depending on layout
       for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
         if (columnLayout[rowIndex]) {
           // Decide prereqs for everything after the first column
-          Ability nextAbility = ids.get(idsIndex++);
+          String nextId = ids.get(idsIndex++);
+          Ability nextAbility = abilityIdToAbility.get(nextId);
           if (columnIndex != 0) {
             // Scan upwards until the first prereq is found
             boolean prereqFound = false;
@@ -423,7 +449,14 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     }
 
     public String toString() {
-      return String.format(ID_PREREQ_FORMAT, id, prereq);
+      return name;
     }
+  }
+
+  public static void main(String[] args) {
+    SettingsJson testSettings = new SettingsJson("test", "test", new Random().nextLong(), null,
+        new GameplaySettingsJson(false, false, false, false, false, false, false, false, false, false, null, null));
+    NeuromodTreeRandomizer n = new NeuromodTreeRandomizer(testSettings, Paths.get("."));
+    n.randomize();
   }
 }
