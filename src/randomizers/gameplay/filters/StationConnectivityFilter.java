@@ -273,12 +273,12 @@ public class StationConnectivityFilter extends BaseFilter {
     // graph.addVertex("HARDWARE_LABS");
     graph.addVertex("DEEP_STORAGE");
     // graph.addVertex("CREW_QUARTERS");
-    graph.addVertex("PSYCHOTRONICS");
+    //graph.addVertex("PSYCHOTRONICS");
     // graph.addEdge("LOBBY", "HARDWARE_LABS");
     graph.addEdge("ARBORETUM", "DEEP_STORAGE");
     // graph.addEdge("ARBORETUM", "CREW_QUARTERS");
-    graph.addEdge("PSYCHOTRONICS", "LOBBY");
-    graph.addEdge("PSYCHOTRONICS", "GUTS");
+    //graph.addEdge("PSYCHOTRONICS", "LOBBY");
+    //graph.addEdge("PSYCHOTRONICS", "GUTS");
 
     JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
     mxIGraphLayout graphLayout = new mxFastOrganicLayout(graphAdapter);
@@ -373,8 +373,8 @@ public class StationConnectivityFilter extends BaseFilter {
   public static void main(String[] args) {
 
     try {
-      // new StationConnectivityFilter(6752871950564122477L).visualize();
-      new StationConnectivityFilter(new Random().nextLong()).visualize();
+      new StationConnectivityFilter(6752871950564122477L).visualize();
+      //new StationConnectivityFilter(new Random().nextLong()).visualize();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
