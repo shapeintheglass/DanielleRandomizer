@@ -18,42 +18,31 @@ public class ItemMultiplierHelper {
   public static final int MAYBE_A_LOT_MIN_BOUND = 1;
   public static final int MAYBE_A_LOT_MAX_BOUND = 30;
 
-  public static final int FUCK_IT_MIN_BOUND = 50;
-  public static final int FUCK_IT_MAX_BOUND = 500;
+  public static final int FUCK_IT_MIN_BOUND = 1;
+  public static final int FUCK_IT_MAX_BOUND = 100;
 
-  private static ImmutableSet<String> FUCK_IT_TIER = ImmutableSet.of("Ammo", "RecyclerJunk", "Ingredients");
-  private static ImmutableSet<String> MAYBE_A_LOT_TIER = ImmutableSet.of("Food");
+  private static ImmutableSet<String> FUCK_IT_TIER = ImmutableSet.of("Ingredients");
+  private static ImmutableSet<String> MAYBE_A_LOT_TIER = ImmutableSet.of("Food", "Ammo");
   private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("EMPGrenades", "LureGrenades",
-      "RecyclerGrenades", "NullwaveTransmitter");
+      "RecyclerGrenades", "NullwaveTransmitter", "RecyclerJunk");
+  private static ImmutableSet<String> ONLY_ONE_TIER = ImmutableSet.of("FabricationPlans", "Weapons");
 
   public static Tier getTierForEntity(Element e) {
     Set<String> tags = Utils.getTags(e);
-    if (tags.isEmpty()) {
-      return Tier.ONLY_ONE;
-    }
-    if (Utils.getCommonElement(tags, MAYBE_A_FEW_TIER) == null) {
-      return Tier.MAYBE_A_FEW;
-    }
-    if (Utils.getCommonElement(tags, MAYBE_A_LOT_TIER) == null) {
-      return Tier.MAYBE_A_LOT;
-    }
-    if (Utils.getCommonElement(tags, FUCK_IT_TIER) == null) {
-      return Tier.FUCK_IT;
-    }
-    return Tier.ONLY_ONE;
+    return getTierForTags(tags);
   }
 
   public static Tier getTierForTags(Set<String> tags) {
-    if (tags.isEmpty()) {
+    if (tags.isEmpty() || Utils.getCommonElement(tags, ONLY_ONE_TIER) != null) {
       return Tier.ONLY_ONE;
     }
-    if (Utils.getCommonElement(tags, MAYBE_A_FEW_TIER) == null) {
+    if (Utils.getCommonElement(tags, MAYBE_A_FEW_TIER) != null) {
       return Tier.MAYBE_A_FEW;
     }
-    if (Utils.getCommonElement(tags, MAYBE_A_LOT_TIER) == null) {
+    if (Utils.getCommonElement(tags, MAYBE_A_LOT_TIER) != null) {
       return Tier.MAYBE_A_LOT;
     }
-    if (Utils.getCommonElement(tags, FUCK_IT_TIER) == null) {
+    if (Utils.getCommonElement(tags, FUCK_IT_TIER) != null) {
       return Tier.FUCK_IT;
     }
     return Tier.ONLY_ONE;
