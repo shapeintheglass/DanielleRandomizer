@@ -53,8 +53,10 @@
                                  <children>
                                     <CheckBox fx:id="cosmeticCheckboxBodies" mnemonicParsing="false" text="Randomize human bodies" />
                                     <CheckBox fx:id="cosmeticCheckboxVoices" mnemonicParsing="false" text="Randomize voice lines" />
+                                    <CheckBox fx:id="cosmeticCheckboxMusic" mnemonicParsing="false" text="Randomize music" />
                                  </children>
                               </VBox>
+                              <Label layoutX="229.0" layoutY="114.0" text="Shuffles in-game music." />
                            </children>
                         </AnchorPane>
                   </content>

@@ -22,7 +22,7 @@ public class Gui2Consts {
   public static final SpawnPresetJson ITEMS_RANDOMIZE_ALL = new SpawnPresetJson("Randomize all", "", Lists.newArrayList(
       new GenericRuleJson(Lists.newArrayList(), Lists.newArrayList(), Lists.newArrayList(), Lists.newArrayList(), Lists
           .newArrayList())));
-  public static final CosmeticSettingsJson RECOMMENDED_COSMETIC = new CosmeticSettingsJson(true, true);
+  public static final CosmeticSettingsJson RECOMMENDED_COSMETIC = new CosmeticSettingsJson(true, true, true);
   public static final GameplaySettingsJson RECOMMENDED_GAMEPLAY = new GameplaySettingsJson(true, false, false, false,
       false, false, false, false, false, false, null, null);
   public static final GameplaySettingsJson CHAOTIC_GAMEPLAY = new GameplaySettingsJson(true, false, true, true, false,

@@ -49,7 +49,7 @@ public class OptionsPanel extends JPanel {
 
   public CosmeticSettingsJson getCosmeticSettings() {
     return new CosmeticSettingsJson(otherOptionsPanel.isChecked(CosmeticSettingsJson.RANDOMIZE_BODIES),
-        otherOptionsPanel.isChecked(CosmeticSettingsJson.RANDOMIZE_VOICELINES));
+        otherOptionsPanel.isChecked(CosmeticSettingsJson.RANDOMIZE_VOICELINES), false);
   }
 
   public GameplaySettingsJson getGameplaySettings() {

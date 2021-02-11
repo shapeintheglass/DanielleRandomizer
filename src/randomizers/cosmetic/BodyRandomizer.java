@@ -23,7 +23,7 @@ import utils.FileConsts;
 
 public class BodyRandomizer extends BaseRandomizer {
 
-  Path tempPatchDir;
+  private Path tempPatchDir;
 
   public BodyRandomizer(SettingsJson s, Path tempPatchDir) {
     super(s);

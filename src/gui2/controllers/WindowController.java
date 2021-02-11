@@ -71,6 +71,8 @@ public class WindowController {
   private CheckBox cosmeticCheckboxBodies;
   @FXML
   private CheckBox cosmeticCheckboxVoices;
+  @FXML
+  private CheckBox cosmeticCheckboxMusic;
 
   /* ITEMS TAB */
   @FXML
@@ -163,6 +165,7 @@ public class WindowController {
   private void updateUI() {
     cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
     cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoiceLines());
+    cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
 
     itemsCheckboxMoreGuns.setSelected(settings.getGameplaySettings().getMoreGuns());
     itemsCheckboxLootTables.setSelected(settings.getGameplaySettings().getRandomizeLoot());
@@ -248,6 +251,7 @@ public class WindowController {
     // TODO: Make this less gross
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
+    cosmeticCheckboxMusic.setSelected(true);
     itemsCheckboxLootTables.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(false);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
@@ -269,6 +273,7 @@ public class WindowController {
     // TODO: Make this less gross
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
+    cosmeticCheckboxMusic.setSelected(true);
     itemsCheckboxLootTables.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items (chaotic)");
@@ -288,8 +293,9 @@ public class WindowController {
   @FXML
   protected void onPresetsLiteClicked(ActionEvent event) {
     // TODO: Make this less gross
-    cosmeticCheckboxBodies.setSelected(true);
-    cosmeticCheckboxVoices.setSelected(true);
+    cosmeticCheckboxBodies.setSelected(false);
+    cosmeticCheckboxVoices.setSelected(false);
+    cosmeticCheckboxMusic.setSelected(false);
     itemsCheckboxLootTables.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(false);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items within type");
@@ -380,7 +386,8 @@ public class WindowController {
   }
 
   private CosmeticSettingsJson getCosmeticSettings() {
-    return new CosmeticSettingsJson(cosmeticCheckboxBodies.isSelected(), cosmeticCheckboxVoices.isSelected());
+    return new CosmeticSettingsJson(cosmeticCheckboxBodies.isSelected(), cosmeticCheckboxVoices.isSelected(),
+        cosmeticCheckboxMusic.isSelected());
   }
 
   private GameplaySettingsJson getGameplaySettings() {
