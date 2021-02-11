@@ -9,8 +9,9 @@ import com.google.common.base.Optional;
 
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
-import gui.Consts;
 import installers.Installer;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
 import json.CosmeticSettingsJson;
 import json.GameplaySettingsJson;
@@ -29,7 +30,7 @@ import randomizers.gameplay.filters.StartOutsideApartmentFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
 import utils.Utils;
 
-public class InstallHelper {
+public class InstallService extends Service<Void> {
 
   private static final String TEMP_FOLDER_SUFFIX = "deleteme";
   private static final String TEMP_PATCH_DIR_NAME = "patch";
@@ -39,16 +40,27 @@ public class InstallHelper {
   private TextArea outputWindow;
   private SettingsJson finalSettings;
 
-  public InstallHelper(TextArea outputWindow, SettingsJson finalSettings) {
+  public InstallService(TextArea outputWindow, SettingsJson finalSettings) {
     this.outputWindow = outputWindow;
     this.finalSettings = finalSettings;
+  }
+  
+  @Override
+  protected Task<Void> createTask() {
+    return new Task<Void>() {
+
+      @Override
+      protected Void call() throws Exception {
+        doInstall();
+        return null;
+      }
+      
+    };
   }
 
   public void doInstall() {
     Date startTime = new Date();
-    outputWindow.appendText(Consts.INSTALL_STATUS_TEXT);
-
-    // TODO: Write last used settings to a special file
+    outputWindow.appendText(Gui2Consts.INSTALL_STATUS_TEXT + "\n");
 
     Path workingDir = Paths.get(DEFAULT_WORKING_DIR);
     Path tempDir = Utils.createTempDir(workingDir, TEMP_FOLDER_SUFFIX);
@@ -66,7 +78,7 @@ public class InstallHelper {
       executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
 
       try {
-        outputWindow.appendText(Consts.INSTALL_PROGRESS_WRITING + "\n");
+        outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_WRITING + "\n");
         installer.get().install();
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
@@ -74,12 +86,17 @@ public class InstallHelper {
 
       Date endTime = new Date();
       long secondsElapsed = endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
-      outputWindow.appendText(String.format(Consts.INSTALL_STATUS_COMPLETE_TEXT + "\n", secondsElapsed));
-
+      outputWindow.appendText(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT + "\n", secondsElapsed));
     } catch (Exception e) {
       e.printStackTrace();
-      outputWindow.appendText(Consts.INSTALL_STATUS_FAILED_TEXT + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_STATUS_FAILED_TEXT + "\n");
     } finally {
+      if (tempLevelDir.toFile().exists()) {
+        Utils.deleteDirectory(tempLevelDir.toFile());
+      }
+      if (tempPatchDir.toFile().exists()) {
+        Utils.deleteDirectory(tempPatchDir.toFile());
+      }
       if (tempDir.toFile().exists()) {
         Utils.deleteDirectory(tempDir.toFile());
       }
@@ -93,15 +110,15 @@ public class InstallHelper {
     // Initialize install
     Installer installer = new Installer(installDir, tempDir, tempLevelDir, tempPatchDir, currentSettings);
     if (!installer.verifyDataExists()) {
-      outputWindow.appendText(Consts.INSTALL_ERROR_DATA_NOT_FOUND + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_ERROR_DATA_NOT_FOUND + "\n");
       return Optional.absent();
     }
     if (!installer.verifyInstallDir()) {
-      outputWindow.appendText(Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER + "\n");
       return Optional.absent();
     }
     if (!installer.testInstall()) {
-      outputWindow.appendText(Consts.INSTALL_ERROR_CANNOT_WRITE + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_ERROR_CANNOT_WRITE + "\n");
       return Optional.absent();
     }
     return Optional.of(installer);
@@ -112,17 +129,17 @@ public class InstallHelper {
 
     /* COSMETIC */
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
-      outputWindow.appendText(Consts.INSTALL_PROGRESS_BODIES + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_BODIES + "\n");
       new BodyRandomizer(currentSettings, tempPatchDir).randomize();
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
-      outputWindow.appendText(Consts.INSTALL_PROGRESS_VOICELINES + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_VOICELINES + "\n");
       new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
-      outputWindow.appendText(Consts.INSTALL_PROGRESS_NEUROMOD + "\n");
+      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_NEUROMOD + "\n");
       new NeuromodTreeRandomizer(currentSettings, tempPatchDir).randomize();
     } else if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS)) {
       new NeuromodTreeRandomizer(currentSettings, tempPatchDir).unlockAllScans();
@@ -130,7 +147,7 @@ public class InstallHelper {
 
     try {
       if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_LOOT)) {
-        outputWindow.appendText(Consts.INSTALL_PROGRESS_LOOT + "\n");
+        outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_LOOT + "\n");
         new LootTableRandomizer(database, currentSettings, tempPatchDir).randomize();
       } else {
         new LootTableRandomizer(database, currentSettings, tempPatchDir).copyFile();
@@ -167,7 +184,7 @@ public class InstallHelper {
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
 
-    outputWindow.appendText(Consts.INSTALL_PROGRESS_LEVELS + "\n");
+    outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_LEVELS + "\n");
     levelRandomizer.randomize();
   }
 }

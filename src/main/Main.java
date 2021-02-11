@@ -1,10 +1,9 @@
 package main;
 
-import gui.RandomizerGui;
+import gui2.RandomizerGui2;
 
 public class Main {
   public static void main(String[] args) {
-    RandomizerGui gui = new RandomizerGui();
-    gui.start();
+    RandomizerGui2.launch(args);
   }
 }

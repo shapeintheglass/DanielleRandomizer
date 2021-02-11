@@ -11,13 +11,18 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 
 import gui2.Gui2Consts;
-import gui2.InstallHelper;
+import gui2.InstallService;
 import installers.Installer;
 import javafx.application.Platform;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -48,6 +53,18 @@ public class WindowController {
   private TextField directoryText;
   @FXML
   private TextField seedText;
+  @FXML
+  private Button changeDirButton;
+  @FXML
+  private Button newSeedButton;
+
+  /* PRESETS */
+  @FXML
+  private Button recommendedPresetButton;
+  @FXML
+  private Button chaoticPresetButton;
+  @FXML
+  private Button litePresetButton;
 
   /* COSMETICS TAB */
   @FXML
@@ -91,10 +108,23 @@ public class WindowController {
   @FXML
   private CheckBox cheatsCheckboxWander;
 
+  /* LOWER BUTTONS */
+  @FXML
+  private Button installButton;
+  @FXML
+  private Button uninstallButton;
+  @FXML
+  private Button clearButton;
+  @FXML
+  private Button saveSettingsButton;
+  @FXML
+  private Button closeButton;
+
   private Stage stage;
   private SettingsJson settings;
   private Optional<AllPresetsJson> allPresets;
   private Logger logger;
+  private List<Node> allEntities;
 
   public void setStage(Stage stage) {
     this.stage = stage;
@@ -122,6 +152,15 @@ public class WindowController {
     seedText.setText(Long.toString(settings.getSeed()));
     directoryText.setText(settings.getInstallDir());
 
+    allEntities = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
+        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton);
+
+    updateUI();
+
+    initCustomSpawnCheckboxes(allPresets, settings);
+  }
+
+  private void updateUI() {
     cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
     cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoiceLines());
 
@@ -138,8 +177,6 @@ public class WindowController {
     cheatsCheckboxUnlockAll.setSelected(settings.getGameplaySettings().getOpenStation());
     cheatsCheckboxAllScans.setSelected(settings.getGameplaySettings().getUnlockAllScans());
     cheatsCheckboxWander.setSelected(settings.getGameplaySettings().getWanderingHumans());
-
-    initCustomSpawnCheckboxes(allPresets, settings);
   }
 
   private void initCustomSpawnCheckboxes(Optional<AllPresetsJson> allPresets, SettingsJson settings) {
@@ -281,8 +318,29 @@ public class WindowController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    InstallHelper installHelper = new InstallHelper(outputWindow, finalSettings);
-    installHelper.doInstall();
+    InstallService installService = new InstallService(outputWindow, finalSettings);
+    installService.setOnRunning(new EventHandler<WorkerStateEvent>() {
+      @Override
+      public void handle(WorkerStateEvent arg0) {
+        disableAllButtons(true);
+      }
+    });
+    EventHandler<WorkerStateEvent> reenableButtons = new EventHandler<WorkerStateEvent>() {
+      @Override
+      public void handle(WorkerStateEvent arg0) {
+        disableAllButtons(false);
+      }
+    };
+    installService.setOnCancelled(reenableButtons);
+    installService.setOnFailed(reenableButtons);
+    installService.setOnSucceeded(reenableButtons);
+    installService.start();
+  }
+
+  private void disableAllButtons(boolean disable) {
+    for (Node b : allEntities) {
+      b.setDisable(disable);
+    }
   }
 
   @FXML

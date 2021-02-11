@@ -17,13 +17,13 @@ public class RandomizerGui2 extends Application {
   
   private PrintStream fileStream;
 
-  public static void main(String[] args) {
+  public static void launch(String[] args) {
     Application.launch(RandomizerGui2.class, args);
   }
 
   @Override
   public void start(Stage stage) throws Exception {
-    //setupLogFile();
+    setupLogFile();
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource(GUI2_TEMPLATE_FXML));
     Parent root = loader.load();

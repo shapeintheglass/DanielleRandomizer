@@ -15,9 +15,9 @@
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="900.0">
          <children>
             <Label layoutX="624.0" layoutY="6.0" text="Seed:" />
-            <Button layoutX="541.0" layoutY="3.0" mnemonicParsing="false" onAction="#onChangeDirClicked" prefHeight="25.0" prefWidth="70.0" text="Change" />
+            <Button fx:id="changeDirButton" layoutX="541.0" layoutY="3.0" mnemonicParsing="false" onAction="#onChangeDirClicked" prefHeight="25.0" prefWidth="70.0" text="Change" />
             <Label layoutX="14.0" layoutY="6.0" text="Prey directory:" />
-            <Button layoutX="825.0" layoutY="3.0" mnemonicParsing="false" onAction="#onNewSeedClicked" text="New Seed" />
+            <Button fx:id="newSeedButton" layoutX="825.0" layoutY="3.0" mnemonicParsing="false" onAction="#onNewSeedClicked" text="New Seed" />
             <TextField fx:id="directoryText" layoutX="103.0" layoutY="3.0" prefHeight="25.0" prefWidth="426.0" />
             <TextField fx:id="seedText" layoutX="665.0" layoutY="3.0" />
          </children>
@@ -31,9 +31,9 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Pick a preset to start! When you pick a preset, check out the other tabs for more customization." />
-                              <Button layoutX="26.0" layoutY="59.0" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Recommended" />
-                              <Button layoutX="26.0" layoutY="105.0" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
-                              <Button layoutX="26.0" layoutY="149.0" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="Lite" />
+                              <Button fx:id="recommendedPresetButton" layoutX="26.0" layoutY="59.0" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Recommended" />
+                              <Button fx:id="chaoticPresetButton" layoutX="26.0" layoutY="105.0" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
+                              <Button fx:id="litePresetButton" layoutX="26.0" layoutY="149.0" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="Lite" />
                               <Label layoutX="144.0" layoutY="63.0" text="A balance of randomized options that keeps gameplay somewhat fair and stable." />
                               <Label layoutX="144.0" layoutY="109.0" text="For people who like to live dangerously. Potential sequence breaking / soft locks." />
                               <Label layoutX="144.0" layoutY="153.0" text="Very light randomization over the original design." />
@@ -170,11 +170,11 @@
       </SplitPane>
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="900.0">
          <children>
-            <Button alignment="CENTER" layoutX="399.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleInstallClicked" prefHeight="25.0" prefWidth="87.0" text="Install" />
-            <Button alignment="CENTER" layoutX="523.0" layoutY="2.0" mnemonicParsing="false" onAction="#onUninstallClicked" prefHeight="25.0" prefWidth="87.0" text="Uninstall" />
-            <Button alignment="CENTER" layoutX="663.0" layoutY="2.0" mnemonicParsing="false" onAction="#onClearClicked" prefHeight="25.0" prefWidth="87.0" text="Clear" />
-            <Button layoutX="274.0" layoutY="2.0" mnemonicParsing="false" onAction="#onSaveSettingsClicked" text="Save Settings" />
-            <Button alignment="CENTER" layoutX="786.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseClicked" prefHeight="25.0" prefWidth="87.0" text="Close" />
+            <Button fx:id="installButton" alignment="CENTER" layoutX="399.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleInstallClicked" prefHeight="25.0" prefWidth="87.0" text="Install" />
+            <Button fx:id="uninstallButton" alignment="CENTER" layoutX="523.0" layoutY="2.0" mnemonicParsing="false" onAction="#onUninstallClicked" prefHeight="25.0" prefWidth="87.0" text="Uninstall" />
+            <Button fx:id="clearButton" alignment="CENTER" layoutX="663.0" layoutY="2.0" mnemonicParsing="false" onAction="#onClearClicked" prefHeight="25.0" prefWidth="87.0" text="Clear" />
+            <Button fx:id="saveSettingsButton" layoutX="274.0" layoutY="2.0" mnemonicParsing="false" onAction="#onSaveSettingsClicked" text="Save Settings" />
+            <Button fx:id="closeButton" alignment="CENTER" layoutX="786.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseClicked" prefHeight="25.0" prefWidth="87.0" text="Close" />
          </children>
       </AnchorPane>
   </children>
