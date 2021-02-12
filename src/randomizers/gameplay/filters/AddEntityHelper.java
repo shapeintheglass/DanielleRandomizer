@@ -1,17 +1,22 @@
 package randomizers.gameplay.filters;
 
+import java.io.File;
+
+import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
 import json.SettingsJson;
 
 public class AddEntityHelper {
+  private static final String NATURAL_DAY_2_START_FILE = "data/naturalday2start/FG_Day2Start.xml";
 
   private static Element getNeuromodDivisionSelfDestructFlowgraph() {
     Element entity = new Element("Entity").setAttribute("Name", "Shenanigans")
         .setAttribute("Pos", "0,0,0")
         .setAttribute("Rotate", "0,0,0,1")
         .setAttribute("EntityClass", "FlowgraphEntity")
-        .setAttribute("EntityId", "5807")
+        .setAttribute("EntityId", "5808")
         .setAttribute("EntityGuid", "0451")
         .setAttribute("CastShadowViewDistRatio", "0")
         .setAttribute("CastShadowMinSpec", "1")
@@ -95,6 +100,19 @@ public class AddEntityHelper {
   public static void addEntities(Element objects, String filename, SettingsJson settings) {
     if (settings.getGameplaySettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
       objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
+    }
+    
+    if (settings.getGameplaySettings().getStartOn2ndDay() && filename.equals("research/simulationlabs")) {
+      try {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File(NATURAL_DAY_2_START_FILE));
+        Element root = document.getRootElement().clone();
+        
+        objects.addContent(root);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
     }
   }
 }

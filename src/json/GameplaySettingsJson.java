@@ -84,10 +84,10 @@ public class GameplaySettingsJson implements HasOptions {
     }
     selfDestructTimer = DEFAULT_SELF_DESTRUCT_TIMER;
     selfDestructShuttleTimer = DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER;
-    this.enemySpawnSettings = enemySpawnSettings == null ? new SpawnPresetJson("", "", new ArrayList<>())
-        : enemySpawnSettings;
-    this.itemSpawnSettings = itemSpawnSettings == null ? new SpawnPresetJson("", "", new ArrayList<>())
-        : itemSpawnSettings;
+    this.enemySpawnSettings = enemySpawnSettings == null ? new SpawnPresetJson("No NPC randomization",
+        "Do not randomize items.", new ArrayList<>()) : enemySpawnSettings;
+    this.itemSpawnSettings = itemSpawnSettings == null ? new SpawnPresetJson("No item randomization",
+        "Do not randomize NPCs.", new ArrayList<>()) : itemSpawnSettings;
   }
 
   public GameplaySettingsJson(JsonNode node) {
@@ -170,7 +170,7 @@ public class GameplaySettingsJson implements HasOptions {
   public String getSelfDestructTimer() {
     return this.selfDestructTimer;
   }
-  
+
   @JsonProperty(SELF_DESTRUCT_SHUTTLE_TIMER)
   public String getSelfDestructShuttleTimer() {
     return this.selfDestructShuttleTimer;

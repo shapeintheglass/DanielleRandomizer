@@ -163,16 +163,15 @@ public class WindowController {
     allEntities = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
         saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton);
 
-    updateUI();
-
     initCustomSpawnCheckboxes(allPresets, settings);
+    
+    updateUI();
 
     cheatsCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         if (event.getSource() instanceof CheckBox) {
-          CheckBox c = (CheckBox) event.getSource();
-          boolean isSelfDestruct = c.isSelected();
+          boolean isSelfDestruct = cheatsCheckboxSelfDestruct.isSelected();
           cheatsTextFieldTimer.setDisable(!isSelfDestruct);
           cheatsTextFieldShuttleTimer.setDisable(!isSelfDestruct);
         }
@@ -181,6 +180,9 @@ public class WindowController {
   }
 
   private void updateUI() {
+    setSpawnCheckbox(itemSpawnToggleGroup, settings.getGameplaySettings().getItemSpawnSettings().getName());
+    setSpawnCheckbox(enemySpawnToggleGroup, settings.getGameplaySettings().getEnemySpawnSettings().getName());
+
     cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
     cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoiceLines());
     cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
@@ -201,6 +203,10 @@ public class WindowController {
     cheatsCheckboxSelfDestruct.setSelected(settings.getGameplaySettings().getStartSelfDestruct());
     cheatsTextFieldTimer.setText(settings.getGameplaySettings().getSelfDestructTimer());
     cheatsTextFieldShuttleTimer.setText(settings.getGameplaySettings().getSelfDestructShuttleTimer());
+    
+    boolean isSelfDestruct = cheatsCheckboxSelfDestruct.isSelected();
+    cheatsTextFieldTimer.setDisable(!isSelfDestruct);
+    cheatsTextFieldShuttleTimer.setDisable(!isSelfDestruct);
   }
 
   private void initCustomSpawnCheckboxes(Optional<AllPresetsJson> allPresets, SettingsJson settings) {
@@ -497,7 +503,7 @@ public class WindowController {
 
     long initialSeed = Utils.getNewSeed();
     return new SettingsJson(Gui2Consts.VERSION, Gui2Consts.DEFAULT_INSTALL_DIR, initialSeed, new CosmeticSettingsJson(),
-        new GameplaySettingsJson(itemPreset, enemyPreset));
+        new GameplaySettingsJson(enemyPreset, itemPreset));
   }
 
   private void validateSpawnPresets(List<SpawnPresetJson> s, String name) {

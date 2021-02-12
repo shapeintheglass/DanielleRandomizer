@@ -188,7 +188,7 @@
             </TabPane>
           <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="261.0">
                <children>
-                  <TextArea fx:id="outputWindow" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="261.0" />
+                  <TextArea fx:id="outputWindow" editable="false" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="261.0" />
                   <Label layoutX="14.0" layoutY="6.0" text="Output" />
                </children>
             </AnchorPane>
