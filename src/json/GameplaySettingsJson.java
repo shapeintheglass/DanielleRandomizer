@@ -33,8 +33,8 @@ public class GameplaySettingsJson implements HasOptions {
       MORE_GUNS, WANDERING_HUMANS, START_SELF_DESTRUCT, SELF_DESTRUCT_TIMER, SELF_DESTRUCT_SHUTTLE_TIMER).build();
 
   private static final boolean DEFAULT_VALUE = false;
-  public static final String DEFAULT_SELF_DESTRUCT_TIMER = "8.000000";
-  public static final String DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER = "6.000000";
+  public static final String DEFAULT_SELF_DESTRUCT_TIMER = "120.000000";
+  public static final String DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER = "30.000000";
 
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
   private SpawnPresetJson enemySpawnSettings;
