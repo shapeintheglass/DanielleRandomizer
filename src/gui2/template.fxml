@@ -151,11 +151,35 @@
                                     <CheckBox fx:id="cheatsCheckboxUnlockAll" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
                                     <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
                                     <CheckBox fx:id="cheatsCheckboxWander" mnemonicParsing="false" text="Make humans wander" />
+                                    <CheckBox fx:id="cheatsCheckboxSelfDestruct" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
+                                    <HBox prefHeight="21.0" prefWidth="307.0">
+                                       <children>
+                                          <Label text="Self-destruct timer (minutes):" />
+                                          <TextField fx:id="cheatsTextFieldTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="8.000000">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="21.0" prefWidth="307.0">
+                                       <children>
+                                          <Label text="Shuttle timer (minutes):" />
+                                          <TextField fx:id="cheatsTextFieldShuttleTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="8.000000">
+                                             <HBox.margin>
+                                                <Insets left="40.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                               <Label layoutX="335.0" layoutY="50.0" text="Unlocks (almost) everything except for scripted locks." />
                               <Label layoutX="335.0" layoutY="82.0" text="Allows installing typhon neuromods without research." />
                               <Label layoutX="335.0" layoutY="113.0" text="Makes humans walk around rather than stand in place." />
+                              <Label layoutX="334.0" layoutY="145.0" text="Race against the clock to leave Talos I before it blows!" />
+                              <Label layoutX="334.0" layoutY="178.0" text="Time before the station self-destructs." />
+                              <Label layoutX="333.0" layoutY="221.0" text="Time before Dahl's shuttle leaves." />
                            </children>
                         </AnchorPane>
                     </content>

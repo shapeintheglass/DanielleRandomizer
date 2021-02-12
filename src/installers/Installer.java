@@ -23,6 +23,7 @@ import java.util.zip.ZipOutputStream;
 import com.google.common.collect.ImmutableMap;
 
 import json.SettingsJson;
+import randomizers.gameplay.SelfDestructTimerHelper;
 import utils.FileConsts;
 import utils.LevelConsts;
 
@@ -52,9 +53,11 @@ public class Installer {
       "data/aitrees/ArmedHumanAiTree.xml", "ark/ai/aitrees/ArmedHumanAiTree.xml", "data/aitrees/HumanAiTree.xml",
       "ark/ai/aitrees/HumanAiTree.xml", "data/aitrees/UnarmedHumanAiTree.xml", "ark/ai/aitrees/UnarmedHumanAiTree.xml");
 
+  public static final ImmutableMap<String, String> SELF_DESTRUCT_DEPENDENCIES = ImmutableMap.of(
+      "data/ark/ApexVolumeConfig.xml", "ark/apexvolumeconfig.xml");
+
   private File patchFile;
   private Logger logger;
-
 
   private Path installDir;
   private Path tempDir;
@@ -87,6 +90,11 @@ public class Installer {
 
     if (settings.getGameplaySettings().getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES);
+    }
+
+    if (settings.getGameplaySettings().getStartSelfDestruct()) {
+      copyFiles(SELF_DESTRUCT_DEPENDENCIES);
+      SelfDestructTimerHelper.install(settings, tempPatchDir);
     }
   }
 

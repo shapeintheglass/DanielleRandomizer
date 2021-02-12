@@ -14,24 +14,19 @@ public class FlowgraphFilter extends BaseFilter {
 
   public FlowgraphFilter(TaggedDatabase database, SettingsJson settings) {
 
-    if (settings.getGameplaySettings()
-        .getItemSpawnSettings()
-        .getRules() == null) {
+    if (settings.getGameplaySettings() == null || settings.getGameplaySettings().getItemSpawnSettings() == null
+        || settings.getGameplaySettings().getItemSpawnSettings().getRules() == null) {
       return;
     }
 
     List<String> doNotOutput = Lists.newArrayList();
     doNotOutput.addAll(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-    if (!settings.getGameplaySettings()
-        .getMoreGuns()) {
-      Logger.getGlobal()
-          .info("Removing randomized weapons from containers");
+    if (!settings.getGameplaySettings().getMoreGuns()) {
+      Logger.getGlobal().info("Removing randomized weapons from containers");
       doNotOutput.add("Randomizer");
     }
 
-    for (GenericRuleJson grj : settings.getGameplaySettings()
-        .getItemSpawnSettings()
-        .getRules()) {
+    for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings().getRules()) {
       grj.addDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS);
       grj.addDoNotOutputTags(doNotOutput);
       CustomRuleHelper crh = new CustomRuleHelper(grj);

@@ -28,8 +28,8 @@ public class SpawnPresetJson implements NameAndDescription {
   }
 
   public SpawnPresetJson(JsonNode node) {
-    this.name = node.get(NAME2).textValue();
-    this.desc = node.get(DESC2).textValue();
+    this.name = node.has(NAME2) ? node.get(NAME2).textValue() : "";
+    this.desc = node.has(DESC2) ? node.get(DESC2).textValue() : "";
     this.rules = new ArrayList<>();
     if (node.has(FILTERS)) {
       node.get(FILTERS).forEach(rule -> rules.add(new GenericRuleJson(rule)));

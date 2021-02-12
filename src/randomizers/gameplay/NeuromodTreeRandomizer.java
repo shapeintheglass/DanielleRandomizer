@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -451,12 +450,5 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     public String toString() {
       return name;
     }
-  }
-
-  public static void main(String[] args) {
-    SettingsJson testSettings = new SettingsJson("test", "test", new Random().nextLong(), null,
-        new GameplaySettingsJson(false, false, false, false, false, false, false, false, false, false, null, null));
-    NeuromodTreeRandomizer n = new NeuromodTreeRandomizer(testSettings, Paths.get("."));
-    n.randomize();
   }
 }

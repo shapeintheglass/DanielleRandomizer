@@ -28,7 +28,6 @@ public class RandomizerGui2 extends Application {
     FXMLLoader loader = new FXMLLoader(getClass().getResource(GUI2_TEMPLATE_FXML));
     Parent root = loader.load();
  
-    
     WindowController controller = (WindowController) loader.getController();
     controller.setStage(stage);
 

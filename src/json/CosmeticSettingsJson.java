@@ -6,22 +6,18 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
-
-import gui.panels.BaseCheckbox;
 
 public class CosmeticSettingsJson implements HasOptions {
   public static final String RANDOMIZE_BODIES = "randomize_bodies";
   public static final String RANDOMIZE_VOICELINES = "randomize_voicelines";
   public static final String RANDOMIZE_MUSIC = "randomize_music";
 
-  public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS = new ImmutableMap.Builder<String, BaseCheckbox>()
-      .put(RANDOMIZE_BODIES, new BaseCheckbox("Randomize bodies", "Randomizes the appearance of all human NPCs", false))
-      .put(RANDOMIZE_VOICELINES, new BaseCheckbox("Randomize voicelines", "Shuffles all voice lines by voice actor",
-          false))
-      .put(RANDOMIZE_MUSIC, new BaseCheckbox("Randomize music", "Scrambles music.", false))
-      .build();
+  public static final ImmutableList<String> ALL_OPTIONS = new ImmutableList.Builder<String>().add(RANDOMIZE_BODIES,
+      RANDOMIZE_MUSIC, RANDOMIZE_VOICELINES).build();
+
+  private static final boolean DEFAULT_VALUE = false;
 
   private Map<String, Boolean> booleanSettings;
 
@@ -37,8 +33,8 @@ public class CosmeticSettingsJson implements HasOptions {
 
   public CosmeticSettingsJson() {
     booleanSettings = new HashMap<>();
-    for (String s : ALL_OPTIONS.keySet()) {
-      booleanSettings.put(s, ALL_OPTIONS.get(s).getDefaultValue());
+    for (String s : ALL_OPTIONS) {
+      booleanSettings.put(s, DEFAULT_VALUE);
     }
   }
 
@@ -50,7 +46,7 @@ public class CosmeticSettingsJson implements HasOptions {
   }
 
   public boolean getOption(String name) {
-    return booleanSettings.get(name);
+    return booleanSettings.containsKey(name) ? booleanSettings.get(name) : DEFAULT_VALUE;
   }
 
   public void toggleOption(String name) {

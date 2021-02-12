@@ -13,7 +13,10 @@ public class EnemyFilter extends BaseFilter {
    * Pre-made combination of rules that specifically filters enemies in certain settings.
    */
   public EnemyFilter(TaggedDatabase database, SettingsJson s) {
-    if (s.getGameplaySettings().getEnemySpawnSettings().getRules() == null) {
+    if (s.getGameplaySettings() == null || s.getGameplaySettings().getItemSpawnSettings() == null || s
+        .getGameplaySettings()
+        .getItemSpawnSettings()
+        .getRules() == null) {
       return;
     }
     for (GenericRuleJson grj : s.getGameplaySettings().getEnemySpawnSettings().getRules()) {

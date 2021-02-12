@@ -7,9 +7,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.collect.ImmutableMap;
-
-import gui.panels.BaseCheckbox;
+import com.google.common.collect.ImmutableList;
 
 public class GameplaySettingsJson implements HasOptions {
   public static final String ITEM_SPAWN_SETTINGS = "item_spawn_settings";
@@ -26,30 +24,17 @@ public class GameplaySettingsJson implements HasOptions {
   public static final String RANDOMIZE_STATION = "randomize_station";
   public static final String MORE_GUNS = "more_guns";
   public static final String WANDERING_HUMANS = "wandering_humans";
-  public static final String START_OUTSIDE_LOBBY = "start_outside_lobby";
+  public static final String START_SELF_DESTRUCT = "start_self_destruct";
+  public static final String SELF_DESTRUCT_TIMER = "self_destruct_timer";
+  public static final String SELF_DESTRUCT_SHUTTLE_TIMER = "self_destruct_shuttle_timer";
 
-  public static final ImmutableMap<String, BaseCheckbox> ALL_OPTIONS = new ImmutableMap.Builder<String, BaseCheckbox>()
-      .put(RANDOMIZE_LOOT, new BaseCheckbox("Randomize loot tables",
-          "Randomizes contents of loot tables according to item spawn settings", false))
-      .put(ADD_LOOT_TO_APARTMENT, new BaseCheckbox("Add loot to Morgan's apartment",
-          "Adds useful equipment in containers around Morgan's apartment", false))
-      .put(OPEN_STATION, new BaseCheckbox("Unlock everything",
-          "Unlocks various doors, workstations, etc around Talos I to make traversal easier.", false))
-      .put(RANDOMIZE_NEUROMODS, new BaseCheckbox("Randomize Neuromod upgrade tree",
-          "Shuffles the neuromods in the skill upgrade tree", false))
-      .put(UNLOCK_ALL_SCANS, new BaseCheckbox("Remove scan requirement for typhon neuromods",
-          "Unlocks all neuromod abilities so you don't have to scan typhon for them", false))
-      .put(RANDOMIZE_STATION, new BaseCheckbox("Randomize station connections", "Shuffles connections between levels.",
-          false))
-      .put(START_ON_2ND_DAY, new BaseCheckbox("Start on 2nd day",
-          "Skips to the 2nd day of the intro. HUD may be invisible until you open your transcribe.", false))
-      .put(MORE_GUNS, new BaseCheckbox("More guns", "Add more guns to the loot pool", false))
-      .put(WANDERING_HUMANS, new BaseCheckbox("Make humans wander",
-          "Lets all humans walk around rather than stand in place. Intended for the \"all typhon are humans\" preset to add some realism.",
-          false))
-      .put(START_OUTSIDE_LOBBY, new BaseCheckbox("Start outside apartment",
-          "Moves the initial spawn point to the neuromod division exit", false))
-      .build();
+  public static final ImmutableList<String> ALL_OPTIONS = new ImmutableList.Builder<String>().add(RANDOMIZE_LOOT,
+      ADD_LOOT_TO_APARTMENT, OPEN_STATION, RANDOMIZE_NEUROMODS, UNLOCK_ALL_SCANS, RANDOMIZE_STATION, START_ON_2ND_DAY,
+      MORE_GUNS, WANDERING_HUMANS, START_SELF_DESTRUCT, SELF_DESTRUCT_TIMER, SELF_DESTRUCT_SHUTTLE_TIMER).build();
+
+  private static final boolean DEFAULT_VALUE = false;
+  public static final String DEFAULT_SELF_DESTRUCT_TIMER = "8.000000";
+  public static final String DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER = "6.000000";
 
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
   private SpawnPresetJson enemySpawnSettings;
@@ -57,6 +42,8 @@ public class GameplaySettingsJson implements HasOptions {
   private SpawnPresetJson itemSpawnSettings;
 
   private Map<String, Boolean> booleanSettings;
+  private String selfDestructTimer;
+  private String selfDestructShuttleTimer;
 
   @JsonCreator
   public GameplaySettingsJson(@JsonProperty(RANDOMIZE_LOOT) boolean randomizeLoot,
@@ -65,7 +52,9 @@ public class GameplaySettingsJson implements HasOptions {
       @JsonProperty(UNLOCK_ALL_SCANS) boolean unlockScans, @JsonProperty(RANDOMIZE_STATION) boolean randomizeStation,
       @JsonProperty(START_ON_2ND_DAY) boolean startOnSecondDay, @JsonProperty(MORE_GUNS) boolean moreGuns,
       @JsonProperty(WANDERING_HUMANS) boolean wanderingHumans,
-      @JsonProperty(START_OUTSIDE_LOBBY) boolean startOutsideLobby,
+      @JsonProperty(START_SELF_DESTRUCT) boolean startSelfDestruct,
+      @JsonProperty(SELF_DESTRUCT_TIMER) String selfDestructTimer,
+      @JsonProperty(SELF_DESTRUCT_SHUTTLE_TIMER) String selfDestructShuttleTimer,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
       @JsonProperty(ITEM_SPAWN_SETTINGS) SpawnPresetJson itemSpawnSettings) {
     booleanSettings = new HashMap<>();
@@ -78,7 +67,11 @@ public class GameplaySettingsJson implements HasOptions {
     booleanSettings.put(START_ON_2ND_DAY, startOnSecondDay);
     booleanSettings.put(MORE_GUNS, moreGuns);
     booleanSettings.put(WANDERING_HUMANS, wanderingHumans);
-    booleanSettings.put(START_OUTSIDE_LOBBY, startOutsideLobby);
+    booleanSettings.put(START_SELF_DESTRUCT, startSelfDestruct);
+    float selfDestructTimerFloat = Float.parseFloat(selfDestructTimer);
+    this.selfDestructTimer = String.format("%.6f", selfDestructTimerFloat);
+    float selfDestructShuttleTimerFloat = Float.parseFloat(selfDestructShuttleTimer);
+    this.selfDestructShuttleTimer = String.format("%.6f", selfDestructShuttleTimerFloat);
 
     this.enemySpawnSettings = enemySpawnSettings;
     this.itemSpawnSettings = itemSpawnSettings;
@@ -86,9 +79,11 @@ public class GameplaySettingsJson implements HasOptions {
 
   public GameplaySettingsJson(SpawnPresetJson enemySpawnSettings, SpawnPresetJson itemSpawnSettings) {
     booleanSettings = new HashMap<>();
-    for (String s : ALL_OPTIONS.keySet()) {
-      booleanSettings.put(s, ALL_OPTIONS.get(s).getDefaultValue());
+    for (String s : ALL_OPTIONS) {
+      booleanSettings.put(s, DEFAULT_VALUE);
     }
+    selfDestructTimer = DEFAULT_SELF_DESTRUCT_TIMER;
+    selfDestructShuttleTimer = DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER;
     this.enemySpawnSettings = enemySpawnSettings == null ? new SpawnPresetJson("", "", new ArrayList<>())
         : enemySpawnSettings;
     this.itemSpawnSettings = itemSpawnSettings == null ? new SpawnPresetJson("", "", new ArrayList<>())
@@ -97,11 +92,13 @@ public class GameplaySettingsJson implements HasOptions {
 
   public GameplaySettingsJson(JsonNode node) {
     booleanSettings = new HashMap<>();
-    for (String s : ALL_OPTIONS.keySet()) {
+    for (String s : ALL_OPTIONS) {
       if (node.has(s)) {
         booleanSettings.put(s, node.get(s).asBoolean());
       }
     }
+    this.selfDestructTimer = node.get(SELF_DESTRUCT_TIMER).asText();
+    this.selfDestructShuttleTimer = node.get(SELF_DESTRUCT_SHUTTLE_TIMER).asText();
 
     if (node.has(ENEMY_SPAWN_SETTINGS)) {
       this.enemySpawnSettings = new SpawnPresetJson(node.get(ENEMY_SPAWN_SETTINGS));
@@ -112,7 +109,7 @@ public class GameplaySettingsJson implements HasOptions {
   }
 
   public boolean getOption(String name) {
-    return booleanSettings.containsKey(name) ? booleanSettings.get(name) : ALL_OPTIONS.get(name).getDefaultValue();
+    return booleanSettings.containsKey(name) ? booleanSettings.get(name) : DEFAULT_VALUE;
   }
 
   public void toggleOption(String name) {
@@ -164,9 +161,19 @@ public class GameplaySettingsJson implements HasOptions {
     return getOption(WANDERING_HUMANS);
   }
 
-  @JsonProperty(START_OUTSIDE_LOBBY)
-  public boolean getStartOutsideLobby() {
-    return getOption(START_OUTSIDE_LOBBY);
+  @JsonProperty(START_SELF_DESTRUCT)
+  public boolean getStartSelfDestruct() {
+    return getOption(START_SELF_DESTRUCT);
+  }
+
+  @JsonProperty(SELF_DESTRUCT_TIMER)
+  public String getSelfDestructTimer() {
+    return this.selfDestructTimer;
+  }
+  
+  @JsonProperty(SELF_DESTRUCT_SHUTTLE_TIMER)
+  public String getSelfDestructShuttleTimer() {
+    return this.selfDestructShuttleTimer;
   }
 
   public SpawnPresetJson getEnemySpawnSettings() {

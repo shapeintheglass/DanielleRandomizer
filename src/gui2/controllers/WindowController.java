@@ -109,6 +109,12 @@ public class WindowController {
   private CheckBox cheatsCheckboxUnlockAll;
   @FXML
   private CheckBox cheatsCheckboxWander;
+  @FXML
+  private CheckBox cheatsCheckboxSelfDestruct;
+  @FXML
+  private TextField cheatsTextFieldTimer;
+  @FXML
+  private TextField cheatsTextFieldShuttleTimer;
 
   /* LOWER BUTTONS */
   @FXML
@@ -160,6 +166,18 @@ public class WindowController {
     updateUI();
 
     initCustomSpawnCheckboxes(allPresets, settings);
+
+    cheatsCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        if (event.getSource() instanceof CheckBox) {
+          CheckBox c = (CheckBox) event.getSource();
+          boolean isSelfDestruct = c.isSelected();
+          cheatsTextFieldTimer.setDisable(!isSelfDestruct);
+          cheatsTextFieldShuttleTimer.setDisable(!isSelfDestruct);
+        }
+      }
+    });
   }
 
   private void updateUI() {
@@ -180,6 +198,9 @@ public class WindowController {
     cheatsCheckboxUnlockAll.setSelected(settings.getGameplaySettings().getOpenStation());
     cheatsCheckboxAllScans.setSelected(settings.getGameplaySettings().getUnlockAllScans());
     cheatsCheckboxWander.setSelected(settings.getGameplaySettings().getWanderingHumans());
+    cheatsCheckboxSelfDestruct.setSelected(settings.getGameplaySettings().getStartSelfDestruct());
+    cheatsTextFieldTimer.setText(settings.getGameplaySettings().getSelfDestructTimer());
+    cheatsTextFieldShuttleTimer.setText(settings.getGameplaySettings().getSelfDestructShuttleTimer());
   }
 
   private void initCustomSpawnCheckboxes(Optional<AllPresetsJson> allPresets, SettingsJson settings) {
@@ -263,6 +284,9 @@ public class WindowController {
     cheatsCheckboxAllScans.setSelected(false);
     cheatsCheckboxUnlockAll.setSelected(false);
     cheatsCheckboxWander.setSelected(false);
+    cheatsCheckboxSelfDestruct.setSelected(false);
+    cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
+    cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
@@ -285,6 +309,9 @@ public class WindowController {
     cheatsCheckboxAllScans.setSelected(false);
     cheatsCheckboxUnlockAll.setSelected(false);
     cheatsCheckboxWander.setSelected(false);
+    cheatsCheckboxSelfDestruct.setSelected(false);
+    cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
+    cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
@@ -307,6 +334,9 @@ public class WindowController {
     cheatsCheckboxAllScans.setSelected(false);
     cheatsCheckboxUnlockAll.setSelected(false);
     cheatsCheckboxWander.setSelected(false);
+    cheatsCheckboxSelfDestruct.setSelected(false);
+    cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
+    cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
@@ -352,7 +382,7 @@ public class WindowController {
   @FXML
   protected void onUninstallClicked(ActionEvent event) {
     Installer.uninstall(Paths.get(directoryText.getText()), logger);
-    outputWindow.appendText("Uninstall complete.");
+    outputWindow.appendText("Uninstall complete.\n");
   }
 
   @FXML
@@ -391,8 +421,6 @@ public class WindowController {
   }
 
   private GameplaySettingsJson getGameplaySettings() {
-    // TODO: Complete w/ item/enemy settings
-
     RadioButton selectedItemSpawn = (RadioButton) itemSpawnToggleGroup.getSelectedToggle();
     String itemToSelect = selectedItemSpawn == null ? "" : selectedItemSpawn.getText();
     SpawnPresetJson itemSpawnPreset = getSpawnPresetFromList(allPresets.get().getItemSpawnSettings(), itemToSelect);
@@ -404,8 +432,8 @@ public class WindowController {
     return new GameplaySettingsJson(itemsCheckboxLootTables.isSelected(), startCheckboxAddAllEquipment.isSelected(),
         cheatsCheckboxUnlockAll.isSelected(), neuromodsCheckboxRandomize.isSelected(), cheatsCheckboxAllScans
             .isSelected(), storyCheckboxRandomStation.isSelected(), startCheckboxDay2.isSelected(),
-        itemsCheckboxMoreGuns.isSelected(), cheatsCheckboxWander.isSelected(), false, enemySpawnPreset,
-        itemSpawnPreset);
+        itemsCheckboxMoreGuns.isSelected(), cheatsCheckboxWander.isSelected(), cheatsCheckboxSelfDestruct.isSelected(),
+        cheatsTextFieldTimer.getText(), cheatsTextFieldShuttleTimer.getText(), enemySpawnPreset, itemSpawnPreset);
   }
 
   private static SpawnPresetJson getSpawnPresetFromList(List<SpawnPresetJson> presetList, String name) {

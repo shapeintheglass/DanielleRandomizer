@@ -15,10 +15,13 @@ public class ItemSpawnFilter extends BaseFilter {
    * Pre-made combination of rules that specifically filters items in certain settings.
    */
   public ItemSpawnFilter(TaggedDatabase database, SettingsJson s) {
-    if (s.getGameplaySettings().getItemSpawnSettings().getRules() == null) {
+    if (s.getGameplaySettings() == null || s.getGameplaySettings().getItemSpawnSettings() == null || s
+        .getGameplaySettings()
+        .getItemSpawnSettings()
+        .getRules() == null) {
       return;
     }
-        
+
     List<String> doNotOutput = Lists.newArrayList();
     doNotOutput.addAll(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
     if (!s.getGameplaySettings().getMoreGuns()) {

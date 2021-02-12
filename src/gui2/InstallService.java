@@ -27,7 +27,6 @@ import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
-import randomizers.gameplay.filters.StartOutsideApartmentFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
 import utils.Utils;
 
@@ -45,7 +44,7 @@ public class InstallService extends Service<Void> {
     this.outputWindow = outputWindow;
     this.finalSettings = finalSettings;
   }
-  
+
   @Override
   protected Task<Void> createTask() {
     return new Task<Void>() {
@@ -55,7 +54,7 @@ public class InstallService extends Service<Void> {
         doInstall();
         return null;
       }
-      
+
     };
   }
 
@@ -67,6 +66,7 @@ public class InstallService extends Service<Void> {
     Path tempDir = Utils.createTempDir(workingDir, TEMP_FOLDER_SUFFIX);
     Path tempLevelDir = tempDir.resolve(TEMP_LEVEL_DIR_NAME);
     Path tempPatchDir = tempDir.resolve(TEMP_PATCH_DIR_NAME);
+    long secondsElapsed = 0L;
     try {
       tempDir.toFile().mkdir();
       tempLevelDir.toFile().mkdir();
@@ -82,12 +82,12 @@ public class InstallService extends Service<Void> {
         outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_WRITING + "\n");
         installer.get().install();
       } catch (IOException | InterruptedException e) {
+        outputWindow.appendText(Gui2Consts.INSTALL_STATUS_FAILED_TEXT + "\n");
         e.printStackTrace();
       }
 
       Date endTime = new Date();
-      long secondsElapsed = endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
-      outputWindow.appendText(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT + "\n", secondsElapsed));
+      secondsElapsed = endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
     } catch (Exception e) {
       e.printStackTrace();
       outputWindow.appendText(Gui2Consts.INSTALL_STATUS_FAILED_TEXT + "\n");
@@ -102,6 +102,7 @@ public class InstallService extends Service<Void> {
         Utils.deleteDirectory(tempDir.toFile());
       }
     }
+    outputWindow.appendText(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT + "\n", secondsElapsed));
   }
 
   private Optional<Installer> initInstaller(SettingsJson currentSettings, Path tempDir, Path tempLevelDir,
@@ -173,10 +174,6 @@ public class InstallService extends Service<Void> {
 
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.ADD_LOOT_TO_APARTMENT)) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
-    }
-
-    if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.START_OUTSIDE_LOBBY)) {
-      levelRandomizer = levelRandomizer.addFilter(new StartOutsideApartmentFilter());
     }
 
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
