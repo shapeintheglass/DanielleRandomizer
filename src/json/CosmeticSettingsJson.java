@@ -20,6 +20,7 @@ public class CosmeticSettingsJson implements HasOptions {
       .put(RANDOMIZE_BODIES, new BaseCheckbox("Randomize bodies", "Randomizes the appearance of all human NPCs", false))
       .put(RANDOMIZE_VOICELINES, new BaseCheckbox("Randomize voicelines", "Shuffles all voice lines by voice actor",
           false))
+      .put(RANDOMIZE_MUSIC, new BaseCheckbox("Randomize music", "Scrambles music.", false))
       .build();
 
   private Map<String, Boolean> booleanSettings;
@@ -65,7 +66,7 @@ public class CosmeticSettingsJson implements HasOptions {
   public boolean getRandomizeVoiceLines() {
     return getOption(RANDOMIZE_VOICELINES);
   }
-  
+
   @JsonProperty(RANDOMIZE_MUSIC)
   public boolean getRandomizeMusic() {
     return getOption(RANDOMIZE_MUSIC);

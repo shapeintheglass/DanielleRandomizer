@@ -47,6 +47,7 @@ public class Gui2Consts {
 
   public static String INSTALL_PROGRESS_BODIES = "Randomizing bodies...";
   public static String INSTALL_PROGRESS_VOICELINES = "Randomizing voicelines...";
+  public static String INSTALL_PROGRESS_MUSIC = "Randomizing music...";
   public static String INSTALL_PROGRESS_NEUROMOD = "Randomizing neuromod upgrade tree...";
   public static String INSTALL_PROGRESS_LOOT = "Randomizing loot tables...";
   public static String INSTALL_PROGRESS_LEVELS = "Processing level data...";

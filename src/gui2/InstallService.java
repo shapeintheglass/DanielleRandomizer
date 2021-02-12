@@ -17,6 +17,7 @@ import json.CosmeticSettingsJson;
 import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.cosmetic.BodyRandomizer;
+import randomizers.cosmetic.MusicRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
@@ -135,6 +136,10 @@ public class InstallService extends Service<Void> {
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
       outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_VOICELINES + "\n");
       new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
+    }
+    if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_MUSIC)) {
+      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_MUSIC + "\n");
+      new MusicRandomizer(currentSettings, tempPatchDir).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */

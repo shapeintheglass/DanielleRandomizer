@@ -93,6 +93,10 @@ public class SettingsJson {
         s.append(" * Randomize voicelines\n");
         atLeastOneSetting = true;
       }
+      if (this.getCosmeticSettings().getRandomizeMusic()) {
+        s.append(" * Randomize music\n");
+        atLeastOneSetting = true;
+      }
     }
 
     if (this.getGameplaySettings() != null) {
