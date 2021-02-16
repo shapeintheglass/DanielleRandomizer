@@ -1,0 +1,52 @@
+{
+  "release_version" : "0.30",
+  "install_dir" : "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey",
+  "seed" : 6371959750007007971,
+  "cosmetic_settings" : {
+    "randomize_bodies" : true,
+    "randomize_voicelines" : true,
+    "randomize_music" : true,
+    "randomize_player_model" : true
+  },
+  "gameplay_settings" : {
+    "randomize_loot" : true,
+    "add_loot_to_apartment" : true,
+    "open_station" : true,
+    "randomize_neuromods" : false,
+    "unlock_all_scans" : true,
+    "randomize_station" : false,
+    "start_on_2nd_day" : false,
+    "more_guns" : true,
+    "wandering_humans" : true,
+    "start_self_destruct" : true,
+    "randomize_nightmare" : false,
+    "randomize_cystoid_nests" : false,
+    "randomize_weaver_cystoids" : false,
+    "randomize_fab_plan_costs" : false,
+    "skip_jovan_cutscene" : true,
+    "self_destruct_timer" : "60.000000",
+    "self_destruct_shuttle_timer" : "30.000000",
+    "enemy_spawn_settings" : {
+      "name" : "Typhon to humans",
+      "desc" : "Replaces all typhon and corrupted operators with humans",
+      "filters" : [ {
+        "input_tags" : [ "ArkNpcs", "Operators\\Generic\\Corrupted" ],
+        "output_tags" : [ "ArkHumans" ],
+        "output_weights" : [ ],
+        "do_not_touch_tags" : [ ],
+        "do_not_output_tags" : [ "Player", "HumanPlaceholders" ]
+      } ]
+    },
+    "item_spawn_settings" : {
+      "name" : "Whiskey and cigars",
+      "desc" : "Replaces all items with whiskey and cigars. For nightly gatherings.",
+      "filters" : [ {
+        "input_tags" : [ "Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE" ],
+        "output_tags" : [ "Bourbon", "UsedCigar" ],
+        "output_weights" : [ ],
+        "do_not_touch_tags" : [ ],
+        "do_not_output_tags" : [ ]
+      } ]
+    }
+  }
+}

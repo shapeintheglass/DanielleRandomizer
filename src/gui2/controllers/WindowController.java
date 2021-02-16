@@ -210,8 +210,8 @@ public class WindowController {
     itemsCheckboxMoreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
     itemsCheckboxLootTables.setTooltip(new Tooltip("Randomizes loot tables. Generally recommended to keep this checked when randomizing items."));
     
-    installButton.setTooltip(new Tooltip("Generates randomized mod using given settings and installs to the given game directory."));
-    uninstallButton.setTooltip(new Tooltip("Removes any mods added by this installer and reverts changes to the given game directory."));
+    installButton.setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
+    uninstallButton.setTooltip(new Tooltip("Removes any mods added by this installer and reverts changes to the game directory."));
     clearButton.setTooltip(new Tooltip("Clears the output window."));
     saveSettingsButton.setTooltip(new Tooltip("Saves the current settings to a file so that they are the default the next time this UI is opened."));
     closeButton.setTooltip(new Tooltip("Closes this UI."));
@@ -396,7 +396,7 @@ public class WindowController {
     cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
-    outputWindow.appendText("Lite preset selected.\n");
+    outputWindow.appendText("G.O.T.S. preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
   }
 

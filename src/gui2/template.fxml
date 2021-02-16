@@ -266,11 +266,27 @@
       </SplitPane>
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="900.0">
          <children>
-            <Button fx:id="installButton" alignment="CENTER" layoutX="399.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleInstallClicked" prefHeight="25.0" prefWidth="87.0" text="Install" />
-            <Button fx:id="uninstallButton" alignment="CENTER" layoutX="523.0" layoutY="2.0" mnemonicParsing="false" onAction="#onUninstallClicked" prefHeight="25.0" prefWidth="87.0" text="Uninstall" />
-            <Button fx:id="clearButton" alignment="CENTER" layoutX="663.0" layoutY="2.0" mnemonicParsing="false" onAction="#onClearClicked" prefHeight="25.0" prefWidth="87.0" text="Clear" />
-            <Button fx:id="saveSettingsButton" layoutX="274.0" layoutY="2.0" mnemonicParsing="false" onAction="#onSaveSettingsClicked" text="Save Settings" />
-            <Button fx:id="closeButton" alignment="CENTER" layoutX="786.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseClicked" prefHeight="25.0" prefWidth="87.0" text="Close" />
+            <HBox alignment="CENTER_RIGHT" layoutX="6.0" layoutY="3.0" prefHeight="25.0" prefWidth="888.0" spacing="25.0">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="396.0" spacing="25.0">
+                     <children>
+                        <Button fx:id="installButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleInstallClicked" prefHeight="25.0" prefWidth="87.0" text="Install">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="uninstallButton" alignment="CENTER" mnemonicParsing="false" onAction="#onUninstallClicked" prefHeight="25.0" prefWidth="87.0" text="Uninstall" />
+                        <Button fx:id="saveSettingsButton" mnemonicParsing="false" onAction="#onSaveSettingsClicked" text="Save Settings" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="25.0" prefWidth="257.0" spacing="25.0">
+                     <children>
+                        <Button fx:id="clearButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClearClicked" prefHeight="25.0" prefWidth="87.0" text="Clear" />
+                        <Button fx:id="closeButton" alignment="CENTER" mnemonicParsing="false" onAction="#onCloseClicked" prefHeight="25.0" prefWidth="87.0" text="Close" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
   </children>

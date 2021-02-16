@@ -6,6 +6,7 @@ import org.jdom2.Element;
 
 import databases.TaggedDatabase;
 import utils.CustomRuleHelper;
+import utils.ItemMultiplierHelper;
 import utils.LevelConsts;
 import utils.Utils;
 
@@ -29,7 +30,8 @@ public class ArchetypeSwapRule implements Rule {
   public boolean trigger(Element e, Random r, String filename) {
     // Check if input tag matches
     if (e.getAttributeValue("Archetype") != null && e.getAttributeValue("EntityClass") != null) {
-      return crh.trigger(database, e.getAttributeValue("Archetype"), filename + LevelConsts.DELIMITER + e.getAttributeValue("Name"));
+      return crh.trigger(database, e.getAttributeValue("Archetype"), filename + LevelConsts.DELIMITER + e
+          .getAttributeValue("Name"));
     } else {
       return false;
     }
@@ -39,6 +41,14 @@ public class ArchetypeSwapRule implements Rule {
   public void apply(Element e, Random r, String filename) {
     Element toSwap = crh.getEntityToSwap(database, r);
     String newArchetype = Utils.getNameForEntity(toSwap);
+
+    // Adjust multiplier quantity if this entity has a count override
+    Element properties2 = e.getChild("Properties2");
+    if (properties2 != null && properties2.getAttributeValue("iCountOverride") != null && !properties2.getAttributeValue(
+        "iCountOverride").equals("0")) {
+      int quantity = ItemMultiplierHelper.getMultiplierForEntity(toSwap, r);
+      properties2.setAttribute("iCountOverride", Integer.toString(quantity));
+    }
     e.setAttribute("Archetype", newArchetype);
   }
 }

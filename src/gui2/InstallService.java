@@ -209,6 +209,7 @@ public class InstallService extends Service<Void> {
       Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
       Map<String, Book> toOverwrite = Maps.newHashMap();
       toOverwrite.put("Bk_SL_Apt_Electronics", b);
+      toOverwrite.put("Bk_TooFarTooFast1", b);
       BookInfoHelper bih = new BookInfoHelper(tempPatchDir);
       bih.installNewBooks(toOverwrite);
 
