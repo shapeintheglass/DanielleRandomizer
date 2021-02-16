@@ -65,6 +65,8 @@ public class WindowController {
   private Button chaoticPresetButton;
   @FXML
   private Button litePresetButton;
+  @FXML
+  private Button gotsPresetButton;
 
   /* COSMETICS TAB */
   @FXML
@@ -73,6 +75,8 @@ public class WindowController {
   private CheckBox cosmeticCheckboxVoices;
   @FXML
   private CheckBox cosmeticCheckboxMusic;
+  @FXML
+  private CheckBox cosmeticCheckboxPlayerModel;
 
   /* ITEMS TAB */
   @FXML
@@ -161,10 +165,10 @@ public class WindowController {
     directoryText.setText(settings.getInstallDir());
 
     allEntities = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
-        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton);
+        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton, gotsPresetButton);
 
     initCustomSpawnCheckboxes(allPresets, settings);
-    
+
     updateUI();
 
     cheatsCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
@@ -186,6 +190,7 @@ public class WindowController {
     cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
     cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoiceLines());
     cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
+    cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
 
     itemsCheckboxMoreGuns.setSelected(settings.getGameplaySettings().getMoreGuns());
     itemsCheckboxLootTables.setSelected(settings.getGameplaySettings().getRandomizeLoot());
@@ -203,7 +208,7 @@ public class WindowController {
     cheatsCheckboxSelfDestruct.setSelected(settings.getGameplaySettings().getStartSelfDestruct());
     cheatsTextFieldTimer.setText(settings.getGameplaySettings().getSelfDestructTimer());
     cheatsTextFieldShuttleTimer.setText(settings.getGameplaySettings().getSelfDestructShuttleTimer());
-    
+
     boolean isSelfDestruct = cheatsCheckboxSelfDestruct.isSelected();
     cheatsTextFieldTimer.setDisable(!isSelfDestruct);
     cheatsTextFieldShuttleTimer.setDisable(!isSelfDestruct);
@@ -279,6 +284,7 @@ public class WindowController {
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
     cosmeticCheckboxMusic.setSelected(true);
+    cosmeticCheckboxPlayerModel.setSelected(true);
     itemsCheckboxLootTables.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(false);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
@@ -304,6 +310,7 @@ public class WindowController {
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
     cosmeticCheckboxMusic.setSelected(true);
+    cosmeticCheckboxPlayerModel.setSelected(true);
     itemsCheckboxLootTables.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items (chaotic)");
@@ -329,6 +336,7 @@ public class WindowController {
     cosmeticCheckboxBodies.setSelected(false);
     cosmeticCheckboxVoices.setSelected(false);
     cosmeticCheckboxMusic.setSelected(false);
+    cosmeticCheckboxPlayerModel.setSelected(false);
     itemsCheckboxLootTables.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(false);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items within type");
@@ -341,6 +349,32 @@ public class WindowController {
     cheatsCheckboxUnlockAll.setSelected(false);
     cheatsCheckboxWander.setSelected(false);
     cheatsCheckboxSelfDestruct.setSelected(false);
+    cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
+    cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
+    outputWindow.clear();
+    outputWindow.appendText("Lite preset selected.\n");
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
+  }
+  
+  @FXML
+  protected void onPresetsGotsClicked(ActionEvent event) {
+    // TODO: Make this less gross
+    cosmeticCheckboxBodies.setSelected(false);
+    cosmeticCheckboxVoices.setSelected(false);
+    cosmeticCheckboxMusic.setSelected(false);
+    cosmeticCheckboxPlayerModel.setSelected(false);
+    itemsCheckboxLootTables.setSelected(true);
+    itemsCheckboxMoreGuns.setSelected(false);
+    setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
+    setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
+    startCheckboxDay2.setSelected(false);
+    startCheckboxAddAllEquipment.setSelected(false);
+    neuromodsCheckboxRandomize.setSelected(false);
+    storyCheckboxRandomStation.setSelected(false);
+    cheatsCheckboxAllScans.setSelected(false);
+    cheatsCheckboxUnlockAll.setSelected(false);
+    cheatsCheckboxWander.setSelected(false);
+    cheatsCheckboxSelfDestruct.setSelected(true);
     cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
@@ -423,7 +457,7 @@ public class WindowController {
 
   private CosmeticSettingsJson getCosmeticSettings() {
     return new CosmeticSettingsJson(cosmeticCheckboxBodies.isSelected(), cosmeticCheckboxVoices.isSelected(),
-        cosmeticCheckboxMusic.isSelected());
+        cosmeticCheckboxMusic.isSelected(), cosmeticCheckboxPlayerModel.isSelected());
   }
 
   private GameplaySettingsJson getGameplaySettings() {

@@ -20,7 +20,7 @@
             "_PLOT_CRITICAL",
             "AlexStationKeyFabPlan",
             "MorganStationKeyFabPlan",
-            "Cystoid_IgnorePlayer"
+            "BigNullwaveTransmitterFabPlan"
           ]
         },
         {
@@ -35,7 +35,7 @@
             "_PLOT_CRITICAL",
             "AlexStationKeyFabPlan",
             "MorganStationKeyFabPlan",
-            "Cystoid_IgnorePlayer"
+            "BigNullwaveTransmitterFabPlan"
           ]
         },
         {
@@ -105,38 +105,8 @@
     },
     {
       "name": "Randomize items (chaotic)",
-      "desc": "Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking.",
+      "desc": "Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking. Can also spawn large furniture in odd places.",
       "filters": [
-        {
-          "input_tags": [
-            "_LEVERAGE_II"
-          ],
-          "output_tags": [
-            "_LEVERAGE_II"
-          ],
-          "do_not_output_tags": [
-            "MissionItems",
-            "_PLOT_CRITICAL",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan",
-            "Cystoid_IgnorePlayer"
-          ]
-        },
-        {
-          "input_tags": [
-            "_LEVERAGE_III"
-          ],
-          "output_tags": [
-            "_LEVERAGE_III"
-          ],
-          "do_not_output_tags": [
-            "MissionItems",
-            "_PLOT_CRITICAL",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan",
-            "Cystoid_IgnorePlayer"
-          ]
-        },
         {
           "input_tags": [
             "Neuromod_Calibration",
@@ -193,16 +163,14 @@
           ],
           "do_not_output_tags": [
             "Cystoid_IgnorePlayer",
-            "ApexTentacle",
-            "_LEVERAGE_II",
-            "_LEVERAGE_III"
+            "ApexTentacle"
           ]
         }
       ]
     },
     {
       "name": "Randomize items within type",
-      "desc": "Randomize items within their type. Weapons can become other weapons, fab plans can become other fab plans, etc. Does not spawn story items early.",
+      "desc": "Randomize items within their type. Weapons can become other weapons, fab plans can become other fab plans, etc. Does not spawn story items early or affect physics props.",
       "filters": [
         {
           "input_tags": [
@@ -210,6 +178,14 @@
           ],
           "output_tags": [
             "Weapons"
+          ],
+          "do_not_output_tags": [
+            "MissionItems",
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -221,7 +197,11 @@
           ],
           "do_not_output_tags": [
             "MissionItems",
-            "_PLOT_CRITICAL"
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -233,7 +213,11 @@
           ],
           "do_not_output_tags": [
             "MissionItems",
-            "_PLOT_CRITICAL"
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -245,7 +229,11 @@
           ],
           "do_not_output_tags": [
             "MissionItems",
-            "_PLOT_CRITICAL"
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -254,6 +242,14 @@
           ],
           "output_tags": [
             "Ammo"
+          ],
+          "do_not_output_tags": [
+            "MissionItems",
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -262,6 +258,14 @@
           ],
           "output_tags": [
             "ArkSpecialWeapons"
+          ],
+          "do_not_output_tags": [
+            "MissionItems",
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -273,7 +277,11 @@
           ],
           "do_not_output_tags": [
             "MissionItems",
-            "_PLOT_CRITICAL"
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -285,7 +293,11 @@
           ],
           "do_not_output_tags": [
             "MissionItems",
-            "_PLOT_CRITICAL"
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         },
         {
@@ -297,43 +309,11 @@
           ],
           "do_not_output_tags": [
             "MissionItems",
-            "_PLOT_CRITICAL"
-          ]
-        },
-        {
-          "input_tags": [
-            "_LEVERAGE_I"
-          ],
-          "output_tags": [
-            "_LEVERAGE_I"
-          ],
-          "do_not_output_tags": [
-            "MissionItems",
-            "_PLOT_CRITICAL"
-          ]
-        },
-        {
-          "input_tags": [
-            "_LEVERAGE_II"
-          ],
-          "output_tags": [
-            "_LEVERAGE_II"
-          ],
-          "do_not_output_tags": [
-            "MissionItems",
-            "_PLOT_CRITICAL"
-          ]
-        },
-        {
-          "input_tags": [
-            "_LEVERAGE_III"
-          ],
-          "output_tags": [
-            "_LEVERAGE_III"
-          ],
-          "do_not_output_tags": [
-            "MissionItems",
-            "_PLOT_CRITICAL"
+            "_PLOT_CRITICAL",
+            "BigNullwaveTransmitterFabPlan",
+            "BigNullwaveTransmitterFabPlan_Cinematic",
+            "AlexStationKeyFabPlan",
+            "MorganStationKeyFabPlan"
           ]
         }
       ]
@@ -454,12 +434,13 @@
     },
     {
       "name": "Randomize enemies",
-      "desc": "The most balanced enemy randomization. Does not spawn unkillable entities that could lead to soft locks.",
+      "desc": "Randomizes all hostile typhon and robots. Does not spawn unkillable entities that could lead to soft locks. Friendly operators are also randomized.",
       "filters": [
         {
           "input_tags": [
             "ArkNpcs",
-            "Operators\\Generic\\Corrupted"
+            "Operators\\Generic\\Corrupted",
+            "ArkOperatorMilitary"
           ],
           "output_tags": [
             "Mimic",
@@ -470,10 +451,11 @@
             "Phantoms",
             "Named Phantoms",
             "Overseers",
-            "ArkNightmare"
+            "ArkNightmare",
+            "ArkOperatorMilitary"
           ],
           "output_weights": [
-            20,
+            25,
             20,
             10,
             8,
@@ -481,22 +463,36 @@
             5,
             5,
             5,
+            3,
             3
           ],
           "do_not_touch_tags": [
             "Named Phantoms"
+          ]
+        },
+        {
+          "input_tags": [
+            "EngineeringOperator",
+            "MedicalOperator",
+            "ScienceOperator"
+          ],
+          "output_tags": [
+            "EngineeringOperator",
+            "MedicalOperator",
+            "ScienceOperator"
           ]
         }
       ]
     },
     {
       "name": "Randomize enemies (chaotic)",
-      "desc": "Has a chance of spawning unkillable entities like tentacles and turrets.",
+      "desc": "Has a chance of spawning unkillable entities like tentacles and turrets. Friendly operators are also randomized.",
       "filters": [
         {
           "input_tags": [
             "ArkNpcs",
-            "Operators\\Generic\\Corrupted"
+            "Operators\\Generic\\Corrupted",
+            "ArkOperatorMilitary"
           ],
           "output_tags": [
             "Mimic",
@@ -509,10 +505,11 @@
             "Named Phantoms",
             "Overseers",
             "ArkNightmare",
-            "ArkTurret"
+            "ArkTurret",
+            "Operators\\Generic"
           ],
           "output_weights": [
-            20,
+            25,
             20,
             15,
             10,
@@ -522,10 +519,23 @@
             5,
             3,
             1,
+            1,
             1
           ],
           "do_not_output_tags": [
             "Tentacle_Large"
+          ]
+        },
+        {
+          "input_tags": [
+            "EngineeringOperator",
+            "MedicalOperator",
+            "ScienceOperator"
+          ],
+          "output_tags": [
+            "EngineeringOperator",
+            "MedicalOperator",
+            "ScienceOperator"
           ]
         }
       ]
@@ -542,6 +552,10 @@
           "output_tags": [
             "Mimic",
             "BasePhantom"
+          ],
+          "output_weights": [
+            "2",
+            "1"
           ]
         },
         {

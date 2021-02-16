@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Map;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Maps;
 
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
@@ -18,7 +20,10 @@ import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.MusicRandomizer;
+import randomizers.cosmetic.PlayerModelRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
+import randomizers.gameplay.BookInfoHelper;
+import randomizers.gameplay.BookInfoHelper.Book;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
@@ -142,6 +147,10 @@ public class InstallService extends Service<Void> {
       outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_MUSIC + "\n");
       new MusicRandomizer(currentSettings, tempPatchDir).randomize();
     }
+    if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_PLAYER_MODEL)) {
+      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL + "\n");
+      new PlayerModelRandomizer(currentSettings, tempPatchDir).randomize();
+    }
 
     /* GAMEPLAY, NON-LEVEL */
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
@@ -178,6 +187,13 @@ public class InstallService extends Service<Void> {
 
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
       StationConnectivityFilter connectivity = new StationConnectivityFilter(currentSettings);
+      String connectivityInfo = connectivity.toString();
+      Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
+      Map<String, Book> toOverwrite = Maps.newHashMap();
+      toOverwrite.put("Bk_SL_Apt_Electronics", b);
+      BookInfoHelper bih = new BookInfoHelper(tempPatchDir);
+      bih.installNewBooks(toOverwrite);
+      
       try {
         connectivity.visualize();
       } catch (IOException e) {

@@ -16,14 +16,14 @@ public class ItemMultiplierHelper {
   public static final int MAYBE_A_FEW_MAX_BOUND = 10;
 
   public static final int MAYBE_A_LOT_MIN_BOUND = 1;
-  public static final int MAYBE_A_LOT_MAX_BOUND = 30;
+  public static final int MAYBE_A_LOT_MAX_BOUND = 50;
 
   public static final int FUCK_IT_MIN_BOUND = 1;
   public static final int FUCK_IT_MAX_BOUND = 100;
 
   private static ImmutableSet<String> FUCK_IT_TIER = ImmutableSet.of("Ingredients");
-  private static ImmutableSet<String> MAYBE_A_LOT_TIER = ImmutableSet.of("Food", "Ammo");
-  private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("EMPGrenades", "LureGrenades",
+  private static ImmutableSet<String> MAYBE_A_LOT_TIER = ImmutableSet.of("Ammo");
+  private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("Food", "EMPGrenades", "LureGrenades",
       "RecyclerGrenades", "NullwaveTransmitter", "RecyclerJunk");
   private static ImmutableSet<String> ONLY_ONE_TIER = ImmutableSet.of("FabricationPlans", "Weapons");
 

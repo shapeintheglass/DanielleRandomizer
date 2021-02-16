@@ -27,6 +27,10 @@ public class GameplaySettingsJson implements HasOptions {
   public static final String START_SELF_DESTRUCT = "start_self_destruct";
   public static final String SELF_DESTRUCT_TIMER = "self_destruct_timer";
   public static final String SELF_DESTRUCT_SHUTTLE_TIMER = "self_destruct_shuttle_timer";
+  public static final String RANDOMIZE_NIGHTMARE = "randomize_nightmare";
+  public static final String RANDOMIZE_CYSTOID_NESTS = "randomize_cystoid_nests";
+  public static final String RANDOMIZE_WEAVER_CYSTOIDS = "randomize_weaver_cystoids";
+  public static final String RANDOMIZE_FAB_PLAN_COSTS = "randomize_fab_plan_costs";
 
   public static final ImmutableList<String> ALL_OPTIONS = new ImmutableList.Builder<String>().add(RANDOMIZE_LOOT,
       ADD_LOOT_TO_APARTMENT, OPEN_STATION, RANDOMIZE_NEUROMODS, UNLOCK_ALL_SCANS, RANDOMIZE_STATION, START_ON_2ND_DAY,

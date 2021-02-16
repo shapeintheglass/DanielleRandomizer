@@ -75,7 +75,7 @@ public class StationConnectivityFilter extends BaseFilter {
         rules.add(new UnlockPsychotronicsRule());
         rules.add(new UnlockPowerPlantRule());
         rules.add(new KeyItemsInBridgeRule());
-        logger.info(connectivityToString());
+        logger.info(getDebugData());
         break;
       } catch (IllegalStateException e) {
         logger.info(String.format("Failed to find connection after %s attempts", numAttempts));
@@ -88,7 +88,7 @@ public class StationConnectivityFilter extends BaseFilter {
     return network;
   }
 
-  private String connectivityToString() {
+  public String getDebugData() {
     StringBuilder sb = new StringBuilder();
     sb.append("CONNECTIVITY DEBUG DATA:\n");
     for (Level l : Level.values()) {
@@ -113,6 +113,30 @@ public class StationConnectivityFilter extends BaseFilter {
         String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
         sb.append(String.format("%s:\tDoor to %s now leads to %s. Debug data: %s --> %s, Spawn %s --> %s\n", l,
             oldDoorValueReadable, doorValueReadable, doorName, doorValue, spawnName, spawnValue));
+      }
+    }
+
+    return sb.toString();
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Connectivity for Deep Storage and the Exterior are not affected.\n");
+    for (Level l : Level.values()) {
+      String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);
+      sb.append(String.format("%s:\n", l));
+      for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
+        String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
+        String spawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(d);
+        String doorValue = doorConnectivity.get(levelName).get(doorName);
+        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+            .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d))
+            .toString();
+        String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
+        sb.append(String.format("\tDoor to %s now leads to %s.\n", oldDoorValueReadable, doorValueReadable, doorName,
+            doorValue, spawnName, spawnValue));
       }
     }
 
@@ -273,12 +297,12 @@ public class StationConnectivityFilter extends BaseFilter {
     // graph.addVertex("HARDWARE_LABS");
     graph.addVertex("DEEP_STORAGE");
     // graph.addVertex("CREW_QUARTERS");
-    //graph.addVertex("PSYCHOTRONICS");
+    // graph.addVertex("PSYCHOTRONICS");
     // graph.addEdge("LOBBY", "HARDWARE_LABS");
     graph.addEdge("ARBORETUM", "DEEP_STORAGE");
     // graph.addEdge("ARBORETUM", "CREW_QUARTERS");
-    //graph.addEdge("PSYCHOTRONICS", "LOBBY");
-    //graph.addEdge("PSYCHOTRONICS", "GUTS");
+    // graph.addEdge("PSYCHOTRONICS", "LOBBY");
+    // graph.addEdge("PSYCHOTRONICS", "GUTS");
 
     JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
     mxIGraphLayout graphLayout = new mxFastOrganicLayout(graphAdapter);
@@ -372,12 +396,8 @@ public class StationConnectivityFilter extends BaseFilter {
 
   public static void main(String[] args) {
 
-    try {
-      new StationConnectivityFilter(6752871950564122477L).visualize();
-      //new StationConnectivityFilter(new Random().nextLong()).visualize();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    StationConnectivityFilter filter = new StationConnectivityFilter(new Random().nextLong());
+    System.out.println(filter.toString());
+
   }
 }

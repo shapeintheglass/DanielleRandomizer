@@ -13,9 +13,10 @@ public class CosmeticSettingsJson implements HasOptions {
   public static final String RANDOMIZE_BODIES = "randomize_bodies";
   public static final String RANDOMIZE_VOICELINES = "randomize_voicelines";
   public static final String RANDOMIZE_MUSIC = "randomize_music";
+  public static final String RANDOMIZE_PLAYER_MODEL = "randomize_player_model";
 
   public static final ImmutableList<String> ALL_OPTIONS = new ImmutableList.Builder<String>().add(RANDOMIZE_BODIES,
-      RANDOMIZE_MUSIC, RANDOMIZE_VOICELINES).build();
+      RANDOMIZE_MUSIC, RANDOMIZE_VOICELINES, RANDOMIZE_PLAYER_MODEL).build();
 
   private static final boolean DEFAULT_VALUE = false;
 
@@ -24,11 +25,13 @@ public class CosmeticSettingsJson implements HasOptions {
   @JsonCreator
   public CosmeticSettingsJson(@JsonProperty(RANDOMIZE_BODIES) boolean randomizeBodies,
       @JsonProperty(RANDOMIZE_VOICELINES) boolean randomizeVoicelines,
-      @JsonProperty(RANDOMIZE_MUSIC) boolean randomizeMusic) {
+      @JsonProperty(RANDOMIZE_MUSIC) boolean randomizeMusic,
+      @JsonProperty(RANDOMIZE_PLAYER_MODEL) boolean randomizePlayerModel) {
     booleanSettings = Maps.newHashMap();
     booleanSettings.put(RANDOMIZE_BODIES, randomizeBodies);
     booleanSettings.put(RANDOMIZE_VOICELINES, randomizeVoicelines);
     booleanSettings.put(RANDOMIZE_MUSIC, randomizeMusic);
+    booleanSettings.put(RANDOMIZE_PLAYER_MODEL, randomizePlayerModel);
   }
 
   public CosmeticSettingsJson() {
@@ -43,6 +46,7 @@ public class CosmeticSettingsJson implements HasOptions {
     booleanSettings.put(RANDOMIZE_BODIES, node.get(RANDOMIZE_BODIES).asBoolean());
     booleanSettings.put(RANDOMIZE_VOICELINES, node.get(RANDOMIZE_VOICELINES).asBoolean());
     booleanSettings.put(RANDOMIZE_MUSIC, node.get(RANDOMIZE_MUSIC).asBoolean());
+    booleanSettings.put(RANDOMIZE_PLAYER_MODEL, node.get(RANDOMIZE_PLAYER_MODEL).asBoolean());
   }
 
   public boolean getOption(String name) {
@@ -66,5 +70,10 @@ public class CosmeticSettingsJson implements HasOptions {
   @JsonProperty(RANDOMIZE_MUSIC)
   public boolean getRandomizeMusic() {
     return getOption(RANDOMIZE_MUSIC);
+  }
+  
+  @JsonProperty(RANDOMIZE_PLAYER_MODEL)
+  public boolean getRandomizePlayerModel() {
+    return getOption(RANDOMIZE_PLAYER_MODEL);
   }
 }

@@ -35,7 +35,7 @@ public class SpawnStatsUtil {
   public static final String LEVEL_DIR = "data/levels";
   public static final String LEVEL_FILE = "research/lobby";
   public static final String LEVEL_FILE_NAME = "mission_mission0.xml";
-  public static final String PRESETS_FILE = "settings.json";
+  public static final String PRESETS_FILE = "spawn_presets.json";
 
   private static TaggedDatabase database;
 

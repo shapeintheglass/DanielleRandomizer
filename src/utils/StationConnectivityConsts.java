@@ -8,18 +8,18 @@ import com.google.common.collect.ImmutableSet;
 public final class StationConnectivityConsts {
 
   public static enum Level {
-    NEUROMOD_DIVISION,
-    LOBBY,
-    PSYCHOTRONICS,
-    SHUTTLE_BAY,
-    GUTS,
     ARBORETUM,
     BRIDGE,
     CARGO_BAY,
-    LIFE_SUPPORT,
-    POWER_PLANT,
+    CREW_QUARTERS,
+    GUTS,
     HARDWARE_LABS,
-    CREW_QUARTERS
+    LIFE_SUPPORT,
+    LOBBY,
+    NEUROMOD_DIVISION,
+    POWER_PLANT,
+    PSYCHOTRONICS,
+    SHUTTLE_BAY
   }
 
   public static enum Door {
