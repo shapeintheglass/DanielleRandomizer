@@ -101,18 +101,29 @@ public class AddEntityHelper {
     if (settings.getGameplaySettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
       objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
     }
-    
+
     if (settings.getGameplaySettings().getStartOn2ndDay() && filename.equals("research/simulationlabs")) {
       try {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new File(NATURAL_DAY_2_START_FILE));
         Element root = document.getRootElement().clone();
-        
+
         objects.addContent(root);
       } catch (Exception e) {
         e.printStackTrace();
       }
+    }
 
+    if (settings.getGameplaySettings().getRandomizeNightmare() && filename.equals("research/simulationlabs")) {
+      try {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File("data/ark/enablenightmaremanager.xml"));
+        Element root = document.getRootElement().clone();
+
+        objects.addContent(root);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 }

@@ -63,11 +63,16 @@ public class LevelRandomizer extends BaseRandomizer {
     }
     if (s.getGameplaySettings().getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
-      gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
     }
     if (s.getGameplaySettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
       gameTokenValues.put(LevelConsts.SELF_DESTRUCT_TIMER_TOKEN_NAME, s.getGameplaySettings().getSelfDestructTimer());
+    }
+    if (s.getGameplaySettings().getSkipJovanCutscene()) {
+      gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
+    }
+    if (s.getGameplaySettings().getRandomizeNightmare()) {
+      gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
     }
 
     gameTokenRule = new GameTokenRule(gameTokenValues);

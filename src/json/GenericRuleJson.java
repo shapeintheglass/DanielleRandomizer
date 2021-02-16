@@ -106,6 +106,12 @@ public class GenericRuleJson {
       doNotOutputTags.addAll(doNotOutput);
     }
   }
+  
+  public void addDoNotOutputTag(String doNotOutput) {
+    if (doNotOutputTags != null) {
+      doNotOutputTags.add(doNotOutput);
+    }
+  }
 
   public List<String> getDoNotOutputTags() {
     return doNotOutputTags;

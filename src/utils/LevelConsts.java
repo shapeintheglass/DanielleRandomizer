@@ -80,4 +80,6 @@ public class LevelConsts {
   public static final String SELF_DESTRUCT_TIMER_TOKEN_NAME = "WorldState.TalosSelfDestructTime";
   public static final ImmutableMap<String, String> START_SELF_DESTRUCT_TOKENS = ImmutableMap.of(
       "CharacterFates.DahlBrainwashed", "true", "AlexAndDahlOutcomes.DahlArrivedInShuttle", "true");
+  public static final ImmutableMap<String, String> SKIP_JOVAN_TOKENS = ImmutableMap.of(
+      "SimLab.Decontamination_SawMimicScene", "true");
 }

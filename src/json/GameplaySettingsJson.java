@@ -31,13 +31,16 @@ public class GameplaySettingsJson implements HasOptions {
   public static final String RANDOMIZE_CYSTOID_NESTS = "randomize_cystoid_nests";
   public static final String RANDOMIZE_WEAVER_CYSTOIDS = "randomize_weaver_cystoids";
   public static final String RANDOMIZE_FAB_PLAN_COSTS = "randomize_fab_plan_costs";
+  public static final String SKIP_JOVAN_CUTSCENE = "skip_jovan_cutscene";
 
   public static final ImmutableList<String> ALL_OPTIONS = new ImmutableList.Builder<String>().add(RANDOMIZE_LOOT,
       ADD_LOOT_TO_APARTMENT, OPEN_STATION, RANDOMIZE_NEUROMODS, UNLOCK_ALL_SCANS, RANDOMIZE_STATION, START_ON_2ND_DAY,
-      MORE_GUNS, WANDERING_HUMANS, START_SELF_DESTRUCT, SELF_DESTRUCT_TIMER, SELF_DESTRUCT_SHUTTLE_TIMER).build();
+      MORE_GUNS, WANDERING_HUMANS, START_SELF_DESTRUCT, SELF_DESTRUCT_TIMER, SELF_DESTRUCT_SHUTTLE_TIMER,
+      RANDOMIZE_NIGHTMARE, RANDOMIZE_CYSTOID_NESTS, RANDOMIZE_WEAVER_CYSTOIDS, RANDOMIZE_FAB_PLAN_COSTS,
+      SKIP_JOVAN_CUTSCENE).build();
 
   private static final boolean DEFAULT_VALUE = false;
-  public static final String DEFAULT_SELF_DESTRUCT_TIMER = "120.000000";
+  public static final String DEFAULT_SELF_DESTRUCT_TIMER = "60.000000";
   public static final String DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER = "30.000000";
 
   @JsonProperty(ENEMY_SPAWN_SETTINGS)
@@ -57,6 +60,11 @@ public class GameplaySettingsJson implements HasOptions {
       @JsonProperty(START_ON_2ND_DAY) boolean startOnSecondDay, @JsonProperty(MORE_GUNS) boolean moreGuns,
       @JsonProperty(WANDERING_HUMANS) boolean wanderingHumans,
       @JsonProperty(START_SELF_DESTRUCT) boolean startSelfDestruct,
+      @JsonProperty(RANDOMIZE_NIGHTMARE) boolean randomizeNightmare,
+      @JsonProperty(RANDOMIZE_CYSTOID_NESTS) boolean randomizeCystoidNests,
+      @JsonProperty(RANDOMIZE_WEAVER_CYSTOIDS) boolean randomizeWeaverCystoids,
+      @JsonProperty(RANDOMIZE_FAB_PLAN_COSTS) boolean randomizeFabPlanCosts,
+      @JsonProperty(SKIP_JOVAN_CUTSCENE) boolean skipJovanCutscene,
       @JsonProperty(SELF_DESTRUCT_TIMER) String selfDestructTimer,
       @JsonProperty(SELF_DESTRUCT_SHUTTLE_TIMER) String selfDestructShuttleTimer,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
@@ -72,6 +80,11 @@ public class GameplaySettingsJson implements HasOptions {
     booleanSettings.put(MORE_GUNS, moreGuns);
     booleanSettings.put(WANDERING_HUMANS, wanderingHumans);
     booleanSettings.put(START_SELF_DESTRUCT, startSelfDestruct);
+    booleanSettings.put(RANDOMIZE_NIGHTMARE, randomizeNightmare);
+    booleanSettings.put(RANDOMIZE_CYSTOID_NESTS, randomizeCystoidNests);
+    booleanSettings.put(RANDOMIZE_WEAVER_CYSTOIDS, randomizeWeaverCystoids);
+    booleanSettings.put(RANDOMIZE_FAB_PLAN_COSTS, randomizeFabPlanCosts);
+    booleanSettings.put(SKIP_JOVAN_CUTSCENE, skipJovanCutscene);
     float selfDestructTimerFloat = Float.parseFloat(selfDestructTimer);
     this.selfDestructTimer = String.format("%.6f", selfDestructTimerFloat);
     float selfDestructShuttleTimerFloat = Float.parseFloat(selfDestructShuttleTimer);
@@ -178,6 +191,31 @@ public class GameplaySettingsJson implements HasOptions {
   @JsonProperty(SELF_DESTRUCT_SHUTTLE_TIMER)
   public String getSelfDestructShuttleTimer() {
     return this.selfDestructShuttleTimer;
+  }
+
+  @JsonProperty(RANDOMIZE_NIGHTMARE)
+  public boolean getRandomizeNightmare() {
+    return getOption(RANDOMIZE_NIGHTMARE);
+  }
+
+  @JsonProperty(RANDOMIZE_CYSTOID_NESTS)
+  public boolean getRandomizeCystoidNests() {
+    return getOption(RANDOMIZE_CYSTOID_NESTS);
+  }
+
+  @JsonProperty(RANDOMIZE_WEAVER_CYSTOIDS)
+  public boolean getRandomizeWeaverCystoids() {
+    return getOption(RANDOMIZE_WEAVER_CYSTOIDS);
+  }
+  
+  @JsonProperty(RANDOMIZE_FAB_PLAN_COSTS)
+  public boolean getRandomizeFabPlanCosts() {
+    return getOption(RANDOMIZE_FAB_PLAN_COSTS);
+  }
+
+  @JsonProperty(SKIP_JOVAN_CUTSCENE)
+  public boolean getSkipJovanCutscene() {
+    return getOption(SKIP_JOVAN_CUTSCENE);
   }
 
   public SpawnPresetJson getEnemySpawnSettings() {

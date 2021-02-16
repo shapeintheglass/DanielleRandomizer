@@ -78,6 +78,11 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final String PAJAMA_FEMALE_ARMS_MTL = "objects/characters/player/female/player1p_female02_arms.mtl";
   private static final String PAJAMA_FEMALE_LEGS_SKIN = "objects/characters/player/female/player1p_female02_pajamas.skin";
   private static final String PAJAMA_FEMALE_LEGS_MTL = "objects/characters/player/female/player1p_female02_pajamas.mtl";
+  
+  private static final String COSMONAUT_ARMS_SKIN = "objects/characters/player/male/cosmonaut_genmalebody01.skin";
+  private static final String COSMONAUT_ARMS_MTL = "objects/characters/player/male/cosmonaut1p_male01.mtl";
+  private static final String COSMONAUT_SUIT_SKIN = "objects/characters/player/male/player1p_male01_legs.skin";
+  private static final String COSMONAUT_SUIT_MTL = "objects/characters/player/male/player1p_male01_legs.mtl";
 
   private Path tempPatchDir;
 
@@ -109,6 +114,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       // Replace arms and legs with a random body attachment
       int index = r.nextInt(BodyType.values().length);
       BodyType bodyType = BodyType.values()[index];
+      logger.info("Setting body type " + bodyType);
 
       switch (bodyType) {
         case Female:
@@ -155,6 +161,22 @@ public class PlayerModelRandomizer extends BaseRandomizer {
               .setAttribute("AName", "legs")
               .setAttribute("Binding", PAJAMA_MALE_LEGS_SKIN)
               .setAttribute("Material", PAJAMA_MALE_LEGS_MTL)
+              .setAttribute("Flags", "0");
+          attachments.addContent(arms);
+          attachments.addContent(legs);
+          break;
+        case Cosmonaut:
+          arms = new Element("Attachment").setAttribute("Inheritable", "0")
+              .setAttribute("Type", "CA_SKIN")
+              .setAttribute("AName", "arms")
+              .setAttribute("Binding", COSMONAUT_ARMS_SKIN)
+              .setAttribute("Material", COSMONAUT_ARMS_MTL)
+              .setAttribute("Flags", "0");
+          legs = new Element("Attachment").setAttribute("Inheritable", "0")
+              .setAttribute("Type", "CA_SKIN")
+              .setAttribute("AName", "legs")
+              .setAttribute("Binding", COSMONAUT_SUIT_SKIN)
+              .setAttribute("Material", COSMONAUT_SUIT_MTL)
               .setAttribute("Flags", "0");
           attachments.addContent(arms);
           attachments.addContent(legs);

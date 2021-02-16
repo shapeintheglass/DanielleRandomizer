@@ -84,10 +84,18 @@ public class WindowController {
   @FXML
   private CheckBox itemsCheckboxLootTables;
   @FXML
+  private CheckBox itemsCheckboxFabPlanCosts;
+  @FXML
   private VBox itemsOptions;
   private ToggleGroup itemSpawnToggleGroup = new ToggleGroup();
 
   /* ENEMIES TAB */
+  @FXML
+  private CheckBox npcsCheckBoxNightmare;
+  @FXML
+  private CheckBox npcsCheckBoxCystoidNests;
+  @FXML
+  private CheckBox npcsCheckBoxWeavers;
   @FXML
   private VBox enemiesOptions;
   private ToggleGroup enemySpawnToggleGroup = new ToggleGroup();
@@ -97,6 +105,8 @@ public class WindowController {
   private CheckBox startCheckboxDay2;
   @FXML
   private CheckBox startCheckboxAddAllEquipment;
+  @FXML
+  private CheckBox startCheckboxSkipJovan;
 
   /* NEUROMODS TAB */
   @FXML
@@ -149,6 +159,8 @@ public class WindowController {
   @FXML
   protected void initialize() {
     logger = Logger.getLogger("randomizer_gui");
+    
+    setTooltips();
 
     // Attempt to read from preset definition file and saved settings file
     allPresets = getSpawnPresets();
@@ -165,7 +177,8 @@ public class WindowController {
     directoryText.setText(settings.getInstallDir());
 
     allEntities = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
-        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton, gotsPresetButton);
+        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton,
+        gotsPresetButton);
 
     initCustomSpawnCheckboxes(allPresets, settings);
 
@@ -182,6 +195,27 @@ public class WindowController {
       }
     });
   }
+  
+  private void setTooltips() {
+    directoryText.setTooltip(new Tooltip("The directory where Prey is installed"));
+    changeDirButton.setTooltip(new Tooltip("Open a file chooser to select the Prey install directory"));
+    seedText.setTooltip(new Tooltip("Seed to use for random generation. Must be a number (int64)"));
+    newSeedButton.setTooltip(new Tooltip("Randomly picks a new seed"));
+    
+    recommendedPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"recommended\" experience."));
+    chaoticPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
+    litePresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"lite\" experience."));
+    gotsPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"timed\" experience."));
+    
+    itemsCheckboxMoreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
+    itemsCheckboxLootTables.setTooltip(new Tooltip("Randomizes loot tables. Generally recommended to keep this checked when randomizing items."));
+    
+    installButton.setTooltip(new Tooltip("Generates randomized mod using given settings and installs to the given game directory."));
+    uninstallButton.setTooltip(new Tooltip("Removes any mods added by this installer and reverts changes to the given game directory."));
+    clearButton.setTooltip(new Tooltip("Clears the output window."));
+    saveSettingsButton.setTooltip(new Tooltip("Saves the current settings to a file so that they are the default the next time this UI is opened."));
+    closeButton.setTooltip(new Tooltip("Closes this UI."));
+  }
 
   private void updateUI() {
     setSpawnCheckbox(itemSpawnToggleGroup, settings.getGameplaySettings().getItemSpawnSettings().getName());
@@ -194,9 +228,15 @@ public class WindowController {
 
     itemsCheckboxMoreGuns.setSelected(settings.getGameplaySettings().getMoreGuns());
     itemsCheckboxLootTables.setSelected(settings.getGameplaySettings().getRandomizeLoot());
+    itemsCheckboxFabPlanCosts.setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
+    
+    npcsCheckBoxCystoidNests.setSelected(settings.getGameplaySettings().getRandomizeCystoidNests());
+    npcsCheckBoxNightmare.setSelected(settings.getGameplaySettings().getRandomizeNightmare());
+    npcsCheckBoxWeavers.setSelected(settings.getGameplaySettings().getRandomizeWeaverCystoids());
 
     startCheckboxDay2.setSelected(settings.getGameplaySettings().getStartOn2ndDay());
     startCheckboxAddAllEquipment.setSelected(settings.getGameplaySettings().getAddLootToApartment());
+    startCheckboxSkipJovan.setSelected(settings.getGameplaySettings().getSkipJovanCutscene());
 
     neuromodsCheckboxRandomize.setSelected(settings.getGameplaySettings().getRandomizeNeuromods());
 
@@ -278,19 +318,23 @@ public class WindowController {
    * PRESETS
    */
 
-  @FXML
-  protected void onPresetsRecommendedClicked(ActionEvent event) {
+  private void resetUI() {
     // TODO: Make this less gross
-    cosmeticCheckboxBodies.setSelected(true);
-    cosmeticCheckboxVoices.setSelected(true);
-    cosmeticCheckboxMusic.setSelected(true);
-    cosmeticCheckboxPlayerModel.setSelected(true);
-    itemsCheckboxLootTables.setSelected(true);
+    cosmeticCheckboxBodies.setSelected(false);
+    cosmeticCheckboxVoices.setSelected(false);
+    cosmeticCheckboxMusic.setSelected(false);
+    cosmeticCheckboxPlayerModel.setSelected(false);
+    itemsCheckboxLootTables.setSelected(false);
     itemsCheckboxMoreGuns.setSelected(false);
-    setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
-    setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies");
+    itemsCheckboxFabPlanCosts.setSelected(false);
+    setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
+    npcsCheckBoxNightmare.setSelected(false);
+    npcsCheckBoxCystoidNests.setSelected(false);
+    npcsCheckBoxWeavers.setSelected(false);
+    setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
     startCheckboxDay2.setSelected(false);
     startCheckboxAddAllEquipment.setSelected(false);
+    startCheckboxSkipJovan.setSelected(false);
     neuromodsCheckboxRandomize.setSelected(false);
     storyCheckboxRandomStation.setSelected(false);
     cheatsCheckboxAllScans.setSelected(false);
@@ -299,6 +343,18 @@ public class WindowController {
     cheatsCheckboxSelfDestruct.setSelected(false);
     cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
+  }
+
+  @FXML
+  protected void onPresetsRecommendedClicked(ActionEvent event) {
+    resetUI();
+    cosmeticCheckboxBodies.setSelected(true);
+    cosmeticCheckboxVoices.setSelected(true);
+    cosmeticCheckboxMusic.setSelected(true);
+    cosmeticCheckboxPlayerModel.setSelected(true);
+    itemsCheckboxLootTables.setSelected(true);
+    setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
+    setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies");
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
@@ -306,7 +362,7 @@ public class WindowController {
 
   @FXML
   protected void onPresetsChaoticClicked(ActionEvent event) {
-    // TODO: Make this less gross
+    resetUI();
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
     cosmeticCheckboxMusic.setSelected(true);
@@ -315,16 +371,8 @@ public class WindowController {
     itemsCheckboxMoreGuns.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items (chaotic)");
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies (chaotic)");
-    startCheckboxDay2.setSelected(false);
-    startCheckboxAddAllEquipment.setSelected(false);
     neuromodsCheckboxRandomize.setSelected(true);
     storyCheckboxRandomStation.setSelected(true);
-    cheatsCheckboxAllScans.setSelected(false);
-    cheatsCheckboxUnlockAll.setSelected(false);
-    cheatsCheckboxWander.setSelected(false);
-    cheatsCheckboxSelfDestruct.setSelected(false);
-    cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
-    cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
@@ -332,48 +380,18 @@ public class WindowController {
 
   @FXML
   protected void onPresetsLiteClicked(ActionEvent event) {
-    // TODO: Make this less gross
-    cosmeticCheckboxBodies.setSelected(false);
-    cosmeticCheckboxVoices.setSelected(false);
-    cosmeticCheckboxMusic.setSelected(false);
-    cosmeticCheckboxPlayerModel.setSelected(false);
+    resetUI();
     itemsCheckboxLootTables.setSelected(true);
-    itemsCheckboxMoreGuns.setSelected(false);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items within type");
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies within type");
-    startCheckboxDay2.setSelected(false);
-    startCheckboxAddAllEquipment.setSelected(false);
-    neuromodsCheckboxRandomize.setSelected(false);
-    storyCheckboxRandomStation.setSelected(false);
-    cheatsCheckboxAllScans.setSelected(false);
-    cheatsCheckboxUnlockAll.setSelected(false);
-    cheatsCheckboxWander.setSelected(false);
-    cheatsCheckboxSelfDestruct.setSelected(false);
-    cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
-    cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
   }
-  
+
   @FXML
   protected void onPresetsGotsClicked(ActionEvent event) {
-    // TODO: Make this less gross
-    cosmeticCheckboxBodies.setSelected(false);
-    cosmeticCheckboxVoices.setSelected(false);
-    cosmeticCheckboxMusic.setSelected(false);
-    cosmeticCheckboxPlayerModel.setSelected(false);
-    itemsCheckboxLootTables.setSelected(true);
-    itemsCheckboxMoreGuns.setSelected(false);
-    setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
-    setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
-    startCheckboxDay2.setSelected(false);
-    startCheckboxAddAllEquipment.setSelected(false);
-    neuromodsCheckboxRandomize.setSelected(false);
-    storyCheckboxRandomStation.setSelected(false);
-    cheatsCheckboxAllScans.setSelected(false);
-    cheatsCheckboxUnlockAll.setSelected(false);
-    cheatsCheckboxWander.setSelected(false);
+    resetUI();
     cheatsCheckboxSelfDestruct.setSelected(true);
     cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
@@ -473,7 +491,9 @@ public class WindowController {
         cheatsCheckboxUnlockAll.isSelected(), neuromodsCheckboxRandomize.isSelected(), cheatsCheckboxAllScans
             .isSelected(), storyCheckboxRandomStation.isSelected(), startCheckboxDay2.isSelected(),
         itemsCheckboxMoreGuns.isSelected(), cheatsCheckboxWander.isSelected(), cheatsCheckboxSelfDestruct.isSelected(),
-        cheatsTextFieldTimer.getText(), cheatsTextFieldShuttleTimer.getText(), enemySpawnPreset, itemSpawnPreset);
+        npcsCheckBoxNightmare.isSelected(), npcsCheckBoxCystoidNests.isSelected(), npcsCheckBoxWeavers.isSelected(),
+        itemsCheckboxFabPlanCosts.isSelected(), startCheckboxSkipJovan.isSelected(), cheatsTextFieldTimer.getText(),
+        cheatsTextFieldShuttleTimer.getText(), enemySpawnPreset, itemSpawnPreset);
   }
 
   private static SpawnPresetJson getSpawnPresetFromList(List<SpawnPresetJson> presetList, String name) {

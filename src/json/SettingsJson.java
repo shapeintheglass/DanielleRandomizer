@@ -39,7 +39,6 @@ public class SettingsJson {
   }
 
   public SettingsJson(String filename) throws IOException {
-    // TODO: Add validation if these settings are incomplete
     JsonNode node = new ObjectMapper().readTree(new File(filename));
     if (node.has(INSTALL_DIR)) {
       this.installDir = node.get(INSTALL_DIR).textValue();
@@ -79,7 +78,7 @@ public class SettingsJson {
   public GameplaySettingsJson getGameplaySettings() {
     return gameplaySettings;
   }
-
+  
   public String toString() {
     StringBuilder s = new StringBuilder();
     boolean atLeastOneSetting = false;
@@ -151,6 +150,12 @@ public class SettingsJson {
       }
       if (gsj.getWanderingHumans()) {
         s.append(" * Make humans wander\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getStartSelfDestruct()) {
+        s.append(" * Self destruct enabled at game start\n");
+        s.append(String.format(" * Self destruct timer: %s min\n", gsj.getSelfDestructTimer()));
+        s.append(String.format(" * Shuttle timer: %s min\n", gsj.getSelfDestructShuttleTimer()));
         atLeastOneSetting = true;
       }
     }

@@ -111,4 +111,12 @@ public class CustomRuleHelper {
     tags.addAll(Utils.getTags(fullEntity));
     return tags;
   }
+  
+  public void addDoNotOutputTags(List<String> doNotOutput) {
+    doNotOutputTags.addAll(doNotOutput);
+  }
+  
+  public void addDoNotTouchTags(List<String> doNotTouch) {
+    doNotTouchTags.addAll(doNotTouch);
+  }
 }

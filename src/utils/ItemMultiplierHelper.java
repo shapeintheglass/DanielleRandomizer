@@ -13,7 +13,7 @@ public class ItemMultiplierHelper {
   }
 
   public static final int MAYBE_A_FEW_MIN_BOUND = 1;
-  public static final int MAYBE_A_FEW_MAX_BOUND = 10;
+  public static final int MAYBE_A_FEW_MAX_BOUND = 5;
 
   public static final int MAYBE_A_LOT_MIN_BOUND = 1;
   public static final int MAYBE_A_LOT_MAX_BOUND = 50;

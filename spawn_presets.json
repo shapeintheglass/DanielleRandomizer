@@ -6,7 +6,7 @@
     },
     {
       "name": "Randomize items",
-      "desc": "The most balanced item randomization. Does not spawn story items early, to avoid sequence breaking.",
+      "desc": "Randomizes all items and physics props. Does not spawn story items early, to avoid sequence breaking.",
       "filters": [
         {
           "input_tags": [
@@ -105,8 +105,18 @@
     },
     {
       "name": "Randomize items (chaotic)",
-      "desc": "Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking. Can also spawn large furniture in odd places.",
+      "desc": "Has a chance of spawning story progression items early (such as the jetpack, psychoscope, and arming keys), which can lead to sequence breaking. May spawn large furniture in unexpected places.",
       "filters": [
+        {
+          "input_tags": [
+            "_LEVERAGE_II",
+            "_LEVERAGE_III"
+          ],
+          "output_tags": [
+            "_LEVERAGE_II",
+            "_LEVERAGE_III"
+          ]
+        },
         {
           "input_tags": [
             "Neuromod_Calibration",
@@ -163,7 +173,9 @@
           ],
           "do_not_output_tags": [
             "Cystoid_IgnorePlayer",
-            "ApexTentacle"
+            "ApexTentacle",
+            "_LEVERAGE_II",
+            "_LEVERAGE_III"
           ]
         }
       ]

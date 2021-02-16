@@ -27,6 +27,7 @@ import randomizers.gameplay.BookInfoHelper.Book;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
+import randomizers.gameplay.NightmareHelper;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
@@ -169,6 +170,11 @@ public class InstallService extends Service<Void> {
       }
     } catch (IOException e) {
       e.printStackTrace();
+    }
+    
+    if (currentSettings.getGameplaySettings().getRandomizeNightmare()) {
+      outputWindow.appendText("Randomizing nightmare...\n");
+      NightmareHelper.install(database, currentSettings, tempPatchDir);
     }
 
     /* GAMEPLAY, LEVEL */

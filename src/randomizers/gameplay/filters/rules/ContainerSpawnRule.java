@@ -3,11 +3,11 @@ package randomizers.gameplay.filters.rules;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.jdom2.Element;
-import databases.TaggedDatabase;
-import utils.CustomRuleHelper;
+
+import utils.CustomFilterHelper;
 import utils.ItemMultiplierHelper;
-import utils.LevelConsts;
 import utils.Utils;
 
 /**
@@ -20,12 +20,10 @@ public class ContainerSpawnRule implements Rule {
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
-  private TaggedDatabase database;
-  private CustomRuleHelper crh;
+  private CustomFilterHelper filterHelper;
 
-  public ContainerSpawnRule(TaggedDatabase database, CustomRuleHelper crh) {
-    this.database = database;
-    this.crh = crh;
+  public ContainerSpawnRule(CustomFilterHelper filterHelper) {
+    this.filterHelper = filterHelper;
   }
 
   public boolean trigger(Element e, Random r, String filename) {
@@ -46,23 +44,19 @@ public class ContainerSpawnRule implements Rule {
   public void apply(Element e, Random r, String filename) {
     // Iterate through nodes until we find an item add node
     List<Element> nodes = getNodes(e);
+    
     for (Element n : nodes) {
       if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
         Element inputs = n.getChild("Inputs");
         String archetypeStr = inputs.getAttributeValue("archetype");
-        if (archetypeStr == null || archetypeStr.isEmpty() || !triggerOnInput(inputs, filename + LevelConsts.DELIMITER
-            + e.getAttributeValue("Name"))) {
-          continue;
-        }
-        Element fullEntity = database.getEntityByName(Utils.stripPrefix(archetypeStr));
-        if (fullEntity == null) {
+        if (archetypeStr == null || archetypeStr.isEmpty() || !filterHelper.trigger(archetypeStr, null)) {
           continue;
         }
 
         // Try different items until we get a valid pickup item
-        // TODO: Make this less dumb
+        // TODO: Make this smarter by just removing non-pickup items from the list first
         for (int i = 0; i < MAX_ATTEMPTS; i++) {
-          Element toSwap = crh.getEntityToSwap(database, r);
+          Element toSwap = filterHelper.getEntity(archetypeStr, null, r);
 
           // Ensure that this has the tag "ArkPickups" to represent that it can be added
           // to an inventory
@@ -88,10 +82,5 @@ public class ContainerSpawnRule implements Rule {
       return null;
     }
     return nodesContainer.getChildren();
-  }
-
-  private boolean triggerOnInput(Element input, String name) {
-    String archetype = input.getAttributeValue("archetype");
-    return crh.trigger(database, archetype, name);
   }
 }
