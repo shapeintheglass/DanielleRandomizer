@@ -93,8 +93,8 @@ public class LootTableRandomizer extends BaseRandomizer {
     List<Element> slots = lootTable.getChild("Slots").getChildren();
     for (Element slot : slots) {
       // Randomize the percent
-      int percent = r.nextInt(100 - PERCENT_OFFSET) + PERCENT_OFFSET;
-      slot.setAttribute("Percent", Integer.toString(percent));
+      //int percent = r.nextInt(100 - PERCENT_OFFSET) + PERCENT_OFFSET;
+      //slot.setAttribute("Percent", Integer.toString(percent));
 
       // Randomize the items
       List<Element> items = slot.getChild("Items").getChildren();

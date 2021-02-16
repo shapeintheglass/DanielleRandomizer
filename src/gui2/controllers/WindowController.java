@@ -392,6 +392,8 @@ public class WindowController {
   @FXML
   protected void onPresetsGotsClicked(ActionEvent event) {
     resetUI();
+    startCheckboxDay2.setSelected(true);
+    startCheckboxSkipJovan.setSelected(true);
     cheatsCheckboxSelfDestruct.setSelected(true);
     cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
@@ -459,6 +461,7 @@ public class WindowController {
     try {
       writeLastUsedSettingsToFile(Gui2Consts.SAVED_SETTINGS_FILE, toSave);
       outputWindow.appendText(String.format(Gui2Consts.SAVING_INFO, Gui2Consts.SAVED_SETTINGS_FILE));
+      outputWindow.appendText(toSave.toString());
     } catch (IOException e) {
       outputWindow.appendText(Gui2Consts.SAVING_FAILED);
       e.printStackTrace();

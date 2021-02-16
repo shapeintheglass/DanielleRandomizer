@@ -44,10 +44,12 @@ public class ArchetypeSwapRule implements Rule {
 
     // Adjust multiplier quantity if this entity has a count override
     Element properties2 = e.getChild("Properties2");
-    if (properties2 != null && properties2.getAttributeValue("iCountOverride") != null && !properties2.getAttributeValue(
-        "iCountOverride").equals("0")) {
-      int quantity = ItemMultiplierHelper.getMultiplierForEntity(toSwap, r);
-      properties2.setAttribute("iCountOverride", Integer.toString(quantity));
+    if (properties2 != null) {
+      String iCountOverride = properties2.getAttributeValue("iCountOverride");
+      if (iCountOverride != null && !iCountOverride.equals("0") && !iCountOverride.equals("1")) {
+        int quantity = ItemMultiplierHelper.getMultiplierForEntity(toSwap, r);
+        properties2.setAttribute("iCountOverride", Integer.toString(quantity));
+      }
     }
     e.setAttribute("Archetype", newArchetype);
   }

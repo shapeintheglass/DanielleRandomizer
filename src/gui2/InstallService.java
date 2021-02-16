@@ -174,12 +174,8 @@ public class InstallService extends Service<Void> {
     }
 
     try {
-      if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_LOOT)) {
-        writeLine(Gui2Consts.INSTALL_PROGRESS_LOOT);
-        new LootTableRandomizer(database, currentSettings, tempPatchDir).randomize();
-      } else {
-        new LootTableRandomizer(database, currentSettings, tempPatchDir).copyFile();
-      }
+      writeLine(Gui2Consts.INSTALL_PROGRESS_LOOT);
+      new LootTableRandomizer(database, currentSettings, tempPatchDir).randomize();
     } catch (IOException e) {
       e.printStackTrace();
     }

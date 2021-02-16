@@ -23,7 +23,7 @@ public class LevelConsts {
 
   public static final List<String> DO_NOT_OUTPUT_ITEM_TAGS = Lists.newArrayList("Architecture", "Gameplay",
       "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench",
-      "Mimic_Placeholder", "OperatorGrenade", "ShotgunPreorderFabPlan", "ArkContainer");
+      "Mimic_Placeholder", "OperatorGrenade", "ShotgunPreorderFabPlan", "ArkContainer", "MedKit_Wall_Mounted");
 
   public static final List<String> DO_NOT_TOUCH_NPC_TAGS = Lists.newArrayList(
       "research/psychotronics;ArkNpcSpawner_Weaver6", "research/psychotronics;ArkNpcSpawner_Weaver2",

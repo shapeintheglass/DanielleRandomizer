@@ -108,7 +108,7 @@
                                        <children>
                                           <Label text="Other options:" />
                                           <CheckBox fx:id="itemsCheckboxMoreGuns" mnemonicParsing="false" text="More guns" />
-                                          <CheckBox fx:id="itemsCheckboxLootTables" mnemonicParsing="false" text="Randomize loot tables" />
+                                          <CheckBox fx:id="itemsCheckboxLootTables" mnemonicParsing="false" text="Randomize loot tables" visible="false" />
                                           <CheckBox fx:id="itemsCheckboxFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" visible="false" />
                                        </children>
                                        <HBox.margin>

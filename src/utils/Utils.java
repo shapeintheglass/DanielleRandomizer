@@ -30,7 +30,7 @@ public class Utils {
     }
 
     int diff = upperBound - lowerBound + 1;
-    return r.nextInt(diff + lowerBound);
+    return r.nextInt(diff) + lowerBound;
   }
 
   public static <T> T getRandom(ImmutableCollection<T> arr, Random r) {

@@ -3,6 +3,7 @@ package randomizers.gameplay.filters.rules;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.jdom2.Element;
 
@@ -44,7 +45,7 @@ public class ContainerSpawnRule implements Rule {
   public void apply(Element e, Random r, String filename) {
     // Iterate through nodes until we find an item add node
     List<Element> nodes = getNodes(e);
-    
+
     for (Element n : nodes) {
       if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
         Element inputs = n.getChild("Inputs");
@@ -65,6 +66,8 @@ public class ContainerSpawnRule implements Rule {
             inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
             int multiplier = ItemMultiplierHelper.getMultiplierForEntity(tags, r);
             inputs.setAttribute("quantity", Integer.toString(multiplier));
+            System.out.printf("level: %s archetype: %s multiplier %s\n", filename, inputs.getAttributeValue(
+                "archetype"), inputs.getAttributeValue("quantity"));
             break;
           }
         }
