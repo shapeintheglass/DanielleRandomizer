@@ -61,7 +61,7 @@ public class CustomRuleHelper {
 
     boolean entityInAllowlist = Utils.getCommonElement(tags, inputTags) != null;
     boolean entityInBlocklist = Utils.getCommonElement(tags, doNotTouchTags) != null;
-    boolean nameInBlocklist = nameInLevel != null && doNotTouchTags.contains(nameInLevel);
+    boolean nameInBlocklist = nameInLevel != null && doNotTouchTags != null && doNotTouchTags.contains(nameInLevel);
 
     return entityInAllowlist && !(entityInBlocklist || nameInBlocklist);
   }
@@ -111,11 +111,11 @@ public class CustomRuleHelper {
     tags.addAll(Utils.getTags(fullEntity));
     return tags;
   }
-  
+
   public void addDoNotOutputTags(List<String> doNotOutput) {
     doNotOutputTags.addAll(doNotOutput);
   }
-  
+
   public void addDoNotTouchTags(List<String> doNotTouch) {
     doNotTouchTags.addAll(doNotTouch);
   }

@@ -30,7 +30,11 @@ public class CustomFilterHelper {
   }
 
   public String getEntityStr(String entityName, String nameInLevel, Random r) {
-    return Utils.getNameForEntity(getEntity(entityName, nameInLevel, r));
+    Element entityToSwap = getEntity(entityName, nameInLevel, r);
+    if (entityToSwap == null) {
+      return null;
+    }
+    return Utils.getNameForEntity(entityToSwap);
   }
 
   public boolean trigger(String entityName, String nameInLevel) {

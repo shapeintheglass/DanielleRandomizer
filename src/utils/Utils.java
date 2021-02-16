@@ -122,6 +122,9 @@ public class Utils {
   }
 
   public static String getCommonElement(Collection<String> s1, Collection<String> s2) {
+    if (s1 == null || s2 == null) {
+      return null;
+    }
     for (String s : s1) {
       if (s2.contains(s)) {
         return s;

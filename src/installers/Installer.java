@@ -53,7 +53,7 @@ public class Installer {
       "data/aitrees/ArmedHumanAiTree.xml", "ark/ai/aitrees/ArmedHumanAiTree.xml", "data/aitrees/HumanAiTree.xml",
       "ark/ai/aitrees/HumanAiTree.xml", "data/aitrees/UnarmedHumanAiTree.xml", "ark/ai/aitrees/UnarmedHumanAiTree.xml");
 
-  public static final ImmutableMap<String, String> SELF_DESTRUCT_DEPENDENCIES = ImmutableMap.of(
+  public static final ImmutableMap<String, String> SURVIVE_APEX_KILL_WALL_DEPENDENCIES = ImmutableMap.of(
       "data/ark/ApexVolumeConfig.xml", "ark/apexvolumeconfig.xml");
 
   private File patchFile;
@@ -91,9 +91,13 @@ public class Installer {
     if (settings.getGameplaySettings().getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES);
     }
+    
+    if (settings.getGameplaySettings().getRandomizeStation()) {
+      copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
+    }
 
     if (settings.getGameplaySettings().getStartSelfDestruct()) {
-      copyFiles(SELF_DESTRUCT_DEPENDENCIES);
+      copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
       SelfDestructTimerHelper.install(settings, tempPatchDir);
     }
   }

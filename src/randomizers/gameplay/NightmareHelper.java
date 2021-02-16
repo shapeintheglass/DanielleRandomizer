@@ -36,7 +36,9 @@ public class NightmareHelper {
       String currentType = root.getAttributeValue("NightmareArchetypePath");
       String newArchetype = new CustomFilterHelper(settings.getGameplaySettings().getEnemySpawnSettings(), database)
           .getEntityStr(currentType, null, r);
-      root.setAttribute("NightmareArchetypePath", newArchetype);
+      if (newArchetype != null) {
+        root.setAttribute("NightmareArchetypePath", newArchetype);
+      }
 
       XMLOutputter xmlOutput = new XMLOutputter();
       xmlOutput.setFormat(Format.getPrettyFormat());

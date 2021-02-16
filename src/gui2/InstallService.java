@@ -46,6 +46,12 @@ public class InstallService extends Service<Void> {
   private TextArea outputWindow;
   private SettingsJson finalSettings;
 
+  private Path tempDir;
+
+  public Path getTempDir() {
+    return tempDir;
+  }
+
   public InstallService(TextArea outputWindow, SettingsJson finalSettings) {
     this.outputWindow = outputWindow;
     this.finalSettings = finalSettings;
@@ -65,11 +71,15 @@ public class InstallService extends Service<Void> {
   }
 
   public void doInstall() {
+    doInstall(true);
+  }
+
+  public void doInstall(boolean cleanUp) {
     Date startTime = new Date();
-    outputWindow.appendText(Gui2Consts.INSTALL_STATUS_TEXT + "\n");
+    writeLine(Gui2Consts.INSTALL_STATUS_TEXT);
 
     Path workingDir = Paths.get(DEFAULT_WORKING_DIR);
-    Path tempDir = Utils.createTempDir(workingDir, TEMP_FOLDER_SUFFIX);
+    tempDir = Utils.createTempDir(workingDir, TEMP_FOLDER_SUFFIX);
     Path tempLevelDir = tempDir.resolve(TEMP_LEVEL_DIR_NAME);
     Path tempPatchDir = tempDir.resolve(TEMP_PATCH_DIR_NAME);
     long secondsElapsed = 0L;
@@ -85,10 +95,10 @@ public class InstallService extends Service<Void> {
       executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
 
       try {
-        outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_WRITING + "\n");
+        writeLine(Gui2Consts.INSTALL_PROGRESS_WRITING);
         installer.get().install();
       } catch (IOException | InterruptedException e) {
-        outputWindow.appendText(Gui2Consts.INSTALL_STATUS_FAILED_TEXT + "\n");
+        writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
         e.printStackTrace();
       }
 
@@ -96,19 +106,21 @@ public class InstallService extends Service<Void> {
       secondsElapsed = endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
     } catch (Exception e) {
       e.printStackTrace();
-      outputWindow.appendText(Gui2Consts.INSTALL_STATUS_FAILED_TEXT + "\n");
+      writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
     } finally {
-      if (tempLevelDir.toFile().exists()) {
-        Utils.deleteDirectory(tempLevelDir.toFile());
-      }
-      if (tempPatchDir.toFile().exists()) {
-        Utils.deleteDirectory(tempPatchDir.toFile());
-      }
-      if (tempDir.toFile().exists()) {
-        Utils.deleteDirectory(tempDir.toFile());
+      if (cleanUp) {
+        if (tempLevelDir.toFile().exists()) {
+          Utils.deleteDirectory(tempLevelDir.toFile());
+        }
+        if (tempPatchDir.toFile().exists()) {
+          Utils.deleteDirectory(tempPatchDir.toFile());
+        }
+        if (tempDir.toFile().exists()) {
+          Utils.deleteDirectory(tempDir.toFile());
+        }
       }
     }
-    outputWindow.appendText(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT + "\n", secondsElapsed));
+    writeLine(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT, secondsElapsed));
   }
 
   private Optional<Installer> initInstaller(SettingsJson currentSettings, Path tempDir, Path tempLevelDir,
@@ -118,15 +130,15 @@ public class InstallService extends Service<Void> {
     // Initialize install
     Installer installer = new Installer(installDir, tempDir, tempLevelDir, tempPatchDir, currentSettings);
     if (!installer.verifyDataExists()) {
-      outputWindow.appendText(Gui2Consts.INSTALL_ERROR_DATA_NOT_FOUND + "\n");
+      writeLine(Gui2Consts.INSTALL_ERROR_DATA_NOT_FOUND);
       return Optional.absent();
     }
     if (!installer.verifyInstallDir()) {
-      outputWindow.appendText(Gui2Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER + "\n");
+      writeLine(Gui2Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER);
       return Optional.absent();
     }
     if (!installer.testInstall()) {
-      outputWindow.appendText(Gui2Consts.INSTALL_ERROR_CANNOT_WRITE + "\n");
+      writeLine(Gui2Consts.INSTALL_ERROR_CANNOT_WRITE);
       return Optional.absent();
     }
     return Optional.of(installer);
@@ -137,25 +149,25 @@ public class InstallService extends Service<Void> {
 
     /* COSMETIC */
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
-      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_BODIES + "\n");
+      writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
       new BodyRandomizer(currentSettings, tempPatchDir).randomize();
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
-      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_VOICELINES + "\n");
+      writeLine(Gui2Consts.INSTALL_PROGRESS_VOICELINES);
       new VoiceRandomizer(currentSettings, tempPatchDir).randomize();
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_MUSIC)) {
-      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_MUSIC + "\n");
+      writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);
       new MusicRandomizer(currentSettings, tempPatchDir).randomize();
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_PLAYER_MODEL)) {
-      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL + "\n");
+      writeLine(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL);
       new PlayerModelRandomizer(currentSettings, tempPatchDir).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
-      outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_NEUROMOD + "\n");
+      writeLine(Gui2Consts.INSTALL_PROGRESS_NEUROMOD);
       new NeuromodTreeRandomizer(currentSettings, tempPatchDir).randomize();
     } else if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS)) {
       new NeuromodTreeRandomizer(currentSettings, tempPatchDir).unlockAllScans();
@@ -163,7 +175,7 @@ public class InstallService extends Service<Void> {
 
     try {
       if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_LOOT)) {
-        outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_LOOT + "\n");
+        writeLine(Gui2Consts.INSTALL_PROGRESS_LOOT);
         new LootTableRandomizer(database, currentSettings, tempPatchDir).randomize();
       } else {
         new LootTableRandomizer(database, currentSettings, tempPatchDir).copyFile();
@@ -171,9 +183,9 @@ public class InstallService extends Service<Void> {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
     if (currentSettings.getGameplaySettings().getRandomizeNightmare()) {
-      outputWindow.appendText("Randomizing nightmare...\n");
+      writeLine("Randomizing nightmare...");
       NightmareHelper.install(database, currentSettings, tempPatchDir);
     }
 
@@ -199,7 +211,7 @@ public class InstallService extends Service<Void> {
       toOverwrite.put("Bk_SL_Apt_Electronics", b);
       BookInfoHelper bih = new BookInfoHelper(tempPatchDir);
       bih.installNewBooks(toOverwrite);
-      
+
       try {
         connectivity.visualize();
       } catch (IOException e) {
@@ -208,7 +220,13 @@ public class InstallService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
 
-    outputWindow.appendText(Gui2Consts.INSTALL_PROGRESS_LEVELS + "\n");
+    writeLine(Gui2Consts.INSTALL_PROGRESS_LEVELS);
     levelRandomizer.randomize();
+  }
+
+  private void writeLine(String text) {
+    if (outputWindow != null) {
+      outputWindow.appendText(text + "\n");
+    }
   }
 }

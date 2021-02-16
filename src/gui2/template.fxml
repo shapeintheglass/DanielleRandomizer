@@ -97,17 +97,13 @@
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Options for item/prop spawns. Mouse over an option for a description." />
-                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="352.0" prefWidth="626.0">
+                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="291.0" prefWidth="581.0">
                                  <children>
-                                    <VBox prefHeight="352.0" prefWidth="390.0">
-                                       <children>
-                                          <ScrollPane prefHeight="297.0" prefWidth="196.0">
-                                             <content>
-                                                <VBox fx:id="itemsOptions" prefHeight="290.0" prefWidth="355.0" spacing="15.0" />
-                                             </content>
-                                          </ScrollPane>
-                                       </children>
-                                    </VBox>
+                                    <ScrollPane prefHeight="297.0" prefWidth="395.0">
+                                       <content>
+                                          <VBox fx:id="itemsOptions" prefHeight="281.0" prefWidth="335.0" spacing="15.0" />
+                                       </content>
+                                    </ScrollPane>
                                     <VBox prefHeight="352.0" prefWidth="166.0" spacing="15.0">
                                        <children>
                                           <Label text="Other options:" />
@@ -130,9 +126,9 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Options for NPC spawns. Mouse over an option for a description." />
-                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="291.0" prefWidth="581.0" spacing="50.0">
+                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="291.0" prefWidth="581.0">
                                  <children>
-                                    <ScrollPane prefHeight="291.0" prefWidth="395.0">
+                                    <ScrollPane prefHeight="297.0" prefWidth="395.0">
                                        <content>
                                           <VBox fx:id="enemiesOptions" prefHeight="281.0" prefWidth="335.0" spacing="15.0">
                               </VBox>
