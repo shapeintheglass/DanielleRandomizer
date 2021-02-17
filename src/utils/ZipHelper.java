@@ -23,35 +23,41 @@ public class ZipHelper {
   public static final String DATA_PAK = "data.pak";
   private ZipFile data;
 
-  public static final String ARK_PICKUPS_XML = "entityarchetypes/arkpickups.xml";
-  public static final String ARK_PROJECTILES_XML = "entityarchetypes/arkprojectiles.xml";
-  public static final String ARK_ITEMS_XML = "ark/arkitems.xml";
-
-  public static final String AI_TREE_ARMED_HUMANS = "aitrees/ArmedHumanAiTree.xml";
-  public static final String AI_TREE_HUMANS = "aitrees/HumanAiTree.xml";
-  public static final String AI_TREE_UNARMED_HUMANS = "aitrees/UnarmedHumanAiTree.xml";
+  public static final String DATA_LEVELS = "levels";
 
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
 
-  public static final String NPC_GAME_EFFECTS = "ark/npcgameeffects.xml";
+  public static final String AI_TREE_ARMED_HUMANS = "ark/ai/aitrees/armedhumanaitree.xml";
+  public static final String AI_TREE_HUMANS = "ark/ai/aitrees/humanaitree.xml";
+  public static final String AI_TREE_UNARMED_HUMANS = "ark/ai/aitrees/unarmedhumanaitree.xml";
 
-  public static final String GLOBALACTIONS_SELFDESTRUCTTIMER = "globalactions/global_selfdestructsequence.xml";
+  public static final String BOOKS_XML = "ark/campaign/books.xml";
 
-  public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "entityarchetypes/";
-  public static final String LOOT_TABLE_FILE = "ark/loottables.xml";
-  public static final String VOICES_PATH = "dialog/voices";
-  public static final String DIALOGIC_PATH = "dialog/dialoglogic";
-  public static final String HUMANS_FINAL_DIR = "humansfinal";
-  public static final String DATA_LEVELS = "levels";
-  public static final String MUSIC_XML = "gameaudio/music.xml";
-  public static final String PLAYER_DIR = "player";
-  public static final String NEUROMOD_ABILITIES = "ark/abilities.xml";
-  public static final String NEUROMOD_PDA_LAYOUT = "ark/abilitiespdalayout.xml";
-  public static final String NEUROMOD_RESEARCH_TOPICS = "ark/researchtopics.xml";
-  public static final String BOOKS_XML = "ark/books.xml";
+  public static final String VOICES_PATH = "ark/dialog/voices";
+  public static final String DIALOGIC_PATH = "ark/dialog/dialoglogic";
+
+  public static final String ARK_ITEMS_XML = "ark/items/arkitems.xml";
+  public static final String LOOT_TABLE_FILE = "ark/items/loottables.xml";
+
+  public static final String NPC_GAME_EFFECTS = "ark/npc/npcgameeffects.xml";
+
+  public static final String NEUROMOD_ABILITIES = "ark/player/abilities.xml";
+  public static final String NEUROMOD_PDA_LAYOUT = "ark/player/abilitiespdalayout.xml";
+  public static final String NEUROMOD_RESEARCH_TOPICS = "ark/player/researchtopics.xml";
+
+  public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "libs/entityarchetypes/";
+  public static final String ARK_PICKUPS_XML = "libs/entityarchetypes/arkpickups.xml";
+  public static final String ARK_PROJECTILES_XML = "libs/entityarchetypes/arkprojectiles.xml";
+
+  public static final String MUSIC_XML = "libs/gameaudio/music.xml";
+
+  public static final String GLOBALACTIONS_SELFDESTRUCTTIMER = "libs/globalactions/global_selfdestructsequence.xml";
+
+  public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
+  public static final String PLAYER_DIR = "objects/characters/player";
 
   public static final String NATURAL_DAY_2_START_FILE = "naturalday2start/FG_Day2Start.xml";
-  public static final String ENABLE_NIGHTMARE_MANAGER = "ark/enablenightmaremanager.xml";
+  public static final String ENABLE_NIGHTMARE_MANAGER = "flowgraphs/enablenightmaremanager.xml";
 
   Multimap<String, String> dirToFileName;
 
@@ -95,6 +101,9 @@ public class ZipHelper {
 
   public InputStream getInputStream(String path) throws IOException {
     ZipEntry entry = data.getEntry(path);
+    if (entry == null) {
+      throw new IOException("Could not find path " + path);
+    }
     return data.getInputStream(entry);
   }
 
