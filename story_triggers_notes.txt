@@ -1,0 +1,95 @@
+
+
+Story beats - 
+* Morgan's video part 1 (Lobby) - Unlocks LG network reboot
+* LG network reboot (HW Labs) - Unlocks Morgan's video part 2
+* Morgan's video part 2 (Lobby) - Grants general access keycard (K)
+* Station lockdown (Deep Storage) - Unlocks station reboot, Morgan's Key (I)
+* Station reboot (Power Plant) - Unlocks Alex's workstation video
+* Alex's video (Arboretum) - Grants Coral scanning chipset (I)
+* Data upload (Arboretum) - Starts "Dahl invasion" state
+* Dahl KO (Arboretum, Life Support, or Shuttle Bay) - Exits "Dahl invasion" state
+* Alex meeting (Arboretum) - Starts "Apex invasion" state, Unlocks Alex's Key, Nullwave (I, I)
+* Self Destruct - Goal
+* Nullwave - Goal
+
+Game stages - 
+* Pre-lockdown - From start of game to entering Deep Storage
+* Lockdown - From entering Deep Storage to rebooting the reactor
+* Dahl invasion - From coral upload to either Dahl KO or Alex KO
+* Apex invasion - From Alex meeting to end of game
+
+
+Question about a hypothetical item randomizer for Prey- If we randomized the location of key items such as keycards/endgame items, what would be a good way to determine their new spawns? Here are three solutions I can think of so far:
+
+1.) Swap locations with each other (Ex. The Artax Jetpack is now the General Access keycard) - Small deterministic list, but may not have much variety and doesn't easily allow adding new progression items (ex. adding more keycards)
+2.) Spawn on random bodies (Ex. The General Access keycard is found on Peter Coleman) - Large number of potential locations that are easy to track down, but may be too easy to stumble across by accident.
+3.) Replace random books (Ex. The Starbender book in Alex's cabin is now the General Access keycard) - Large number of potential locations, but not all books are in very visible areas so they may be hard to track down or clip through geometry.
+
+So far I'm a fan of combining 1 and 2. However, I was wondering if there was any other kind of scheme that could be used to determine new object locations. Note that we don't have a workable level editor for Prey, so it's easiest to use some pre-existing item as reference.
+
+Note: I didn't want to use keycards or neuromods as the replacement item because some of them spawn out of bounds when they are used as quest rewards. Just wanted to avoid locking progression behind sidequests for now since some of them are softlocked with a randomizer (hypothetically).
+
+These are what I might consider "story items" because they can block progress through levels or in the story:
+* Artax propulsion system (Hardware labs) - For exterior access
+* Psychoscope (Psychotronics) - For coral scanning
+* Coral scanning chipset (Arboretum) - For data upload
+* ||Morgan's Arming Key (Deep Storage) - With Alex's Arming Key, ends the game||
+* ||Alex's Arming Key (Arboretum) - With Morgan's Arming Key, ends the game||
+* ||Prototype Nullwave Device (Arboretum) - Ends the game||
+* Calvino's workshop keycard (Exterior) - Found in exterior, opens Calvino's workshop
+* General access keycard (Lobby) - Given by January after watching video part 2, opens Lobby --> Psychotronics and Lobby --> Shuttle Bay
+* Magnetosphere keycard (GUTS) - Found in GUTS, opens maintenance tunnel (one way)
+* Fuel Storage keycard (GUTS) - Found in GUTS, opens GUTS --> Shuttle Bay and Shuttle Bay --> GUTS
+
+
+Key items:
+* Artax propulsion system (Hardware labs) - For exterior access
+* Psychoscope (Psychotronics) - For coral scanning
+* Coral scanning chipset (Arboretum) - For data upload
+* Morgan's Arming Key (Deep Storage) - With Alex's Arming Key, ends the game
+* Alex's Arming Key (Arboretum) - With Morgan's Arming Key, ends the game
+* Prototype Nullwave Device (Arboretum) - Ends the game
+
+Keycards:
+* Calvino's workshop keycard (Exterior) - Found in exterior, opens Calvino's workshop
+* General access keycard (Lobby) - Given by January after watching video part 2, opens Lobby --> Psychotronics and Lobby --> Shuttle Bay
+* Magnetosphere keycard (GUTS) - Found in GUTS, opens maintenance tunnel (one way)
+* Fuel Storage keycard (GUTS) - Found in GUTS, opens GUTS --> Shuttle Bay and Shuttle Bay --> GUTS
+* Crew Facilities keycard (Arboretum) - Found in Arboretum, opens Arboretum --> Crew Quarters
+
+New keycards?
+* Bridge
+* Hardware labs
+* Power Plant
+* Arboretum lift
+* Life Support lift
+* New keycard for every level transition door and airlock?
+
+Main question:
+Where to spawn randomized story items?
+ - On bodies: Easy to track/access, many options, may be too easy to stumble across by accident
+ - Replace books: Many options, books not required for progression, may be hard to find
+ - In place of other key items: Very limited due to small number of key items, would not be able to add new ones
+
+--
+
+Randomize minor keycards / keycodes / passwords
+
+Minor keycards
+* 
+
+Minor keycodes
+*
+
+Minor passwords
+*
+
+Major keycards:
+* Deep Storage security keycart (Deep Storage) - Found in Deep Storage, unlocks security station (without needing mimic)
+
+Major keycodes:
+* Morgan's office - Found in Lobby, unlocks morgan's office, hardcoded by default
+
+Major passwords:
+*   

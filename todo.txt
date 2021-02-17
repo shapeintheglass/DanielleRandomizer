@@ -78,3 +78,10 @@ Unactionable feedback:
  - Fix ammo situation on typhon weapons
  - Let all humans mimic
  - Better genesis
+ 
+ 
+ Neuromod Division
+  - Fix second day flag (can get stuck in tests, helicopter room has no way out)
+  - Randomize typhon/human neuromods within their type
+  - Yuki Kimura quest would be impossible
+  - Option to put locks in Morgan and Alex's offices
