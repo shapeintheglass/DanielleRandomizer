@@ -1,24 +1,27 @@
 package randomizers.cosmetic;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
+import com.google.common.collect.Lists;
 
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
-import utils.FileConsts;
+import utils.ZipHelper;
 
 /**
  * 
@@ -27,17 +30,14 @@ import utils.FileConsts;
  */
 public class VoiceRandomizer extends BaseRandomizer {
 
-  private static final String DIALOG_ID_PATTERN = "dialog=\"([0-9]*)\"";
-  private static final String VOICES_ID_PATTERN = "id=\"([0-9]*)\"";
-
-  private static Map<String, String> DIALOG_TO_CHARACTER = new HashMap<String, String>();
-  private static Map<String, List<String>> CHARACTER_TO_DIALOG = new HashMap<String, List<String>>();
-  private static Map<String, String> SWAPPED_LINES_MAP = new HashMap<String, String>();
+  private Map<String, String> dialogIdToCharacterId = new HashMap<String, String>();
+  private Map<String, List<String>> characterToDialog = new HashMap<String, List<String>>();
+  private Map<String, String> swappedLinesMap = new HashMap<String, String>();
 
   private Path tempPatchDir;
 
-  public VoiceRandomizer(SettingsJson s, Path tempPatchDir) {
-    super(s);
+  public VoiceRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     this.tempPatchDir = tempPatchDir;
   }
 
@@ -49,89 +49,67 @@ public class VoiceRandomizer extends BaseRandomizer {
 
     try {
       getDialogIds();
-      randomizeAndWrite(new File(FileConsts.DIALOGIC_PATH), outputDir);
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
+      randomizeAndWrite(ZipHelper.DIALOGIC_PATH, outputDir);
+    } catch (IOException | JDOMException e) {
       e.printStackTrace();
     }
   }
 
   // Randomizes the given file and adds it into the given output dir
-  private void randomizeAndWrite(File srcDir, Path outDir) throws FileNotFoundException, IOException {
-    outDir.toFile()
-          .mkdirs();
-    for (File file : srcDir.listFiles()) {
-      String fileName = file.getName();
-      if (file.isDirectory()) {
+  private void randomizeAndWrite(String srcDir, Path outDir) throws FileNotFoundException, IOException, JDOMException {
+    outDir.toFile().mkdirs();
+    for (String file : zipHelper.listFiles(srcDir)) {
+      String name = ZipHelper.getFileName(file);
+      if (zipHelper.isDirectory(file)) {
         // Call recursively
-        randomizeAndWrite(file, outDir.resolve(fileName));
+        randomizeAndWrite(file, outDir.resolve(name));
       } else {
         // Create and randomize new file
-        randomizeDialog(file, outDir.resolve(fileName)
-                                    .toFile());
+        randomizeDialog(file, outDir.resolve(name).toFile());
       }
     }
   }
 
   // Writes a randomized version of the in file to the out file.
-  private void randomizeDialog(File in, File out) throws FileNotFoundException, IOException {
+  private void randomizeDialog(String in, File out) throws FileNotFoundException, IOException, JDOMException {
     out.createNewFile();
-    try (BufferedReader br = new BufferedReader(new FileReader(in));
-        BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
-      String line = br.readLine();
-      while (line != null) {
-        Matcher m = Pattern.compile(DIALOG_ID_PATTERN)
-                           .matcher(line);
-        if (m.find()) {
-          // Replace with a random dialog ID and remove from list
-          String oldDialog = m.group(1);
 
-          // If this line has not already been swapped with a random line of
-          // dialogue, add
-          // it
-          if (!SWAPPED_LINES_MAP.containsKey(oldDialog)) {
-            String characterFile = DIALOG_TO_CHARACTER.get(oldDialog);
-            List<String> dialoglines = CHARACTER_TO_DIALOG.get(characterFile);
-
-            String newDialog = dialoglines.remove(0);
-            // logger.info(String.format("Mapping %s --> %s, remaining IDs %s\n",
-            // oldDialog, newDialog, dialoglines.size()));
-
-            CHARACTER_TO_DIALOG.put(characterFile, dialoglines);
-            SWAPPED_LINES_MAP.put(oldDialog, newDialog);
-          }
-
-          line = line.replaceFirst(DIALOG_ID_PATTERN, String.format("dialog=\"%s\"", SWAPPED_LINES_MAP.get(oldDialog)));
-        }
-
-        bw.append(line);
-        bw.append('\n');
-
-        line = br.readLine();
+    Document document = zipHelper.getDocument(in);
+    for (Element responseSet : document.getRootElement().getChildren("ResponseSet")) {
+      Element response = responseSet.getChild("Response");
+      String oldDialog = response.getAttributeValue("dialog");
+      // If this line has not already been swapped, add it
+      if (!swappedLinesMap.containsKey(oldDialog)) {
+        String characterFile = dialogIdToCharacterId.get(oldDialog);
+        List<String> dialogLines = characterToDialog.get(characterFile);
+        String newDialog = dialogLines.remove(0);
+        characterToDialog.put(characterFile, dialogLines);
+        swappedLinesMap.put(oldDialog, newDialog);
       }
+
+      response.setAttribute("dialog", swappedLinesMap.get(oldDialog));
     }
+
+    XMLOutputter xmlOutput = new XMLOutputter();
+    xmlOutput.setFormat(Format.getPrettyFormat());
+    xmlOutput.output(document, new FileOutputStream(out));
   }
 
   // Populates maps for dialog IDs.
-  private void getDialogIds() throws FileNotFoundException, IOException {
-    for (File file : new File(FileConsts.VOICES_PATH).listFiles()) {
-      String fileName = file.getName();
-      List<String> voiceLineIds = new ArrayList<>();
-      try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-        String line = br.readLine();
-        while (line != null) {
-          Matcher m = Pattern.compile(VOICES_ID_PATTERN)
-                             .matcher(line);
-          if (m.find()) {
-            String voiceLineId = m.group(1);
-            DIALOG_TO_CHARACTER.put(voiceLineId, fileName);
-            voiceLineIds.add(voiceLineId);
-          }
-          line = br.readLine();
-        }
+  private void getDialogIds() throws FileNotFoundException, IOException, JDOMException {
+    Collection<String> files = zipHelper.listFiles(ZipHelper.VOICES_PATH);
+    for (String file : files) {
+      String fileName = ZipHelper.getFileName(file);
+      List<String> voiceLineIds = Lists.newArrayList();
+      Document document = zipHelper.getDocument(file);
+      Element root = document.getRootElement();
+      for (Element dialog : root.getChildren()) {
+        String voiceLineId = dialog.getAttributeValue("id");
+        dialogIdToCharacterId.put(voiceLineId, fileName);
+        voiceLineIds.add(voiceLineId);
       }
       Collections.shuffle(voiceLineIds, r);
-      CHARACTER_TO_DIALOG.put(fileName, voiceLineIds);
+      characterToDialog.put(fileName, voiceLineIds);
     }
   }
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.Set;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -24,10 +22,10 @@ import com.google.common.collect.Sets;
 
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
+import utils.ZipHelper;
 
 public class PlayerModelRandomizer extends BaseRandomizer {
 
-  private static final String IN_DIR = "data/player";
   private static final String OUT_DIR = "objects/characters/player/";
 
   private static final ImmutableList<String> PLAYER_FILES = ImmutableList.of("player.cdf");
@@ -99,30 +97,27 @@ public class PlayerModelRandomizer extends BaseRandomizer {
 
   private Path tempPatchDir;
 
-  public PlayerModelRandomizer(SettingsJson s, Path tempPatchDir) {
-    super(s);
+  public PlayerModelRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     this.tempPatchDir = tempPatchDir;
   }
 
   @Override
   public void randomize() {
     for (String file : PLAYER_FILES) {
-      File in = Paths.get(IN_DIR).resolve(file).toFile();
       File out = tempPatchDir.resolve(OUT_DIR).resolve(file).toFile();
-      randomizeCdf(in, out, false);
+      randomizeCdf(ZipHelper.PLAYER_DIR + "/" + file, out, false);
     }
 
     for (String file : PAJAMA_FILES) {
-      File in = Paths.get(IN_DIR).resolve(file).toFile();
       File out = tempPatchDir.resolve(OUT_DIR).resolve(file).toFile();
-      randomizeCdf(in, out, true);
+      randomizeCdf(ZipHelper.PLAYER_DIR + "/" + file, out, true);
     }
   }
 
-  private void randomizeCdf(File in, File out, boolean isPajamas) {
+  private void randomizeCdf(String in, File out, boolean isPajamas) {
     try {
-      SAXBuilder saxBuilder = new SAXBuilder();
-      Document document = saxBuilder.build(in);
+      Document document = zipHelper.getDocument(in);
       Element root = document.getRootElement();
       Element attachments = root.getChild("AttachmentList");
 

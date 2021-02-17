@@ -10,7 +10,6 @@ import java.util.Arrays;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -19,14 +18,14 @@ import randomizers.BaseRandomizer;
 import utils.BodyConfig;
 import utils.BodyConfig.Gender;
 import utils.BodyConsts;
-import utils.FileConsts;
+import utils.ZipHelper;
 
 public class BodyRandomizer extends BaseRandomizer {
 
   private Path tempPatchDir;
 
-  public BodyRandomizer(SettingsJson s, Path tempPatchDir) {
-    super(s);
+  public BodyRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     this.tempPatchDir = tempPatchDir;
     Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS);
     Arrays.sort(BodyConsts.BODIES_WITH_BARE_HANDS);
@@ -38,15 +37,13 @@ public class BodyRandomizer extends BaseRandomizer {
   private static final String HUMANS_FILE_TEMPLATE = "objects\\characters\\humansfinal\\%s";
 
   public void randomize() {
-    for (File f : new File(FileConsts.HUMANS_FINAL_DIR).listFiles()) {
-      Path out = tempPatchDir.resolve(String.format(HUMANS_FILE_TEMPLATE, f.getName()));
+    for (String f : zipHelper.listFiles(ZipHelper.HUMANS_FINAL_DIR)) {
+      String filename = ZipHelper.getFileName(f);
+      Path out = tempPatchDir.resolve(String.format(HUMANS_FILE_TEMPLATE, filename));
 
       try {
-        tempPatchDir.resolve(HUMANS_FINAL_OUT)
-                    .toFile()
-                    .mkdirs();
-        out.toFile()
-           .createNewFile();
+        tempPatchDir.resolve(HUMANS_FINAL_OUT).toFile().mkdirs();
+        out.toFile().createNewFile();
         randomizeBody(f, out.toFile());
       } catch (IOException | JDOMException e) {
         // TODO Auto-generated catch block
@@ -56,14 +53,11 @@ public class BodyRandomizer extends BaseRandomizer {
     }
   }
 
-  private void randomizeBody(File in, File out) throws FileNotFoundException, IOException, JDOMException {
-    SAXBuilder saxBuilder = new SAXBuilder();
-    Document document = saxBuilder.build(in);
+  private void randomizeBody(String in, File out) throws FileNotFoundException, IOException, JDOMException {
+    Document document = zipHelper.getDocument(in);
     Element root = document.getRootElement();
 
-    String modelFile = root.getChild("Model")
-                           .getAttributeValue("File")
-                           .toLowerCase();
+    String modelFile = root.getChild("Model").getAttributeValue("File").toLowerCase();
     Gender gender = Gender.UNKNOWN;
     if (modelFile.contains(BodyConsts.FEMALE_BODY_TYPE)) {
       gender = BodyConfig.Gender.FEMALE;
@@ -79,7 +73,8 @@ public class BodyRandomizer extends BaseRandomizer {
 
     Element attachmentList = root.getChild("AttachmentList");
 
-    BodyConfig bc = new BodyConfig(in.getName(), gender, attachmentList, r);
+    String filename = ZipHelper.getFileName(in);
+    BodyConfig bc = new BodyConfig(filename, gender, attachmentList, r);
     bc.generateAttachmentsForGender();
 
     XMLOutputter xmlOutput = new XMLOutputter();

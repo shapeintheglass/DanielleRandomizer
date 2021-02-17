@@ -7,6 +7,8 @@ import org.jdom2.Element;
 
 import com.google.common.collect.LinkedListMultimap;
 
+import utils.ZipHelper;
+
 /**
  * Interface for a basic database where objects are assigned string tags
  *
@@ -20,14 +22,14 @@ public abstract class TaggedDatabase {
   protected Map<String, Element> nameToElement;
   public static final String GLOBAL_TAG = "GLOBAL";
 
-  public TaggedDatabase() {
-    populateDatabase();
+  public TaggedDatabase(ZipHelper zipHelper) {
+    populateDatabase(zipHelper);
   }
 
   /**
    * Adds all entries to database
    */
-  protected abstract void populateDatabase();
+  protected abstract void populateDatabase(ZipHelper zipHelper);
 
   public Element getEntityByName(String name) {
     return nameToElement.get(name);

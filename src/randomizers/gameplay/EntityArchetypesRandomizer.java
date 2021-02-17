@@ -10,18 +10,21 @@ import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+
 import com.google.common.collect.ImmutableSet;
-import databases.EntityDatabase;
+
 import databases.TaggedDatabase;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
 import randomizers.gameplay.filters.BaseFilter;
 import utils.FileConsts;
 import utils.FileConsts.Archetype;
+import utils.ZipHelper;
 
 /**
  * 
@@ -43,12 +46,12 @@ public class EntityArchetypesRandomizer extends BaseRandomizer {
   private static final ImmutableSet<Archetype> SUPPORTED_ARCHETYPES =
       ImmutableSet.of(Archetype.PICKUPS);
 
-  public EntityArchetypesRandomizer(SettingsJson s, Path tempPatchDir) {
-    super(s);
+  public EntityArchetypesRandomizer(SettingsJson s, TaggedDatabase database, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     filterList = new LinkedList<>();
     r = new Random(s.getSeed());
     this.tempPatchDir = tempPatchDir;
-    this.database = EntityDatabase.getInstance();
+    this.database = database;
   }
 
   public EntityArchetypesRandomizer addFilter(BaseFilter f) {

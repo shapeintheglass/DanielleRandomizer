@@ -13,7 +13,6 @@ import java.util.Random;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -22,8 +21,8 @@ import randomizers.BaseRandomizer;
 import randomizers.gameplay.filters.AddEntityHelper;
 import randomizers.gameplay.filters.BaseFilter;
 import randomizers.gameplay.filters.rules.GameTokenRule;
-import utils.FileConsts;
 import utils.LevelConsts;
+import utils.ZipHelper;
 
 /**
  * A special kind of randomizer that requires a series of filters in order to process level files.
@@ -45,8 +44,8 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private GameTokenRule gameTokenRule;
 
-  public LevelRandomizer(SettingsJson s, Path tempLevelDir) {
-    super(s);
+  public LevelRandomizer(SettingsJson s, Path tempLevelDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     filterList = new LinkedList<>();
     r = new Random(s.getSeed());
     this.tempLevelDir = tempLevelDir;
@@ -91,13 +90,13 @@ public class LevelRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      Path levelDirIn = FileConsts.DATA_LEVELS.resolve(levelDir);
+      String levelDirIn = ZipHelper.DATA_LEVELS + "/" + levelDir;
       Path levelDirOut = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir);
       levelDirOut.toFile().mkdirs();
 
-      File missionIn = levelDirIn.resolve(MISSION_FILE_NAME).toFile();
+      String missionIn = levelDirIn + "/" + MISSION_FILE_NAME;
       File missionOut = levelDirOut.resolve(MISSION_FILE_NAME).toFile();
-      File gameTokensIn = levelDirIn.resolve(TOKENS_FOLDER_NAME).toFile();
+      String gameTokensIn = levelDirIn + "/" + TOKENS_FOLDER_NAME;
       Path gameTokensOut = levelDirOut.resolve(TOKENS_FOLDER_NAME);
       gameTokensOut.toFile().mkdirs();
 
@@ -105,9 +104,10 @@ public class LevelRandomizer extends BaseRandomizer {
         logger.info(String.format("filtering level file: %s --> %s", missionIn, missionOut));
         filterMissionFile(missionIn, missionOut, levelDir);
 
-        for (File gameTokenFile : gameTokensIn.listFiles()) {
-          logger.info(String.format("filtering tokens file: %s", gameTokenFile));
-          filterTokensFile(gameTokenFile, gameTokensOut.resolve(gameTokenFile.getName()).toFile(), levelDir);
+        for (String gameTokenFile : zipHelper.listFiles(gameTokensIn)) {
+          String filename = ZipHelper.getFileName(gameTokenFile);
+          logger.info(String.format("filtering tokens file: %s", filename));
+          filterTokensFile(gameTokenFile, gameTokensOut.resolve(filename).toFile(), levelDir);
         }
 
       } catch (IOException | JDOMException e1) {
@@ -120,13 +120,12 @@ public class LevelRandomizer extends BaseRandomizer {
   /**
    * Copies level def into temp directory, while filtering.
    */
-  private void filterMissionFile(File in, File out, String levelDir) throws IOException, JDOMException {
-    SAXBuilder saxBuilder = new SAXBuilder();
-    Document document = saxBuilder.build(in);
+  private void filterMissionFile(String in, File out, String levelDir) throws IOException, JDOMException {
+    Document document = zipHelper.getDocument(in);
     Element root = document.getRootElement();
     Element objects = root.getChild("Objects");
 
-    AddEntityHelper.addEntities(objects, levelDir, settings);
+    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper);
 
     for (Element e : objects.getChildren()) {
       filterEntityXml(e, levelDir);
@@ -144,15 +143,14 @@ public class LevelRandomizer extends BaseRandomizer {
     }
   }
 
-  private void filterTokensFile(File in, File out, String levelDir) throws JDOMException, IOException {
-    SAXBuilder saxBuilder = new SAXBuilder();
-    Document document = saxBuilder.build(in);
+  private void filterTokensFile(String in, File out, String levelDir) throws JDOMException, IOException {
+    Document document = zipHelper.getDocument(in);
     Element root = document.getRootElement();
     List<Element> entities = root.getChildren();
 
     for (Element e : entities) {
-      if (gameTokenRule.trigger(e, r, in.getName())) {
-        gameTokenRule.apply(e, r, in.getName());
+      if (gameTokenRule.trigger(e, r, null)) {
+        gameTokenRule.apply(e, r, null);
       }
     }
 

@@ -20,7 +20,6 @@ import javax.swing.SwingConstants;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.jgraph.graph.DefaultEdge;
@@ -40,6 +39,7 @@ import com.mxgraph.util.mxCellRenderer;
 import json.GameplaySettingsJson;
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
+import utils.ZipHelper;
 
 /**
  * Randomizes the neuromod upgrade tree.
@@ -51,16 +51,12 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private static final int NUM_COLUMNS = 4;
   private static final int NUM_ROWS = 7;
   private static final int NUM_CATEGORIES = 6;
-  private static final String FILES_DIR = "data/ark";
   private static final String ABILITIES_FILE = "abilities.xml";
   private static final String PDA_LAYOUT_FILE = "abilitiespdalayout.xml";
   private static final String RESEARCH_TOPICS_FILE = "researchtopics.xml";
 
   private static final String OUTPUT_PATH = "ark/player";
 
-  private File abilitiesFileIn;
-  private File layoutFileIn;
-  private File researchFileIn;
   private File abilitiesFileOut;
   private File layoutFileOut;
   private File researchFileOut;
@@ -109,17 +105,13 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private Document abilitiesDoc;
   private Document layoutDoc;
 
-  public NeuromodTreeRandomizer(SettingsJson s, Path tempPatchDir) {
-    super(s);
+  public NeuromodTreeRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     unlockAllScans = s.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS);
     abilityIdToAbility = new HashMap<>();
     abilityIdToElement = new HashMap<>();
     categoryToAbilityId = HashMultimap.create();
     categoryOrder = Lists.newArrayList();
-    Path arkDir = new File(FILES_DIR).toPath();
-    abilitiesFileIn = arkDir.resolve(ABILITIES_FILE).toFile();
-    layoutFileIn = arkDir.resolve(PDA_LAYOUT_FILE).toFile();
-    researchFileIn = arkDir.resolve(RESEARCH_TOPICS_FILE).toFile();
     Path outDir = tempPatchDir.resolve(OUTPUT_PATH);
     outDir.toFile().mkdirs();
     abilitiesFileOut = outDir.resolve(ABILITIES_FILE).toFile();
@@ -134,8 +126,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   }
 
   public void populateAbilitiesMap() throws JDOMException, IOException {
-    SAXBuilder saxBuilder = new SAXBuilder();
-    abilitiesDoc = saxBuilder.build(abilitiesFileIn);
+    abilitiesDoc = zipHelper.getDocument(ZipHelper.NEUROMOD_ABILITIES);
     Element abilitiesRoot = abilitiesDoc.getRootElement();
     List<Element> allAbilities = abilitiesRoot.getChild("Abilities").getChildren();
     for (Element ability : allAbilities) {
@@ -145,7 +136,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       abilityIdToElement.put(id, ability);
     }
 
-    layoutDoc = saxBuilder.build(layoutFileIn);
+    layoutDoc = zipHelper.getDocument(ZipHelper.NEUROMOD_PDA_LAYOUT);
     Element layoutRoot = layoutDoc.getRootElement();
     List<Element> categories = layoutRoot.getChild("Categories").getChildren();
     for (Element arkAbilityCategory : categories) {
@@ -299,8 +290,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
   private void removeScanRequirementInResearchTopics() throws JDOMException, IOException {
     // Read in research topics file
-    SAXBuilder saxBuilder = new SAXBuilder();
-    Document researchDoc = saxBuilder.build(researchFileIn);
+    Document researchDoc = zipHelper.getDocument(ZipHelper.NEUROMOD_RESEARCH_TOPICS);
     Element researchRoot = researchDoc.getRootElement();
     // Iterate over every research topic
     for (Element topic : researchRoot.getChild("Topics").getChildren()) {

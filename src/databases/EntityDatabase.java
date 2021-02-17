@@ -14,13 +14,13 @@ import java.util.Set;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 
 import com.google.common.collect.LinkedListMultimap;
 
 import utils.FileConsts;
 import utils.FileConsts.Archetype;
 import utils.Utils;
+import utils.ZipHelper;
 
 /**
  * 
@@ -32,16 +32,19 @@ public class EntityDatabase extends TaggedDatabase {
   // Singleton
   private static EntityDatabase database;
 
+  public EntityDatabase(ZipHelper zipHelper) {
+    super(zipHelper);
+  }
+  
   // Creates or returns singleton instance.
-  public static EntityDatabase getInstance() {
-
+  public static EntityDatabase getInstance(ZipHelper zipHelper) {
     if (database == null) {
-      database = new EntityDatabase();
+      database = new EntityDatabase(zipHelper);
     }
     return database;
   }
 
-  protected void populateDatabase() {
+  protected void populateDatabase(ZipHelper zipHelper) {
     tagToName = LinkedListMultimap.create();
     nameToElement = new HashMap<>();
 
@@ -49,8 +52,7 @@ public class EntityDatabase extends TaggedDatabase {
     for (Archetype a : Archetype.values()) {
       String file = FileConsts.getFileForArchetype(a);
       try {
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(file);
+        Document document = zipHelper.getDocument(file);
         Element root = document.getRootElement();
         List<Element> entities = root.getChildren("EntityPrototype");
 
@@ -86,7 +88,13 @@ public class EntityDatabase extends TaggedDatabase {
   }
 
   public static void main(String[] args) {
-    EntityDatabase d = getInstance();
+    EntityDatabase d;
+    try {
+      d = getInstance(new ZipHelper());
+    } catch (IOException e1) {
+      e1.printStackTrace();
+      return;
+    }
     List<String> validTags = new ArrayList<>();
     d.tagToName.keySet().stream().forEach(s -> validTags.add(s));
     List<String> validEntities = d.getAllForTag(GLOBAL_TAG);

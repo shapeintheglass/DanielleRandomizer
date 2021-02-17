@@ -1,15 +1,12 @@
 package randomizers.gameplay.filters;
 
-import java.io.File;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
 
 import json.SettingsJson;
+import utils.ZipHelper;
 
 public class AddEntityHelper {
-  private static final String NATURAL_DAY_2_START_FILE = "data/naturalday2start/FG_Day2Start.xml";
 
   private static Element getNeuromodDivisionSelfDestructFlowgraph() {
     Element entity = new Element("Entity").setAttribute("Name", "Shenanigans")
@@ -97,15 +94,14 @@ public class AddEntityHelper {
     return entity;
   }
 
-  public static void addEntities(Element objects, String filename, SettingsJson settings) {
+  public static void addEntities(Element objects, String filename, SettingsJson settings, ZipHelper zipHelper) {
     if (settings.getGameplaySettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
       objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
     }
 
     if (settings.getGameplaySettings().getStartOn2ndDay() && filename.equals("research/simulationlabs")) {
       try {
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new File(NATURAL_DAY_2_START_FILE));
+        Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
         Element root = document.getRootElement().clone();
 
         objects.addContent(root);
@@ -116,8 +112,7 @@ public class AddEntityHelper {
 
     if (settings.getGameplaySettings().getRandomizeNightmare() && filename.equals("research/simulationlabs")) {
       try {
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new File("data/ark/enablenightmaremanager.xml"));
+        Document document = zipHelper.getDocument(ZipHelper.ENABLE_NIGHTMARE_MANAGER);
         Element root = document.getRootElement().clone();
 
         objects.addContent(root);

@@ -12,7 +12,7 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
-import gui2.InstallService;
+import gui2.RandomizerService;
 import json.CosmeticSettingsJson;
 import json.GameplaySettingsJson;
 import json.GenericRuleJson;
@@ -87,13 +87,13 @@ public class ConsistencyValidator {
     setUpFakeInstallDir(installDir);
     SettingsJson settings = generateRandomSettings(seed, installDir.toString());
     System.out.println(settings);
-    InstallService service = new InstallService(null, settings);
+    RandomizerService service = new RandomizerService(null, settings);
     service.doInstall(false);
     return service.getTempDir();
   }
 
   public static void main(String[] args) {
-    long seed = 0314L;
+    long seed = new Random().nextLong();
     Path p1 = OUTPUT_DIR.resolve("installDir1");
     Path p2 = OUTPUT_DIR.resolve("installDir2");
     Path tempDir1 = createFakeInstallDirAndInstall(seed, p1);

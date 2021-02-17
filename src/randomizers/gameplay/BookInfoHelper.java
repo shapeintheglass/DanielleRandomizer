@@ -9,28 +9,29 @@ import java.util.Map;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+
+import utils.ZipHelper;
 
 /*
  * Overwrites the books file with custom subjects and content.
  */
 public class BookInfoHelper {
 
-  private static final String IN = "data/ark/books.xml";
   private static final String OUT = "ark/campaign/books.xml";
 
   private Path tempPatchDir;
+  private ZipHelper zipHelper;
 
-  public BookInfoHelper(Path tempPatchDir) {
+  public BookInfoHelper(Path tempPatchDir, ZipHelper zipHelper) {
     this.tempPatchDir = tempPatchDir;
+    this.zipHelper = zipHelper;
   }
 
   public void installNewBooks(Map<String, Book> books) {
     try {
-      SAXBuilder saxBuilder = new SAXBuilder();
-      Document document = saxBuilder.build(new File(IN));
+      Document document = zipHelper.getDocument(ZipHelper.BOOKS_XML);
       Element root = document.getRootElement();
       Element notes = root.getChild("Notes");
 

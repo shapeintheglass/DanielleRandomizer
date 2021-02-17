@@ -1,23 +1,9 @@
 package utils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import com.google.common.collect.ImmutableMap;
 
-public class FileConsts {
-  public static final String BINARY_PATH = "Binaries\\Danielle\\x64\\Release\\Prey.exe";
-  
-  public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "data/entityarchetypes/";
+public class FileConsts {  
   public static final String ENTITY_ARCHETYPES_DEST_DIR = "libs/entityarchetypes/";
-
-  public static final String LOOT_TABLE_FILE = "data/ark/loottables.xml";
-
-  public static final String VOICES_PATH = "data/dialog/voices";
-  public static final String DIALOGIC_PATH = "data/dialog/dialoglogic";
-
-  public static final String HUMANS_FINAL_DIR = "data/humansfinal/";
-
-  public static final Path DATA_LEVELS = Paths.get("data/levels");
 
   public enum Archetype {
     HUMANS,
@@ -56,6 +42,6 @@ public class FileConsts {
           .build();
 
   public static String getFileForArchetype(Archetype a) {
-    return ENTITY_ARCHETYPES_SOURCE_DIR + ARCHETYPE_TO_FILENAME.get(a);
+    return ZipHelper.ENTITY_ARCHETYPES_SOURCE_DIR + ARCHETYPE_TO_FILENAME.get(a);
   }
 }

@@ -3,7 +3,6 @@ package installers;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -13,28 +12,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.Stack;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import com.google.common.collect.ImmutableMap;
-
 import json.SettingsJson;
-import randomizers.gameplay.SelfDestructTimerHelper;
-import utils.FileConsts;
 import utils.LevelConsts;
+import utils.ZipHelper;
 
 /**
  * 
  * Central place for installing all mod files. Handles all logistics of zipping and paking so that
- * randomizers only have to worry about filtering.
+ * randomizers only have to worry about filtering and copying dependencies over.
  *
  */
 public class Installer {
-  private static final String GAMETOKENS_DIR = "gametokens";
   private static final String LEVEL_PAK_NAME = "level.pak";
   private static final String LEVEL_ZIP_NAME = "level.zip";
   private static final String BACKUP_LEVEL_PAK_NAME = "level_backup.pak";
@@ -42,19 +36,6 @@ public class Installer {
 
   private static final String PATCH_ZIP_NAME = "patch_randomizer.zip";
   private static final String PATCH_NAME = "patch_randomizer.pak";
-  private static final String MISSION_FILE_NAME = "mission_mission0.xml";
-
-  private static final ImmutableMap<String, String> MORE_GUNS_DEPENDENCIES = ImmutableMap.of(
-      "data/entityarchetypes/arkpickups.xml", "libs/entityarchetypes/arkpickups.xml",
-      "data/entityarchetypes/arkprojectiles.xml", "libs/entityarchetypes/arkprojectiles.xml", "data/ark/arkitems.xml",
-      "ark/items/arkitems.xml");
-
-  private static final ImmutableMap<String, String> WANDERING_HUMANS_DEPENDENCIES = ImmutableMap.of(
-      "data/aitrees/ArmedHumanAiTree.xml", "ark/ai/aitrees/ArmedHumanAiTree.xml", "data/aitrees/HumanAiTree.xml",
-      "ark/ai/aitrees/HumanAiTree.xml", "data/aitrees/UnarmedHumanAiTree.xml", "ark/ai/aitrees/UnarmedHumanAiTree.xml");
-
-  public static final ImmutableMap<String, String> SURVIVE_APEX_KILL_WALL_DEPENDENCIES = ImmutableMap.of(
-      "data/ark/ApexVolumeConfig.xml", "ark/apexvolumeconfig.xml");
 
   private File patchFile;
   private Logger logger;
@@ -64,56 +45,24 @@ public class Installer {
   private Path tempPatchDir;
   private Path tempLevelDir;
 
+  private ZipHelper zipHelper;
+
   /**
    * Initialize the installer.
    * 
    * @param installDir Prey install location
    * @param tempDir Where to store temporary files
    */
-  public Installer(Path installDir, Path tempDir, Path tempLevelDir, Path tempPatchDir, SettingsJson settings) {
+  public Installer(Path installDir, Path tempDir, Path tempLevelDir, Path tempPatchDir, SettingsJson settings,
+      ZipHelper zipHelper) {
     this.installDir = installDir;
     this.tempDir = tempDir;
     this.tempLevelDir = tempLevelDir;
     this.tempPatchDir = tempPatchDir;
+    this.zipHelper = zipHelper;
 
     patchFile = installDir.resolve(INSTALL_LOCATION).resolve(PATCH_NAME).toFile();
     logger = Logger.getLogger("Installer");
-
-    // Copy over dependencies files for certain settings
-    copyDependencies(settings);
-  }
-
-  private void copyDependencies(SettingsJson settings) {
-    if (settings.getGameplaySettings().getMoreGuns()) {
-      copyFiles(MORE_GUNS_DEPENDENCIES);
-    }
-
-    if (settings.getGameplaySettings().getWanderingHumans()) {
-      copyFiles(WANDERING_HUMANS_DEPENDENCIES);
-    }
-    
-    if (settings.getGameplaySettings().getRandomizeStation()) {
-      copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
-    }
-
-    if (settings.getGameplaySettings().getStartSelfDestruct()) {
-      copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
-      SelfDestructTimerHelper.install(settings, tempPatchDir);
-    }
-  }
-
-  private void copyFiles(ImmutableMap<String, String> dependencies) {
-    for (String key : dependencies.keySet()) {
-      Path in = Paths.get(key);
-      Path out = tempPatchDir.resolve(dependencies.get(key));
-      out.toFile().mkdirs();
-      try {
-        Files.copy(in, out, StandardCopyOption.REPLACE_EXISTING);
-      } catch (IOException e) {
-        logger.warning(String.format("Unable to copy dependency file %s", key));
-        e.printStackTrace();
-      }
-    }
   }
 
   public void install() throws IOException, InterruptedException {
@@ -138,7 +87,7 @@ public class Installer {
 
   public boolean verifyDataExists() {
     logger.info("Verifying existence of data/ folder...");
-    return Paths.get("data").toFile().exists();
+    return Paths.get(ZipHelper.DATA_PAK).toFile().exists();
   }
 
   public boolean testInstall() {
@@ -154,12 +103,6 @@ public class Installer {
 
   private void installPatchDir() throws IOException {
     logger.info("----INSTALLING PATCH FILE...----");
-
-    // Copy required files over
-    // TODO: Make this less of a hack
-    File npcGameEffectsDir = tempPatchDir.resolve("ark/npc").toFile();
-    npcGameEffectsDir.mkdirs();
-    Files.copy(Paths.get("data/ark/npcgameeffects.xml"), npcGameEffectsDir.toPath().resolve("npcgameeffects.xml"));
 
     // Create temporary zip file in temp dir to store patch as a zip
     Path tempPatchFileAsZip = tempDir.resolve(PATCH_ZIP_NAME);
@@ -212,49 +155,29 @@ public class Installer {
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
       // Premade zip file containing everything but the main mission def
-      Path preMadeZipFile = FileConsts.DATA_LEVELS.resolve(levelDir).resolve(LEVEL_ZIP_NAME);
+      String preMadeZipFilePath = ZipHelper.DATA_LEVELS + "/" + levelDir;
 
       // Location to copy into for combined zip
       tempLevelDir.resolve(levelDir).toFile().mkdirs();
       Path tempZipFile = tempLevelDir.resolve(levelDir).resolve(LEVEL_ZIP_NAME);
 
-      // Location of the mission file
-      Path missionFile = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(MISSION_FILE_NAME);
+      Stack<String> toZip = new Stack<>();
+      toZip.add(preMadeZipFilePath);
 
-      Path gameTokensDir = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(GAMETOKENS_DIR);
-
-      if (!missionFile.toFile().exists() && !gameTokensDir.toFile().exists()) {
-        continue;
-      }
-
-      try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(tempZipFile.toString()));
-          ZipFile originalZip = new ZipFile(preMadeZipFile.toFile().getCanonicalPath());
-          FileInputStream missionFileStream = new FileInputStream(missionFile.toFile())) {
-
-        // Copy existing entries from original zip into new zip
-        Enumeration<? extends ZipEntry> entries = originalZip.entries();
-        while (entries.hasMoreElements()) {
-          ZipEntry e = entries.nextElement();
-          zos.putNextEntry(new ZipEntry(e.getName()));
-          if (!e.isDirectory()) {
-            copyStreams(originalZip.getInputStream(e), zos);
+      try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(tempZipFile.toString()))) {
+        while (!toZip.isEmpty()) {
+          Collection<String> files = zipHelper.listFiles(toZip.pop());
+          for (String file : files) {
+            if (zipHelper.isDirectory(file)) {
+              toZip.add(file);
+            } else {
+              InputStream is = zipHelper.getInputStream(file);
+              // Insert files
+              zos.putNextEntry(new ZipEntry(file));
+              copyStreams(is, zos);
+              zos.closeEntry();
+            }
           }
-          zos.closeEntry();
-        }
-
-        // Insert mission file
-        zos.putNextEntry(new ZipEntry(MISSION_FILE_NAME));
-        copyStreams(missionFileStream, zos);
-        zos.closeEntry();
-
-        // Insert game token files
-        Path gameTokenPath = Paths.get(GAMETOKENS_DIR);
-        for (File f : gameTokensDir.toFile().listFiles()) {
-          FileInputStream fis = new FileInputStream(f);
-          zos.putNextEntry(new ZipEntry(gameTokenPath.resolve(f.getName()).toString()));
-          copyStreams(fis, zos);
-          zos.closeEntry();
-          fis.close();
         }
 
       }

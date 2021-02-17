@@ -8,26 +8,31 @@ import java.nio.file.Path;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import json.SettingsJson;
+import randomizers.BaseRandomizer;
+import utils.ZipHelper;
 
-public class SelfDestructTimerHelper {
+public class SelfDestructTimerHelper extends BaseRandomizer {
 
-  private static final String INPUT_FILE = "data/globalactions/global_selfdestructsequence.xml";
+  private Path tempPatchDir;
+
+  public SelfDestructTimerHelper(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
+    this.tempPatchDir = tempPatchDir;
+  }
+
   private static final String OUTPUT_FILE = "libs/globalactions/global_selfdestructsequence.xml";
 
-  public static void install(SettingsJson settings, Path tempPatchDir) {
-    File in = new File(INPUT_FILE);
+  @Override
+  public void randomize() {
     File out = tempPatchDir.resolve(OUTPUT_FILE).toFile();
     out.getParentFile().mkdirs();
 
     try {
-      SAXBuilder saxBuilder = new SAXBuilder();
-
-      Document document = saxBuilder.build(in);
+      Document document = zipHelper.getDocument(ZipHelper.GLOBALACTIONS_SELFDESTRUCTTIMER);
       Element nodes = document.getRootElement().getChild("Nodes");
 
       float selfDestructTimer = Float.parseFloat(settings.getGameplaySettings().getSelfDestructTimer());

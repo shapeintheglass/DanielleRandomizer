@@ -110,10 +110,6 @@ public class SettingsJson {
         s.append(" * More guns\n");
         atLeastOneSetting = true;
       }
-      if (gsj.getRandomizeLoot()) {
-        s.append(" * Randomize loot tables\n");
-        atLeastOneSetting = true;
-      }
 
       // Enemy
       if (gsj.getEnemySpawnSettings() != null) {
@@ -127,6 +123,10 @@ public class SettingsJson {
       }
       if (gsj.getAddLootToApartment()) {
         s.append(" * Add loot to Morgan's apartment\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getSkipJovanCutscene()) {
+        s.append(" * Skip Jovan's cutscene\n");
         atLeastOneSetting = true;
       }
       // Neuromod

@@ -14,7 +14,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 
 import gui2.Gui2Consts;
-import gui2.InstallService;
+import gui2.RandomizerService;
 import installers.Installer;
 import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
@@ -414,7 +414,7 @@ public class WindowController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    InstallService installService = new InstallService(outputWindow, finalSettings);
+    RandomizerService installService = new RandomizerService(outputWindow, finalSettings);
     installService.setOnRunning(new EventHandler<WorkerStateEvent>() {
       @Override
       public void handle(WorkerStateEvent arg0) {

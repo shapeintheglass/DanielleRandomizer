@@ -6,13 +6,16 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
+
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import json.AllPresetsJson;
@@ -23,6 +26,7 @@ import randomizers.gameplay.filters.rules.NpcSpawnerSwapRule;
 import randomizers.gameplay.filters.rules.Rule;
 import utils.CustomRuleHelper;
 import utils.LevelConsts;
+import utils.ZipHelper;
 
 /**
  * 
@@ -167,7 +171,7 @@ public class SpawnStatsUtil {
 
   public static void main(String[] args) {
     try {
-      database = EntityDatabase.getInstance();
+      database = EntityDatabase.getInstance(new ZipHelper());
       AllPresetsJson allPresets = new AllPresetsJson(PRESETS_FILE);
 
       Multiset<String> originalTags = getOriginalState();

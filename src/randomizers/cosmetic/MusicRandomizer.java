@@ -11,7 +11,6 @@ import java.util.Random;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -21,9 +20,9 @@ import com.google.common.collect.Lists;
 
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
+import utils.ZipHelper;
 
 public class MusicRandomizer extends BaseRandomizer {
-  private static final String IN = "data/gameaudio/music.xml";
   private static final String OUT = "libs/gameaudio/music.xml";
 
   private static final ImmutableList<String> MUSIC_STATES = new ImmutableList.Builder<String>().add("Zero_G",
@@ -40,18 +39,16 @@ public class MusicRandomizer extends BaseRandomizer {
   private Path tempPatchDir;
   private Random r;
 
-  public MusicRandomizer(SettingsJson s, Path tempPatchDir) {
-    super(s);
+  public MusicRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+    super(s, zipHelper);
     r = new Random(s.getSeed());
     this.tempPatchDir = tempPatchDir;
   }
 
   @Override
   public void randomize() {
-    SAXBuilder saxBuilder = new SAXBuilder();
-    Document document;
     try {
-      document = saxBuilder.build(new File(IN));
+      Document document = zipHelper.getDocument(ZipHelper.MUSIC_XML);
       Element root = document.getRootElement();
 
       ImmutableSet<String> musicSet = new ImmutableSet.Builder<String>().addAll(MUSIC_STATES).build();
