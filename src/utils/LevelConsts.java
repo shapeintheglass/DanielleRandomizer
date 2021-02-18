@@ -16,9 +16,9 @@ public class LevelConsts {
       "executive/crewfacilities", "research/lobby", "research/prototype", "research/psychotronics",
       "research/shuttlebay", "research/simulationlabs", "research/zerog_utilitytunnels", "station/exterior" };
 
-  public static final List<String> DO_NOT_TOUCH_ITEM_TAGS = Lists.newArrayList("Data", "MissionItems",
-      "_PROGRESSION", "_PLOT_CRITICAL", "ArkRobots", "ArkLight", "research/simulationlabs;Weapons.Wrench1",
-      "MedKit_Wall_Mounted", "ArkContainer", "Light_Fixtures");
+  public static final List<String> DO_NOT_TOUCH_ITEM_TAGS = Lists.newArrayList("Data", "MissionItems", "_PROGRESSION",
+      "_PLOT_CRITICAL", "ArkRobots", "ArkLight", "research/simulationlabs;Weapons.Wrench1", "MedKit_Wall_Mounted",
+      "ArkContainer", "Light_Fixtures");
 
   public static final List<String> DO_NOT_OUTPUT_ITEM_TAGS = Lists.newArrayList("Architecture", "Gameplay",
       "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench",
@@ -30,7 +30,8 @@ public class LevelConsts {
       "research/lobby;ArkNpcSpawner_BasePhantom5", "executive/arboretum;ArkNpcSpawner_Telepath1",
       "executive/arboretum;Spawner_GreenhouseTelepath", "executive/crewfacilities;ArkNpcSpawner16",
       "executive/crewfacilities;ArkNpcSpawner_Telepath2", "engineering/lifesupport;ArkNpcSpawner_Technopath1",
-      "station/exterior;ArkNpcSpawner_Telepath4", "engineering/lifesupport;ArkNpcSpawner_Telepath1");
+      "station/exterior;ArkNpcSpawner_Telepath4", "engineering/lifesupport;ArkNpcSpawner_Telepath1",
+      "MilitaryOperatorCopycat", "FakeTechnopath", "Operators\\Named", "Kaspar");
 
   public static final Set<String> CAN_BE_KILLABLE_NPC_TAGS = Sets.newHashSet("research/lobby;ArkNpcSpawner_Technopath1",
       "research/lobby;ArkNpcSpawner_BasePhantom5", "engineering/lifesupport;ArkNpcSpawner_Technopath1");

@@ -461,11 +461,7 @@
             300
           ],
           "do_not_touch_tags": [
-            "Named Phantoms",
-            "MilitaryOperatorCopycat",
-            "FakeTechnopath",
-            "Operators\\Named",
-            "Kaspar"
+            "Named Phantoms"
           ],
           "do_not_output_tags": [
             "Named Phantoms"
