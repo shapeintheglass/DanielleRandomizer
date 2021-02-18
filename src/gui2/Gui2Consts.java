@@ -34,6 +34,6 @@ public class Gui2Consts {
   public static String INSTALL_PROGRESS_PLAYER_MODEL = "Randomizing player model...";
   public static String INSTALL_PROGRESS_NEUROMOD = "Randomizing neuromod upgrade tree...";
   public static String INSTALL_PROGRESS_LOOT = "Randomizing loot tables...";
-  public static String INSTALL_PROGRESS_LEVELS = "Processing level data...";
+  public static String INSTALL_PROGRESS_LEVELS = "Processing level data... (can take a while)";
   public static String INSTALL_PROGRESS_WRITING = "Copying mod files to game directory...";
 }

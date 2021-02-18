@@ -39,7 +39,6 @@ public class StationConnectivityRule implements Rule {
   @Override
   public void apply(Element e, Random r, String filename) {
     String name = e.getAttributeValue(NAME);
-    Logger.getGlobal().info("Processing element " + name);
 
     String newLocation = doorConnectivity.get(filename).get(name);
     String newSpawn = spawnConnectivity.get(filename).get(name);

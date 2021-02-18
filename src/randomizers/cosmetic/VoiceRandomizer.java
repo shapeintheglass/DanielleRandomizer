@@ -1,8 +1,6 @@
 package randomizers.cosmetic;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -14,8 +12,6 @@ import java.util.Map;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import com.google.common.collect.Lists;
 
@@ -57,7 +53,6 @@ public class VoiceRandomizer extends BaseRandomizer {
 
   // Randomizes the given file and adds it into the given output dir
   private void randomizeAndWrite(String srcDir, Path outDir) throws FileNotFoundException, IOException, JDOMException {
-    outDir.toFile().mkdirs();
     for (String file : zipHelper.listFiles(srcDir)) {
       String name = ZipHelper.getFileName(file);
       if (zipHelper.isDirectory(file)) {
@@ -65,15 +60,13 @@ public class VoiceRandomizer extends BaseRandomizer {
         randomizeAndWrite(file, outDir.resolve(name));
       } else {
         // Create and randomize new file
-        randomizeDialog(file, outDir.resolve(name).toFile());
+        randomizeDialog(file, file);
       }
     }
   }
 
   // Writes a randomized version of the in file to the out file.
-  private void randomizeDialog(String in, File out) throws FileNotFoundException, IOException, JDOMException {
-    out.createNewFile();
-
+  private void randomizeDialog(String in, String out) throws FileNotFoundException, IOException, JDOMException {
     Document document = zipHelper.getDocument(in);
     for (Element responseSet : document.getRootElement().getChildren("ResponseSet")) {
       Element response = responseSet.getChild("Response");
@@ -90,9 +83,7 @@ public class VoiceRandomizer extends BaseRandomizer {
       response.setAttribute("dialog", swappedLinesMap.get(oldDialog));
     }
 
-    XMLOutputter xmlOutput = new XMLOutputter();
-    xmlOutput.setFormat(Format.getPrettyFormat());
-    xmlOutput.output(document, new FileOutputStream(out));
+    zipHelper.copyToPatch(document, out);
   }
 
   // Populates maps for dialog IDs.

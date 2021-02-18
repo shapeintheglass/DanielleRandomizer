@@ -1,9 +1,6 @@
 package randomizers.cosmetic;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -11,8 +8,6 @@ import java.util.Set;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -95,27 +90,24 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final String PHANTOM_ARMS_SKIN = "objects/characters/player/male/player1p_male01_armsalien.skin";
   private static final String PHANTOM_ARMS_MTL = "objects/characters/player/male/player1p_male02_arms_alien_cine_02.mtl";
 
-  private Path tempPatchDir;
-
-  public PlayerModelRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+  public PlayerModelRandomizer(SettingsJson s, ZipHelper zipHelper) {
     super(s, zipHelper);
-    this.tempPatchDir = tempPatchDir;
   }
 
   @Override
   public void randomize() {
     for (String file : PLAYER_FILES) {
-      File out = tempPatchDir.resolve(OUT_DIR).resolve(file).toFile();
+      String out = OUT_DIR + "/" + file;
       randomizeCdf(ZipHelper.PLAYER_DIR + "/" + file, out, false);
     }
 
     for (String file : PAJAMA_FILES) {
-      File out = tempPatchDir.resolve(OUT_DIR).resolve(file).toFile();
+      String out = OUT_DIR + "/" + file;
       randomizeCdf(ZipHelper.PLAYER_DIR + "/" + file, out, true);
     }
   }
 
-  private void randomizeCdf(String in, File out, boolean isPajamas) {
+  private void randomizeCdf(String in, String out, boolean isPajamas) {
     try {
       Document document = zipHelper.getDocument(in);
       Element root = document.getRootElement();
@@ -152,10 +144,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
         attachments.addContent(pajamaElements);
       }
 
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      out.getParentFile().mkdirs();
-      xmlOutput.output(document, new FileOutputStream(out));
+      zipHelper.copyToPatch(document, out);
     } catch (IOException | JDOMException e) {
       e.printStackTrace();
     }

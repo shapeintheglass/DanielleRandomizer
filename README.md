@@ -4,40 +4,49 @@ A simple randomizer for Prey 2017 (code-named "Danielle").
 
 ## Description
 
-Randomizes various entities in Prey 2017 via an external executable that overwrites the level files and generates a patch_randomizer.pak. Before overwriting, level files are backed up in the same directory as "level_backup.pak".
+An external executable GUI that randomizes various entities in Prey 2017 by  overwriting the level files and generating a patch_randomizer.pak in GameSDK\Precache. Before overwriting, level files are backed up in the same directory as "level_backup.pak".
 
-### Randomizer features:
+### Features
+
+Here are some of the options the randomizer offers:
+
+**Cosmetic**
+
+* Randomized human appearance
+* Randomized voice lines
+* Randomized music
+* Randomized player model
+
+**Gameplay**
 
 * Randomized item/physics prop spawns
 * Randomized enemy/NPC spawns
-* Randomized human appearance
-* Randomized voice lines
-* Randomized loot tables
 * Randomized neuromod upgrade tree
 * Randomized station connectivity
 
-### Other features:
+**Other features:**
 
 * Start on 2nd day
 * Add loot to Morgan's apartment
 * Remove scan requirement for neuromods
-* Unlock all doors/safes/workstations (doesn't work for certain scripted doors or the main lift)
-* Configurable spawn rates for item/enemy randomization
-* Make humans wander
+* Unlock all doors/safes/workstations
+* Get Off The Station mode (timed)
 
 ## Getting Started
 
-**IMPORTANT if you want to avoid game crashes** If you plan to start a new randomized game in an existing save slot, manually delete the old save data first (and ensure cloud save doesn't try to restore it). By default this should be in `C:\Users\<Name>\Saved Games\Arkane Studios\Prey\SaveGames`. This is because unfortunately Prey does not always cleanly delete old files before starting up a new game. If you don't do this, there's a chance your old save files will stay there and conflict with the randomized level files. The same applies if you are done with this randomized save slot and want to use it for a normal game.
+**IMPORTANT if you want to avoid game crashes** If you plan to start a new randomized game in an existing save slot, manually delete the old save data first (and ensure cloud save doesn't try to restore it). By default this should be in `C:\Users\<Name>\Saved Games\Arkane Studios\Prey\SaveGames`. This is because unfortunately Prey does not always cleanly delete old files before starting up a new game. 
+
+If you don't do this, there's a chance your old save files will stay there and conflict with the randomized level files. The same applies if you are done with this randomized save slot and want to use it for a normal game.
 
 ### Dependencies
 
 * Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded).
 * Must have [Java for Windows](http://java.com/download) installed.
 
-### Running the randomizer
+### Running the randomizer (as of v0.3)
 
 1. Unzip danielle_randomizer.zip anywhere.
-2. Ensure danielle_randomizer.exe is in the same directory as the included data/ folder and settings.json file.
+2. Ensure danielle_randomizer.exe is in the same directory as the included data.pak file and spawn_presets.json file.
 3. Run danielle_randomizer.exe to start up the GUI.
 4. Specify Prey install directory.
 5. Specify desired randomization settings.
@@ -58,9 +67,32 @@ If the randomizer spends a long time at the "Installing..." step, check the gene
 * If this isn't possible, you can use the GOG or Steam client to redownload any missing or modified files.
 * To uninstall the randomizer itself, just delete danielle_randomizer.exe and its associated files.
 
-## Customization and presets
+## Description of presets
 
-This randomizer offers certain presets, and some of them can be customized.
+### Item spawn presets - Affects entities that are spawned directly in the level
+
+* Randomize all - Randomizes all items and replaces them with new items at a (mostly) sane spawn rate. Should not affect items that are essential for story progress.
+* Randomize all (chaotic)- Similar to randomize all, but has a chance of spawning story progression items (ex. the arming keys) early, as well as hazardous items such as explosive containers or radioactive containers.
+* Randomize all (lite) - Objects are randomized within their type. Ex. weapons are replaced with other weapons, food is replaced with other food, fab plans are replaced with other fab plans, etc.
+
+### NPC spawn presets - Affects entities that are spawned from an NPC spawner
+
+* Randomize all - Randomizes all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression.
+* Randomize all (chaotic) - Similar to randomize all, but has a chance of spawning unkillable entities such as tentacles and turrets.
+* Randomize all (lite) - Swaps out enemies for an enemy of roughly the same difficulty level. Ex. Mimics and base phantoms can become other mimics/base phantoms.
+
+### Other options
+
+* Randomize NPC bodies - Scrambles body parts for every human NPC.
+* Randomize voice lines - Shuffles voices lines by voice actor
+* Start on 2nd day - Starts the game at the beginning of the 2nd day of the intro.
+* Add loot to Morgan's apartment - Adds some starting loot to various containers in Morgan's apartment (nightstands on either side of the bed, three kitchen cabinets, refrigerator, large kitchen cabinet)
+* More guns - Adds more guns to the loot table. Some exotic variants use typhon organs as ammo. Make sure not to recycle the organs by mistake!
+* Unlock all neuromod scans - Removes research requirements for all typhon neuromods. You'll still have to purchase them via neuromods though!
+* Randomize Neuromod upgrade tree - Scrambles the neuromod skill tree so that the order of unlocking every neuromod will be a little different.
+* Unlock everything - Unlocks (almost) every door, airlock, workstation, safe, etc on board the station. Does not unlock the main lift or doors that are scripted to be locked (ex. the door to Psychotronics in the Lobby).
+* Randomize station connections - Scrambles connections between maps. Basic checks are done to ensure that the game is still completable.
+* Make humans wander - Alters human AI so that their idle behavior is to wander rather than stand in place. Intended to be used with "typhon to humans" option to add some realism.
 
 ### Configuring custom randomizer settings
 
@@ -80,52 +112,11 @@ Filters are processed sequentially for each level entity. If an entity can be tr
 
 If you change settings.json while the randomizer GUI is active, close and reopen the GUI to see your changes.
 
-### Item spawn presets - Affects entities that are spawned directly in the level
-
-* Randomize all - Randomizes all items and replaces them with new items at a (mostly) sane spawn rate. Should not affect items that are essential for story progress.
-* Randomize all (chaotic)- Similar to randomize all, but has a chance of spawning story progression items (ex. the arming keys) early, as well as hazardous items such as explosive containers or radioactive containers.
-* Randomize all (lite) - Objects are randomized within their type. Ex. weapons are replaced with other weapons, food is replaced with other food, fab plans are replaced with other fab plans, etc.
-* Whiskey and cigars - Replaces all items with whiskey and cigars.
-* All reployers - Replaces all items with reployers.
-* Oops! All eels - Replaces all items with eels.
-* All weapons and neuromods - Replaces all items with various weapons, ammo, neuromods, medkits, etc.
-* All explosive containers - Replaces all items with explosive containers.
-
-### NPC spawn presets - Affects entities that are spawned from an NPC spawner
-
-* Randomize all - Randomizes all typhon and replaces them with new hostile NPCs at a (mostly) sane spawn rate. Should not affect enemies that are essential for story progression.
-* Randomize all (chaotic) - Similar to randomize all, but has a chance of spawning unkillable entities such as tentacles and turrets.
-* Randomize all (lite) - Swaps out enemies for an enemy of roughly the same difficulty level. Ex. Mimics and base phantoms can become other mimics/base phantoms.
-* All nightmares - Replaces all typhon with nightmares. Why would you use this setting? Who would think this is a good idea?
-* All mimics - Replaces all typhon with mimics.
-* Typhon to humans - Replaces all typhon with humans.
-* All Dahl - Replaces all typhon with Dahl.
-
-### Other options
-
-* Randomize NPC bodies - Scrambles body parts for every human NPC.
-* Randomize voice lines - Shuffles voices lines by voice actor
-* Start on 2nd day - Starts the game at the beginning of the 2nd day of the intro. There is a known bug where the HUD will be invisible at first. To fix this, open and close the inventory menu.
-* Add loot to Morgan's apartment - Adds some starting loot to various containers in Morgan's apartment (nightstands on either side of the bed, three kitchen cabinets, refrigerator, large kitchen cabinet)
-* Randomize loot tables - Scrambles items that can show up as loot in various containers.
-* More guns - Adds more guns to the loot table. Some exotic variants use typhon organs as ammo. Make sure not to recycle the organs by mistake!
-* Unlock all neuromod scans - Removes research requirements for all typhon neuromods. You'll still have to purchase them via neuromods though!
-* Randomize Neuromod upgrade tree - Scrambles the neuromod skill tree so that the order of unlocking every neuromod will be a little different.
-* Unlock everything - Unlocks (almost) every door, airlock, workstation, safe, etc on board the station. Does not unlock the main lift or doors that are scripted to be locked (ex. the door to Psychoronics in the Lobby).
-* Randomize station connections - Scrambles connections between maps. Basic checks are done to ensure that the game is still completable.
-* Make humans wander - Alters human AI so that their idle behavior is to wander rather than stand in place. Intended to be used with "typhon to humans" option to add some realism.
-
 ## Known issues
 
-* If starting on the 2nd day, the HUD will not be visible unless you open and close your inventory menu.
 * If save files are not manually deleted before starting a new save slot, game can crash if old level files are left over from the previous save.
 * Temporary directories will not be deleted if there was an issue during randomization/install. If these start to pile up, feel free to delete them manually.
 * Game can occasionally crash when quitting to menu.
-
-## Working as intended
-
-* Randomized neuromods - If "Unlock all scans" is not selected, typhon neuromods will not initially be available until the Psychoscope is obtained.
-* Randomized station - To prevent soft locking scenarios, some doors are not randomized. These include the doors to Crew Quarters, Hardware Labs, Deep Storage, and Psychotronics. The Exterior airlocks are also not randomized.
 
 ## Authors
 
@@ -166,6 +157,24 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
   * Added randomization for Alex and Luka's appearance in "randomize bodies" option
   * Added version compatibility check to saved settings file
   * Added "Make humans wander" option
+* 0.30
+  * Overhauled GUI for better organization
+  * Overhauled dependency retrieval to take up less hard drive space
+  * Running installer now creates a "last_used_settings.json" file that reflects the last used settings
+  * Renamed "settings.json" to "spawn_presets.json" to make naming more accurate
+  * Added "G.O.T.S." timed mode
+  * Added music, player model randomization
+  * Added option to skip Jovan's death cutscene
+  * Set "Randomize loot tables" as a default when randomizing items
+  * Updated skip to 2nd day option to use JerryTerry's "Natural Day 2 Start" mod
+  * Tweaked recommended/chaotic/lite presets for items/enemies to better match expectations for those tiers
+  * Modified neuromod skill tree randomization to randomize within category
+  * Modified station randomization to allow Psychotronics, Hardware Labs, and Crew Quarters to be randomized
+  * Modified station randomization so that the mod overwrites certain books in Morgan's apartment and office with the new layout of the station
+  * Modified station randomization and G.O.T.S. mode so that the player can walk through Apex kill walls
+  * Fixed a case where some randomly generated stations were soft locks
+  * Fixed a case where item spawn multiplers were still not very reasonable
+  * Fixed randomization for containers (for real this time)
 
 ## Dependencies info
 
@@ -177,4 +186,10 @@ This project uses:
 
 ## Acknowledgments
 
-Thanks to fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure. Also big thanks to the Prey reddit and discord communities for being pretty swell and listening to my terrible ideas. Biggest thanks to Arkane Studios for being cool folks who make cool games. =]
+A big thanks to:
+
+* JerryTerry for letting me use their "Natural Day 2 Start" mod!
+* Fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure
+* The brave adventrous souls who have helped me playtest and debug
+* The Prey reddit and discord communities for being pretty swell and listening to my terrible ideas
+* Arkane Studios for being cool folks who make cool games =]

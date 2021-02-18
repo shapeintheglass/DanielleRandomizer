@@ -1,36 +1,22 @@
 package randomizers.gameplay;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Random;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import databases.TaggedDatabase;
 import json.SettingsJson;
 import utils.CustomFilterHelper;
+import utils.ZipHelper;
 
 public class NightmareHelper {
-  private static final String INPUT_FILE = "data/ark/NightmareManager.xml";
-  private static final String OUTPUT_FILE = "ark/npc/nightmaremanager.xml";
-
-  public static void install(TaggedDatabase database, SettingsJson settings, Path tempPatchDir) {
-    File in = new File(INPUT_FILE);
-    File out = tempPatchDir.resolve(OUTPUT_FILE).toFile();
-    out.getParentFile().mkdirs();
-
+  public static void install(TaggedDatabase database, SettingsJson settings, ZipHelper zipHelper) {
     Random r = new Random(settings.getSeed());
     try {
-      SAXBuilder saxBuilder = new SAXBuilder();
-
-      Document document = saxBuilder.build(in);
+      Document document = zipHelper.getDocument(ZipHelper.NIGHTMARE_MANAGER);
       Element root = document.getRootElement();
 
       String currentType = root.getAttributeValue("NightmareArchetypePath");
@@ -40,9 +26,7 @@ public class NightmareHelper {
         root.setAttribute("NightmareArchetypePath", newArchetype);
       }
 
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(document, new FileOutputStream(out));
+      zipHelper.copyToPatch(document, ZipHelper.NIGHTMARE_MANAGER);
     } catch (JDOMException | IOException e) {
       e.printStackTrace();
     }

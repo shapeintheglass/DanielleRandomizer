@@ -1,9 +1,5 @@
 package randomizers.gameplay.filters;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,13 +9,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import org.jgraph.graph.DefaultEdge;
-import org.jgrapht.Graph;
+
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.graph.guava.MutableNetworkAdapter;
+
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -28,9 +21,7 @@ import com.google.common.graph.Graphs;
 import com.google.common.graph.ImmutableNetwork;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
-import com.mxgraph.layout.mxFastOrganicLayout;
-import com.mxgraph.layout.mxIGraphLayout;
-import com.mxgraph.util.mxCellRenderer;
+
 import json.SettingsJson;
 import randomizers.gameplay.filters.rules.KeyItemsInBridgeRule;
 import randomizers.gameplay.filters.rules.StationConnectivityRule;
@@ -43,7 +34,6 @@ import utils.StationConnectivityConsts.Level;
 public class StationConnectivityFilter extends BaseFilter {
 
   private static final int UNLOCK_ATTEMPTS = 10;
-  private static final String STATION_CONNECTIVITY_PNG = "station_connectivity.png";
   private static final int MAX_ATTEMPTS = 100;
   // Map of filename to door name to location id
   private Map<String, Map<String, String>> doorConnectivity;
@@ -277,41 +267,6 @@ public class StationConnectivityFilter extends BaseFilter {
     }
 
     return Lists.newArrayList(validConnections);
-  }
-
-  public void visualize() throws IOException {
-    Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-    for (Level l : network.nodes()) {
-      if (!graph.containsVertex(l.name())) {
-        graph.addVertex(l.name());
-      }
-      for (Level neighbor : network.adjacentNodes(l)) {
-        if (!graph.containsVertex(neighbor.name())) {
-          graph.addVertex(neighbor.name());
-        }
-        if (!graph.containsEdge(l.name(), neighbor.name())) {
-          graph.addEdge(l.name(), neighbor.name());
-        }
-      }
-    }
-    // graph.addVertex("HARDWARE_LABS");
-    graph.addVertex("DEEP_STORAGE");
-    // graph.addVertex("CREW_QUARTERS");
-    // graph.addVertex("PSYCHOTRONICS");
-    // graph.addEdge("LOBBY", "HARDWARE_LABS");
-    graph.addEdge("ARBORETUM", "DEEP_STORAGE");
-    // graph.addEdge("ARBORETUM", "CREW_QUARTERS");
-    // graph.addEdge("PSYCHOTRONICS", "LOBBY");
-    // graph.addEdge("PSYCHOTRONICS", "GUTS");
-
-    JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
-    mxIGraphLayout graphLayout = new mxFastOrganicLayout(graphAdapter);
-    graphLayout.execute(graphAdapter.getDefaultParent());
-
-    BufferedImage image = mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
-    File imgFile = new File(STATION_CONNECTIVITY_PNG);
-    imgFile.createNewFile();
-    ImageIO.write(image, "PNG", imgFile);
   }
 
   private boolean validate(ImmutableNetwork<Level, Door> network) {

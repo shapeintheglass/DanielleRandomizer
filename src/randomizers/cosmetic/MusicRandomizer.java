@@ -1,9 +1,6 @@
 package randomizers.cosmetic;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -11,8 +8,6 @@ import java.util.Random;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -36,13 +31,11 @@ public class MusicRandomizer extends BaseRandomizer {
       "SimLabs_Day2_WakeUp", "SimLabs_EnterHallway", "SimLabs_PostWrench", "Arboretum_Apex_Arrival",
       "SimLabs_Heli_Main", "SimLabs_Heli_Intro").build();
 
-  private Path tempPatchDir;
   private Random r;
 
-  public MusicRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+  public MusicRandomizer(SettingsJson s, ZipHelper zipHelper) {
     super(s, zipHelper);
     r = new Random(s.getSeed());
-    this.tempPatchDir = tempPatchDir;
   }
 
   @Override
@@ -69,12 +62,7 @@ public class MusicRandomizer extends BaseRandomizer {
         }
       }
 
-      File out = tempPatchDir.resolve(OUT).toFile();
-      out.getParentFile().mkdirs();
-      out.createNewFile();
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(document, new FileOutputStream(out));
+      zipHelper.copyToPatch(document, OUT);
     } catch (JDOMException | IOException e) {
       e.printStackTrace();
     }

@@ -1,9 +1,5 @@
 package randomizers.gameplay;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.rmi.UnexpectedException;
@@ -14,27 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-import javax.swing.SwingConstants;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-import org.jgraph.graph.DefaultEdge;
-import org.jgrapht.Graph;
-import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.SimpleGraph;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.ImmutableIntArray;
-import com.mxgraph.layout.mxIGraphLayout;
-import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
-import com.mxgraph.util.mxCellRenderer;
 
 import json.GameplaySettingsJson;
 import json.SettingsJson;
@@ -45,21 +29,11 @@ import utils.ZipHelper;
  * Randomizes the neuromod upgrade tree.
  */
 public class NeuromodTreeRandomizer extends BaseRandomizer {
-  private static final String NEUROMOD_OUTPUT_PNG = "neuromod_output.png";
   private static final String FALSE = "false";
   private static final String REQUIRE_SCANNER = "RequireScanner";
   private static final int NUM_COLUMNS = 4;
   private static final int NUM_ROWS = 7;
   private static final int NUM_CATEGORIES = 6;
-  private static final String ABILITIES_FILE = "abilities.xml";
-  private static final String PDA_LAYOUT_FILE = "abilitiespdalayout.xml";
-  private static final String RESEARCH_TOPICS_FILE = "researchtopics.xml";
-
-  private static final String OUTPUT_PATH = "ark/player";
-
-  private File abilitiesFileOut;
-  private File layoutFileOut;
-  private File researchFileOut;
 
   private boolean unlockAllScans;
 
@@ -112,11 +86,6 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     abilityIdToElement = new HashMap<>();
     categoryToAbilityId = HashMultimap.create();
     categoryOrder = Lists.newArrayList();
-    Path outDir = tempPatchDir.resolve(OUTPUT_PATH);
-    outDir.toFile().mkdirs();
-    abilitiesFileOut = outDir.resolve(ABILITIES_FILE).toFile();
-    layoutFileOut = outDir.resolve(PDA_LAYOUT_FILE).toFile();
-    researchFileOut = outDir.resolve(RESEARCH_TOPICS_FILE).toFile();
 
     try {
       populateAbilitiesMap();
@@ -225,60 +194,24 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         }
         e.setAttribute("Cost", Integer.toString(a.getCost()));
       }
-
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(abilitiesDoc, new FileOutputStream(abilitiesFileOut));
-      xmlOutput.output(layoutDoc, new FileOutputStream(layoutFileOut));
-      visualize();
+      
+      zipHelper.copyToPatch(abilitiesDoc, ZipHelper.NEUROMOD_ABILITIES);
+      zipHelper.copyToPatch(layoutDoc, ZipHelper.NEUROMOD_PDA_LAYOUT);
     } catch (IOException e) {
       e.printStackTrace();
       return;
     }
   }
 
-  private void visualize() throws IOException {
-    Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-
-    // First pass to add all vertex names
-    for (Ability a : abilityIdToAbility.values()) {
-      graph.addVertex(String.format("\t%s (%d)\t", a.getName(), a.getCost()));
-    }
-
-    // Second pass to add all edges
-    for (Ability a : abilityIdToAbility.values()) {
-      String newNodeName = String.format("\t%s (%d)\t", a.getName(), a.getCost());
-
-      if (a.getPrereq() != null) {
-        Element e = abilityIdToElement.get(a.getPrereq());
-        String prereqName = String.format("\t%s (%s)\t", e.getAttributeValue("Name"), e.getAttributeValue("Cost"));
-        graph.addEdge(prereqName, newNodeName);
-      }
-    }
-
-    File output = new File(NEUROMOD_OUTPUT_PNG);
-    output.createNewFile();
-
-    JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<>(graph);
-    mxIGraphLayout graphLayout = new mxHierarchicalLayout(graphAdapter, SwingConstants.WEST);
-    graphLayout.execute(graphAdapter.getDefaultParent());
-
-    BufferedImage img = mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
-    ImageIO.write(img, "PNG", output);
-  }
-
   public void unlockAllScans() {
     // Update prereqs and other requirements for all abilities
-
     try {
       for (Ability a : abilityIdToAbility.values()) {
         Element e = abilityIdToElement.get(a.getId());
         e.setAttribute(REQUIRE_SCANNER, FALSE);
       }
 
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(abilitiesDoc, new FileOutputStream(abilitiesFileOut));
+      zipHelper.copyToPatch(abilitiesDoc, ZipHelper.NEUROMOD_ABILITIES);
       removeScanRequirementInResearchTopics();
     } catch (IOException e) {
       e.printStackTrace();
@@ -300,14 +233,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         abilityGroup.setAttribute("scansRequired", "0");
       }
     }
-
-    XMLOutputter xmlOutput = new XMLOutputter();
-    xmlOutput.setFormat(Format.getPrettyFormat());
-    try {
-      xmlOutput.output(researchDoc, new FileOutputStream(researchFileOut));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    zipHelper.copyToPatch(researchDoc, ZipHelper.NEUROMOD_RESEARCH_TOPICS);
   }
 
   // Creates a single page layout
@@ -411,10 +337,6 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       this.id = id;
       this.prereq = null;
       this.cost = 0;
-    }
-
-    public String getName() {
-      return name;
     }
 
     public String getId() {

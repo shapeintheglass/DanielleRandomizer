@@ -159,13 +159,14 @@ public class WindowController {
   @FXML
   protected void initialize() {
     logger = Logger.getLogger("randomizer_gui");
-    
+
     setTooltips();
 
     // Attempt to read from preset definition file and saved settings file
     allPresets = getSpawnPresets();
 
     if (!allPresets.isPresent()) {
+      outputWindow.appendText(String.format("Unable to find %s\n", Gui2Consts.ALL_PRESETS_FILE));
       logger.info(String.format("An error occurred while parsing %s.", Gui2Consts.ALL_PRESETS_FILE));
     }
 
@@ -195,25 +196,28 @@ public class WindowController {
       }
     });
   }
-  
+
   private void setTooltips() {
     directoryText.setTooltip(new Tooltip("The directory where Prey is installed"));
     changeDirButton.setTooltip(new Tooltip("Open a file chooser to select the Prey install directory"));
     seedText.setTooltip(new Tooltip("Seed to use for random generation. Must be a number (int64)"));
     newSeedButton.setTooltip(new Tooltip("Randomly picks a new seed"));
-    
+
     recommendedPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"recommended\" experience."));
     chaoticPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
     litePresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"lite\" experience."));
     gotsPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"timed\" experience."));
-    
+
     itemsCheckboxMoreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
-    itemsCheckboxLootTables.setTooltip(new Tooltip("Randomizes loot tables. Generally recommended to keep this checked when randomizing items."));
-    
+    itemsCheckboxLootTables.setTooltip(new Tooltip(
+        "Randomizes loot tables. Generally recommended to keep this checked when randomizing items."));
+
     installButton.setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
-    uninstallButton.setTooltip(new Tooltip("Removes any mods added by this installer and reverts changes to the game directory."));
+    uninstallButton.setTooltip(new Tooltip(
+        "Removes any mods added by this installer and reverts changes to the game directory."));
     clearButton.setTooltip(new Tooltip("Clears the output window."));
-    saveSettingsButton.setTooltip(new Tooltip("Saves the current settings to a file so that they are the default the next time this UI is opened."));
+    saveSettingsButton.setTooltip(new Tooltip(
+        "Saves the current settings to a file so that they are the default the next time this UI is opened."));
     closeButton.setTooltip(new Tooltip("Closes this UI."));
   }
 
@@ -229,7 +233,7 @@ public class WindowController {
     itemsCheckboxMoreGuns.setSelected(settings.getGameplaySettings().getMoreGuns());
     itemsCheckboxLootTables.setSelected(settings.getGameplaySettings().getRandomizeLoot());
     itemsCheckboxFabPlanCosts.setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
-    
+
     npcsCheckBoxCystoidNests.setSelected(settings.getGameplaySettings().getRandomizeCystoidNests());
     npcsCheckBoxNightmare.setSelected(settings.getGameplaySettings().getRandomizeNightmare());
     npcsCheckBoxWeavers.setSelected(settings.getGameplaySettings().getRandomizeWeaverCystoids());
@@ -355,6 +359,7 @@ public class WindowController {
     itemsCheckboxLootTables.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies");
+    neuromodsCheckboxRandomize.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
@@ -482,13 +487,17 @@ public class WindowController {
   }
 
   private GameplaySettingsJson getGameplaySettings() {
-    RadioButton selectedItemSpawn = (RadioButton) itemSpawnToggleGroup.getSelectedToggle();
-    String itemToSelect = selectedItemSpawn == null ? "" : selectedItemSpawn.getText();
-    SpawnPresetJson itemSpawnPreset = getSpawnPresetFromList(allPresets.get().getItemSpawnSettings(), itemToSelect);
+    SpawnPresetJson itemSpawnPreset = null;
+    SpawnPresetJson enemySpawnPreset = null;
+    if (allPresets.isPresent()) {
+      RadioButton selectedItemSpawn = (RadioButton) itemSpawnToggleGroup.getSelectedToggle();
+      String itemToSelect = selectedItemSpawn == null ? "" : selectedItemSpawn.getText();
+      itemSpawnPreset = getSpawnPresetFromList(allPresets.get().getItemSpawnSettings(), itemToSelect);
 
-    RadioButton selectedEnemySpawn = (RadioButton) enemySpawnToggleGroup.getSelectedToggle();
-    String enemyToSelect = selectedEnemySpawn == null ? "" : selectedEnemySpawn.getText();
-    SpawnPresetJson enemySpawnPreset = getSpawnPresetFromList(allPresets.get().getEnemySpawnSettings(), enemyToSelect);
+      RadioButton selectedEnemySpawn = (RadioButton) enemySpawnToggleGroup.getSelectedToggle();
+      String enemyToSelect = selectedEnemySpawn == null ? "" : selectedEnemySpawn.getText();
+      enemySpawnPreset = getSpawnPresetFromList(allPresets.get().getEnemySpawnSettings(), enemyToSelect);
+    }
 
     return new GameplaySettingsJson(itemsCheckboxLootTables.isSelected(), startCheckboxAddAllEquipment.isSelected(),
         cheatsCheckboxUnlockAll.isSelected(), neuromodsCheckboxRandomize.isSelected(), cheatsCheckboxAllScans
@@ -537,7 +546,9 @@ public class WindowController {
       try {
         return Optional.of(new SettingsJson(Gui2Consts.SAVED_SETTINGS_FILE));
       } catch (Exception e) {
-        logger.warning(Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE);
+        String loggerWarning = Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE;
+        logger.warning(loggerWarning);
+        outputWindow.appendText(loggerWarning);
         e.printStackTrace();
       }
     }
@@ -550,8 +561,10 @@ public class WindowController {
       if (savedSettings.get().getReleaseVersion().equals(Gui2Consts.VERSION)) {
         return savedSettings.get();
       } else {
-        logger.warning(String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH, savedSettings.get()
-            .getReleaseVersion(), Gui2Consts.VERSION));
+        String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH, savedSettings.get()
+            .getReleaseVersion(), Gui2Consts.VERSION);
+        logger.warning(loggerWarning);
+        outputWindow.appendText("Saved settings version mismatch. Falling back to default.\n");
       }
     }
 

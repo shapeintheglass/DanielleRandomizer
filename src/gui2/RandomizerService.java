@@ -106,7 +106,7 @@ public class RandomizerService extends Service<Void> {
     long secondsElapsed = 0L;
     try {
       try {
-        this.zipHelper = new ZipHelper();
+        this.zipHelper = new ZipHelper(tempLevelDir, tempPatchDir);
       } catch (IOException e) {
         e.printStackTrace();
         writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
@@ -126,6 +126,7 @@ public class RandomizerService extends Service<Void> {
       copyDependencies(finalSettings, tempPatchDir);
 
       executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
+      zipHelper.closeOutputZips();
 
       try {
         writeLine(Gui2Consts.INSTALL_PROGRESS_WRITING);
@@ -160,7 +161,7 @@ public class RandomizerService extends Service<Void> {
     Path installDir = Paths.get(currentSettings.getInstallDir());
 
     // Initialize install
-    Installer installer = new Installer(installDir, tempDir, tempLevelDir, tempPatchDir, currentSettings, zipHelper);
+    Installer installer = new Installer(installDir, tempLevelDir, tempPatchDir, currentSettings);
     if (!installer.verifyDataExists()) {
       writeLine(Gui2Consts.INSTALL_ERROR_DATA_NOT_FOUND);
       return Optional.absent();
@@ -185,7 +186,7 @@ public class RandomizerService extends Service<Void> {
     /* COSMETIC */
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
-      new BodyRandomizer(currentSettings, tempPatchDir, zipHelper).randomize();
+      new BodyRandomizer(currentSettings, zipHelper).randomize();
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_VOICELINES);
@@ -193,11 +194,11 @@ public class RandomizerService extends Service<Void> {
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_MUSIC)) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);
-      new MusicRandomizer(currentSettings, tempPatchDir, zipHelper).randomize();
+      new MusicRandomizer(currentSettings, zipHelper).randomize();
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_PLAYER_MODEL)) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL);
-      new PlayerModelRandomizer(currentSettings, tempPatchDir, zipHelper).randomize();
+      new PlayerModelRandomizer(currentSettings, zipHelper).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
@@ -217,16 +218,17 @@ public class RandomizerService extends Service<Void> {
 
     if (currentSettings.getGameplaySettings().getRandomizeNightmare()) {
       writeLine("Randomizing nightmare...");
-      NightmareHelper.install(database, currentSettings, tempPatchDir);
+      NightmareHelper.install(database, currentSettings, zipHelper);
     }
 
     if (currentSettings.getGameplaySettings().getStartSelfDestruct()) {
-      new SelfDestructTimerHelper(currentSettings, tempPatchDir, zipHelper).randomize();
+      writeLine("Updating self-destruct timer...");
+      new SelfDestructTimerHelper(currentSettings, zipHelper).randomize();
     }
 
     /* GAMEPLAY, LEVEL */
-    LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, tempLevelDir, zipHelper).addFilter(
-        new ItemSpawnFilter(database, currentSettings))
+    LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper).addFilter(new ItemSpawnFilter(
+        database, currentSettings))
         .addFilter(new FlowgraphFilter(database, currentSettings))
         .addFilter(new EnemyFilter(database, currentSettings));
 
@@ -245,19 +247,14 @@ public class RandomizerService extends Service<Void> {
       Map<String, Book> toOverwrite = Maps.newHashMap();
       toOverwrite.put("Bk_SL_Apt_Electronics", b);
       toOverwrite.put("Bk_TooFarTooFast1", b);
-      BookInfoHelper bih = new BookInfoHelper(tempPatchDir, zipHelper);
+      BookInfoHelper bih = new BookInfoHelper(zipHelper);
       bih.installNewBooks(toOverwrite);
-
-      try {
-        connectivity.visualize();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
 
     writeLine(Gui2Consts.INSTALL_PROGRESS_LEVELS);
     levelRandomizer.randomize();
+    writeLine("Done processing level files.");
   }
 
   private void copyDependencies(SettingsJson settings, Path tempPatchDir) throws IOException {
@@ -278,10 +275,8 @@ public class RandomizerService extends Service<Void> {
 
   private void copyFiles(ImmutableMap<String, String> dependencies, Path tempPatchDir) throws IOException {
     for (String key : dependencies.keySet()) {
-      Path out = tempPatchDir.resolve(dependencies.get(key));
-      out.toFile().getParentFile().mkdirs();
       try {
-        zipHelper.copy(key, out.toString());
+        zipHelper.copy(key, dependencies.get(key));
       } catch (IOException e) {
         logger.warning(String.format("Unable to copy dependency file %s", key));
         e.printStackTrace();

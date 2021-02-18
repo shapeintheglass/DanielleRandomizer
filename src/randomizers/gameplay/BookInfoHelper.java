@@ -1,16 +1,11 @@
 package randomizers.gameplay;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import utils.ZipHelper;
 
@@ -21,11 +16,9 @@ public class BookInfoHelper {
 
   private static final String OUT = "ark/campaign/books.xml";
 
-  private Path tempPatchDir;
   private ZipHelper zipHelper;
 
-  public BookInfoHelper(Path tempPatchDir, ZipHelper zipHelper) {
-    this.tempPatchDir = tempPatchDir;
+  public BookInfoHelper(ZipHelper zipHelper) {
     this.zipHelper = zipHelper;
   }
 
@@ -44,11 +37,7 @@ public class BookInfoHelper {
         }
       }
 
-      File toWrite = tempPatchDir.resolve(OUT).toFile();
-      toWrite.getParentFile().mkdirs();
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(document, new FileOutputStream(toWrite));
+      zipHelper.copyToPatch(document, OUT);
     } catch (IOException | JDOMException e) {
       e.printStackTrace();
     }

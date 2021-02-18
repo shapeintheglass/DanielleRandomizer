@@ -96,6 +96,10 @@ public class SettingsJson {
         s.append(" * Randomize music\n");
         atLeastOneSetting = true;
       }
+      if (this.getCosmeticSettings().getRandomizePlayerModel()) {
+        s.append(" * Randomize player model\n");
+        atLeastOneSetting = true;
+      }
     }
 
     if (this.getGameplaySettings() != null) {

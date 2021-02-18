@@ -1,20 +1,18 @@
 package randomizers.gameplay;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import json.SettingsJson;
 import randomizers.BaseRandomizer;
@@ -38,17 +36,14 @@ public class LevelRandomizer extends BaseRandomizer {
   private List<BaseFilter> filterList;
   private Random r;
 
-  private Path tempLevelDir;
-
   private Map<String, String> gameTokenValues;
 
   private GameTokenRule gameTokenRule;
 
-  public LevelRandomizer(SettingsJson s, Path tempLevelDir, ZipHelper zipHelper) {
+  public LevelRandomizer(SettingsJson s, ZipHelper zipHelper) {
     super(s, zipHelper);
     filterList = new LinkedList<>();
     r = new Random(s.getSeed());
-    this.tempLevelDir = tempLevelDir;
     this.gameTokenValues = new HashMap<>();
 
     // Use the settings to determine required level game tokens
@@ -90,29 +85,47 @@ public class LevelRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     for (String levelDir : LevelConsts.LEVEL_DIRS) {
-      String levelDirIn = ZipHelper.DATA_LEVELS + "/" + levelDir;
-      Path levelDirOut = tempLevelDir.resolve(LevelConsts.PREFIX).resolve(levelDir);
-      levelDirOut.toFile().mkdirs();
+      String levelDirInputPath = ZipHelper.DATA_LEVELS + "/" + levelDir;
 
-      String missionIn = levelDirIn + "/" + MISSION_FILE_NAME;
-      File missionOut = levelDirOut.resolve(MISSION_FILE_NAME).toFile();
-      String gameTokensIn = levelDirIn + "/" + TOKENS_FOLDER_NAME;
-      Path gameTokensOut = levelDirOut.resolve(TOKENS_FOLDER_NAME);
-      gameTokensOut.toFile().mkdirs();
+      Stack<String> toExamine = new Stack<>();
+      toExamine.push(levelDirInputPath);
+      while (!toExamine.isEmpty()) {
+        String f = toExamine.pop();
 
-      try {
-        logger.info(String.format("filtering level file: %s --> %s", missionIn, missionOut));
-        filterMissionFile(missionIn, missionOut, levelDir);
+        if (zipHelper.isDirectory(f)) {
+          for (String file : zipHelper.listFiles(f)) {
+            toExamine.push(file);
+          }
+        } else {
+          Path inputPath = Paths.get(f);
+          String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir).relativize(inputPath).toString();
 
-        for (String gameTokenFile : zipHelper.listFiles(gameTokensIn)) {
-          String filename = ZipHelper.getFileName(gameTokenFile);
-          logger.info(String.format("filtering tokens file: %s", filename));
-          filterTokensFile(gameTokenFile, gameTokensOut.resolve(filename).toFile(), levelDir);
+          if (f.endsWith(MISSION_FILE_NAME)) {
+            // Filter mission file
+            try {
+              filterMissionFile(f, pathInOutputZip, levelDir);
+            } catch (IOException | JDOMException e) {
+              logger.warning("Unable to filter mission file for level " + levelDir);
+              e.printStackTrace();
+            }
+          } else if (f.endsWith(TOKENS_FOLDER_NAME)) {
+            // Filter tokens folder
+            try {
+              filterTokensFolder(f, levelDir);
+            } catch (JDOMException | IOException e) {
+              logger.warning("Unable to filter gametokens for level " + levelDir);
+              e.printStackTrace();
+            }
+          } else {
+            // Copy without filtering
+            try {
+              zipHelper.copyToLevelPak(f, pathInOutputZip, levelDir);
+            } catch (IOException e) {
+              logger.warning("Unable to copy level dependency " + f + " for level " + levelDir);
+              e.printStackTrace();
+            }
+          }
         }
-
-      } catch (IOException | JDOMException e1) {
-        e1.printStackTrace();
-        return;
       }
     }
   }
@@ -120,8 +133,9 @@ public class LevelRandomizer extends BaseRandomizer {
   /**
    * Copies level def into temp directory, while filtering.
    */
-  private void filterMissionFile(String in, File out, String levelDir) throws IOException, JDOMException {
-    Document document = zipHelper.getDocument(in);
+  private void filterMissionFile(String missionFilePath, String pathInZip, String levelDir) throws IOException,
+      JDOMException {
+    Document document = zipHelper.getDocument(missionFilePath);
     Element root = document.getRootElement();
     Element objects = root.getChild("Objects");
 
@@ -131,9 +145,7 @@ public class LevelRandomizer extends BaseRandomizer {
       filterEntityXml(e, levelDir);
     }
 
-    XMLOutputter xmlOutput = new XMLOutputter();
-    xmlOutput.setFormat(Format.getPrettyFormat());
-    xmlOutput.output(document, new FileOutputStream(out));
+    zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }
 
   // Filters the xml representation of an entity
@@ -143,8 +155,16 @@ public class LevelRandomizer extends BaseRandomizer {
     }
   }
 
-  private void filterTokensFile(String in, File out, String levelDir) throws JDOMException, IOException {
-    Document document = zipHelper.getDocument(in);
+  private void filterTokensFolder(String gameTokensFolder, String levelDir) throws JDOMException, IOException {
+    for (String f : zipHelper.listFiles(gameTokensFolder)) {
+      String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir).relativize(Paths.get(f)).toString();
+      filterTokensFile(f, pathInOutputZip, levelDir);
+    }
+  }
+
+  private void filterTokensFile(String gameTokensFile, String pathInZip, String levelDir) throws JDOMException,
+      IOException {
+    Document document = zipHelper.getDocument(gameTokensFile);
     Element root = document.getRootElement();
     List<Element> entities = root.getChildren();
 
@@ -154,8 +174,6 @@ public class LevelRandomizer extends BaseRandomizer {
       }
     }
 
-    XMLOutputter xmlOutput = new XMLOutputter();
-    xmlOutput.setFormat(Format.getPrettyFormat());
-    xmlOutput.output(document, new FileOutputStream(out));
+    zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }
 }

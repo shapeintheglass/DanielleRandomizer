@@ -171,7 +171,7 @@ public class SpawnStatsUtil {
 
   public static void main(String[] args) {
     try {
-      database = EntityDatabase.getInstance(new ZipHelper());
+      database = EntityDatabase.getInstance(new ZipHelper(null, null));
       AllPresetsJson allPresets = new AllPresetsJson(PRESETS_FILE);
 
       Multiset<String> originalTags = getOriginalState();

@@ -1,7 +1,5 @@
 package randomizers.gameplay;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -10,8 +8,6 @@ import java.util.Set;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import databases.TaggedDatabase;
 import json.GenericRuleJson;
@@ -25,39 +21,28 @@ import utils.ZipHelper;
 
 public class LootTableRandomizer extends BaseRandomizer {
 
-  private static final String OUTPUT_DIR = "ark/items";
-  private static final String OUTPUT_NAME = "loottables.xml";
-
   private static final int MAX_ATTEMPTS = 10;
 
   private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
 
   private TaggedDatabase database;
 
-  private File outputFile;
-
-  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) throws IOException {
+  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir, ZipHelper zipHelper)
+      throws IOException {
     super(s, zipHelper);
     this.database = database;
-
-    File outputDir = tempPatchDir.resolve(OUTPUT_DIR).toFile();
-    outputDir.mkdirs();
-
-    outputFile = outputDir.toPath().resolve(OUTPUT_NAME).toFile();
-    outputFile.createNewFile();
-  }
-
-  public void copyFile() throws IOException {
-    zipHelper.copy(ZipHelper.LOOT_TABLE_FILE, outputFile.getCanonicalPath());
   }
 
   @Override
   public void randomize() {
-    outputFile.getParentFile().mkdirs();
-    try {
-      outputFile.createNewFile();
-    } catch (IOException e1) {
-      e1.printStackTrace();
+    // If there are no item spawn settings, copy the loot table file over directly.
+    if (settings.getGameplaySettings() == null || settings.getGameplaySettings().getItemSpawnSettings() == null) {
+      try {
+        zipHelper.copyToPatch(ZipHelper.LOOT_TABLE_FILE, ZipHelper.LOOT_TABLE_FILE);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
     }
 
     try {
@@ -69,9 +54,7 @@ public class LootTableRandomizer extends BaseRandomizer {
         filterLootTable(e);
       }
 
-      XMLOutputter xmlOutput = new XMLOutputter();
-      xmlOutput.setFormat(Format.getPrettyFormat());
-      xmlOutput.output(document, new FileOutputStream(outputFile));
+      zipHelper.copyToPatch(document, ZipHelper.LOOT_TABLE_FILE);
     } catch (JDOMException | IOException e1) {
       e1.printStackTrace();
     }

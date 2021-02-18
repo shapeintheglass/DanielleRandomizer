@@ -30,8 +30,8 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="12.0" layoutY="21.0" text="Pick a preset to start! When you pick a preset, check out the other tabs for more customization." />
-                              <Label layoutX="11.0" layoutY="289.0" prefHeight="45.0" prefWidth="603.0" text="If you already have a randomized game in progress, make sure not to install a new seed/settings until you are finished, or else you may not be able to load your old saves." wrapText="true" />
+                              <Label layoutX="12.0" layoutY="21.0" prefHeight="17.0" prefWidth="597.0" text="Pick a preset to start! Check out the other tabs for more customization. Click &quot;Install&quot; to install changes." />
+                              <Label layoutX="11.0" layoutY="289.0" prefHeight="45.0" prefWidth="603.0" text="If you already have a randomized game in progress, make sure not to install a new seed/settings or uninstall until you are finished, or else you may not be able to load your old saves." wrapText="true" />
                               <HBox layoutX="28.0" layoutY="50.0" prefHeight="171.0" prefWidth="633.0" spacing="15.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
@@ -44,7 +44,7 @@
                                     </VBox>
                                     <VBox prefHeight="275.0" prefWidth="478.0" spacing="23.0">
                                        <children>
-                                          <Label text="Balanced and less likely to break the game." />
+                                          <Label text="As random as possible without breaking the game." />
                                           <Label text="For people who like to live dangerously. Potential sequence breaking / soft locks." />
                                           <Label text="As close to the original experience as possible, but with slight randomization." />
                                           <Label text="&quot;Get Off The Station&quot; mode. Can you escape Talos I before time is up?">
@@ -163,7 +163,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Story/Progression">
+                  <Tab text="Story Progression">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -178,12 +178,12 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Intro Skip/Loadout">
+                  <Tab text="Game Start">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Settings for starting the game and choosing loadouts." />
-                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="276.0" prefWidth="605.0">
+                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="105.0" prefWidth="605.0">
                                  <children>
                                     <VBox prefHeight="276.0" prefWidth="242.0" spacing="15.0">
                                        <children>
@@ -194,9 +194,9 @@
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
                                        <children>
-                                          <Label prefHeight="17.0" prefWidth="170.0" text="Skips intro to the 2nd day." />
+                                          <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
-                                          <Label text="Skips Jovan's death in the Neuromod Division." />
+                                          <Label text="Skips Jovan's appearance in the Neuromod Division." />
                                        </children>
                                     </VBox>
                                  </children>
@@ -246,7 +246,7 @@
                               </VBox>
                               <Label layoutX="335.0" layoutY="50.0" text="Unlocks (almost) everything except for scripted locks." />
                               <Label layoutX="335.0" layoutY="82.0" text="Allows installing typhon neuromods without research." />
-                              <Label layoutX="335.0" layoutY="113.0" text="Makes humans walk around rather than stand in place." />
+                              <Label layoutX="335.0" layoutY="113.0" text="Intended for the &quot;typhon to humans&quot; option." />
                               <Label layoutX="334.0" layoutY="145.0" text="Activate self-destruct/shuttle when waking up." />
                               <Label layoutX="334.0" layoutY="181.0" text="Time before the station self-destructs." />
                               <Label layoutX="333.0" layoutY="221.0" text="Time before Dahl's shuttle leaves." />

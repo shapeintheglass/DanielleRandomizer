@@ -90,7 +90,7 @@ public class EntityDatabase extends TaggedDatabase {
   public static void main(String[] args) {
     EntityDatabase d;
     try {
-      d = getInstance(new ZipHelper());
+      d = getInstance(new ZipHelper(null, null));
     } catch (IOException e1) {
       e1.printStackTrace();
       return;
