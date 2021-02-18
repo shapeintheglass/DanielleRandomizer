@@ -24,13 +24,14 @@ public abstract class BaseFilter {
   /**
    * Modifies the given entity in-place using a pre-built combination of rules.
    */
-  public void filterEntity(Element e, Random r, String filename) {
+  public boolean filterEntity(Element e, Random r, String filename) {
     for (Rule rule : rules) {
       if (rule.trigger(e, r, filename)) {
         rule.apply(e, r, filename);
-        return;
+        return true;
       }
     }
+    return false;
   }
 
   public BaseFilter addRule(Rule rule) {

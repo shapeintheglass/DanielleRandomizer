@@ -17,9 +17,8 @@ public class LevelConsts {
       "research/shuttlebay", "research/simulationlabs", "research/zerog_utilitytunnels", "station/exterior" };
 
   public static final List<String> DO_NOT_TOUCH_ITEM_TAGS = Lists.newArrayList("Data", "MissionItems",
-      "BigNullwaveTransmitterFabPlan", "AlexStationKeyFabPlan", "MorganStationKeyFabPlan", "PropulsionSystemFabPlan",
-      "Psychoscope", "ZeroGSuit", "_PLOT_CRITICAL", "ArkRobots", "ArkLight", "research/simulationlabs;Weapons.Wrench1",
-      "MedKit_Wall_Mounted", "ArkContainer");
+      "_PROGRESSION", "_PLOT_CRITICAL", "ArkRobots", "ArkLight", "research/simulationlabs;Weapons.Wrench1",
+      "MedKit_Wall_Mounted", "ArkContainer", "Light_Fixtures");
 
   public static final List<String> DO_NOT_OUTPUT_ITEM_TAGS = Lists.newArrayList("Architecture", "Gameplay",
       "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden", "DoubleWrench",
@@ -58,11 +57,6 @@ public class LevelConsts {
       .put("CrewFacility.VoiceSampleProcessingPercent", "100")
       .build();
 
-  // Intended to unlock the main lift.
-  public static final ImmutableMap<String, String> UNLOCK_LIFT_GAME_TOKENS = new ImmutableMap.Builder<String, String>()
-      .put("Lobby.ElevatorUsedForFirstTime", "true")
-      .build();
-
   // Opens all exterior airlocks
   public static final ImmutableMap<String, String> UNLOCK_EXTERIOR_GAME_TOKENS = new ImmutableMap.Builder<String, String>()
       .put("AirlockStates.AirlockSealedInternally_ShuttleBay", "false")
@@ -71,8 +65,6 @@ public class LevelConsts {
       .put("AirlockStates.AirlockSealedInternally_Arboretum", "false")
       .put("AirlockStates.AirlockSealedInternally_Psychotronics", "false")
       .build();
-  public static final ImmutableMap<String, String> START_2ND_DAY_GAME_TOKENS = ImmutableMap.of(
-      "SimLab.Apartment_2ndDay", "true", "SimLab.Apartment_PlayerHasFirstDay2Objective", "true");
   public static final ImmutableMap<String, String> PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS = ImmutableMap.of(
       "WorldState.PsychoscopeCalibrationComplete", "true");
   public static final ImmutableMap<String, String> ENABLE_NIGHTMARE_TOKENS = ImmutableMap.of(

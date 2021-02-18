@@ -2,7 +2,6 @@ package utils.validators;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +35,6 @@ import utils.ZipHelper;
 public class SpawnStatsUtil {
 
   private static final long SEED = -1738138057449994609L;
-  public static final String LEVEL_DIR = "data/levels";
   public static final String LEVEL_FILE = "research/lobby";
   public static final String LEVEL_FILE_NAME = "mission_mission0.xml";
   public static final String PRESETS_FILE = "spawn_presets.json";
@@ -89,8 +87,7 @@ public class SpawnStatsUtil {
   public static List<String> getTagsForEntity(Element e) {
     String tag = null;
     // Handle npc spawner differently
-    if (e.getAttributeValue("EntityClass") != null
-        && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
+    if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
       tag = e.getChild("Properties").getAttributeValue("sNpcArchetype");
     } else {
       tag = e.getAttributeValue("Archetype") != null ? e.getAttributeValue("Archetype")
@@ -114,10 +111,10 @@ public class SpawnStatsUtil {
     return toReturn;
   }
 
-  public static void describeRandomization(SpawnPresetJson j, List<Rule> rulesList,
-      Multiset<String> originalTags) throws JDOMException, IOException {
-    Element root = getEntitiesFromLevel(
-        Paths.get(LEVEL_DIR).resolve(LEVEL_FILE).resolve(LEVEL_FILE_NAME).toFile());
+  public static void describeRandomization(SpawnPresetJson j, List<Rule> rulesList, Multiset<String> originalTags, ZipHelper zipHelper)
+      throws JDOMException, IOException {
+    Document document = zipHelper.getDocument(ZipHelper.DATA_LEVELS + "/" + LEVEL_FILE + "/" + LEVEL_FILE_NAME);
+    Element root = document.getRootElement().getChild("Objects");
     System.out.println(j.getName());
     System.out.println(j.getDesc());
 
@@ -153,9 +150,9 @@ public class SpawnStatsUtil {
     }
   }
 
-  public static Multiset<String> getOriginalState() throws JDOMException, IOException {
-    Element root = getEntitiesFromLevel(
-        Paths.get(LEVEL_DIR).resolve(LEVEL_FILE).resolve(LEVEL_FILE_NAME).toFile());
+  public static Multiset<String> getOriginalState(ZipHelper zipHelper) throws JDOMException, IOException {
+    Document document = zipHelper.getDocument(ZipHelper.DATA_LEVELS + "/" + LEVEL_FILE + "/" + LEVEL_FILE_NAME);
+    Element root = document.getRootElement().getChild("Objects");
 
     Multiset<String> tagsSet = HashMultiset.create();
 
@@ -168,26 +165,29 @@ public class SpawnStatsUtil {
     return tagsSet;
   }
 
-
   public static void main(String[] args) {
+    ZipHelper zipHelper = null;
     try {
-      database = EntityDatabase.getInstance(new ZipHelper(null, null));
+      zipHelper = new ZipHelper(null, null);
+      database = EntityDatabase.getInstance(zipHelper);
       AllPresetsJson allPresets = new AllPresetsJson(PRESETS_FILE);
 
-      Multiset<String> originalTags = getOriginalState();
+      Multiset<String> originalTags = getOriginalState(zipHelper);
 
       for (SpawnPresetJson j : allPresets.getItemSpawnSettings()) {
         List<Rule> rulesList = createItemRulesList(j.getRules());
-        describeRandomization(j, rulesList, originalTags);
+        describeRandomization(j, rulesList, originalTags, zipHelper);
       }
 
       for (SpawnPresetJson j : allPresets.getEnemySpawnSettings()) {
         List<Rule> rulesList = createNpcRulesList(j.getRules());
-        describeRandomization(j, rulesList, originalTags);
+        describeRandomization(j, rulesList, originalTags, zipHelper);
       }
     } catch (IOException | JDOMException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+    } finally {
+      zipHelper.close();
     }
   }
 }

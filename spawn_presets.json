@@ -10,6 +10,19 @@
       "filters": [
         {
           "input_tags": [
+            "_LEVERAGE_I"
+          ],
+          "output_tags": [
+            "_LEVERAGE_I"
+          ],
+          "do_not_output_tags": [
+            "MissionItems",
+            "_PLOT_CRITICAL",
+            "_PROGRESSION"
+          ]
+        },
+        {
+          "input_tags": [
             "_LEVERAGE_II"
           ],
           "output_tags": [
@@ -18,9 +31,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan",
-            "BigNullwaveTransmitterFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
@@ -33,72 +44,74 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan",
-            "BigNullwaveTransmitterFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
           "input_tags": [
             "Neuromod_Calibration",
-            "_MIMICABLE",
-            "_CARRYABLE",
-            "_USABLE",
-            "_CONSUMABLE"
+            "ArkPickups"
           ],
           "output_tags": [
             "Stickynote_Mimic",
-            "MedKit",
-            "PsiHypo",
-            "Ingredients",
-            "WeaponUpgradeKit",
-            "SuitPatchKit",
-            "Weapon",
-            "Weapons",
             "FabricationPlans",
-            "Mods",
+            "WeaponUpgradeKit",
+            "SuitPatchKit",    
             "Medical",
-            "Neuromod",
+            "Mods",
             "SpareParts",
+            "Neuromod",
+            "Ingredients",
+            "Weapons",
             "Ammo",
             "Food",
-            "RecyclerJunk",
-            "_CARRYABLE"
+            "RecyclerJunk"
           ],
           "output_weights": [
             1,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            10,
-            10,
-            10,
             25,
             50,
+            50,
+            75,
+            75,
+            75,
+            80,
+            100,
+            100,
+            200,
             300,
-            1000
+            600
           ],
           "do_not_touch_tags": [
+            "_LEVERAGE_I",
             "_LEVERAGE_II",
             "_LEVERAGE_III"
           ],
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan",
-            "Cystoid_IgnorePlayer",
+            "_PROGRESSION",
+            "_LEVERAGE_I",
             "_LEVERAGE_II",
             "_LEVERAGE_III",
             "ArkAreaHazard",
             "RadioactiveTank"
+          ]
+        },
+        {
+          "input_tags": [
+            "_CARRYABLE"
+          ],
+          "output_tags": [
+            "_CARRYABLE"
+          ],
+          "do_not_output_tags": [
+            "MissionItems",
+            "_PLOT_CRITICAL",
+            "_PROGRESSION",
+            "_LEVERAGE_I",
+            "_LEVERAGE_II",
+            "_LEVERAGE_III"
           ]
         }
       ]
@@ -109,12 +122,19 @@
       "filters": [
         {
           "input_tags": [
+            "_LEVERAGE_I",
             "_LEVERAGE_II",
             "_LEVERAGE_III"
           ],
           "output_tags": [
+            "_LEVERAGE_I",
             "_LEVERAGE_II",
             "_LEVERAGE_III"
+          ],
+          "output_weights": [
+            "3",
+            "2",
+            "1"
           ]
         },
         {
@@ -122,27 +142,23 @@
             "Neuromod_Calibration",
             "_MIMICABLE",
             "_CARRYABLE",
+            "_CONSUMABLE",
             "_USABLE",
-            "_CONSUMABLE"
+            "ArkPickups"
           ],
           "output_tags": [
             "Stickynote_Mimic",
             "MissionItems",
-            "ArkPsychoscope",
-            "ZeroGSuit",
-            "MedKit",
-            "PsiHypo",
-            "Ingredients",
-            "WeaponUpgradeKit",
-            "SuitPatchKit",
-            "Weapon",
-            "Weapons",
             "FabricationPlans",
-            "Mods",
             "ExplosiveTanks",
-            "Neuromod",
-            "Medical",
+            "SuitPatchKit",
+            "WeaponUpgradeKit",
+            "Mods",
             "SpareParts",
+            "Medical",
+            "Neuromod",
+            "Ingredients",
+            "Weapons",
             "Ammo",
             "Food",
             "RecyclerJunk",
@@ -150,30 +166,29 @@
           ],
           "output_weights": [
             1,
-            1,
-            1,
-            1,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
             10,
             10,
-            10,
-            10,
-            25,
             50,
+            50,
+            50,
+            50,
+            75,
+            75,
+            75,
+            100,
+            100,
+            200,
             300,
-            1000
+            600,
+            7000
+          ],
+          "do_not_touch_tags": [
+            "_LEVERAGE_I",
+            "_LEVERAGE_II",
+            "_LEVERAGE_III"
           ],
           "do_not_output_tags": [
-            "Cystoid_IgnorePlayer",
-            "ApexTentacle",
+            "_LEVERAGE_I",
             "_LEVERAGE_II",
             "_LEVERAGE_III"
           ]
@@ -194,10 +209,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
@@ -210,10 +222,8 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION",
+            "Ammo"
           ]
         },
         {
@@ -226,10 +236,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
@@ -237,15 +244,19 @@
             "Medical"
           ],
           "output_tags": [
-            "Medical"
+            "Medical",
+            "MedKit",
+            "PsiHypo"
+          ],
+          "output_weights": [
+            "2",
+            "1",
+            "1"
           ],
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
@@ -258,26 +269,8 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
-          ]
-        },
-        {
-          "input_tags": [
-            "ArkSpecialWeapons"
-          ],
-          "output_tags": [
-            "ArkSpecialWeapons"
-          ],
-          "do_not_output_tags": [
-            "MissionItems",
-            "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION",
+            "FabricationPlans"
           ]
         },
         {
@@ -290,10 +283,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
@@ -306,10 +296,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION"
           ]
         },
         {
@@ -322,10 +309,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "BigNullwaveTransmitterFabPlan",
-            "BigNullwaveTransmitterFabPlan_Cinematic",
-            "AlexStationKeyFabPlan",
-            "MorganStationKeyFabPlan"
+            "_PROGRESSION"
           ]
         }
       ]

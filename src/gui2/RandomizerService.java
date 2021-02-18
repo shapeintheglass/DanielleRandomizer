@@ -1,5 +1,6 @@
 package gui2;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -96,6 +97,12 @@ public class RandomizerService extends Service<Void> {
   }
 
   public boolean doInstall(boolean deleteFilesAfterwards) {
+    File dataPak = new File(ZipHelper.DATA_PAK);
+    if (!dataPak.exists()) {
+      writeLine("Unable to find required resource " + ZipHelper.DATA_PAK);
+      return false;
+    }
+    
     Date startTime = new Date();
     writeLine(Gui2Consts.INSTALL_STATUS_TEXT);
 
@@ -276,7 +283,7 @@ public class RandomizerService extends Service<Void> {
   private void copyFiles(ImmutableMap<String, String> dependencies, Path tempPatchDir) throws IOException {
     for (String key : dependencies.keySet()) {
       try {
-        zipHelper.copy(key, dependencies.get(key));
+        zipHelper.copyToPatch(key, dependencies.get(key));
       } catch (IOException e) {
         logger.warning(String.format("Unable to copy dependency file %s", key));
         e.printStackTrace();

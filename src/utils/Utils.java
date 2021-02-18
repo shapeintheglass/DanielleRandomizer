@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -12,11 +13,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.jdom2.Element;
+
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 public class Utils {
+
+  private static final ImmutableSet<String> PROGRESSION_ITEMS = ImmutableSet.of("Player.ZeroGSuit",
+      "Player.Psychoscope", "Mods.Psychoscope.CanScanCoral", "MissionItems.BigNullwaveTransmitter",
+      "MissionItems.BigNullwave_Alex_Cinematic", "MissionItems.SelfDestructKey_Alex",
+      "MissionItems.SelfDestructKey_Morgan", "MissionItems.SelfDestructKey_Morgan_Cinematic",
+      "Crafting.FabricationPlans.PropulsionSystemFabPlan", "Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan",
+      "Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan_Cinematic",
+      "Crafting.FabricationPlans.AlexStationKeyFabPlan", "Crafting.FabricationPlans.MorganStationKeyFabPlan",
+      "Crafting.FabricationPlans.CoralScanModFabPlan");
+
   public static Path createTempDir(Path workingDir, String name) {
     long now = new Date().getTime();
     Path newTempDir = workingDir.resolve(String.format("temp_%8d_%s", now, name));
@@ -104,6 +118,13 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(List<T> arr, List<Integer> weights, Random r) {
+    if (weights == null || weights.size() != arr.size()) {
+      weights = new ArrayList<>(arr.size());
+      for (int i = 0; i < arr.size(); i++) {
+        weights.add(1);
+      }
+    }
+    
     int sum = weights.stream().reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
@@ -175,6 +196,10 @@ public class Utils {
     addTagForBoolean(tags, properties, "bSurvivalMode", "_SURVIVAL");
     addCarryRequirementTag(tags, properties);
 
+    if (PROGRESSION_ITEMS.contains(name)) {
+      tags.add("_PROGRESSION");
+    }
+    
     return tags;
   }
 
@@ -189,6 +214,9 @@ public class Utils {
   }
 
   private static void addCarryRequirementTag(Set<String> tags, Element properties) {
+    if (properties == null) {
+      return;
+    }
     String carryReq = properties.getAttributeValue("ability_CarryRequirement");
 
     if (carryReq == null) {
