@@ -439,30 +439,35 @@
             "ArkOperatorMilitary"
           ],
           "output_tags": [
-            "Mimic",
-            "BasePhantom",
-            "EliteMimic",
-            "Operators\\Generic\\Corrupted",
             "ArkPoltergeist",
-            "Phantoms",
-            "Named Phantoms",
-            "Overseers",
             "ArkNightmare",
-            "ArkOperatorMilitary"
+            "MilitaryOperator",
+            "Overseers",
+            "BasePhantom",
+            "Operators\\Generic\\Corrupted",
+            "EliteMimic",
+            "Phantoms",
+            "Mimic"
           ],
           "output_weights": [
             25,
-            20,
-            10,
-            8,
-            5,
-            5,
-            5,
-            5,
-            3,
-            3
+            25,
+            25,
+            50,
+            75,
+            75,
+            125,
+            170,
+            300
           ],
           "do_not_touch_tags": [
+            "Named Phantoms",
+            "MilitaryOperatorCopycat",
+            "FakeTechnopath",
+            "Operators\\Named",
+            "Kaspar"
+          ],
+          "do_not_output_tags": [
             "Named Phantoms"
           ]
         },
@@ -491,32 +496,32 @@
             "ArkOperatorMilitary"
           ],
           "output_tags": [
-            "Mimic",
-            "BasePhantom",
-            "EliteMimic",
             "ApexTentacle",
-            "Operators\\Generic\\Corrupted",
-            "ArkPoltergeist",
-            "Phantoms",
             "Named Phantoms",
-            "Overseers",
-            "ArkNightmare",
             "ArkTurret",
-            "Operators\\Generic"
+            "ArkPoltergeist",
+            "ArkNightmare",
+            "MilitaryOperator",
+            "Overseers",
+            "BasePhantom",
+            "Operators\\Generic\\Corrupted",
+            "EliteMimic",
+            "Phantoms",
+            "Mimic"
           ],
           "output_weights": [
             25,
-            20,
-            15,
-            10,
-            8,
-            5,
-            5,
-            5,
-            3,
-            1,
-            1,
-            1
+            25,
+            25,
+            25,
+            25,
+            25,
+            50,
+            75,
+            75,
+            125,
+            170,
+            300
           ],
           "do_not_output_tags": [
             "Tentacle_Large"
@@ -550,7 +555,7 @@
             "BasePhantom"
           ],
           "output_weights": [
-            "2",
+            "4",
             "1"
           ]
         },
@@ -567,24 +572,23 @@
         {
           "input_tags": [
             "EliteMimic",
-            "ArkPoltergeist",
+            "ArkPoltergeist"
+          ],
+          "output_tags": [
+            "EliteMimic",
+            "ArkPoltergeist"
+          ]
+        },
+        {
+          "input_tags": [
             "EthericPhantom",
             "VoltaicPhantom",
             "ThermalPhantom"
           ],
           "output_tags": [
-            "EliteMimic",
-            "ArkPoltergeist",
             "EthericPhantom",
             "VoltaicPhantom",
             "ThermalPhantom"
-          ],
-          "output_weights": [
-            5,
-            3,
-            5,
-            5,
-            5
           ]
         },
         {
@@ -597,7 +601,7 @@
             "ArkNightmare"
           ],
           "output_weights": [
-            4,
+            5,
             1
           ]
         },

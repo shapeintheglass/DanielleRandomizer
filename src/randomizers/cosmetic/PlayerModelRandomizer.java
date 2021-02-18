@@ -31,7 +31,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final ImmutableSet<String> PAJAMA_TAGS = ImmutableSet.of("pajama_arms", "pajama_legs");
 
   private static enum BodyType {
-    Volunteer, Security, Engineer, Scientist, Corporate, LabCoat, Dahl, Etheric, Cosmonaut, Phantom, Female, PajamaMale,
+    Volunteer, Security, Engineer, Scientist, Corporate, LabCoat, Dahl, Etheric, Cosmonaut, Phantom, PajamaMale,
     PajamaFemale, GlovelessMale
   }
 
@@ -66,11 +66,6 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final String LAB_COAT_HANDS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
   private static final String LAB_COAT_LEGS_SKIN = "objects/characters/humans/labcoat/labcoat_genmalelegs01.skin";
   private static final String LAB_COAT_LEGS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
-
-  private static final String FEMALE_ARMS_SKIN = "objects/characters/player/female/player1p_female01_arms.skin";
-  private static final String FEMALE_ARMS_MTL = "objects/characters/player/female/player1p_female01_Arms.mtl";
-  private static final String FEMALE_LEGS_SKIN = "objects/characters/player/female/player1p_female01_legs.skin";
-  private static final String FEMALE_LEGS_MTL = "objects/characters/player/female/Player1P_Female01_Legs.mtl";
 
   private static final String PAJAMA_MALE_ARMS_SKIN = "objects/characters/player/male/player1p_male02_arms.skin";
   private static final String PAJAMA_MALE_ARMS_MTL = "objects/characters/player/male/player1p_male02_arms.mtl";
@@ -156,30 +151,14 @@ public class PlayerModelRandomizer extends BaseRandomizer {
 
     List<Element> elements = Lists.newArrayList();
     switch (b) {
-      case Female:
-        Element arms = new Element("Attachment").setAttribute("Inheritable", "0")
-            .setAttribute("Type", "CA_SKIN")
-            .setAttribute("AName", armName)
-            .setAttribute("Binding", FEMALE_ARMS_SKIN)
-            .setAttribute("Material", FEMALE_ARMS_MTL)
-            .setAttribute("Flags", "0");
-        Element legs = new Element("Attachment").setAttribute("Inheritable", "0")
-            .setAttribute("Type", "CA_SKIN")
-            .setAttribute("AName", legName)
-            .setAttribute("Binding", FEMALE_LEGS_SKIN)
-            .setAttribute("Material", FEMALE_LEGS_MTL)
-            .setAttribute("Flags", "0");
-        elements.add(arms);
-        elements.add(legs);
-        break;
       case PajamaFemale:
-        arms = new Element("Attachment").setAttribute("Inheritable", "0")
+        Element arms = new Element("Attachment").setAttribute("Inheritable", "0")
             .setAttribute("Type", "CA_SKIN")
             .setAttribute("AName", armName)
             .setAttribute("Binding", PAJAMA_FEMALE_ARMS_SKIN)
             .setAttribute("Material", PAJAMA_FEMALE_ARMS_MTL)
             .setAttribute("Flags", "0");
-        legs = new Element("Attachment").setAttribute("Inheritable", "0")
+        Element legs = new Element("Attachment").setAttribute("Inheritable", "0")
             .setAttribute("Type", "CA_SKIN")
             .setAttribute("AName", legName)
             .setAttribute("Binding", PAJAMA_FEMALE_LEGS_SKIN)

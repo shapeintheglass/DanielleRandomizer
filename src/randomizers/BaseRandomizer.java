@@ -26,7 +26,7 @@ public abstract class BaseRandomizer {
     this.settings = s;
     this.zipHelper = zipHelper;
     this.r = new Random(s.getSeed());
-    this.logger = Logger.getGlobal();
+    this.logger = Logger.getLogger("randomizer");
   }
 
   /**

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Stack;
 
 import org.jdom2.Document;
@@ -34,7 +33,6 @@ public class LevelRandomizer extends BaseRandomizer {
   private static final String TOKENS_FOLDER_NAME = "gametokens";
 
   private List<BaseFilter> filterList;
-  private Random r;
 
   private Map<String, String> gameTokenValues;
 
@@ -43,7 +41,6 @@ public class LevelRandomizer extends BaseRandomizer {
   public LevelRandomizer(SettingsJson s, ZipHelper zipHelper) {
     super(s, zipHelper);
     filterList = new LinkedList<>();
-    r = new Random(s.getSeed());
     this.gameTokenValues = new HashMap<>();
 
     // Use the settings to determine required level game tokens

@@ -21,6 +21,7 @@ import com.google.common.collect.Sets;
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import json.SettingsJson;
+import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
 import utils.LevelConsts;
@@ -30,12 +31,15 @@ import utils.ZipHelper;
 public class CustomSpawnValidator {
   private static final String LEVEL = "research/lobby";
 
-  private static final List<String> TO_PRINT = Lists.newArrayList("Stickynote_Mimic", "MissionItems", "ExplosiveTanks",
-      "SuitPatchKit", "WeaponUpgradeKit", "FabricationPlans", "Mods", "SpareParts", "Medical", "Neuromod",
-      "Ingredients", "Weapons", "Ammo", "Food", "RecyclerJunk", "_CARRYABLE");
+  private static final List<String> TO_PRINT = Lists.newArrayList("ApexTentacle", "Named Phantoms", "ArkTurret",
+      "ArkPoltergeist", "ArkNightmare", "MilitaryOperator", "Overseers", "BasePhantom", "Operators\\Generic\\Corrupted",
+      "EliteMimic", "Phantoms", "Mimic");
 
   private ItemSpawnFilter isf;
   private FlowgraphFilter fgf;
+
+  private EnemyFilter ef;
+
   private Random r;
   private int numFilteredByArchetypeSwap;
   private int numFilteredByFlowgraphSwap;
@@ -55,6 +59,7 @@ public class CustomSpawnValidator {
     this.zipHelper = zipHelper;
     isf = new ItemSpawnFilter(database, settings);
     fgf = new FlowgraphFilter(database, settings);
+    ef = new EnemyFilter(database, settings);
     r = new Random(settings.getSeed());
     numFilteredByArchetypeSwap = 0;
     numFilteredByFlowgraphSwap = 0;
@@ -67,19 +72,18 @@ public class CustomSpawnValidator {
 
   private boolean filter(Element e) {
     boolean filtered = false;
-    if (isf.filterEntity(e, r, LEVEL)) {
+    if (ef.filterEntity(e, r, LEVEL)) {
       numFilteredByArchetypeSwap++;
-      filtered = true;
-    }
-    if (fgf.filterEntity(e, r, LEVEL)) {
-      numFilteredByFlowgraphSwap++;
       filtered = true;
     }
     return filtered;
   }
 
   private void filterEntity(Element entity) {
-    String before = entity.getAttributeValue("Archetype");
+    if (entity.getChild("Properties") == null) {
+      return;
+    }
+    String before = entity.getChild("Properties").getAttributeValue("sNpcArchetype");
     Set<String> beforeTags = Sets.newHashSet();
     if (before != null) {
       Element oldArchetype = database.getEntityByName(Utils.stripPrefix(before));
@@ -89,7 +93,7 @@ public class CustomSpawnValidator {
     }
 
     if (filter(entity)) {
-      String after = entity.getAttributeValue("Archetype");
+      String after = entity.getChild("Properties").getAttributeValue("sNpcArchetype");
       if (after != null) {
         Element newArchetype = database.getEntityByName(Utils.stripPrefix(after));
         Set<String> afterTags = Utils.getTags(newArchetype);
@@ -100,7 +104,7 @@ public class CustomSpawnValidator {
         updateTagsCount(afterTags, afterTagsCount);
       }
 
-      startArchetypeToEndArchetype.put(before, entity.getAttributeValue("Archetype"));
+      startArchetypeToEndArchetype.put(before, after);
 
     }
   }
@@ -122,7 +126,7 @@ public class CustomSpawnValidator {
     Collections.sort(sortedTags);
     System.out.println(numFilteredByArchetypeSwap);
     System.out.println("Name,Before,After,Diff");
-    //Collections.sort(TO_PRINT);
+    // Collections.sort(TO_PRINT);
     for (String tag : sortedTags) {
       int before = beforeTagsCount.containsKey(tag) ? beforeTagsCount.get(tag) : 0;
       int after = afterTagsCount.containsKey(tag) ? afterTagsCount.get(tag) : 0;
