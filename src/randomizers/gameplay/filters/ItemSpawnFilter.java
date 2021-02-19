@@ -9,6 +9,7 @@ import json.SettingsJson;
 import randomizers.gameplay.filters.rules.ArchetypeSwapRule;
 import utils.CustomRuleHelper;
 import utils.LevelConsts;
+import utils.Utils;
 
 public class ItemSpawnFilter extends BaseFilter {
   /**
@@ -22,6 +23,8 @@ public class ItemSpawnFilter extends BaseFilter {
       return;
     }
 
+    // TODO: Do not double-add tags to lists
+    
     List<String> doNotOutput = Lists.newArrayList();
     doNotOutput.addAll(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
     if (!s.getGameplaySettings().getMoreGuns()) {
@@ -30,8 +33,14 @@ public class ItemSpawnFilter extends BaseFilter {
     }
 
     for (GenericRuleJson grj : s.getGameplaySettings().getItemSpawnSettings().getRules()) {
-      grj.addDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS);
-      grj.addDoNotOutputTags(doNotOutput);
+      if (!Utils.listAContainsListB(grj.getDoNotTouchTags(), LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)) {
+        grj.addDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS);
+      }
+      
+      if (!Utils.listAContainsListB(grj.getDoNotOutputTags(), doNotOutput)) {
+        grj.addDoNotOutputTags(doNotOutput);
+      }
+      
       CustomRuleHelper crh = new CustomRuleHelper(grj);
       rules.add(new ArchetypeSwapRule(database, crh));
     }

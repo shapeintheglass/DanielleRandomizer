@@ -19,6 +19,7 @@ import org.jdom2.Element;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 
 public class Utils {
 
@@ -247,5 +248,18 @@ public class Utils {
 
   public static long getNewSeed() {
     return new Random().nextLong();
+  }
+  
+  public static boolean listAContainsListB(List<String> listA, List<String> listB) {
+    if (listA == null || listA.isEmpty()) {
+      return false;
+    }
+    Set<String> listASet = Sets.newHashSet(listA);
+    for (String s : listB) {
+      if (!listASet.contains(s)) {
+        return false;
+      }
+    }
+    return true;
   }
 }

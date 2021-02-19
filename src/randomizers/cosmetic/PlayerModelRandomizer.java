@@ -92,12 +92,12 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     for (String file : PLAYER_FILES) {
-      String out = OUT_DIR + "/" + file;
+      String out = OUT_DIR + file;
       randomizeCdf(ZipHelper.PLAYER_DIR + "/" + file, out, false);
     }
 
     for (String file : PAJAMA_FILES) {
-      String out = OUT_DIR + "/" + file;
+      String out = OUT_DIR + file;
       randomizeCdf(ZipHelper.PLAYER_DIR + "/" + file, out, true);
     }
   }
