@@ -30,7 +30,7 @@ import utils.ZipHelper;
 public class LevelRandomizer extends BaseRandomizer {
 
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
-  private static final String TOKENS_FOLDER_NAME = "gametokens";
+  private static final String TOKENS_FOLDER_NAME = "gametokens/";
 
   private List<BaseFilter> filterList;
 
@@ -87,29 +87,30 @@ public class LevelRandomizer extends BaseRandomizer {
       toExamine.push(levelDirInputPath);
       while (!toExamine.isEmpty()) {
         String f = toExamine.pop();
+        Path inputPath = Paths.get(f);
+        String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir).relativize(inputPath).toString();
 
         if (zipHelper.isDirectory(f)) {
-          for (String file : zipHelper.listFiles(f)) {
-            toExamine.push(file);
+          if (f.endsWith(TOKENS_FOLDER_NAME)) {
+            // Filter tokens folder
+            try {
+              filterTokensFolder(f, levelDir);
+            } catch (JDOMException | IOException e) {
+              logger.warning("Unable to filter gametokens for level " + levelDir);
+              e.printStackTrace();
+            }
+          } else {
+            for (String file : zipHelper.listFiles(f)) {
+              toExamine.push(file);
+            }
           }
         } else {
-          Path inputPath = Paths.get(f);
-          String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir).relativize(inputPath).toString();
-
           if (f.endsWith(MISSION_FILE_NAME)) {
             // Filter mission file
             try {
               filterMissionFile(f, pathInOutputZip, levelDir);
             } catch (IOException | JDOMException e) {
               logger.warning("Unable to filter mission file for level " + levelDir);
-              e.printStackTrace();
-            }
-          } else if (f.endsWith(TOKENS_FOLDER_NAME)) {
-            // Filter tokens folder
-            try {
-              filterTokensFolder(f, levelDir);
-            } catch (JDOMException | IOException e) {
-              logger.warning("Unable to filter gametokens for level " + levelDir);
               e.printStackTrace();
             }
           } else {

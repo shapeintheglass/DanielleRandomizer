@@ -34,7 +34,7 @@ public class MusicRandomizer extends BaseRandomizer {
           continue;
         }
         String wwiseName = wwiseTrigger.getAttributeValue("wwise_name");
-        if (wwiseName != null && !wwiseName.startsWith("Stop")) {
+        if (wwiseName != null && wwiseName.startsWith("Set_State_MX_")) {
           validNames.add(wwiseName);
         }
       }
@@ -47,7 +47,7 @@ public class MusicRandomizer extends BaseRandomizer {
           continue;
         }
         String wwiseName = wwiseTrigger.getAttributeValue("wwise_name");
-        if (wwiseName != null && !wwiseName.startsWith("Stop")) {
+        if (wwiseName != null && wwiseName.startsWith("Set_State_MX_")) {
           wwiseTrigger.setAttribute("wwise_name", validNames.get(index++));
         }
       }

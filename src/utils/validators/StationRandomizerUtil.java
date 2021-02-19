@@ -7,12 +7,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+
 import com.google.common.collect.Lists;
 import com.google.common.graph.EndpointPair;
 import com.google.common.graph.ImmutableNetwork;
-import randomizers.gameplay.filters.StationConnectivityFilter;
+
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
+import utils.StationGenerator;
 
 public class StationRandomizerUtil {
 
@@ -39,7 +41,7 @@ public class StationRandomizerUtil {
     Random r = new Random();
 
     for (int i = 0; i < NUM_ITERATIONS; i++) {
-      StationConnectivityFilter connectivity = new StationConnectivityFilter(r.nextLong());
+      StationGenerator connectivity = new StationGenerator(r.nextLong());
       ImmutableNetwork<Level, Door> network = connectivity.getNetwork();
 
       for (Level l : levelsAlphabetized) {

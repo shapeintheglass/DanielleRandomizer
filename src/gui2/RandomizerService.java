@@ -38,6 +38,7 @@ import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
+import utils.StationGenerator;
 import utils.Utils;
 import utils.ZipHelper;
 
@@ -102,7 +103,7 @@ public class RandomizerService extends Service<Void> {
       writeLine("Unable to find required resource " + ZipHelper.DATA_PAK);
       return false;
     }
-    
+
     Date startTime = new Date();
     writeLine(Gui2Consts.INSTALL_STATUS_TEXT);
 
@@ -189,6 +190,8 @@ public class RandomizerService extends Service<Void> {
     if (database == null) {
       return;
     }
+    
+    writeLine(currentSettings.toString());
 
     /* COSMETIC */
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
@@ -248,8 +251,10 @@ public class RandomizerService extends Service<Void> {
     }
 
     if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
-      StationConnectivityFilter connectivity = new StationConnectivityFilter(currentSettings);
-      String connectivityInfo = connectivity.toString();
+      StationGenerator stationGenerator = new StationGenerator(currentSettings.getSeed());
+      StationConnectivityFilter connectivity = new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
+          stationGenerator.getSpawnConnectivity());
+      String connectivityInfo = stationGenerator.toString();
       Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
       Map<String, Book> toOverwrite = Maps.newHashMap();
       toOverwrite.put("Bk_SL_Apt_Electronics", b);
