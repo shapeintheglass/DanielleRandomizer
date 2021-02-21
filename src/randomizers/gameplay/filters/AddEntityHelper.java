@@ -158,8 +158,10 @@ public class AddEntityHelper {
       }
     }
 
-    if (settings.getCheatSettings().getZeroGravityEverywhere() && !filename.equals("station/exterior") && !filename
-        .equals("research/zerog_utilitytunnels")) {
+    if (settings.getCheatSettings().getZeroGravityEverywhere() && !filename.equals("station/exterior")) {
+      if (filename.equals("research/zerog_utilitytunnels") && settings.getCheatSettings().getEnableGravityInExtAndGuts()) {
+        return;
+      }
       objects.addContent(gravityBox(0));
     }
   }

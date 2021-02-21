@@ -72,7 +72,7 @@ public class ItemMultiplierHelper {
         return FUCK_IT_MAX_BOUND;
       case ONLY_ONE:
       default:
-        return 1;
+        return 2;
     }
   }
 

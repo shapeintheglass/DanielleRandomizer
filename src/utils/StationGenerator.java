@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -285,7 +286,10 @@ public class StationGenerator {
       validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(l));
     }
 
-    return Lists.newArrayList(validConnections);
+    // Put into a deterministic order
+    List<Door> remaining =  Lists.newArrayList(validConnections);
+    Collections.sort(remaining);
+    return remaining;
   }
 
   private boolean validate(ImmutableNetwork<Level, Door> network) {
@@ -370,7 +374,7 @@ public class StationGenerator {
 
   public static void main(String[] args) {
 
-    long seed = 0L;
+    long seed = new Random().nextLong();
     StationGenerator sg = new StationGenerator(seed);
     String station1 = sg.toString();
     

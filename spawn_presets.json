@@ -140,8 +140,8 @@
     "desc": "All items are weapons, neuromods, ammo, or explosive canisters.",
     "filters": [{
       "input_tags": ["Neuromod_Calibration", "_MIMICABLE", "_CARRYABLE", "_USABLE", "_CONSUMABLE"],
-      "output_tags": ["Weapons", "Ammo", "ExplosiveTanks", "Neuromod", "PsiHypo", "MedKit", "WeaponUpgradeKit", "AlienOrganSmall"],
-      "output_weights": [100, 25, 10, 5, 5, 5, 5, 1],
+      "output_tags": ["Weapons", "Ammo", "ExplosiveTanks", "Neuromod", "PsiHypo", "MedKit", "WeaponUpgradeKit"],
+      "output_weights": [100, 25, 10, 5, 5, 5, 5],
       "do_not_touch_tags": [],
       "do_not_output_tags": []
     }]

@@ -44,7 +44,7 @@ public class Utils {
       return lowerBound;
     }
 
-    int diff = upperBound - lowerBound + 1;
+    int diff = upperBound - lowerBound;
     return r.nextInt(diff) + lowerBound;
   }
 
