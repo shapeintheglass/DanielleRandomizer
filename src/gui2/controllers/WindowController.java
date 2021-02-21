@@ -124,6 +124,10 @@ public class WindowController {
   @FXML
   private CheckBox cheatsCheckboxWander;
   @FXML
+  private CheckBox cheatsCheckboxGravity;
+  @FXML
+  private CheckBox cheatsCheckboxEnableGravity;
+  @FXML
   private CheckBox cheatsCheckboxSelfDestruct;
   @FXML
   private TextField cheatsTextFieldTimer;
@@ -182,7 +186,7 @@ public class WindowController {
         gotsPresetButton);
 
     initCustomSpawnCheckboxes(allPresets, settings);
-    
+
     outputWindow.appendText("Loaded with settings:\n" + settings.toString());
 
     updateUI();
@@ -251,6 +255,8 @@ public class WindowController {
     cheatsCheckboxUnlockAll.setSelected(settings.getGameplaySettings().getOpenStation());
     cheatsCheckboxAllScans.setSelected(settings.getGameplaySettings().getUnlockAllScans());
     cheatsCheckboxWander.setSelected(settings.getGameplaySettings().getWanderingHumans());
+    cheatsCheckboxGravity.setSelected(settings.getGameplaySettings().getDisableGravity());
+    cheatsCheckboxEnableGravity.setSelected(settings.getGameplaySettings().getEnableGravity());
     cheatsCheckboxSelfDestruct.setSelected(settings.getGameplaySettings().getStartSelfDestruct());
     cheatsTextFieldTimer.setText(settings.getGameplaySettings().getSelfDestructTimer());
     cheatsTextFieldShuttleTimer.setText(settings.getGameplaySettings().getSelfDestructShuttleTimer());
@@ -346,6 +352,8 @@ public class WindowController {
     cheatsCheckboxAllScans.setSelected(false);
     cheatsCheckboxUnlockAll.setSelected(false);
     cheatsCheckboxWander.setSelected(false);
+    cheatsCheckboxGravity.setSelected(false);
+    cheatsCheckboxEnableGravity.setSelected(false);
     cheatsCheckboxSelfDestruct.setSelected(false);
     cheatsTextFieldTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(GameplaySettingsJson.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
@@ -506,8 +514,9 @@ public class WindowController {
             .isSelected(), storyCheckboxRandomStation.isSelected(), startCheckboxDay2.isSelected(),
         itemsCheckboxMoreGuns.isSelected(), cheatsCheckboxWander.isSelected(), cheatsCheckboxSelfDestruct.isSelected(),
         npcsCheckBoxNightmare.isSelected(), npcsCheckBoxCystoidNests.isSelected(), npcsCheckBoxWeavers.isSelected(),
-        itemsCheckboxFabPlanCosts.isSelected(), startCheckboxSkipJovan.isSelected(), cheatsTextFieldTimer.getText(),
-        cheatsTextFieldShuttleTimer.getText(), enemySpawnPreset, itemSpawnPreset);
+        itemsCheckboxFabPlanCosts.isSelected(), startCheckboxSkipJovan.isSelected(), cheatsCheckboxGravity.isSelected(),
+        cheatsCheckboxEnableGravity.isSelected(), cheatsTextFieldTimer.getText(), cheatsTextFieldShuttleTimer.getText(),
+        enemySpawnPreset, itemSpawnPreset);
   }
 
   private static SpawnPresetJson getSpawnPresetFromList(List<SpawnPresetJson> presetList, String name) {

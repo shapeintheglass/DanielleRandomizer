@@ -34,6 +34,7 @@ import randomizers.gameplay.NightmareHelper;
 import randomizers.gameplay.SelfDestructTimerHelper;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
+import randomizers.gameplay.filters.GravityDisablerFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
@@ -190,7 +191,7 @@ public class RandomizerService extends Service<Void> {
     if (database == null) {
       return;
     }
-    
+
     writeLine(currentSettings.toString());
 
     /* COSMETIC */
@@ -198,9 +199,13 @@ public class RandomizerService extends Service<Void> {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
       new BodyRandomizer(currentSettings, zipHelper).randomize();
     }
+    Map<String, String> swappedLinesMap = null;
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_VOICELINES);
-      new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper).randomize();
+      VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
+      vr.randomize();
+      swappedLinesMap = vr.getSwappedLinesMap();
+
     }
     if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_MUSIC)) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);
@@ -237,20 +242,20 @@ public class RandomizerService extends Service<Void> {
     }
 
     /* GAMEPLAY, LEVEL */
-    LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper).addFilter(new ItemSpawnFilter(
-        database, currentSettings))
+    LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap).addFilter(
+        new ItemSpawnFilter(database, currentSettings))
         .addFilter(new FlowgraphFilter(database, currentSettings))
         .addFilter(new EnemyFilter(database, currentSettings));
 
-    if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.OPEN_STATION)) {
+    if (currentSettings.getGameplaySettings().getOpenStation()) {
       levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
     }
 
-    if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.ADD_LOOT_TO_APARTMENT)) {
+    if (currentSettings.getGameplaySettings().getAddLootToApartment()) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
     }
 
-    if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_STATION)) {
+    if (currentSettings.getGameplaySettings().getRandomizeStation()) {
       StationGenerator stationGenerator = new StationGenerator(currentSettings.getSeed());
       StationConnectivityFilter connectivity = new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
           stationGenerator.getSpawnConnectivity());
@@ -262,6 +267,10 @@ public class RandomizerService extends Service<Void> {
       BookInfoHelper bih = new BookInfoHelper(zipHelper);
       bih.installNewBooks(toOverwrite);
       levelRandomizer = levelRandomizer.addFilter(connectivity);
+    }
+    
+    if (currentSettings.getGameplaySettings().getEnableGravity()) {
+      levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());
     }
 
     writeLine(Gui2Consts.INSTALL_PROGRESS_LEVELS);

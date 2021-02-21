@@ -32,12 +32,14 @@ public class GameplaySettingsJson implements HasOptions {
   public static final String RANDOMIZE_WEAVER_CYSTOIDS = "randomize_weaver_cystoids";
   public static final String RANDOMIZE_FAB_PLAN_COSTS = "randomize_fab_plan_costs";
   public static final String SKIP_JOVAN_CUTSCENE = "skip_jovan_cutscene";
+  public static final String DISABLE_GRAVITY = "zero_gravity_everywhere";
+  public static final String ENABLE_GRAVITY = "enable_gravity_in_ext_and_guts";
 
   public static final ImmutableList<String> ALL_OPTIONS = new ImmutableList.Builder<String>().add(RANDOMIZE_LOOT,
       ADD_LOOT_TO_APARTMENT, OPEN_STATION, RANDOMIZE_NEUROMODS, UNLOCK_ALL_SCANS, RANDOMIZE_STATION, START_ON_2ND_DAY,
       MORE_GUNS, WANDERING_HUMANS, START_SELF_DESTRUCT, SELF_DESTRUCT_TIMER, SELF_DESTRUCT_SHUTTLE_TIMER,
       RANDOMIZE_NIGHTMARE, RANDOMIZE_CYSTOID_NESTS, RANDOMIZE_WEAVER_CYSTOIDS, RANDOMIZE_FAB_PLAN_COSTS,
-      SKIP_JOVAN_CUTSCENE).build();
+      SKIP_JOVAN_CUTSCENE, DISABLE_GRAVITY, ENABLE_GRAVITY).build();
 
   private static final boolean DEFAULT_VALUE = false;
   public static final String DEFAULT_SELF_DESTRUCT_TIMER = "60.000000";
@@ -65,6 +67,8 @@ public class GameplaySettingsJson implements HasOptions {
       @JsonProperty(RANDOMIZE_WEAVER_CYSTOIDS) boolean randomizeWeaverCystoids,
       @JsonProperty(RANDOMIZE_FAB_PLAN_COSTS) boolean randomizeFabPlanCosts,
       @JsonProperty(SKIP_JOVAN_CUTSCENE) boolean skipJovanCutscene,
+      @JsonProperty(DISABLE_GRAVITY) boolean disableGravity,
+      @JsonProperty(ENABLE_GRAVITY) boolean enableGravity,
       @JsonProperty(SELF_DESTRUCT_TIMER) String selfDestructTimer,
       @JsonProperty(SELF_DESTRUCT_SHUTTLE_TIMER) String selfDestructShuttleTimer,
       @JsonProperty(ENEMY_SPAWN_SETTINGS) SpawnPresetJson enemySpawnSettings,
@@ -85,6 +89,8 @@ public class GameplaySettingsJson implements HasOptions {
     booleanSettings.put(RANDOMIZE_WEAVER_CYSTOIDS, randomizeWeaverCystoids);
     booleanSettings.put(RANDOMIZE_FAB_PLAN_COSTS, randomizeFabPlanCosts);
     booleanSettings.put(SKIP_JOVAN_CUTSCENE, skipJovanCutscene);
+    booleanSettings.put(DISABLE_GRAVITY, disableGravity);
+    booleanSettings.put(ENABLE_GRAVITY, enableGravity);
     float selfDestructTimerFloat = Float.parseFloat(selfDestructTimer);
     this.selfDestructTimer = String.format("%.6f", selfDestructTimerFloat);
     float selfDestructShuttleTimerFloat = Float.parseFloat(selfDestructShuttleTimer);
@@ -216,6 +222,16 @@ public class GameplaySettingsJson implements HasOptions {
   @JsonProperty(SKIP_JOVAN_CUTSCENE)
   public boolean getSkipJovanCutscene() {
     return getOption(SKIP_JOVAN_CUTSCENE);
+  }
+  
+  @JsonProperty(DISABLE_GRAVITY)
+  public boolean getDisableGravity() {
+    return getOption(DISABLE_GRAVITY);
+  }
+  
+  @JsonProperty(ENABLE_GRAVITY)
+  public boolean getEnableGravity() {
+    return getOption(ENABLE_GRAVITY);
   }
 
   public SpawnPresetJson getEnemySpawnSettings() {

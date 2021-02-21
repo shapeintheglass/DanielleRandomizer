@@ -210,46 +210,68 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="633.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Miscellaneous/experimental options and cheats." />
-                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="307.0" spacing="15.0">
+                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="317.0" prefWidth="596.0">
                                  <children>
-                                    <CheckBox fx:id="cheatsCheckboxUnlockAll" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
-                                    <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
-                                    <CheckBox fx:id="cheatsCheckboxWander" mnemonicParsing="false" text="Make humans wander" />
-                                    <CheckBox fx:id="cheatsCheckboxSelfDestruct" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
-                                    <HBox prefHeight="21.0" prefWidth="307.0">
+                                    <VBox prefHeight="200.0" prefWidth="307.0" spacing="15.0">
                                        <children>
-                                          <Label text="Self-destruct timer (minutes):">
-                                             <HBox.margin>
-                                                <Insets top="3.0" />
-                                             </HBox.margin></Label>
-                                          <TextField fx:id="cheatsTextFieldTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="8.000000">
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
+                                          <CheckBox fx:id="cheatsCheckboxUnlockAll" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
+                                          <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
+                                          <CheckBox fx:id="cheatsCheckboxWander" mnemonicParsing="false" text="Make humans wander" />
+                                          <CheckBox fx:id="cheatsCheckboxGravity" mnemonicParsing="false" text="Zero gravity everywhere" />
+                                          <CheckBox fx:id="cheatsCheckboxEnableGravity" mnemonicParsing="false" text="Enable gravity in Exterior and GUTS" />
+                                          <CheckBox fx:id="cheatsCheckboxSelfDestruct" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
+                                          <HBox prefHeight="21.0" prefWidth="307.0">
+                                             <children>
+                                                <Label text="Self-destruct timer (minutes):">
+                                                   <HBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="cheatsTextFieldTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="8.000000">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="21.0" prefWidth="307.0">
+                                             <children>
+                                                <Label text="Shuttle timer (minutes):">
+                                                   <HBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="cheatsTextFieldShuttleTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="6.000000">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
-                                    <HBox prefHeight="21.0" prefWidth="307.0">
+                                    </VBox>
+                                    <VBox prefHeight="317.0" prefWidth="309.0" spacing="15.0">
                                        <children>
-                                          <Label text="Shuttle timer (minutes):">
-                                             <HBox.margin>
-                                                <Insets top="3.0" />
-                                             </HBox.margin></Label>
-                                          <TextField fx:id="cheatsTextFieldShuttleTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="6.000000">
-                                             <HBox.margin>
-                                                <Insets left="40.0" />
-                                             </HBox.margin>
-                                          </TextField>
+                                          <Label text="Unlocks (almost) everything except for scripted locks." />
+                                          <Label text="Allows installing typhon neuromods without research." />
+                                          <Label text="Intended for the &quot;typhon to humans&quot; option." />
+                                          <Label text="Adds 0G to every map. Breaks most cutscenes." />
+                                          <Label text="For masochists only." />
+                                          <Label text="Activate self-destruct/shuttle when waking up." />
+                                          <Label text="Time before the station self-destructs.">
+                                             <VBox.margin>
+                                                <Insets bottom="3.0" top="3.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Time before Dahl's shuttle leaves.">
+                                             <VBox.margin>
+                                                <Insets top="6.0" />
+                                             </VBox.margin>
+                                          </Label>
                                        </children>
-                                    </HBox>
+                                    </VBox>
                                  </children>
-                              </VBox>
-                              <Label layoutX="335.0" layoutY="50.0" text="Unlocks (almost) everything except for scripted locks." />
-                              <Label layoutX="335.0" layoutY="82.0" text="Allows installing typhon neuromods without research." />
-                              <Label layoutX="335.0" layoutY="113.0" text="Intended for the &quot;typhon to humans&quot; option." />
-                              <Label layoutX="334.0" layoutY="145.0" text="Activate self-destruct/shuttle when waking up." />
-                              <Label layoutX="334.0" layoutY="181.0" text="Time before the station self-destructs." />
-                              <Label layoutX="333.0" layoutY="221.0" text="Time before Dahl's shuttle leaves." />
+                              </HBox>
                            </children>
                         </AnchorPane>
                     </content>

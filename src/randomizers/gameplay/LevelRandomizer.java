@@ -1,6 +1,7 @@
 package randomizers.gameplay;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -36,12 +37,15 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private Map<String, String> gameTokenValues;
 
+  private Map<String, String> swappedLinesMap;
+
   private GameTokenRule gameTokenRule;
 
-  public LevelRandomizer(SettingsJson s, ZipHelper zipHelper) {
+  public LevelRandomizer(SettingsJson s, ZipHelper zipHelper, Map<String, String> swappedLinesMap) {
     super(s, zipHelper);
     filterList = new LinkedList<>();
     this.gameTokenValues = new HashMap<>();
+    this.swappedLinesMap = swappedLinesMap;
 
     // Use the settings to determine required level game tokens
     if (s.getGameplaySettings().getUnlockAllScans()) {
@@ -113,6 +117,14 @@ public class LevelRandomizer extends BaseRandomizer {
               logger.warning("Unable to filter mission file for level " + levelDir);
               e.printStackTrace();
             }
+          } else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) {
+            // Filter movie data if applicable
+            try {
+              filterMovieDataFile(f, pathInOutputZip, levelDir);
+            } catch (IOException | JDOMException e) {
+              logger.warning("Unable to filter movie data for level " + levelDir);
+              e.printStackTrace();
+            }
           } else {
             // Copy without filtering
             try {
@@ -136,11 +148,11 @@ public class LevelRandomizer extends BaseRandomizer {
     Element root = document.getRootElement();
     Element objects = root.getChild("Objects");
 
-    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper);
-
     for (Element e : objects.getChildren()) {
       filterEntityXml(e, levelDir);
     }
+    
+    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper);
 
     zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }
@@ -168,6 +180,41 @@ public class LevelRandomizer extends BaseRandomizer {
     for (Element e : entities) {
       if (gameTokenRule.trigger(e, r, null)) {
         gameTokenRule.apply(e, r, null);
+      }
+    }
+
+    zipHelper.copyToLevelPak(document, pathInZip, levelDir);
+  }
+
+  private void filterMovieDataFile(String movieDataFile, String pathInZip, String levelDir) throws IOException,
+      JDOMException {
+    Document document = zipHelper.getDocument(movieDataFile);
+    Element root = document.getRootElement();
+    List<Element> sequences = root.getChild("Mission").getChild("SequenceData").getChildren();
+
+    for (Element s : sequences) {
+      List<Element> nodes = s.getChild("Nodes").getChildren();
+      for (Element n : nodes) {
+        List<Element> tracks = n.getChildren();
+        for (Element t : tracks) {
+          String paramType = t.getAttributeValue("paramType");
+          if (paramType == null) {
+            continue;
+          }
+          if (!paramType.equals("Dialog")) {
+            continue;
+          }
+          List<Element> keys = t.getChildren();
+          for (Element k : keys) {
+            String dialogIdHex = k.getAttributeValue("dialogId");
+            String dialogIdDec = new BigInteger(dialogIdHex, 16).toString();
+            if (swappedLinesMap.containsKey(dialogIdDec)) {
+              String newDialogIdHex = new BigInteger(swappedLinesMap.get(dialogIdDec)).toString(16).toUpperCase();
+              k.setAttribute("dialogId", newDialogIdHex);
+            }
+          }
+        }
+
       }
     }
 

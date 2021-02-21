@@ -50,6 +50,10 @@ public class VoiceRandomizer extends BaseRandomizer {
       e.printStackTrace();
     }
   }
+  
+  public Map<String, String> getSwappedLinesMap() {
+    return swappedLinesMap;
+  }
 
   // Randomizes the given file and adds it into the given output dir
   private void randomizeAndWrite(String srcDir, Path outDir) throws FileNotFoundException, IOException, JDOMException {

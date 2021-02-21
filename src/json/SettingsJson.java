@@ -156,6 +156,14 @@ public class SettingsJson {
         s.append(" * Make humans wander\n");
         atLeastOneSetting = true;
       }
+      if (gsj.getDisableGravity()) {
+        s.append(" * Zero gravity everywhere\n");
+        atLeastOneSetting = true;
+      }
+      if (gsj.getDisableGravity()) {
+        s.append(" * Enable gravity in Exterior/GUTS\n");
+        atLeastOneSetting = true;
+      }
       if (gsj.getStartSelfDestruct()) {
         s.append(" * Self destruct enabled at game start\n");
         s.append(String.format(" * Self destruct timer: %s min\n", gsj.getSelfDestructTimer()));

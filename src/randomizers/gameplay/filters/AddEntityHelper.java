@@ -1,5 +1,8 @@
 package randomizers.gameplay.filters;
 
+import java.math.BigInteger;
+import java.util.Random;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -94,6 +97,40 @@ public class AddEntityHelper {
     return entity;
   }
 
+  private static Element gravityBox(double gravityVector) {
+
+    // Used for generating IDs only
+    Random r = new Random();
+    BigInteger id = new BigInteger(Integer.toString(r.nextInt(Integer.MAX_VALUE)));
+    Element entity = new Element("Entity").setAttribute("Name", String.format("GravityBox%s", id.toString()))
+        .setAttribute("Pos", "0.0,0.0,0.0")
+        .setAttribute("Rotate", "0.0,0,0,0")
+        .setAttribute("EntityClass", "GravityBox")
+        .setAttribute("EntityId", id.toString())
+        .setAttribute("EntityGuid", id.toString(16).toUpperCase())
+        .setAttribute("CastShadowViewDistRatio", "0")
+        .setAttribute("CastShadowMinSpec", "1")
+        .setAttribute("CastSunShadowMinSpec", "8")
+        .setAttribute("ShadowCasterType", "0")
+        .setAttribute("Layer", "AlwaysLoaded");
+    Element properties = new Element("Properties").setAttribute("bActive", "1")
+        .setAttribute("bAffectsParticleEmitterPosition", "0")
+        .setAttribute("FalloffInner", "0")
+        .setAttribute("vector_ImpulseActivate", "0,0,0")
+        .setAttribute("vector_ImpulseDeactivate", "0,0,0")
+        .setAttribute("bUniform", "1");
+    properties.addContent(new Element("BoxMax").setAttribute("x", "100000")
+        .setAttribute("y", "100000")
+        .setAttribute("z", "100000"));
+    properties.addContent(new Element("BoxMin").setAttribute("x", "0").setAttribute("y", "0").setAttribute("z", "0"));
+    properties.addContent(new Element("Gravity").setAttribute("x", "0")
+        .setAttribute("y", "0")
+        .setAttribute("z", Double.toString(gravityVector)));
+
+    entity.addContent(properties);
+    return entity;
+  }
+
   public static void addEntities(Element objects, String filename, SettingsJson settings, ZipHelper zipHelper) {
     if (settings.getGameplaySettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
       objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
@@ -119,6 +156,11 @@ public class AddEntityHelper {
       } catch (Exception e) {
         e.printStackTrace();
       }
+    }
+
+    if (settings.getGameplaySettings().getDisableGravity() && !filename.equals("station/exterior") && !filename
+        .equals("research/zerog_utilitytunnels")) {
+      objects.addContent(gravityBox(0));
     }
   }
 }

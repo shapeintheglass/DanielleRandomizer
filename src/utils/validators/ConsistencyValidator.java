@@ -54,7 +54,8 @@ public class ConsistencyValidator {
     GameplaySettingsJson gameplaySettingsJson = new GameplaySettingsJson(r.nextBoolean(), r.nextBoolean(), r
         .nextBoolean(), r.nextBoolean(), r.nextBoolean(), r.nextBoolean(), r.nextBoolean(), r.nextBoolean(), r
             .nextBoolean(), r.nextBoolean(), r.nextBoolean(), r.nextBoolean(), r.nextBoolean(), r.nextBoolean(), r
-                .nextBoolean(), Float.toString(r.nextFloat()), Float.toString(r.nextFloat()), enemyPreset, itemPreset);
+                .nextBoolean(), r.nextBoolean(), Float.toString(r.nextFloat()), Float.toString(r.nextFloat()),
+        enemyPreset, itemPreset);
 
     return new SettingsJson("Test", installDir, seed, cosmeticSettingsJson, gameplaySettingsJson);
   }
