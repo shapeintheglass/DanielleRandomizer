@@ -1,11 +1,11 @@
-[img]https://i.imgur.com/mPgYhrX.jpg[/img]
+[img]https://imgur.com/taaeBI5.jpg[/img]
 [size=6]Prey 2017 Randomizer[/size]
 
 An item/enemy/neuromod/station/cosmetic randomizer for Prey 2017. Currently in pre-release form.
 
 This is an external executable that overwrites the game level files (keeping a backup in the same directory) and generates a patch_randomizer.pak in GameSDK/Precache. Level files are backed up as "level_backup.pak" in their respective directories.
 
-[b]What this is currently capable of randomizing:[/b]
+[b][u]WHAT CAN BE RANDOMIZED[/u][/b]
 
 [list]
 [*]Item/prop spawns + loot tables
@@ -14,24 +14,39 @@ This is an external executable that overwrites the game level files (keeping a b
 [*]Station connectivity
 [*]Human appearance
 [*]Voice lines
-[*]Music
-[*]Player model
+[*](new in v0.30) Music
+[*](new in v0.30) Player model
 [/list]
 
-[b]Additional options (can be enabled or disabled):[/b]
+[b][u]OTHER OPTIONS[/u][/b]
 
 [list]
 [*]Add every weapon, fab plan, chipset, etc to Morgan's apartment
 [*]Unlock various doors throughout the station to make progress easier
 [*]Remove scan requirements for all typhon neuromods
-[*]Start on second day (Now new and improved, thanks to JerryTerry letting me use their "Natural Day 2 Start" mod!)
+[*]Start on second day (Now new and improved, thanks to JerryTerry letting me use their [url=https://www.nexusmods.com/prey2017/mods/68]"Natural Day 2 Start"[/url] mod!)
 [*]More guns - Adds [url=https://www.nexusmods.com/prey2017/mods/69]guns with randomized projectiles[/url]﻿ to the item spawn pool.
 [*](new in v0.30) G.O.T.S. (Get Off The Station) mode - The station's self destruct will start as soon as you wake up in the Neuromod Division. Can you escape before time runs out?
 [/list]
 
+[b][u]QUICK START INSTRUCTIONS[/u][/b]
+
+Important note: Randomized runs will only work on a new game of Prey. There is also a known game crashing bug where the game does not cleanly delete old save files if you start a new save over an existing slot. To guarantee that this won't happen, manually delete any save progress first before starting a new randomized game in an existing slot. See "Install instructions" on how to do this.
+
+[list=1]
+[*]Unzip danielle_randomizer.zip anywhere.
+[*]Run danielle_randomizer.exe to start the installer GUI.
+[*]Specify Prey install directory and your desired settings.
+[*]Start a new randomized game!
+[/list]
+
 [size=5]Install instructions[/size]
 
-[spoiler][b]IMPORTANT! This mod is intended to be used on a new game. If you plan to start a new randomized game in an existing save slot...[/b]
+[spoiler]
+
+[img]https://i.imgur.com/9MXNnpN.jpg[/img]
+
+[b]IMPORTANT! This mod is intended to be used on a new game. If you plan to start a new randomized game in an existing save slot...[/b]
 manually delete the old save data in that slot first (and ensure cloud save doesn't try to restore it). By default this should be in `C:\Users\<Name>\Saved Games\Arkane Studios\Prey\SaveGames\Campaign<0/1/2>`. Campaign 0 is the first slot, Campaign 1 is the second slot, and Campaign 2 is the third slot.
 
 This is because unfortunately Prey does not always cleanly delete old files before starting up a new game. If you don't do this, there's a chance your old save files will stay there and conflict with the randomized level files, which will cause the game to crash unexpectedly when loading that level. The same applies if you are done with this randomized save slot and want to reuse it for a normal game.
@@ -42,6 +57,21 @@ This is because unfortunately Prey does not always cleanly delete old files befo
 [*]Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded)
 [*]Must have [url=http://java.com/download]Java for Windows[/url] installed
 [/list]
+
+[size=4]How to install[/size]
+
+This randomizer will directly modify the Prey 2017 level files. Any new save slots created while the randomizer is in effect will be randomized. Uninstalling the randomized mod (via the "Uninstall" button) or reinstalling with new settings/seed is not recommended unless you are done with your randomized playthrough. If you attempt to load a save slot that's incompatible with the current randomized level, the game will mark the save as "corrupt" and immediately delete it. Existing save slots will not be affected unless you try to load them. [b]tl;dr You won't be able to load save files created under a different seed/settings. Avoid changing seeds/settings until you are done with your current playthrough.[/b]
+
+[list=1]
+[*]Unzip danielle_randomizer.zip anywhere.
+[*]Run danielle_randomizer.exe to start up the GUI. Ensure danielle_randomizer.exe is in the same directory as the included data.pak file and spawn_presets.json file.
+[*]Specify Prey install directory.
+[*]Specify desired randomization settings.
+[*]Click "Install" to generate randomized files and install them.
+[*]Start up Prey and begin a new randomized game!
+[/list]
+
+If the randomizer spends a long time at the "Installing..." step, check the generated log.txt file to see if it encountered any errors. Sometimes it can take a long time to generate the first time around.
 
 [size=4]Compatibility with other mods[/size]
 
@@ -70,24 +100,14 @@ Will not be compatible with most mods, especially ones that modify level files (
 [*]objects/characters/player/*
 [/list]
 
-[size=4]How to install (as of v0.3)[/size]
 
-This randomizer will directly modify the Prey 2017 level files. Any new save slots created while the randomizer is in effect will be randomized. Uninstalling the randomized mod (via the "Uninstall" button) or reinstalling with new settings/seed is not recommended unless you are done with your randomized playthrough. If you attempt to load a save slot that's incompatible with the current randomized level, the game will mark the save as "corrupt" and immediately delete it. Existing save slots will not be affected unless you try to load them. [b]tl;dr You won't be able to load save files created under a different seed/settings. Avoid changing seeds/settings until you are done with your current playthrough.[/b]
-
-[list=1]
-[*]Unzip danielle_randomizer.zip anywhere.
-[*]Run danielle_randomizer.exe to start up the GUI. Ensure danielle_randomizer.exe is in the same directory as the included data.pak file and spawn_presets.json file.
-[*]Specify Prey install directory.
-[*]Specify desired randomization settings.
-[*]Click "Install" to generate randomized files and install them.
-[*]Start up Prey and begin a new randomized game!
-[/list]
-
-If the randomizer spends a long time at the "Installing..." step, check the generated log.txt file to see if it encountered any errors. Sometimes it can take a long time to generate the first time around.
 [/spoiler]
 
 [size=5]Uninstall instructions[/size]
 [spoiler]
+
+[img]https://imgur.com/JJOh2wp.jpg[/img]
+
 To revert the changes made by this mod, use the "Uninstall" button in the GUI. Note that any save slots created while the mod was in effect will be in a bad state as a result of this. Attempting to load those again may crash the game, or be in a weird state of partly randomized partly not randomized, depending on what settings you used.
 
 Ideally, use the "Uninstall" function within the randomizer GUI to uninstall any generated files before deleting the randomizer installer files. Otherwise, you will have to manually uninstall the randomizer files, or just use your client's "verify game file integrity" feature to reset the game files to their default state. To manually unininstall the patch file generated by this mod, delete patch_randomizer.pak in Prey\GameSDK\Precache, if it exists. To manually uninstall the level files generated by this mod, go to Prey\GameSDK\Levels\Campaign in your game directory and replace every case of level.pak with level_backup.pak for each map, if level_backup.pak exists.
@@ -95,9 +115,12 @@ Ideally, use the "Uninstall" function within the randomizer GUI to uninstall any
 To uninstall the randomizer installer GUI itself, just delete danielle_randomizer.exe and its associated files.
 [/spoiler]
 
-[size=5]Description of presets[/size]
+[size=5]Basic presets[/size]
 
 [spoiler]
+
+[img]https://imgur.com/PkEtzIl.jpg[/img]
+
 This randomizer offers three basic presets as a starting point. These can be customized further, or you can build up your desired settings from scratch.
 
 [size=4]Recommended[/size]
@@ -106,7 +129,7 @@ This preset pushes randomization as far as it can go without openly inviting a p
 
 Settings:
 [list]
-[*]Randomize all items - Randomizes all items/props. Does not spawn story items early, or any hazardous items.
+[*]Randomize all items - Randomizes all items and props. Does not spawn story items early, or any hazardous items.
 [*]Randomize all enemies - Randomizes all typhon/corrupted operators. Does not spawn unkillable entities such as turrets or tentacles. Also randomizes friendly operators.
 [*]Randomize neuromods - Randomizes the neuromod skill tree within each category
 [*]All cosmetic randomizations - Randomizes bodies/voicelines/music/player model
@@ -138,7 +161,9 @@ Settings:
 
 [size=4]G.O.T.S. (timed challenge mode)[/size]
 
-Get Off The Station! The station's self-destruct sequence is activated as soon as Morgan wakes up in the neuromod division. Escape via the shuttle or Alex's escape pod before time runs out! The shuttle is easier to get to, but will have a shorter timer than the self-destruct.
+Note: This mode will have involve endgame spoilers for Prey. Recommended for people who have beaten the game at least once, so that they know where to go.
+
+Get Off The Station! The station's self-destruct sequence is activated as soon as Morgan wakes up in the neuromod division. There are two options for leaving the station- the Shuttle and the Escape Pod.
 
 Quick guide on how to use either escape method:
 
@@ -154,20 +179,26 @@ Settings:
 [/list]
 
 Note that because the shuttle is at Talos I, this also means that the station is in a state where Dahl and his operators have arrived. For a more interesting challenge, try decreasing the timer values or enabling some randomization options, such as station connectivity.
+[/spoiler]
 
-[size=5]Other options[/size]
+[size=5]Other options provided by the randomizer[/size]
 
-Quick description of all the options this randomizer provides:
+[spoiler]
+
+[img]https://imgur.com/w6BF6Vz.jpg[/img]
+
+Here is some more in-depth information on the other options that this randomizer provides:
 
 [list]
 [*]Randomize voice lines - Shuffles voices lines by voice actor. This could potentially contain story spoilers if you haven't played the entire game yet.
 [*]Randomize NPC bodies - Scrambles body parts for every human NPC.
 [*]Add loot to Morgan's apartment - Adds some starting loot to various containers in Morgan's apartment (nightstands on either side of the bed, three kitchen cabinets, refrigerator, large kitchen cabinet)
-[*]Randomize loot tables - Scrambles items that can show up as loot in various containers.
+[*]Randomize player model - Replaces the first person player model with a different character.
+[*]Randomize music - Shuffles the global soundtrack
 [*]Unlock everything - Unlocks various doors. See next section for more details.
 [*]Start on 2nd day - skips the intro to the second day. This has a known bug where the HUD will be gone until you open and close the inventory screen.
 [*]Unlock all neuromod scans - Removes the scan requirement for all typhon abilities and unlocks the Psychoscope calibration door in Psychotronics.
-[*]Randomize neuromod upgrade tree - Shuffles all neuromods around in the upgrade tree. Note: If you get a tiered neuromod out of order such as Hacking II without Hacking I, that means you can ONLY open Hacking II workstations with it. Same applies for Leverage.
+[*]Randomize neuromod upgrade tree - Shuffles all neuromods around in the upgrade tree. Note: If you get a tiered neuromod out of order such as Hacking II without Hacking I, that means you can ONLY open Hacking II workstations with it. Same applies for Leverage, Repair, etc.
 [*]Randomize station - Shuffles the connections between various parts of the station.
 [*]More guns - Adds more guns to the loot table. Some exotic variants use typhon organs as ammo. Make sure not to recycle the organs by mistake!
 [*]Make humans wander - Alters human AI so that their idle behavior is to wander rather than stand in place. Intended to be used with "typhon to humans" option to add some realism.
@@ -192,22 +223,19 @@ Note that if you pick up these items and complete the intro, you will lose all i
 The "Unlock everything" option will force most doors, workstations, etc to be unlocked by default, as well as set various global variables to allow skipping some sidequests.
 
 [list]
-[*]Unlocks all doors and workstations by default (some are not affected if they are scripted to be locked, such as the doors to Psychotronics and Shuttle Bay)
+[*]Unlocks all doors, safes, and workstations by default (some are not affected if they are scripted to be locked, such as the doors to Psychotronics and Shuttle Bay)
 [*]Unlocks all exterior airlocks, allowing them to be opened from the outside
 [*]Immediately grants all voice samples required to enter Deep Storage (must pick up Zachary West's transcribe to proc the quest first, then wait a few seconds)
 [/list]
 
 Note that this does [b]not[/b] unlock the main lift. v0.1 attempted to solve this by moving the arboretum technopath to the lobby, but this was reverted in v0.2.
 
-[size=4]Randomize neuromods[/size]
-
-This option shuffles all neuromods in the upgrade tree, regardless of category of type. New costs are assigned to the neuromods according to their position in the new skill tree. Note that if "Unlock all neuromod scans" is not selected, typhon neuromods will not be shown in the skill tree until the psychoscope is obtained.
-
-If this option is selected, a simple graph of the new skill tree is generated as neuromod_output.png.
-
 [size=4]Randomize station[/size]
 
 This option shuffles the connections between various sections of the station, resulting in a new exploration experience. If this option is selected, the book "Hands-On Electronics" in Morgan's apartment and "Too Far, Too Fast I" in Morgan's office will be replaced with a book called "Station Connectivity Debug Info" that describes the new layout of the station.
+
+Location in Morgan's apartment: [url=https://i.imgur.com/X1SgZyc.jpg]https://i.imgur.com/X1SgZyc.jpg[/url]
+Location in Morgan's office: [url=https://i.imgur.com/WaJTclk.jpg]https://i.imgur.com/WaJTclk.jpg[/url]
 
 To prevent some soft lock situations (and reduce confusion), there are some restrictions on generated stations:
 
@@ -243,13 +271,37 @@ Normally, you must obtain Morgan's arming key via Deep Storage, followed by Alex
 [*]First stop should be the Arboretum, to enter Deep Storage and kick off the reboot sequence.
 [*]While at the Lobby, try to do the "Through a Glass Darkly" sequence in order to obtain the General Access keycard. Note that Calvino may not spawn in the exterior unless you've been to Hardware Labs.
 [/list]
+
+[size=4]Enable self-destruct[/size]
+
+This option does the following:
+
+[list]
+[*]Triggers the station's self-destruct at the beginning of the game
+[*]Brings Dahl to the station and brainwashes him so that the shuttle is ready
+[*]Allows you to walk through apex kill walls (because one will spawn right outside the Neuromod Division
+[*]Sets the self-destruct timer and shuttle leaving timer to configurable values
+[/list]
+
+You have two options to leave the station: Dahl's Shuttle and Alex's escape pod. The shuttle is easier to get to, but has a shorter timer by default. Here are some hints on how to get to each one:
+
+[list]
+[*]The shuttle bay is locked behind the General Access keycard at the beginning of the game. You'll have to complete "Through a Glass Darkly" to get the keycard off of January.
+[*]Alex's escape pod requires the EP101 keycard. December can walk you through the steps to finding it.
+[*]The keycard for Alex's cabin is in the safe in his office. December will have the safe code if you meet them in person.
+[/list]
+
+If you find this challenge fun, I'd also recommend trying it out with some of the randomization options enabled!
+
 [/spoiler]
 
 [size=5]Configuring your own item/NPC spawn presets[/size]
 
-[spoiler][img]https://imgur.com/HvH35rc.jpg[/img]
+[spoiler]
 
-If you'd like to tweak the preset spawn rates for items and enemies, you can specify them yourself in settings.json.
+[img]https://imgur.com/26XkfL5.jpg[/img]
+
+If you'd like to tweak the preset spawn rates for items and enemies, you can modify them yourself or add your own in spawn_presets.json.
 
 This randomizer has assigned multiple tags to every entity in the game (ex. weapons are "Weapons", food is "ArkFood", etc). To see a list of supported entities and tags, see the included files tagstoentities.csv (shows the entities associated with each tag) and entitiestotags.csv (shows the tags generated for each entity).
 
@@ -310,7 +362,7 @@ Filters are configured behind the scenes to not affect entities that would preve
 
 Filters are processed sequentially for each level entity. If an entity can be transformed by multiple filters, the first one should take precedence.
 
-If you change settings.json while the randomizer GUI is active, click "Refresh settings" to see your changes. If there are any parsing errors, the GUI should show them in a dialog box.
+If you change spawn_setings.json, you will need to restart the GUI for your changes to be applied. If there are any parsing errors, see the generated log.txt.
 
 To find out what tags are valid, consult the included files tagstoentities.csv  and entitiestotags.csv. Here are some basic tags that may be helpful to know:
 
@@ -334,12 +386,19 @@ To find out what tags are valid, consult the included files tagstoentities.csv�
 [size=5]Known issues[/size]
 
 [spoiler]
-[img]https://imgur.com/RKFNYxJ.jpg[/img]
+
+[img]https://imgur.com/mkYVA8c.jpg[/img]
 
 Issues when using "More guns":
 
 [list]
 [*][b]tl;dr Avoid saving the game in the Neuromod Division at the very beginning of the game.[/b] If you have one of the new randomized guns in your inventory while in the Neuromod Division at the very beginning of the game, quit Prey entirely, then reload, you will be unable to equip any weapons. To fix this issue, simply leave the Neuromod Division, then save the game again. You may have to re-equip and re-favorite the new weapon.
+[/list]
+
+G.O.T.S. mode:
+
+[list]
+[*]Apex kill wall appears in front of the Neuromod Division - This is expected behavior. To get around this, this mode will also allow you to walk through apex kill walls unharmed.
 [/list]
 
 Some entities are not randomized:
@@ -348,6 +407,8 @@ Some entities are not randomized:
 [*]Voice lines in certain cutscenes are not randomized.
 [*]Certain items/NPCs required for progression are hard coded to not be randomized to avoid messing with the game scripting, such as Patricia Varma's wrench and the lift technopath.
 [*]Certain station connections are left as-is to prevent soft lock situations.
+[*]Some music tracks may not be randomized with the "Randomize music" option.
+[*]The randomized player model will not be visible until after leaving the neuromod division.
 [/list]
 
 Sidequest related issues:
@@ -357,12 +418,6 @@ Sidequest related issues:
 [*]Dr. Calvino's keycard can only be obtained from the exterior if you load Hardware Labs first.
 [*]If any of the Cargo Bay B typhon become unkillable or go out of bounds, this may prevent rescuing the survivors there.
 [*]The nightmare quest may not trigger correctly.
-[/list]
-
-Potential soft locking issues:
-
-[list]
-[*]Ejecting from the station in Deep Storage before Alex has enforced his lockdown can result in a soft lock where you are unable to return to the station. This should no longer be possible, but is still something to watch out for.
 [/list]
 
 Game crashing issues:
@@ -385,6 +440,9 @@ Other issues:
 [size=5]Troubleshooting[/size]
 
 [spoiler]
+
+[img]https://imgur.com/R6J7ICx.jpg[/img]
+
 In general, check the generated log.txt file to see if there were any issues. Please report any issues you find! Ideally, also attach the log.txt file, screenshots, and the seed/settings you used.
 
 Installer takes longer than expected
@@ -431,7 +489,11 @@ Also feel free to share your ideas on how to expand the mod! Here are some featu
 [/spoiler]
 
 [size=5]Authors/Version History[/size]
+
 [spoiler]
+
+[img]https://imgur.com/QmNBYpL.jpg[/img]
+
 Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or [url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿, or leave a post here.
 
 Source code can be found on [url=https://github.com/shapeintheglass/DanielleRandomizer]GitHub[/url]﻿.
@@ -470,30 +532,30 @@ Source code can be found on [url=https://github.com/shapeintheglass/DanielleRan
    * Added version compatibility check to saved settings file
    * Added "Make humans wander" option
 * 0.30
-  * Overhauled GUI for better organization
-  * Overhauled dependency retrieval to take up less hard drive space
-  * Running installer now creates a "last_used_settings.json" file that reflects the last used settings
-  * Renamed "settings.json" to "spawn_presets.json" to make naming more accurate
-  * Added "G.O.T.S." timed mode
-  * Added music, player model randomization
-  * Added option to skip Jovan's death cutscene
-  * Set "Randomize loot tables" as a default when randomizing items
-  * Updated skip to 2nd day option to use JerryTerry's "Natural Day 2 Start" mod
-  * Tweaked recommended/chaotic/lite presets for items/enemies to better match expectations for those tiers
-  * Modified neuromod skill tree randomization to randomize within category
-  * Modified station randomization to allow Psychotronics, Hardware Labs, and Crew Quarters to be randomized
-  * Modified station randomization so that the mod overwrites certain books in Morgan's apartment and office with the new layout of the station
-  * Modified station randomization and G.O.T.S. mode so that the player can walk through Apex kill walls
-  * Fixed a case where some randomly generated stations were soft locks
-  * Fixed a case where item spawn multiplers were still not very reasonable
-  * Fixed randomization for containers (for real this time)
+   * Overhauled GUI for better organization
+   * Overhauled dependency retrieval to take up less hard drive space
+   * Running installer now creates a "last_used_settings.json" file that reflects the last used settings
+   * Renamed "settings.json" to "spawn_presets.json" to make naming more accurate
+   * Added "G.O.T.S." timed mode
+   * Added music, player model randomization
+   * Added option to skip Jovan's death cutscene
+   * Set "Randomize loot tables" as a default when randomizing items
+   * Updated skip to 2nd day option to use JerryTerry's [url=https://www.nexusmods.com/prey2017/mods/68]"Natural Day 2 Start"[/url] mod
+   * Tweaked recommended/chaotic/lite presets for items/enemies to better match expectations for those tiers
+   * Modified neuromod skill tree randomization to randomize within category
+   * Modified station randomization to allow Psychotronics, Hardware Labs, and Crew Quarters to be randomized
+   * Modified station randomization so that the mod overwrites certain books in Morgan's apartment and office with the new layout of the station
+   * Modified station randomization and G.O.T.S. mode so that the player can walk through Apex kill walls
+   * Fixed a case where some randomly generated stations were soft locks
+   * Fixed a case where item spawn multiplers were still not very reasonable
+   * Fixed randomization for containers (for real this time)
 [/spoiler]
 
 [size=4]Acknowledgments[/size]
 
 A big thanks to:
 
-* JerryTerry for letting me use their "Natural Day 2 Start" mod!
+* JerryTerry for allowing the use of their [url=https://www.nexusmods.com/prey2017/mods/68]"Natural Day 2 Start"[/url] mod!
 * Fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure
 * The brave adventrous souls who have helped me playtest and debug
 * The Prey reddit and discord communities for being pretty swell and listening to my terrible ideas

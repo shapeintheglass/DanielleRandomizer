@@ -1,6 +1,7 @@
 package utils;
 
 import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
@@ -249,16 +250,16 @@ public final class StationConnectivityConsts {
           .put(Door.SHUTTLE_BAY_LOBBY_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT)
           .build();
 
-  public static final ImmutableSet<Door> SINGLE_CONNECTIONS =
-      ImmutableSet.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
+  public static final ImmutableList<Door> SINGLE_CONNECTIONS =
+      ImmutableList.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
           Door.POWER_PLANT_LIFE_SUPPORT_EXIT);
 
-  public static final ImmutableSet<Door> LIFT_LOBBY_SIDE =
-      ImmutableSet.of(Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LOBBY_ARBORETUM_EXIT);
-  public static final ImmutableSet<Door> LIFT_NOT_LOBBY_SIDE =
-      ImmutableSet.of(Door.ARBORETUM_LOBBY_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT);
-  public static final ImmutableSet<Door> APEX_LOCKED_KILL_WALL_SIDE =
-      ImmutableSet.of(Door.LOBBY_HARDWARE_LABS_EXIT, Door.ARBORETUM_CREW_QUARTERS_EXIT);
-  public static final ImmutableSet<Door> APEX_LOCKED_NO_KILL_WALL_SIDE =
-      ImmutableSet.of(Door.HARDWARE_LABS_LOBBY_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT);
+  public static final ImmutableList<Door> LIFT_LOBBY_SIDE =
+      ImmutableList.of(Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LOBBY_ARBORETUM_EXIT);
+  public static final ImmutableList<Door> LIFT_NOT_LOBBY_SIDE =
+      ImmutableList.of(Door.ARBORETUM_LOBBY_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT);
+  public static final ImmutableList<Door> APEX_LOCKED_KILL_WALL_SIDE =
+      ImmutableList.of(Door.LOBBY_HARDWARE_LABS_EXIT, Door.ARBORETUM_CREW_QUARTERS_EXIT);
+  public static final ImmutableList<Door> APEX_LOCKED_NO_KILL_WALL_SIDE =
+      ImmutableList.of(Door.HARDWARE_LABS_LOBBY_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT);
 }

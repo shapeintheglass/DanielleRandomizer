@@ -183,7 +183,7 @@ public class WindowController {
 
     initCustomSpawnCheckboxes(allPresets, settings);
     
-    outputWindow.appendText("Starting GUI with settings:\n" + settings.toString());
+    outputWindow.appendText("Loaded with settings:\n" + settings.toString());
 
     updateUI();
 

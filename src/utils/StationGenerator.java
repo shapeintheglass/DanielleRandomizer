@@ -227,19 +227,41 @@ public class StationGenerator {
       MutableNetwork<Level, Door> station) {
     // Start with special cases that can only be matched with each other
     if (StationConnectivityConsts.LIFT_LOBBY_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE));
+      List<Door> toReturn = Lists.newArrayList();
+      for (Door d : remainingConnections) {
+        if (StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE.contains(d)) {
+          toReturn.add(d);
+        }
+      }
+      return toReturn;
     }
     if (StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections, StationConnectivityConsts.LIFT_LOBBY_SIDE));
+      List<Door> toReturn = Lists.newArrayList();
+      for (Door d : remainingConnections) {
+        if (StationConnectivityConsts.LIFT_LOBBY_SIDE.contains(d)) {
+          toReturn.add(d);
+        }
+      }
+      return toReturn;
     }
 
     if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections,
-          StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE));
+      List<Door> toReturn = Lists.newArrayList();
+      for (Door d : remainingConnections) {
+        if (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(d)) {
+          toReturn.add(d);
+        }
+      }
+      return toReturn;
     }
     if (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(door)) {
-      return Lists.newArrayList(Sets.intersection(remainingConnections,
-          StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE));
+      List<Door> toReturn = Lists.newArrayList();
+      for (Door d : remainingConnections) {
+        if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(d)) {
+          toReturn.add(d);
+        }
+      }
+      return toReturn;
     }
 
     Set<Door> validConnections = Sets.newHashSet(remainingConnections);
@@ -348,7 +370,7 @@ public class StationGenerator {
 
   public static void main(String[] args) {
 
-    long seed = new Random().nextLong();
+    long seed = 0L;
     StationGenerator sg = new StationGenerator(seed);
     String station1 = sg.toString();
     
