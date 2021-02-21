@@ -8,7 +8,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.BodyConfig;
 import utils.BodyConfig.Gender;
@@ -17,7 +17,7 @@ import utils.ZipHelper;
 
 public class BodyRandomizer extends BaseRandomizer {
 
-  public BodyRandomizer(SettingsJson s, ZipHelper zipHelper) {
+  public BodyRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
     Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS);
     Arrays.sort(BodyConsts.BODIES_WITH_BARE_HANDS);

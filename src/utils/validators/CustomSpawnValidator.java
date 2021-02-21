@@ -1,5 +1,6 @@
 package utils.validators;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,10 +18,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.google.protobuf.util.JsonFormat;
 
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
-import json.SettingsJson;
+import gui2.Gui2Consts;
+import proto.RandomizerSettings.Settings;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
@@ -54,13 +57,13 @@ public class CustomSpawnValidator {
   private TaggedDatabase database;
   private ZipHelper zipHelper;
 
-  private CustomSpawnValidator(TaggedDatabase database, SettingsJson settings, ZipHelper zipHelper) {
+  private CustomSpawnValidator(TaggedDatabase database, Settings settings, ZipHelper zipHelper) {
     this.database = database;
     this.zipHelper = zipHelper;
     isf = new ItemSpawnFilter(database, settings);
     fgf = new FlowgraphFilter(database, settings);
     ef = new EnemyFilter(database, settings);
-    r = new Random(settings.getSeed());
+    r = new Random(Long.parseLong(settings.getSeed()));
     numFilteredByArchetypeSwap = 0;
     numFilteredByFlowgraphSwap = 0;
     startArchetypeToEndArchetype = ArrayListMultimap.create();
@@ -154,7 +157,10 @@ public class CustomSpawnValidator {
     try {
       zipHelper = new ZipHelper(null, null);
       TaggedDatabase database = EntityDatabase.getInstance(zipHelper);
-      SettingsJson settings = new SettingsJson("saved_settings.json");
+      FileReader fr = new FileReader(Gui2Consts.SAVED_SETTINGS_FILE);
+      Settings.Builder builder = Settings.newBuilder();
+      JsonFormat.parser().ignoringUnknownFields().merge(fr, builder);
+      Settings settings = builder.build();
       CustomSpawnValidator validator = new CustomSpawnValidator(database, settings, zipHelper);
 
       for (String level : LevelConsts.LEVEL_DIRS) {

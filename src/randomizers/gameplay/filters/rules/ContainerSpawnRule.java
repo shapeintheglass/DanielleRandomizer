@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.jdom2.Element;
 
-import utils.CustomFilterHelper;
+import utils.CustomItemFilterHelper;
 import utils.ItemMultiplierHelper;
 import utils.Utils;
 
@@ -20,9 +20,9 @@ public class ContainerSpawnRule implements Rule {
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
-  private CustomFilterHelper filterHelper;
+  private CustomItemFilterHelper filterHelper;
 
-  public ContainerSpawnRule(CustomFilterHelper filterHelper) {
+  public ContainerSpawnRule(CustomItemFilterHelper filterHelper) {
     this.filterHelper = filterHelper;
   }
 

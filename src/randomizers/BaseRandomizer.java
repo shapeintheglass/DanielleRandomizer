@@ -3,7 +3,7 @@ package randomizers;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import utils.ZipHelper;
 
 /**
@@ -15,17 +15,17 @@ import utils.ZipHelper;
 public abstract class BaseRandomizer {
   String name;
 
-  protected SettingsJson settings;
+  protected Settings settings;
   protected ZipHelper zipHelper;
   
   protected Random r;
   protected Logger logger;
   
 
-  public BaseRandomizer(SettingsJson s, ZipHelper zipHelper) {
+  public BaseRandomizer(Settings s, ZipHelper zipHelper) {
     this.settings = s;
     this.zipHelper = zipHelper;
-    this.r = new Random(s.getSeed());
+    this.r = new Random(Long.parseLong(s.getSeed()));
     this.logger = Logger.getLogger("randomizer");
   }
 

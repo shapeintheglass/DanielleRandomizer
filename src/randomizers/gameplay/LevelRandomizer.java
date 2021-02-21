@@ -14,7 +14,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import randomizers.gameplay.filters.AddEntityHelper;
 import randomizers.gameplay.filters.BaseFilter;
@@ -41,31 +41,31 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private GameTokenRule gameTokenRule;
 
-  public LevelRandomizer(SettingsJson s, ZipHelper zipHelper, Map<String, String> swappedLinesMap) {
+  public LevelRandomizer(Settings s, ZipHelper zipHelper, Map<String, String> swappedLinesMap) {
     super(s, zipHelper);
     filterList = new LinkedList<>();
     this.gameTokenValues = new HashMap<>();
     this.swappedLinesMap = swappedLinesMap;
 
     // Use the settings to determine required level game tokens
-    if (s.getGameplaySettings().getUnlockAllScans()) {
+    if (s.getCheatSettings().getUnlockAllScans()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getGameplaySettings().getOpenStation()) {
+    if (s.getCheatSettings().getOpenStation()) {
       gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getGameplaySettings().getRandomizeStation()) {
+    if (s.getStoryProgressionSettings().getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getGameplaySettings().getStartSelfDestruct()) {
+    if (s.getCheatSettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
-    if (s.getGameplaySettings().getSkipJovanCutscene()) {
+    if (s.getGameStartSettings().getSkipJovanCutscene()) {
       gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
     }
-    if (s.getGameplaySettings().getRandomizeNightmare()) {
+    if (s.getNpcSettings().getRandomizeNightmare()) {
       gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
     }
 

@@ -10,7 +10,7 @@ import org.jdom2.Element;
 import com.google.common.collect.ImmutableSet;
 
 import databases.TaggedDatabase;
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import randomizers.gameplay.filters.BaseFilter;
 import utils.FileConsts;
@@ -30,7 +30,7 @@ public class EntityArchetypesRandomizer extends BaseRandomizer {
 
   private static final ImmutableSet<Archetype> SUPPORTED_ARCHETYPES = ImmutableSet.of(Archetype.PICKUPS);
 
-  public EntityArchetypesRandomizer(SettingsJson s, TaggedDatabase database, ZipHelper zipHelper) {
+  public EntityArchetypesRandomizer(Settings s, TaggedDatabase database, ZipHelper zipHelper) {
     super(s, zipHelper);
     filterList = new LinkedList<>();
     this.database = database;

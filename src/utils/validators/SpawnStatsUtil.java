@@ -1,6 +1,7 @@
 package utils.validators;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -14,12 +15,14 @@ import org.jdom2.input.SAXBuilder;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
+import com.google.protobuf.util.JsonFormat;
 
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
-import json.AllPresetsJson;
-import json.GenericRuleJson;
-import json.SpawnPresetJson;
+import gui2.Gui2Consts;
+import proto.RandomizerSettings.AllPresets;
+import proto.RandomizerSettings.GenericSpawnPresetFilter;
+import proto.RandomizerSettings.GenericSpawnPresetRule;
 import randomizers.gameplay.filters.rules.ArchetypeSwapRule;
 import randomizers.gameplay.filters.rules.NpcSpawnerSwapRule;
 import randomizers.gameplay.filters.rules.Rule;
@@ -47,23 +50,27 @@ public class SpawnStatsUtil {
     return document.getRootElement().getChild("Objects");
   }
 
-  public static List<Rule> createItemRulesList(List<GenericRuleJson> rules) {
+  public static List<Rule> createItemRulesList(List<GenericSpawnPresetRule> rules) {
     List<Rule> rulesList = Lists.newArrayList();
-    for (GenericRuleJson grj : rules) {
-      grj.addDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS);
-      grj.addDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-      CustomRuleHelper crh = new CustomRuleHelper(grj);
+    for (GenericSpawnPresetRule grj : rules) {
+      GenericSpawnPresetRule copy = grj.toBuilder()
+          .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
+          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
+          .build();
+      CustomRuleHelper crh = new CustomRuleHelper(copy);
       rulesList.add(new ArchetypeSwapRule(database, crh));
     }
     return rulesList;
   }
 
-  public static List<Rule> createNpcRulesList(List<GenericRuleJson> rules) {
+  public static List<Rule> createNpcRulesList(List<GenericSpawnPresetRule> rules) {
     List<Rule> rulesList = Lists.newArrayList();
-    for (GenericRuleJson grj : rules) {
-      grj.addDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_NPC_TAGS);
-      grj.addDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_NPC_TAGS);
-      CustomRuleHelper crh = new CustomRuleHelper(grj);
+    for (GenericSpawnPresetRule grj : rules) {
+      GenericSpawnPresetRule copy = grj.toBuilder()
+          .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
+          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
+          .build();
+      CustomRuleHelper crh = new CustomRuleHelper(copy);
       rulesList.add(new NpcSpawnerSwapRule(database, crh));
     }
     return rulesList;
@@ -111,8 +118,8 @@ public class SpawnStatsUtil {
     return toReturn;
   }
 
-  public static void describeRandomization(SpawnPresetJson j, List<Rule> rulesList, Multiset<String> originalTags, ZipHelper zipHelper)
-      throws JDOMException, IOException {
+  public static void describeRandomization(GenericSpawnPresetFilter j, List<Rule> rulesList,
+      Multiset<String> originalTags, ZipHelper zipHelper) throws JDOMException, IOException {
     Document document = zipHelper.getDocument(ZipHelper.DATA_LEVELS + "/" + LEVEL_FILE + "/" + LEVEL_FILE_NAME);
     Element root = document.getRootElement().getChild("Objects");
     System.out.println(j.getName());
@@ -170,17 +177,19 @@ public class SpawnStatsUtil {
     try {
       zipHelper = new ZipHelper(null, null);
       database = EntityDatabase.getInstance(zipHelper);
-      AllPresetsJson allPresets = new AllPresetsJson(PRESETS_FILE);
-
+      FileReader fr = new FileReader(Gui2Consts.ALL_PRESETS_FILE);
+      AllPresets.Builder builder = AllPresets.newBuilder();
+      JsonFormat.parser().ignoringUnknownFields().merge(fr, builder);
+      AllPresets allPresets = builder.build();
       Multiset<String> originalTags = getOriginalState(zipHelper);
 
-      for (SpawnPresetJson j : allPresets.getItemSpawnSettings()) {
-        List<Rule> rulesList = createItemRulesList(j.getRules());
+      for (GenericSpawnPresetFilter j : allPresets.getItemSpawnSettingsList()) {
+        List<Rule> rulesList = createItemRulesList(j.getFiltersList());
         describeRandomization(j, rulesList, originalTags, zipHelper);
       }
 
-      for (SpawnPresetJson j : allPresets.getEnemySpawnSettings()) {
-        List<Rule> rulesList = createNpcRulesList(j.getRules());
+      for (GenericSpawnPresetFilter j : allPresets.getEnemySpawnSettingsList()) {
+        List<Rule> rulesList = createNpcRulesList(j.getFiltersList());
         describeRandomization(j, rulesList, originalTags, zipHelper);
       }
     } catch (IOException | JDOMException e) {

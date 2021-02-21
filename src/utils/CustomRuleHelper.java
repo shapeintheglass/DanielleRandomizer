@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.jdom2.Element;
+
 import databases.TaggedDatabase;
-import json.GenericRuleJson;
+import proto.RandomizerSettings.GenericSpawnPresetRule;
 
 /**
  * Low-level rule that allows getting a random entity given a series of input/output tags.
@@ -30,17 +32,17 @@ public class CustomRuleHelper {
   // Tags not to output. Takes priority.
   private List<String> doNotOutputTags;
 
-  public CustomRuleHelper(GenericRuleJson gfj) {
-    this.inputTags = gfj.getInputTags();
-    this.outputTags = gfj.getOutputTags();
-    if (gfj.getOutputWeights() != null) {
-      this.outputTagsWeights = gfj.getOutputWeights();
+  public CustomRuleHelper(GenericSpawnPresetRule gfj) {
+    this.inputTags = gfj.getInputTagsList();
+    this.outputTags = gfj.getOutputTagsList();
+    if (gfj.getOutputWeightsList() != null) {
+      this.outputTagsWeights = gfj.getOutputWeightsList();
     }
-    if (gfj.getDoNotTouchTags() != null) {
-      this.doNotTouchTags = gfj.getDoNotTouchTags();
+    if (gfj.getDoNotTouchTagsList() != null) {
+      this.doNotTouchTags = gfj.getDoNotTouchTagsList();
     }
-    if (gfj.getDoNotOutputTags() != null) {
-      this.doNotOutputTags = gfj.getDoNotOutputTags();
+    if (gfj.getDoNotOutputTagsList() != null) {
+      this.doNotOutputTags = gfj.getDoNotOutputTagsList();
     }
   }
 

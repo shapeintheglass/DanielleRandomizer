@@ -15,7 +15,7 @@ import org.jdom2.JDOMException;
 
 import com.google.common.collect.Lists;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.ZipHelper;
 
@@ -32,7 +32,7 @@ public class VoiceRandomizer extends BaseRandomizer {
 
   private Path tempPatchDir;
 
-  public VoiceRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+  public VoiceRandomizer(Settings s, Path tempPatchDir, ZipHelper zipHelper) {
     super(s, zipHelper);
     this.tempPatchDir = tempPatchDir;
   }

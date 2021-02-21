@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import utils.LevelConsts;
 import utils.ZipHelper;
 
@@ -38,7 +38,7 @@ public class Installer {
    * @param installDir Prey install location
    * @param tempDir Where to store temporary files
    */
-  public Installer(Path installDir, Path tempLevelDir, Path tempPatchDir, SettingsJson settings) {
+  public Installer(Path installDir, Path tempLevelDir, Path tempPatchDir, Settings settings) {
     this.installDir = installDir;
     this.tempLevelDir = tempLevelDir;
     this.tempPatchDir = tempPatchDir;

@@ -10,14 +10,14 @@ import org.jdom2.JDOMException;
 
 import com.google.common.collect.Lists;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.ZipHelper;
 
 public class MusicRandomizer extends BaseRandomizer {
   private static final String OUT = "libs/gameaudio/music.xml";
 
-  public MusicRandomizer(SettingsJson s, ZipHelper zipHelper) {
+  public MusicRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
   }
 

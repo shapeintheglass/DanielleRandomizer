@@ -20,8 +20,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.ImmutableIntArray;
 
-import json.GameplaySettingsJson;
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.ZipHelper;
 
@@ -79,9 +78,9 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private Document abilitiesDoc;
   private Document layoutDoc;
 
-  public NeuromodTreeRandomizer(SettingsJson s, Path tempPatchDir, ZipHelper zipHelper) {
+  public NeuromodTreeRandomizer(Settings s, Path tempPatchDir, ZipHelper zipHelper) {
     super(s, zipHelper);
-    unlockAllScans = s.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS);
+    unlockAllScans = s.getCheatSettings().getUnlockAllScans();
     abilityIdToAbility = new HashMap<>();
     abilityIdToElement = new HashMap<>();
     categoryToAbilityId = HashMultimap.create();

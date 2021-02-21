@@ -18,9 +18,7 @@ import installers.Installer;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
-import json.CosmeticSettingsJson;
-import json.GameplaySettingsJson;
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.MusicRandomizer;
 import randomizers.cosmetic.PlayerModelRandomizer;
@@ -69,13 +67,13 @@ public class RandomizerService extends Service<Void> {
       ZipHelper.NPC_GAME_EFFECTS, "ark/npc/npcgameeffects.xml");
 
   private TextArea outputWindow;
-  private SettingsJson finalSettings;
+  private Settings finalSettings;
 
   private Path tempDir;
   private ZipHelper zipHelper;
   private Logger logger;
 
-  public RandomizerService(TextArea outputWindow, SettingsJson finalSettings) {
+  public RandomizerService(TextArea outputWindow, Settings finalSettings) {
     this.outputWindow = outputWindow;
     this.finalSettings = finalSettings;
     logger = Logger.getLogger("RandomizerService");
@@ -165,7 +163,7 @@ public class RandomizerService extends Service<Void> {
     return tempDir;
   }
 
-  private Optional<Installer> initInstaller(SettingsJson currentSettings, Path tempDir, Path tempLevelDir,
+  private Optional<Installer> initInstaller(Settings currentSettings, Path tempDir, Path tempLevelDir,
       Path tempPatchDir, ZipHelper zipHelper) {
     Path installDir = Paths.get(currentSettings.getInstallDir());
 
@@ -186,7 +184,7 @@ public class RandomizerService extends Service<Void> {
     return Optional.of(installer);
   }
 
-  private void executeRandomization(SettingsJson currentSettings, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
+  private void executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
     TaggedDatabase database = EntityDatabase.getInstance(zipHelper);
     if (database == null) {
       return;
@@ -195,32 +193,32 @@ public class RandomizerService extends Service<Void> {
     writeLine(currentSettings.toString());
 
     /* COSMETIC */
-    if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_BODIES)) {
+    if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
       new BodyRandomizer(currentSettings, zipHelper).randomize();
     }
     Map<String, String> swappedLinesMap = null;
-    if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_VOICELINES)) {
+    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_VOICELINES);
       VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
       vr.randomize();
       swappedLinesMap = vr.getSwappedLinesMap();
 
     }
-    if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_MUSIC)) {
+    if (currentSettings.getCosmeticSettings().getRandomizeMusic()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);
       new MusicRandomizer(currentSettings, zipHelper).randomize();
     }
-    if (currentSettings.getCosmeticSettings().getOption(CosmeticSettingsJson.RANDOMIZE_PLAYER_MODEL)) {
+    if (currentSettings.getCosmeticSettings().getRandomizePlayerModel()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL);
       new PlayerModelRandomizer(currentSettings, zipHelper).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
-    if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.RANDOMIZE_NEUROMODS)) {
+    if (currentSettings.getNeuromodSettings().getRandomizeNeuromods()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_NEUROMOD);
       new NeuromodTreeRandomizer(currentSettings, tempPatchDir, zipHelper).randomize();
-    } else if (currentSettings.getGameplaySettings().getOption(GameplaySettingsJson.UNLOCK_ALL_SCANS)) {
+    } else if (currentSettings.getCheatSettings().getUnlockAllScans()) {
       new NeuromodTreeRandomizer(currentSettings, tempPatchDir, zipHelper).unlockAllScans();
     }
 
@@ -231,12 +229,12 @@ public class RandomizerService extends Service<Void> {
       e.printStackTrace();
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeNightmare()) {
+    if (currentSettings.getNpcSettings().getRandomizeNightmare()) {
       writeLine("Randomizing nightmare...");
       NightmareHelper.install(database, currentSettings, zipHelper);
     }
 
-    if (currentSettings.getGameplaySettings().getStartSelfDestruct()) {
+    if (currentSettings.getCheatSettings().getStartSelfDestruct()) {
       writeLine("Updating self-destruct timer...");
       new SelfDestructTimerHelper(currentSettings, zipHelper).randomize();
     }
@@ -247,16 +245,16 @@ public class RandomizerService extends Service<Void> {
         .addFilter(new FlowgraphFilter(database, currentSettings))
         .addFilter(new EnemyFilter(database, currentSettings));
 
-    if (currentSettings.getGameplaySettings().getOpenStation()) {
+    if (currentSettings.getCheatSettings().getOpenStation()) {
       levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
     }
 
-    if (currentSettings.getGameplaySettings().getAddLootToApartment()) {
+    if (currentSettings.getGameStartSettings().getAddLootToApartment()) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeStation()) {
-      StationGenerator stationGenerator = new StationGenerator(currentSettings.getSeed());
+    if (currentSettings.getStoryProgressionSettings().getRandomizeStation()) {
+      StationGenerator stationGenerator = new StationGenerator(Long.parseLong(currentSettings.getSeed()));
       StationConnectivityFilter connectivity = new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
           stationGenerator.getSpawnConnectivity());
       String connectivityInfo = stationGenerator.toString();
@@ -269,7 +267,7 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
     
-    if (currentSettings.getGameplaySettings().getEnableGravity()) {
+    if (currentSettings.getCheatSettings().getEnableGravityInExtAndGuts()) {
       levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());
     }
 
@@ -278,18 +276,18 @@ public class RandomizerService extends Service<Void> {
     writeLine("Done processing level files.");
   }
 
-  private void copyDependencies(SettingsJson settings, Path tempPatchDir) throws IOException {
+  private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {
     copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES, tempPatchDir);
 
-    if (settings.getGameplaySettings().getMoreGuns()) {
+    if (settings.getItemSettings().getMoreGuns()) {
       copyFiles(MORE_GUNS_DEPENDENCIES, tempPatchDir);
     }
 
-    if (settings.getGameplaySettings().getWanderingHumans()) {
+    if (settings.getCheatSettings().getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES, tempPatchDir);
     }
 
-    if (settings.getGameplaySettings().getRandomizeStation() || settings.getGameplaySettings().getStartSelfDestruct()) {
+    if (settings.getStoryProgressionSettings().getRandomizeStation() || settings.getCheatSettings().getStartSelfDestruct()) {
       copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES, tempPatchDir);
     }
   }

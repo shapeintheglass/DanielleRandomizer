@@ -6,7 +6,7 @@ import java.util.Random;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import utils.ZipHelper;
 
 public class AddEntityHelper {
@@ -131,12 +131,12 @@ public class AddEntityHelper {
     return entity;
   }
 
-  public static void addEntities(Element objects, String filename, SettingsJson settings, ZipHelper zipHelper) {
-    if (settings.getGameplaySettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
+  public static void addEntities(Element objects, String filename, Settings settings, ZipHelper zipHelper) {
+    if (settings.getCheatSettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
       objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
     }
 
-    if (settings.getGameplaySettings().getStartOn2ndDay() && filename.equals("research/simulationlabs")) {
+    if (settings.getGameStartSettings().getStartOnSecondDay() && filename.equals("research/simulationlabs")) {
       try {
         Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
         Element root = document.getRootElement().clone();
@@ -147,7 +147,7 @@ public class AddEntityHelper {
       }
     }
 
-    if (settings.getGameplaySettings().getRandomizeNightmare() && filename.equals("research/simulationlabs")) {
+    if (settings.getNpcSettings().getRandomizeNightmare() && filename.equals("research/simulationlabs")) {
       try {
         Document document = zipHelper.getDocument(ZipHelper.ENABLE_NIGHTMARE_MANAGER);
         Element root = document.getRootElement().clone();
@@ -158,7 +158,7 @@ public class AddEntityHelper {
       }
     }
 
-    if (settings.getGameplaySettings().getDisableGravity() && !filename.equals("station/exterior") && !filename
+    if (settings.getCheatSettings().getZeroGravityEverywhere() && !filename.equals("station/exterior") && !filename
         .equals("research/zerog_utilitytunnels")) {
       objects.addContent(gravityBox(0));
     }

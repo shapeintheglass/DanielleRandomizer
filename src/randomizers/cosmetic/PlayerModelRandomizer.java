@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import json.SettingsJson;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.ZipHelper;
 
@@ -85,7 +85,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final String PHANTOM_ARMS_SKIN = "objects/characters/player/male/player1p_male01_armsalien.skin";
   private static final String PHANTOM_ARMS_MTL = "objects/characters/player/male/player1p_male02_arms_alien_cine_02.mtl";
 
-  public PlayerModelRandomizer(SettingsJson s, ZipHelper zipHelper) {
+  public PlayerModelRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
   }
 

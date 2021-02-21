@@ -2,7 +2,10 @@ package gui2;
 
 public class Gui2Consts {
   public static final String WINDOW_TITLE = "Danielle Randomizer v%s";
-  public static final String VERSION = "0.30";
+  public static final String VERSION = "0.31";
+
+  public static final String DEFAULT_SELF_DESTRUCT_TIMER = "60.000000";
+  public static final String DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER = "30.000000";
 
   public static final String DEFAULT_INSTALL_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Prey";
 
@@ -19,7 +22,7 @@ public class Gui2Consts {
   public static final String ERROR_COULD_NOT_PARSE_FILE = "Failed to parse file: ";
   public static final String WARNING_SAVED_SETTINGS_VERSION_MISMATCH = "Found saved settings at version %s. This application is only compatible with version %s. Falling back to default settings.";
   public static final String SAVING_FAILED = "Failed to save. See log for more info.\n";
-  
+
   /* INSTALLATION */
   public static String INSTALL_STATUS_TEXT = "Installing...";
   public static String INSTALL_STATUS_COMPLETE_TEXT = "Finished installing in %d seconds.";

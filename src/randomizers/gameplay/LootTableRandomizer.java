@@ -10,8 +10,8 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
 import databases.TaggedDatabase;
-import json.GenericRuleJson;
-import json.SettingsJson;
+import proto.RandomizerSettings.GenericSpawnPresetRule;
+import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.CustomRuleHelper;
 import utils.ItemMultiplierHelper;
@@ -27,7 +27,7 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   private TaggedDatabase database;
 
-  public LootTableRandomizer(TaggedDatabase database, SettingsJson s, Path tempPatchDir, ZipHelper zipHelper)
+  public LootTableRandomizer(TaggedDatabase database, Settings s, Path tempPatchDir, ZipHelper zipHelper)
       throws IOException {
     super(s, zipHelper);
     this.database = database;
@@ -36,7 +36,7 @@ public class LootTableRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     // If there are no item spawn settings, copy the loot table file over directly.
-    if (settings.getGameplaySettings() == null || settings.getGameplaySettings().getItemSpawnSettings() == null) {
+    if (settings.getItemSettings().getItemSpawnSettings().getFiltersCount() == 0) {
       try {
         zipHelper.copyToPatch(ZipHelper.LOOT_TABLE_FILE, ZipHelper.LOOT_TABLE_FILE);
       } catch (IOException e) {
@@ -71,7 +71,7 @@ public class LootTableRandomizer extends BaseRandomizer {
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
 
-        for (GenericRuleJson grj : settings.getGameplaySettings().getItemSpawnSettings().getRules()) {
+        for (GenericSpawnPresetRule grj : settings.getItemSettings().getItemSpawnSettings().getFiltersList()) {
           CustomRuleHelper crh = new CustomRuleHelper(grj);
 
           // Explicitly prevent non-pickup items from appearing in loot tables
