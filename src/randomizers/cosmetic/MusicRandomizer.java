@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
+import utils.Utils;
 import utils.ZipHelper;
 
 public class MusicRandomizer extends BaseRandomizer {
@@ -35,7 +36,7 @@ public class MusicRandomizer extends BaseRandomizer {
 
   public MusicRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
-    r = new Random(Long.parseLong(s.getSeed()));
+    r = new Random(Utils.stringToLong(s.getSeed()));
   }
 
   @Override

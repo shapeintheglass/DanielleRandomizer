@@ -63,7 +63,7 @@ public class CustomSpawnValidator {
     isf = new ItemSpawnFilter(database, settings);
     fgf = new FlowgraphFilter(database, settings);
     ef = new EnemyFilter(database, settings);
-    r = new Random(Long.parseLong(settings.getSeed()));
+    r = new Random(Utils.stringToLong(settings.getSeed()));
     numFilteredByArchetypeSwap = 0;
     numFilteredByFlowgraphSwap = 0;
     startArchetypeToEndArchetype = ArrayListMultimap.create();

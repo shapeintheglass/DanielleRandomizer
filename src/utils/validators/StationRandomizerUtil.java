@@ -12,9 +12,9 @@ import com.google.common.collect.Lists;
 import com.google.common.graph.EndpointPair;
 import com.google.common.graph.ImmutableNetwork;
 
+import randomizers.generators.StationGenerator;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
-import utils.StationGenerator;
 
 public class StationRandomizerUtil {
 

@@ -92,7 +92,7 @@ public class Installer {
     // Copy to pak destination as a pak
     logger.info(String.format("Copying %s to %s", tempPatchFileAsZip, patchFile.toPath()));
     Files.copy(tempPatchFileAsZip, patchFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    
+
     logger.info("----DONE INSTALLING PATCH FILE!----");
   }
 
@@ -135,8 +135,15 @@ public class Installer {
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
 
+      if (levelDir.equals("research/simulationlabs")) {
+        levelDir = "research/shuttlebay";
+      } else if (levelDir.equals("research/lobby")) {
+        levelDir = "research/shuttlebay";
+      }
+
       // Copy zip over to final destination
       Path sourcePak = tempLevelDir.resolve(levelDir).resolve(ZipHelper.LEVEL_OUTPUT_PAK);
+
       Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
       Files.copy(sourcePak, levelPak, StandardCopyOption.REPLACE_EXISTING);
       logger.info(String.format("Installed level file %s (%d/%d)", levelPak, i + 1, LevelConsts.LEVEL_DIRS.length));

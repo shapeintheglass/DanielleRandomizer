@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 import proto.RandomizerSettings.Settings;
+import utils.Utils;
 import utils.ZipHelper;
 
 /**
@@ -25,7 +26,7 @@ public abstract class BaseRandomizer {
   public BaseRandomizer(Settings s, ZipHelper zipHelper) {
     this.settings = s;
     this.zipHelper = zipHelper;
-    this.r = new Random(Long.parseLong(s.getSeed()));
+    this.r = new Random(Utils.stringToLong(s.getSeed()));
     this.logger = Logger.getLogger("randomizer");
   }
 

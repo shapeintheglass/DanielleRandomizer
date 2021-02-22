@@ -34,6 +34,7 @@ public class RandomizerGui2 extends Application {
     stage.setTitle(String.format(Gui2Consts.WINDOW_TITLE, Gui2Consts.VERSION));
     Scene scene = new Scene(root);
     scene.getStylesheets().add("gui2/stylesheet.css");
+    stage.setResizable(false);
     stage.setScene(scene);
     stage.show();
   }

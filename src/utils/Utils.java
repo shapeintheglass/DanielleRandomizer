@@ -262,4 +262,12 @@ public class Utils {
     }
     return true;
   }
+  
+  public static long stringToLong(String s) {
+    try {
+      return Long.parseLong(s);
+    } catch (NumberFormatException e) {
+      return s.hashCode();
+    }
+  }
 }

@@ -1,4 +1,4 @@
-package randomizers.gameplay;
+package randomizers.generators;
 
 import java.io.IOException;
 import java.util.Map;

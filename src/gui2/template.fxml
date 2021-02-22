@@ -168,12 +168,27 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Options that can affect the story progression of the game." />
-                              <Label layoutX="289.0" layoutY="50.0" text="Shuffles connections between levels." />
-                              <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="232.0" spacing="15.0">
+                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="270.0" prefWidth="586.0">
                                  <children>
-                                    <CheckBox fx:id="storyCheckboxRandomStation" mnemonicParsing="false" text="Randomize station connectivity" />
+                                    <VBox prefHeight="270.0" prefWidth="311.0" spacing="15.0">
+                                       <children>
+                                          <CheckBox fx:id="storyCheckboxRandomStation" mnemonicParsing="false" text="Randomize station connectivity" />
+                                          <CheckBox fx:id="storyCheckboxCustomStart" mnemonicParsing="false" text="Custom starting location" />
+                                          <ChoiceBox fx:id="storyChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0">
+                                             <VBox.margin>
+                                                <Insets left="22.0" />
+                                             </VBox.margin>
+                                          </ChoiceBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="270.0" prefWidth="343.0" spacing="15.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="210.0" text="Shuffles connections between levels." />
+                                          <Label text="Start the game in the given map (experimental)" />
+                                       </children>
+                                    </VBox>
                                  </children>
-                              </VBox>
+                              </HBox>
                            </children>
                         </AnchorPane>
                     </content>

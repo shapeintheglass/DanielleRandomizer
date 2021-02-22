@@ -1,4 +1,4 @@
-package utils;
+package randomizers.generators;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -23,6 +23,7 @@ import com.google.common.graph.ImmutableNetwork;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 
+import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
 

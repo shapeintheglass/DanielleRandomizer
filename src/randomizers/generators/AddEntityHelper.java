@@ -1,7 +1,6 @@
-package randomizers.gameplay.filters;
+package randomizers.generators;
 
 import java.math.BigInteger;
-import java.util.Random;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -98,10 +97,7 @@ public class AddEntityHelper {
   }
 
   private static Element gravityBox(double gravityVector) {
-
-    // Used for generating IDs only
-    Random r = new Random();
-    BigInteger id = new BigInteger(Integer.toString(r.nextInt(Integer.MAX_VALUE)));
+    BigInteger id = new BigInteger("1000000");
     Element entity = new Element("Entity").setAttribute("Name", String.format("GravityBox%s", id.toString()))
         .setAttribute("Pos", "0.0,0.0,0.0")
         .setAttribute("Rotate", "0.0,0,0,0")

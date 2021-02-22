@@ -1,4 +1,4 @@
-package randomizers.gameplay;
+package randomizers.generators;
 
 import java.io.IOException;
 import java.util.Random;
@@ -10,11 +10,12 @@ import org.jdom2.JDOMException;
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.Settings;
 import utils.CustomItemFilterHelper;
+import utils.Utils;
 import utils.ZipHelper;
 
 public class NightmareHelper {
   public static void install(TaggedDatabase database, Settings settings, ZipHelper zipHelper) {
-    Random r = new Random(Long.parseLong(settings.getSeed()));
+    Random r = new Random(Utils.stringToLong(settings.getSeed()));
     try {
       Document document = zipHelper.getDocument(ZipHelper.NIGHTMARE_MANAGER);
       Element root = document.getRootElement();

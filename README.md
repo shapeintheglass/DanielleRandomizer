@@ -31,6 +31,7 @@ Here are some of the options the randomizer offers:
 * Remove scan requirement for neuromods
 * Unlock all doors/safes/workstations
 * Get Off The Station mode (timed)
+* Enable/disable gravity (experimental)
 
 ## Getting Started
 

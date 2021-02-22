@@ -16,6 +16,7 @@ import com.google.protobuf.util.JsonFormat;
 
 import gui2.Gui2Consts;
 import gui2.RandomizerService;
+import gui2.SettingsHelper;
 import installers.Installer;
 import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
@@ -25,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -119,6 +121,10 @@ public class WindowController {
   /* STORY/PROGRESSION TAB */
   @FXML
   private CheckBox storyCheckboxRandomStation;
+  @FXML
+  private CheckBox storyCheckboxCustomStart;
+  @FXML
+  private ChoiceBox<String> storyChoiceBoxCustomStart;
 
   /* CHEATS TAB */
   @FXML
@@ -202,7 +208,7 @@ public class WindowController {
 
     initCustomSpawnCheckboxes(allPresets, settings);
 
-    outputWindow.appendText("Loaded with settings:\n" + settings.toString());
+    outputWindow.appendText("Loaded with settings:\n" + SettingsHelper.settingsToString(settings));
 
     updateUI();
 
@@ -379,7 +385,7 @@ public class WindowController {
     neuromodsCheckboxRandomize.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -396,7 +402,7 @@ public class WindowController {
     storyCheckboxRandomStation.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -406,7 +412,7 @@ public class WindowController {
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies within type");
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -419,7 +425,7 @@ public class WindowController {
     cheatsTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("G.O.T.S. preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, getSettings().toString()));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   /*
@@ -486,7 +492,7 @@ public class WindowController {
     try {
       writeLastUsedSettingsToFile(Gui2Consts.SAVED_SETTINGS_FILE, toSave);
       outputWindow.appendText(String.format(Gui2Consts.SAVING_INFO, Gui2Consts.SAVED_SETTINGS_FILE));
-      outputWindow.appendText(toSave.toString());
+      outputWindow.appendText(SettingsHelper.settingsToString(toSave));
     } catch (IOException e) {
       outputWindow.appendText(Gui2Consts.SAVING_FAILED);
       e.printStackTrace();
@@ -619,7 +625,10 @@ public class WindowController {
       String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH, savedSettings
           .getReleaseVersion(), Gui2Consts.VERSION);
       logger.warning(loggerWarning);
-      outputWindow.appendText("Saved settings version mismatch. Falling back to default.\n");
+      if (settings.getReleaseVersion().isEmpty()) {
+        outputWindow.appendText("Saved settings version mismatch.\n");
+      }
+      outputWindow.appendText("Falling back to default settings.\n");
     }
 
     long initialSeed = Utils.getNewSeed();

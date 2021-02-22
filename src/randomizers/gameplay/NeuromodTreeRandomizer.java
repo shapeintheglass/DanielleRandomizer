@@ -67,6 +67,9 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
 
   private static final boolean[][] LAYOUT_SEVEN = { { true, true, true, true, true, true, true } };
 
+  private static final ImmutableList<String> PSI_APTITIUDE_IDS = ImmutableList.of("3149325216929347148",
+      "3149325216929347150", "3149325216929347152");
+
   // If we recalculate neuromod costs, pull a random int from the appropriate set.
   private static final ImmutableIntArray COLUMN_ONE_COSTS = ImmutableIntArray.of(1, 1, 2, 2, 3);
   private static final ImmutableIntArray COLUMN_TWO_COSTS = ImmutableIntArray.of(3, 4, 5);
@@ -130,6 +133,8 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
       } catch (JDOMException | IOException e) {
         e.printStackTrace();
       }
+    } else {
+      removePsychoscopeRequirementForPsiAptitudes();
     }
 
     try {
@@ -193,7 +198,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
         }
         e.setAttribute("Cost", Integer.toString(a.getCost()));
       }
-      
+
       zipHelper.copyToPatch(abilitiesDoc, ZipHelper.NEUROMOD_ABILITIES);
       zipHelper.copyToPatch(layoutDoc, ZipHelper.NEUROMOD_PDA_LAYOUT);
     } catch (IOException e) {
@@ -217,7 +222,13 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
     } catch (JDOMException e) {
       e.printStackTrace();
     }
+  }
 
+  private void removePsychoscopeRequirementForPsiAptitudes() {
+    for (String id : PSI_APTITIUDE_IDS) {
+      Element e = abilityIdToElement.get(id);
+      e.setAttribute(REQUIRE_SCANNER, FALSE); 
+    }
   }
 
   private void removeScanRequirementInResearchTopics() throws JDOMException, IOException {

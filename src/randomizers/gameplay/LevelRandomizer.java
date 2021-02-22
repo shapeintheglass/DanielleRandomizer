@@ -16,9 +16,9 @@ import org.jdom2.JDOMException;
 
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
-import randomizers.gameplay.filters.AddEntityHelper;
 import randomizers.gameplay.filters.BaseFilter;
 import randomizers.gameplay.filters.rules.GameTokenRule;
+import randomizers.generators.AddEntityHelper;
 import utils.LevelConsts;
 import utils.ZipHelper;
 

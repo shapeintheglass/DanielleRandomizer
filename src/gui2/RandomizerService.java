@@ -23,13 +23,9 @@ import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.MusicRandomizer;
 import randomizers.cosmetic.PlayerModelRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
-import randomizers.gameplay.BookInfoHelper;
-import randomizers.gameplay.BookInfoHelper.Book;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
-import randomizers.gameplay.NightmareHelper;
-import randomizers.gameplay.SelfDestructTimerHelper;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.GravityDisablerFilter;
@@ -37,7 +33,11 @@ import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
-import utils.StationGenerator;
+import randomizers.generators.BookInfoHelper;
+import randomizers.generators.NightmareHelper;
+import randomizers.generators.SelfDestructTimerHelper;
+import randomizers.generators.StationGenerator;
+import randomizers.generators.BookInfoHelper.Book;
 import utils.Utils;
 import utils.ZipHelper;
 
@@ -190,7 +190,7 @@ public class RandomizerService extends Service<Void> {
       return;
     }
 
-    writeLine(currentSettings.toString());
+    writeLine(SettingsHelper.settingsToString(currentSettings));
 
     /* COSMETIC */
     if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
@@ -254,7 +254,7 @@ public class RandomizerService extends Service<Void> {
     }
 
     if (currentSettings.getStoryProgressionSettings().getRandomizeStation()) {
-      StationGenerator stationGenerator = new StationGenerator(Long.parseLong(currentSettings.getSeed()));
+      StationGenerator stationGenerator = new StationGenerator(Utils.stringToLong(currentSettings.getSeed()));
       StationConnectivityFilter connectivity = new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
           stationGenerator.getSpawnConnectivity());
       String connectivityInfo = stationGenerator.toString();
