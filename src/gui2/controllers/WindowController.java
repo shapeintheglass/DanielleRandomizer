@@ -47,6 +47,8 @@ import proto.RandomizerSettings.NeuromodSettings;
 import proto.RandomizerSettings.NpcSettings;
 import proto.RandomizerSettings.Settings;
 import proto.RandomizerSettings.StoryProgressionSettings;
+import proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation;
+import randomizers.generators.CustomSpawnGenerator;
 import utils.Utils;
 
 public class WindowController {
@@ -176,6 +178,11 @@ public class WindowController {
 
     setTooltips();
 
+    storyChoiceBoxCustomStart.getItems().add(SpawnLocation.RANDOM.name());
+    for (SpawnLocation l : CustomSpawnGenerator.SUPPORTED_SPAWNS) {
+      storyChoiceBoxCustomStart.getItems().add(l.name());
+    }
+
     // Attempt to read from preset definition file and saved settings file
 
     try {
@@ -211,6 +218,16 @@ public class WindowController {
     outputWindow.appendText("Loaded with settings:\n" + SettingsHelper.settingsToString(settings));
 
     updateUI();
+
+    storyCheckboxCustomStart.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        if (event.getSource() instanceof CheckBox) {
+          boolean isCustomStart = storyCheckboxCustomStart.isSelected();
+          storyChoiceBoxCustomStart.setDisable(!isCustomStart);
+        }
+      }
+    });
 
     cheatsCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -269,6 +286,9 @@ public class WindowController {
     neuromodsCheckboxRandomize.setSelected(settings.getNeuromodSettings().getRandomizeNeuromods());
 
     storyCheckboxRandomStation.setSelected(settings.getStoryProgressionSettings().getRandomizeStation());
+    storyCheckboxCustomStart.setSelected(settings.getStoryProgressionSettings().getUseCustomSpawn());
+    storyChoiceBoxCustomStart.setDisable(!settings.getStoryProgressionSettings().getUseCustomSpawn());
+    storyChoiceBoxCustomStart.setValue(settings.getStoryProgressionSettings().getCustomSpawnLocation().name());
 
     cheatsCheckboxUnlockAll.setSelected(settings.getCheatSettings().getOpenStation());
     cheatsCheckboxAllScans.setSelected(settings.getCheatSettings().getUnlockAllScans());
@@ -279,9 +299,37 @@ public class WindowController {
     cheatsTextFieldTimer.setText(settings.getCheatSettings().getSelfDestructTimer());
     cheatsTextFieldShuttleTimer.setText(settings.getCheatSettings().getSelfDestructShuttleTimer());
 
-    boolean isSelfDestruct = cheatsCheckboxSelfDestruct.isSelected();
-    cheatsTextFieldTimer.setDisable(!isSelfDestruct);
-    cheatsTextFieldShuttleTimer.setDisable(!isSelfDestruct);
+    cheatsTextFieldTimer.setDisable(!cheatsCheckboxSelfDestruct.isSelected());
+    cheatsTextFieldShuttleTimer.setDisable(!cheatsCheckboxSelfDestruct.isSelected());
+  }
+
+  private void resetUI() {
+    cosmeticCheckboxBodies.setSelected(false);
+    cosmeticCheckboxVoices.setSelected(false);
+    cosmeticCheckboxMusic.setSelected(false);
+    cosmeticCheckboxPlayerModel.setSelected(false);
+    itemsCheckboxMoreGuns.setSelected(false);
+    itemsCheckboxFabPlanCosts.setSelected(false);
+    setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
+    npcsCheckBoxNightmare.setSelected(false);
+    npcsCheckBoxCystoidNests.setSelected(false);
+    npcsCheckBoxWeavers.setSelected(false);
+    setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
+    startCheckboxDay2.setSelected(false);
+    startCheckboxAddAllEquipment.setSelected(false);
+    startCheckboxSkipJovan.setSelected(false);
+    neuromodsCheckboxRandomize.setSelected(false);
+    storyCheckboxRandomStation.setSelected(false);
+    storyCheckboxCustomStart.setSelected(false);
+    storyChoiceBoxCustomStart.setValue(SpawnLocation.NONE.name());
+    cheatsCheckboxAllScans.setSelected(false);
+    cheatsCheckboxUnlockAll.setSelected(false);
+    cheatsCheckboxWander.setSelected(false);
+    cheatsCheckboxGravity.setSelected(false);
+    cheatsCheckboxEnableGravity.setSelected(false);
+    cheatsCheckboxSelfDestruct.setSelected(false);
+    cheatsTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
+    cheatsTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
   }
 
   private void initCustomSpawnCheckboxes(AllPresets allPresets, Settings settings) {
@@ -344,34 +392,6 @@ public class WindowController {
   /*
    * PRESETS
    */
-
-  private void resetUI() {
-    // TODO: Make this less gross
-    cosmeticCheckboxBodies.setSelected(false);
-    cosmeticCheckboxVoices.setSelected(false);
-    cosmeticCheckboxMusic.setSelected(false);
-    cosmeticCheckboxPlayerModel.setSelected(false);
-    itemsCheckboxMoreGuns.setSelected(false);
-    itemsCheckboxFabPlanCosts.setSelected(false);
-    setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
-    npcsCheckBoxNightmare.setSelected(false);
-    npcsCheckBoxCystoidNests.setSelected(false);
-    npcsCheckBoxWeavers.setSelected(false);
-    setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
-    startCheckboxDay2.setSelected(false);
-    startCheckboxAddAllEquipment.setSelected(false);
-    startCheckboxSkipJovan.setSelected(false);
-    neuromodsCheckboxRandomize.setSelected(false);
-    storyCheckboxRandomStation.setSelected(false);
-    cheatsCheckboxAllScans.setSelected(false);
-    cheatsCheckboxUnlockAll.setSelected(false);
-    cheatsCheckboxWander.setSelected(false);
-    cheatsCheckboxGravity.setSelected(false);
-    cheatsCheckboxEnableGravity.setSelected(false);
-    cheatsCheckboxSelfDestruct.setSelected(false);
-    cheatsTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
-    cheatsTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
-  }
 
   @FXML
   protected void onPresetsRecommendedClicked(ActionEvent event) {
@@ -550,7 +570,11 @@ public class WindowController {
   }
 
   private StoryProgressionSettings getStoryProgressionSettings() {
-    return StoryProgressionSettings.newBuilder().setRandomizeStation(storyCheckboxRandomStation.isSelected()).build();
+    return StoryProgressionSettings.newBuilder()
+        .setRandomizeStation(storyCheckboxRandomStation.isSelected())
+        .setUseCustomSpawn(storyCheckboxCustomStart.isSelected())
+        .setCustomSpawnLocation(SpawnLocation.valueOf(storyChoiceBoxCustomStart.getValue()))
+        .build();
   }
 
   private GameStartSettings getGameStartSettings() {

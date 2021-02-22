@@ -6265,6 +6265,23 @@ public final class RandomizerSettings {
      * @return The randomizeStation.
      */
     boolean getRandomizeStation();
+
+    /**
+     * <code>bool use_custom_spawn = 2;</code>
+     * @return The useCustomSpawn.
+     */
+    boolean getUseCustomSpawn();
+
+    /**
+     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+     * @return The enum numeric value on the wire for customSpawnLocation.
+     */
+    int getCustomSpawnLocationValue();
+    /**
+     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+     * @return The customSpawnLocation.
+     */
+    proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation getCustomSpawnLocation();
   }
   /**
    * Protobuf type {@code StoryProgressionSettings}
@@ -6279,6 +6296,7 @@ public final class RandomizerSettings {
       super(builder);
     }
     private StoryProgressionSettings() {
+      customSpawnLocation_ = 0;
     }
 
     @java.lang.Override
@@ -6316,6 +6334,17 @@ public final class RandomizerSettings {
               randomizeStation_ = input.readBool();
               break;
             }
+            case 16: {
+
+              useCustomSpawn_ = input.readBool();
+              break;
+            }
+            case 24: {
+              int rawValue = input.readEnum();
+
+              customSpawnLocation_ = rawValue;
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -6348,6 +6377,222 @@ public final class RandomizerSettings {
               proto.RandomizerSettings.StoryProgressionSettings.class, proto.RandomizerSettings.StoryProgressionSettings.Builder.class);
     }
 
+    /**
+     * Protobuf enum {@code StoryProgressionSettings.SpawnLocation}
+     */
+    public enum SpawnLocation
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>NONE = 0;</code>
+       */
+      NONE(0),
+      /**
+       * <code>RANDOM = 1;</code>
+       */
+      RANDOM(1),
+      /**
+       * <code>LOBBY = 2;</code>
+       */
+      LOBBY(2),
+      /**
+       * <code>HARDWARE_LABS = 3;</code>
+       */
+      HARDWARE_LABS(3),
+      /**
+       * <code>PSYCHOTRONICS = 4;</code>
+       */
+      PSYCHOTRONICS(4),
+      /**
+       * <code>GUTS = 5;</code>
+       */
+      GUTS(5),
+      /**
+       * <code>ARBORETUM = 6;</code>
+       */
+      ARBORETUM(6),
+      /**
+       * <code>BRIDGE = 7;</code>
+       */
+      BRIDGE(7),
+      /**
+       * <code>CREW_QUARTERS = 8;</code>
+       */
+      CREW_QUARTERS(8),
+      /**
+       * <code>DEEP_STORAGE = 9;</code>
+       */
+      DEEP_STORAGE(9),
+      /**
+       * <code>CARGO_BAY = 10;</code>
+       */
+      CARGO_BAY(10),
+      /**
+       * <code>LIFE_SUPPORT = 11;</code>
+       */
+      LIFE_SUPPORT(11),
+      /**
+       * <code>POWER_PLANT = 12;</code>
+       */
+      POWER_PLANT(12),
+      /**
+       * <code>SHUTTLE_BAY = 13;</code>
+       */
+      SHUTTLE_BAY(13),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>NONE = 0;</code>
+       */
+      public static final int NONE_VALUE = 0;
+      /**
+       * <code>RANDOM = 1;</code>
+       */
+      public static final int RANDOM_VALUE = 1;
+      /**
+       * <code>LOBBY = 2;</code>
+       */
+      public static final int LOBBY_VALUE = 2;
+      /**
+       * <code>HARDWARE_LABS = 3;</code>
+       */
+      public static final int HARDWARE_LABS_VALUE = 3;
+      /**
+       * <code>PSYCHOTRONICS = 4;</code>
+       */
+      public static final int PSYCHOTRONICS_VALUE = 4;
+      /**
+       * <code>GUTS = 5;</code>
+       */
+      public static final int GUTS_VALUE = 5;
+      /**
+       * <code>ARBORETUM = 6;</code>
+       */
+      public static final int ARBORETUM_VALUE = 6;
+      /**
+       * <code>BRIDGE = 7;</code>
+       */
+      public static final int BRIDGE_VALUE = 7;
+      /**
+       * <code>CREW_QUARTERS = 8;</code>
+       */
+      public static final int CREW_QUARTERS_VALUE = 8;
+      /**
+       * <code>DEEP_STORAGE = 9;</code>
+       */
+      public static final int DEEP_STORAGE_VALUE = 9;
+      /**
+       * <code>CARGO_BAY = 10;</code>
+       */
+      public static final int CARGO_BAY_VALUE = 10;
+      /**
+       * <code>LIFE_SUPPORT = 11;</code>
+       */
+      public static final int LIFE_SUPPORT_VALUE = 11;
+      /**
+       * <code>POWER_PLANT = 12;</code>
+       */
+      public static final int POWER_PLANT_VALUE = 12;
+      /**
+       * <code>SHUTTLE_BAY = 13;</code>
+       */
+      public static final int SHUTTLE_BAY_VALUE = 13;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static SpawnLocation valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static SpawnLocation forNumber(int value) {
+        switch (value) {
+          case 0: return NONE;
+          case 1: return RANDOM;
+          case 2: return LOBBY;
+          case 3: return HARDWARE_LABS;
+          case 4: return PSYCHOTRONICS;
+          case 5: return GUTS;
+          case 6: return ARBORETUM;
+          case 7: return BRIDGE;
+          case 8: return CREW_QUARTERS;
+          case 9: return DEEP_STORAGE;
+          case 10: return CARGO_BAY;
+          case 11: return LIFE_SUPPORT;
+          case 12: return POWER_PLANT;
+          case 13: return SHUTTLE_BAY;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          SpawnLocation> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>() {
+              public SpawnLocation findValueByNumber(int number) {
+                return SpawnLocation.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalStateException(
+              "Can't get the descriptor of an unrecognized enum value.");
+        }
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return proto.RandomizerSettings.StoryProgressionSettings.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final SpawnLocation[] VALUES = values();
+
+      public static SpawnLocation valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private SpawnLocation(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:StoryProgressionSettings.SpawnLocation)
+    }
+
     public static final int RANDOMIZE_STATION_FIELD_NUMBER = 1;
     private boolean randomizeStation_;
     /**
@@ -6357,6 +6602,36 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getRandomizeStation() {
       return randomizeStation_;
+    }
+
+    public static final int USE_CUSTOM_SPAWN_FIELD_NUMBER = 2;
+    private boolean useCustomSpawn_;
+    /**
+     * <code>bool use_custom_spawn = 2;</code>
+     * @return The useCustomSpawn.
+     */
+    @java.lang.Override
+    public boolean getUseCustomSpawn() {
+      return useCustomSpawn_;
+    }
+
+    public static final int CUSTOM_SPAWN_LOCATION_FIELD_NUMBER = 3;
+    private int customSpawnLocation_;
+    /**
+     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+     * @return The enum numeric value on the wire for customSpawnLocation.
+     */
+    @java.lang.Override public int getCustomSpawnLocationValue() {
+      return customSpawnLocation_;
+    }
+    /**
+     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+     * @return The customSpawnLocation.
+     */
+    @java.lang.Override public proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation getCustomSpawnLocation() {
+      @SuppressWarnings("deprecation")
+      proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation result = proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.valueOf(customSpawnLocation_);
+      return result == null ? proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -6376,6 +6651,12 @@ public final class RandomizerSettings {
       if (randomizeStation_ != false) {
         output.writeBool(1, randomizeStation_);
       }
+      if (useCustomSpawn_ != false) {
+        output.writeBool(2, useCustomSpawn_);
+      }
+      if (customSpawnLocation_ != proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.NONE.getNumber()) {
+        output.writeEnum(3, customSpawnLocation_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6388,6 +6669,14 @@ public final class RandomizerSettings {
       if (randomizeStation_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, randomizeStation_);
+      }
+      if (useCustomSpawn_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, useCustomSpawn_);
+      }
+      if (customSpawnLocation_ != proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.NONE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(3, customSpawnLocation_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6406,6 +6695,9 @@ public final class RandomizerSettings {
 
       if (getRandomizeStation()
           != other.getRandomizeStation()) return false;
+      if (getUseCustomSpawn()
+          != other.getUseCustomSpawn()) return false;
+      if (customSpawnLocation_ != other.customSpawnLocation_) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6420,6 +6712,11 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_STATION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeStation());
+      hash = (37 * hash) + USE_CUSTOM_SPAWN_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getUseCustomSpawn());
+      hash = (37 * hash) + CUSTOM_SPAWN_LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + customSpawnLocation_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6555,6 +6852,10 @@ public final class RandomizerSettings {
         super.clear();
         randomizeStation_ = false;
 
+        useCustomSpawn_ = false;
+
+        customSpawnLocation_ = 0;
+
         return this;
       }
 
@@ -6582,6 +6883,8 @@ public final class RandomizerSettings {
       public proto.RandomizerSettings.StoryProgressionSettings buildPartial() {
         proto.RandomizerSettings.StoryProgressionSettings result = new proto.RandomizerSettings.StoryProgressionSettings(this);
         result.randomizeStation_ = randomizeStation_;
+        result.useCustomSpawn_ = useCustomSpawn_;
+        result.customSpawnLocation_ = customSpawnLocation_;
         onBuilt();
         return result;
       }
@@ -6632,6 +6935,12 @@ public final class RandomizerSettings {
         if (other == proto.RandomizerSettings.StoryProgressionSettings.getDefaultInstance()) return this;
         if (other.getRandomizeStation() != false) {
           setRandomizeStation(other.getRandomizeStation());
+        }
+        if (other.getUseCustomSpawn() != false) {
+          setUseCustomSpawn(other.getUseCustomSpawn());
+        }
+        if (other.customSpawnLocation_ != 0) {
+          setCustomSpawnLocationValue(other.getCustomSpawnLocationValue());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6689,6 +6998,91 @@ public final class RandomizerSettings {
       public Builder clearRandomizeStation() {
         
         randomizeStation_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean useCustomSpawn_ ;
+      /**
+       * <code>bool use_custom_spawn = 2;</code>
+       * @return The useCustomSpawn.
+       */
+      @java.lang.Override
+      public boolean getUseCustomSpawn() {
+        return useCustomSpawn_;
+      }
+      /**
+       * <code>bool use_custom_spawn = 2;</code>
+       * @param value The useCustomSpawn to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUseCustomSpawn(boolean value) {
+        
+        useCustomSpawn_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool use_custom_spawn = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUseCustomSpawn() {
+        
+        useCustomSpawn_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int customSpawnLocation_ = 0;
+      /**
+       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+       * @return The enum numeric value on the wire for customSpawnLocation.
+       */
+      @java.lang.Override public int getCustomSpawnLocationValue() {
+        return customSpawnLocation_;
+      }
+      /**
+       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+       * @param value The enum numeric value on the wire for customSpawnLocation to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCustomSpawnLocationValue(int value) {
+        
+        customSpawnLocation_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+       * @return The customSpawnLocation.
+       */
+      @java.lang.Override
+      public proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation getCustomSpawnLocation() {
+        @SuppressWarnings("deprecation")
+        proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation result = proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.valueOf(customSpawnLocation_);
+        return result == null ? proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+       * @param value The customSpawnLocation to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCustomSpawnLocation(proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        customSpawnLocation_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCustomSpawnLocation() {
+        
+        customSpawnLocation_ = 0;
         onChanged();
         return this;
       }
@@ -11185,24 +11579,33 @@ public final class RandomizerSettings {
       "nightmare\030\002 \001(\010\022\037\n\027randomize_cystoid_nes" +
       "ts\030\003 \001(\010\022!\n\031randomize_weaver_cystoids\030\004 " +
       "\001(\010\"/\n\020NeuromodSettings\022\033\n\023randomize_neu" +
-      "romods\030\001 \001(\010\"5\n\030StoryProgressionSettings" +
-      "\022\031\n\021randomize_station\030\001 \001(\010\"l\n\021GameStart" +
-      "Settings\022\035\n\025add_loot_to_apartment\030\001 \001(\010\022" +
-      "\033\n\023start_on_second_day\030\002 \001(\010\022\033\n\023skip_jov" +
-      "an_cutscene\030\003 \001(\010\"\201\002\n\rCheatSettings\022\024\n\014o" +
-      "pen_station\030\001 \001(\010\022\030\n\020unlock_all_scans\030\002 " +
-      "\001(\010\022\030\n\020wandering_humans\030\003 \001(\010\022\033\n\023start_s" +
-      "elf_destruct\030\004 \001(\010\022\033\n\023self_destruct_time" +
-      "r\030\005 \001(\t\022#\n\033self_destruct_shuttle_timer\030\006" +
-      " \001(\t\022\037\n\027zero_gravity_everywhere\030\007 \001(\010\022&\n" +
-      "\036enable_gravity_in_ext_and_guts\030\010 \001(\010\"`\n" +
-      "\030GenericSpawnPresetFilter\022\014\n\004name\030\001 \001(\t\022" +
-      "\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.Generic" +
-      "SpawnPresetRule\"\220\001\n\026GenericSpawnPresetRu" +
-      "le\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 " +
-      "\003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_not_to" +
-      "uch_tags\030\004 \003(\t\022\032\n\022do_not_output_tags\030\005 \003" +
-      "(\tB\033\n\005protoB\022RandomizerSettingsb\006proto3"
+      "romods\030\001 \001(\010\"\375\002\n\030StoryProgressionSetting" +
+      "s\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cust" +
+      "om_spawn\030\002 \001(\010\022F\n\025custom_spawn_location\030" +
+      "\003 \001(\0162\'.StoryProgressionSettings.SpawnLo" +
+      "cation\"\343\001\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RA" +
+      "NDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\r" +
+      "PSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006" +
+      "\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_" +
+      "STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT" +
+      "\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\"l\n\021" +
+      "GameStartSettings\022\035\n\025add_loot_to_apartme" +
+      "nt\030\001 \001(\010\022\033\n\023start_on_second_day\030\002 \001(\010\022\033\n" +
+      "\023skip_jovan_cutscene\030\003 \001(\010\"\201\002\n\rCheatSett" +
+      "ings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_all" +
+      "_scans\030\002 \001(\010\022\030\n\020wandering_humans\030\003 \001(\010\022\033" +
+      "\n\023start_self_destruct\030\004 \001(\010\022\033\n\023self_dest" +
+      "ruct_timer\030\005 \001(\t\022#\n\033self_destruct_shuttl" +
+      "e_timer\030\006 \001(\t\022\037\n\027zero_gravity_everywhere" +
+      "\030\007 \001(\010\022&\n\036enable_gravity_in_ext_and_guts" +
+      "\030\010 \001(\010\"`\n\030GenericSpawnPresetFilter\022\014\n\004na" +
+      "me\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132" +
+      "\027.GenericSpawnPresetRule\"\220\001\n\026GenericSpaw" +
+      "nPresetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013outpu" +
+      "t_tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021" +
+      "do_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_output" +
+      "_tags\030\005 \003(\tB\033\n\005protoB\022RandomizerSettings" +
+      "b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11249,7 +11652,7 @@ public final class RandomizerSettings {
     internal_static_StoryProgressionSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_StoryProgressionSettings_descriptor,
-        new java.lang.String[] { "RandomizeStation", });
+        new java.lang.String[] { "RandomizeStation", "UseCustomSpawn", "CustomSpawnLocation", });
     internal_static_GameStartSettings_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_GameStartSettings_fieldAccessorTable = new

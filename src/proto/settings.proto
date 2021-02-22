@@ -47,6 +47,24 @@ message NeuromodSettings {
 
 message StoryProgressionSettings {
   bool randomize_station = 1;
+  bool use_custom_spawn = 2;
+  enum SpawnLocation {
+	NONE = 0;
+	RANDOM = 1;
+	LOBBY = 2;
+	HARDWARE_LABS = 3;
+	PSYCHOTRONICS= 4;
+	GUTS = 5;
+	ARBORETUM = 6;
+	BRIDGE = 7;
+	CREW_QUARTERS = 8;
+	DEEP_STORAGE = 9;
+	CARGO_BAY = 10;
+	LIFE_SUPPORT = 11;
+	POWER_PLANT = 12;
+	SHUTTLE_BAY = 13;
+  }
+  SpawnLocation custom_spawn_location = 3;
 }
 
 message GameStartSettings {

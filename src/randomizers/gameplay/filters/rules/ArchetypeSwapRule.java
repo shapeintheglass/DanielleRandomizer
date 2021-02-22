@@ -42,9 +42,6 @@ public class ArchetypeSwapRule implements Rule {
   public void apply(Element e, Random r, String filename) {
     Element toSwap = crh.getEntityToSwap(database, r);
     String newArchetype = Utils.getNameForEntity(toSwap);
-    if (filename.equals("station/exterior")) {
-      System.out.printf("\t\tChanging archetype %s --> %s\n", e.getAttributeValue("Archetype"), newArchetype);
-    }
     Set<String> tags = Utils.getTags(toSwap);
 
     // Adjust multiplier quantity if this entity has a count override
@@ -55,14 +52,8 @@ public class ArchetypeSwapRule implements Rule {
         if (tags.contains("ArkPickups") && !iCountOverride.equals("0") && !iCountOverride.equals("1")) {
           int quantity = ItemMultiplierHelper.getMultiplierForEntity(toSwap, r);
           properties2.setAttribute("iCountOverride", Integer.toString(quantity));
-          if (filename.equals("station/exterior")) {
-            System.out.printf("\t\tAdjusting count override %s --> %d\n", iCountOverride, quantity);
-          }
         } else {
           properties2.setAttribute("iCountOverride", "0");
-          if (filename.equals("station/exterior")) {
-            System.out.printf("\t\tAdjusting count override %s --> %d\n", iCountOverride, 0);
-          }
         }
       }
     }

@@ -20,7 +20,8 @@ public final class StationConnectivityConsts {
     NEUROMOD_DIVISION,
     POWER_PLANT,
     PSYCHOTRONICS,
-    SHUTTLE_BAY
+    SHUTTLE_BAY,
+    DEEP_STORAGE
   }
 
   public static enum Door {
@@ -41,7 +42,11 @@ public final class StationConnectivityConsts {
     ARBORETUM_GUTS_EXIT,
     ARBORETUM_BRIDGE_EXIT,
     ARBORETUM_LOBBY_EXIT,
+    ARBORETUM_CREW_QUARTERS_EXIT,
+    ARBORETUM_DEEP_STORAGE_EXIT,
     BRIDGE_ARBORETUM_EXIT,
+    CREW_QUARTERS_ARBORETUM_EXIT,
+    DEEP_STORAGE_ARBORETUM_EXIT,
     CARGO_BAY_GUTS_EXIT,
     CARGO_BAY_LIFE_SUPPORT_EXIT,
     LIFE_SUPPORT_CARGO_BAY_EXIT,
@@ -49,9 +54,7 @@ public final class StationConnectivityConsts {
     LIFE_SUPPORT_POWER_PLANT_EXIT,
     POWER_PLANT_LIFE_SUPPORT_EXIT,
     LOBBY_HARDWARE_LABS_EXIT,
-    HARDWARE_LABS_LOBBY_EXIT,
-    ARBORETUM_CREW_QUARTERS_EXIT,
-    CREW_QUARTERS_ARBORETUM_EXIT
+    HARDWARE_LABS_LOBBY_EXIT
   }
   
   public static final ImmutableSet<Door> LIFT_DOORS = 
@@ -68,7 +71,7 @@ public final class StationConnectivityConsts {
           .put(Level.BRIDGE, "executive/bridge")
           .put(Level.CARGO_BAY, "engineering/cargobay")
           .put(Level.CREW_QUARTERS, "executive/crewfacilities")
-          //.put(Level.DEEP_STORAGE, "executive/corporateit")
+          .put(Level.DEEP_STORAGE, "executive/corporateit")
           .put(Level.GUTS, "research/zerog_utilitytunnels")
           .put(Level.HARDWARE_LABS, "research/prototype")
           .put(Level.LIFE_SUPPORT, "engineering/lifesupport")
@@ -79,30 +82,13 @@ public final class StationConnectivityConsts {
           .put(Level.SHUTTLE_BAY, "research/shuttlebay")
           .build();
 
-  // Map of level to level id
-  public static final ImmutableBiMap<Level, String> LEVELS_TO_IDS =
-      new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "1713490239386284818")
-          .put(Level.BRIDGE, "844024417275035158")
-          .put(Level.CARGO_BAY, "15659330456296333985")
-          .put(Level.CREW_QUARTERS, "844024417252490146")
-          // .put(Level.DEEP_STORAGE, "1713490239377738413")
-          .put(Level.GUTS, "4349723564886052417")
-          .put(Level.HARDWARE_LABS, "844024417263019221")
-          .put(Level.LIFE_SUPPORT, "4349723564895209499")
-          .put(Level.LOBBY, "1713490239377285936")
-          .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
-          .put(Level.POWER_PLANT, "6732635291182790112")
-          .put(Level.PSYCHOTRONICS, "11824555372632688907")
-          .put(Level.SHUTTLE_BAY, "1713490239386284988")
-          .build();
-
   // Map of level to associated spawn name
   public static final ImmutableBiMap<Level, String> LEVELS_TO_DESTINATIONS =
       new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "From_Arboretum")
           .put(Level.BRIDGE, "From_Bridge")
           .put(Level.CARGO_BAY, "From_CargoBay")
           .put(Level.CREW_QUARTERS, "From_CrewFacilities")
-          // .put(Level.DEEP_STORAGE, "From_CorporateIT")
+          .put(Level.DEEP_STORAGE, "From_CorporateIT")
           .put(Level.GUTS, "From_ZeroG_UtilityTunnels")
           .put(Level.HARDWARE_LABS, "From_Prototype")
           .put(Level.LIFE_SUPPORT, "From_LifeSupport")
@@ -118,14 +104,14 @@ public final class StationConnectivityConsts {
       new ImmutableMap.Builder<Door, String>()
           .put(Door.ARBORETUM_BRIDGE_EXIT, "Door.Door_LevelTransition_Default5")
           .put(Door.ARBORETUM_CREW_QUARTERS_EXIT, "Door.Door_LevelTransition_Default1")
-          // .put(Door.ARBORETUM_DEEP_STORAGE_EXIT, "Door.Door_LevelTransition_Default8")
+          .put(Door.ARBORETUM_DEEP_STORAGE_EXIT, "Door.Door_LevelTransition_Default8")
           .put(Door.ARBORETUM_GUTS_EXIT, "Door.Door_LevelTransition_Default3")
           .put(Door.ARBORETUM_LOBBY_EXIT, "Door.Door_LevelTransition_Default6")
           .put(Door.BRIDGE_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default1")
           .put(Door.CARGO_BAY_GUTS_EXIT, "Door.Door_LevelTransition_Exterior1")
           .put(Door.CARGO_BAY_LIFE_SUPPORT_EXIT, "Door.Door_LevelTransition_Default2")
           .put(Door.CREW_QUARTERS_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default1")
-          // .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default2")
+          .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default2")
           .put(Door.GUTS_ARBORETUM_EXIT, "Door.Door_LevelTransition_Default3")
           .put(Door.GUTS_CARGO_BAY_EXIT, "Door.Door_LevelTransition_Exterior1")
           .put(Door.GUTS_PSYCHOTRONICS_EXIT, "Door.Door_LevelTransition_Default1")
@@ -151,14 +137,14 @@ public final class StationConnectivityConsts {
   public static final ImmutableMap<Door, String> DOORS_TO_SPAWNS =
       new ImmutableMap.Builder<Door, String>().put(Door.ARBORETUM_BRIDGE_EXIT, "SpawnFromLobby2")
           .put(Door.ARBORETUM_CREW_QUARTERS_EXIT, "SpawnPoint3")
-          // .put(Door.ARBORETUM_DEEP_STORAGE_EXIT, "SpawnPoint2")
+          .put(Door.ARBORETUM_DEEP_STORAGE_EXIT, "SpawnPoint2")
           .put(Door.ARBORETUM_GUTS_EXIT, "SpawnFromGUTs")
           .put(Door.ARBORETUM_LOBBY_EXIT, "SpawnFromLobby")
           .put(Door.BRIDGE_ARBORETUM_EXIT, "SpawnPoint1")
           .put(Door.CARGO_BAY_GUTS_EXIT, "SpawnPoint11")
           .put(Door.CARGO_BAY_LIFE_SUPPORT_EXIT, "SpawnPoint3")
           .put(Door.CREW_QUARTERS_ARBORETUM_EXIT, "SpawnPoint1")
-          // .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, "switch")
+          .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, "switch")
           .put(Door.GUTS_ARBORETUM_EXIT, "SpawnPoint2")
           .put(Door.GUTS_CARGO_BAY_EXIT, "SpawnPoint4")
           .put(Door.GUTS_PSYCHOTRONICS_EXIT, "SpawnPoint5")
@@ -185,14 +171,14 @@ public final class StationConnectivityConsts {
   public static final ImmutableMultimap<Level, Door> LEVELS_TO_DOORS =
       new ImmutableMultimap.Builder<Level, Door>().put(Level.ARBORETUM, Door.ARBORETUM_BRIDGE_EXIT)
           .put(Level.ARBORETUM, Door.ARBORETUM_CREW_QUARTERS_EXIT)
-          // .put(Level.ARBORETUM, Door.ARBORETUM_DEEP_STORAGE_EXIT)
+          .put(Level.ARBORETUM, Door.ARBORETUM_DEEP_STORAGE_EXIT)
           .put(Level.ARBORETUM, Door.ARBORETUM_GUTS_EXIT)
           .put(Level.ARBORETUM, Door.ARBORETUM_LOBBY_EXIT)
           .put(Level.BRIDGE, Door.BRIDGE_ARBORETUM_EXIT)
           .put(Level.CARGO_BAY, Door.CARGO_BAY_GUTS_EXIT)
           .put(Level.CARGO_BAY, Door.CARGO_BAY_LIFE_SUPPORT_EXIT)
           .put(Level.CREW_QUARTERS, Door.CREW_QUARTERS_ARBORETUM_EXIT)
-          // .put(Level.DEEP_STORAGE, Door.DEEP_STORAGE_ARBORETUM_EXIT)
+          .put(Level.DEEP_STORAGE, Door.DEEP_STORAGE_ARBORETUM_EXIT)
           .put(Level.GUTS, Door.GUTS_ARBORETUM_EXIT)
           .put(Level.GUTS, Door.GUTS_CARGO_BAY_EXIT)
           .put(Level.GUTS, Door.GUTS_PSYCHOTRONICS_EXIT)
@@ -220,14 +206,14 @@ public final class StationConnectivityConsts {
       new ImmutableBiMap.Builder<Door, Door>()
           .put(Door.ARBORETUM_BRIDGE_EXIT, Door.BRIDGE_ARBORETUM_EXIT)
           .put(Door.ARBORETUM_CREW_QUARTERS_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT)
-          // .put(Door.ARBORETUM_DEEP_STORAGE_EXIT, Door.DEEP_STORAGE_ARBORETUM_EXIT)
+          .put(Door.ARBORETUM_DEEP_STORAGE_EXIT, Door.DEEP_STORAGE_ARBORETUM_EXIT)
           .put(Door.ARBORETUM_GUTS_EXIT, Door.GUTS_ARBORETUM_EXIT)
           .put(Door.ARBORETUM_LOBBY_EXIT, Door.LOBBY_ARBORETUM_EXIT)
           .put(Door.BRIDGE_ARBORETUM_EXIT, Door.ARBORETUM_BRIDGE_EXIT)
           .put(Door.CARGO_BAY_GUTS_EXIT, Door.GUTS_CARGO_BAY_EXIT)
           .put(Door.CARGO_BAY_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_CARGO_BAY_EXIT)
           .put(Door.CREW_QUARTERS_ARBORETUM_EXIT, Door.ARBORETUM_CREW_QUARTERS_EXIT)
-          // .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT)
+          .put(Door.DEEP_STORAGE_ARBORETUM_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT)
           .put(Door.GUTS_ARBORETUM_EXIT, Door.ARBORETUM_GUTS_EXIT)
           .put(Door.GUTS_CARGO_BAY_EXIT, Door.CARGO_BAY_GUTS_EXIT)
           .put(Door.GUTS_PSYCHOTRONICS_EXIT, Door.PSYCHOTRONICS_GUTS_EXIT)
@@ -253,7 +239,7 @@ public final class StationConnectivityConsts {
   public static final ImmutableList<Door> SINGLE_CONNECTIONS =
       ImmutableList.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
           Door.POWER_PLANT_LIFE_SUPPORT_EXIT);
-
+  
   public static final ImmutableList<Door> LIFT_LOBBY_SIDE =
       ImmutableList.of(Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LOBBY_ARBORETUM_EXIT);
   public static final ImmutableList<Door> LIFT_NOT_LOBBY_SIDE =

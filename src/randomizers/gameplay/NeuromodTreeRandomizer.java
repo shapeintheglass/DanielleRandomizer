@@ -68,7 +68,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private static final boolean[][] LAYOUT_SEVEN = { { true, true, true, true, true, true, true } };
 
   private static final ImmutableList<String> PSI_APTITIUDE_IDS = ImmutableList.of("3149325216929347148",
-      "3149325216929347150", "3149325216929347152");
+      "3149325216929347150", "3149325216929347152", "3149325216929347147", "3149325216977824648");
 
   // If we recalculate neuromod costs, pull a random int from the appropriate set.
   private static final ImmutableIntArray COLUMN_ONE_COSTS = ImmutableIntArray.of(1, 1, 2, 2, 3);

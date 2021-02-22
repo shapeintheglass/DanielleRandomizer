@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
@@ -34,10 +33,11 @@ import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
 import randomizers.generators.BookInfoHelper;
+import randomizers.generators.BookInfoHelper.Book;
+import randomizers.generators.CustomSpawnGenerator;
 import randomizers.generators.NightmareHelper;
 import randomizers.generators.SelfDestructTimerHelper;
 import randomizers.generators.StationGenerator;
-import randomizers.generators.BookInfoHelper.Book;
 import utils.Utils;
 import utils.ZipHelper;
 
@@ -123,8 +123,7 @@ public class RandomizerService extends Service<Void> {
       tempDir.toFile().mkdir();
       tempLevelDir.toFile().mkdir();
       tempPatchDir.toFile().mkdir();
-      Optional<Installer> installer = initInstaller(finalSettings, tempDir, tempLevelDir, tempPatchDir, zipHelper);
-      if (!installer.isPresent()) {
+      if (!sanityChecks(finalSettings, tempPatchDir)) {
         writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
         return false;
       }
@@ -132,12 +131,14 @@ public class RandomizerService extends Service<Void> {
       // Copy over dependencies files for certain settings
       copyDependencies(finalSettings, tempPatchDir);
 
-      executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
+      String spawnLocation = executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
       zipHelper.closeOutputZips();
 
       try {
         writeLine(Gui2Consts.INSTALL_PROGRESS_WRITING);
-        installer.get().install();
+        Path installDir = Paths.get(finalSettings.getInstallDir());
+        Installer installer = new Installer(installDir, tempLevelDir, tempPatchDir, spawnLocation);
+        installer.install();
       } catch (IOException | InterruptedException e) {
         writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
         e.printStackTrace();
@@ -163,31 +164,27 @@ public class RandomizerService extends Service<Void> {
     return tempDir;
   }
 
-  private Optional<Installer> initInstaller(Settings currentSettings, Path tempDir, Path tempLevelDir,
-      Path tempPatchDir, ZipHelper zipHelper) {
+  private boolean sanityChecks(Settings currentSettings, Path tempPatchDir) {
     Path installDir = Paths.get(currentSettings.getInstallDir());
-
-    // Initialize install
-    Installer installer = new Installer(installDir, tempLevelDir, tempPatchDir, currentSettings);
-    if (!installer.verifyDataExists()) {
+    if (!Installer.verifyDataExists(logger)) {
       writeLine(Gui2Consts.INSTALL_ERROR_DATA_NOT_FOUND);
-      return Optional.absent();
+      return false;
     }
-    if (!installer.verifyInstallDir()) {
+    if (!Installer.verifyInstallDir(logger, installDir)) {
       writeLine(Gui2Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER);
-      return Optional.absent();
+      return false;
     }
-    if (!installer.testInstall()) {
+    if (!Installer.testInstall(logger, tempPatchDir.resolve(Installer.PATCH_NAME).toFile())) {
       writeLine(Gui2Consts.INSTALL_ERROR_CANNOT_WRITE);
-      return Optional.absent();
+      return false;
     }
-    return Optional.of(installer);
+    return true;
   }
 
-  private void executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
+  private String executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
     TaggedDatabase database = EntityDatabase.getInstance(zipHelper);
     if (database == null) {
-      return;
+      return null;
     }
 
     writeLine(SettingsHelper.settingsToString(currentSettings));
@@ -253,10 +250,19 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
     }
 
+    CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator(currentSettings.getStoryProgressionSettings()
+        .getCustomSpawnLocation(), zipHelper, Utils.stringToLong(currentSettings.getSeed()));
+
+    if (currentSettings.getStoryProgressionSettings().getUseCustomSpawn()) {
+      logger.info(String.format("Setting custom spawn to %s", customSpawnGenerator.getLocation()));
+      customSpawnGenerator.swapLocationId();
+    }
+
     if (currentSettings.getStoryProgressionSettings().getRandomizeStation()) {
-      StationGenerator stationGenerator = new StationGenerator(Utils.stringToLong(currentSettings.getSeed()));
+      StationGenerator stationGenerator = new StationGenerator(Utils.stringToLong(currentSettings.getSeed()),
+          customSpawnGenerator.getLevelsToIds());
       StationConnectivityFilter connectivity = new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
-          stationGenerator.getSpawnConnectivity());
+          stationGenerator.getSpawnConnectivity(), customSpawnGenerator.getLevelsToIds());
       String connectivityInfo = stationGenerator.toString();
       Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
       Map<String, Book> toOverwrite = Maps.newHashMap();
@@ -266,7 +272,7 @@ public class RandomizerService extends Service<Void> {
       bih.installNewBooks(toOverwrite);
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
-    
+
     if (currentSettings.getCheatSettings().getEnableGravityInExtAndGuts()) {
       levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());
     }
@@ -274,6 +280,8 @@ public class RandomizerService extends Service<Void> {
     writeLine(Gui2Consts.INSTALL_PROGRESS_LEVELS);
     levelRandomizer.randomize();
     writeLine("Done processing level files.");
+
+    return customSpawnGenerator.getNewSpawnLocation();
   }
 
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {
@@ -287,7 +295,8 @@ public class RandomizerService extends Service<Void> {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES, tempPatchDir);
     }
 
-    if (settings.getStoryProgressionSettings().getRandomizeStation() || settings.getCheatSettings().getStartSelfDestruct()) {
+    if (settings.getStoryProgressionSettings().getRandomizeStation() || settings.getCheatSettings()
+        .getStartSelfDestruct()) {
       copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES, tempPatchDir);
     }
   }

@@ -43,6 +43,7 @@ public class ZipHelper {
   public static final String AI_TREE_UNARMED_HUMANS = "ark/ai/aitrees/unarmedhumanaitree.xml";
 
   public static final String BOOKS_XML = "ark/campaign/books.xml";
+  public static final String LOCATIONS_XML = "ark/campaign/locations.xml";
 
   public static final String VOICES_PATH = "ark/dialog/voices";
   public static final String DIALOGIC_PATH = "ark/dialog/dialoglogic";

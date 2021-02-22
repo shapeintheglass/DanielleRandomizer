@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
 
-import proto.RandomizerSettings.Settings;
 import utils.LevelConsts;
 import utils.ZipHelper;
 
@@ -23,7 +22,7 @@ public class Installer {
   private static final String BACKUP_LEVEL_PAK_NAME = "level_backup.pak";
   private static final String INSTALL_LOCATION = "GameSDK\\Precache";
 
-  private static final String PATCH_NAME = "patch_randomizer.pak";
+  public static final String PATCH_NAME = "patch_randomizer.pak";
 
   private File patchFile;
   private Logger logger;
@@ -32,16 +31,19 @@ public class Installer {
   private Path tempPatchDir;
   private Path tempLevelDir;
 
+  private String spawnLocation;
+
   /**
    * Initialize the installer.
    * 
    * @param installDir Prey install location
    * @param tempDir Where to store temporary files
    */
-  public Installer(Path installDir, Path tempLevelDir, Path tempPatchDir, Settings settings) {
+  public Installer(Path installDir, Path tempLevelDir, Path tempPatchDir, String spawnLocation) {
     this.installDir = installDir;
     this.tempLevelDir = tempLevelDir;
     this.tempPatchDir = tempPatchDir;
+    this.spawnLocation = spawnLocation;
 
     patchFile = installDir.resolve(INSTALL_LOCATION).resolve(PATCH_NAME).toFile();
     logger = Logger.getLogger("Installer");
@@ -60,19 +62,19 @@ public class Installer {
     logger.info("Done installing! Have a nice day.");
   }
 
-  public boolean verifyInstallDir() {
+  public static boolean verifyInstallDir(Logger logger, Path installDir) {
     logger.info("Verifying install directory...");
     return installDir.resolve(INSTALL_LOCATION).toFile().exists() && installDir.resolve(LevelConsts.PREFIX)
         .toFile()
         .exists();
   }
 
-  public boolean verifyDataExists() {
+  public static boolean verifyDataExists(Logger logger) {
     logger.info("Verifying existence of data/ folder...");
     return Paths.get(ZipHelper.DATA_PAK).toFile().exists();
   }
 
-  public boolean testInstall() {
+  public static boolean testInstall(Logger logger, File patchFile) {
     logger.info("Verifying ability to install randomizer mod...");
     try {
       patchFile.createNewFile();
@@ -135,16 +137,20 @@ public class Installer {
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
 
-      if (levelDir.equals("research/simulationlabs")) {
-        levelDir = "research/shuttlebay";
-      } else if (levelDir.equals("research/lobby")) {
-        levelDir = "research/shuttlebay";
+      Path sourcePak = tempLevelDir.resolve(levelDir).resolve(ZipHelper.LEVEL_OUTPUT_PAK);
+      
+      // Swap spawn location if applicable
+      String destLevelDir = levelDir;
+      if (spawnLocation != null && levelDir.equals(spawnLocation)) {
+        logger.info(String.format("Installing %s in place of sim labs", spawnLocation));
+        destLevelDir = "research/simulationlabs";
+      } else if (spawnLocation != null && levelDir.equals("research/simulationlabs")) {
+        logger.info(String.format("Installing sim labs in place of %s", spawnLocation));
+        destLevelDir = spawnLocation;
       }
 
       // Copy zip over to final destination
-      Path sourcePak = tempLevelDir.resolve(levelDir).resolve(ZipHelper.LEVEL_OUTPUT_PAK);
-
-      Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
+      Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(destLevelDir).resolve(LEVEL_PAK_NAME);
       Files.copy(sourcePak, levelPak, StandardCopyOption.REPLACE_EXISTING);
       logger.info(String.format("Installed level file %s (%d/%d)", levelPak, i + 1, LevelConsts.LEVEL_DIRS.length));
     }

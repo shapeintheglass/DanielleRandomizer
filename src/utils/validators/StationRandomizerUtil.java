@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.graph.EndpointPair;
 import com.google.common.graph.ImmutableNetwork;
@@ -18,16 +19,15 @@ import utils.StationConnectivityConsts.Level;
 
 public class StationRandomizerUtil {
 
-
   private static final int NUM_ITERATIONS = 1000;
 
   public static void main(String[] args) {
     Map<Level, Map<Level, Integer>> levelCounts = new HashMap<Level, Map<Level, Integer>>();
     Map<Door, Map<Door, Integer>> doorCounts = new HashMap<Door, Map<Door, Integer>>();
 
-    List<Level> levelsAlphabetized = Lists.newArrayList(Level.values());
+    List<Level> levelsAlphabetized = Lists.newArrayList(StationGenerator.LEVELS_TO_PROCESS);
     Collections.sort(levelsAlphabetized);
-    List<Door> doorsAlphabetized = Lists.newArrayList(Door.values());
+    List<Door> doorsAlphabetized = Lists.newArrayList(StationGenerator.DOORS_TO_PROCESS);
     Collections.sort(doorsAlphabetized);
 
     for (Level l : levelsAlphabetized) {
@@ -40,8 +40,25 @@ public class StationRandomizerUtil {
 
     Random r = new Random();
 
+    
+    ImmutableBiMap<Level, String> levelsToIds = new ImmutableBiMap.Builder<Level, String>()
+        .put(Level.ARBORETUM, "1713490239386284818")
+        .put(Level.BRIDGE, "844024417275035158")
+        .put(Level.CARGO_BAY, "15659330456296333985")
+        .put(Level.CREW_QUARTERS, "844024417252490146")
+        .put(Level.DEEP_STORAGE, "1713490239377738413")
+        .put(Level.GUTS, "4349723564886052417")
+        .put(Level.HARDWARE_LABS, "844024417263019221")
+        .put(Level.LIFE_SUPPORT, "4349723564895209499")
+        .put(Level.LOBBY, "1713490239377285936")
+        .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
+        .put(Level.POWER_PLANT, "6732635291182790112")
+        .put(Level.PSYCHOTRONICS, "11824555372632688907")
+        .put(Level.SHUTTLE_BAY, "1713490239386284988")
+        .build();
+
     for (int i = 0; i < NUM_ITERATIONS; i++) {
-      StationGenerator connectivity = new StationGenerator(r.nextLong());
+      StationGenerator connectivity = new StationGenerator(r.nextLong(), levelsToIds);
       ImmutableNetwork<Level, Door> network = connectivity.getNetwork();
 
       for (Level l : levelsAlphabetized) {
@@ -54,8 +71,7 @@ public class StationRandomizerUtil {
 
       for (Door d : doorsAlphabetized) {
         EndpointPair<Level> connection = network.incidentNodes(d);
-        Optional<Door> parallelDoor =
-            network.edgeConnecting(connection.nodeV(), connection.nodeU());
+        Optional<Door> parallelDoor = network.edgeConnecting(connection.nodeV(), connection.nodeU());
         if (parallelDoor.isPresent()) {
           Door n = parallelDoor.get();
           int initialCount = doorCounts.get(d).containsKey(n) ? doorCounts.get(d).get(n) : 0;

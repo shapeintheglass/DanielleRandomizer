@@ -51,6 +51,9 @@ public class SettingsHelper {
     if (settings.getStoryProgressionSettings().getRandomizeStation()) {
       builder.append(String.format("\t* Randomize station\n"));
     }
+    if (settings.getStoryProgressionSettings().getUseCustomSpawn()) {
+      builder.append(String.format("\t* Start location: %s\n", settings.getStoryProgressionSettings().getCustomSpawnLocation().name()));
+    }
 
     if (settings.getGameStartSettings().getStartOnSecondDay()) {
       builder.append(String.format("\t* Start on second day\n"));

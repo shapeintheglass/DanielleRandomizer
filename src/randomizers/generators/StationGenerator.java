@@ -1,7 +1,6 @@
 package randomizers.generators;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +13,8 @@ import java.util.logging.Logger;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.guava.MutableNetworkAdapter;
 
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -28,7 +29,21 @@ import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
 
 public class StationGenerator {
-  
+
+  public static final ImmutableList<Door> DOORS_TO_PROCESS = ImmutableList.of(Door.NEUROMOD_DIVISION_LOBBY_EXIT,
+      Door.LOBBY_NEUROMOD_DIVISION_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT,
+      Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT, Door.PSYCHOTRONICS_LOBBY_EXIT,
+      Door.PSYCHOTRONICS_GUTS_EXIT, Door.SHUTTLE_BAY_LOBBY_EXIT, Door.SHUTTLE_BAY_GUTS_EXIT,
+      Door.GUTS_PSYCHOTRONICS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT, Door.GUTS_CARGO_BAY_EXIT, Door.GUTS_ARBORETUM_EXIT,
+      Door.ARBORETUM_GUTS_EXIT, Door.ARBORETUM_BRIDGE_EXIT, Door.ARBORETUM_LOBBY_EXIT,
+      Door.ARBORETUM_CREW_QUARTERS_EXIT, Door.BRIDGE_ARBORETUM_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT,
+      Door.CARGO_BAY_GUTS_EXIT, Door.CARGO_BAY_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_CARGO_BAY_EXIT,
+      Door.LIFE_SUPPORT_LOBBY_EXIT, Door.LIFE_SUPPORT_POWER_PLANT_EXIT, Door.POWER_PLANT_LIFE_SUPPORT_EXIT,
+      Door.LOBBY_HARDWARE_LABS_EXIT, Door.HARDWARE_LABS_LOBBY_EXIT);
+  public static final ImmutableList<Level> LEVELS_TO_PROCESS = ImmutableList.of(Level.ARBORETUM, Level.BRIDGE,
+      Level.CARGO_BAY, Level.CREW_QUARTERS, Level.GUTS, Level.HARDWARE_LABS, Level.LIFE_SUPPORT, Level.LOBBY,
+      Level.NEUROMOD_DIVISION, Level.POWER_PLANT, Level.PSYCHOTRONICS, Level.SHUTTLE_BAY);
+
   private static final int UNLOCK_ATTEMPTS = 10;
   private static final int MAX_ATTEMPTS = 100;
   // Map of filename to door name to location id
@@ -41,9 +56,11 @@ public class StationGenerator {
   private Logger logger;
   private Random r;
   private long seed;
-  
-  public StationGenerator(long seed) {
+  ImmutableBiMap<Level, String> levelsToIds;
+
+  public StationGenerator(long seed, ImmutableBiMap<Level, String> levelsToIds) {
     this.seed = seed;
+    this.levelsToIds = levelsToIds;
     r = new Random(seed);
     logger = Logger.getLogger("StationConnectivity");
 
@@ -63,7 +80,7 @@ public class StationGenerator {
       }
     }
   }
-  
+
   public ImmutableNetwork<Level, Door> getNetwork() {
     return network;
   }
@@ -79,9 +96,12 @@ public class StationGenerator {
   public String getDebugData() {
     StringBuilder sb = new StringBuilder();
     sb.append("CONNECTIVITY DEBUG DATA:\n");
-    for (Level l : Level.values()) {
+    for (Level l : LEVELS_TO_PROCESS) {
       String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);
       for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
+        if (!DOORS_TO_PROCESS.contains(d)) {
+          continue;
+        }
         String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
         if (doorName == null) {
           logger.warning(String.format("Door name not found for door %s", d.toString()));
@@ -94,7 +114,7 @@ public class StationGenerator {
         if (doorValue == null) {
           logger.warning(String.format("Door value not found for door %s, level %s", d.toString(), levelName));
         }
-        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String doorValueReadable = levelsToIds.inverse().get(doorValue).toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
             .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d))
             .toString();
@@ -111,14 +131,17 @@ public class StationGenerator {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("Connectivity for Deep Storage and the Exterior are not affected.\n");
-    for (Level l : Level.values()) {
+    for (Level l : LEVELS_TO_PROCESS) {
       String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);
       sb.append(String.format("%s:\n", l));
       for (Door d : StationConnectivityConsts.LEVELS_TO_DOORS.get(l)) {
+        if (!DOORS_TO_PROCESS.contains(d)) {
+          continue;
+        }
         String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
         String spawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(d);
         String doorValue = doorConnectivity.get(levelName).get(doorName);
-        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String doorValueReadable = levelsToIds.inverse().get(doorValue).toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
             .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d))
             .toString();
@@ -136,16 +159,16 @@ public class StationGenerator {
     doorConnectivity = new HashMap<String, Map<String, String>>();
     spawnConnectivity = new HashMap<String, Map<String, String>>();
     // Initialize with blank maps
-    for (Level l : Level.values()) {
+    for (Level l : LEVELS_TO_PROCESS) {
       doorConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
       spawnConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
     }
 
-    for (Level fromLevel : Level.values()) {
+    for (Level fromLevel : LEVELS_TO_PROCESS) {
       // Destination name coming from this level
       String fromDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(fromLevel);
       // Location ID of this level
-      String fromLocationId = StationConnectivityConsts.LEVELS_TO_IDS.get(fromLevel);
+      String fromLocationId = levelsToIds.get(fromLevel);
 
       // Iterate through all of its neighbors
       for (Level toLevel : network.successors(fromLevel)) {
@@ -159,7 +182,7 @@ public class StationGenerator {
         // Shorthand destination name to use when spawning from the neighbor
         String toDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(toLevel);
         // Location ID of the neighbor
-        String toLocationId = StationConnectivityConsts.LEVELS_TO_IDS.get(toLevel);
+        String toLocationId = levelsToIds.get(toLevel);
 
         // Spawn point name in this level
         String fromLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(fromDoor);
@@ -183,7 +206,7 @@ public class StationGenerator {
         .allowsSelfLoops(false)
         .build();
 
-    for (Level l : Level.values()) {
+    for (Level l : LEVELS_TO_PROCESS) {
       station.addNode(l);
     }
 
@@ -192,7 +215,7 @@ public class StationGenerator {
     connectionsToProcess.addAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
-    Arrays.stream(Door.values()).forEach(door -> {
+    DOORS_TO_PROCESS.stream().forEach(door -> {
       if (!connectionsToProcess.contains(door)) {
         connectionsToProcess.add(door);
       }
@@ -288,7 +311,7 @@ public class StationGenerator {
     }
 
     // Put into a deterministic order
-    List<Door> remaining =  Lists.newArrayList(validConnections);
+    List<Door> remaining = Lists.newArrayList(validConnections);
     Collections.sort(remaining);
     return remaining;
   }
@@ -375,15 +398,31 @@ public class StationGenerator {
 
   public static void main(String[] args) {
 
-    long seed = new Random().nextLong();
-    StationGenerator sg = new StationGenerator(seed);
+    ImmutableBiMap<Level, String> levelsToIds = new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM,
+        "1713490239386284818")
+        .put(Level.BRIDGE, "844024417275035158")
+        .put(Level.CARGO_BAY, "15659330456296333985")
+        .put(Level.CREW_QUARTERS, "844024417252490146")
+        .put(Level.DEEP_STORAGE, "1713490239377738413")
+        .put(Level.GUTS, "4349723564886052417")
+        .put(Level.HARDWARE_LABS, "844024417263019221")
+        .put(Level.LIFE_SUPPORT, "4349723564895209499")
+        .put(Level.LOBBY, "1713490239377285936")
+        .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
+        .put(Level.POWER_PLANT, "6732635291182790112")
+        .put(Level.PSYCHOTRONICS, "11824555372632688907")
+        .put(Level.SHUTTLE_BAY, "1713490239386284988")
+        .build();
+
+    Random r = new Random();
+    long seed = r.nextLong();
+    StationGenerator sg = new StationGenerator(seed, levelsToIds);
     String station1 = sg.toString();
-    
-    StationGenerator sg2 = new StationGenerator(seed);
+
+    StationGenerator sg2 = new StationGenerator(seed, levelsToIds);
     String station2 = sg2.toString();
     System.out.println(station1);
     System.out.println(station2);
     System.out.println(station1.equals(station2));
-
   }
 }
