@@ -253,6 +253,7 @@ public class WindowController {
     gotsPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"timed\" experience."));
 
     itemsCheckboxMoreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
+    itemsCheckboxFabPlanCosts.setTooltip(new Tooltip("Sets the materials costs for every fab plan to random values."));
 
     installButton.setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
     uninstallButton.setTooltip(new Tooltip(

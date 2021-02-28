@@ -104,12 +104,11 @@
                                           <VBox fx:id="itemsOptions" prefHeight="281.0" prefWidth="335.0" spacing="15.0" />
                                        </content>
                                     </ScrollPane>
-                                    <VBox prefHeight="352.0" prefWidth="166.0" spacing="15.0">
+                                    <VBox prefHeight="291.0" prefWidth="202.0" spacing="15.0">
                                        <children>
                                           <Label text="Other options:" />
                                           <CheckBox fx:id="itemsCheckboxMoreGuns" mnemonicParsing="false" text="More guns" />
-                                          <CheckBox fx:id="itemsCheckboxLootTables" mnemonicParsing="false" text="Randomize loot tables" visible="false" />
-                                          <CheckBox fx:id="itemsCheckboxFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" visible="false" />
+                                          <CheckBox fx:id="itemsCheckboxFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="50.0" />

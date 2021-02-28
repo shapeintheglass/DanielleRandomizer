@@ -1,7 +1,6 @@
 package randomizers.gameplay;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,17 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.ImmutableIntArray;
-
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.ZipHelper;
@@ -81,7 +77,7 @@ public class NeuromodTreeRandomizer extends BaseRandomizer {
   private Document abilitiesDoc;
   private Document layoutDoc;
 
-  public NeuromodTreeRandomizer(Settings s, Path tempPatchDir, ZipHelper zipHelper) {
+  public NeuromodTreeRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
     unlockAllScans = s.getCheatSettings().getUnlockAllScans();
     abilityIdToAbility = new HashMap<>();

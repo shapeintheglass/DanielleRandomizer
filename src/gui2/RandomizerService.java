@@ -7,10 +7,8 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
@@ -22,6 +20,7 @@ import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.MusicRandomizer;
 import randomizers.cosmetic.PlayerModelRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
+import randomizers.gameplay.FabPlanCostRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
@@ -214,9 +213,9 @@ public class RandomizerService extends Service<Void> {
     /* GAMEPLAY, NON-LEVEL */
     if (currentSettings.getNeuromodSettings().getRandomizeNeuromods()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_NEUROMOD);
-      new NeuromodTreeRandomizer(currentSettings, tempPatchDir, zipHelper).randomize();
+      new NeuromodTreeRandomizer(currentSettings, zipHelper).randomize();
     } else if (currentSettings.getCheatSettings().getUnlockAllScans()) {
-      new NeuromodTreeRandomizer(currentSettings, tempPatchDir, zipHelper).unlockAllScans();
+      new NeuromodTreeRandomizer(currentSettings, zipHelper).unlockAllScans();
     }
 
     try {
@@ -224,6 +223,11 @@ public class RandomizerService extends Service<Void> {
       new LootTableRandomizer(database, currentSettings, tempPatchDir, zipHelper).randomize();
     } catch (IOException e) {
       e.printStackTrace();
+    }
+    
+    if (currentSettings.getItemSettings().getRandomizeFabPlanCosts()) {
+      writeLine("Randomizing fab plan costs...");
+      new FabPlanCostRandomizer(currentSettings, zipHelper).randomize();
     }
 
     if (currentSettings.getNpcSettings().getRandomizeNightmare()) {
