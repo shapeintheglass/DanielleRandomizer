@@ -22,7 +22,9 @@ public final class StationConnectivityConsts {
     PSYCHOTRONICS,
     SHUTTLE_BAY,
     DEEP_STORAGE,
-    EXTERIOR
+    EXTERIOR,
+    ENDGAME,
+    GENDER_SELECT
   }
 
   public static enum Door {

@@ -27,7 +27,7 @@ public class CustomSpawnGenerator {
       SpawnLocation.LOBBY, SpawnLocation.HARDWARE_LABS, SpawnLocation.SHUTTLE_BAY, SpawnLocation.PSYCHOTRONICS,
       SpawnLocation.GUTS, SpawnLocation.ARBORETUM, SpawnLocation.BRIDGE, SpawnLocation.CREW_QUARTERS,
       SpawnLocation.DEEP_STORAGE, SpawnLocation.CARGO_BAY, SpawnLocation.LIFE_SUPPORT, SpawnLocation.POWER_PLANT,
-      SpawnLocation.EXTERIOR);
+      SpawnLocation.EXTERIOR, SpawnLocation.ENDGAME, SpawnLocation.GENDER_SELECT);
 
   public static final ImmutableMap<StoryProgressionSettings.SpawnLocation, Level> SPAWN_LOCATION_TO_LEVEL = new ImmutableMap.Builder<StoryProgressionSettings.SpawnLocation, Level>()
       .put(SpawnLocation.LOBBY, Level.LOBBY)
@@ -43,6 +43,8 @@ public class CustomSpawnGenerator {
       .put(SpawnLocation.LIFE_SUPPORT, Level.LIFE_SUPPORT)
       .put(SpawnLocation.POWER_PLANT, Level.POWER_PLANT)
       .put(SpawnLocation.EXTERIOR, Level.EXTERIOR)
+      .put(SpawnLocation.ENDGAME, Level.ENDGAME)
+      .put(SpawnLocation.GENDER_SELECT, Level.GENDER_SELECT)
       .build();
 
   private BiMap<Level, String> levelsToIds;
@@ -73,6 +75,8 @@ public class CustomSpawnGenerator {
     levelsToIds.put(Level.PSYCHOTRONICS, "11824555372632688907");
     levelsToIds.put(Level.SHUTTLE_BAY, "1713490239386284988");
     levelsToIds.put(Level.EXTERIOR, "1713490239386284337");
+    levelsToIds.put(Level.ENDGAME, "13680621263401479941");
+    levelsToIds.put(Level.GENDER_SELECT, "3149325216909839564");
   }
 
   public SpawnLocation getLocation() {

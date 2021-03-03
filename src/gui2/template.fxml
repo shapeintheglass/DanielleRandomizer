@@ -197,12 +197,13 @@
                                           <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
                                           <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" />
-                                          <CheckBox fx:id="storyCheckboxCustomStart" mnemonicParsing="false" text="Custom starting map (for testing)" />
+                                          <CheckBox fx:id="storyCheckboxCustomStart" mnemonicParsing="false" text="Custom starting map (do not use)" />
                                           <ChoiceBox fx:id="storyChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0">
                                              <VBox.margin>
                                                 <Insets left="22.0" />
                                              </VBox.margin>
                                           </ChoiceBox>
+                                          <Label text="Game token overrides (do not use)" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
@@ -210,7 +211,13 @@
                                           <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
                                           <Label text="Skips Jovan's appearance in the Neuromod Division." />
-                                          <Label text="Very buggy. Not recommended for regular gameplay." />
+                                          <Label text="Not recommended for regular gameplay. For testing only." />
+                                          <Label prefHeight="53.0" prefWidth="44.0">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField fx:id="cheatsTextFieldGameTokens" prefHeight="25.0" prefWidth="303.0" promptText="key1=value1,key2=value2,..." />
                                        </children>
                                     </VBox>
                                  </children>
@@ -262,7 +269,6 @@
                                                 </TextField>
                                              </children>
                                           </HBox>
-                                          <Label text="Game token overrides (for debugging purposes)" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="317.0" prefWidth="309.0" spacing="15.0">
@@ -283,7 +289,6 @@
                                                 <Insets top="6.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextField fx:id="cheatsTextFieldGameTokens" promptText="key1=value1,key2=value2,..." />
                                        </children>
                                     </VBox>
                                  </children>

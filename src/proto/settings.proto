@@ -64,6 +64,8 @@ message StoryProgressionSettings {
 	POWER_PLANT = 12;
 	SHUTTLE_BAY = 13;
 	EXTERIOR = 14;
+	ENDGAME = 15;
+	GENDER_SELECT = 16;
   }
   SpawnLocation custom_spawn_location = 3;
 }

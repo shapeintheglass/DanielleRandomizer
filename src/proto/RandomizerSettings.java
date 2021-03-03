@@ -6442,6 +6442,14 @@ public final class RandomizerSettings {
        * <code>EXTERIOR = 14;</code>
        */
       EXTERIOR(14),
+      /**
+       * <code>ENDGAME = 15;</code>
+       */
+      ENDGAME(15),
+      /**
+       * <code>GENDER_SELECT = 16;</code>
+       */
+      GENDER_SELECT(16),
       UNRECOGNIZED(-1),
       ;
 
@@ -6505,6 +6513,14 @@ public final class RandomizerSettings {
        * <code>EXTERIOR = 14;</code>
        */
       public static final int EXTERIOR_VALUE = 14;
+      /**
+       * <code>ENDGAME = 15;</code>
+       */
+      public static final int ENDGAME_VALUE = 15;
+      /**
+       * <code>GENDER_SELECT = 16;</code>
+       */
+      public static final int GENDER_SELECT_VALUE = 16;
 
 
       public final int getNumber() {
@@ -6546,6 +6562,8 @@ public final class RandomizerSettings {
           case 12: return POWER_PLANT;
           case 13: return SHUTTLE_BAY;
           case 14: return EXTERIOR;
+          case 15: return ENDGAME;
+          case 16: return GENDER_SELECT;
           default: return null;
         }
       }
@@ -11738,34 +11756,35 @@ public final class RandomizerSettings {
       "nightmare\030\002 \001(\010\022\037\n\027randomize_cystoid_nes" +
       "ts\030\003 \001(\010\022!\n\031randomize_weaver_cystoids\030\004 " +
       "\001(\010\"/\n\020NeuromodSettings\022\033\n\023randomize_neu" +
-      "romods\030\001 \001(\010\"\213\003\n\030StoryProgressionSetting" +
+      "romods\030\001 \001(\010\"\253\003\n\030StoryProgressionSetting" +
       "s\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cust" +
       "om_spawn\030\002 \001(\010\022F\n\025custom_spawn_location\030" +
       "\003 \001(\0162\'.StoryProgressionSettings.SpawnLo" +
-      "cation\"\361\001\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RA" +
+      "cation\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RA" +
       "NDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\r" +
       "PSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006" +
       "\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_" +
       "STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT" +
       "\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010" +
-      "EXTERIOR\020\016\"l\n\021GameStartSettings\022\035\n\025add_l" +
-      "oot_to_apartment\030\001 \001(\010\022\033\n\023start_on_secon" +
-      "d_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001(\010" +
-      "\"\237\002\n\rCheatSettings\022\024\n\014open_station\030\001 \001(\010" +
-      "\022\030\n\020unlock_all_scans\030\002 \001(\010\022\030\n\020wandering_" +
-      "humans\030\003 \001(\010\022\033\n\023start_self_destruct\030\004 \001(" +
-      "\010\022\033\n\023self_destruct_timer\030\005 \001(\t\022#\n\033self_d" +
-      "estruct_shuttle_timer\030\006 \001(\t\022\037\n\027zero_grav" +
-      "ity_everywhere\030\007 \001(\010\022&\n\036enable_gravity_i" +
-      "n_ext_and_guts\030\010 \001(\010\022\034\n\024game_token_overr" +
-      "ides\030\t \001(\t\"`\n\030GenericSpawnPresetFilter\022\014" +
-      "\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 " +
-      "\003(\0132\027.GenericSpawnPresetRule\"\220\001\n\026Generic" +
-      "SpawnPresetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013o" +
-      "utput_tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005" +
-      "\022\031\n\021do_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_ou" +
-      "tput_tags\030\005 \003(\tB\033\n\005protoB\022RandomizerSett" +
-      "ingsb\006proto3"
+      "EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SELECT" +
+      "\020\020\"l\n\021GameStartSettings\022\035\n\025add_loot_to_a" +
+      "partment\030\001 \001(\010\022\033\n\023start_on_second_day\030\002 " +
+      "\001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001(\010\"\237\002\n\rChe" +
+      "atSettings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlo" +
+      "ck_all_scans\030\002 \001(\010\022\030\n\020wandering_humans\030\003" +
+      " \001(\010\022\033\n\023start_self_destruct\030\004 \001(\010\022\033\n\023sel" +
+      "f_destruct_timer\030\005 \001(\t\022#\n\033self_destruct_" +
+      "shuttle_timer\030\006 \001(\t\022\037\n\027zero_gravity_ever" +
+      "ywhere\030\007 \001(\010\022&\n\036enable_gravity_in_ext_an" +
+      "d_guts\030\010 \001(\010\022\034\n\024game_token_overrides\030\t \001" +
+      "(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name\030\001" +
+      " \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.Ge" +
+      "nericSpawnPresetRule\"\220\001\n\026GenericSpawnPre" +
+      "setRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_ta" +
+      "gs\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_n" +
+      "ot_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_tag" +
+      "s\030\005 \003(\tB\033\n\005protoB\022RandomizerSettingsb\006pr" +
+      "oto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
