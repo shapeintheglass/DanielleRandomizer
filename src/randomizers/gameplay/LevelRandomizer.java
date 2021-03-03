@@ -46,27 +46,40 @@ public class LevelRandomizer extends BaseRandomizer {
     filterList = new LinkedList<>();
     this.gameTokenValues = new HashMap<>();
     this.swappedLinesMap = swappedLinesMap;
+    setupGameTokens();
+  }
 
+  private void setupGameTokens() {
     // Use the settings to determine required level game tokens
-    if (s.getCheatSettings().getUnlockAllScans()) {
+    if (settings.getCheatSettings().getUnlockAllScans()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getCheatSettings().getOpenStation()) {
+    if (settings.getCheatSettings().getOpenStation()) {
       gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getStoryProgressionSettings().getRandomizeStation()) {
+    if (settings.getStoryProgressionSettings().getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (s.getCheatSettings().getStartSelfDestruct()) {
+    if (settings.getCheatSettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
-    if (s.getGameStartSettings().getSkipJovanCutscene()) {
+    if (settings.getGameStartSettings().getSkipJovanCutscene()) {
       gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
     }
-    if (s.getNpcSettings().getRandomizeNightmare()) {
+    if (settings.getNpcSettings().getRandomizeNightmare()) {
       gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
+    }
+    if (!settings.getCheatSettings().getGameTokenOverrides().isEmpty()) {
+      String[] tokens = settings.getCheatSettings().getGameTokenOverrides().split(",");
+      for (String token : tokens) {
+        if (!token.contains("=")) {
+          continue;
+        }
+        String[] keyVals = token.split("=");
+        gameTokenValues.put(keyVals[0], keyVals[1]);
+      }
     }
 
     gameTokenRule = new GameTokenRule(gameTokenValues);
@@ -74,11 +87,6 @@ public class LevelRandomizer extends BaseRandomizer {
 
   public LevelRandomizer addFilter(BaseFilter f) {
     filterList.add(f);
-    return this;
-  }
-
-  public LevelRandomizer addGameTokenValues(Map<String, String> values) {
-    this.gameTokenValues.putAll(values);
     return this;
   }
 
@@ -151,7 +159,7 @@ public class LevelRandomizer extends BaseRandomizer {
     for (Element e : objects.getChildren()) {
       filterEntityXml(e, levelDir);
     }
-    
+
     AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper);
 
     zipHelper.copyToLevelPak(document, pathInZip, levelDir);

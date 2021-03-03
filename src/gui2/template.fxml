@@ -172,18 +172,11 @@
                                     <VBox prefHeight="270.0" prefWidth="311.0" spacing="15.0">
                                        <children>
                                           <CheckBox fx:id="storyCheckboxRandomStation" mnemonicParsing="false" text="Randomize station connectivity" />
-                                          <CheckBox fx:id="storyCheckboxCustomStart" mnemonicParsing="false" text="Custom starting location" />
-                                          <ChoiceBox fx:id="storyChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0">
-                                             <VBox.margin>
-                                                <Insets left="22.0" />
-                                             </VBox.margin>
-                                          </ChoiceBox>
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="270.0" prefWidth="343.0" spacing="15.0">
                                        <children>
                                           <Label prefHeight="17.0" prefWidth="210.0" text="Shuffles connections between levels." />
-                                          <Label text="Start the game in the given map (experimental)" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -204,6 +197,12 @@
                                           <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
                                           <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" />
+                                          <CheckBox fx:id="storyCheckboxCustomStart" mnemonicParsing="false" text="Custom starting map (for testing)" />
+                                          <ChoiceBox fx:id="storyChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0">
+                                             <VBox.margin>
+                                                <Insets left="22.0" />
+                                             </VBox.margin>
+                                          </ChoiceBox>
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
@@ -211,6 +210,7 @@
                                           <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
                                           <Label text="Skips Jovan's appearance in the Neuromod Division." />
+                                          <Label text="Very buggy. Not recommended for regular gameplay." />
                                        </children>
                                     </VBox>
                                  </children>
@@ -262,6 +262,7 @@
                                                 </TextField>
                                              </children>
                                           </HBox>
+                                          <Label text="Game token overrides (for debugging purposes)" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="317.0" prefWidth="309.0" spacing="15.0">
@@ -282,6 +283,7 @@
                                                 <Insets top="6.0" />
                                              </VBox.margin>
                                           </Label>
+                                          <TextField fx:id="cheatsTextFieldGameTokens" promptText="key1=value1,key2=value2,..." />
                                        </children>
                                     </VBox>
                                  </children>

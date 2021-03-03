@@ -63,6 +63,7 @@ message StoryProgressionSettings {
 	LIFE_SUPPORT = 11;
 	POWER_PLANT = 12;
 	SHUTTLE_BAY = 13;
+	EXTERIOR = 14;
   }
   SpawnLocation custom_spawn_location = 3;
 }
@@ -82,6 +83,7 @@ message CheatSettings {
   string self_destruct_shuttle_timer = 6;
   bool zero_gravity_everywhere = 7;
   bool enable_gravity_in_ext_and_guts = 8;
+  string game_token_overrides = 9;
 }
 
 message GenericSpawnPresetFilter {

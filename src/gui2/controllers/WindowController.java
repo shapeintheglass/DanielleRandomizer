@@ -145,6 +145,8 @@ public class WindowController {
   private TextField cheatsTextFieldTimer;
   @FXML
   private TextField cheatsTextFieldShuttleTimer;
+  @FXML
+  private TextField cheatsTextFieldGameTokens;
 
   /* LOWER BUTTONS */
   @FXML
@@ -299,6 +301,7 @@ public class WindowController {
     cheatsCheckboxSelfDestruct.setSelected(settings.getCheatSettings().getStartSelfDestruct());
     cheatsTextFieldTimer.setText(settings.getCheatSettings().getSelfDestructTimer());
     cheatsTextFieldShuttleTimer.setText(settings.getCheatSettings().getSelfDestructShuttleTimer());
+    cheatsTextFieldGameTokens.setText(settings.getCheatSettings().getGameTokenOverrides());
 
     cheatsTextFieldTimer.setDisable(!cheatsCheckboxSelfDestruct.isSelected());
     cheatsTextFieldShuttleTimer.setDisable(!cheatsCheckboxSelfDestruct.isSelected());
@@ -331,6 +334,7 @@ public class WindowController {
     cheatsCheckboxSelfDestruct.setSelected(false);
     cheatsTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
     cheatsTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
+    cheatsTextFieldGameTokens.clear();
   }
 
   private void initCustomSpawnCheckboxes(AllPresets allPresets, Settings settings) {
@@ -596,6 +600,7 @@ public class WindowController {
         .setSelfDestructShuttleTimer(cheatsTextFieldShuttleTimer.getText())
         .setZeroGravityEverywhere(cheatsCheckboxGravity.isSelected())
         .setEnableGravityInExtAndGuts(cheatsCheckboxEnableGravity.isSelected())
+        .setGameTokenOverrides(cheatsTextFieldGameTokens.getText())
         .build();
   }
 

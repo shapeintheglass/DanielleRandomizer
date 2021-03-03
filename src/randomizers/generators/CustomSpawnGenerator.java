@@ -26,7 +26,8 @@ public class CustomSpawnGenerator {
   public static final ImmutableList<StoryProgressionSettings.SpawnLocation> SUPPORTED_SPAWNS = ImmutableList.of(
       SpawnLocation.LOBBY, SpawnLocation.HARDWARE_LABS, SpawnLocation.SHUTTLE_BAY, SpawnLocation.PSYCHOTRONICS,
       SpawnLocation.GUTS, SpawnLocation.ARBORETUM, SpawnLocation.BRIDGE, SpawnLocation.CREW_QUARTERS,
-      SpawnLocation.DEEP_STORAGE, SpawnLocation.CARGO_BAY, SpawnLocation.LIFE_SUPPORT, SpawnLocation.POWER_PLANT);
+      SpawnLocation.DEEP_STORAGE, SpawnLocation.CARGO_BAY, SpawnLocation.LIFE_SUPPORT, SpawnLocation.POWER_PLANT,
+      SpawnLocation.EXTERIOR);
 
   public static final ImmutableMap<StoryProgressionSettings.SpawnLocation, Level> SPAWN_LOCATION_TO_LEVEL = new ImmutableMap.Builder<StoryProgressionSettings.SpawnLocation, Level>()
       .put(SpawnLocation.LOBBY, Level.LOBBY)
@@ -41,6 +42,7 @@ public class CustomSpawnGenerator {
       .put(SpawnLocation.CARGO_BAY, Level.CARGO_BAY)
       .put(SpawnLocation.LIFE_SUPPORT, Level.LIFE_SUPPORT)
       .put(SpawnLocation.POWER_PLANT, Level.POWER_PLANT)
+      .put(SpawnLocation.EXTERIOR, Level.EXTERIOR)
       .build();
 
   private BiMap<Level, String> levelsToIds;
@@ -70,6 +72,7 @@ public class CustomSpawnGenerator {
     levelsToIds.put(Level.POWER_PLANT, "6732635291182790112");
     levelsToIds.put(Level.PSYCHOTRONICS, "11824555372632688907");
     levelsToIds.put(Level.SHUTTLE_BAY, "1713490239386284988");
+    levelsToIds.put(Level.EXTERIOR, "1713490239386284337");
   }
 
   public SpawnLocation getLocation() {
@@ -98,6 +101,7 @@ public class CustomSpawnGenerator {
       Level level = SPAWN_LOCATION_TO_LEVEL.get(location);
       String customLocationId = levelsToIds.get(level);
       String neuromodDivisionId = levelsToIds.get(Level.NEUROMOD_DIVISION);
+
       levelsToIds.remove(Level.NEUROMOD_DIVISION);
       levelsToIds.remove(level);
       levelsToIds.put(Level.NEUROMOD_DIVISION, customLocationId);
@@ -118,7 +122,6 @@ public class CustomSpawnGenerator {
           neuromodDivisionSwitched = true;
         }
       }
-
       zipHelper.copyToPatch(document, ZipHelper.LOCATIONS_XML);
     } catch (IOException | JDOMException e) {
       e.printStackTrace();

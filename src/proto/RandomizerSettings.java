@@ -6438,6 +6438,10 @@ public final class RandomizerSettings {
        * <code>SHUTTLE_BAY = 13;</code>
        */
       SHUTTLE_BAY(13),
+      /**
+       * <code>EXTERIOR = 14;</code>
+       */
+      EXTERIOR(14),
       UNRECOGNIZED(-1),
       ;
 
@@ -6497,6 +6501,10 @@ public final class RandomizerSettings {
        * <code>SHUTTLE_BAY = 13;</code>
        */
       public static final int SHUTTLE_BAY_VALUE = 13;
+      /**
+       * <code>EXTERIOR = 14;</code>
+       */
+      public static final int EXTERIOR_VALUE = 14;
 
 
       public final int getNumber() {
@@ -6537,6 +6545,7 @@ public final class RandomizerSettings {
           case 11: return LIFE_SUPPORT;
           case 12: return POWER_PLANT;
           case 13: return SHUTTLE_BAY;
+          case 14: return EXTERIOR;
           default: return null;
         }
       }
@@ -7833,6 +7842,18 @@ public final class RandomizerSettings {
      * @return The enableGravityInExtAndGuts.
      */
     boolean getEnableGravityInExtAndGuts();
+
+    /**
+     * <code>string game_token_overrides = 9;</code>
+     * @return The gameTokenOverrides.
+     */
+    java.lang.String getGameTokenOverrides();
+    /**
+     * <code>string game_token_overrides = 9;</code>
+     * @return The bytes for gameTokenOverrides.
+     */
+    com.google.protobuf.ByteString
+        getGameTokenOverridesBytes();
   }
   /**
    * Protobuf type {@code CheatSettings}
@@ -7849,6 +7870,7 @@ public final class RandomizerSettings {
     private CheatSettings() {
       selfDestructTimer_ = "";
       selfDestructShuttleTimer_ = "";
+      gameTokenOverrides_ = "";
     }
 
     @java.lang.Override
@@ -7921,6 +7943,12 @@ public final class RandomizerSettings {
             case 64: {
 
               enableGravityInExtAndGuts_ = input.readBool();
+              break;
+            }
+            case 74: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              gameTokenOverrides_ = s;
               break;
             }
             default: {
@@ -8097,6 +8125,44 @@ public final class RandomizerSettings {
       return enableGravityInExtAndGuts_;
     }
 
+    public static final int GAME_TOKEN_OVERRIDES_FIELD_NUMBER = 9;
+    private volatile java.lang.Object gameTokenOverrides_;
+    /**
+     * <code>string game_token_overrides = 9;</code>
+     * @return The gameTokenOverrides.
+     */
+    @java.lang.Override
+    public java.lang.String getGameTokenOverrides() {
+      java.lang.Object ref = gameTokenOverrides_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        gameTokenOverrides_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string game_token_overrides = 9;</code>
+     * @return The bytes for gameTokenOverrides.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getGameTokenOverridesBytes() {
+      java.lang.Object ref = gameTokenOverrides_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        gameTokenOverrides_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -8134,6 +8200,9 @@ public final class RandomizerSettings {
       }
       if (enableGravityInExtAndGuts_ != false) {
         output.writeBool(8, enableGravityInExtAndGuts_);
+      }
+      if (!getGameTokenOverridesBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 9, gameTokenOverrides_);
       }
       unknownFields.writeTo(output);
     }
@@ -8174,6 +8243,9 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(8, enableGravityInExtAndGuts_);
       }
+      if (!getGameTokenOverridesBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, gameTokenOverrides_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -8205,6 +8277,8 @@ public final class RandomizerSettings {
           != other.getZeroGravityEverywhere()) return false;
       if (getEnableGravityInExtAndGuts()
           != other.getEnableGravityInExtAndGuts()) return false;
+      if (!getGameTokenOverrides()
+          .equals(other.getGameTokenOverrides())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -8238,6 +8312,8 @@ public final class RandomizerSettings {
       hash = (37 * hash) + ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getEnableGravityInExtAndGuts());
+      hash = (37 * hash) + GAME_TOKEN_OVERRIDES_FIELD_NUMBER;
+      hash = (53 * hash) + getGameTokenOverrides().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -8387,6 +8463,8 @@ public final class RandomizerSettings {
 
         enableGravityInExtAndGuts_ = false;
 
+        gameTokenOverrides_ = "";
+
         return this;
       }
 
@@ -8421,6 +8499,7 @@ public final class RandomizerSettings {
         result.selfDestructShuttleTimer_ = selfDestructShuttleTimer_;
         result.zeroGravityEverywhere_ = zeroGravityEverywhere_;
         result.enableGravityInExtAndGuts_ = enableGravityInExtAndGuts_;
+        result.gameTokenOverrides_ = gameTokenOverrides_;
         onBuilt();
         return result;
       }
@@ -8494,6 +8573,10 @@ public final class RandomizerSettings {
         }
         if (other.getEnableGravityInExtAndGuts() != false) {
           setEnableGravityInExtAndGuts(other.getEnableGravityInExtAndGuts());
+        }
+        if (!other.getGameTokenOverrides().isEmpty()) {
+          gameTokenOverrides_ = other.gameTokenOverrides_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -8858,6 +8941,82 @@ public final class RandomizerSettings {
       public Builder clearEnableGravityInExtAndGuts() {
         
         enableGravityInExtAndGuts_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object gameTokenOverrides_ = "";
+      /**
+       * <code>string game_token_overrides = 9;</code>
+       * @return The gameTokenOverrides.
+       */
+      public java.lang.String getGameTokenOverrides() {
+        java.lang.Object ref = gameTokenOverrides_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          gameTokenOverrides_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string game_token_overrides = 9;</code>
+       * @return The bytes for gameTokenOverrides.
+       */
+      public com.google.protobuf.ByteString
+          getGameTokenOverridesBytes() {
+        java.lang.Object ref = gameTokenOverrides_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          gameTokenOverrides_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string game_token_overrides = 9;</code>
+       * @param value The gameTokenOverrides to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGameTokenOverrides(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        gameTokenOverrides_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string game_token_overrides = 9;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGameTokenOverrides() {
+        
+        gameTokenOverrides_ = getDefaultInstance().getGameTokenOverrides();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string game_token_overrides = 9;</code>
+       * @param value The bytes for gameTokenOverrides to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGameTokenOverridesBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        gameTokenOverrides_ = value;
         onChanged();
         return this;
       }
@@ -11579,33 +11738,34 @@ public final class RandomizerSettings {
       "nightmare\030\002 \001(\010\022\037\n\027randomize_cystoid_nes" +
       "ts\030\003 \001(\010\022!\n\031randomize_weaver_cystoids\030\004 " +
       "\001(\010\"/\n\020NeuromodSettings\022\033\n\023randomize_neu" +
-      "romods\030\001 \001(\010\"\375\002\n\030StoryProgressionSetting" +
+      "romods\030\001 \001(\010\"\213\003\n\030StoryProgressionSetting" +
       "s\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cust" +
       "om_spawn\030\002 \001(\010\022F\n\025custom_spawn_location\030" +
       "\003 \001(\0162\'.StoryProgressionSettings.SpawnLo" +
-      "cation\"\343\001\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RA" +
+      "cation\"\361\001\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RA" +
       "NDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\r" +
       "PSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006" +
       "\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_" +
       "STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT" +
-      "\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\"l\n\021" +
-      "GameStartSettings\022\035\n\025add_loot_to_apartme" +
-      "nt\030\001 \001(\010\022\033\n\023start_on_second_day\030\002 \001(\010\022\033\n" +
-      "\023skip_jovan_cutscene\030\003 \001(\010\"\201\002\n\rCheatSett" +
-      "ings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_all" +
-      "_scans\030\002 \001(\010\022\030\n\020wandering_humans\030\003 \001(\010\022\033" +
-      "\n\023start_self_destruct\030\004 \001(\010\022\033\n\023self_dest" +
-      "ruct_timer\030\005 \001(\t\022#\n\033self_destruct_shuttl" +
-      "e_timer\030\006 \001(\t\022\037\n\027zero_gravity_everywhere" +
-      "\030\007 \001(\010\022&\n\036enable_gravity_in_ext_and_guts" +
-      "\030\010 \001(\010\"`\n\030GenericSpawnPresetFilter\022\014\n\004na" +
-      "me\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132" +
-      "\027.GenericSpawnPresetRule\"\220\001\n\026GenericSpaw" +
-      "nPresetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013outpu" +
-      "t_tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021" +
-      "do_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_output" +
-      "_tags\030\005 \003(\tB\033\n\005protoB\022RandomizerSettings" +
-      "b\006proto3"
+      "\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010" +
+      "EXTERIOR\020\016\"l\n\021GameStartSettings\022\035\n\025add_l" +
+      "oot_to_apartment\030\001 \001(\010\022\033\n\023start_on_secon" +
+      "d_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001(\010" +
+      "\"\237\002\n\rCheatSettings\022\024\n\014open_station\030\001 \001(\010" +
+      "\022\030\n\020unlock_all_scans\030\002 \001(\010\022\030\n\020wandering_" +
+      "humans\030\003 \001(\010\022\033\n\023start_self_destruct\030\004 \001(" +
+      "\010\022\033\n\023self_destruct_timer\030\005 \001(\t\022#\n\033self_d" +
+      "estruct_shuttle_timer\030\006 \001(\t\022\037\n\027zero_grav" +
+      "ity_everywhere\030\007 \001(\010\022&\n\036enable_gravity_i" +
+      "n_ext_and_guts\030\010 \001(\010\022\034\n\024game_token_overr" +
+      "ides\030\t \001(\t\"`\n\030GenericSpawnPresetFilter\022\014" +
+      "\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 " +
+      "\003(\0132\027.GenericSpawnPresetRule\"\220\001\n\026Generic" +
+      "SpawnPresetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013o" +
+      "utput_tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005" +
+      "\022\031\n\021do_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_ou" +
+      "tput_tags\030\005 \003(\tB\033\n\005protoB\022RandomizerSett" +
+      "ingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11664,7 +11824,7 @@ public final class RandomizerSettings {
     internal_static_CheatSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CheatSettings_descriptor,
-        new java.lang.String[] { "OpenStation", "UnlockAllScans", "WanderingHumans", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", });
+        new java.lang.String[] { "OpenStation", "UnlockAllScans", "WanderingHumans", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "GameTokenOverrides", });
     internal_static_GenericSpawnPresetFilter_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_GenericSpawnPresetFilter_fieldAccessorTable = new

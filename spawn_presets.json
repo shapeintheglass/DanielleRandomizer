@@ -151,7 +151,8 @@
         {
           "input_tags": [
             "Neuromod_Calibration",
-            "ArkPickups"
+            "ArkPickups",
+            "_CARRYABLE"
           ],
           "output_tags": [
             "Stickynote_Mimic",

@@ -21,7 +21,8 @@ public final class StationConnectivityConsts {
     POWER_PLANT,
     PSYCHOTRONICS,
     SHUTTLE_BAY,
-    DEEP_STORAGE
+    DEEP_STORAGE,
+    EXTERIOR
   }
 
   public static enum Door {
@@ -80,6 +81,7 @@ public final class StationConnectivityConsts {
           .put(Level.POWER_PLANT, "engineering/powersource")
           .put(Level.PSYCHOTRONICS, "research/psychotronics")
           .put(Level.SHUTTLE_BAY, "research/shuttlebay")
+          .put(Level.EXTERIOR, "station/exterior")
           .build();
 
   // Map of level to associated spawn name
