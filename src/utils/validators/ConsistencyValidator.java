@@ -72,9 +72,7 @@ public class ConsistencyValidator {
         .setItemSpawnSettings(itemFilter)
         .build();
     NpcSettings npcSettings = NpcSettings.newBuilder()
-        .setRandomizeCystoidNests(r.nextBoolean())
-        .setRandomizeNightmare(r.nextBoolean())
-        .setRandomizeWeaverCystoids(r.nextBoolean())
+        .setRandomizeDynamicallySpawnedEnemies(r.nextBoolean())
         .setEnemySpawnSettings(enemyFilter)
         .build();
     NeuromodSettings neuromodSettings = NeuromodSettings.newBuilder().setRandomizeNeuromods(r.nextBoolean()).build();

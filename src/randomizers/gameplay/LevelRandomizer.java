@@ -1,7 +1,6 @@
 package randomizers.gameplay;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -68,9 +67,6 @@ public class LevelRandomizer extends BaseRandomizer {
     if (settings.getGameStartSettings().getSkipJovanCutscene()) {
       gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
     }
-    if (settings.getNpcSettings().getRandomizeNightmare()) {
-      gameTokenValues.putAll(LevelConsts.ENABLE_NIGHTMARE_TOKENS);
-    }
     if (!settings.getCheatSettings().getGameTokenOverrides().isEmpty()) {
       String[] tokens = settings.getCheatSettings().getGameTokenOverrides().split(",");
       for (String token : tokens) {
@@ -125,7 +121,7 @@ public class LevelRandomizer extends BaseRandomizer {
               logger.warning("Unable to filter mission file for level " + levelDir);
               e.printStackTrace();
             }
-          } else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) {
+          } /*else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) {
             // Filter movie data if applicable
             try {
               filterMovieDataFile(f, pathInOutputZip, levelDir);
@@ -133,7 +129,7 @@ public class LevelRandomizer extends BaseRandomizer {
               logger.warning("Unable to filter movie data for level " + levelDir);
               e.printStackTrace();
             }
-          } else {
+            } */else {
             // Copy without filtering
             try {
               zipHelper.copyToLevelPak(f, pathInOutputZip, levelDir);
@@ -194,12 +190,13 @@ public class LevelRandomizer extends BaseRandomizer {
     zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }
 
+  /*
   private void filterMovieDataFile(String movieDataFile, String pathInZip, String levelDir) throws IOException,
       JDOMException {
     Document document = zipHelper.getDocument(movieDataFile);
     Element root = document.getRootElement();
     List<Element> sequences = root.getChild("Mission").getChild("SequenceData").getChildren();
-
+  
     for (Element s : sequences) {
       List<Element> nodes = s.getChild("Nodes").getChildren();
       for (Element n : nodes) {
@@ -222,10 +219,11 @@ public class LevelRandomizer extends BaseRandomizer {
             }
           }
         }
-
+  
       }
     }
-
+  
     zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }
+  */
 }

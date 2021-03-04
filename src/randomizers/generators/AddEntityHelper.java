@@ -143,7 +143,7 @@ public class AddEntityHelper {
       }
     }
 
-    if (settings.getNpcSettings().getRandomizeNightmare() && filename.equals("research/simulationlabs")) {
+    if (settings.getNpcSettings().getEnableNightmareEarly() && filename.equals("research/simulationlabs")) {
       try {
         Document document = zipHelper.getDocument(ZipHelper.ENABLE_NIGHTMARE_MANAGER);
         Element root = document.getRootElement().clone();
@@ -155,7 +155,8 @@ public class AddEntityHelper {
     }
 
     if (settings.getCheatSettings().getZeroGravityEverywhere() && !filename.equals("station/exterior")) {
-      if (filename.equals("research/zerog_utilitytunnels") && settings.getCheatSettings().getEnableGravityInExtAndGuts()) {
+      if (filename.equals("research/zerog_utilitytunnels") && settings.getCheatSettings()
+          .getEnableGravityInExtAndGuts()) {
         return;
       }
       objects.addContent(gravityBox(0));

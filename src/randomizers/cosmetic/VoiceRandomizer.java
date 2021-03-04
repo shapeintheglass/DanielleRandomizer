@@ -13,6 +13,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import proto.RandomizerSettings.Settings;
@@ -26,15 +27,26 @@ import utils.ZipHelper;
  */
 public class VoiceRandomizer extends BaseRandomizer {
 
+  private static final ImmutableList<String> EMOTIONS = ImmutableList.of("15659330456346423977", "15659330456346423989",
+      "15659330456346424000", "15659330456346424008", "3152439162748317787", "3152439162748317984",
+      "3152439162748317994", "3152439162748318010", "3152439162748318026", "3152439162748318033", "3152439162748318046",
+      "3152439162748318053", "3152439162748318060", "3152439162748318066", "3152439162748318076", "3152439162748318081",
+      "3152439162748318087");
+
   private Map<String, String> dialogIdToCharacterId = new HashMap<String, String>();
   private Map<String, List<String>> characterToDialog = new HashMap<String, List<String>>();
   private Map<String, String> swappedLinesMap = new HashMap<String, String>();
+
+  private boolean randomizeVoice;
+  private boolean randomizeEmotion;
 
   private Path tempPatchDir;
 
   public VoiceRandomizer(Settings s, Path tempPatchDir, ZipHelper zipHelper) {
     super(s, zipHelper);
     this.tempPatchDir = tempPatchDir;
+    this.randomizeVoice = s.getCosmeticSettings().getRandomizeVoicelines();
+    this.randomizeEmotion = s.getCosmeticSettings().getRandomizeEmotions();
   }
 
   /**
@@ -44,13 +56,15 @@ public class VoiceRandomizer extends BaseRandomizer {
     Path outputDir = tempPatchDir.resolve("ark/dialog/dialoglogic");
 
     try {
-      getDialogIds();
+      if (randomizeVoice) {
+        getDialogIds();
+      }
       randomizeAndWrite(ZipHelper.DIALOGIC_PATH, outputDir);
     } catch (IOException | JDOMException e) {
       e.printStackTrace();
     }
   }
-  
+
   public Map<String, String> getSwappedLinesMap() {
     return swappedLinesMap;
   }
@@ -73,18 +87,26 @@ public class VoiceRandomizer extends BaseRandomizer {
   private void randomizeDialog(String in, String out) throws FileNotFoundException, IOException, JDOMException {
     Document document = zipHelper.getDocument(in);
     for (Element responseSet : document.getRootElement().getChildren("ResponseSet")) {
-      Element response = responseSet.getChild("Response");
-      String oldDialog = response.getAttributeValue("dialog");
-      // If this line has not already been swapped, add it
-      if (!swappedLinesMap.containsKey(oldDialog)) {
-        String characterFile = dialogIdToCharacterId.get(oldDialog);
-        List<String> dialogLines = characterToDialog.get(characterFile);
-        String newDialog = dialogLines.remove(0);
-        characterToDialog.put(characterFile, dialogLines);
-        swappedLinesMap.put(oldDialog, newDialog);
-      }
+      for (Element response : responseSet.getChildren("Response")) {
+        if (randomizeVoice) {
+          String oldDialog = response.getAttributeValue("dialog");
+          // If this line has not already been swapped, add it
+          if (!swappedLinesMap.containsKey(oldDialog)) {
+            String characterFile = dialogIdToCharacterId.get(oldDialog);
+            List<String> dialogLines = characterToDialog.get(characterFile);
+            String newDialog = dialogLines.remove(0);
+            characterToDialog.put(characterFile, dialogLines);
+            swappedLinesMap.put(oldDialog, newDialog);
+          }
 
-      response.setAttribute("dialog", swappedLinesMap.get(oldDialog));
+          response.setAttribute("dialog", swappedLinesMap.get(oldDialog));
+        }
+
+        if (randomizeEmotion) {
+          int emotionIndex = r.nextInt(EMOTIONS.size());
+          response.setAttribute("emotion", EMOTIONS.get(emotionIndex));
+        }
+      }
     }
 
     zipHelper.copyToPatch(document, out);

@@ -3495,6 +3495,18 @@ public final class RandomizerSettings {
      * @return The randomizePlayerModel.
      */
     boolean getRandomizePlayerModel();
+
+    /**
+     * <code>bool randomize_planet_size = 5;</code>
+     * @return The randomizePlanetSize.
+     */
+    boolean getRandomizePlanetSize();
+
+    /**
+     * <code>bool randomize_emotions = 6;</code>
+     * @return The randomizeEmotions.
+     */
+    boolean getRandomizeEmotions();
   }
   /**
    * Protobuf type {@code CosmeticSettings}
@@ -3559,6 +3571,16 @@ public final class RandomizerSettings {
             case 32: {
 
               randomizePlayerModel_ = input.readBool();
+              break;
+            }
+            case 40: {
+
+              randomizePlanetSize_ = input.readBool();
+              break;
+            }
+            case 48: {
+
+              randomizeEmotions_ = input.readBool();
               break;
             }
             default: {
@@ -3637,6 +3659,28 @@ public final class RandomizerSettings {
       return randomizePlayerModel_;
     }
 
+    public static final int RANDOMIZE_PLANET_SIZE_FIELD_NUMBER = 5;
+    private boolean randomizePlanetSize_;
+    /**
+     * <code>bool randomize_planet_size = 5;</code>
+     * @return The randomizePlanetSize.
+     */
+    @java.lang.Override
+    public boolean getRandomizePlanetSize() {
+      return randomizePlanetSize_;
+    }
+
+    public static final int RANDOMIZE_EMOTIONS_FIELD_NUMBER = 6;
+    private boolean randomizeEmotions_;
+    /**
+     * <code>bool randomize_emotions = 6;</code>
+     * @return The randomizeEmotions.
+     */
+    @java.lang.Override
+    public boolean getRandomizeEmotions() {
+      return randomizeEmotions_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -3663,6 +3707,12 @@ public final class RandomizerSettings {
       if (randomizePlayerModel_ != false) {
         output.writeBool(4, randomizePlayerModel_);
       }
+      if (randomizePlanetSize_ != false) {
+        output.writeBool(5, randomizePlanetSize_);
+      }
+      if (randomizeEmotions_ != false) {
+        output.writeBool(6, randomizeEmotions_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -3688,6 +3738,14 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(4, randomizePlayerModel_);
       }
+      if (randomizePlanetSize_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, randomizePlanetSize_);
+      }
+      if (randomizeEmotions_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(6, randomizeEmotions_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -3711,6 +3769,10 @@ public final class RandomizerSettings {
           != other.getRandomizeMusic()) return false;
       if (getRandomizePlayerModel()
           != other.getRandomizePlayerModel()) return false;
+      if (getRandomizePlanetSize()
+          != other.getRandomizePlanetSize()) return false;
+      if (getRandomizeEmotions()
+          != other.getRandomizeEmotions()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -3734,6 +3796,12 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_PLAYER_MODEL_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizePlayerModel());
+      hash = (37 * hash) + RANDOMIZE_PLANET_SIZE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizePlanetSize());
+      hash = (37 * hash) + RANDOMIZE_EMOTIONS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeEmotions());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3875,6 +3943,10 @@ public final class RandomizerSettings {
 
         randomizePlayerModel_ = false;
 
+        randomizePlanetSize_ = false;
+
+        randomizeEmotions_ = false;
+
         return this;
       }
 
@@ -3905,6 +3977,8 @@ public final class RandomizerSettings {
         result.randomizeVoicelines_ = randomizeVoicelines_;
         result.randomizeMusic_ = randomizeMusic_;
         result.randomizePlayerModel_ = randomizePlayerModel_;
+        result.randomizePlanetSize_ = randomizePlanetSize_;
+        result.randomizeEmotions_ = randomizeEmotions_;
         onBuilt();
         return result;
       }
@@ -3964,6 +4038,12 @@ public final class RandomizerSettings {
         }
         if (other.getRandomizePlayerModel() != false) {
           setRandomizePlayerModel(other.getRandomizePlayerModel());
+        }
+        if (other.getRandomizePlanetSize() != false) {
+          setRandomizePlanetSize(other.getRandomizePlanetSize());
+        }
+        if (other.getRandomizeEmotions() != false) {
+          setRandomizeEmotions(other.getRandomizeEmotions());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4114,6 +4194,68 @@ public final class RandomizerSettings {
       public Builder clearRandomizePlayerModel() {
         
         randomizePlayerModel_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizePlanetSize_ ;
+      /**
+       * <code>bool randomize_planet_size = 5;</code>
+       * @return The randomizePlanetSize.
+       */
+      @java.lang.Override
+      public boolean getRandomizePlanetSize() {
+        return randomizePlanetSize_;
+      }
+      /**
+       * <code>bool randomize_planet_size = 5;</code>
+       * @param value The randomizePlanetSize to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizePlanetSize(boolean value) {
+        
+        randomizePlanetSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_planet_size = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizePlanetSize() {
+        
+        randomizePlanetSize_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeEmotions_ ;
+      /**
+       * <code>bool randomize_emotions = 6;</code>
+       * @return The randomizeEmotions.
+       */
+      @java.lang.Override
+      public boolean getRandomizeEmotions() {
+        return randomizeEmotions_;
+      }
+      /**
+       * <code>bool randomize_emotions = 6;</code>
+       * @param value The randomizeEmotions to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeEmotions(boolean value) {
+        
+        randomizeEmotions_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_emotions = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeEmotions() {
+        
+        randomizeEmotions_ = false;
         onChanged();
         return this;
       }
@@ -4953,22 +5095,16 @@ public final class RandomizerSettings {
     proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder();
 
     /**
-     * <code>bool randomize_nightmare = 2;</code>
-     * @return The randomizeNightmare.
+     * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
+     * @return The randomizeDynamicallySpawnedEnemies.
      */
-    boolean getRandomizeNightmare();
+    boolean getRandomizeDynamicallySpawnedEnemies();
 
     /**
-     * <code>bool randomize_cystoid_nests = 3;</code>
-     * @return The randomizeCystoidNests.
+     * <code>bool enable_nightmare_early = 3;</code>
+     * @return The enableNightmareEarly.
      */
-    boolean getRandomizeCystoidNests();
-
-    /**
-     * <code>bool randomize_weaver_cystoids = 4;</code>
-     * @return The randomizeWeaverCystoids.
-     */
-    boolean getRandomizeWeaverCystoids();
+    boolean getEnableNightmareEarly();
   }
   /**
    * Protobuf type {@code NpcSettings}
@@ -5030,17 +5166,12 @@ public final class RandomizerSettings {
             }
             case 16: {
 
-              randomizeNightmare_ = input.readBool();
+              randomizeDynamicallySpawnedEnemies_ = input.readBool();
               break;
             }
             case 24: {
 
-              randomizeCystoidNests_ = input.readBool();
-              break;
-            }
-            case 32: {
-
-              randomizeWeaverCystoids_ = input.readBool();
+              enableNightmareEarly_ = input.readBool();
               break;
             }
             default: {
@@ -5101,37 +5232,26 @@ public final class RandomizerSettings {
       return getEnemySpawnSettings();
     }
 
-    public static final int RANDOMIZE_NIGHTMARE_FIELD_NUMBER = 2;
-    private boolean randomizeNightmare_;
+    public static final int RANDOMIZE_DYNAMICALLY_SPAWNED_ENEMIES_FIELD_NUMBER = 2;
+    private boolean randomizeDynamicallySpawnedEnemies_;
     /**
-     * <code>bool randomize_nightmare = 2;</code>
-     * @return The randomizeNightmare.
+     * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
+     * @return The randomizeDynamicallySpawnedEnemies.
      */
     @java.lang.Override
-    public boolean getRandomizeNightmare() {
-      return randomizeNightmare_;
+    public boolean getRandomizeDynamicallySpawnedEnemies() {
+      return randomizeDynamicallySpawnedEnemies_;
     }
 
-    public static final int RANDOMIZE_CYSTOID_NESTS_FIELD_NUMBER = 3;
-    private boolean randomizeCystoidNests_;
+    public static final int ENABLE_NIGHTMARE_EARLY_FIELD_NUMBER = 3;
+    private boolean enableNightmareEarly_;
     /**
-     * <code>bool randomize_cystoid_nests = 3;</code>
-     * @return The randomizeCystoidNests.
+     * <code>bool enable_nightmare_early = 3;</code>
+     * @return The enableNightmareEarly.
      */
     @java.lang.Override
-    public boolean getRandomizeCystoidNests() {
-      return randomizeCystoidNests_;
-    }
-
-    public static final int RANDOMIZE_WEAVER_CYSTOIDS_FIELD_NUMBER = 4;
-    private boolean randomizeWeaverCystoids_;
-    /**
-     * <code>bool randomize_weaver_cystoids = 4;</code>
-     * @return The randomizeWeaverCystoids.
-     */
-    @java.lang.Override
-    public boolean getRandomizeWeaverCystoids() {
-      return randomizeWeaverCystoids_;
+    public boolean getEnableNightmareEarly() {
+      return enableNightmareEarly_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5151,14 +5271,11 @@ public final class RandomizerSettings {
       if (enemySpawnSettings_ != null) {
         output.writeMessage(1, getEnemySpawnSettings());
       }
-      if (randomizeNightmare_ != false) {
-        output.writeBool(2, randomizeNightmare_);
+      if (randomizeDynamicallySpawnedEnemies_ != false) {
+        output.writeBool(2, randomizeDynamicallySpawnedEnemies_);
       }
-      if (randomizeCystoidNests_ != false) {
-        output.writeBool(3, randomizeCystoidNests_);
-      }
-      if (randomizeWeaverCystoids_ != false) {
-        output.writeBool(4, randomizeWeaverCystoids_);
+      if (enableNightmareEarly_ != false) {
+        output.writeBool(3, enableNightmareEarly_);
       }
       unknownFields.writeTo(output);
     }
@@ -5173,17 +5290,13 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getEnemySpawnSettings());
       }
-      if (randomizeNightmare_ != false) {
+      if (randomizeDynamicallySpawnedEnemies_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, randomizeNightmare_);
+          .computeBoolSize(2, randomizeDynamicallySpawnedEnemies_);
       }
-      if (randomizeCystoidNests_ != false) {
+      if (enableNightmareEarly_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, randomizeCystoidNests_);
-      }
-      if (randomizeWeaverCystoids_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, randomizeWeaverCystoids_);
+          .computeBoolSize(3, enableNightmareEarly_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5205,12 +5318,10 @@ public final class RandomizerSettings {
         if (!getEnemySpawnSettings()
             .equals(other.getEnemySpawnSettings())) return false;
       }
-      if (getRandomizeNightmare()
-          != other.getRandomizeNightmare()) return false;
-      if (getRandomizeCystoidNests()
-          != other.getRandomizeCystoidNests()) return false;
-      if (getRandomizeWeaverCystoids()
-          != other.getRandomizeWeaverCystoids()) return false;
+      if (getRandomizeDynamicallySpawnedEnemies()
+          != other.getRandomizeDynamicallySpawnedEnemies()) return false;
+      if (getEnableNightmareEarly()
+          != other.getEnableNightmareEarly()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -5226,15 +5337,12 @@ public final class RandomizerSettings {
         hash = (37 * hash) + ENEMY_SPAWN_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getEnemySpawnSettings().hashCode();
       }
-      hash = (37 * hash) + RANDOMIZE_NIGHTMARE_FIELD_NUMBER;
+      hash = (37 * hash) + RANDOMIZE_DYNAMICALLY_SPAWNED_ENEMIES_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeNightmare());
-      hash = (37 * hash) + RANDOMIZE_CYSTOID_NESTS_FIELD_NUMBER;
+          getRandomizeDynamicallySpawnedEnemies());
+      hash = (37 * hash) + ENABLE_NIGHTMARE_EARLY_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeCystoidNests());
-      hash = (37 * hash) + RANDOMIZE_WEAVER_CYSTOIDS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeWeaverCystoids());
+          getEnableNightmareEarly());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5374,11 +5482,9 @@ public final class RandomizerSettings {
           enemySpawnSettings_ = null;
           enemySpawnSettingsBuilder_ = null;
         }
-        randomizeNightmare_ = false;
+        randomizeDynamicallySpawnedEnemies_ = false;
 
-        randomizeCystoidNests_ = false;
-
-        randomizeWeaverCystoids_ = false;
+        enableNightmareEarly_ = false;
 
         return this;
       }
@@ -5411,9 +5517,8 @@ public final class RandomizerSettings {
         } else {
           result.enemySpawnSettings_ = enemySpawnSettingsBuilder_.build();
         }
-        result.randomizeNightmare_ = randomizeNightmare_;
-        result.randomizeCystoidNests_ = randomizeCystoidNests_;
-        result.randomizeWeaverCystoids_ = randomizeWeaverCystoids_;
+        result.randomizeDynamicallySpawnedEnemies_ = randomizeDynamicallySpawnedEnemies_;
+        result.enableNightmareEarly_ = enableNightmareEarly_;
         onBuilt();
         return result;
       }
@@ -5465,14 +5570,11 @@ public final class RandomizerSettings {
         if (other.hasEnemySpawnSettings()) {
           mergeEnemySpawnSettings(other.getEnemySpawnSettings());
         }
-        if (other.getRandomizeNightmare() != false) {
-          setRandomizeNightmare(other.getRandomizeNightmare());
+        if (other.getRandomizeDynamicallySpawnedEnemies() != false) {
+          setRandomizeDynamicallySpawnedEnemies(other.getRandomizeDynamicallySpawnedEnemies());
         }
-        if (other.getRandomizeCystoidNests() != false) {
-          setRandomizeCystoidNests(other.getRandomizeCystoidNests());
-        }
-        if (other.getRandomizeWeaverCystoids() != false) {
-          setRandomizeWeaverCystoids(other.getRandomizeWeaverCystoids());
+        if (other.getEnableNightmareEarly() != false) {
+          setEnableNightmareEarly(other.getEnableNightmareEarly());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5622,95 +5724,64 @@ public final class RandomizerSettings {
         return enemySpawnSettingsBuilder_;
       }
 
-      private boolean randomizeNightmare_ ;
+      private boolean randomizeDynamicallySpawnedEnemies_ ;
       /**
-       * <code>bool randomize_nightmare = 2;</code>
-       * @return The randomizeNightmare.
+       * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
+       * @return The randomizeDynamicallySpawnedEnemies.
        */
       @java.lang.Override
-      public boolean getRandomizeNightmare() {
-        return randomizeNightmare_;
+      public boolean getRandomizeDynamicallySpawnedEnemies() {
+        return randomizeDynamicallySpawnedEnemies_;
       }
       /**
-       * <code>bool randomize_nightmare = 2;</code>
-       * @param value The randomizeNightmare to set.
+       * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
+       * @param value The randomizeDynamicallySpawnedEnemies to set.
        * @return This builder for chaining.
        */
-      public Builder setRandomizeNightmare(boolean value) {
+      public Builder setRandomizeDynamicallySpawnedEnemies(boolean value) {
         
-        randomizeNightmare_ = value;
+        randomizeDynamicallySpawnedEnemies_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool randomize_nightmare = 2;</code>
+       * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
        * @return This builder for chaining.
        */
-      public Builder clearRandomizeNightmare() {
+      public Builder clearRandomizeDynamicallySpawnedEnemies() {
         
-        randomizeNightmare_ = false;
+        randomizeDynamicallySpawnedEnemies_ = false;
         onChanged();
         return this;
       }
 
-      private boolean randomizeCystoidNests_ ;
+      private boolean enableNightmareEarly_ ;
       /**
-       * <code>bool randomize_cystoid_nests = 3;</code>
-       * @return The randomizeCystoidNests.
+       * <code>bool enable_nightmare_early = 3;</code>
+       * @return The enableNightmareEarly.
        */
       @java.lang.Override
-      public boolean getRandomizeCystoidNests() {
-        return randomizeCystoidNests_;
+      public boolean getEnableNightmareEarly() {
+        return enableNightmareEarly_;
       }
       /**
-       * <code>bool randomize_cystoid_nests = 3;</code>
-       * @param value The randomizeCystoidNests to set.
+       * <code>bool enable_nightmare_early = 3;</code>
+       * @param value The enableNightmareEarly to set.
        * @return This builder for chaining.
        */
-      public Builder setRandomizeCystoidNests(boolean value) {
+      public Builder setEnableNightmareEarly(boolean value) {
         
-        randomizeCystoidNests_ = value;
+        enableNightmareEarly_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool randomize_cystoid_nests = 3;</code>
+       * <code>bool enable_nightmare_early = 3;</code>
        * @return This builder for chaining.
        */
-      public Builder clearRandomizeCystoidNests() {
+      public Builder clearEnableNightmareEarly() {
         
-        randomizeCystoidNests_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean randomizeWeaverCystoids_ ;
-      /**
-       * <code>bool randomize_weaver_cystoids = 4;</code>
-       * @return The randomizeWeaverCystoids.
-       */
-      @java.lang.Override
-      public boolean getRandomizeWeaverCystoids() {
-        return randomizeWeaverCystoids_;
-      }
-      /**
-       * <code>bool randomize_weaver_cystoids = 4;</code>
-       * @param value The randomizeWeaverCystoids to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeWeaverCystoids(boolean value) {
-        
-        randomizeWeaverCystoids_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_weaver_cystoids = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeWeaverCystoids() {
-        
-        randomizeWeaverCystoids_ = false;
+        enableNightmareEarly_ = false;
         onChanged();
         return this;
       }
@@ -11744,47 +11815,48 @@ public final class RandomizerSettings {
       "ion_settings\030\010 \001(\0132\031.StoryProgressionSet" +
       "tings\022/\n\023game_start_settings\030\t \001(\0132\022.Gam" +
       "eStartSettings\022&\n\016cheat_settings\030\n \001(\0132\016" +
-      ".CheatSettings\"\203\001\n\020CosmeticSettings\022\030\n\020r" +
+      ".CheatSettings\"\276\001\n\020CosmeticSettings\022\030\n\020r" +
       "andomize_bodies\030\001 \001(\010\022\034\n\024randomize_voice" +
       "lines\030\002 \001(\010\022\027\n\017randomize_music\030\003 \001(\010\022\036\n\026" +
-      "randomize_player_model\030\004 \001(\010\"{\n\014ItemSett" +
-      "ings\0226\n\023item_spawn_settings\030\001 \001(\0132\031.Gene" +
-      "ricSpawnPresetFilter\022\021\n\tmore_guns\030\002 \001(\010\022" +
-      " \n\030randomize_fab_plan_costs\030\003 \001(\010\"\247\001\n\013Np" +
-      "cSettings\0227\n\024enemy_spawn_settings\030\001 \001(\0132" +
-      "\031.GenericSpawnPresetFilter\022\033\n\023randomize_" +
-      "nightmare\030\002 \001(\010\022\037\n\027randomize_cystoid_nes" +
-      "ts\030\003 \001(\010\022!\n\031randomize_weaver_cystoids\030\004 " +
-      "\001(\010\"/\n\020NeuromodSettings\022\033\n\023randomize_neu" +
-      "romods\030\001 \001(\010\"\253\003\n\030StoryProgressionSetting" +
-      "s\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cust" +
-      "om_spawn\030\002 \001(\010\022F\n\025custom_spawn_location\030" +
-      "\003 \001(\0162\'.StoryProgressionSettings.SpawnLo" +
-      "cation\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RA" +
-      "NDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\r" +
-      "PSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006" +
-      "\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_" +
-      "STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT" +
-      "\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010" +
-      "EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SELECT" +
-      "\020\020\"l\n\021GameStartSettings\022\035\n\025add_loot_to_a" +
-      "partment\030\001 \001(\010\022\033\n\023start_on_second_day\030\002 " +
-      "\001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001(\010\"\237\002\n\rChe" +
-      "atSettings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlo" +
-      "ck_all_scans\030\002 \001(\010\022\030\n\020wandering_humans\030\003" +
-      " \001(\010\022\033\n\023start_self_destruct\030\004 \001(\010\022\033\n\023sel" +
-      "f_destruct_timer\030\005 \001(\t\022#\n\033self_destruct_" +
-      "shuttle_timer\030\006 \001(\t\022\037\n\027zero_gravity_ever" +
-      "ywhere\030\007 \001(\010\022&\n\036enable_gravity_in_ext_an" +
-      "d_guts\030\010 \001(\010\022\034\n\024game_token_overrides\030\t \001" +
-      "(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name\030\001" +
-      " \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.Ge" +
-      "nericSpawnPresetRule\"\220\001\n\026GenericSpawnPre" +
-      "setRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_ta" +
-      "gs\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_n" +
-      "ot_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_tag" +
-      "s\030\005 \003(\tB\033\n\005protoB\022RandomizerSettingsb\006pr" +
-      "oto3"
+      "randomize_player_model\030\004 \001(\010\022\035\n\025randomiz" +
+      "e_planet_size\030\005 \001(\010\022\032\n\022randomize_emotion" +
+      "s\030\006 \001(\010\"{\n\014ItemSettings\0226\n\023item_spawn_se" +
+      "ttings\030\001 \001(\0132\031.GenericSpawnPresetFilter\022" +
+      "\021\n\tmore_guns\030\002 \001(\010\022 \n\030randomize_fab_plan" +
+      "_costs\030\003 \001(\010\"\225\001\n\013NpcSettings\0227\n\024enemy_sp" +
+      "awn_settings\030\001 \001(\0132\031.GenericSpawnPresetF" +
+      "ilter\022-\n%randomize_dynamically_spawned_e" +
+      "nemies\030\002 \001(\010\022\036\n\026enable_nightmare_early\030\003" +
+      " \001(\010\"/\n\020NeuromodSettings\022\033\n\023randomize_ne" +
+      "uromods\030\001 \001(\010\"\253\003\n\030StoryProgressionSettin" +
+      "gs\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cus" +
+      "tom_spawn\030\002 \001(\010\022F\n\025custom_spawn_location" +
+      "\030\003 \001(\0162\'.StoryProgressionSettings.SpawnL" +
+      "ocation\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006R" +
+      "ANDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n" +
+      "\rPSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020" +
+      "\006\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP" +
+      "_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPOR" +
+      "T\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n" +
+      "\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SELEC" +
+      "T\020\020\"l\n\021GameStartSettings\022\035\n\025add_loot_to_" +
+      "apartment\030\001 \001(\010\022\033\n\023start_on_second_day\030\002" +
+      " \001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001(\010\"\237\002\n\rCh" +
+      "eatSettings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unl" +
+      "ock_all_scans\030\002 \001(\010\022\030\n\020wandering_humans\030" +
+      "\003 \001(\010\022\033\n\023start_self_destruct\030\004 \001(\010\022\033\n\023se" +
+      "lf_destruct_timer\030\005 \001(\t\022#\n\033self_destruct" +
+      "_shuttle_timer\030\006 \001(\t\022\037\n\027zero_gravity_eve" +
+      "rywhere\030\007 \001(\010\022&\n\036enable_gravity_in_ext_a" +
+      "nd_guts\030\010 \001(\010\022\034\n\024game_token_overrides\030\t " +
+      "\001(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name\030" +
+      "\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.G" +
+      "enericSpawnPresetRule\"\220\001\n\026GenericSpawnPr" +
+      "esetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_t" +
+      "ags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_" +
+      "not_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_ta" +
+      "gs\030\005 \003(\tB\033\n\005protoB\022RandomizerSettingsb\006p" +
+      "roto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11807,7 +11879,7 @@ public final class RandomizerSettings {
     internal_static_CosmeticSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CosmeticSettings_descriptor,
-        new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", });
+        new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", "RandomizePlanetSize", "RandomizeEmotions", });
     internal_static_ItemSettings_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_ItemSettings_fieldAccessorTable = new
@@ -11819,7 +11891,7 @@ public final class RandomizerSettings {
     internal_static_NpcSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_NpcSettings_descriptor,
-        new java.lang.String[] { "EnemySpawnSettings", "RandomizeNightmare", "RandomizeCystoidNests", "RandomizeWeaverCystoids", });
+        new java.lang.String[] { "EnemySpawnSettings", "RandomizeDynamicallySpawnedEnemies", "EnableNightmareEarly", });
     internal_static_NeuromodSettings_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_NeuromodSettings_fieldAccessorTable = new

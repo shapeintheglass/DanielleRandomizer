@@ -7,8 +7,10 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
@@ -18,12 +20,15 @@ import javafx.scene.control.TextArea;
 import proto.RandomizerSettings.Settings;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.MusicRandomizer;
+import randomizers.cosmetic.PlanetRandomizer;
 import randomizers.cosmetic.PlayerModelRandomizer;
 import randomizers.cosmetic.VoiceRandomizer;
 import randomizers.gameplay.FabPlanCostRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
+import randomizers.gameplay.NightmareRandomizer;
+import randomizers.gameplay.NpcAbilitiesRandomizer;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.GravityDisablerFilter;
@@ -34,7 +39,6 @@ import randomizers.gameplay.filters.StationConnectivityFilter;
 import randomizers.generators.BookInfoHelper;
 import randomizers.generators.BookInfoHelper.Book;
 import randomizers.generators.CustomSpawnGenerator;
-import randomizers.generators.NightmareHelper;
 import randomizers.generators.SelfDestructTimerHelper;
 import randomizers.generators.StationGenerator;
 import utils.Utils;
@@ -194,8 +198,8 @@ public class RandomizerService extends Service<Void> {
       new BodyRandomizer(currentSettings, zipHelper).randomize();
     }
     Map<String, String> swappedLinesMap = null;
-    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines()) {
-      writeLine(Gui2Consts.INSTALL_PROGRESS_VOICELINES);
+    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines() || currentSettings.getCosmeticSettings().getRandomizeEmotions()) {
+      writeLine("Randomizing dialogue...");
       VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
       vr.randomize();
       swappedLinesMap = vr.getSwappedLinesMap();
@@ -208,6 +212,10 @@ public class RandomizerService extends Service<Void> {
     if (currentSettings.getCosmeticSettings().getRandomizePlayerModel()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL);
       new PlayerModelRandomizer(currentSettings, zipHelper).randomize();
+    }
+    if (currentSettings.getCosmeticSettings().getRandomizePlanetSize()) {
+      writeLine("Randomizing planet size");
+      new PlanetRandomizer(currentSettings, zipHelper).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
@@ -224,15 +232,16 @@ public class RandomizerService extends Service<Void> {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
     if (currentSettings.getItemSettings().getRandomizeFabPlanCosts()) {
       writeLine("Randomizing fab plan costs...");
       new FabPlanCostRandomizer(currentSettings, zipHelper).randomize();
     }
 
-    if (currentSettings.getNpcSettings().getRandomizeNightmare()) {
-      writeLine("Randomizing nightmare...");
-      NightmareHelper.install(database, currentSettings, zipHelper);
+    if (currentSettings.getNpcSettings().getRandomizeDynamicallySpawnedEnemies()) {
+      writeLine("Randomizing dynamically spawned entities...");
+      new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
+      new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
     }
 
     if (currentSettings.getCheatSettings().getStartSelfDestruct()) {
@@ -254,11 +263,12 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
     }
 
-    CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator(currentSettings.getStoryProgressionSettings()
-        .getCustomSpawnLocation(), zipHelper, Utils.stringToLong(currentSettings.getSeed()));
+    CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();
 
     if (currentSettings.getStoryProgressionSettings().getUseCustomSpawn()) {
       logger.info(String.format("Setting custom spawn to %s", customSpawnGenerator.getLocation()));
+      customSpawnGenerator.setSpawn(currentSettings.getStoryProgressionSettings().getCustomSpawnLocation(), zipHelper,
+          Utils.stringToLong(currentSettings.getSeed()));
       customSpawnGenerator.swapLocationId();
     }
 
@@ -285,7 +295,11 @@ public class RandomizerService extends Service<Void> {
     levelRandomizer.randomize();
     writeLine("Done processing level files.");
 
-    return customSpawnGenerator.getNewSpawnLocation();
+    if (currentSettings.getStoryProgressionSettings().getUseCustomSpawn()) {
+      return customSpawnGenerator.getNewSpawnLocation();
+    } else {
+      return null;
+    }
   }
 
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {

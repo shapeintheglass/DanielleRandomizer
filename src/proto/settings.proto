@@ -26,6 +26,8 @@ message CosmeticSettings {
   bool randomize_voicelines = 2;
   bool randomize_music = 3;
   bool randomize_player_model = 4;
+  bool randomize_planet_size = 5;
+  bool randomize_emotions = 6;
 }
 
 message ItemSettings {
@@ -36,9 +38,8 @@ message ItemSettings {
 
 message NpcSettings {
   GenericSpawnPresetFilter enemy_spawn_settings = 1;
-  bool randomize_nightmare = 2;
-  bool randomize_cystoid_nests = 3;
-  bool randomize_weaver_cystoids = 4;
+  bool randomize_dynamically_spawned_enemies = 2;
+  bool enable_nightmare_early = 3;
 }
 
 message NeuromodSettings {

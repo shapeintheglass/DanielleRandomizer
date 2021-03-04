@@ -70,20 +70,24 @@
                               <Label layoutX="12.0" layoutY="21.0" text="These options affect the look of the game but do not affect gameplay." />
                               <HBox layoutX="28.0" layoutY="50.0" prefHeight="230.0" prefWidth="598.0" spacing="15.0">
                                  <children>
-                                    <VBox prefHeight="230.0" prefWidth="186.0" spacing="15.0">
+                                    <VBox prefHeight="230.0" prefWidth="217.0" spacing="15.0">
                                        <children>
                                           <CheckBox fx:id="cosmeticCheckboxBodies" mnemonicParsing="false" text="Randomize human bodies" />
                                           <CheckBox fx:id="cosmeticCheckboxVoices" mnemonicParsing="false" text="Randomize voice lines" />
+                                          <CheckBox fx:id="cosmeticCheckboxEmotions" mnemonicParsing="false" text="Randomize emotions" />
                                           <CheckBox fx:id="cosmeticCheckboxMusic" mnemonicParsing="false" text="Randomize music" />
                                           <CheckBox fx:id="cosmeticCheckboxPlayerModel" mnemonicParsing="false" text="Randomize player model" />
+                                          <CheckBox fx:id="cosmeticCheckboxPlanetSize" mnemonicParsing="false" text="Randomize Earth/Moon/Sun size" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
                                        <children>
                                           <Label text="Generates new appearances for every human NPC." />
                                           <Label text="Randomizes voice lines by voice actor (except for certain cutscenes)." />
+                                          <Label text="Assigns a random facial expression to every voice line." />
                                           <Label text="Shuffles in-game music." />
                                           <Label text="Randomizes the first person player model." />
+                                          <Label text="Changes the size of the Earth/Moon/Sun." />
                                        </children>
                                     </VBox>
                                  </children>
@@ -111,8 +115,11 @@
                                           <CheckBox fx:id="itemsCheckboxFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
                                        </children>
                                        <HBox.margin>
-                                          <Insets left="50.0" />
+                                          <Insets />
                                        </HBox.margin>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
                                     </VBox>
                                  </children>
                               </HBox>
@@ -135,11 +142,15 @@
                                     </ScrollPane>
                                     <VBox prefHeight="271.0" prefWidth="210.0" spacing="15.0">
                                        <children>
-                                          <Label text="Other options:" visible="false" />
-                                          <CheckBox fx:id="npcsCheckBoxNightmare" mnemonicParsing="false" text="Randomize nightmare" visible="false" />
-                                          <CheckBox fx:id="npcsCheckBoxCystoidNests" mnemonicParsing="false" text="Randomize cystoid nests" visible="false" />
-                                          <CheckBox fx:id="npcsCheckBoxWeavers" mnemonicParsing="false" text="Randomize weaver cystoids" visible="false" />
+                                          <Label text="Other options:" />
+                                          <CheckBox fx:id="npcsCheckBoxDynamicSpawns" mnemonicParsing="false" text="Include dynamic spawns" />
                                        </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
                                     </VBox>
                                  </children>
                               </HBox>

@@ -87,6 +87,10 @@ public class WindowController {
   private CheckBox cosmeticCheckboxMusic;
   @FXML
   private CheckBox cosmeticCheckboxPlayerModel;
+  @FXML
+  private CheckBox cosmeticCheckboxPlanetSize;
+  @FXML
+  private CheckBox cosmeticCheckboxEmotions;
 
   /* ITEMS TAB */
   @FXML
@@ -99,11 +103,7 @@ public class WindowController {
 
   /* ENEMIES TAB */
   @FXML
-  private CheckBox npcsCheckBoxNightmare;
-  @FXML
-  private CheckBox npcsCheckBoxCystoidNests;
-  @FXML
-  private CheckBox npcsCheckBoxWeavers;
+  private CheckBox npcsCheckBoxDynamicSpawns;
   @FXML
   private VBox enemiesOptions;
   private ToggleGroup enemySpawnToggleGroup = new ToggleGroup();
@@ -164,7 +164,7 @@ public class WindowController {
   private Settings settings;
   private AllPresets allPresets;
   private Logger logger;
-  private List<Node> allEntities;
+  private List<Node> toDisable;
 
   public void setStage(Stage stage) {
     this.stage = stage;
@@ -211,9 +211,10 @@ public class WindowController {
     seedText.setText(settings.getSeed());
     directoryText.setText(settings.getInstallDir());
 
-    allEntities = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
+    toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
         saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton,
-        gotsPresetButton);
+        gotsPresetButton, cheatsTextFieldGameTokens, cheatsTextFieldShuttleTimer, cheatsTextFieldTimer, seedText,
+        directoryText);
 
     initCustomSpawnCheckboxes(allPresets, settings);
 
@@ -257,6 +258,9 @@ public class WindowController {
     itemsCheckboxMoreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
     itemsCheckboxFabPlanCosts.setTooltip(new Tooltip("Sets the materials costs for every fab plan to random values."));
 
+    npcsCheckBoxDynamicSpawns.setTooltip(new Tooltip(
+        "Also randomize entities such as the nightmare and phantoms created by weavers. May cause game crashes."));
+
     installButton.setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
     uninstallButton.setTooltip(new Tooltip(
         "Removes any mods added by this installer and reverts changes to the game directory."));
@@ -274,13 +278,13 @@ public class WindowController {
     cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoicelines());
     cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
     cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
+    cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings().getRandomizePlanetSize());
+    cosmeticCheckboxEmotions.setSelected(settings.getCosmeticSettings().getRandomizeEmotions());
 
     itemsCheckboxMoreGuns.setSelected(settings.getItemSettings().getMoreGuns());
     itemsCheckboxFabPlanCosts.setSelected(settings.getItemSettings().getRandomizeFabPlanCosts());
 
-    npcsCheckBoxCystoidNests.setSelected(settings.getNpcSettings().getRandomizeCystoidNests());
-    npcsCheckBoxNightmare.setSelected(settings.getNpcSettings().getRandomizeNightmare());
-    npcsCheckBoxWeavers.setSelected(settings.getNpcSettings().getRandomizeWeaverCystoids());
+    npcsCheckBoxDynamicSpawns.setSelected(settings.getNpcSettings().getRandomizeDynamicallySpawnedEnemies());
 
     startCheckboxDay2.setSelected(settings.getGameStartSettings().getStartOnSecondDay());
     startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings().getAddLootToApartment());
@@ -312,12 +316,12 @@ public class WindowController {
     cosmeticCheckboxVoices.setSelected(false);
     cosmeticCheckboxMusic.setSelected(false);
     cosmeticCheckboxPlayerModel.setSelected(false);
+    cosmeticCheckboxPlanetSize.setSelected(false);
+    cosmeticCheckboxEmotions.setSelected(false);
     itemsCheckboxMoreGuns.setSelected(false);
     itemsCheckboxFabPlanCosts.setSelected(false);
     setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
-    npcsCheckBoxNightmare.setSelected(false);
-    npcsCheckBoxCystoidNests.setSelected(false);
-    npcsCheckBoxWeavers.setSelected(false);
+    npcsCheckBoxDynamicSpawns.setSelected(false);
     setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
     startCheckboxDay2.setSelected(false);
     startCheckboxAddAllEquipment.setSelected(false);
@@ -490,7 +494,7 @@ public class WindowController {
   }
 
   private void disableAllButtons(boolean disable) {
-    for (Node b : allEntities) {
+    for (Node b : toDisable) {
       b.setDisable(disable);
     }
   }
@@ -540,6 +544,8 @@ public class WindowController {
         .setRandomizeVoicelines(cosmeticCheckboxVoices.isSelected())
         .setRandomizeMusic(cosmeticCheckboxMusic.isSelected())
         .setRandomizePlayerModel(cosmeticCheckboxPlayerModel.isSelected())
+        .setRandomizePlanetSize(cosmeticCheckboxPlanetSize.isSelected())
+        .setRandomizeEmotions(cosmeticCheckboxEmotions.isSelected())
         .build();
   }
 
@@ -564,9 +570,7 @@ public class WindowController {
 
     return NpcSettings.newBuilder()
         .setEnemySpawnSettings(enemySpawnPreset)
-        .setRandomizeNightmare(npcsCheckBoxNightmare.isSelected())
-        .setRandomizeCystoidNests(npcsCheckBoxCystoidNests.isSelected())
-        .setRandomizeWeaverCystoids(npcsCheckBoxWeavers.isSelected())
+        .setRandomizeDynamicallySpawnedEnemies(npcsCheckBoxDynamicSpawns.isSelected())
         .build();
   }
 

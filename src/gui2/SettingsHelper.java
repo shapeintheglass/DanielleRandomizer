@@ -20,6 +20,12 @@ public class SettingsHelper {
     if (settings.getCosmeticSettings().getRandomizePlayerModel()) {
       builder.append(String.format("\t* Randomize player model\n"));
     }
+    if (settings.getCosmeticSettings().getRandomizeEmotions()) {
+      builder.append(String.format("\t* Randomize emotions\n"));
+    }
+    if (settings.getCosmeticSettings().getRandomizePlanetSize()) {
+      builder.append(String.format("\t* Randomize Earth/Moon/Sun\n"));
+    }
 
     if (!settings.getItemSettings().getItemSpawnSettings().getFiltersList().isEmpty()) {
       builder.append(String.format("\t* %s\n", settings.getItemSettings().getItemSpawnSettings().getName()));
@@ -34,14 +40,8 @@ public class SettingsHelper {
     if (!settings.getNpcSettings().getEnemySpawnSettings().getFiltersList().isEmpty()) {
       builder.append(String.format("\t* %s\n", settings.getNpcSettings().getEnemySpawnSettings().getName()));
     }
-    if (settings.getNpcSettings().getRandomizeCystoidNests()) {
-      builder.append(String.format("\t* Randomize cystoid nests\n"));
-    }
-    if (settings.getNpcSettings().getRandomizeNightmare()) {
-      builder.append(String.format("\t* Randomize nightmare\n"));
-    }
-    if (settings.getNpcSettings().getRandomizeWeaverCystoids()) {
-      builder.append(String.format("\t* Randomize weaver cystoids\n"));
+    if (settings.getNpcSettings().getRandomizeDynamicallySpawnedEnemies()) {
+      builder.append(String.format("\t* Randomize dynamically spawned enemies\n"));
     }
 
     if (settings.getNeuromodSettings().getRandomizeNeuromods()) {
@@ -52,7 +52,9 @@ public class SettingsHelper {
       builder.append(String.format("\t* Randomize station\n"));
     }
     if (settings.getStoryProgressionSettings().getUseCustomSpawn()) {
-      builder.append(String.format("\t* Start location: %s\n", settings.getStoryProgressionSettings().getCustomSpawnLocation().name()));
+      builder.append(String.format("\t* Start location: %s\n", settings.getStoryProgressionSettings()
+          .getCustomSpawnLocation()
+          .name()));
     }
 
     if (settings.getGameStartSettings().getStartOnSecondDay()) {
@@ -64,7 +66,6 @@ public class SettingsHelper {
     if (settings.getGameStartSettings().getSkipJovanCutscene()) {
       builder.append(String.format("\t* Skip Jovan cutscene\n"));
     }
-    
 
     if (settings.getCheatSettings().getOpenStation()) {
       builder.append(String.format("\t* Unlock all doors/safes/workstations\n"));

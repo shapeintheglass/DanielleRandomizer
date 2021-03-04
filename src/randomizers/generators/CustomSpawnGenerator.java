@@ -52,14 +52,7 @@ public class CustomSpawnGenerator {
   private SpawnLocation location;
   private ZipHelper zipHelper;
 
-  public CustomSpawnGenerator(SpawnLocation l, ZipHelper zipHelper, long seed) {
-    this.zipHelper = zipHelper;
-    Random r = new Random(seed);
-    if (l == SpawnLocation.RANDOM) {
-      l = SUPPORTED_SPAWNS.get(r.nextInt(SUPPORTED_SPAWNS.size()));
-      Logger.getGlobal().info(String.format("Random spawn set to %s", l.name()));
-    }
-    this.location = l;
+  public CustomSpawnGenerator() {
     levelsToIds = HashBiMap.create();
     levelsToIds.put(Level.ARBORETUM, "1713490239386284818");
     levelsToIds.put(Level.BRIDGE, "844024417275035158");
@@ -77,6 +70,16 @@ public class CustomSpawnGenerator {
     levelsToIds.put(Level.EXTERIOR, "1713490239386284337");
     levelsToIds.put(Level.ENDGAME, "13680621263401479941");
     levelsToIds.put(Level.GENDER_SELECT, "3149325216909839564");
+  }
+  
+  public void setSpawn(SpawnLocation l, ZipHelper zipHelper, long seed) {
+    this.zipHelper = zipHelper;
+    Random r = new Random(seed);
+    if (l == SpawnLocation.RANDOM) {
+      l = SUPPORTED_SPAWNS.get(r.nextInt(SUPPORTED_SPAWNS.size()));
+      Logger.getGlobal().info(String.format("Random spawn set to %s", l.name()));
+    }
+    this.location = l;
   }
 
   public SpawnLocation getLocation() {
