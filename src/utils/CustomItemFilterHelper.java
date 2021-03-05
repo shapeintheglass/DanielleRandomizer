@@ -1,9 +1,9 @@
 package utils;
 
+import java.util.List;
 import java.util.Random;
-
 import org.jdom2.Element;
-
+import com.google.common.collect.Lists;
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.GenericSpawnPresetFilter;
 import proto.RandomizerSettings.GenericSpawnPresetRule;
@@ -14,20 +14,30 @@ public class CustomItemFilterHelper {
   private Settings settings;
   private TaggedDatabase database;
 
+  List<String> doNotOutput;
+
   public CustomItemFilterHelper(Settings settings, TaggedDatabase database) {
     this.settings = settings;
     this.database = database;
+    doNotOutput = Lists.newArrayList();
+  }
+
+  public void addDoNotOutput(List<String> doNotOutput) {
+    this.doNotOutput.addAll(doNotOutput);
   }
 
   public Element getEntity(String entityName, String nameInLevel, Random r) {
     // TODO: Store rules list at construction
-    GenericSpawnPresetFilter spawnPreset = settings.getItemSettings().getItemSpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getItemSettings()
+        .getItemSpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
 
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
-          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-      if (!settings.getItemSettings().getMoreGuns()) {
+          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
+          .addAllDoNotOutputTags(doNotOutput);
+      if (!settings.getItemSettings()
+          .getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
 
@@ -49,13 +59,15 @@ public class CustomItemFilterHelper {
   }
 
   public boolean trigger(String entityName, String nameInLevel) {
-    GenericSpawnPresetFilter spawnPreset = settings.getItemSettings().getItemSpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getItemSettings()
+        .getItemSpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
 
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-      if (!settings.getItemSettings().getMoreGuns()) {
+      if (!settings.getItemSettings()
+          .getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
 

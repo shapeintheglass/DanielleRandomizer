@@ -28,7 +28,7 @@ public class EntityArchetypesRandomizer extends BaseRandomizer {
 
   private TaggedDatabase database;
 
-  private static final ImmutableSet<Archetype> SUPPORTED_ARCHETYPES = ImmutableSet.of(Archetype.PICKUPS);
+  private static final ImmutableSet<Archetype> SUPPORTED_ARCHETYPES = ImmutableSet.of(Archetype.PICKUPS, Archetype.GAMEPLAY_ARCHITECTURE);
 
   public EntityArchetypesRandomizer(Settings s, TaggedDatabase database, ZipHelper zipHelper) {
     super(s, zipHelper);

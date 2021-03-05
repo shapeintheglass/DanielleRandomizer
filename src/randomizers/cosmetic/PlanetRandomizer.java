@@ -14,10 +14,15 @@ public class PlanetRandomizer extends BaseRandomizer {
 
   private static final String SKY_PATH = "libs/sky/arkspacesettings.xml";
 
-  private static final float MIN_SCALE = 1.0f;
+  private static final float MIN_SCALE_EARTH = 1.0f;
   private static final float MAX_SCALE_EARTH = 10.0f;
+  private static final float MIN_SCALE_MOON = 0.5f;
   private static final float MAX_SCALE_MOON = 2.0f;
+  private static final float MIN_SCALE_SUN = 1.0f;
   private static final float MAX_SCALE_SUN = 20.0f;
+  private static final float MIN_SCALE_STARS = 1.0f;
+  private static final float MAX_SCALE_STARS = 10.0f;
+
 
   public PlanetRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
@@ -28,9 +33,11 @@ public class PlanetRandomizer extends BaseRandomizer {
     try {
       Document d = zipHelper.getDocument(SKY_PATH);
       Element root = d.getRootElement();
-      setValue(root, "Earth", "Scale", MIN_SCALE, MAX_SCALE_EARTH);
-      setValue(root, "Moon", "Scale", MIN_SCALE, MAX_SCALE_MOON);
-      setValue(root, "Sun", "Scale", MIN_SCALE, MAX_SCALE_SUN);
+      setValue(root, "Earth", "Scale", MIN_SCALE_EARTH, MAX_SCALE_EARTH);
+      setValue(root, "Moon", "Scale", MIN_SCALE_MOON, MAX_SCALE_MOON);
+      setValue(root, "Sun", "Scale", MIN_SCALE_SUN, MAX_SCALE_SUN);
+      setValue(root, "Stars", "Scale", MIN_SCALE_STARS, MAX_SCALE_STARS);
+      setValue(root, "Stars", "CountPercentage", 0.01f, 0.99f);
 
       zipHelper.copyToPatch(d, SKY_PATH);
     } catch (IOException | JDOMException e) {
