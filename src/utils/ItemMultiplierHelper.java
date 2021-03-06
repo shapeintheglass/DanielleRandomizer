@@ -9,7 +9,10 @@ import com.google.common.collect.ImmutableSet;
 
 public class ItemMultiplierHelper {
   public enum Tier {
-    ONLY_ONE, MAYBE_A_FEW, MAYBE_A_LOT, FUCK_IT
+    ONLY_ONE,
+    MAYBE_A_FEW,
+    MAYBE_A_LOT,
+    FUCK_IT
   }
 
   public static final int MAYBE_A_FEW_MIN_BOUND = 1;
@@ -23,9 +26,10 @@ public class ItemMultiplierHelper {
 
   private static ImmutableSet<String> FUCK_IT_TIER = ImmutableSet.of("Ingredients");
   private static ImmutableSet<String> MAYBE_A_LOT_TIER = ImmutableSet.of("Ammo");
-  private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("Food", "EMPGrenades", "LureGrenades",
-      "RecyclerGrenades", "NullwaveTransmitter", "RecyclerJunk");
-  private static ImmutableSet<String> ONLY_ONE_TIER = ImmutableSet.of("FabricationPlans", "Weapons");
+  private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("Food", "EMPGrenades",
+      "LureGrenades", "RecyclerGrenades", "NullwaveTransmitter", "RecyclerJunk");
+  private static ImmutableSet<String> ONLY_ONE_TIER =
+      ImmutableSet.of("FabricationPlans", "Weapons", "ArkPhysicsProps");
 
   public static Tier getTierForEntity(Element e) {
     Set<String> tags = Utils.getTags(e);

@@ -140,11 +140,7 @@
                               </VBox>
                                        </content>
                                     </ScrollPane>
-                                    <VBox prefHeight="271.0" prefWidth="210.0" spacing="15.0">
-                                       <children>
-                                          <Label text="Other options:" />
-                                          <CheckBox fx:id="npcsCheckBoxDynamicSpawns" mnemonicParsing="false" text="Include dynamic spawns" />
-                                       </children>
+                                    <VBox prefHeight="271.0" prefWidth="210.0" spacing="15.0" visible="false">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>

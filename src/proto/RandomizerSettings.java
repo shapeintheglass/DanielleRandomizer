@@ -5093,18 +5093,6 @@ public final class RandomizerSettings {
      * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
      */
     proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder();
-
-    /**
-     * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
-     * @return The randomizeDynamicallySpawnedEnemies.
-     */
-    boolean getRandomizeDynamicallySpawnedEnemies();
-
-    /**
-     * <code>bool enable_nightmare_early = 3;</code>
-     * @return The enableNightmareEarly.
-     */
-    boolean getEnableNightmareEarly();
   }
   /**
    * Protobuf type {@code NpcSettings}
@@ -5162,16 +5150,6 @@ public final class RandomizerSettings {
                 enemySpawnSettings_ = subBuilder.buildPartial();
               }
 
-              break;
-            }
-            case 16: {
-
-              randomizeDynamicallySpawnedEnemies_ = input.readBool();
-              break;
-            }
-            case 24: {
-
-              enableNightmareEarly_ = input.readBool();
               break;
             }
             default: {
@@ -5232,28 +5210,6 @@ public final class RandomizerSettings {
       return getEnemySpawnSettings();
     }
 
-    public static final int RANDOMIZE_DYNAMICALLY_SPAWNED_ENEMIES_FIELD_NUMBER = 2;
-    private boolean randomizeDynamicallySpawnedEnemies_;
-    /**
-     * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
-     * @return The randomizeDynamicallySpawnedEnemies.
-     */
-    @java.lang.Override
-    public boolean getRandomizeDynamicallySpawnedEnemies() {
-      return randomizeDynamicallySpawnedEnemies_;
-    }
-
-    public static final int ENABLE_NIGHTMARE_EARLY_FIELD_NUMBER = 3;
-    private boolean enableNightmareEarly_;
-    /**
-     * <code>bool enable_nightmare_early = 3;</code>
-     * @return The enableNightmareEarly.
-     */
-    @java.lang.Override
-    public boolean getEnableNightmareEarly() {
-      return enableNightmareEarly_;
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -5271,12 +5227,6 @@ public final class RandomizerSettings {
       if (enemySpawnSettings_ != null) {
         output.writeMessage(1, getEnemySpawnSettings());
       }
-      if (randomizeDynamicallySpawnedEnemies_ != false) {
-        output.writeBool(2, randomizeDynamicallySpawnedEnemies_);
-      }
-      if (enableNightmareEarly_ != false) {
-        output.writeBool(3, enableNightmareEarly_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -5289,14 +5239,6 @@ public final class RandomizerSettings {
       if (enemySpawnSettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getEnemySpawnSettings());
-      }
-      if (randomizeDynamicallySpawnedEnemies_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, randomizeDynamicallySpawnedEnemies_);
-      }
-      if (enableNightmareEarly_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, enableNightmareEarly_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5318,10 +5260,6 @@ public final class RandomizerSettings {
         if (!getEnemySpawnSettings()
             .equals(other.getEnemySpawnSettings())) return false;
       }
-      if (getRandomizeDynamicallySpawnedEnemies()
-          != other.getRandomizeDynamicallySpawnedEnemies()) return false;
-      if (getEnableNightmareEarly()
-          != other.getEnableNightmareEarly()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -5337,12 +5275,6 @@ public final class RandomizerSettings {
         hash = (37 * hash) + ENEMY_SPAWN_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getEnemySpawnSettings().hashCode();
       }
-      hash = (37 * hash) + RANDOMIZE_DYNAMICALLY_SPAWNED_ENEMIES_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeDynamicallySpawnedEnemies());
-      hash = (37 * hash) + ENABLE_NIGHTMARE_EARLY_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getEnableNightmareEarly());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5482,10 +5414,6 @@ public final class RandomizerSettings {
           enemySpawnSettings_ = null;
           enemySpawnSettingsBuilder_ = null;
         }
-        randomizeDynamicallySpawnedEnemies_ = false;
-
-        enableNightmareEarly_ = false;
-
         return this;
       }
 
@@ -5517,8 +5445,6 @@ public final class RandomizerSettings {
         } else {
           result.enemySpawnSettings_ = enemySpawnSettingsBuilder_.build();
         }
-        result.randomizeDynamicallySpawnedEnemies_ = randomizeDynamicallySpawnedEnemies_;
-        result.enableNightmareEarly_ = enableNightmareEarly_;
         onBuilt();
         return result;
       }
@@ -5569,12 +5495,6 @@ public final class RandomizerSettings {
         if (other == proto.RandomizerSettings.NpcSettings.getDefaultInstance()) return this;
         if (other.hasEnemySpawnSettings()) {
           mergeEnemySpawnSettings(other.getEnemySpawnSettings());
-        }
-        if (other.getRandomizeDynamicallySpawnedEnemies() != false) {
-          setRandomizeDynamicallySpawnedEnemies(other.getRandomizeDynamicallySpawnedEnemies());
-        }
-        if (other.getEnableNightmareEarly() != false) {
-          setEnableNightmareEarly(other.getEnableNightmareEarly());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5722,68 +5642,6 @@ public final class RandomizerSettings {
           enemySpawnSettings_ = null;
         }
         return enemySpawnSettingsBuilder_;
-      }
-
-      private boolean randomizeDynamicallySpawnedEnemies_ ;
-      /**
-       * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
-       * @return The randomizeDynamicallySpawnedEnemies.
-       */
-      @java.lang.Override
-      public boolean getRandomizeDynamicallySpawnedEnemies() {
-        return randomizeDynamicallySpawnedEnemies_;
-      }
-      /**
-       * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
-       * @param value The randomizeDynamicallySpawnedEnemies to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeDynamicallySpawnedEnemies(boolean value) {
-        
-        randomizeDynamicallySpawnedEnemies_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_dynamically_spawned_enemies = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeDynamicallySpawnedEnemies() {
-        
-        randomizeDynamicallySpawnedEnemies_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean enableNightmareEarly_ ;
-      /**
-       * <code>bool enable_nightmare_early = 3;</code>
-       * @return The enableNightmareEarly.
-       */
-      @java.lang.Override
-      public boolean getEnableNightmareEarly() {
-        return enableNightmareEarly_;
-      }
-      /**
-       * <code>bool enable_nightmare_early = 3;</code>
-       * @param value The enableNightmareEarly to set.
-       * @return This builder for chaining.
-       */
-      public Builder setEnableNightmareEarly(boolean value) {
-        
-        enableNightmareEarly_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool enable_nightmare_early = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearEnableNightmareEarly() {
-        
-        enableNightmareEarly_ = false;
-        onChanged();
-        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -11823,11 +11681,9 @@ public final class RandomizerSettings {
       "s\030\006 \001(\010\"{\n\014ItemSettings\0226\n\023item_spawn_se" +
       "ttings\030\001 \001(\0132\031.GenericSpawnPresetFilter\022" +
       "\021\n\tmore_guns\030\002 \001(\010\022 \n\030randomize_fab_plan" +
-      "_costs\030\003 \001(\010\"\225\001\n\013NpcSettings\0227\n\024enemy_sp" +
-      "awn_settings\030\001 \001(\0132\031.GenericSpawnPresetF" +
-      "ilter\022-\n%randomize_dynamically_spawned_e" +
-      "nemies\030\002 \001(\010\022\036\n\026enable_nightmare_early\030\003" +
-      " \001(\010\"/\n\020NeuromodSettings\022\033\n\023randomize_ne" +
+      "_costs\030\003 \001(\010\"F\n\013NpcSettings\0227\n\024enemy_spa" +
+      "wn_settings\030\001 \001(\0132\031.GenericSpawnPresetFi" +
+      "lter\"/\n\020NeuromodSettings\022\033\n\023randomize_ne" +
       "uromods\030\001 \001(\010\"\253\003\n\030StoryProgressionSettin" +
       "gs\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cus" +
       "tom_spawn\030\002 \001(\010\022F\n\025custom_spawn_location" +
@@ -11891,7 +11747,7 @@ public final class RandomizerSettings {
     internal_static_NpcSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_NpcSettings_descriptor,
-        new java.lang.String[] { "EnemySpawnSettings", "RandomizeDynamicallySpawnedEnemies", "EnableNightmareEarly", });
+        new java.lang.String[] { "EnemySpawnSettings", });
     internal_static_NeuromodSettings_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_NeuromodSettings_fieldAccessorTable = new

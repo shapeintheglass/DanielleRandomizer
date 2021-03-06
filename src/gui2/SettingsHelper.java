@@ -40,9 +40,6 @@ public class SettingsHelper {
     if (!settings.getNpcSettings().getEnemySpawnSettings().getFiltersList().isEmpty()) {
       builder.append(String.format("\t* %s\n", settings.getNpcSettings().getEnemySpawnSettings().getName()));
     }
-    if (settings.getNpcSettings().getRandomizeDynamicallySpawnedEnemies()) {
-      builder.append(String.format("\t* Randomize dynamically spawned enemies\n"));
-    }
 
     if (settings.getNeuromodSettings().getRandomizeNeuromods()) {
       builder.append(String.format("\t* Randomize neuromods\n"));

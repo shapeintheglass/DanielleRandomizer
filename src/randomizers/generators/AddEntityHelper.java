@@ -62,7 +62,8 @@ public class AddEntityHelper {
         .setAttribute("Class", "Ark:SendRemoteEvent")
         .setAttribute("pos", "484,20,0")
         .setAttribute("mod", "1")
-        .addContent(new Element("Inputs").setAttribute("remoteEvent_Event", "14667999412552670772"));
+        .addContent(
+            new Element("Inputs").setAttribute("remoteEvent_Event", "14667999412552670772"));
     nodes.addContent(node1);
     nodes.addContent(node2);
     nodes.addContent(node3);
@@ -98,17 +99,19 @@ public class AddEntityHelper {
 
   private static Element gravityBox(double gravityVector) {
     BigInteger id = new BigInteger("1000000");
-    Element entity = new Element("Entity").setAttribute("Name", String.format("GravityBox%s", id.toString()))
-        .setAttribute("Pos", "0.0,0.0,0.0")
-        .setAttribute("Rotate", "0.0,0,0,0")
-        .setAttribute("EntityClass", "GravityBox")
-        .setAttribute("EntityId", id.toString())
-        .setAttribute("EntityGuid", id.toString(16).toUpperCase())
-        .setAttribute("CastShadowViewDistRatio", "0")
-        .setAttribute("CastShadowMinSpec", "1")
-        .setAttribute("CastSunShadowMinSpec", "8")
-        .setAttribute("ShadowCasterType", "0")
-        .setAttribute("Layer", "AlwaysLoaded");
+    Element entity =
+        new Element("Entity").setAttribute("Name", String.format("GravityBox%s", id.toString()))
+            .setAttribute("Pos", "0.0,0.0,0.0")
+            .setAttribute("Rotate", "0.0,0,0,0")
+            .setAttribute("EntityClass", "GravityBox")
+            .setAttribute("EntityId", id.toString())
+            .setAttribute("EntityGuid", id.toString(16)
+                .toUpperCase())
+            .setAttribute("CastShadowViewDistRatio", "0")
+            .setAttribute("CastShadowMinSpec", "1")
+            .setAttribute("CastSunShadowMinSpec", "8")
+            .setAttribute("ShadowCasterType", "0")
+            .setAttribute("Layer", "AlwaysLoaded");
     Element properties = new Element("Properties").setAttribute("bActive", "1")
         .setAttribute("bAffectsParticleEmitterPosition", "0")
         .setAttribute("FalloffInner", "0")
@@ -118,7 +121,9 @@ public class AddEntityHelper {
     properties.addContent(new Element("BoxMax").setAttribute("x", "100000")
         .setAttribute("y", "100000")
         .setAttribute("z", "100000"));
-    properties.addContent(new Element("BoxMin").setAttribute("x", "0").setAttribute("y", "0").setAttribute("z", "0"));
+    properties.addContent(new Element("BoxMin").setAttribute("x", "0")
+        .setAttribute("y", "0")
+        .setAttribute("z", "0"));
     properties.addContent(new Element("Gravity").setAttribute("x", "0")
         .setAttribute("y", "0")
         .setAttribute("z", Double.toString(gravityVector)));
@@ -127,15 +132,19 @@ public class AddEntityHelper {
     return entity;
   }
 
-  public static void addEntities(Element objects, String filename, Settings settings, ZipHelper zipHelper) {
-    if (settings.getCheatSettings().getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
+  public static void addEntities(Element objects, String filename, Settings settings,
+      ZipHelper zipHelper) {
+    if (settings.getCheatSettings()
+        .getStartSelfDestruct() && filename.equals("research/simulationlabs")) {
       objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
     }
 
-    if (settings.getGameStartSettings().getStartOnSecondDay() && filename.equals("research/simulationlabs")) {
+    if (settings.getGameStartSettings()
+        .getStartOnSecondDay() && filename.equals("research/simulationlabs")) {
       try {
         Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
-        Element root = document.getRootElement().clone();
+        Element root = document.getRootElement()
+            .clone();
 
         objects.addContent(root);
       } catch (Exception e) {
@@ -143,18 +152,8 @@ public class AddEntityHelper {
       }
     }
 
-    if (settings.getNpcSettings().getEnableNightmareEarly() && filename.equals("research/simulationlabs")) {
-      try {
-        Document document = zipHelper.getDocument(ZipHelper.ENABLE_NIGHTMARE_MANAGER);
-        Element root = document.getRootElement().clone();
-
-        objects.addContent(root);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-
-    if (settings.getCheatSettings().getZeroGravityEverywhere() && !filename.equals("station/exterior")) {
+    if (settings.getCheatSettings()
+        .getZeroGravityEverywhere() && !filename.equals("station/exterior")) {
       if (filename.equals("research/zerog_utilitytunnels") && settings.getCheatSettings()
           .getEnableGravityInExtAndGuts()) {
         return;

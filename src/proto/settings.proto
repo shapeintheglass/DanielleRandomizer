@@ -38,8 +38,6 @@ message ItemSettings {
 
 message NpcSettings {
   GenericSpawnPresetFilter enemy_spawn_settings = 1;
-  bool randomize_dynamically_spawned_enemies = 2;
-  bool enable_nightmare_early = 3;
 }
 
 message NeuromodSettings {

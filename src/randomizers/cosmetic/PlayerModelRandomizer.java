@@ -4,17 +4,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import utils.ZipHelper;
@@ -28,62 +25,97 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final ImmutableList<String> PAJAMA_FILES = ImmutableList.of();
 
   private static final ImmutableSet<String> PLAYER_TAGS = ImmutableSet.of("arms", "legs");
-  private static final ImmutableSet<String> PAJAMA_TAGS = ImmutableSet.of("pajama_arms", "pajama_legs");
+  private static final ImmutableSet<String> PAJAMA_TAGS =
+      ImmutableSet.of("pajama_arms", "pajama_legs");
 
   private static enum BodyType {
-    Volunteer, Security, Engineer, Scientist, Corporate, LabCoat, Dahl, Etheric, Cosmonaut, Phantom, PajamaMale,
-    PajamaFemale, GlovelessMale
+    Volunteer,
+    Security,
+    Engineer,
+    Scientist,
+    Corporate,
+    LabCoat,
+    Dahl,
+    Etheric,
+    Cosmonaut,
+    PajamaMale,
+    PajamaFemale,
+    GlovelessMale
   }
 
-  private static final ImmutableList<BodyType> PAJAMA_COMPATIBLE_BODIES = ImmutableList.of(BodyType.Volunteer,
-      BodyType.Security, BodyType.Engineer, BodyType.Scientist, BodyType.Corporate, BodyType.Dahl);
+  private static final ImmutableList<BodyType> PAJAMA_COMPATIBLE_BODIES =
+      ImmutableList.of(BodyType.Volunteer, BodyType.Security, BodyType.Engineer, BodyType.Scientist,
+          BodyType.Corporate, BodyType.Dahl);
 
-  private static final ImmutableMap<BodyType, String> BODY_SKIN = new ImmutableMap.Builder<BodyType, String>().put(
-      BodyType.Volunteer, "Objects/characters/Humans/Volunteer/Volunteer_GenMaleBody01.skin")
-      .put(BodyType.Security, "Objects/characters/Humans/Security/Security_GenMaleBody01.skin")
-      .put(BodyType.Engineer, "Objects/characters/Humans/Mechanic/Mechanic_GenMaleBody01.skin")
-      .put(BodyType.Scientist, "Objects/characters/Humans/Scientist/Scientist_GenMaleBody01.skin")
-      .put(BodyType.Corporate, "Objects/characters/Humans/Corporate/Corporate_GenMaleBody01.skin")
-      .put(BodyType.LabCoat, "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.skin")
-      .put(BodyType.Dahl, "Objects/characters/Humans/Dahl/Dahl_GenMaleBody01.skin")
-      .put(BodyType.Etheric, "objects/characters/humans/genmale/genmale_mesh.skin")
-      .put(BodyType.GlovelessMale, "objects/characters/humans/morgankarl/morgankarlgenderselect_genmale.skin")
-      .build();
+  private static final ImmutableMap<BodyType, String> BODY_SKIN =
+      new ImmutableMap.Builder<BodyType, String>()
+          .put(BodyType.Volunteer,
+              "Objects/characters/Humans/Volunteer/Volunteer_GenMaleBody01.skin")
+          .put(BodyType.Security, "Objects/characters/Humans/Security/Security_GenMaleBody01.skin")
+          .put(BodyType.Engineer, "Objects/characters/Humans/Mechanic/Mechanic_GenMaleBody01.skin")
+          .put(BodyType.Scientist,
+              "Objects/characters/Humans/Scientist/Scientist_GenMaleBody01.skin")
+          .put(BodyType.Corporate,
+              "Objects/characters/Humans/Corporate/Corporate_GenMaleBody01.skin")
+          .put(BodyType.LabCoat, "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.skin")
+          .put(BodyType.Dahl, "Objects/characters/Humans/Dahl/Dahl_GenMaleBody01.skin")
+          .put(BodyType.Etheric, "objects/characters/humans/genmale/genmale_mesh.skin")
+          .put(BodyType.GlovelessMale,
+              "objects/characters/humans/morgankarl/morgankarlgenderselect_genmale.skin")
+          .build();
 
-  private static final ImmutableMap<BodyType, String> BODY_MTL = new ImmutableMap.Builder<BodyType, String>().put(
-      BodyType.Volunteer, "Objects/characters/Humans/Volunteer/Volunteer_GenMaleBody01.mtl")
-      .put(BodyType.Security, "Objects/characters/Humans/Security/Security_GenMaleBody01.mtl")
-      .put(BodyType.Engineer, "Objects/characters/Humans/Mechanic/Mechanic_GenMaleBody01.mtl")
-      .put(BodyType.Scientist, "Objects/characters/Humans/Scientist/Scientist_GenMaleBody01.mtl")
-      .put(BodyType.Corporate, "Objects/characters/Humans/Corporate/Corporate_GenMaleBody01.mtl")
-      .put(BodyType.LabCoat, "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.mtl")
-      .put(BodyType.Dahl, "Objects/characters/Humans/Dahl/Dahl_GenMaleBody01.mtl")
-      .put(BodyType.Etheric, "Objects/characters/Player/EtherDuplicate_00.mtl")
-      .put(BodyType.GlovelessMale, "objects/characters/humans/morgankarl/morgan_genmalebody01_cut_scene.mtl")
-      .build();
+  private static final ImmutableMap<BodyType, String> BODY_MTL =
+      new ImmutableMap.Builder<BodyType, String>()
+          .put(BodyType.Volunteer,
+              "Objects/characters/Humans/Volunteer/Volunteer_GenMaleBody01.mtl")
+          .put(BodyType.Security, "Objects/characters/Humans/Security/Security_GenMaleBody01.mtl")
+          .put(BodyType.Engineer, "Objects/characters/Humans/Mechanic/Mechanic_GenMaleBody01.mtl")
+          .put(BodyType.Scientist,
+              "Objects/characters/Humans/Scientist/Scientist_GenMaleBody01.mtl")
+          .put(BodyType.Corporate,
+              "Objects/characters/Humans/Corporate/Corporate_GenMaleBody01.mtl")
+          .put(BodyType.LabCoat, "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.mtl")
+          .put(BodyType.Dahl, "Objects/characters/Humans/Dahl/Dahl_GenMaleBody01.mtl")
+          .put(BodyType.Etheric, "Objects/characters/Player/EtherDuplicate_00.mtl")
+          .put(BodyType.GlovelessMale,
+              "objects/characters/humans/morgankarl/morgan_genmalebody01_cut_scene.mtl")
+          .build();
 
-  private static final String LAB_COAT_HANDS_SKIN = "objects/characters/humans/labcoat/labcoat_genmalehands01.skin";
-  private static final String LAB_COAT_HANDS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
-  private static final String LAB_COAT_LEGS_SKIN = "objects/characters/humans/labcoat/labcoat_genmalelegs01.skin";
-  private static final String LAB_COAT_LEGS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
+  private static final String LAB_COAT_HANDS_SKIN =
+      "objects/characters/humans/labcoat/labcoat_genmalehands01.skin";
+  private static final String LAB_COAT_HANDS_MTL =
+      "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
+  private static final String LAB_COAT_LEGS_SKIN =
+      "objects/characters/humans/labcoat/labcoat_genmalelegs01.skin";
+  private static final String LAB_COAT_LEGS_MTL =
+      "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
 
-  private static final String PAJAMA_MALE_ARMS_SKIN = "objects/characters/player/male/player1p_male02_arms.skin";
-  private static final String PAJAMA_MALE_ARMS_MTL = "objects/characters/player/male/player1p_male02_arms.mtl";
-  private static final String PAJAMA_MALE_LEGS_SKIN = "objects/characters/player/male/player1p_male02_pajamas.skin";
-  private static final String PAJAMA_MALE_LEGS_MTL = "objects/characters/player/male/player1p_male02_pajamas.mtl";
+  private static final String PAJAMA_MALE_ARMS_SKIN =
+      "objects/characters/player/male/player1p_male02_arms.skin";
+  private static final String PAJAMA_MALE_ARMS_MTL =
+      "objects/characters/player/male/player1p_male02_arms.mtl";
+  private static final String PAJAMA_MALE_LEGS_SKIN =
+      "objects/characters/player/male/player1p_male02_pajamas.skin";
+  private static final String PAJAMA_MALE_LEGS_MTL =
+      "objects/characters/player/male/player1p_male02_pajamas.mtl";
 
-  private static final String PAJAMA_FEMALE_ARMS_SKIN = "objects/characters/player/female/player1p_female02_arms.skin";
-  private static final String PAJAMA_FEMALE_ARMS_MTL = "objects/characters/player/female/player1p_female02_arms.mtl";
-  private static final String PAJAMA_FEMALE_LEGS_SKIN = "objects/characters/player/female/player1p_female02_pajamas.skin";
-  private static final String PAJAMA_FEMALE_LEGS_MTL = "objects/characters/player/female/player1p_female02_pajamas.mtl";
+  private static final String PAJAMA_FEMALE_ARMS_SKIN =
+      "objects/characters/player/female/player1p_female02_arms.skin";
+  private static final String PAJAMA_FEMALE_ARMS_MTL =
+      "objects/characters/player/female/player1p_female02_arms.mtl";
+  private static final String PAJAMA_FEMALE_LEGS_SKIN =
+      "objects/characters/player/female/player1p_female02_pajamas.skin";
+  private static final String PAJAMA_FEMALE_LEGS_MTL =
+      "objects/characters/player/female/player1p_female02_pajamas.mtl";
 
-  private static final String COSMONAUT_ARMS_SKIN = "objects/characters/player/male/cosmonaut_genmalebody01.skin";
-  private static final String COSMONAUT_ARMS_MTL = "objects/characters/player/male/cosmonaut1p_male01.mtl";
-  private static final String GENERIC_SUIT_SKIN = "objects/characters/player/male/player1p_male01_legs.skin";
-  private static final String GENERIC_SUIT_MTL = "objects/characters/player/male/player1p_male01_legs.mtl";
-
-  private static final String PHANTOM_ARMS_SKIN = "objects/characters/player/male/player1p_male01_armsalien.skin";
-  private static final String PHANTOM_ARMS_MTL = "objects/characters/player/male/player1p_male02_arms_alien_cine_02.mtl";
+  private static final String COSMONAUT_ARMS_SKIN =
+      "objects/characters/player/male/cosmonaut_genmalebody01.skin";
+  private static final String COSMONAUT_ARMS_MTL =
+      "objects/characters/player/male/cosmonaut1p_male01.mtl";
+  private static final String GENERIC_SUIT_SKIN =
+      "objects/characters/player/male/player1p_male01_legs.skin";
+  private static final String GENERIC_SUIT_MTL =
+      "objects/characters/player/male/player1p_male01_legs.mtl";
 
   public PlayerModelRandomizer(Settings s, ZipHelper zipHelper) {
     super(s, zipHelper);
@@ -189,22 +221,6 @@ public class PlayerModelRandomizer extends BaseRandomizer {
             .setAttribute("AName", armName)
             .setAttribute("Binding", COSMONAUT_ARMS_SKIN)
             .setAttribute("Material", COSMONAUT_ARMS_MTL)
-            .setAttribute("Flags", "0");
-        legs = new Element("Attachment").setAttribute("Inheritable", "0")
-            .setAttribute("Type", "CA_SKIN")
-            .setAttribute("AName", legName)
-            .setAttribute("Binding", GENERIC_SUIT_SKIN)
-            .setAttribute("Material", GENERIC_SUIT_MTL)
-            .setAttribute("Flags", "0");
-        elements.add(arms);
-        elements.add(legs);
-        break;
-      case Phantom:
-        arms = new Element("Attachment").setAttribute("Inheritable", "0")
-            .setAttribute("Type", "CA_SKIN")
-            .setAttribute("AName", armName)
-            .setAttribute("Binding", PHANTOM_ARMS_SKIN)
-            .setAttribute("Material", PHANTOM_ARMS_MTL)
             .setAttribute("Flags", "0");
         legs = new Element("Attachment").setAttribute("Inheritable", "0")
             .setAttribute("Type", "CA_SKIN")

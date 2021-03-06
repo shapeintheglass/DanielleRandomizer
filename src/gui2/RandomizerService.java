@@ -263,13 +263,6 @@ public class RandomizerService extends Service<Void> {
       new FabPlanCostRandomizer(currentSettings, zipHelper).randomize();
     }
 
-    if (currentSettings.getNpcSettings()
-        .getRandomizeDynamicallySpawnedEnemies()) {
-      writeLine("Randomizing dynamically spawned entities...");
-      new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
-      new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
-    }
-
     if (currentSettings.getCheatSettings()
         .getStartSelfDestruct()) {
       writeLine("Updating self-destruct timer...");
@@ -280,6 +273,9 @@ public class RandomizerService extends Service<Void> {
         new EntityArchetypesRandomizer(currentSettings, database, zipHelper)
             .addFilter(new FruitTreeFilter(currentSettings, database));
     entityRandomizer.randomize();
+    
+    new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
+    new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
 
     /* GAMEPLAY, LEVEL */
     LevelRandomizer levelRandomizer =

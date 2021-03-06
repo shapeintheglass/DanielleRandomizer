@@ -5,6 +5,8 @@ An item/enemy/neuromod/station/cosmetic randomizer for Prey 2017. Currently in p
 
 This is an external executable that overwrites the game level files (keeping a backup in the same directory) and generates a patch_randomizer.pak in GameSDK/Precache. Level files are backed up as "level_backup.pak" in their respective directories.
 
+We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url]﻿! Feel free to join to discuss the randomizer and/or provide feedback/suggestions.
+
 [b][u]WHAT CAN BE RANDOMIZED[/u][/b]
 
 [list]
@@ -14,8 +16,10 @@ This is an external executable that overwrites the game level files (keeping a b
 [*]Station connectivity
 [*]Human appearance
 [*]Voice lines
-[*](new in v0.30) Music
-[*](new in v0.30) Player model
+[*]Music
+[*]Player model
+[*](new in v0.31) Fabrication plan costs
+[*](new in v0.31) Earth/moon/sun size
 [/list]
 
 [b][u]OTHER OPTIONS[/u][/b]
@@ -26,7 +30,8 @@ This is an external executable that overwrites the game level files (keeping a b
 [*]Remove scan requirements for all typhon neuromods
 [*]Start on second day (Now new and improved, thanks to JerryTerry letting me use their [url=https://www.nexusmods.com/prey2017/mods/68]"Natural Day 2 Start"[/url] mod!)
 [*]More guns - Adds [url=https://www.nexusmods.com/prey2017/mods/69]guns with randomized projectiles[/url]﻿ to the item spawn pool.
-[*](new in v0.30) G.O.T.S. (Get Off The Station) mode - The station's self destruct will start as soon as you wake up in the Neuromod Division. Can you escape before time runs out?
+[*]G.O.T.S. (Get Off The Station) mode - The station's self destruct will start as soon as you wake up in the Neuromod Division. Can you escape before time runs out?
+[*](new in v0.31) Gravity toggles - enable 0G everywhere, or 1G in the Exterior+GUTS. Not intended for serious playthroughs.
 [/list]
 
 [b][u]QUICK START INSTRUCTIONS[/u][/b]
@@ -129,10 +134,10 @@ This preset pushes randomization as far as it can go without openly inviting a p
 
 Settings:
 [list]
-[*]Randomize all items - Randomizes all items and props. Does not spawn story items early, or any hazardous items.
+[*]Randomize all items - Randomizes all items and props. Does not spawn story items early, or any hazardous items. Pickups can only become other pickups, and physics props can only become other physics props.
 [*]Randomize all enemies - Randomizes all typhon/corrupted operators. Does not spawn unkillable entities such as turrets or tentacles. Also randomizes friendly operators.
 [*]Randomize neuromods - Randomizes the neuromod skill tree within each category
-[*]All cosmetic randomizations - Randomizes bodies/voicelines/music/player model
+[*]All cosmetic randomizations
 [/list]
 
 [size=4]Chaotic[/size]
@@ -146,7 +151,7 @@ Settings:
 [*]Randomize neuromods - Randomizes the neuromod skill tree within each category
 [*]More guns - adds randomized guns to the item spawn pool
 [*]Randomize station - randomizes station connectivity
-[*]All cosmetic randomizations - Randomizes bodies/voicelines/music/player model
+[*]All cosmetic randomizations
 [/list]
 
 [size=4]Lite[/size]
@@ -202,6 +207,12 @@ Here is some more in-depth information on the other options that this randomizer
 [*]Randomize station - Shuffles the connections between various parts of the station.
 [*]More guns - Adds more guns to the loot table. Some exotic variants use typhon organs as ammo. Make sure not to recycle the organs by mistake!
 [*]Make humans wander - Alters human AI so that their idle behavior is to wander rather than stand in place. Intended to be used with "typhon to humans" option to add some realism.
+[*](new in 0.31) Randomize emotions - Assigns a random facial expression to every line of dialog. Weirdly, most conversations still make sense no matter whether the NPC looks surprised, scared, happy, etc so it's hard to tell if this is actually working.
+[*](new in 0.31) Randomize fabrication plan cost - Non-intelligently randomizes the materials requirement for every fab plan. Note that this can potentially create fab plans with 0 cost, although it is unlikely.
+[*](new in 0.31) Microgravity in all maps - Turns every map that would normally be 1G into a 0G zone. Probably not playable. Not recommended for serious playthroughs.
+[*](new in 0.31) Gravity in GUTS and exterior - Adds gravity to the GUTS and Exterior. If both this and "enable microgravity everywhere" are on, GUTS and Exterior will have gravity. Definitely not playable. For masochists only.
+[*](new in 0.31) Custom starting map (for testing purposes only) - A WIP feature that is a little broken but at least functions in terms of starting you in the given map. Intended for testing purposes only. This currently works by swapping the given map with the neuromod division. Saving may not work, and story triggers may not occur.
+[*](new in 0.31) Game token overrides (for testing purposes only)- Specify initial starting values for any game tokens you wish (both level and global). If you don't know what game tokens are, you don't need this feature. Intended for testing purposes only.
 [/list]
 
 [size=4]Loot in Morgan's Apartment[/size]
@@ -226,6 +237,7 @@ The "Unlock everything" option will force most doors, workstations, etc to be un
 [*]Unlocks all doors, safes, and workstations by default (some are not affected if they are scripted to be locked, such as the doors to Psychotronics and Shuttle Bay)
 [*]Unlocks all exterior airlocks, allowing them to be opened from the outside
 [*]Immediately grants all voice samples required to enter Deep Storage (must pick up Zachary West's transcribe to proc the quest first, then wait a few seconds)
+[*]Unfortunately this is also a death sentence for Mikhaila and the Cargo Bay survivors since they will immediately get killed by the typhon in their adjacent rooms.
 [/list]
 
 Note that this does [b]not[/b] unlock the main lift. v0.1 attempted to solve this by moving the arboretum technopath to the lobby, but this was reverted in v0.2.
@@ -418,6 +430,7 @@ Sidequest related issues:
 [*]Dr. Calvino's keycard can only be obtained from the exterior if you load Hardware Labs first.
 [*]If any of the Cargo Bay B typhon become unkillable or go out of bounds, this may prevent rescuing the survivors there.
 [*]The nightmare quest may not trigger correctly.
+[*]If you eject yourself from Deep Storage before the director lockdown happens, you will be softlocked in the exterior.
 [/list]
 
 Game crashing issues:
@@ -425,6 +438,7 @@ Game crashing issues:
 [list]
 [*]A game crash can result if you start a randomized game on top of an existing save slot. Manually deleting old save files before starting a new game in the same slot can fix this issue.
 [*]Occasional game crashes when quitting to menu.
+[*]Occasional game crashes and soft locks when using the "chaotic" item randomization settings.
 [*](Still investigating) Some game crashes may occur when loading quicksaves. I'm still looking into ways to reproduce this issue.
 [/list]
 
@@ -434,6 +448,7 @@ Other issues:
 [*]If randomizing the neuromod skill tree, ability descriptions will no longer be accurate (ex. toughness III tells you it'll raise your HP to 300, but that assumes that you've already gotten toughness I and II).
 [*]If installer fails while running, there may not be an indication of this in the UI. If it takes too long, check the log.txt file for more info on what happened.
 [*]Temporary directories may not be deleted if there was an issue during randomization/install. If these start to pile up, feel free to delete them manually.
+[*]Invisible nightmares - Unknown cause, still investigating.
 [/list]
 [/spoiler]
 
@@ -452,6 +467,7 @@ Installer takes longer than expected
 [*]Close Prey 2017 if it is currently running.
 [*]Assert you have enough hard drive space for the generated mod files.
 [*]Delete any old temporary directories created by the mod.
+[*]Try closing the installer, reopening it, then running it again.
 [/list]
 
 No changes are occurring. Loot isn't showing up in Morgan's apartment, Voice lines aren't randomized, etc.
@@ -472,6 +488,8 @@ Game crashes on loading into level
 
 Please report issues to [url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or [url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿!
 
+We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url] for the randomizer as well for feedback and bug reports.
+
 Also feel free to share your ideas on how to expand the mod! Here are some features that are tentatively planned down the line:
 [list]
 [*]Tweaked neuromod abilities (ex. expanded range of typhon created by Phantom Genesis)
@@ -480,11 +498,7 @@ Also feel free to share your ideas on how to expand the mod! Here are some featu
 [*]Randomized keycards
 [*]Randomized recyclers/fabricators
 [*]Mooncrash compatibility
-[*]Randomized gravity
 [*]Randomize within level
-[*]Randomized nightmare/cystoid nests/weaver cystoids
-[*]Randomize fabrication plan cost
-[*]1994 mode
 [/list]
 [/spoiler]
 
@@ -495,6 +509,8 @@ Also feel free to share your ideas on how to expand the mod! Here are some featu
 [img]https://imgur.com/QmNBYpL.jpg[/img]
 
 Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or [url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿, or leave a post here.
+
+We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url]! Feel free to join to discuss the randomizer, provide suggestions, give bug reports, leave any kind of feedback, etc.
 
 Source code can be found on [url=https://github.com/shapeintheglass/DanielleRandomizer]GitHub[/url]﻿.
 
@@ -549,6 +565,18 @@ Source code can be found on [url=https://github.com/shapeintheglass/DanielleRan
    * Fixed a case where some randomly generated stations were soft locks
    * Fixed a case where item spawn multiplers were still not very reasonable
    * Fixed randomization for containers (for real this time)
+* 0.31
+   * Retooled JSON serialization to use protobuffers, and restructured all JSON files
+   * Fixed an issue where randomized stations were not deterministic
+   * Fixed an issue where randomized music would lag the game
+   * Removed phantom player model option as the textures are not loaded in by default
+   * Modified item randomization to include items spawned on harvestables and "fruit trees" such as vending machines, gun lockers, trees, flowers, medkit holders, and neuromod holders
+   * Modified enemy randomization to include systemically created enemies such as phantoms created by weavers, doppelgangers created by etheric phantoms, and the nightmare
+   * Added fabrication plan randomization
+   * Added gravity enable/disable options (experimental and not intended for serious runs)
+   * Added a start location chooser (experimental and only intended for debugging purposes)
+   * Added a game token override text box (only intended for debugging purposes)
+   * Added support for string seeds
 [/spoiler]
 
 [size=4]Acknowledgments[/size]

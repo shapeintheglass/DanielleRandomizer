@@ -26,6 +26,10 @@ public class NpcAbilitiesRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
+    if (settings.getNpcSettings().getEnemySpawnSettings().getFiltersCount() == 0) {
+      return;
+    }
+
     try {
       Document d = zipHelper.getDocument(NPC_ABILITIES_PATH);
 
