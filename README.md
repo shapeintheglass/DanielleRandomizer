@@ -1,4 +1,4 @@
-# Danielle Randomizer
+# Danielle Randomizer v0.31
 
 A configurable randomizer for Prey 2017 (code-named "Danielle").
 
@@ -25,6 +25,7 @@ Here are some of the options the randomizer offers:
 * Randomized enemy/NPC spawns
 * Randomized neuromod upgrade tree
 * Randomized station connectivity
+* Randomized fab plan costs
 
 **Other features:**
 
@@ -37,7 +38,7 @@ Here are some of the options the randomizer offers:
 
 ## Getting Started
 
-See [Nexus Mods](https://www.nexusmods.com/prey2017/mods/67) for the latest documentation and links to the latest release. Beta releases [can be found here](https://github.com/shapeintheglass/DanielleRandomizer/releases), but may have some issues.
+See [Nexus Mods](https://www.nexusmods.com/prey2017/mods/67) for the latest documentation and links to the latest release. Alpha releases [can be found here](https://github.com/shapeintheglass/DanielleRandomizer/releases), but may have some issues.
 
 ## Contact
 
@@ -100,22 +101,17 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
   * Retooled JSON serialization to use protobuffers, and restructured all JSON files
   * Fixed an issue where randomized stations were not deterministic
   * Fixed an issue where randomized music would lag the game
+  * Fixed an issue where some randomized stations were soft locked
+  * Fixed an issue where some randomized neuromod abilities in the science tree were not visible until the psychoscope was picked up
+  * Fixed an issue were item multipliers in containers could be unreasonably high
   * Removed phantom player model option as the textures are not loaded in by default
   * Modified item randomization to include items spawned on harvestables and "fruit trees" such as vending machines, gun lockers, trees, flowers, medkit holders, and neuromod holders
-  * Modified enemy randomization to include systemically created enemies such as phantoms created by weavers, doppelgangers created by etheric phantoms, and the nightmare
+  * Modified item randomization to include the preorder locker
   * Added fabrication plan randomization
   * Added gravity enable/disable options (experimental and not intended for serious runs)
   * Added a start location chooser (experimental and only intended for debugging purposes)
   * Added a game token override text box (only intended for debugging purposes)
   * Added support for string seeds
-
-## Dependencies info
-
-This project uses:
-* JDOM for xml parsing, which is licensed under the JDOM license.
-* Guava, which is licensed under the Apache license.
-* JGraphT for graph logic, which is dual-licensed under LGPL 2.1 and EPL 2.0.
-* Protobuffers for JSON parsing, which are licensed [here](https://github.com/protocolbuffers/protobuf/blob/master/LICENSE)
 
 ## Acknowledgments
 

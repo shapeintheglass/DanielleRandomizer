@@ -85,26 +85,32 @@ Will not be compatible with most mods, especially ones that modify level files (
 [list]
 [*]All level.paks
 [*]ark/apexvolumeconfig.xml
+[*]ark/entitlementunlocklibrary.xml
 [*]ark/ai/aitrees/armedhumanaitree.xml
 [*]ark/ai/aitrees/humanaitree.xml
 [*]ark/ai/aitrees/unarmedhumanaitree.xml
 [*]ark/campaign/books.xml
-[*]ark/dialog/voices/*
+[*]ark/campaign/locations.xml
 [*]ark/dialog/dialoglogic/*
+[*]ark/dialog/voices/*
 [*]ark/items/arkitems.xml
+[*]ark/items/fabricationplanlibrary.xml
 [*]ark/items/loottables.xml
 [*]ark/npc/npcgameeffects.xml
 [*]ark/player/abilities.xml
 [*]ark/player/abilitiespdalayout.xml
 [*]ark/player/researchtopics.xml
+[*]libs/entityarchetypes/arkgameplayarchitecture.xml
 [*]libs/entityarchetypes/arkpickups.xml
 [*]libs/entityarchetypes/arkprojectiles.xml
 [*]libs/gameaudio/music.xml
 [*]libs/globalactions/global_selfdestructsequence.xml
+[*]libs/sky/arkspacesettings.xml
 [*]objects/characters/humansfinal/*
 [*]objects/characters/player/*
 [/list]
 
+If the other mod modifies any of these files, the randomizer will likely not be compatible.
 
 [/spoiler]
 
@@ -137,6 +143,7 @@ Settings:
 [*]Randomize all items - Randomizes all items and props. Does not spawn story items early, or any hazardous items. Pickups can only become other pickups, and physics props can only become other physics props.
 [*]Randomize all enemies - Randomizes all typhon/corrupted operators. Does not spawn unkillable entities such as turrets or tentacles. Also randomizes friendly operators.
 [*]Randomize neuromods - Randomizes the neuromod skill tree within each category
+[*]Randomize fab plan costs
 [*]All cosmetic randomizations
 [/list]
 
@@ -151,6 +158,7 @@ Settings:
 [*]Randomize neuromods - Randomizes the neuromod skill tree within each category
 [*]More guns - adds randomized guns to the item spawn pool
 [*]Randomize station - randomizes station connectivity
+[*]Randomize fab plan costs
 [*]All cosmetic randomizations
 [/list]
 
@@ -211,7 +219,7 @@ Here is some more in-depth information on the other options that this randomizer
 [*](new in 0.31) Randomize fabrication plan cost - Non-intelligently randomizes the materials requirement for every fab plan. Note that this can potentially create fab plans with 0 cost, although it is unlikely.
 [*](new in 0.31) Microgravity in all maps - Turns every map that would normally be 1G into a 0G zone. Probably not playable. Not recommended for serious playthroughs.
 [*](new in 0.31) Gravity in GUTS and exterior - Adds gravity to the GUTS and Exterior. If both this and "enable microgravity everywhere" are on, GUTS and Exterior will have gravity. Definitely not playable. For masochists only.
-[*](new in 0.31) Custom starting map (for testing purposes only) - A WIP feature that is a little broken but at least functions in terms of starting you in the given map. Intended for testing purposes only. This currently works by swapping the given map with the neuromod division. Saving may not work, and story triggers may not occur.
+[*](new in 0.31) Custom starting map (for testing purposes only) - A WIP feature that is a little broken but at least functions in terms of starting you in the given map. This literally just swaps the given map with the neuromod division. Saving may not work, and story triggers may not occur. Intended for testing purposes only. 
 [*](new in 0.31) Game token overrides (for testing purposes only)- Specify initial starting values for any game tokens you wish (both level and global). If you don't know what game tokens are, you don't need this feature. Intended for testing purposes only.
 [/list]
 
@@ -569,9 +577,12 @@ Source code can be found on [url=https://github.com/shapeintheglass/DanielleRan
    * Retooled JSON serialization to use protobuffers, and restructured all JSON files
    * Fixed an issue where randomized stations were not deterministic
    * Fixed an issue where randomized music would lag the game
+   * Fixed an issue where some randomized stations were soft locked
+   * Fixed an issue where some randomized neuromod abilities in the science tree were not visible until the psychoscope was picked up
+   * Fixed an issue were item multipliers in containers could be unreasonably high
    * Removed phantom player model option as the textures are not loaded in by default
    * Modified item randomization to include items spawned on harvestables and "fruit trees" such as vending machines, gun lockers, trees, flowers, medkit holders, and neuromod holders
-   * Modified enemy randomization to include systemically created enemies such as phantoms created by weavers, doppelgangers created by etheric phantoms, and the nightmare
+   * Modified item randomization to include the preorder locker
    * Added fabrication plan randomization
    * Added gravity enable/disable options (experimental and not intended for serious runs)
    * Added a start location chooser (experimental and only intended for debugging purposes)

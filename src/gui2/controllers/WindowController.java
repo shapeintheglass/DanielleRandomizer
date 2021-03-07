@@ -2,6 +2,7 @@ package gui2.controllers;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -185,6 +186,12 @@ public class WindowController {
 
     try {
       allPresets = getAllPresets();
+    } catch (FileNotFoundException e) {
+      String loggerWarning =
+          String.format("Could not find presets file %s.\n", Gui2Consts.ALL_PRESETS_FILE);
+      logger.warning(loggerWarning);
+      outputWindow.appendText(loggerWarning);
+      e.printStackTrace();
     } catch (IOException e) {
       outputWindow.appendText(String.format("Unable to parse %s\n", Gui2Consts.ALL_PRESETS_FILE));
       logger
@@ -196,6 +203,11 @@ public class WindowController {
     Settings savedSettings = Settings.getDefaultInstance();
     try {
       savedSettings = getSavedSettings();
+    } catch (FileNotFoundException e) {
+      String loggerWarning =
+          String.format("Could not find saved settings file %s.\n", Gui2Consts.SAVED_SETTINGS_FILE);
+      logger.warning(loggerWarning);
+      e.printStackTrace();
     } catch (IOException e) {
       String loggerWarning =
           Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE + "\n";
@@ -371,7 +383,9 @@ public class WindowController {
 
   private void initCustomSpawnCheckboxes(AllPresets allPresets, Settings settings) {
     // Add custom presets
-
+    if (allPresets == null) {
+      return;
+    }
     for (GenericSpawnPresetFilter spj : allPresets.getItemSpawnSettingsList()) {
       RadioButton rb = new RadioButton(spj.getName());
       rb.setToggleGroup(itemSpawnToggleGroup);
@@ -446,6 +460,9 @@ public class WindowController {
     cosmeticCheckboxVoices.setSelected(true);
     cosmeticCheckboxMusic.setSelected(true);
     cosmeticCheckboxPlayerModel.setSelected(true);
+    cosmeticCheckboxEmotions.setSelected(true);
+    cosmeticCheckboxPlanetSize.setSelected(true);
+    itemsCheckboxFabPlanCosts.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies");
     neuromodsCheckboxRandomize.setSelected(true);
@@ -462,7 +479,10 @@ public class WindowController {
     cosmeticCheckboxVoices.setSelected(true);
     cosmeticCheckboxMusic.setSelected(true);
     cosmeticCheckboxPlayerModel.setSelected(true);
+    cosmeticCheckboxEmotions.setSelected(true);
+    cosmeticCheckboxPlanetSize.setSelected(true);
     itemsCheckboxMoreGuns.setSelected(true);
+    itemsCheckboxFabPlanCosts.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items (chaotic)");
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies (chaotic)");
     neuromodsCheckboxRandomize.setSelected(true);
@@ -597,10 +617,13 @@ public class WindowController {
   }
 
   private ItemSettings getItemSettings() {
-    GenericSpawnPresetFilter itemSpawnPreset = GenericSpawnPresetFilter.getDefaultInstance();
     RadioButton selectedItemSpawn = (RadioButton) itemSpawnToggleGroup.getSelectedToggle();
     String itemToSelect = selectedItemSpawn == null ? "" : selectedItemSpawn.getText();
-    itemSpawnPreset = getSpawnPresetFromList(allPresets.getItemSpawnSettingsList(), itemToSelect);
+    GenericSpawnPresetFilter itemSpawnPreset =
+        getSpawnPresetFromList(allPresets.getItemSpawnSettingsList(), itemToSelect);
+    if (itemSpawnPreset == null) {
+      itemSpawnPreset = GenericSpawnPresetFilter.getDefaultInstance();
+    }
 
     return ItemSettings.newBuilder()
         .setItemSpawnSettings(itemSpawnPreset)
@@ -610,11 +633,13 @@ public class WindowController {
   }
 
   private NpcSettings getNpcSettings() {
-    GenericSpawnPresetFilter enemySpawnPreset = GenericSpawnPresetFilter.getDefaultInstance();
     RadioButton selectedEnemySpawn = (RadioButton) enemySpawnToggleGroup.getSelectedToggle();
     String enemyToSelect = selectedEnemySpawn == null ? "" : selectedEnemySpawn.getText();
-    enemySpawnPreset =
+    GenericSpawnPresetFilter enemySpawnPreset =
         getSpawnPresetFromList(allPresets.getEnemySpawnSettingsList(), enemyToSelect);
+    if (enemySpawnPreset == null) {
+      enemySpawnPreset = GenericSpawnPresetFilter.getDefaultInstance();
+    }
 
     return NpcSettings.newBuilder()
         .setEnemySpawnSettings(enemySpawnPreset)
@@ -714,8 +739,10 @@ public class WindowController {
       String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH,
           savedSettings.getReleaseVersion(), Gui2Consts.VERSION);
       logger.warning(loggerWarning);
-      if (settings.getReleaseVersion()
+      if (savedSettings.getReleaseVersion()
           .isEmpty()) {
+        outputWindow.appendText("No saved settings found.\n");
+      } else {
         outputWindow.appendText("Saved settings version mismatch.\n");
       }
       outputWindow.appendText("Falling back to default settings.\n");
