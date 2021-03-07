@@ -67,6 +67,8 @@ public final class StationConnectivityConsts {
       ImmutableSet.of(Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT);
   public static final ImmutableSet<Door> FUEL_STORAGE_DOORS = 
       ImmutableSet.of(Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT);
+  public static final ImmutableSet<Door> CREW_QUARTERS_DOORS = 
+      ImmutableSet.of(Door.ARBORETUM_CREW_QUARTERS_EXIT);
 
   // Map of level to level id
   public static final ImmutableBiMap<Level, String> LEVELS_TO_NAMES =
