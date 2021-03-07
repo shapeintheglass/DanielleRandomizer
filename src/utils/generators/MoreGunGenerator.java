@@ -21,41 +21,47 @@ public class MoreGunGenerator {
   private static final String SOURCE = "_data/libs/entityarchetypes/arkpickups_backup.xml";
   private static final String DEST = "_data/libs/entityarchetypes/arkpickups.xml";
 
-  private static final ImmutableMap<String, String> WEAPON_NAME_TO_READABLE_NAME = new ImmutableMap.Builder<String, String>()
-      .put("Weapons.Shotgun", "Shotgun")
-      .put("Weapons.GooGun", "Gloo Gun")
-      .put("Weapons.Pistol", "Pistol")
-      .put("Weapons.ToyGun", "Huntress Boltcaster")
-      .build();
+  private static final ImmutableMap<String, String> WEAPON_NAME_TO_READABLE_NAME =
+      new ImmutableMap.Builder<String, String>().put("Weapons.Shotgun", "Shotgun")
+          .put("Weapons.GooGun", "Gloo Gun")
+          .put("Weapons.Pistol", "Pistol")
+          .put("Weapons.ToyGun", "Huntress Boltcaster")
+          .build();
 
-  private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_READABLE_NAME = new ImmutableMap.Builder<String, String>()
-      .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default", "Phantasmic")
-      .put("ArkProjectiles.AlienPowers.TelepathProjectile", "Telepathic")
-      .put("ArkProjectiles.AlienPowers.NightmareProjectile", "Nightmarish")
-      .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP", "Voltaic")
-      .put("ArkProjectiles.Charges.Lure", "Lure")
-      .put("ArkProjectiles.Charges.Nullwave", "Nullwave")
-      .put("ArkProjectiles.Charges.Recycler", "Recycler")
-      .put("ArkProjectiles.Charges.EMP", "EMP")
-      .put("ArkProjectiles.Gloo.GlooShot", "GLOO")
-      .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
-      .put("ArkProjectiles.Bullets.ToygunDart_Default", "Foam")
-      .build();
+  private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_READABLE_NAME =
+      new ImmutableMap.Builder<String, String>()
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default", "Phantasmic")
+          .put("ArkProjectiles.AlienPowers.TelepathProjectile", "Telepathic")
+          .put("ArkProjectiles.AlienPowers.NightmareProjectile", "Nightmarish")
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP", "Voltaic")
+          .put("ArkProjectiles.Charges.Lure", "Lure")
+          .put("ArkProjectiles.Charges.Nullwave", "Nullwave")
+          .put("ArkProjectiles.Charges.Recycler", "Recycler")
+          .put("ArkProjectiles.Charges.EMP", "EMP")
+          .put("ArkProjectiles.Gloo.GlooShot", "GLOO")
+          .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
+          .put("ArkProjectiles.Bullets.ToygunDart_Default", "Foam")
+          .build();
 
-  private static final ImmutableMap<String, String> REDUNDANT_PROJECTILE_TYPES = new ImmutableMap.Builder<String, String>()
-      .put("Weapons.Shotgun", "ArkProjectiles.Bullets.PistolRound_Default")
-      .put("Weapons.GooGun", "ArkProjectiles.Gloo.GlooShot")
-      .put("Weapons.Pistol", "ArkProjectiles.Bullets.PistolRound_Default")
-      .put("Weapons.ToyGun", "ArkProjectiles.Bullets.ToygunDart_Default")
-      .build();
+  private static final ImmutableMap<String, String> REDUNDANT_PROJECTILE_TYPES =
+      new ImmutableMap.Builder<String, String>()
+          .put("Weapons.Shotgun", "ArkProjectiles.Bullets.PistolRound_Default")
+          .put("Weapons.GooGun", "ArkProjectiles.Gloo.GlooShot")
+          .put("Weapons.Pistol", "ArkProjectiles.Bullets.PistolRound_Default")
+          .put("Weapons.ToyGun", "ArkProjectiles.Bullets.ToygunDart_Default")
+          .build();
 
-  /*private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_MATERIAL = new ImmutableMap.Builder<String, String>()
-      .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default",
-          "Objects\\characters\\Aliens\\AlienCorpses\\AlienCorpsePiece")
-      .put("ArkProjectiles.AlienPowers.TelepathProjectile", "Objects\\characters\\Aliens\\Telepath\\Telepath01")
-      .put("ArkProjectiles.AlienPowers.NightmareProjectile", "Objects\\characters\\Aliens\\Phantom\\PhantomElite01")
-      .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP", "Objects\\characters\\Player\\EtherDuplicate_00")
-      .build();*/
+  private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_MATERIAL =
+      new ImmutableMap.Builder<String, String>()
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default",
+              "Objects\\characters\\Aliens\\AlienCorpses\\AlienCorpsePiece")
+          .put("ArkProjectiles.AlienPowers.TelepathProjectile",
+              "Objects\\characters\\Aliens\\Telepath\\Telepath01")
+          .put("ArkProjectiles.AlienPowers.NightmareProjectile",
+              "Objects\\characters\\Aliens\\Phantom\\PhantomElite01")
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP",
+              "Objects\\characters\\Player\\EtherDuplicate_00")
+          .build();
 
   private static Map<String, Element> getSupportedWeapons(Element root) {
     Map<String, Element> toReturn = Maps.newHashMap();
@@ -76,34 +82,42 @@ public class MoreGunGenerator {
       String readableWeaponName = WEAPON_NAME_TO_READABLE_NAME.get(weaponName);
       for (String projectileName : PROJECTILE_NAME_TO_READABLE_NAME.keySet()) {
 
-        if (REDUNDANT_PROJECTILE_TYPES.containsKey(weaponName) && REDUNDANT_PROJECTILE_TYPES.get(weaponName)
-            .equals(projectileName)) {
+        if (REDUNDANT_PROJECTILE_TYPES.containsKey(weaponName)
+            && REDUNDANT_PROJECTILE_TYPES.get(weaponName)
+                .equals(projectileName)) {
           continue;
         }
 
-        Element clone = weapons.get(weaponName).clone();
+        Element clone = weapons.get(weaponName)
+            .clone();
         String readableProjectileName = PROJECTILE_NAME_TO_READABLE_NAME.get(projectileName);
         String newName = weaponName + readableProjectileName + ".Randomizer";
         String newReadableName = readableProjectileName + " " + readableWeaponName;
-        String newDescription = String.format("A %s with %s projectiles.", readableWeaponName, readableProjectileName);
+        String newDescription =
+            String.format("A %s with %s projectiles.", readableWeaponName, readableProjectileName);
         long newIdLong = r.nextLong();
         if (newIdLong < 0L) {
           newIdLong = -1 * newIdLong;
         }
-        String newUUID = String.format("{%s}", UUID.randomUUID()).toUpperCase();
+        String newUUID = String.format("{%s}", UUID.randomUUID())
+            .toUpperCase();
         clone.setAttribute("Name", newName);
         clone.setAttribute("ArchetypeId", Long.toString(newIdLong));
         clone.setAttribute("Id", newUUID);
-        clone.getChild("Properties").setAttribute("textDisplayName", newReadableName);
-        clone.getChild("Properties").setAttribute("textDescription", newDescription);
-        clone.getChild("Properties").getChild("Weapon").setAttribute("archetype_ammo", projectileName);
-        /*if (PROJECTILE_NAME_TO_MATERIAL.containsKey(projectileName)) {
+        clone.getChild("Properties")
+            .setAttribute("textDisplayName", newReadableName);
+        clone.getChild("Properties")
+            .setAttribute("textDescription", newDescription);
+        clone.getChild("Properties")
+            .getChild("Weapon")
+            .setAttribute("archetype_ammo", projectileName);
+        if (PROJECTILE_NAME_TO_MATERIAL.containsKey(projectileName)) {
           String material = PROJECTILE_NAME_TO_MATERIAL.get(projectileName);
           clone.getChild("Properties")
               .setAttribute("material_MaterialFP", material);
           clone.getChild("Properties")
               .setAttribute("material_MaterialTP", material);
-        }*/
+        }
         originalRoot.addContent(clone);
       }
     }

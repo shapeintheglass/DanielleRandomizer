@@ -30,6 +30,7 @@ import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
 import randomizers.gameplay.NightmareRandomizer;
 import randomizers.gameplay.NpcAbilitiesRandomizer;
+import randomizers.gameplay.PreorderLockerRandomizer;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.FruitTreeFilter;
@@ -273,9 +274,11 @@ public class RandomizerService extends Service<Void> {
         new EntityArchetypesRandomizer(currentSettings, database, zipHelper)
             .addFilter(new FruitTreeFilter(currentSettings, database));
     entityRandomizer.randomize();
-    
-    new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
-    new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
+
+    new PreorderLockerRandomizer(currentSettings, zipHelper, database).randomize();
+
+    // new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
+    // new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
 
     /* GAMEPLAY, LEVEL */
     LevelRandomizer levelRandomizer =

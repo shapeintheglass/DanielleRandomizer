@@ -64,7 +64,7 @@ public class StationGenerator {
     r = new Random(seed);
     logger = Logger.getLogger("StationConnectivity");
 
-    for (int numAttempts = 0; numAttempts < MAX_ATTEMPTS; numAttempts++) {
+    for (int numAttempts = 1; numAttempts <= MAX_ATTEMPTS; numAttempts++) {
       try {
         logger.info(String.format("Attempt #%d", numAttempts));
         network = createNewConnectivity();
@@ -414,8 +414,8 @@ public class StationGenerator {
         .put(Level.SHUTTLE_BAY, "1713490239386284988")
         .build();
 
-    Random r = new Random();
-    long seed = r.nextLong();
+    //Random r = new Random();
+    long seed = -1034766805608871062L;
     StationGenerator sg = new StationGenerator(seed, levelsToIds);
     String station1 = sg.toString();
 

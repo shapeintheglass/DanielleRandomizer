@@ -5,20 +5,17 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
 import org.jdom2.Element;
-import databases.TaggedDatabase;
 import utils.CustomItemFilterHelper;
 import utils.Utils;
 
 public class FruitTreeRule implements Rule {
 
-  CustomItemFilterHelper cfh;
-  TaggedDatabase database;
+  private CustomItemFilterHelper cfh;
 
   private static final int MAX_ATTEMPTS = 100;
 
-  public FruitTreeRule(CustomItemFilterHelper cfh, TaggedDatabase database) {
+  public FruitTreeRule(CustomItemFilterHelper cfh) {
     this.cfh = cfh;
-    this.database = database;
   }
 
   @Override

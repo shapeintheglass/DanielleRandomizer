@@ -16,6 +16,6 @@ public class FruitTreeFilter extends BaseFilter {
     }
 
     CustomItemFilterHelper filterHelper = new CustomItemFilterHelper(currentSettings, database);
-    rules.add(new FruitTreeRule(filterHelper, database));
+    rules.add(new FruitTreeRule(filterHelper));
   }
 }

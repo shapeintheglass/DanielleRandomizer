@@ -27,8 +27,8 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   private TaggedDatabase database;
 
-  public LootTableRandomizer(TaggedDatabase database, Settings s, Path tempPatchDir, ZipHelper zipHelper)
-      throws IOException {
+  public LootTableRandomizer(TaggedDatabase database, Settings s, Path tempPatchDir,
+      ZipHelper zipHelper) throws IOException {
     super(s, zipHelper);
     this.database = database;
   }
@@ -36,7 +36,9 @@ public class LootTableRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     // If there are no item spawn settings, copy the loot table file over directly.
-    if (settings.getItemSettings().getItemSpawnSettings().getFiltersCount() == 0) {
+    if (settings.getItemSettings()
+        .getItemSpawnSettings()
+        .getFiltersCount() == 0) {
       try {
         zipHelper.copyToPatch(ZipHelper.LOOT_TABLE_FILE, ZipHelper.LOOT_TABLE_FILE);
       } catch (IOException e) {
@@ -48,7 +50,8 @@ public class LootTableRandomizer extends BaseRandomizer {
     try {
       Document document = zipHelper.getDocument(ZipHelper.LOOT_TABLE_FILE);
       Element root = document.getRootElement();
-      List<Element> lootTables = root.getChild("Tables").getChildren();
+      List<Element> lootTables = root.getChild("Tables")
+          .getChildren();
 
       for (Element e : lootTables) {
         filterLootTable(e);
@@ -61,17 +64,22 @@ public class LootTableRandomizer extends BaseRandomizer {
   }
 
   private void filterLootTable(Element lootTable) {
-    if (lootTable.getAttributeValue("Name").contains(DO_NOT_TOUCH_PREFIX)) {
+    if (lootTable.getAttributeValue("Name")
+        .contains(DO_NOT_TOUCH_PREFIX)) {
       return;
     }
-    List<Element> slots = lootTable.getChild("Slots").getChildren();
+    List<Element> slots = lootTable.getChild("Slots")
+        .getChildren();
     for (Element slot : slots) {
       // Randomize the items
-      List<Element> items = slot.getChild("Items").getChildren();
+      List<Element> items = slot.getChild("Items")
+          .getChildren();
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
 
-        for (GenericSpawnPresetRule grj : settings.getItemSettings().getItemSpawnSettings().getFiltersList()) {
+        for (GenericSpawnPresetRule grj : settings.getItemSettings()
+            .getItemSpawnSettings()
+            .getFiltersList()) {
           CustomRuleHelper crh = new CustomRuleHelper(grj);
 
           // Explicitly prevent non-pickup items from appearing in loot tables
@@ -83,9 +91,11 @@ public class LootTableRandomizer extends BaseRandomizer {
                 item.setAttribute("Archetype", Utils.getNameForEntity(newArchetype));
 
                 Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
-                if (t == Tier.FUCK_IT) {
-                  item.setAttribute("CountMin", Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
-                  item.setAttribute("CountMax", Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
+                if (item.getAttribute("CountMax") != null && t == Tier.FUCK_IT) {
+                  item.setAttribute("CountMin",
+                      Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
+                  item.setAttribute("CountMax",
+                      Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
                 }
                 break;
               }
