@@ -2,6 +2,7 @@ package utils.generators;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
 public class MoreGunGenerator {
@@ -21,11 +23,21 @@ public class MoreGunGenerator {
   private static final String SOURCE = "_data/libs/entityarchetypes/arkpickups_backup.xml";
   private static final String DEST = "_data/libs/entityarchetypes/arkpickups.xml";
 
+  private static final String FILE_LIST_DEST =
+      "_data/libs/ui/textures/icons_inventory/filelist.txt";
+
   private static final ImmutableMap<String, String> WEAPON_NAME_TO_READABLE_NAME =
       new ImmutableMap.Builder<String, String>().put("Weapons.Shotgun", "Shotgun")
           .put("Weapons.GooGun", "Gloo Gun")
           .put("Weapons.Pistol", "Pistol")
           .put("Weapons.ToyGun", "Huntress Boltcaster")
+          .build();
+
+  private static final ImmutableMap<String, String> WEAPON_NAME_TO_UI_NAME =
+      new ImmutableMap.Builder<String, String>().put("Weapons.Shotgun", "shotgun")
+          .put("Weapons.GooGun", "googun")
+          .put("Weapons.Pistol", "pistol")
+          .put("Weapons.ToyGun", "toygun")
           .build();
 
   private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_READABLE_NAME =
@@ -40,7 +52,22 @@ public class MoreGunGenerator {
           .put("ArkProjectiles.Charges.EMP", "EMP")
           .put("ArkProjectiles.Gloo.GlooShot", "GLOO")
           .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
-          .put("ArkProjectiles.Bullets.ToygunDart_Default", "Foam")
+          .put("ArkProjectiles.Bullets.ToygunDart_Default", "Toy")
+          .build();
+
+  private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_UI_NAME =
+      new ImmutableMap.Builder<String, String>()
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default", "phantom")
+          .put("ArkProjectiles.AlienPowers.TelepathProjectile", "telepath")
+          .put("ArkProjectiles.AlienPowers.NightmareProjectile", "nightmare")
+          .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP", "voltaic")
+          .put("ArkProjectiles.Charges.Lure", "lure")
+          .put("ArkProjectiles.Charges.Nullwave", "nullwave")
+          .put("ArkProjectiles.Charges.Recycler", "recycler")
+          .put("ArkProjectiles.Charges.EMP", "emp")
+          .put("ArkProjectiles.Gloo.GlooShot", "gloo")
+          .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
+          .put("ArkProjectiles.Bullets.ToygunDart_Default", "foam")
           .build();
 
   private static final ImmutableMap<String, String> REDUNDANT_PROJECTILE_TYPES =
@@ -51,17 +78,13 @@ public class MoreGunGenerator {
           .put("Weapons.ToyGun", "ArkProjectiles.Bullets.ToygunDart_Default")
           .build();
 
-  private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_MATERIAL =
-      new ImmutableMap.Builder<String, String>()
-          .put("ArkProjectiles.AlienPowers.PhantomProjectile_Default",
-              "Objects\\characters\\Aliens\\AlienCorpses\\AlienCorpsePiece")
-          .put("ArkProjectiles.AlienPowers.TelepathProjectile",
-              "Objects\\characters\\Aliens\\Telepath\\Telepath01")
-          .put("ArkProjectiles.AlienPowers.NightmareProjectile",
-              "Objects\\characters\\Aliens\\Phantom\\PhantomElite01")
-          .put("ArkProjectiles.AlienPowers.PhantomProjectile_EMP",
-              "Objects\\characters\\Player\\EtherDuplicate_00")
-          .build();
+  private static final ImmutableSet<String> EXOTIC_PROJECTILE_TYPES =
+      ImmutableSet.of("phantom", "nightmare", "voltaic", "telepath");
+
+  private static final String MATERIALS_DIR = "objects\\weapons\\";
+
+  private static final String FIRST_PARTY_MTL = "%s\\1p\\%s1p_%s01";
+  private static final String THIRD_PARTY_MTL = "%s\\3p\\%s3p_%s01";
 
   private static Map<String, Element> getSupportedWeapons(Element root) {
     Map<String, Element> toReturn = Maps.newHashMap();
@@ -78,48 +101,71 @@ public class MoreGunGenerator {
 
   private static void addMoreGuns(Element originalRoot, Random r) {
     Map<String, Element> weapons = getSupportedWeapons(originalRoot);
-    for (String weaponName : WEAPON_NAME_TO_READABLE_NAME.keySet()) {
-      String readableWeaponName = WEAPON_NAME_TO_READABLE_NAME.get(weaponName);
-      for (String projectileName : PROJECTILE_NAME_TO_READABLE_NAME.keySet()) {
+    try (FileWriter fw = new FileWriter(new File(FILE_LIST_DEST));) {
+      for (String weaponName : WEAPON_NAME_TO_READABLE_NAME.keySet()) {
+        String readableWeaponName = WEAPON_NAME_TO_READABLE_NAME.get(weaponName);
+        for (String projectileName : PROJECTILE_NAME_TO_READABLE_NAME.keySet()) {
 
-        if (REDUNDANT_PROJECTILE_TYPES.containsKey(weaponName)
-            && REDUNDANT_PROJECTILE_TYPES.get(weaponName)
-                .equals(projectileName)) {
-          continue;
-        }
+          if (REDUNDANT_PROJECTILE_TYPES.containsKey(weaponName)
+              && REDUNDANT_PROJECTILE_TYPES.get(weaponName)
+                  .equals(projectileName)) {
+            continue;
+          }
 
-        Element clone = weapons.get(weaponName)
-            .clone();
-        String readableProjectileName = PROJECTILE_NAME_TO_READABLE_NAME.get(projectileName);
-        String newName = weaponName + readableProjectileName + ".Randomizer";
-        String newReadableName = readableProjectileName + " " + readableWeaponName;
-        String newDescription =
-            String.format("A %s with %s projectiles.", readableWeaponName, readableProjectileName);
-        long newIdLong = r.nextLong();
-        if (newIdLong < 0L) {
-          newIdLong = -1 * newIdLong;
+          Element clone = weapons.get(weaponName)
+              .clone();
+          String readableProjectileName = PROJECTILE_NAME_TO_READABLE_NAME.get(projectileName);
+          String newName = weaponName + readableProjectileName + ".Randomizer";
+          String newReadableName = readableProjectileName + " " + readableWeaponName;
+          String newDescription = String.format("A %s with %s projectiles.", readableWeaponName,
+              readableProjectileName);
+          long newIdLong = r.nextLong();
+          if (newIdLong < 0L) {
+            newIdLong = -1 * newIdLong;
+          }
+          String newUUID = String.format("{%s}", UUID.randomUUID())
+              .toUpperCase();
+
+          String uiName = WEAPON_NAME_TO_UI_NAME.get(weaponName);
+          String projectileUiName = PROJECTILE_NAME_TO_UI_NAME.get(projectileName);
+          String iconName = String.format("ui_icon_inv_%s_%s", projectileUiName, uiName);
+          String hudName = iconName + "_HUD";
+
+
+          String mtl1p =
+              String.format(MATERIALS_DIR + FIRST_PARTY_MTL, uiName, uiName, projectileUiName)
+                  .toLowerCase();
+          String mtl3p =
+              String.format(MATERIALS_DIR + THIRD_PARTY_MTL, uiName, uiName, projectileUiName)
+                  .toLowerCase();
+          
+          fw.write(iconName + ".dds\n");
+          fw.write(hudName + ".dds\n");
+
+          clone.setAttribute("Name", newName);
+          clone.setAttribute("ArchetypeId", Long.toString(newIdLong));
+          clone.setAttribute("Id", newUUID);
+          Element properties = clone.getChild("Properties");
+          properties.setAttribute("textDisplayName", newReadableName)
+              .setAttribute("sStylizedIcon", hudName)
+              .setAttribute("sHUDIcon", hudName)
+              .setAttribute("textDescription", newDescription);
+
+          if (EXOTIC_PROJECTILE_TYPES.contains(projectileUiName)) {
+            properties.setAttribute("material_MaterialFP", mtl1p)
+                .setAttribute("material_MaterialTP", mtl3p);
+            System.out.printf("\"%s.mtl\", \"%s.mtl\", ", mtl1p.replace("\\", "/"), mtl3p.replace("\\", "/"));
+          }
+
+          properties.getChild("Weapon")
+              .setAttribute("archetype_ammo", projectileName);
+          properties.getChild("Inventory")
+              .setAttribute("sIcon", iconName);
+          originalRoot.addContent(clone);
         }
-        String newUUID = String.format("{%s}", UUID.randomUUID())
-            .toUpperCase();
-        clone.setAttribute("Name", newName);
-        clone.setAttribute("ArchetypeId", Long.toString(newIdLong));
-        clone.setAttribute("Id", newUUID);
-        clone.getChild("Properties")
-            .setAttribute("textDisplayName", newReadableName);
-        clone.getChild("Properties")
-            .setAttribute("textDescription", newDescription);
-        clone.getChild("Properties")
-            .getChild("Weapon")
-            .setAttribute("archetype_ammo", projectileName);
-        if (PROJECTILE_NAME_TO_MATERIAL.containsKey(projectileName)) {
-          String material = PROJECTILE_NAME_TO_MATERIAL.get(projectileName);
-          clone.getChild("Properties")
-              .setAttribute("material_MaterialFP", material);
-          clone.getChild("Properties")
-              .setAttribute("material_MaterialTP", material);
-        }
-        originalRoot.addContent(clone);
       }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

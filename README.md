@@ -107,6 +107,7 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
   * Removed phantom player model option as the textures are not loaded in by default
   * Modified item randomization to include items spawned on harvestables and "fruit trees" such as vending machines, gun lockers, trees, flowers, medkit holders, and neuromod holders
   * Modified item randomization to include the preorder locker
+  * Changed exotic ammunition to a non-junk item so that it won't be recycled by accident
   * Added fabrication plan randomization
   * Added gravity enable/disable options (experimental and not intended for serious runs)
   * Added a start location chooser (experimental and only intended for debugging purposes)

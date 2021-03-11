@@ -225,10 +225,10 @@ public class CustomSpawnValidator {
       bos.write("Archetype, Before Count, After Count\n".getBytes());
       for (String key : allArchetypesList) {
         Element e = database.getEntityByName(key);
-        if (e == null) {
-          System.out.println(key);
+        List<String> tags = Lists.newArrayList();
+        if (e != null) {
+          tags = Lists.newArrayList(Utils.getTags(e));
         }
-        List<String> tags = Lists.newArrayList(Utils.getTags(e));
         Collections.sort(tags);
         bos.write(String.format("%s,%s,%d,%d\n", key, tags.toString().replace(',', ';'), beforeArchetypesCount.get(key), afterArchetypesCount.get(key))
             .getBytes());

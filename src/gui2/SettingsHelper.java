@@ -14,14 +14,14 @@ public class SettingsHelper {
     if (settings.getCosmeticSettings().getRandomizeVoicelines()) {
       builder.append(String.format("\t* Randomize voicelines\n"));
     }
+    if (settings.getCosmeticSettings().getRandomizeEmotions()) {
+      builder.append(String.format("\t* Randomize emotions\n"));
+    }
     if (settings.getCosmeticSettings().getRandomizeMusic()) {
       builder.append(String.format("\t* Randomize music\n"));
     }
     if (settings.getCosmeticSettings().getRandomizePlayerModel()) {
       builder.append(String.format("\t* Randomize player model\n"));
-    }
-    if (settings.getCosmeticSettings().getRandomizeEmotions()) {
-      builder.append(String.format("\t* Randomize emotions\n"));
     }
     if (settings.getCosmeticSettings().getRandomizePlanetSize()) {
       builder.append(String.format("\t* Randomize Earth/Moon/Sun\n"));

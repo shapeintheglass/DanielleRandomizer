@@ -3,17 +3,15 @@ package randomizers.gameplay;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-
 import databases.TaggedDatabase;
-import proto.RandomizerSettings.GenericSpawnPresetRule;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
-import utils.CustomRuleHelper;
+import utils.CustomItemFilterHelper;
 import utils.ItemMultiplierHelper;
 import utils.ItemMultiplierHelper.Tier;
 import utils.Utils;
@@ -25,12 +23,12 @@ public class LootTableRandomizer extends BaseRandomizer {
 
   private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
 
-  private TaggedDatabase database;
+  private CustomItemFilterHelper cfh;
 
   public LootTableRandomizer(TaggedDatabase database, Settings s, Path tempPatchDir,
       ZipHelper zipHelper) throws IOException {
     super(s, zipHelper);
-    this.database = database;
+    cfh = new CustomItemFilterHelper(s, database);
   }
 
   @Override
@@ -77,32 +75,35 @@ public class LootTableRandomizer extends BaseRandomizer {
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
 
-        for (GenericSpawnPresetRule grj : settings.getItemSettings()
-            .getItemSpawnSettings()
-            .getFiltersList()) {
-          CustomRuleHelper crh = new CustomRuleHelper(grj);
-
-          // Explicitly prevent non-pickup items from appearing in loot tables
-          for (int i = 0; i < MAX_ATTEMPTS; i++) {
-            if (crh.trigger(database, oldArchetype, null)) {
-              Element newArchetype = crh.getEntityToSwap(database, r);
-              Set<String> tags = Utils.getTags(newArchetype);
-              if (tags.contains("ArkPickups")) {
-                item.setAttribute("Archetype", Utils.getNameForEntity(newArchetype));
-
-                Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
-                if (item.getAttribute("CountMax") != null && t == Tier.FUCK_IT) {
-                  item.setAttribute("CountMin",
-                      Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
-                  item.setAttribute("CountMax",
-                      Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
-                }
-                break;
-              }
-            }
-          }
+        Element newArchetype = getPickup(cfh, oldArchetype, r);
+        if (newArchetype != null) {
+          Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
+          String newArchetypeStr = Utils.getNameForEntity(newArchetype);
+          item.setAttribute("Archetype", newArchetypeStr);
+          item.setAttribute("CountMin", Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
+          item.setAttribute("CountMax", Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
         }
       }
     }
+  }
+
+  private Element getPickup(CustomItemFilterHelper cfh, String archetype, Random r) {
+    // Try different items until we get a valid pickup item
+    // TODO: Make this smarter by just removing non-pickup items from the list first
+    for (int i = 0; i < MAX_ATTEMPTS; i++) {
+      Element toSwap = cfh.getEntity(archetype, null, r);
+
+      if (toSwap == null) {
+        continue;
+      }
+
+      // Ensure that this has the tag "ArkPickups" to represent that it can be added
+      // to an inventory
+      Set<String> tags = Utils.getTags(toSwap);
+      if (tags.contains("ArkPickups")) {
+        return toSwap;
+      }
+    }
+    return null;
   }
 }

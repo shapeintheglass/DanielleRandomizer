@@ -347,7 +347,8 @@
             "_MIMICABLE",
             "_CARRYABLE",
             "_USABLE",
-            "_CONSUMABLE"
+            "_CONSUMABLE",
+			"ArkPickups"
           ],
           "output_tags": [
             "Bourbon",
@@ -369,7 +370,8 @@
             "_MIMICABLE",
             "_CARRYABLE",
             "_USABLE",
-            "_CONSUMABLE"
+            "_CONSUMABLE",
+			"ArkPickups"
           ],
           "output_tags": [
             "Reployer"
@@ -390,12 +392,50 @@
             "_MIMICABLE",
             "_CARRYABLE",
             "_USABLE",
-            "_CONSUMABLE"
+            "_CONSUMABLE",
+			"ArkPickups"
           ],
           "output_tags": [
             "ArkEel"
           ],
           "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        }
+      ]
+    },
+	{
+      "name": "Typhon weapons",
+      "desc": "All items are typhon weapons",
+      "filters": [
+        {
+          "input_tags": [
+            "Neuromod_Calibration",
+            "_MIMICABLE",
+            "_CARRYABLE",
+            "_USABLE",
+            "_CONSUMABLE",
+			"ArkPickups"
+          ],
+          "output_tags": [
+            "ArkAmmoExotic",
+            "ShotgunPhantasmic",
+			"ShotgunTelepathic",
+			"ShotgunNightmarish",
+			"ShotgunVoltaic",
+			"GooGunPhantasmic",
+			"GooGunTelepathic",
+			"GooGunNightmarish",
+			"GooGunVoltaic",
+			"PistolPhantasmic",
+			"PistolTelepathic",
+			"PistolNightmarish",
+			"PistolVoltaic",
+			"ToyGunPhantasmic",
+			"ToyGunTelepathic",
+			"ToyGunNightmarish",
+			"ToyGunVoltaic"
+          ],
           "do_not_touch_tags": [],
           "do_not_output_tags": []
         }
@@ -411,7 +451,8 @@
             "_MIMICABLE",
             "_CARRYABLE",
             "_USABLE",
-            "_CONSUMABLE"
+            "_CONSUMABLE",
+			"ArkPickups"
           ],
           "output_tags": [
             "Weapons",
@@ -446,7 +487,8 @@
             "_MIMICABLE",
             "_CARRYABLE",
             "_USABLE",
-            "_CONSUMABLE"
+            "_CONSUMABLE",
+			"ArkPickups"
           ],
           "output_tags": [
             "ExplosiveTanks"

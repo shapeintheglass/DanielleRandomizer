@@ -1,12 +1,15 @@
 package gui2;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import databases.EntityDatabase;
@@ -54,10 +57,46 @@ public class RandomizerService extends Service<Void> {
   private static final String TEMP_LEVEL_DIR_NAME = "level";
   private static final String DEFAULT_WORKING_DIR = ".";
 
+  private static final String LOGO = "libs/ui/textures/danielle_shared_textures/danielle_title.dds";
   private static final ImmutableMap<String, String> MORE_GUNS_DEPENDENCIES =
       ImmutableMap.of(ZipHelper.ARK_PICKUPS_XML, "libs/entityarchetypes/arkpickups.xml",
           ZipHelper.ARK_PROJECTILES_XML, "libs/entityarchetypes/arkprojectiles.xml",
           ZipHelper.ARK_ITEMS_XML, "ark/items/arkitems.xml");
+  private static final ImmutableList<String> MORE_GUNS_MATERIALS =
+      ImmutableList.of("objects/weapons/shotgun/1p/shotgun1p_phantom01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_phantom01.mtl",
+          "objects/weapons/shotgun/1p/shotgun1p_telepath01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_telepath01.mtl",
+          "objects/weapons/shotgun/1p/shotgun1p_nightmare01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_nightmare01.mtl",
+          "objects/weapons/shotgun/1p/shotgun1p_voltaic01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_voltaic01.mtl",
+          "objects/weapons/googun/1p/googun1p_phantom01.mtl",
+          "objects/weapons/googun/3p/googun3p_phantom01.mtl",
+          "objects/weapons/googun/1p/googun1p_telepath01.mtl",
+          "objects/weapons/googun/3p/googun3p_telepath01.mtl",
+          "objects/weapons/googun/1p/googun1p_nightmare01.mtl",
+          "objects/weapons/googun/3p/googun3p_nightmare01.mtl",
+          "objects/weapons/googun/1p/googun1p_voltaic01.mtl",
+          "objects/weapons/googun/3p/googun3p_voltaic01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_phantom01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_phantom01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_telepath01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_telepath01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_nightmare01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_nightmare01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_voltaic01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_voltaic01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_phantom01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_phantom01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_telepath01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_telepath01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_nightmare01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_nightmare01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_voltaic01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_voltaic01.mtl");
+  private static final String MORE_GUNS_FILE_LIST = "libs/ui/textures/icons_inventory/filelist.txt";
+  private static final String MORE_GUNS_ICONS_DIR = "libs/ui/textures/icons_inventory/";
 
   private static final ImmutableMap<String, String> WANDERING_HUMANS_DEPENDENCIES =
       ImmutableMap.of(ZipHelper.AI_TREE_ARMED_HUMANS, "ark/ai/aitrees/ArmedHumanAiTree.xml",
@@ -341,9 +380,25 @@ public class RandomizerService extends Service<Void> {
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {
     copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES, tempPatchDir);
 
+    zipHelper.copyToPatch(LOGO, LOGO);
+
     if (settings.getItemSettings()
         .getMoreGuns()) {
       copyFiles(MORE_GUNS_DEPENDENCIES, tempPatchDir);
+      copyFiles(MORE_GUNS_MATERIALS);
+
+      try (BufferedReader br = new BufferedReader(
+          new InputStreamReader(zipHelper.getInputStream(MORE_GUNS_FILE_LIST)))) {
+        String line = "";
+        while (line != null) {
+          line = br.readLine();
+          if (line == null) {
+            break;
+          }
+          String path = MORE_GUNS_ICONS_DIR + line;
+          zipHelper.copyToPatch(path, path);
+        }
+      }
     }
 
     if (settings.getCheatSettings()
@@ -356,6 +411,16 @@ public class RandomizerService extends Service<Void> {
         || settings.getCheatSettings()
             .getStartSelfDestruct()) {
       copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES, tempPatchDir);
+    }
+  }
+
+  private void copyFiles(ImmutableList<String> dependencies) {
+    for (String s : dependencies) {
+      try {
+        zipHelper.copyToPatch(s, s);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 

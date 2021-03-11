@@ -463,6 +463,7 @@ public class WindowController {
     cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
     itemsCheckboxFabPlanCosts.setSelected(true);
+    itemsCheckboxMoreGuns.setSelected(true);
     setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
     setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies");
     neuromodsCheckboxRandomize.setSelected(true);
@@ -560,6 +561,7 @@ public class WindowController {
     for (Node b : toDisable) {
       b.setDisable(disable);
     }
+    mainWindow.setDisable(disable);
   }
 
   @FXML

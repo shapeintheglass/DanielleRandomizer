@@ -110,7 +110,17 @@ Will not be compatible with most mods, especially ones that modify level files (
 [*]objects/characters/player/*
 [/list]
 
-If the other mod modifies any of these files, the randomizer will likely not be compatible.
+If the other mod modifies any of these files, the randomizer will likely not be compatible. Strange things (usually crashes) may occur if you install multiple mods that overwrite the same files).
+
+I haven't tested a lot of mod compatibility, but here are some of my other mods (mostly cosmetic) that can still work with the randomizer:
+
+[list]
+[*] [url=https://www.nexusmods.com/prey2017/mods/49]Kasma Corp transcribes[/url]
+[*] [url=https://www.nexusmods.com/prey2017/mods/50]Mooncrash weapon cosmetics[/url]
+[*] [url=https://www.nexusmods.com/prey2017/mods/55]Mimics with silly hats[/url]
+[*] [url=https://www.nexusmods.com/prey2017/mods/60]All keycodes are 1111[/url]
+[*] [url=https://www.nexusmods.com/prey2017/mods/70]Poorly translated Prey[/url]
+[/list]
 
 [/spoiler]
 
@@ -144,12 +154,13 @@ Settings:
 [*]Randomize all enemies - Randomizes all typhon/corrupted operators. Does not spawn unkillable entities such as turrets or tentacles. Also randomizes friendly operators.
 [*]Randomize neuromods - Randomizes the neuromod skill tree within each category
 [*]Randomize fab plan costs
+[*]More guns - adds randomized guns to the item spawn pool
 [*]All cosmetic randomizations
 [/list]
 
 [size=4]Chaotic[/size]
 
-Intended for brave souls who would like to go a little further than the safe zone.
+Intended for brave souls who would like to go a little further than the safe zone. Anything can happen. Warning: Chaotic randomization is known to cause the most crashes/soft locks.
 
 Settings:
 [list]
@@ -164,7 +175,7 @@ Settings:
 
 [size=4]Lite[/size]
 
-Preserves as much of the Prey experience as possible, but with a small bit of randomization.
+Preserves as much of the Prey experience as possible, but with a small bit of randomization. If you're trying out the randomizer for the first time, try starting out with this option and adding a few other customizations that you're comfortable with.
 
 Settings:
 [list]
@@ -457,6 +468,7 @@ Other issues:
 [*]If installer fails while running, there may not be an indication of this in the UI. If it takes too long, check the log.txt file for more info on what happened.
 [*]Temporary directories may not be deleted if there was an issue during randomization/install. If these start to pile up, feel free to delete them manually.
 [*]Invisible nightmares - Unknown cause, still investigating.
+[*]Bald women when randomizing bodies - Still investigating. Note: Bald Alex is a feature, not a bug.
 [/list]
 [/spoiler]
 
@@ -583,6 +595,7 @@ Source code can be found on [url=https://github.com/shapeintheglass/DanielleRan
    * Removed phantom player model option as the textures are not loaded in by default
    * Modified item randomization to include items spawned on harvestables and "fruit trees" such as vending machines, gun lockers, trees, flowers, medkit holders, and neuromod holders
    * Modified item randomization to include the preorder locker
+   * Changed exotic ammunition to a non-junk item so that it won't be recycled by accident
    * Added fabrication plan randomization
    * Added gravity enable/disable options (experimental and not intended for serious runs)
    * Added a start location chooser (experimental and only intended for debugging purposes)
