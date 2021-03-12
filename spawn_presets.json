@@ -404,43 +404,6 @@
         }
       ]
     },
-	{
-      "name": "Typhon weapons",
-      "desc": "All items are typhon weapons",
-      "filters": [
-        {
-          "input_tags": [
-            "Neuromod_Calibration",
-            "_MIMICABLE",
-            "_CARRYABLE",
-            "_USABLE",
-            "_CONSUMABLE",
-			"ArkPickups"
-          ],
-          "output_tags": [
-            "ArkAmmoExotic",
-            "ShotgunPhantasmic",
-			"ShotgunTelepathic",
-			"ShotgunNightmarish",
-			"ShotgunVoltaic",
-			"GooGunPhantasmic",
-			"GooGunTelepathic",
-			"GooGunNightmarish",
-			"GooGunVoltaic",
-			"PistolPhantasmic",
-			"PistolTelepathic",
-			"PistolNightmarish",
-			"PistolVoltaic",
-			"ToyGunPhantasmic",
-			"ToyGunTelepathic",
-			"ToyGunNightmarish",
-			"ToyGunVoltaic"
-          ],
-          "do_not_touch_tags": [],
-          "do_not_output_tags": []
-        }
-      ]
-    },
     {
       "name": "All items are weapons and neuromods",
       "desc": "All items are weapons, neuromods, ammo, or explosive canisters.",

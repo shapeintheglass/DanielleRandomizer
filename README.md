@@ -113,6 +113,11 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
   * Added a start location chooser (experimental and only intended for debugging purposes)
   * Added a game token override text box (only intended for debugging purposes)
   * Added support for string seeds
+* 0.31 patch
+  * Fixed an issue where loot tables would contain more guns even if "more guns" was not selected
+  * Renamed "Foam" guns to "Toy" guns
+  * Updated textures for exotic guns so that the ammo counter is visible
+  * Updated inventory and HUD icons for "more guns" guns
 
 ## Acknowledgments
 
