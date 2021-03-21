@@ -247,7 +247,11 @@ public class RandomizerService extends Service<Void> {
     if (currentSettings.getCosmeticSettings()
         .getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
-      new BodyRandomizer(currentSettings, zipHelper).randomize();
+      try {
+        new BodyRandomizer(currentSettings, zipHelper).randomize();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     Map<String, String> swappedLinesMap = null;
     if (currentSettings.getCosmeticSettings()

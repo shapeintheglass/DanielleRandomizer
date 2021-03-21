@@ -347,6 +347,15 @@ public class StationGenerator {
 
     // Find out which level has the lift technopath
     Level liftTechnopathLevel = getLiftTechnopathLevel(network);
+    
+    // Ensure that we can get from Cargo Bay to the Power Plant w/o the GUTS exit.
+    // This prevents softlocks after initiating the lockdown.
+    lockedDoors.add(Door.CARGO_BAY_GUTS_EXIT);
+    if (!isConnected(network, lockedDoors, Level.CARGO_BAY, Level.POWER_PLANT)) {
+      return false;
+    }
+    
+    lockedDoors.remove(Door.CARGO_BAY_GUTS_EXIT);
 
     // See how much of the station we can unlock w/o getting the lift
     while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard

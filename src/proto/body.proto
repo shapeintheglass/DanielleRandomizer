@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "proto";
+option java_outer_classname = "Body";
+
+message HumansFinal {
+  repeated Human body = 1;
+}
+
+message Human {
+  string name = 1;
+  string skeleton = 2;
+  string chrparams = 3;
+  bool is_husk = 4;
+  string husk_head_name = 5;
+}

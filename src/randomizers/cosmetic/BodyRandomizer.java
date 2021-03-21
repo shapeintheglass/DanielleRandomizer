@@ -1,68 +1,88 @@
 package randomizers.cosmetic;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
-
+import java.io.InputStream;
+import java.nio.file.Paths;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
-
+import com.google.common.io.ByteStreams;
+import com.google.protobuf.util.JsonFormat;
+import proto.Body.Human;
+import proto.Body.HumansFinal;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
-import utils.BodyConfig;
-import utils.BodyConfig.Gender;
-import utils.BodyConsts;
+import randomizers.generators.BodyGenerator;
 import utils.ZipHelper;
 
 public class BodyRandomizer extends BaseRandomizer {
 
-  public BodyRandomizer(Settings s, ZipHelper zipHelper) {
+  private static final String BODIES_FILE = "objects/characters/humansfinal/humansfinal.json";
+
+
+  private HumansFinal bodies;
+
+  public BodyRandomizer(Settings s, ZipHelper zipHelper) throws IOException {
     super(s, zipHelper);
-    Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS);
-    Arrays.sort(BodyConsts.BODIES_WITH_BARE_HANDS);
-    Arrays.sort(BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR);
-    Arrays.sort(BodyConsts.ACCESSORY_COMPATIBLE_BODIES);
+
+    bodies = readHumansFinalJson();
+  }
+
+  private HumansFinal readHumansFinalJson() throws IOException {
+    InputStream is = zipHelper.getInputStream(BODIES_FILE);
+    HumansFinal.Builder builder = HumansFinal.newBuilder();
+
+    byte[] bytes = ByteStreams.toByteArray(is);
+
+    JsonFormat.parser()
+        .ignoringUnknownFields()
+        .merge(new String(bytes), builder);
+
+    return builder.build();
   }
 
   public void randomize() {
-    for (String f : zipHelper.listFiles(ZipHelper.HUMANS_FINAL_DIR)) {
-      String filename = ZipHelper.getFileName(f);
-      String out = ZipHelper.HUMANS_FINAL_DIR + "/" + filename;
-
-      try {
-        randomizeBody(f, out);
-      } catch (IOException | JDOMException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        return;
-      }
+    for (Human h : bodies.getBodyList()) {
+      createBodyForHuman(h);
     }
   }
 
-  private void randomizeBody(String in, String out) throws FileNotFoundException, IOException, JDOMException {
-    Document document = zipHelper.getDocument(in);
-    Element root = document.getRootElement();
+  private void createBodyForHuman(Human h) {
+    Element root = new Element("CharacterDefinition");
+    Element model = new Element("Model");
+    model.setAttribute("File", h.getSkeleton());
 
-    String modelFile = root.getChild("Model").getAttributeValue("File").toLowerCase();
-    Gender gender = Gender.UNKNOWN;
-    if (modelFile.contains(BodyConsts.FEMALE_BODY_TYPE)) {
-      gender = BodyConfig.Gender.FEMALE;
-    } else if (modelFile.contains(BodyConsts.MALE_BODY_TYPE)) {
-      gender = BodyConfig.Gender.MALE;
-    } else if (modelFile.contains(BodyConsts.LARGE_MALE_BODY_TYPE)) {
-      gender = BodyConfig.Gender.LARGE_MALE;
-    } else {
-      // Body type not supported, do not overwrite
-      return;
+    Element addlChrparams = null;
+    if (h.getChrparams() != null) {
+      addlChrparams = new Element("AdditionalChrparams");
+      addlChrparams.setAttribute("File", h.getChrparams());
     }
 
-    Element attachmentList = root.getChild("AttachmentList");
+    BodyGenerator bc = new BodyGenerator(h, r);
+    Element attachmentList = bc.getAttachmentList();
 
-    String filename = ZipHelper.getFileName(in);
-    BodyConfig bc = new BodyConfig(filename, gender, attachmentList, r);
-    bc.generateAttachmentsForGender();
+    root.addContent(model)
+        .addContent(addlChrparams)
+        .addContent(attachmentList);
 
-    zipHelper.copyToPatch(document, out);
+    Document d = new Document(root);
+    String outputPath = "objects/characters/humansfinal/" + h.getName();
+    try {
+      zipHelper.copyToPatch(d, outputPath);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void main(String[] args) {
+    Settings s = Settings.newBuilder()
+        .build();
+    try {
+      ZipHelper zipHelper = new ZipHelper(null, Paths.get("temp"));
+      BodyRandomizer br = new BodyRandomizer(s, zipHelper);
+      br.randomize();
+      zipHelper.closeOutputZips();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

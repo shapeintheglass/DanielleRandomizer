@@ -39,18 +39,22 @@
                                           <Button fx:id="recommendedPresetButton" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Recommended" />
                                           <Button fx:id="chaoticPresetButton" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
                                           <Button fx:id="litePresetButton" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="Lite" />
+                                          <Label text="Challenges" />
                                           <Button fx:id="gotsPresetButton" mnemonicParsing="false" onAction="#onPresetsGotsClicked" prefHeight="25.0" prefWidth="101.0" text="G.O.T.S. (Timed)" />
+                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Talos Climber" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="275.0" prefWidth="478.0" spacing="23.0">
                                        <children>
                                           <Label text="As random as possible without breaking the game." />
-                                          <Label text="For people who like to live dangerously. Potential sequence breaking / soft locks." />
-                                          <Label text="As close to the original experience as possible, but with slight randomization." />
+                                          <Label text="As many settings as possible. Potential sequence breaking / soft locks." />
+                                          <Label text="Minimal amount of randomization, keeping close to the original experience." />
+                                          <Separator prefHeight="23.0" prefWidth="478.0" />
                                           <Label text="&quot;Get Off The Station&quot; mode. Can you escape Talos I before time is up?">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin></Label>
+                                          <Label text="Can you climb the exterior in 1G with only a gloo gun? For madmen only." />
                                        </children>
                                        <HBox.margin>
                                           <Insets bottom="12.5" top="5.0" />
@@ -58,7 +62,6 @@
                                     </VBox>
                                  </children>
                               </HBox>
-                              <Label layoutX="12.0" layoutY="209.0" prefHeight="63.0" prefWidth="601.0" text="G.O.T.S. is an experimental timed challenge where the station's self-destruct timer is activated as soon as you wake up in the Neuromod Division. You must leave via the shuttle or the escape pod before time is up. See the &quot;Cheats&quot; tab for more configuration about this option." wrapText="true" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -78,6 +81,8 @@
                                           <CheckBox fx:id="cosmeticCheckboxMusic" mnemonicParsing="false" text="Randomize music" />
                                           <CheckBox fx:id="cosmeticCheckboxPlayerModel" mnemonicParsing="false" text="Randomize player model" />
                                           <CheckBox fx:id="cosmeticCheckboxPlanetSize" mnemonicParsing="false" text="Randomize Earth/Moon/Sun size" />
+                                          <Label text="Body randomization" />
+                                          <Label text="Voice line randomization" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
@@ -88,6 +93,8 @@
                                           <Label text="Shuffles in-game music." />
                                           <Label text="Randomizes the first person player model." />
                                           <Label text="Changes the size of the Earth/Moon/Sun." />
+                                          <ChoiceBox prefHeight="25.0" prefWidth="360.0" />
+                                          <ChoiceBox prefHeight="25.0" prefWidth="361.0" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -154,6 +161,93 @@
                         </AnchorPane>
                     </content>
                   </Tab>
+                  <Tab text="More &lt;X&gt;">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutY="67.0" prefHeight="230.0" prefWidth="598.0" spacing="15.0">
+                                 <children>
+                                    <VBox prefHeight="230.0" prefWidth="217.0" spacing="15.0">
+                                       <children>
+                                          <CheckBox fx:id="cosmeticCheckboxBodies1" mnemonicParsing="false" text="More guns" />
+                                          <CheckBox fx:id="cosmeticCheckboxVoices1" mnemonicParsing="false" text="More fab plans" />
+                                          <CheckBox fx:id="cosmeticCheckboxEmotions1" mnemonicParsing="false" text="More chipsets" />
+                                          <CheckBox fx:id="cosmeticCheckboxMusic1" mnemonicParsing="false" text="More enemies" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
+                                       <children>
+                                          <Label text="Adds more guns" />
+                                          <Label text="Adds more fab plans" />
+                                          <Label text="Adds more chipsets" />
+                                          <Label text="Adds more enemy types" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <Label text="Adds more entities to the game." />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Level">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Options for level-based configuration" />
+                              <HBox layoutX="19.0" layoutY="35.0" prefHeight="291.0" prefWidth="596.0">
+                                 <children>
+                                    <VBox fx:id="enemiesOptions1" prefHeight="291.0" prefWidth="218.0" spacing="15.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="240.0" text="Item randomization" />
+                                          <Label text="Enemy randomization" />
+                                          <Label text="Station connectivity randomization" />
+                                          <Label text="\% broken objects" />
+                                          <Label text="\% locked workstations" />
+                                          <Label text="\% alive corpses" />
+                                          <Label text="Recycler/Fabricator ratio" />
+                                          <Label text="\% objects that are secretly mimics" />
+                                          <Label text="\% armed humans" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                       <children>
+                                          <ChoiceBox prefHeight="25.0" prefWidth="293.0" />
+                                          <ChoiceBox prefHeight="25.0" prefWidth="294.0" />
+                                          <ChoiceBox prefHeight="25.0" prefWidth="294.0" />
+                                          <SplitPane dividerPositions="0.29797979797979796" prefHeight="28.0" prefWidth="316.0">
+                                            <items>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <CheckBox mnemonicParsing="false" text="Enable" />
+                                                   </children>
+                                                </AnchorPane>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Slider prefHeight="14.0" prefWidth="203.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </items>
+                                          </SplitPane>
+                                          <Slider />
+                                          <Slider />
+                                          <Slider />
+                                          <Slider />
+                                          <Slider />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                   <Tab text="Neuromods">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -162,9 +256,15 @@
                               <VBox layoutX="28.0" layoutY="50.0" prefHeight="200.0" prefWidth="237.0" spacing="15.0">
                                  <children>
                                     <CheckBox fx:id="neuromodsCheckboxRandomize" mnemonicParsing="false" text="Randomize neuromod skill tree" />
+                                    <Label text="Neuromod randomization" />
+                                    <Label text="Limit number of neuromods" />
                                  </children>
                               </VBox>
                               <Label layoutX="289.0" layoutY="50.0" text="Shuffles the upgrade tree and reevaluates skill point cost." />
+                              <ChoiceBox layoutX="289.0" layoutY="87.0" prefHeight="25.0" prefWidth="307.0" />
+                              <Slider layoutX="384.0" layoutY="129.0" />
+                              <CheckBox layoutX="280.0" layoutY="127.0" mnemonicParsing="false" text="CheckBox" />
+                              <TextField layoutX="535.0" layoutY="123.0" prefHeight="25.0" prefWidth="70.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -237,17 +337,42 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="633.0">
                            <children>
-                              <Label layoutX="12.0" layoutY="21.0" text="Miscellaneous/experimental options and cheats." />
+                              <Label layoutX="12.0" layoutY="21.0" text="Facilitates gameplay/debugging." />
                               <HBox layoutX="27.0" layoutY="50.0" prefHeight="317.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="307.0" spacing="15.0">
                                        <children>
                                           <CheckBox fx:id="cheatsCheckboxUnlockAll" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
                                           <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
-                                          <CheckBox fx:id="cheatsCheckboxWander" mnemonicParsing="false" text="Make humans wander" />
-                                          <CheckBox fx:id="cheatsCheckboxGravity" mnemonicParsing="false" text="Zero gravity everywhere" />
-                                          <CheckBox fx:id="cheatsCheckboxEnableGravity" mnemonicParsing="false" text="Enable gravity in Exterior and GUTS" />
-                                          <CheckBox fx:id="cheatsCheckboxSelfDestruct" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
+                                          <CheckBox mnemonicParsing="false" text="Friendly typhon" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="317.0" prefWidth="309.0" spacing="15.0">
+                                       <children>
+                                          <Label text="Unlocks (almost) everything except for scripted locks." />
+                                          <Label text="Allows installing typhon neuromods without research." />
+                                          <Label text="Typhon are non-hostile" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Experiments">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="633.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Experimental options for special modes." />
+                              <HBox layoutX="27.0" layoutY="50.0" prefHeight="317.0" prefWidth="596.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="307.0" spacing="15.0">
+                                       <children>
+                                          <CheckBox fx:id="cheatsCheckboxWander1" mnemonicParsing="false" text="Make humans wander" />
+                                          <CheckBox fx:id="cheatsCheckboxGravity1" mnemonicParsing="false" text="Zero gravity everywhere" />
+                                          <CheckBox fx:id="cheatsCheckboxEnableGravity1" mnemonicParsing="false" text="Enable gravity in Exterior and GUTS" />
+                                          <CheckBox fx:id="cheatsCheckboxSelfDestruct1" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
                                           <HBox prefHeight="21.0" prefWidth="307.0">
                                              <children>
                                                 <Label text="Self-destruct timer (minutes):">
@@ -255,7 +380,7 @@
                                                       <Insets top="3.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="cheatsTextFieldTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="8.000000">
+                                                <TextField fx:id="cheatsTextFieldTimer1" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="8.000000">
                                                    <HBox.margin>
                                                       <Insets left="10.0" />
                                                    </HBox.margin>
@@ -269,7 +394,7 @@
                                                       <Insets top="3.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="cheatsTextFieldShuttleTimer" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="6.000000">
+                                                <TextField fx:id="cheatsTextFieldShuttleTimer1" alignment="CENTER_RIGHT" prefHeight="12.0" prefWidth="85.0" text="6.000000">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
@@ -280,8 +405,6 @@
                                     </VBox>
                                     <VBox prefHeight="317.0" prefWidth="309.0" spacing="15.0">
                                        <children>
-                                          <Label text="Unlocks (almost) everything except for scripted locks." />
-                                          <Label text="Allows installing typhon neuromods without research." />
                                           <Label text="Intended for the &quot;typhon to humans&quot; option." />
                                           <Label text="Adds 0G to every map. Breaks most cutscenes." />
                                           <Label text="For masochists only." />
@@ -302,7 +425,7 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                    </content>
+                     </content>
                   </Tab>
               </tabs>
             </TabPane>

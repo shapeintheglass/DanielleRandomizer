@@ -85,6 +85,7 @@ message CheatSettings {
   bool zero_gravity_everywhere = 7;
   bool enable_gravity_in_ext_and_guts = 8;
   string game_token_overrides = 9;
+  bool all_corpses_are_alive = 10;
 }
 
 message GenericSpawnPresetFilter {
