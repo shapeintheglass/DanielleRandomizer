@@ -1,13 +1,27 @@
 package randomizers.generators;
 
-import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
+
 import org.jdom2.Element;
+
+import com.google.common.collect.ImmutableCollection;
+
 import proto.Body.Human;
 import utils.BodyConsts;
+import utils.BodyConsts.BodyType;
+import utils.BodyConsts.FemaleBody;
 import utils.BodyConsts.FemaleHair;
+import utils.BodyConsts.FemaleHairColor;
+import utils.BodyConsts.FemaleHairType;
 import utils.BodyConsts.FemaleHead;
+import utils.BodyConsts.HeadType;
+import utils.BodyConsts.LargeMaleHair;
+import utils.BodyConsts.LargeMaleHead;
+import utils.BodyConsts.MaleBody;
+import utils.BodyConsts.MaleHair;
+import utils.BodyConsts.MaleHairColor;
+import utils.BodyConsts.MaleHairType;
+import utils.BodyConsts.MaleHead;
 import utils.Utils;
 
 /**
@@ -25,13 +39,8 @@ public class BodyGenerator {
   private static final int BALD_PERCENT_CHANCE = 15; // out of 100
 
   public enum Gender {
-    MALE,
-    FEMALE,
-    LARGE_MALE,
-    UNKNOWN,
+    MALE, FEMALE, LARGE_MALE, UNKNOWN,
   }
-
-  private String name;
 
   private Human human;
   private Element attachmentList;
@@ -44,13 +53,12 @@ public class BodyGenerator {
   public BodyGenerator(Human h, Random r) {
     this.human = h;
     this.r = r;
-    
+
     addJetpack = r.nextInt(100) < ADD_ACCESSORY_PERCENT_CHANCE;
     addHelmet = r.nextInt(100) < ADD_HELMET_PERCENT_CHANCE;
     isBald = r.nextInt(100) < BALD_PERCENT_CHANCE;
 
     Element attachmentList = new Element("AttachmentList");
-
 
     this.attachmentList = attachmentList;
   }
@@ -66,161 +74,170 @@ public class BodyGenerator {
     attachmentList.addContent(inherited);
 
     // Body
-    String bodyModel = addBodyAttribute(g);
+    BodyType bodyModel = addBodyAttribute(g);
     // Accessories
     addAccessoriesAttribute(bodyModel, g);
     // Head
-    String headModel = addHeadAttribute(bodyModel, g);
+    HeadType headModel = addHeadAttribute(bodyModel, g);
     // Hair
     addHairAttribute(headModel, g);
 
     return attachmentList;
   }
 
-  private String addBodyAttribute(Gender g) {
-    String bodyModel;
+  private BodyType addBodyAttribute(Gender g) {
+    BodyType bodyType;
+    String bodyModel = "";
+    String bodyMtl = "";
     switch (g) {
       case FEMALE:
-        bodyModel =
-            Utils.getRandomWeighted(BodyConsts.FEMALE_BODIES, BodyConsts.FEMALE_BODIES_WEIGHTS, r);
+        bodyType = Utils.getRandomWeighted(BodyConsts.SUPPORTED_FEMALE_BODIES, BodyConsts.FEMALE_BODIES_WEIGHTS, r);
+        bodyModel = BodyConsts.FEMALE_BODIES_MAP.get(bodyType);
+        if (bodyType == FemaleBody.GLOVELESS) {
+          bodyMtl = BodyConsts.MORGAN_FEMALE_GLOVELESS_MTL;
+        } else {
+          bodyMtl = bodyModel;
+        }
         break;
       case MALE:
-        bodyModel =
-            Utils.getRandomWeighted(BodyConsts.MALE_BODIES, BodyConsts.MALE_BODIES_WEIGHTS, r);
-        break;
-      case LARGE_MALE:
-        bodyModel = BodyConsts.LARGE_MALE_BODIES[0];
-        break;
       case UNKNOWN:
       default:
-        return null;
-    }
-
-    String bodyMtl = bodyModel;
-
-    // Override for morgan gender select mtl
-    if (bodyModel.contains("morgankarlgenderselect_genfemale")) {
-      bodyMtl = "morgankarl/morgan_genfemalebody01_cut_scene";
-    }
-    if (bodyModel.contains("morgankarlgenderselect_genmale")) {
-      bodyMtl = "morgankarl/morgan_genmalebody01_cut_scene";
-    }
-
-    // Override for large male mtl
-    if (g == Gender.LARGE_MALE) {
-      bodyMtl = Utils.getRandom(BodyConsts.LARGE_MALE_MTLS, r);
+        bodyType = Utils.getRandomWeighted(BodyConsts.SUPPORTED_MALE_BODIES, BodyConsts.MALE_BODIES_WEIGHTS, r);
+        bodyModel = BodyConsts.MALE_BODIES_MAP.get(bodyType);
+        if (bodyType == MaleBody.GLOVELESS) {
+          bodyMtl = BodyConsts.MORGAN_MALE_GLOVELESS_MTL;
+        } else {
+          bodyMtl = bodyModel;
+        }
+        break;
+      case LARGE_MALE:
+        // There's only one body model for large male
+        bodyType = Utils.getRandom(BodyConsts.SUPPORTED_LARGE_MALE_BODIES, r);
+        bodyModel = BodyConsts.LARGE_MALE_BODY_MODEL;
+        bodyMtl = Utils.getRandom(BodyConsts.LARGE_MALE_MTLS, r);
+        break;
     }
 
     addAttachment("body_skin", bodyModel, bodyMtl);
 
     // Some bodies need additional attachments
-    if (bodyModel.contains("labcoat_genmalebody01")) {
+    if (bodyType == MaleBody.LABCOAT) {
       // Legs/arms for lab coat body
-      addAttachment("legs", "labcoat/labcoat_genmalelegs01", "scientist/scientist_genmalebody01");
-      addAttachment("hands", "labcoat/labcoat_genmalehands01", "scientist/scientist_genmalebody01");
+      addAttachment("legs", BodyConsts.MALE_LABCOAT_LEGS_MODEL, BodyConsts.MALE_LABCOAT_LIMBS_MTL);
+      addAttachment("hands", BodyConsts.MALE_LABCOAT_HANDS_MODEL, BodyConsts.MALE_LABCOAT_LIMBS_MTL);
     }
-    if (bodyModel.contains("plumber/plumber_genfemalebody01")) {
+
+    if (bodyModel.contains("labcoat_genmalebody01")) {
       // Hat for plumber body
+      // TODO: Make this hair dependent, not body dependent
       addAttachment("hat_skin", BodyConsts.PLUMBER_HAT, BodyConsts.PLUMBER_HAT_MTL);
     }
-    return bodyModel;
+
+    return bodyType;
   }
 
-  private void addAccessoriesAttribute(String bodyModel, Gender g) {
-    boolean compatibleWithAccessories = BodyConsts.ACCESSORY_COMPATIBLE_BODIES.contains(bodyModel);
-    if (addJetpack && compatibleWithAccessories) {
-      String cdf = null;
-      String mtl = null;
-      switch (g) {
-        case FEMALE:
-          cdf = Utils.getRandom(BodyConsts.ACCESSORIES_FEMALE, r);
-          mtl = Utils.getRandom(BodyConsts.ACCESSORIES_FEMALE_MTL, r);
-          break;
-        case MALE:
-          int index = r.nextInt(BodyConsts.ACCESSORIES_MALE.length);
-          cdf = BodyConsts.ACCESSORIES_MALE[index];
-          mtl = BodyConsts.ACCESSORIES_MALE_MTL[index];
-          break;
-        case LARGE_MALE:
-        case UNKNOWN:
-        default:
-          return;
+  private void addAccessoriesAttribute(BodyType bodyModel, Gender g) {
+    if (addJetpack) {
+      if (g == Gender.FEMALE && BodyConsts.ACCESSORY_COMPATIBLE_FEMALE_BODIES.contains(bodyModel)) {
+        String cdf = Utils.getRandom(BodyConsts.ACCESSORIES_FEMALE, r);
+        String mtl = Utils.getRandom(BodyConsts.ACCESSORIES_FEMALE_MTL, r);
+        addAttachmentVerbatim("0", "propulsion_skin", cdf + ".skin", mtl + ".mtl", "0");
       }
-      addAttachmentVerbatim("0", "propulsion_skin", cdf + ".skin", mtl + ".mtl", "0");
+
+      if (g == Gender.MALE && BodyConsts.ACCESSORY_COMPATIBLE_MALE_BODIES.contains(bodyModel)) {
+        int index = r.nextInt(BodyConsts.ACCESSORIES_MALE.length);
+        String cdf = BodyConsts.ACCESSORIES_MALE[index];
+        String mtl = BodyConsts.ACCESSORIES_MALE_MTL[index];
+        addAttachmentVerbatim("0", "propulsion_skin", cdf + ".skin", mtl + ".mtl", "0");
+      }
     }
   }
 
-  private String addHeadAttribute(String bodyModel, Gender g) {
-    boolean hasBareHands = BodyConsts.BODIES_WITH_BARE_HANDS.contains(bodyModel);
+  private HeadType addHeadAttribute(BodyType bodyModel, Gender g) {
+    HeadType headType = getHeadModel(g, r);
 
-    String headModel = getHeadModel(g, r);
-
-    // Reroll if head and hands are mismatched
-    if (hasBareHands) {
-      // TODO: Add maximum counter
-      while (BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS.contains(headModel)) {
-        headModel = getHeadModel(g, r);
+    // Re-roll if head and hands are mismatched
+    if (BodyConsts.BODIES_WITH_BARE_HANDS.contains(bodyModel)) {
+      int numAttempts = 0;
+      while (BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS.contains(headType) && numAttempts++ < 10) {
+        headType = getHeadModel(g, r);
       }
     }
-
-    String headMtl = headModel;
-
-    // If female, chance of giving a helmet
-    if (g == Gender.FEMALE && addHelmet) {
-      headModel = BodyConsts.FEMALE_HEAD_HELMET;
-      headMtl = BodyConsts.FEMALE_HEAD_HELMET_MTL;
-      if (!addJetpack) {
-        // Add a jetpack if we weren't giving one already
-        addJetpack = true;
-      }
-      Element head =
-          addAttachmentVerbatim("1", "head_skin", headModel + ".skin", headMtl + ".mtl", "0");
-      head.setAttribute("SkinJointsOverrideSkeleton", "1");
-      return headModel;
+    
+    String headModel = "";
+    String headMtl = "";
+    switch (g) {
+      case FEMALE:
+        // If female, chance of giving a helmet
+        if (addHelmet) {
+          headModel = BodyConsts.FEMALE_HEAD_HELMET;
+          headMtl = BodyConsts.FEMALE_HEAD_HELMET_MTL;
+          if (!addJetpack) {
+            // Add a jetpack if we weren't giving one already
+            addJetpack = true;
+          }
+          Element head = addAttachmentVerbatim("1", "head_skin", headModel + ".skin", headMtl + ".mtl", "0");
+          head.setAttribute("SkinJointsOverrideSkeleton", "1");
+          return FemaleHead.HELMET;
+        } else {
+          headModel = BodyConsts.FEMALE_HEADS_MAP.get(headType);
+          headMtl = headModel;          
+        }
+        break;
+      case MALE:
+      case UNKNOWN:
+      default:
+        headModel = BodyConsts.MALE_HEADS_MAP.get(headType);
+        headMtl = headModel;
+        break;
+      case LARGE_MALE:
+        headModel = BodyConsts.LARGE_MALE_HEADS_MAP.get(headType);
+        headMtl = headModel;
+        break;
     }
 
     Element head = createAttachment("head_skin", headModel, headMtl, "0");
     head.setAttribute("SkinJointsOverrideSkeleton", "1");
 
-    return headModel;
+    return headType;
+  }
+  
+  private static HeadType getHeadModel(Gender g, Random r) {
+    switch (g) {
+      case FEMALE:
+        return Utils.getRandom(BodyConsts.SUPPORTED_FEMALE_HEADS, r);
+      case UNKNOWN:
+      default:
+      case MALE:
+        return Utils.getRandom(BodyConsts.SUPPORTED_MALE_HEADS, r);
+      case LARGE_MALE:
+        return Utils.getRandom(BodyConsts.SUPPORTED_LARGE_MALE_HEADS, r);
+    }
   }
 
-  private void addHairAttribute(String headModel, Gender g) {
-    if (BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR.contains(headModel)
-        || headModel.equals(BodyConsts.FEMALE_HEAD_HELMET)) {
+  private void addHairAttribute(HeadType headModel, Gender g) {
+    if (BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR.contains(headModel)) {
       return;
     }
 
     switch (g) {
       case FEMALE:
-        generateHairForHeadFemale(headModel, r);
+        FemaleHead fh = (FemaleHead) headModel;
+        generateHairForHeadFemale(fh, r);
         break;
       case MALE:
-        generateHairForHeadMale(headModel, r);
+        MaleHead mh = (MaleHead) headModel;
+        generateHairForHeadMale(mh, r);
         break;
       case LARGE_MALE:
-        generateHairForHeadLargeMale(headModel, r);
+        LargeMaleHead lmh = (LargeMaleHead) headModel;
+        generateHairForHeadLargeMale(lmh, r);
       default:
         break;
     }
   }
 
-  private static String getHeadModel(Gender g, Random r) {
-    switch (g) {
-      case FEMALE:
-        return Utils.getRandom(BodyConsts.FEMALE_HEADS, r);
-      case MALE:
-        return Utils.getRandom(BodyConsts.MALE_HEADS, r);
-      case LARGE_MALE:
-        return Utils.getRandom(BodyConsts.LARGE_MALE_HEADS, r);
-      case UNKNOWN:
-      default:
-        return null;
-    }
-  }
-
-  private Element addAttachmentVerbatim(String inheritable, String aName, String cdf, String mtl,
-      String flags) {
+  private Element addAttachmentVerbatim(String inheritable, String aName, String cdf, String mtl, String flags) {
     Element e = new Element("Attachment");
     e.setAttribute("Inheritable", inheritable);
     e.setAttribute("Type", "CA_SKIN");
@@ -250,212 +267,50 @@ public class BodyGenerator {
     return e;
   }
 
-  private Element generateHairForHeadFemale(String headModel, Random r) {
-
-    String hairModelShort = "";
-    switch (headModel) {
-      case "genfemale/genfemale_head01":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_01, r);
-        break;
-      case "genfemale/genfemale_head02":
-        hairModelShort =
-            Utils.getRandom(BodyConsts.FEMALE_HAIRS_02, BodyConsts.FEMALE_HAIR_MORGAN, r);
-        break;
-      case "genfemale/genfemale_head03":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_03, r);
-        break;
-      case "genfemale/genfemale_head04":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_04, r);
-        break;
-      case "genfemale/genfemale_head05":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_05, r);
-        break;
-      case "genfemale/genfemale_head06":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_06, r);
-        break;
-      case "mikhailailyushin/mikhailailyushin_genfemalehead01":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_02, BodyConsts.FEMALE_HAIR_MORGAN,
-            BodyConsts.FEMALE_HAIR_MIKA, BodyConsts.FEMALE_HAIR_SARA, r);
-        break;
-      case "morgankarl/morgankarl_genfemalehead01":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIRS_02, BodyConsts.FEMALE_HAIR_MORGAN,
-            BodyConsts.FEMALE_HAIR_SARA, r);
-        break;
-      case "saraelazar/saraelazar_genfemalehead01":
-        hairModelShort = Utils.getRandom(BodyConsts.FEMALE_HAIR_MORGAN, BodyConsts.FEMALE_HAIR_MIKA,
-            BodyConsts.FEMALE_HAIR_SARA, r);
-        break;
-      default:
-        Logger.getGlobal()
-            .info(name + ": Could not find hair for head " + headModel);
+  private Element generateHairForHeadFemale(FemaleHead headModel, Random r) {
+    ImmutableCollection<FemaleHair> compatibleHairs = BodyConsts.FEMALE_HEAD_HAIR_COMPATIBILITY.get(headModel);
+    FemaleHair hairType = Utils.getRandom(compatibleHairs, r);
+    String hairModel = BodyConsts.FEMALE_HAIRS_MAP.get(hairType);
+    FemaleHairType genericHairType = BodyConsts.FEMALE_HAIR_TO_HAIR_TYPE.get(hairType); 
+    ImmutableCollection<FemaleHairColor> compatibleColors = BodyConsts.FEMALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
+    FemaleHairColor hairColor = Utils.getRandom(compatibleColors, r);
+    String hairColorMtl = BodyConsts.FEMALE_HAIR_COLORS_MAP.get(hairColor);
+    return addAttachment("hair_skin", hairModel, hairColorMtl);
+  }
+  
+  private Element generateHairForHeadMale(MaleHead headModel, Random r) {
+    if (isBald && BodyConsts.HEADS_THAT_CAN_BE_BALD.contains(headModel)) {
+      return null;
     }
-    return addAttachment("hair_skin", hairModelShort, getColorForHairFemale(hairModelShort, r));
+    
+    ImmutableCollection<MaleHair> compatibleHairs = BodyConsts.MALE_HEAD_HAIR_COMPATIBILITY.get(headModel);
+    MaleHair hairType = Utils.getRandom(compatibleHairs, r);
+    String hairModel = BodyConsts.MALE_HAIRS_MAP.get(hairType);
+    MaleHairType genericHairType = BodyConsts.MALE_HAIR_TO_HAIR_TYPE.get(hairType); 
+    ImmutableCollection<MaleHairColor> compatibleColors = BodyConsts.MALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
+    MaleHairColor hairColor = Utils.getRandom(compatibleColors, r);
+    String hairColorMtl = BodyConsts.MALE_HAIR_COLORS_MAP.get(hairColor);
+    return addAttachment("hair_skin", hairModel, hairColorMtl);
   }
 
-  private String getColorForHairFemale(String hairModelShort, Random r) {
-    switch (hairModelShort) {
-      case "genfemale/genfemale_head01_hair01":
-        return Utils.getRandom(BodyConsts.FEMALE_HAIR_COLORS_01, r);
-      case "genfemale/genfemale_head02_hair02":
-      case "genfemale/genfemale_head03_hair02":
-      case "genfemale/genfemale_head06_hair02":
-        return Utils.getRandom(BodyConsts.FEMALE_HAIR_COLORS_02, r);
-      case "genfemale/genfemale_head01_hair03":
-      case "genfemale/genfemale_head02_hair03":
-      case "genfemale/genfemale_head03_hair03":
-      case "genfemale/genfemale_head04_hair03":
-      case "genfemale/genfemale_head05_hair03":
-      case "genfemale/genfemale_head06_hair03":
-        return Utils.getRandom(BodyConsts.FEMALE_HAIR_COLORS_03, r);
-      case "genfemale/genfemale_head02_hair04":
-      case "genfemale/genfemale_head03_hair04":
-      case "genfemale/genfemale_head04_hair04":
-        return Utils.getRandom(BodyConsts.FEMALE_HAIR_COLORS_04, r);
-      case "genfemale/genfemale_head01_hair05":
-      case "genfemale/genfemale_head02_hair05":
-      case "genfemale/genfemale_head03_hair05":
-      case "genfemale/genfemale_head04_hair05":
-      case "genfemale/genfemale_head05_hair05":
-      case "genfemale/genfemale_head06_hair05":
-        return Utils.getRandom(BodyConsts.FEMALE_HAIR_COLORS_05, r);
-      case "mikhailailyushin/mikhailailyushin_genfemalehead01_hair01":
-        return BodyConsts.FEMALE_HAIR_MIKA[0];
-      case "morgankarl/morgankarl_genfemalehead01_hair01":
-        return BodyConsts.FEMALE_HAIR_MORGAN[0];
-      case "saraelazar/saraelazar_genfemalehead01_hair01":
-        return BodyConsts.FEMALE_HAIR_SARA[0];
-      default:
-        break;
-    }
-    Logger.getGlobal()
-        .info(name + ": Could not find a hair color for hair model " + hairModelShort);
-    return "";
-  }
-
-  private Element generateHairForHeadMale(String headModel, Random r) {
-    String hairModelShort = "";
-    // Give a chance of some specific types being bald
-    switch (headModel) {
-      case "genmale/genmale_head01":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIRS_01, r);
-        break;
-      case "genmale/genmale_head02":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIRS_02, r);
-        break;
-      case "genmale/genmale_head03":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIRS_03, r);
-        break;
-      case "genmale/genmale_head04":
-        if (isBald) {
-          return null;
-        }
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIRS_04, r);
-        break;
-      case "genmale/genmale_head05":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIRS_05, r);
-        break;
-      case "genmale/genmale_head06":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIRS_06, r);
-        break;
-      case "morgankarl/morgankarl_genmalehead01":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIR_MORGAN, r);
-        break;
-      case "dahl/dahl_genmalehead01":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIR_DAHL, BodyConsts.MALE_HAIR_MORGAN, r);
-        break;
-      case "drcalvino/drcalvino_genmalehead01":
-        hairModelShort = BodyConsts.MALE_HAIR_CALVINO[0];
-        break;
-      case "drigwe/igwe_genmalehead01":
-        hairModelShort = Utils.getRandom(BodyConsts.MALE_HAIR_IGWE, BodyConsts.MALE_HAIRS_02, r);
-        break;
-      case "aaroningram/aaroningram_genmale_head01":
-        if (isBald) {
-          return null;
-        }
-        hairModelShort = BodyConsts.MALE_HAIR_MORGAN[0];
-        break;
-      case "volunteer/volunteer_genmalehead01":
-        if (isBald) {
-          return null;
-        }
-        hairModelShort = BodyConsts.MALE_HAIRS_V01[0];
-        break;
-      case "volunteer/volunteer_genmalehead02":
-        if (isBald) {
-          return null;
-        }
-        hairModelShort = BodyConsts.MALE_HAIRS_V02[0];
-        break;
-      case "volunteer/volunteer_genmalehead03":
-        if (isBald) {
-          return null;
-        }
-        hairModelShort = BodyConsts.MALE_HAIRS_V03[0];
-        break;
-      default:
-        Logger.getGlobal()
-            .info(name + ": Could not find hair for head " + headModel);
-    }
-    return addAttachment("hair_skin", hairModelShort, getColorForHairMale(hairModelShort, r));
-  }
-
-  private String getColorForHairMale(String hairModelShort, Random r) {
-    switch (hairModelShort) {
-      case "genmale/genmale_head01_hair01":
-      case "genmale/genmale_head02_hair01":
-      case "genmale/genmale_head05_hair01":
-      case "genmale/genmale_head06_hair01":
-        return Utils.getRandom(BodyConsts.MALE_HAIR_COLORS_01, r);
-      case "genmale/genmale_head01_hair03":
-      case "genmale/genmale_head02_hair03":
-      case "genmale/genmale_head03_hair03":
-        return Utils.getRandom(BodyConsts.MALE_HAIR_COLORS_03, r);
-      case "genmale/genmale_head04_hair04":
-        return Utils.getRandom(BodyConsts.MALE_HAIR_COLORS_04, r);
-      case "genmale/genmale_head01_hair05":
-      case "genmale/genmale_head02_hair05":
-      case "genmale/genmale_head03_hair05":
-      case "genmale/genmale_head05_hair05":
-      case "genmale/genmale_head06_hair05":
-        return Utils.getRandom(BodyConsts.MALE_HAIR_COLORS_05, r);
-      case "genmale/genmale_head03_hair06":
-      case "genmale/genmale_head05_hair06":
-      case "genmale/genmale_head06_hair06":
-        return Utils.getRandom(BodyConsts.MALE_HAIR_COLORS_06, r);
-      case "volunteer/volunteer_genmalehead01_hair01":
-      case "volunteer/volunteer_genmalehead02_hair01":
-      case "volunteer/volunteer_genmalehead03_hair01":
-        return Utils.getRandom(BodyConsts.MALE_HAIR_VOLUNTEER, r);
-      case "dahl/dahl_genmalehead01_hair01":
-        return BodyConsts.MALE_HAIR_DAHL[0];
-      case "morgankarl/morgankarl_genmalehead01_hair01":
-        return BodyConsts.MALE_HAIR_MORGAN[0];
-      case "drigwe/igwe_genmalehead01_hair01":
-        return BodyConsts.MALE_HAIR_IGWE[0];
-      case "drcalvino/drcalvino_genmalehead01_hair01":
-        return BodyConsts.MALE_HAIR_CALVINO_COLOR[0];
-      default:
-        Logger.getGlobal()
-            .info(name + ": Could not find a hair color for hair model " + hairModelShort);
-    }
-    return "";
-  }
-
-  private Element generateHairForHeadLargeMale(String headModel, Random r) {
+  private Element generateHairForHeadLargeMale(LargeMaleHead headModel, Random r) {
     if (isBald) {
       return null;
     }
-    String hairModel = "";
+    
+    LargeMaleHair hair;
+    
     switch (headModel) {
-      case "Luka/Luka_LargeMaleHead01":
-        hairModel = "Luka/Luka_LargeMaleHead01_Hair01";
+      case LUKA:
+        hair = LargeMaleHair.LUKA;
         break;
-      case "alexlikarl/alexlikarl_largemalehead01":
-      case "alexlikarl/alexlikarl_largemalehead01_variant":
-        hairModel = Utils.getRandom(BodyConsts.ALEX_HAIRS, r);
+      default:
+        hair = Utils.getRandom(BodyConsts.SUPPORTED_ALEX_HAIRS, r);
         break;
     }
+    
+    String hairModel = BodyConsts.LARGE_MALE_HAIRS_MAP.get(hair);
+    
     return addAttachment("hair_skin", hairModel, hairModel);
   }
 
@@ -476,12 +331,23 @@ public class BodyGenerator {
     switch (g) {
       case LARGE_MALE:
         return BodyConsts.LARGE_MALE_ATTACHMENTS;
+      default:
       case MALE:
         return BodyConsts.MALE_ATTACHMENTS;
       case FEMALE:
         return BodyConsts.FEMALE_ATTACHMENTS;
-      default:
-        return null;
     }
+  }
+  
+  public static void main(String[] args) {
+    Human h = Human.newBuilder()
+        .setName("foo")
+        .setSkeleton(BodyConsts.MALE_BODY_TYPE)  
+        .build();
+    
+    Random r = new Random(0L);
+    BodyGenerator bg = new BodyGenerator(h, r);
+    Element e = bg.getAttachmentList();
+    System.out.println(e);
   }
 }
