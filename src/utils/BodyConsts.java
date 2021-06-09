@@ -30,6 +30,9 @@ public class BodyConsts {
   public static interface HairType {
   }
 
+  public static interface HairColorType {
+  }
+
   public static enum FemaleBody implements BodyType {
     CORPORATE, MECHANIC, PLUMBER, SCIENTIST, SECURITY, GLOVELESS
     // TODO: Add labcoat, morgan shift
@@ -52,7 +55,7 @@ public class BodyConsts {
 
   public static enum MaleHead implements HeadType {
     DAHL, CALVINO, IGWE, HEAD01, HEAD01_PSYCHOSCOPE, HEAD01_PSYCHO, HEAD02, HEAD03, HEAD03_PSYCHOSCOPE, HEAD04, HEAD05,
-    HEAD06, INGRAM, MORGAN, VOLUNTEER01, VOLUNTEER02, VOLUNTEER03, HELMET, HUSK
+    HEAD06, INGRAM, MORGAN, VOLUNTEER01, VOLUNTEER02, VOLUNTEER03, VOLUNTEER04, HELMET, HUSK
   }
 
   public static enum LargeMaleHead implements HeadType {
@@ -71,7 +74,7 @@ public class BodyConsts {
     HAIR02, HAIR03, HAIR04, HAIR05, HAIR06, MIKHAILA, MORGAN, SARA
   }
 
-  public static enum FemaleHairColor {
+  public static enum FemaleHairColor implements HairColorType {
     // HAIR01_BLACK, // Unused
     HAIR02_BLACK, HAIR02_BLONDE, HAIR02_BROWN, HAIR02_GRAY, HAIR02_RED, HAIR03, HAIR03_BLACK, HAIR03_BLONDE,
     HAIR03_BROWN, HAIR03_RED, HAIR04_BLACK,
@@ -88,11 +91,11 @@ public class BodyConsts {
     HEAD03_HAIR05, HEAD03_HAIR06, HEAD04_HAIR04, HEAD05_HAIR01, HEAD05_HAIR05, HEAD05_HAIR06, HEAD06_HAIR01,
     HEAD06_HAIR05, HEAD06_HAIR06, VOLUNTEER01, VOLUNTEER02, VOLUNTEER03, MORGAN, DAHL, IGWE, CALVINO
   }
-  
-  public static enum MaleHairColor {
+
+  public static enum MaleHairColor implements HairColorType {
     HAIR01, HAIR01_BLACK, HAIR01_BLONDE, HAIR01_BROWN, HAIR01_RED, HAIR03, HAIR03_BLACK, HAIR03_BLONDE, HAIR03_BROWN,
     HAIR03_RED, HAIR04, HAIR05, HAIR05_BLACK, HAIR05_BLONDE, HAIR05_BROWN, HAIR05_RED, HAIR06, HAIR06_BLACK,
-    HAIR06_BLONDE, MORGAN, DAHL, IGWE, CALVINO, VOLUNTEER
+    HAIR06_BLONDE, MORGAN, DAHL, IGWE, CALVINO, VOLUNTEER, VOLUNTEER_BROWN
   }
 
   public static enum LargeMaleHair implements HairType {
@@ -155,8 +158,10 @@ public class BodyConsts {
       .put(MaleHair.IGWE, MaleHairType.IGWE)
       .put(MaleHair.CALVINO, MaleHairType.CALVINO)
       .put(MaleHair.VOLUNTEER01, MaleHairType.VOLUNTEER)
+      .put(MaleHair.VOLUNTEER02, MaleHairType.VOLUNTEER)
+      .put(MaleHair.VOLUNTEER03, MaleHairType.VOLUNTEER)
       .build();
-  
+
   public static final ImmutableMultimap<MaleHairType, MaleHairColor> MALE_HAIR_COLOR_COMPATIBILITY = new ImmutableMultimap.Builder<MaleHairType, MaleHairColor>()
       .put(MaleHairType.HAIR01, MaleHairColor.HAIR01)
       .put(MaleHairType.HAIR01, MaleHairColor.HAIR01_BLACK)
@@ -182,6 +187,7 @@ public class BodyConsts {
       .put(MaleHairType.IGWE, MaleHairColor.IGWE)
       .put(MaleHairType.CALVINO, MaleHairColor.CALVINO)
       .put(MaleHairType.VOLUNTEER, MaleHairColor.VOLUNTEER)
+      .put(MaleHairType.VOLUNTEER, MaleHairColor.VOLUNTEER_BROWN)
       .build();
 
   public static final ImmutableMultimap<FemaleHead, FemaleHair> FEMALE_HEAD_HAIR_COMPATIBILITY = new ImmutableMultimap.Builder<FemaleHead, FemaleHair>()
@@ -228,6 +234,7 @@ public class BodyConsts {
 
   public static final ImmutableMap<FemaleHair, FemaleHairType> FEMALE_HAIR_TO_HAIR_TYPE = new ImmutableMap.Builder<FemaleHair, FemaleHairType>()
       .put(FemaleHair.HEAD01_HAIR02, FemaleHairType.HAIR02)
+      .put(FemaleHair.HEAD02_HAIR02, FemaleHairType.HAIR02)
       .put(FemaleHair.HEAD03_HAIR02, FemaleHairType.HAIR02)
       .put(FemaleHair.HEAD01_HAIR03, FemaleHairType.HAIR03)
       .put(FemaleHair.HEAD02_HAIR03, FemaleHairType.HAIR03)
@@ -327,11 +334,12 @@ public class BodyConsts {
       .put(MaleHead.VOLUNTEER01, "volunteer/volunteer_genmalehead01")
       .put(MaleHead.VOLUNTEER02, "volunteer/volunteer_genmalehead02")
       .put(MaleHead.VOLUNTEER03, "volunteer/volunteer_genmalehead03")
+      .put(MaleHead.VOLUNTEER04, "volunteer/volunteer02_genmalehead01")
       .put(MaleHead.HELMET, "scientist/scientist_genmalehead01")
       .put(MaleHead.HUSK, "husk/husk_genmalehead01")
       .put(MaleHead.INGRAM, "aaroningram/aaroningram_genmale_head01")
       .build();
-  
+
   public static final ImmutableMap<LargeMaleHead, String> LARGE_MALE_HEADS_MAP = new ImmutableMap.Builder<LargeMaleHead, String>()
       .put(LargeMaleHead.ALEX, "alexlikarl/alexlikarl_largemalehead01")
       .put(LargeMaleHead.ALEX_VARIANT, "alexlikarl/alexlikarl_largemalehead01_variant")
@@ -379,7 +387,6 @@ public class BodyConsts {
       .put(FemaleHairColor.HAIR04_BLACK, "genfemale/genfemale_hair04_black")
       // .put(FemaleHairColor.HAIR04_BLONDE, "genfemale/genfemale_hair04_blonde")
       .put(FemaleHairColor.HAIR04_BROWN, "genfemale/genfemale_hair04_brown")
-      .put(FemaleHairColor.HAIR04_RED, "genfemale/genfemale_hair04_red")
       .put(FemaleHairColor.HAIR04_RED, "genfemale/genfemale_hair04_red")
       .put(FemaleHairColor.HAIR05_BLACK, "genfemale/genfemale_hair05_black")
       .put(FemaleHairColor.HAIR05_BLONDE, "genfemale/genfemale_hair05_blonde")
@@ -435,16 +442,16 @@ public class BodyConsts {
       .put(MaleHairColor.HAIR05_BROWN, "genmale/genmale_hair05_brown")
       .put(MaleHairColor.HAIR05_RED, "genmale/genmale_hair05_red")
       .put(MaleHairColor.HAIR06, "genmale/genmale_hair06")
-      .put(MaleHairColor.HAIR06, "genmale/genmale_hair06")
       .put(MaleHairColor.HAIR06_BLACK, "genmale/genmale_hair06_black")
       .put(MaleHairColor.HAIR06_BLONDE, "genmale/genmale_hair06_blonde")
       .put(MaleHairColor.MORGAN, "morgankarl/morgankarl_genmalehead01_hair01")
       .put(MaleHairColor.DAHL, "dahl/dahl_genmalehead01_hair01")
       .put(MaleHairColor.IGWE, "drigwe/igwe_genmalehead01_hair01")
       .put(MaleHairColor.CALVINO, "drcalvino/dr_calvino_genmalehead01_hair")
-      .put(MaleHairColor.VOLUNTEER, "volunteer/volunteer_hair01_brown")
+      .put(MaleHairColor.VOLUNTEER, "volunteer/volunteer_hair01")
+      .put(MaleHairColor.VOLUNTEER_BROWN, "volunteer/volunteer_hair01_brown")
       .build();
-  
+
   public static final ImmutableMap<LargeMaleHair, String> LARGE_MALE_HAIRS_MAP = new ImmutableMap.Builder<LargeMaleHair, String>()
       .put(LargeMaleHair.ALEX, "alexlikarl/alexlikarl_largemalehead01_hair01")
       .put(LargeMaleHair.ALEX_VARIANT, "alexlikarl/alexlikarl_largemalehead01_variant_hair01")
@@ -477,7 +484,7 @@ public class BodyConsts {
 
   public static final LargeMaleHead[] SUPPORTED_LARGE_MALE_HEADS = { LargeMaleHead.ALEX, LargeMaleHead.ALEX_VARIANT,
       LargeMaleHead.LUKA };
-  
+
   public static final LargeMaleHair[] SUPPORTED_ALEX_HAIRS = { LargeMaleHair.ALEX, LargeMaleHair.ALEX_VARIANT };
 
   public static final ImmutableSet<HeadType> HEADS_THAT_SHOULD_NOT_HAVE_BARE_HANDS = ImmutableSet.of(FemaleHead.SARA,
@@ -489,20 +496,19 @@ public class BodyConsts {
   // Used to make sure that "complete" heads do not have hair
   // TODO: Add husk heads?
   public static final ImmutableSet<HeadType> HEADS_THAT_SHOULD_NOT_HAVE_HAIR = ImmutableSet.of(
-      FemaleHead.HEAD02_PSYCHOSCOPE, FemaleHead.HELMET, MaleHead.HEAD01_PSYCHOSCOPE, 
-      MaleHead.HEAD01_PSYCHO, MaleHead.HEAD01_PSYCHOSCOPE, MaleHead.HELMET);
+      FemaleHead.HEAD02_PSYCHOSCOPE, FemaleHead.HELMET, MaleHead.HEAD01_PSYCHOSCOPE, MaleHead.HEAD01_PSYCHO,
+      MaleHead.HEAD01_PSYCHOSCOPE, MaleHead.HELMET, MaleHead.HEAD03_PSYCHOSCOPE, MaleHead.VOLUNTEER04);
 
-  
   public static final String FEMALE_HEAD_HELMET = "objects/accessories/breather/breather3p/breather3p_genfemale01";
   public static final String FEMALE_HEAD_HELMET_MTL = "objects/accessories/breather/breather3p/breather1";
-  
+
   public static final String MALE_LABCOAT_LEGS_MODEL = "labcoat/labcoat_genmalelegs01";
   public static final String MALE_LABCOAT_HANDS_MODEL = "labcoat/labcoat_genmalehands01";
   public static final String MALE_LABCOAT_LIMBS_MTL = "scientist/scientist_genmalebody01";
-  
+
   public static final String MORGAN_FEMALE_GLOVELESS_MTL = "morgankarl/morgan_genfemalebody01_cut_scene";
   public static final String MORGAN_MALE_GLOVELESS_MTL = "morgankarl/morgan_genmalebody01_cut_scene";
-  
+
   // TODO: Bellamy's labcoat seems to be broken, female limbs as well
   public static final String MALE_LAB_COAT_LIMBS = "  <Attachment Inheritable=\"0\" Type=\"CA_SKIN\" AName=\"legs\" Binding=\"objects/characters/humans/labcoat/labcoat_genmalelegs01.skin\" Material=\"objects/characters/humans/scientist/scientist_genmalebody01.mtl\" Flags=\"0\"/>\n"
       + "  <Attachment Inheritable=\"0\" Type=\"CA_SKIN\" AName=\"hands\" Binding=\"objects/characters/humans/labcoat/labcoat_genmalehands01.skin\" Material=\"objects/characters/humans/scientist/scientist_genmalebody01.mtl\" Flags=\"0\"/>";

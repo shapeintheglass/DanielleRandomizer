@@ -14,6 +14,8 @@ import utils.BodyConsts.FemaleHair;
 import utils.BodyConsts.FemaleHairColor;
 import utils.BodyConsts.FemaleHairType;
 import utils.BodyConsts.FemaleHead;
+import utils.BodyConsts.HairColorType;
+import utils.BodyConsts.HairType;
 import utils.BodyConsts.HeadType;
 import utils.BodyConsts.LargeMaleHair;
 import utils.BodyConsts.LargeMaleHead;
@@ -49,6 +51,11 @@ public class BodyGenerator {
   private boolean addJetpack;
   private boolean addHelmet;
   private boolean isBald;
+  
+  private BodyType body;
+  private HeadType head;
+  private HairType hair;
+  private HairColorType color;
 
   public BodyGenerator(Human h, Random r) {
     this.human = h;
@@ -80,7 +87,11 @@ public class BodyGenerator {
     // Head
     HeadType headModel = addHeadAttribute(bodyModel, g);
     // Hair
-    addHairAttribute(headModel, g);
+    HairType hairModel = addHairAttribute(headModel, g);
+    
+    body = bodyModel;
+    head = headModel;
+    hair = hairModel;
 
     return attachmentList;
   }
@@ -127,7 +138,7 @@ public class BodyGenerator {
       addAttachment("hands", BodyConsts.MALE_LABCOAT_HANDS_MODEL, BodyConsts.MALE_LABCOAT_LIMBS_MTL);
     }
 
-    if (bodyModel.contains("labcoat_genmalebody01")) {
+    if (bodyType == FemaleBody.PLUMBER) {
       // Hat for plumber body
       // TODO: Make this hair dependent, not body dependent
       addAttachment("hat_skin", BodyConsts.PLUMBER_HAT, BodyConsts.PLUMBER_HAT_MTL);
@@ -215,25 +226,23 @@ public class BodyGenerator {
     }
   }
 
-  private void addHairAttribute(HeadType headModel, Gender g) {
+  private HairType addHairAttribute(HeadType headModel, Gender g) {
     if (BodyConsts.HEADS_THAT_SHOULD_NOT_HAVE_HAIR.contains(headModel)) {
-      return;
+      return null;
     }
 
     switch (g) {
       case FEMALE:
         FemaleHead fh = (FemaleHead) headModel;
-        generateHairForHeadFemale(fh, r);
-        break;
+        return generateHairForHeadFemale(fh, r);
       case MALE:
         MaleHead mh = (MaleHead) headModel;
-        generateHairForHeadMale(mh, r);
-        break;
+        return generateHairForHeadMale(mh, r);
       case LARGE_MALE:
         LargeMaleHead lmh = (LargeMaleHead) headModel;
-        generateHairForHeadLargeMale(lmh, r);
+        return generateHairForHeadLargeMale(lmh, r);
       default:
-        break;
+        return null;
     }
   }
 
@@ -267,7 +276,7 @@ public class BodyGenerator {
     return e;
   }
 
-  private Element generateHairForHeadFemale(FemaleHead headModel, Random r) {
+  private HairType generateHairForHeadFemale(FemaleHead headModel, Random r) {
     ImmutableCollection<FemaleHair> compatibleHairs = BodyConsts.FEMALE_HEAD_HAIR_COMPATIBILITY.get(headModel);
     FemaleHair hairType = Utils.getRandom(compatibleHairs, r);
     String hairModel = BodyConsts.FEMALE_HAIRS_MAP.get(hairType);
@@ -275,10 +284,14 @@ public class BodyGenerator {
     ImmutableCollection<FemaleHairColor> compatibleColors = BodyConsts.FEMALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
     FemaleHairColor hairColor = Utils.getRandom(compatibleColors, r);
     String hairColorMtl = BodyConsts.FEMALE_HAIR_COLORS_MAP.get(hairColor);
-    return addAttachment("hair_skin", hairModel, hairColorMtl);
+    addAttachment("hair_skin", hairModel, hairColorMtl);
+    
+    color = hairColor;
+    
+    return hairType;
   }
   
-  private Element generateHairForHeadMale(MaleHead headModel, Random r) {
+  private HairType generateHairForHeadMale(MaleHead headModel, Random r) {
     if (isBald && BodyConsts.HEADS_THAT_CAN_BE_BALD.contains(headModel)) {
       return null;
     }
@@ -290,28 +303,33 @@ public class BodyGenerator {
     ImmutableCollection<MaleHairColor> compatibleColors = BodyConsts.MALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
     MaleHairColor hairColor = Utils.getRandom(compatibleColors, r);
     String hairColorMtl = BodyConsts.MALE_HAIR_COLORS_MAP.get(hairColor);
-    return addAttachment("hair_skin", hairModel, hairColorMtl);
+    addAttachment("hair_skin", hairModel, hairColorMtl);
+    
+    color = hairColor;
+    
+    return hairType;
   }
 
-  private Element generateHairForHeadLargeMale(LargeMaleHead headModel, Random r) {
+  private HairType generateHairForHeadLargeMale(LargeMaleHead headModel, Random r) {
     if (isBald) {
       return null;
     }
     
-    LargeMaleHair hair;
+    LargeMaleHair largeMaleHair;
     
     switch (headModel) {
       case LUKA:
-        hair = LargeMaleHair.LUKA;
+        largeMaleHair = LargeMaleHair.LUKA;
         break;
       default:
-        hair = Utils.getRandom(BodyConsts.SUPPORTED_ALEX_HAIRS, r);
+        largeMaleHair = Utils.getRandom(BodyConsts.SUPPORTED_ALEX_HAIRS, r);
         break;
     }
     
-    String hairModel = BodyConsts.LARGE_MALE_HAIRS_MAP.get(hair);
+    String hairModel = BodyConsts.LARGE_MALE_HAIRS_MAP.get(largeMaleHair);
     
-    return addAttachment("hair_skin", hairModel, hairModel);
+    addAttachment("hair_skin", hairModel, hairModel);
+    return largeMaleHair;
   }
 
   private Gender getGenderForSkeleton(String skeleton) {
@@ -339,15 +357,24 @@ public class BodyGenerator {
     }
   }
   
+  @Override
+  public String toString() {
+    return String.format("Body: %s, Head: %s, Hair: %s, Color: %s", body, head, hair, color);
+  }
+  
   public static void main(String[] args) {
     Human h = Human.newBuilder()
         .setName("foo")
-        .setSkeleton(BodyConsts.MALE_BODY_TYPE)  
+        .setSkeleton(BodyConsts.LARGE_MALE_BODY_TYPE)  
         .build();
     
     Random r = new Random(0L);
-    BodyGenerator bg = new BodyGenerator(h, r);
-    Element e = bg.getAttachmentList();
-    System.out.println(e);
+    
+    for (int i = 0; i < 100; i++) {
+      BodyGenerator bg = new BodyGenerator(h, r);
+      Element e = bg.getAttachmentList();
+      System.out.println(bg);   
+      System.out.println(e.getText());
+    }
   }
 }
