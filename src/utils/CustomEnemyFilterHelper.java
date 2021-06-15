@@ -21,7 +21,7 @@ public class CustomEnemyFilterHelper {
 
   public Element getEntity(String entityName, String nameInLevel, Random r) {
     // TODO: Store rules list at construction
-    GenericSpawnPresetFilter spawnPreset = settings.getNpcSettings().getEnemySpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getEnemySpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
 
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()
@@ -46,7 +46,7 @@ public class CustomEnemyFilterHelper {
   }
 
   public boolean trigger(String entityName, String nameInLevel) {
-    GenericSpawnPresetFilter spawnPreset = settings.getNpcSettings().getEnemySpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getEnemySpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
 
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()

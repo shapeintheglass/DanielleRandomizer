@@ -15,21 +15,20 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import proto.RandomizerSettings.StoryProgressionSettings;
-import proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation;
+import proto.RandomizerSettings.CheatSettings.SpawnLocation;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Level;
 import utils.ZipHelper;
 
 public class CustomSpawnGenerator {
 
-  public static final ImmutableList<StoryProgressionSettings.SpawnLocation> SUPPORTED_SPAWNS = ImmutableList.of(
+  public static final ImmutableList<SpawnLocation> SUPPORTED_SPAWNS = ImmutableList.of(
       SpawnLocation.LOBBY, SpawnLocation.HARDWARE_LABS, SpawnLocation.SHUTTLE_BAY, SpawnLocation.PSYCHOTRONICS,
       SpawnLocation.GUTS, SpawnLocation.ARBORETUM, SpawnLocation.BRIDGE, SpawnLocation.CREW_QUARTERS,
       SpawnLocation.DEEP_STORAGE, SpawnLocation.CARGO_BAY, SpawnLocation.LIFE_SUPPORT, SpawnLocation.POWER_PLANT,
       SpawnLocation.EXTERIOR, SpawnLocation.ENDGAME, SpawnLocation.GENDER_SELECT);
 
-  public static final ImmutableMap<StoryProgressionSettings.SpawnLocation, Level> SPAWN_LOCATION_TO_LEVEL = new ImmutableMap.Builder<StoryProgressionSettings.SpawnLocation, Level>()
+  public static final ImmutableMap<SpawnLocation, Level> SPAWN_LOCATION_TO_LEVEL = new ImmutableMap.Builder<SpawnLocation, Level>()
       .put(SpawnLocation.LOBBY, Level.LOBBY)
       .put(SpawnLocation.HARDWARE_LABS, Level.HARDWARE_LABS)
       .put(SpawnLocation.SHUTTLE_BAY, Level.SHUTTLE_BAY)

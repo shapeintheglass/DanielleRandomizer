@@ -8,9 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
 import randomizers.gameplay.filters.BaseFilter;
@@ -34,7 +36,7 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private Map<String, String> gameTokenValues;
 
-  //private Map<String, String> swappedLinesMap;
+  // private Map<String, String> swappedLinesMap;
 
   private GameTokenRule gameTokenRule;
 
@@ -42,7 +44,7 @@ public class LevelRandomizer extends BaseRandomizer {
     super(s, zipHelper);
     filterList = new LinkedList<>();
     this.gameTokenValues = new HashMap<>();
-    //this.swappedLinesMap = swappedLinesMap;
+    // this.swappedLinesMap = swappedLinesMap;
     setupGameTokens();
   }
 
@@ -56,10 +58,10 @@ public class LevelRandomizer extends BaseRandomizer {
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (settings.getStoryProgressionSettings().getRandomizeStation()) {
+    if (settings.getGameplaySettings().getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (settings.getCheatSettings().getStartSelfDestruct()) {
+    if (settings.getExpSettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
     if (settings.getGameStartSettings().getSkipJovanCutscene()) {

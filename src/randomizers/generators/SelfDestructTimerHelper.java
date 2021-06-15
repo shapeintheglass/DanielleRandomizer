@@ -22,8 +22,8 @@ public class SelfDestructTimerHelper extends BaseRandomizer {
       Document document = zipHelper.getDocument(ZipHelper.GLOBALACTIONS_SELFDESTRUCTTIMER);
       Element nodes = document.getRootElement().getChild("Nodes");
 
-      float selfDestructTimer = Float.parseFloat(settings.getCheatSettings().getSelfDestructTimer());
-      float selfDestructShuttleTimer = Float.parseFloat(settings.getCheatSettings().getSelfDestructShuttleTimer());
+      float selfDestructTimer = Float.parseFloat(settings.getExpSettings().getSelfDestructTimer());
+      float selfDestructShuttleTimer = Float.parseFloat(settings.getExpSettings().getSelfDestructShuttleTimer());
       float diff = selfDestructTimer - selfDestructShuttleTimer;
       String strDiff = String.format("%.6f", diff);
 
@@ -32,7 +32,7 @@ public class SelfDestructTimerHelper extends BaseRandomizer {
           node.getChild("Inputs").setAttribute("B", strDiff);
         }
         if (node.getAttributeValue("Id").equals("2553")) {
-          node.getChild("Inputs").setAttribute("in", settings.getCheatSettings().getSelfDestructTimer());
+          node.getChild("Inputs").setAttribute("in", settings.getExpSettings().getSelfDestructTimer());
         }
       }
 

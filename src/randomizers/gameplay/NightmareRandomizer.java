@@ -25,10 +25,10 @@ public class NightmareRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
-    if (settings.getNpcSettings().getEnemySpawnSettings().getFiltersCount() == 0) {
+    if (settings.getGameplaySettings().getEnemySpawnSettings().getFiltersCount() == 0) {
       return;
     }
-    
+
     try {
       Document d = zipHelper.getDocument(NIGHTMARE_PATH);
 

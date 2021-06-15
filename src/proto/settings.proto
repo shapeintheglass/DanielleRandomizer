@@ -13,12 +13,11 @@ message Settings {
   string install_dir = 2;
   string release_version = 3;
   CosmeticSettings cosmetic_settings = 4;
-  ItemSettings item_settings = 5;
-  NpcSettings npc_settings = 6;
-  NeuromodSettings neuromod_settings = 7;
-  StoryProgressionSettings story_progression_settings = 8;
-  GameStartSettings game_start_settings = 9;
-  CheatSettings cheat_settings = 10;
+  GameplaySettings gameplay_settings = 5;
+  GameStartSettings game_start_settings = 6;
+  MoreSettings more_settings = 7;
+  CheatSettings cheat_settings = 8;
+  ExperimentalSettings exp_settings = 9;
 }
 
 message CosmeticSettings {
@@ -30,23 +29,37 @@ message CosmeticSettings {
   bool randomize_emotions = 6;
 }
 
-message ItemSettings {
+message GameplaySettings {
   GenericSpawnPresetFilter item_spawn_settings = 1;
-  bool more_guns = 2;
-  bool randomize_fab_plan_costs = 3;
+  GenericSpawnPresetFilter enemy_spawn_settings = 2;
+  bool randomize_station = 3;
+  bool randomize_neuromods = 4;
+  bool randomize_fab_plan_costs = 5;
+  bool randomize_recyclers = 6;
+  bool randomize_dispensers = 7;
+  bool randomize_breakables = 8;
+  bool randomize_hackables = 9;
 }
 
-message NpcSettings {
-  GenericSpawnPresetFilter enemy_spawn_settings = 1;
+message GameStartSettings {
+  bool add_loot_to_apartment = 1;
+  bool start_on_second_day = 2;
+  bool skip_jovan_cutscene = 3;
 }
 
-message NeuromodSettings {
-  bool randomize_neuromods = 1;
+message MoreSettings {
+  bool more_guns = 1;
+  bool more_fab_plans = 2;
+  bool more_neuromods = 3;
+  bool more_chipsets = 4;
+  bool more_enemies = 5;
 }
 
-message StoryProgressionSettings {
-  bool randomize_station = 1;
-  bool use_custom_spawn = 2;
+message CheatSettings {
+  bool open_station = 1;
+  bool unlock_all_scans = 2;
+  bool friendly_npcs = 3;
+  bool use_custom_spawn = 4;
   enum SpawnLocation {
 	NONE = 0;
 	RANDOM = 1;
@@ -66,26 +79,18 @@ message StoryProgressionSettings {
 	ENDGAME = 15;
 	GENDER_SELECT = 16;
   }
-  SpawnLocation custom_spawn_location = 3;
+  SpawnLocation custom_spawn_location = 5;
+  string game_token_overrides = 6;
 }
 
-message GameStartSettings {
-  bool add_loot_to_apartment = 1;
-  bool start_on_second_day = 2;
-  bool skip_jovan_cutscene = 3;
-}
-
-message CheatSettings {
-  bool open_station = 1;
-  bool unlock_all_scans = 2;
-  bool wandering_humans = 3;
-  bool start_self_destruct = 4;
-  string self_destruct_timer = 5;
-  string self_destruct_shuttle_timer = 6;
-  bool zero_gravity_everywhere = 7;
-  bool enable_gravity_in_ext_and_guts = 8;
-  string game_token_overrides = 9;
-  bool all_corpses_are_alive = 10;
+message ExperimentalSettings {
+  bool wandering_humans = 1;
+  bool living_corpses = 2;
+  bool zero_gravity_everywhere = 3;
+  bool enable_gravity_in_ext_and_guts = 4;
+  bool start_self_destruct = 5;
+  string self_destruct_timer = 6;
+  string self_destruct_shuttle_timer = 7;
 }
 
 message GenericSpawnPresetFilter {

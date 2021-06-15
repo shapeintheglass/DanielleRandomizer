@@ -13,7 +13,7 @@ public class EnemyFilter extends BaseFilter {
    * Pre-made combination of rules that specifically filters enemies in certain settings.
    */
   public EnemyFilter(TaggedDatabase database, Settings s) {
-    for (GenericSpawnPresetRule grj : s.getNpcSettings().getEnemySpawnSettings().getFiltersList()) {
+    for (GenericSpawnPresetRule grj : s.getGameplaySettings().getEnemySpawnSettings().getFiltersList()) {
       GenericSpawnPresetRule copy = grj.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_NPC_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_NPC_TAGS)

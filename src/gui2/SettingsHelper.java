@@ -27,29 +27,29 @@ public class SettingsHelper {
       builder.append(String.format("\t* Randomize Earth/Moon/Sun\n"));
     }
 
-    if (!settings.getItemSettings().getItemSpawnSettings().getFiltersList().isEmpty()) {
-      builder.append(String.format("\t* %s\n", settings.getItemSettings().getItemSpawnSettings().getName()));
+    if (!settings.getGameplaySettings().getItemSpawnSettings().getFiltersList().isEmpty()) {
+      builder.append(String.format("\t* %s\n", settings.getGameplaySettings().getItemSpawnSettings().getName()));
     }
-    if (settings.getItemSettings().getMoreGuns()) {
+    if (settings.getMoreSettings().getMoreGuns()) {
       builder.append(String.format("\t* More guns\n"));
     }
-    if (settings.getItemSettings().getRandomizeFabPlanCosts()) {
+    if (settings.getGameplaySettings().getRandomizeFabPlanCosts()) {
       builder.append(String.format("\t* Randomize fab plan costs\n"));
     }
 
-    if (!settings.getNpcSettings().getEnemySpawnSettings().getFiltersList().isEmpty()) {
-      builder.append(String.format("\t* %s\n", settings.getNpcSettings().getEnemySpawnSettings().getName()));
+    if (!settings.getGameplaySettings().getEnemySpawnSettings().getFiltersList().isEmpty()) {
+      builder.append(String.format("\t* %s\n", settings.getGameplaySettings().getEnemySpawnSettings().getName()));
     }
 
-    if (settings.getNeuromodSettings().getRandomizeNeuromods()) {
+    if (settings.getGameplaySettings().getRandomizeNeuromods()) {
       builder.append(String.format("\t* Randomize neuromods\n"));
     }
 
-    if (settings.getStoryProgressionSettings().getRandomizeStation()) {
+    if (settings.getGameplaySettings().getRandomizeStation()) {
       builder.append(String.format("\t* Randomize station\n"));
     }
-    if (settings.getStoryProgressionSettings().getUseCustomSpawn()) {
-      builder.append(String.format("\t* Start location: %s\n", settings.getStoryProgressionSettings()
+    if (settings.getCheatSettings().getUseCustomSpawn()) {
+      builder.append(String.format("\t* Start location: %s\n", settings.getCheatSettings()
           .getCustomSpawnLocation()
           .name()));
     }
@@ -70,20 +70,20 @@ public class SettingsHelper {
     if (settings.getCheatSettings().getUnlockAllScans()) {
       builder.append(String.format("\t* Unlock all typhon scans\n"));
     }
-    if (settings.getCheatSettings().getWanderingHumans()) {
+    if (settings.getExpSettings().getWanderingHumans()) {
       builder.append(String.format("\t* Make humans wander\n"));
     }
-    if (settings.getCheatSettings().getZeroGravityEverywhere()) {
+    if (settings.getExpSettings().getZeroGravityEverywhere()) {
       builder.append(String.format("\t* Microgravity everywhere\n"));
     }
-    if (settings.getCheatSettings().getEnableGravityInExtAndGuts()) {
+    if (settings.getExpSettings().getEnableGravityInExtAndGuts()) {
       builder.append(String.format("\t* Enable gravity in exterior + GUTS\n"));
     }
-    if (settings.getCheatSettings().getStartSelfDestruct()) {
+    if (settings.getExpSettings().getStartSelfDestruct()) {
       builder.append(String.format("\t* Start self-destruct sequence\n"));
-      builder.append(String.format("\t\t* Self-destruct timer: %s\n", settings.getCheatSettings()
+      builder.append(String.format("\t\t* Self-destruct timer: %s\n", settings.getExpSettings()
           .getSelfDestructTimer()));
-      builder.append(String.format("\t\t* Shuttle timer: %s\n", settings.getCheatSettings()
+      builder.append(String.format("\t\t* Shuttle timer: %s\n", settings.getExpSettings()
           .getSelfDestructShuttleTimer()));
     }
 

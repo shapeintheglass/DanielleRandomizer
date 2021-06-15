@@ -19,13 +19,12 @@ import gui2.RandomizerService;
 import proto.RandomizerSettings.AllPresets;
 import proto.RandomizerSettings.CheatSettings;
 import proto.RandomizerSettings.CosmeticSettings;
+import proto.RandomizerSettings.ExperimentalSettings;
 import proto.RandomizerSettings.GameStartSettings;
+import proto.RandomizerSettings.GameplaySettings;
 import proto.RandomizerSettings.GenericSpawnPresetFilter;
-import proto.RandomizerSettings.ItemSettings;
-import proto.RandomizerSettings.NeuromodSettings;
-import proto.RandomizerSettings.NpcSettings;
+import proto.RandomizerSettings.MoreSettings;
 import proto.RandomizerSettings.Settings;
-import proto.RandomizerSettings.StoryProgressionSettings;
 import utils.LevelConsts;
 
 public class ConsistencyValidator {
@@ -66,32 +65,34 @@ public class ConsistencyValidator {
     List<GenericSpawnPresetFilter> itemSettingsList = allPresets.getItemSpawnSettingsList();
     GenericSpawnPresetFilter itemFilter = itemSettingsList.get(r.nextInt(itemSettingsList.size()));
 
-    ItemSettings itemSettings = ItemSettings.newBuilder()
-        .setMoreGuns(r.nextBoolean())
-        .setRandomizeFabPlanCosts(r.nextBoolean())
+    
+    GameplaySettings gameplaySettings = GameplaySettings.newBuilder()
         .setItemSpawnSettings(itemFilter)
-        .build();
-    NpcSettings npcSettings = NpcSettings.newBuilder()
         .setEnemySpawnSettings(enemyFilter)
-        .build();
-    NeuromodSettings neuromodSettings = NeuromodSettings.newBuilder().setRandomizeNeuromods(r.nextBoolean()).build();
-    StoryProgressionSettings storySettings = StoryProgressionSettings.newBuilder()
+        .setRandomizeFabPlanCosts(r.nextBoolean())
+        .setRandomizeNeuromods(r.nextBoolean())
         .setRandomizeStation(r.nextBoolean())
         .build();
+    MoreSettings moreSettings = MoreSettings.newBuilder()
+        .setMoreGuns(r.nextBoolean())
+        .build();
+    ExperimentalSettings expSettings = ExperimentalSettings.newBuilder()
+        .setEnableGravityInExtAndGuts(r.nextBoolean())
+        .setStartSelfDestruct(r.nextBoolean())
+        .setWanderingHumans(r.nextBoolean())
+        .setZeroGravityEverywhere(r.nextBoolean())
+        .setSelfDestructTimer(Float.toString(r.nextFloat()))
+        .setSelfDestructShuttleTimer(Float.toString(r.nextFloat()))
+        .build();
+
     GameStartSettings startSettings = GameStartSettings.newBuilder()
         .setAddLootToApartment(r.nextBoolean())
         .setSkipJovanCutscene(r.nextBoolean())
         .setStartOnSecondDay(r.nextBoolean())
         .build();
     CheatSettings cheatSettings = CheatSettings.newBuilder()
-        .setEnableGravityInExtAndGuts(r.nextBoolean())
         .setOpenStation(r.nextBoolean())
-        .setStartSelfDestruct(r.nextBoolean())
         .setUnlockAllScans(r.nextBoolean())
-        .setWanderingHumans(r.nextBoolean())
-        .setZeroGravityEverywhere(r.nextBoolean())
-        .setSelfDestructTimer(Float.toString(r.nextFloat()))
-        .setSelfDestructShuttleTimer(Float.toString(r.nextFloat()))
         .build();
 
     return Settings.newBuilder()
@@ -99,10 +100,9 @@ public class ConsistencyValidator {
         .setInstallDir(installDir)
         .setReleaseVersion("Test")
         .setCosmeticSettings(cosmeticSettings)
-        .setItemSettings(itemSettings)
-        .setNpcSettings(npcSettings)
-        .setNeuromodSettings(neuromodSettings)
-        .setStoryProgressionSettings(storySettings)
+        .setGameplaySettings(gameplaySettings)
+        .setMoreSettings(moreSettings)
+        .setExpSettings(expSettings)
         .setGameStartSettings(startSettings)
         .setCheatSettings(cheatSettings)
         .build();

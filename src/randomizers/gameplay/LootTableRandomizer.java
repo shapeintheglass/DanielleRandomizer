@@ -5,9 +5,11 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
@@ -34,7 +36,7 @@ public class LootTableRandomizer extends BaseRandomizer {
   @Override
   public void randomize() {
     // If there are no item spawn settings, copy the loot table file over directly.
-    if (settings.getItemSettings()
+    if (settings.getGameplaySettings()
         .getItemSpawnSettings()
         .getFiltersCount() == 0) {
       try {

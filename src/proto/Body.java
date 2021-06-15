@@ -846,6 +846,24 @@ public final class Body {
      */
     com.google.protobuf.ByteString
         getChrparamsBytes();
+
+    /**
+     * <code>bool is_husk = 4;</code>
+     * @return The isHusk.
+     */
+    boolean getIsHusk();
+
+    /**
+     * <code>string husk_head_name = 5;</code>
+     * @return The huskHeadName.
+     */
+    java.lang.String getHuskHeadName();
+    /**
+     * <code>string husk_head_name = 5;</code>
+     * @return The bytes for huskHeadName.
+     */
+    com.google.protobuf.ByteString
+        getHuskHeadNameBytes();
   }
   /**
    * Protobuf type {@code Human}
@@ -863,6 +881,7 @@ public final class Body {
       name_ = "";
       skeleton_ = "";
       chrparams_ = "";
+      huskHeadName_ = "";
     }
 
     @java.lang.Override
@@ -911,6 +930,17 @@ public final class Body {
               java.lang.String s = input.readStringRequireUtf8();
 
               chrparams_ = s;
+              break;
+            }
+            case 32: {
+
+              isHusk_ = input.readBool();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              huskHeadName_ = s;
               break;
             }
             default: {
@@ -1059,6 +1089,55 @@ public final class Body {
       }
     }
 
+    public static final int IS_HUSK_FIELD_NUMBER = 4;
+    private boolean isHusk_;
+    /**
+     * <code>bool is_husk = 4;</code>
+     * @return The isHusk.
+     */
+    @java.lang.Override
+    public boolean getIsHusk() {
+      return isHusk_;
+    }
+
+    public static final int HUSK_HEAD_NAME_FIELD_NUMBER = 5;
+    private volatile java.lang.Object huskHeadName_;
+    /**
+     * <code>string husk_head_name = 5;</code>
+     * @return The huskHeadName.
+     */
+    @java.lang.Override
+    public java.lang.String getHuskHeadName() {
+      java.lang.Object ref = huskHeadName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        huskHeadName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string husk_head_name = 5;</code>
+     * @return The bytes for huskHeadName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getHuskHeadNameBytes() {
+      java.lang.Object ref = huskHeadName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        huskHeadName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1082,6 +1161,12 @@ public final class Body {
       if (!getChrparamsBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, chrparams_);
       }
+      if (isHusk_ != false) {
+        output.writeBool(4, isHusk_);
+      }
+      if (!getHuskHeadNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, huskHeadName_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1099,6 +1184,13 @@ public final class Body {
       }
       if (!getChrparamsBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, chrparams_);
+      }
+      if (isHusk_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, isHusk_);
+      }
+      if (!getHuskHeadNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, huskHeadName_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1121,6 +1213,10 @@ public final class Body {
           .equals(other.getSkeleton())) return false;
       if (!getChrparams()
           .equals(other.getChrparams())) return false;
+      if (getIsHusk()
+          != other.getIsHusk()) return false;
+      if (!getHuskHeadName()
+          .equals(other.getHuskHeadName())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1138,6 +1234,11 @@ public final class Body {
       hash = (53 * hash) + getSkeleton().hashCode();
       hash = (37 * hash) + CHRPARAMS_FIELD_NUMBER;
       hash = (53 * hash) + getChrparams().hashCode();
+      hash = (37 * hash) + IS_HUSK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsHusk());
+      hash = (37 * hash) + HUSK_HEAD_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getHuskHeadName().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1277,6 +1378,10 @@ public final class Body {
 
         chrparams_ = "";
 
+        isHusk_ = false;
+
+        huskHeadName_ = "";
+
         return this;
       }
 
@@ -1306,6 +1411,8 @@ public final class Body {
         result.name_ = name_;
         result.skeleton_ = skeleton_;
         result.chrparams_ = chrparams_;
+        result.isHusk_ = isHusk_;
+        result.huskHeadName_ = huskHeadName_;
         onBuilt();
         return result;
       }
@@ -1364,6 +1471,13 @@ public final class Body {
         }
         if (!other.getChrparams().isEmpty()) {
           chrparams_ = other.chrparams_;
+          onChanged();
+        }
+        if (other.getIsHusk() != false) {
+          setIsHusk(other.getIsHusk());
+        }
+        if (!other.getHuskHeadName().isEmpty()) {
+          huskHeadName_ = other.huskHeadName_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -1622,6 +1736,113 @@ public final class Body {
         onChanged();
         return this;
       }
+
+      private boolean isHusk_ ;
+      /**
+       * <code>bool is_husk = 4;</code>
+       * @return The isHusk.
+       */
+      @java.lang.Override
+      public boolean getIsHusk() {
+        return isHusk_;
+      }
+      /**
+       * <code>bool is_husk = 4;</code>
+       * @param value The isHusk to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsHusk(boolean value) {
+        
+        isHusk_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool is_husk = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsHusk() {
+        
+        isHusk_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object huskHeadName_ = "";
+      /**
+       * <code>string husk_head_name = 5;</code>
+       * @return The huskHeadName.
+       */
+      public java.lang.String getHuskHeadName() {
+        java.lang.Object ref = huskHeadName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          huskHeadName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string husk_head_name = 5;</code>
+       * @return The bytes for huskHeadName.
+       */
+      public com.google.protobuf.ByteString
+          getHuskHeadNameBytes() {
+        java.lang.Object ref = huskHeadName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          huskHeadName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string husk_head_name = 5;</code>
+       * @param value The huskHeadName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setHuskHeadName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        huskHeadName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string husk_head_name = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearHuskHeadName() {
+        
+        huskHeadName_ = getDefaultInstance().getHuskHeadName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string husk_head_name = 5;</code>
+       * @param value The bytes for huskHeadName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setHuskHeadNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        huskHeadName_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1695,9 +1916,10 @@ public final class Body {
   static {
     java.lang.String[] descriptorData = {
       "\n\nbody.proto\"#\n\013HumansFinal\022\024\n\004body\030\001 \003(" +
-      "\0132\006.Human\":\n\005Human\022\014\n\004name\030\001 \001(\t\022\020\n\010skel" +
-      "eton\030\002 \001(\t\022\021\n\tchrparams\030\003 \001(\tB\r\n\005protoB\004" +
-      "Bodyb\006proto3"
+      "\0132\006.Human\"c\n\005Human\022\014\n\004name\030\001 \001(\t\022\020\n\010skel" +
+      "eton\030\002 \001(\t\022\021\n\tchrparams\030\003 \001(\t\022\017\n\007is_husk" +
+      "\030\004 \001(\010\022\026\n\016husk_head_name\030\005 \001(\tB\r\n\005protoB" +
+      "\004Bodyb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1714,7 +1936,7 @@ public final class Body {
     internal_static_Human_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Human_descriptor,
-        new java.lang.String[] { "Name", "Skeleton", "Chrparams", });
+        new java.lang.String[] { "Name", "Skeleton", "Chrparams", "IsHusk", "HuskHeadName", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -17,18 +17,18 @@ public class ItemSpawnFilter extends BaseFilter {
    * Pre-made combination of rules that specifically filters items in certain settings.
    */
   public ItemSpawnFilter(TaggedDatabase database, Settings s) {
-    if (s.getItemSettings().getItemSpawnSettings().getFiltersList().size() == 0) {
+    if (s.getGameplaySettings().getItemSpawnSettings().getFiltersList().size() == 0) {
       return;
     }
 
     List<String> doNotOutput = Lists.newArrayList();
     doNotOutput.addAll(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-    if (!s.getItemSettings().getMoreGuns()) {
+    if (!s.getMoreSettings().getMoreGuns()) {
       Logger.getGlobal().info("Removing randomized weapons");
       doNotOutput.add("Randomizer");
     }
 
-    for (GenericSpawnPresetRule grj : s.getItemSettings().getItemSpawnSettings().getFiltersList()) {
+    for (GenericSpawnPresetRule grj : s.getGameplaySettings().getItemSpawnSettings().getFiltersList()) {
       GenericSpawnPresetRule copy = grj.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
           .addAllDoNotOutputTags(doNotOutput)

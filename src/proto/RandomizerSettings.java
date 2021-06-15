@@ -1235,94 +1235,79 @@ public final class RandomizerSettings {
     proto.RandomizerSettings.CosmeticSettingsOrBuilder getCosmeticSettingsOrBuilder();
 
     /**
-     * <code>.ItemSettings item_settings = 5;</code>
-     * @return Whether the itemSettings field is set.
+     * <code>.GameplaySettings gameplay_settings = 5;</code>
+     * @return Whether the gameplaySettings field is set.
      */
-    boolean hasItemSettings();
+    boolean hasGameplaySettings();
     /**
-     * <code>.ItemSettings item_settings = 5;</code>
-     * @return The itemSettings.
+     * <code>.GameplaySettings gameplay_settings = 5;</code>
+     * @return The gameplaySettings.
      */
-    proto.RandomizerSettings.ItemSettings getItemSettings();
+    proto.RandomizerSettings.GameplaySettings getGameplaySettings();
     /**
-     * <code>.ItemSettings item_settings = 5;</code>
+     * <code>.GameplaySettings gameplay_settings = 5;</code>
      */
-    proto.RandomizerSettings.ItemSettingsOrBuilder getItemSettingsOrBuilder();
+    proto.RandomizerSettings.GameplaySettingsOrBuilder getGameplaySettingsOrBuilder();
 
     /**
-     * <code>.NpcSettings npc_settings = 6;</code>
-     * @return Whether the npcSettings field is set.
-     */
-    boolean hasNpcSettings();
-    /**
-     * <code>.NpcSettings npc_settings = 6;</code>
-     * @return The npcSettings.
-     */
-    proto.RandomizerSettings.NpcSettings getNpcSettings();
-    /**
-     * <code>.NpcSettings npc_settings = 6;</code>
-     */
-    proto.RandomizerSettings.NpcSettingsOrBuilder getNpcSettingsOrBuilder();
-
-    /**
-     * <code>.NeuromodSettings neuromod_settings = 7;</code>
-     * @return Whether the neuromodSettings field is set.
-     */
-    boolean hasNeuromodSettings();
-    /**
-     * <code>.NeuromodSettings neuromod_settings = 7;</code>
-     * @return The neuromodSettings.
-     */
-    proto.RandomizerSettings.NeuromodSettings getNeuromodSettings();
-    /**
-     * <code>.NeuromodSettings neuromod_settings = 7;</code>
-     */
-    proto.RandomizerSettings.NeuromodSettingsOrBuilder getNeuromodSettingsOrBuilder();
-
-    /**
-     * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-     * @return Whether the storyProgressionSettings field is set.
-     */
-    boolean hasStoryProgressionSettings();
-    /**
-     * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-     * @return The storyProgressionSettings.
-     */
-    proto.RandomizerSettings.StoryProgressionSettings getStoryProgressionSettings();
-    /**
-     * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-     */
-    proto.RandomizerSettings.StoryProgressionSettingsOrBuilder getStoryProgressionSettingsOrBuilder();
-
-    /**
-     * <code>.GameStartSettings game_start_settings = 9;</code>
+     * <code>.GameStartSettings game_start_settings = 6;</code>
      * @return Whether the gameStartSettings field is set.
      */
     boolean hasGameStartSettings();
     /**
-     * <code>.GameStartSettings game_start_settings = 9;</code>
+     * <code>.GameStartSettings game_start_settings = 6;</code>
      * @return The gameStartSettings.
      */
     proto.RandomizerSettings.GameStartSettings getGameStartSettings();
     /**
-     * <code>.GameStartSettings game_start_settings = 9;</code>
+     * <code>.GameStartSettings game_start_settings = 6;</code>
      */
     proto.RandomizerSettings.GameStartSettingsOrBuilder getGameStartSettingsOrBuilder();
 
     /**
-     * <code>.CheatSettings cheat_settings = 10;</code>
+     * <code>.MoreSettings more_settings = 7;</code>
+     * @return Whether the moreSettings field is set.
+     */
+    boolean hasMoreSettings();
+    /**
+     * <code>.MoreSettings more_settings = 7;</code>
+     * @return The moreSettings.
+     */
+    proto.RandomizerSettings.MoreSettings getMoreSettings();
+    /**
+     * <code>.MoreSettings more_settings = 7;</code>
+     */
+    proto.RandomizerSettings.MoreSettingsOrBuilder getMoreSettingsOrBuilder();
+
+    /**
+     * <code>.CheatSettings cheat_settings = 8;</code>
      * @return Whether the cheatSettings field is set.
      */
     boolean hasCheatSettings();
     /**
-     * <code>.CheatSettings cheat_settings = 10;</code>
+     * <code>.CheatSettings cheat_settings = 8;</code>
      * @return The cheatSettings.
      */
     proto.RandomizerSettings.CheatSettings getCheatSettings();
     /**
-     * <code>.CheatSettings cheat_settings = 10;</code>
+     * <code>.CheatSettings cheat_settings = 8;</code>
      */
     proto.RandomizerSettings.CheatSettingsOrBuilder getCheatSettingsOrBuilder();
+
+    /**
+     * <code>.ExperimentalSettings exp_settings = 9;</code>
+     * @return Whether the expSettings field is set.
+     */
+    boolean hasExpSettings();
+    /**
+     * <code>.ExperimentalSettings exp_settings = 9;</code>
+     * @return The expSettings.
+     */
+    proto.RandomizerSettings.ExperimentalSettings getExpSettings();
+    /**
+     * <code>.ExperimentalSettings exp_settings = 9;</code>
+     */
+    proto.RandomizerSettings.ExperimentalSettingsOrBuilder getExpSettingsOrBuilder();
   }
   /**
    * Protobuf type {@code Settings}
@@ -1404,58 +1389,19 @@ public final class RandomizerSettings {
               break;
             }
             case 42: {
-              proto.RandomizerSettings.ItemSettings.Builder subBuilder = null;
-              if (itemSettings_ != null) {
-                subBuilder = itemSettings_.toBuilder();
+              proto.RandomizerSettings.GameplaySettings.Builder subBuilder = null;
+              if (gameplaySettings_ != null) {
+                subBuilder = gameplaySettings_.toBuilder();
               }
-              itemSettings_ = input.readMessage(proto.RandomizerSettings.ItemSettings.parser(), extensionRegistry);
+              gameplaySettings_ = input.readMessage(proto.RandomizerSettings.GameplaySettings.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(itemSettings_);
-                itemSettings_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(gameplaySettings_);
+                gameplaySettings_ = subBuilder.buildPartial();
               }
 
               break;
             }
             case 50: {
-              proto.RandomizerSettings.NpcSettings.Builder subBuilder = null;
-              if (npcSettings_ != null) {
-                subBuilder = npcSettings_.toBuilder();
-              }
-              npcSettings_ = input.readMessage(proto.RandomizerSettings.NpcSettings.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(npcSettings_);
-                npcSettings_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 58: {
-              proto.RandomizerSettings.NeuromodSettings.Builder subBuilder = null;
-              if (neuromodSettings_ != null) {
-                subBuilder = neuromodSettings_.toBuilder();
-              }
-              neuromodSettings_ = input.readMessage(proto.RandomizerSettings.NeuromodSettings.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(neuromodSettings_);
-                neuromodSettings_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 66: {
-              proto.RandomizerSettings.StoryProgressionSettings.Builder subBuilder = null;
-              if (storyProgressionSettings_ != null) {
-                subBuilder = storyProgressionSettings_.toBuilder();
-              }
-              storyProgressionSettings_ = input.readMessage(proto.RandomizerSettings.StoryProgressionSettings.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(storyProgressionSettings_);
-                storyProgressionSettings_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 74: {
               proto.RandomizerSettings.GameStartSettings.Builder subBuilder = null;
               if (gameStartSettings_ != null) {
                 subBuilder = gameStartSettings_.toBuilder();
@@ -1468,7 +1414,20 @@ public final class RandomizerSettings {
 
               break;
             }
-            case 82: {
+            case 58: {
+              proto.RandomizerSettings.MoreSettings.Builder subBuilder = null;
+              if (moreSettings_ != null) {
+                subBuilder = moreSettings_.toBuilder();
+              }
+              moreSettings_ = input.readMessage(proto.RandomizerSettings.MoreSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(moreSettings_);
+                moreSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 66: {
               proto.RandomizerSettings.CheatSettings.Builder subBuilder = null;
               if (cheatSettings_ != null) {
                 subBuilder = cheatSettings_.toBuilder();
@@ -1477,6 +1436,19 @@ public final class RandomizerSettings {
               if (subBuilder != null) {
                 subBuilder.mergeFrom(cheatSettings_);
                 cheatSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 74: {
+              proto.RandomizerSettings.ExperimentalSettings.Builder subBuilder = null;
+              if (expSettings_ != null) {
+                subBuilder = expSettings_.toBuilder();
+              }
+              expSettings_ = input.readMessage(proto.RandomizerSettings.ExperimentalSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(expSettings_);
+                expSettings_ = subBuilder.buildPartial();
               }
 
               break;
@@ -1653,114 +1625,36 @@ public final class RandomizerSettings {
       return getCosmeticSettings();
     }
 
-    public static final int ITEM_SETTINGS_FIELD_NUMBER = 5;
-    private proto.RandomizerSettings.ItemSettings itemSettings_;
+    public static final int GAMEPLAY_SETTINGS_FIELD_NUMBER = 5;
+    private proto.RandomizerSettings.GameplaySettings gameplaySettings_;
     /**
-     * <code>.ItemSettings item_settings = 5;</code>
-     * @return Whether the itemSettings field is set.
+     * <code>.GameplaySettings gameplay_settings = 5;</code>
+     * @return Whether the gameplaySettings field is set.
      */
     @java.lang.Override
-    public boolean hasItemSettings() {
-      return itemSettings_ != null;
+    public boolean hasGameplaySettings() {
+      return gameplaySettings_ != null;
     }
     /**
-     * <code>.ItemSettings item_settings = 5;</code>
-     * @return The itemSettings.
+     * <code>.GameplaySettings gameplay_settings = 5;</code>
+     * @return The gameplaySettings.
      */
     @java.lang.Override
-    public proto.RandomizerSettings.ItemSettings getItemSettings() {
-      return itemSettings_ == null ? proto.RandomizerSettings.ItemSettings.getDefaultInstance() : itemSettings_;
+    public proto.RandomizerSettings.GameplaySettings getGameplaySettings() {
+      return gameplaySettings_ == null ? proto.RandomizerSettings.GameplaySettings.getDefaultInstance() : gameplaySettings_;
     }
     /**
-     * <code>.ItemSettings item_settings = 5;</code>
+     * <code>.GameplaySettings gameplay_settings = 5;</code>
      */
     @java.lang.Override
-    public proto.RandomizerSettings.ItemSettingsOrBuilder getItemSettingsOrBuilder() {
-      return getItemSettings();
-    }
-
-    public static final int NPC_SETTINGS_FIELD_NUMBER = 6;
-    private proto.RandomizerSettings.NpcSettings npcSettings_;
-    /**
-     * <code>.NpcSettings npc_settings = 6;</code>
-     * @return Whether the npcSettings field is set.
-     */
-    @java.lang.Override
-    public boolean hasNpcSettings() {
-      return npcSettings_ != null;
-    }
-    /**
-     * <code>.NpcSettings npc_settings = 6;</code>
-     * @return The npcSettings.
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.NpcSettings getNpcSettings() {
-      return npcSettings_ == null ? proto.RandomizerSettings.NpcSettings.getDefaultInstance() : npcSettings_;
-    }
-    /**
-     * <code>.NpcSettings npc_settings = 6;</code>
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.NpcSettingsOrBuilder getNpcSettingsOrBuilder() {
-      return getNpcSettings();
+    public proto.RandomizerSettings.GameplaySettingsOrBuilder getGameplaySettingsOrBuilder() {
+      return getGameplaySettings();
     }
 
-    public static final int NEUROMOD_SETTINGS_FIELD_NUMBER = 7;
-    private proto.RandomizerSettings.NeuromodSettings neuromodSettings_;
-    /**
-     * <code>.NeuromodSettings neuromod_settings = 7;</code>
-     * @return Whether the neuromodSettings field is set.
-     */
-    @java.lang.Override
-    public boolean hasNeuromodSettings() {
-      return neuromodSettings_ != null;
-    }
-    /**
-     * <code>.NeuromodSettings neuromod_settings = 7;</code>
-     * @return The neuromodSettings.
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.NeuromodSettings getNeuromodSettings() {
-      return neuromodSettings_ == null ? proto.RandomizerSettings.NeuromodSettings.getDefaultInstance() : neuromodSettings_;
-    }
-    /**
-     * <code>.NeuromodSettings neuromod_settings = 7;</code>
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.NeuromodSettingsOrBuilder getNeuromodSettingsOrBuilder() {
-      return getNeuromodSettings();
-    }
-
-    public static final int STORY_PROGRESSION_SETTINGS_FIELD_NUMBER = 8;
-    private proto.RandomizerSettings.StoryProgressionSettings storyProgressionSettings_;
-    /**
-     * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-     * @return Whether the storyProgressionSettings field is set.
-     */
-    @java.lang.Override
-    public boolean hasStoryProgressionSettings() {
-      return storyProgressionSettings_ != null;
-    }
-    /**
-     * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-     * @return The storyProgressionSettings.
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.StoryProgressionSettings getStoryProgressionSettings() {
-      return storyProgressionSettings_ == null ? proto.RandomizerSettings.StoryProgressionSettings.getDefaultInstance() : storyProgressionSettings_;
-    }
-    /**
-     * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.StoryProgressionSettingsOrBuilder getStoryProgressionSettingsOrBuilder() {
-      return getStoryProgressionSettings();
-    }
-
-    public static final int GAME_START_SETTINGS_FIELD_NUMBER = 9;
+    public static final int GAME_START_SETTINGS_FIELD_NUMBER = 6;
     private proto.RandomizerSettings.GameStartSettings gameStartSettings_;
     /**
-     * <code>.GameStartSettings game_start_settings = 9;</code>
+     * <code>.GameStartSettings game_start_settings = 6;</code>
      * @return Whether the gameStartSettings field is set.
      */
     @java.lang.Override
@@ -1768,7 +1662,7 @@ public final class RandomizerSettings {
       return gameStartSettings_ != null;
     }
     /**
-     * <code>.GameStartSettings game_start_settings = 9;</code>
+     * <code>.GameStartSettings game_start_settings = 6;</code>
      * @return The gameStartSettings.
      */
     @java.lang.Override
@@ -1776,17 +1670,43 @@ public final class RandomizerSettings {
       return gameStartSettings_ == null ? proto.RandomizerSettings.GameStartSettings.getDefaultInstance() : gameStartSettings_;
     }
     /**
-     * <code>.GameStartSettings game_start_settings = 9;</code>
+     * <code>.GameStartSettings game_start_settings = 6;</code>
      */
     @java.lang.Override
     public proto.RandomizerSettings.GameStartSettingsOrBuilder getGameStartSettingsOrBuilder() {
       return getGameStartSettings();
     }
 
-    public static final int CHEAT_SETTINGS_FIELD_NUMBER = 10;
+    public static final int MORE_SETTINGS_FIELD_NUMBER = 7;
+    private proto.RandomizerSettings.MoreSettings moreSettings_;
+    /**
+     * <code>.MoreSettings more_settings = 7;</code>
+     * @return Whether the moreSettings field is set.
+     */
+    @java.lang.Override
+    public boolean hasMoreSettings() {
+      return moreSettings_ != null;
+    }
+    /**
+     * <code>.MoreSettings more_settings = 7;</code>
+     * @return The moreSettings.
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.MoreSettings getMoreSettings() {
+      return moreSettings_ == null ? proto.RandomizerSettings.MoreSettings.getDefaultInstance() : moreSettings_;
+    }
+    /**
+     * <code>.MoreSettings more_settings = 7;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.MoreSettingsOrBuilder getMoreSettingsOrBuilder() {
+      return getMoreSettings();
+    }
+
+    public static final int CHEAT_SETTINGS_FIELD_NUMBER = 8;
     private proto.RandomizerSettings.CheatSettings cheatSettings_;
     /**
-     * <code>.CheatSettings cheat_settings = 10;</code>
+     * <code>.CheatSettings cheat_settings = 8;</code>
      * @return Whether the cheatSettings field is set.
      */
     @java.lang.Override
@@ -1794,7 +1714,7 @@ public final class RandomizerSettings {
       return cheatSettings_ != null;
     }
     /**
-     * <code>.CheatSettings cheat_settings = 10;</code>
+     * <code>.CheatSettings cheat_settings = 8;</code>
      * @return The cheatSettings.
      */
     @java.lang.Override
@@ -1802,11 +1722,37 @@ public final class RandomizerSettings {
       return cheatSettings_ == null ? proto.RandomizerSettings.CheatSettings.getDefaultInstance() : cheatSettings_;
     }
     /**
-     * <code>.CheatSettings cheat_settings = 10;</code>
+     * <code>.CheatSettings cheat_settings = 8;</code>
      */
     @java.lang.Override
     public proto.RandomizerSettings.CheatSettingsOrBuilder getCheatSettingsOrBuilder() {
       return getCheatSettings();
+    }
+
+    public static final int EXP_SETTINGS_FIELD_NUMBER = 9;
+    private proto.RandomizerSettings.ExperimentalSettings expSettings_;
+    /**
+     * <code>.ExperimentalSettings exp_settings = 9;</code>
+     * @return Whether the expSettings field is set.
+     */
+    @java.lang.Override
+    public boolean hasExpSettings() {
+      return expSettings_ != null;
+    }
+    /**
+     * <code>.ExperimentalSettings exp_settings = 9;</code>
+     * @return The expSettings.
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ExperimentalSettings getExpSettings() {
+      return expSettings_ == null ? proto.RandomizerSettings.ExperimentalSettings.getDefaultInstance() : expSettings_;
+    }
+    /**
+     * <code>.ExperimentalSettings exp_settings = 9;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ExperimentalSettingsOrBuilder getExpSettingsOrBuilder() {
+      return getExpSettings();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1835,23 +1781,20 @@ public final class RandomizerSettings {
       if (cosmeticSettings_ != null) {
         output.writeMessage(4, getCosmeticSettings());
       }
-      if (itemSettings_ != null) {
-        output.writeMessage(5, getItemSettings());
-      }
-      if (npcSettings_ != null) {
-        output.writeMessage(6, getNpcSettings());
-      }
-      if (neuromodSettings_ != null) {
-        output.writeMessage(7, getNeuromodSettings());
-      }
-      if (storyProgressionSettings_ != null) {
-        output.writeMessage(8, getStoryProgressionSettings());
+      if (gameplaySettings_ != null) {
+        output.writeMessage(5, getGameplaySettings());
       }
       if (gameStartSettings_ != null) {
-        output.writeMessage(9, getGameStartSettings());
+        output.writeMessage(6, getGameStartSettings());
+      }
+      if (moreSettings_ != null) {
+        output.writeMessage(7, getMoreSettings());
       }
       if (cheatSettings_ != null) {
-        output.writeMessage(10, getCheatSettings());
+        output.writeMessage(8, getCheatSettings());
+      }
+      if (expSettings_ != null) {
+        output.writeMessage(9, getExpSettings());
       }
       unknownFields.writeTo(output);
     }
@@ -1875,29 +1818,25 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getCosmeticSettings());
       }
-      if (itemSettings_ != null) {
+      if (gameplaySettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getItemSettings());
-      }
-      if (npcSettings_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getNpcSettings());
-      }
-      if (neuromodSettings_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getNeuromodSettings());
-      }
-      if (storyProgressionSettings_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, getStoryProgressionSettings());
+          .computeMessageSize(5, getGameplaySettings());
       }
       if (gameStartSettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, getGameStartSettings());
+          .computeMessageSize(6, getGameStartSettings());
+      }
+      if (moreSettings_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getMoreSettings());
       }
       if (cheatSettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, getCheatSettings());
+          .computeMessageSize(8, getCheatSettings());
+      }
+      if (expSettings_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, getExpSettings());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1925,35 +1864,30 @@ public final class RandomizerSettings {
         if (!getCosmeticSettings()
             .equals(other.getCosmeticSettings())) return false;
       }
-      if (hasItemSettings() != other.hasItemSettings()) return false;
-      if (hasItemSettings()) {
-        if (!getItemSettings()
-            .equals(other.getItemSettings())) return false;
-      }
-      if (hasNpcSettings() != other.hasNpcSettings()) return false;
-      if (hasNpcSettings()) {
-        if (!getNpcSettings()
-            .equals(other.getNpcSettings())) return false;
-      }
-      if (hasNeuromodSettings() != other.hasNeuromodSettings()) return false;
-      if (hasNeuromodSettings()) {
-        if (!getNeuromodSettings()
-            .equals(other.getNeuromodSettings())) return false;
-      }
-      if (hasStoryProgressionSettings() != other.hasStoryProgressionSettings()) return false;
-      if (hasStoryProgressionSettings()) {
-        if (!getStoryProgressionSettings()
-            .equals(other.getStoryProgressionSettings())) return false;
+      if (hasGameplaySettings() != other.hasGameplaySettings()) return false;
+      if (hasGameplaySettings()) {
+        if (!getGameplaySettings()
+            .equals(other.getGameplaySettings())) return false;
       }
       if (hasGameStartSettings() != other.hasGameStartSettings()) return false;
       if (hasGameStartSettings()) {
         if (!getGameStartSettings()
             .equals(other.getGameStartSettings())) return false;
       }
+      if (hasMoreSettings() != other.hasMoreSettings()) return false;
+      if (hasMoreSettings()) {
+        if (!getMoreSettings()
+            .equals(other.getMoreSettings())) return false;
+      }
       if (hasCheatSettings() != other.hasCheatSettings()) return false;
       if (hasCheatSettings()) {
         if (!getCheatSettings()
             .equals(other.getCheatSettings())) return false;
+      }
+      if (hasExpSettings() != other.hasExpSettings()) return false;
+      if (hasExpSettings()) {
+        if (!getExpSettings()
+            .equals(other.getExpSettings())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -1976,29 +1910,25 @@ public final class RandomizerSettings {
         hash = (37 * hash) + COSMETIC_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getCosmeticSettings().hashCode();
       }
-      if (hasItemSettings()) {
-        hash = (37 * hash) + ITEM_SETTINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getItemSettings().hashCode();
-      }
-      if (hasNpcSettings()) {
-        hash = (37 * hash) + NPC_SETTINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getNpcSettings().hashCode();
-      }
-      if (hasNeuromodSettings()) {
-        hash = (37 * hash) + NEUROMOD_SETTINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getNeuromodSettings().hashCode();
-      }
-      if (hasStoryProgressionSettings()) {
-        hash = (37 * hash) + STORY_PROGRESSION_SETTINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getStoryProgressionSettings().hashCode();
+      if (hasGameplaySettings()) {
+        hash = (37 * hash) + GAMEPLAY_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getGameplaySettings().hashCode();
       }
       if (hasGameStartSettings()) {
         hash = (37 * hash) + GAME_START_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getGameStartSettings().hashCode();
       }
+      if (hasMoreSettings()) {
+        hash = (37 * hash) + MORE_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getMoreSettings().hashCode();
+      }
       if (hasCheatSettings()) {
         hash = (37 * hash) + CHEAT_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getCheatSettings().hashCode();
+      }
+      if (hasExpSettings()) {
+        hash = (37 * hash) + EXP_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getExpSettings().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -2145,29 +2075,11 @@ public final class RandomizerSettings {
           cosmeticSettings_ = null;
           cosmeticSettingsBuilder_ = null;
         }
-        if (itemSettingsBuilder_ == null) {
-          itemSettings_ = null;
+        if (gameplaySettingsBuilder_ == null) {
+          gameplaySettings_ = null;
         } else {
-          itemSettings_ = null;
-          itemSettingsBuilder_ = null;
-        }
-        if (npcSettingsBuilder_ == null) {
-          npcSettings_ = null;
-        } else {
-          npcSettings_ = null;
-          npcSettingsBuilder_ = null;
-        }
-        if (neuromodSettingsBuilder_ == null) {
-          neuromodSettings_ = null;
-        } else {
-          neuromodSettings_ = null;
-          neuromodSettingsBuilder_ = null;
-        }
-        if (storyProgressionSettingsBuilder_ == null) {
-          storyProgressionSettings_ = null;
-        } else {
-          storyProgressionSettings_ = null;
-          storyProgressionSettingsBuilder_ = null;
+          gameplaySettings_ = null;
+          gameplaySettingsBuilder_ = null;
         }
         if (gameStartSettingsBuilder_ == null) {
           gameStartSettings_ = null;
@@ -2175,11 +2087,23 @@ public final class RandomizerSettings {
           gameStartSettings_ = null;
           gameStartSettingsBuilder_ = null;
         }
+        if (moreSettingsBuilder_ == null) {
+          moreSettings_ = null;
+        } else {
+          moreSettings_ = null;
+          moreSettingsBuilder_ = null;
+        }
         if (cheatSettingsBuilder_ == null) {
           cheatSettings_ = null;
         } else {
           cheatSettings_ = null;
           cheatSettingsBuilder_ = null;
+        }
+        if (expSettingsBuilder_ == null) {
+          expSettings_ = null;
+        } else {
+          expSettings_ = null;
+          expSettingsBuilder_ = null;
         }
         return this;
       }
@@ -2215,35 +2139,30 @@ public final class RandomizerSettings {
         } else {
           result.cosmeticSettings_ = cosmeticSettingsBuilder_.build();
         }
-        if (itemSettingsBuilder_ == null) {
-          result.itemSettings_ = itemSettings_;
+        if (gameplaySettingsBuilder_ == null) {
+          result.gameplaySettings_ = gameplaySettings_;
         } else {
-          result.itemSettings_ = itemSettingsBuilder_.build();
-        }
-        if (npcSettingsBuilder_ == null) {
-          result.npcSettings_ = npcSettings_;
-        } else {
-          result.npcSettings_ = npcSettingsBuilder_.build();
-        }
-        if (neuromodSettingsBuilder_ == null) {
-          result.neuromodSettings_ = neuromodSettings_;
-        } else {
-          result.neuromodSettings_ = neuromodSettingsBuilder_.build();
-        }
-        if (storyProgressionSettingsBuilder_ == null) {
-          result.storyProgressionSettings_ = storyProgressionSettings_;
-        } else {
-          result.storyProgressionSettings_ = storyProgressionSettingsBuilder_.build();
+          result.gameplaySettings_ = gameplaySettingsBuilder_.build();
         }
         if (gameStartSettingsBuilder_ == null) {
           result.gameStartSettings_ = gameStartSettings_;
         } else {
           result.gameStartSettings_ = gameStartSettingsBuilder_.build();
         }
+        if (moreSettingsBuilder_ == null) {
+          result.moreSettings_ = moreSettings_;
+        } else {
+          result.moreSettings_ = moreSettingsBuilder_.build();
+        }
         if (cheatSettingsBuilder_ == null) {
           result.cheatSettings_ = cheatSettings_;
         } else {
           result.cheatSettings_ = cheatSettingsBuilder_.build();
+        }
+        if (expSettingsBuilder_ == null) {
+          result.expSettings_ = expSettings_;
+        } else {
+          result.expSettings_ = expSettingsBuilder_.build();
         }
         onBuilt();
         return result;
@@ -2308,23 +2227,20 @@ public final class RandomizerSettings {
         if (other.hasCosmeticSettings()) {
           mergeCosmeticSettings(other.getCosmeticSettings());
         }
-        if (other.hasItemSettings()) {
-          mergeItemSettings(other.getItemSettings());
-        }
-        if (other.hasNpcSettings()) {
-          mergeNpcSettings(other.getNpcSettings());
-        }
-        if (other.hasNeuromodSettings()) {
-          mergeNeuromodSettings(other.getNeuromodSettings());
-        }
-        if (other.hasStoryProgressionSettings()) {
-          mergeStoryProgressionSettings(other.getStoryProgressionSettings());
+        if (other.hasGameplaySettings()) {
+          mergeGameplaySettings(other.getGameplaySettings());
         }
         if (other.hasGameStartSettings()) {
           mergeGameStartSettings(other.getGameStartSettings());
         }
+        if (other.hasMoreSettings()) {
+          mergeMoreSettings(other.getMoreSettings());
+        }
         if (other.hasCheatSettings()) {
           mergeCheatSettings(other.getCheatSettings());
+        }
+        if (other.hasExpSettings()) {
+          mergeExpSettings(other.getExpSettings());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2702,494 +2618,137 @@ public final class RandomizerSettings {
         return cosmeticSettingsBuilder_;
       }
 
-      private proto.RandomizerSettings.ItemSettings itemSettings_;
+      private proto.RandomizerSettings.GameplaySettings gameplaySettings_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.ItemSettings, proto.RandomizerSettings.ItemSettings.Builder, proto.RandomizerSettings.ItemSettingsOrBuilder> itemSettingsBuilder_;
+          proto.RandomizerSettings.GameplaySettings, proto.RandomizerSettings.GameplaySettings.Builder, proto.RandomizerSettings.GameplaySettingsOrBuilder> gameplaySettingsBuilder_;
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
-       * @return Whether the itemSettings field is set.
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
+       * @return Whether the gameplaySettings field is set.
        */
-      public boolean hasItemSettings() {
-        return itemSettingsBuilder_ != null || itemSettings_ != null;
+      public boolean hasGameplaySettings() {
+        return gameplaySettingsBuilder_ != null || gameplaySettings_ != null;
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
-       * @return The itemSettings.
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
+       * @return The gameplaySettings.
        */
-      public proto.RandomizerSettings.ItemSettings getItemSettings() {
-        if (itemSettingsBuilder_ == null) {
-          return itemSettings_ == null ? proto.RandomizerSettings.ItemSettings.getDefaultInstance() : itemSettings_;
+      public proto.RandomizerSettings.GameplaySettings getGameplaySettings() {
+        if (gameplaySettingsBuilder_ == null) {
+          return gameplaySettings_ == null ? proto.RandomizerSettings.GameplaySettings.getDefaultInstance() : gameplaySettings_;
         } else {
-          return itemSettingsBuilder_.getMessage();
+          return gameplaySettingsBuilder_.getMessage();
         }
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
-      public Builder setItemSettings(proto.RandomizerSettings.ItemSettings value) {
-        if (itemSettingsBuilder_ == null) {
+      public Builder setGameplaySettings(proto.RandomizerSettings.GameplaySettings value) {
+        if (gameplaySettingsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          itemSettings_ = value;
+          gameplaySettings_ = value;
           onChanged();
         } else {
-          itemSettingsBuilder_.setMessage(value);
+          gameplaySettingsBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
-      public Builder setItemSettings(
-          proto.RandomizerSettings.ItemSettings.Builder builderForValue) {
-        if (itemSettingsBuilder_ == null) {
-          itemSettings_ = builderForValue.build();
+      public Builder setGameplaySettings(
+          proto.RandomizerSettings.GameplaySettings.Builder builderForValue) {
+        if (gameplaySettingsBuilder_ == null) {
+          gameplaySettings_ = builderForValue.build();
           onChanged();
         } else {
-          itemSettingsBuilder_.setMessage(builderForValue.build());
+          gameplaySettingsBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
-      public Builder mergeItemSettings(proto.RandomizerSettings.ItemSettings value) {
-        if (itemSettingsBuilder_ == null) {
-          if (itemSettings_ != null) {
-            itemSettings_ =
-              proto.RandomizerSettings.ItemSettings.newBuilder(itemSettings_).mergeFrom(value).buildPartial();
+      public Builder mergeGameplaySettings(proto.RandomizerSettings.GameplaySettings value) {
+        if (gameplaySettingsBuilder_ == null) {
+          if (gameplaySettings_ != null) {
+            gameplaySettings_ =
+              proto.RandomizerSettings.GameplaySettings.newBuilder(gameplaySettings_).mergeFrom(value).buildPartial();
           } else {
-            itemSettings_ = value;
+            gameplaySettings_ = value;
           }
           onChanged();
         } else {
-          itemSettingsBuilder_.mergeFrom(value);
+          gameplaySettingsBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
-      public Builder clearItemSettings() {
-        if (itemSettingsBuilder_ == null) {
-          itemSettings_ = null;
+      public Builder clearGameplaySettings() {
+        if (gameplaySettingsBuilder_ == null) {
+          gameplaySettings_ = null;
           onChanged();
         } else {
-          itemSettings_ = null;
-          itemSettingsBuilder_ = null;
+          gameplaySettings_ = null;
+          gameplaySettingsBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
-      public proto.RandomizerSettings.ItemSettings.Builder getItemSettingsBuilder() {
+      public proto.RandomizerSettings.GameplaySettings.Builder getGameplaySettingsBuilder() {
         
         onChanged();
-        return getItemSettingsFieldBuilder().getBuilder();
+        return getGameplaySettingsFieldBuilder().getBuilder();
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
-      public proto.RandomizerSettings.ItemSettingsOrBuilder getItemSettingsOrBuilder() {
-        if (itemSettingsBuilder_ != null) {
-          return itemSettingsBuilder_.getMessageOrBuilder();
+      public proto.RandomizerSettings.GameplaySettingsOrBuilder getGameplaySettingsOrBuilder() {
+        if (gameplaySettingsBuilder_ != null) {
+          return gameplaySettingsBuilder_.getMessageOrBuilder();
         } else {
-          return itemSettings_ == null ?
-              proto.RandomizerSettings.ItemSettings.getDefaultInstance() : itemSettings_;
+          return gameplaySettings_ == null ?
+              proto.RandomizerSettings.GameplaySettings.getDefaultInstance() : gameplaySettings_;
         }
       }
       /**
-       * <code>.ItemSettings item_settings = 5;</code>
+       * <code>.GameplaySettings gameplay_settings = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.ItemSettings, proto.RandomizerSettings.ItemSettings.Builder, proto.RandomizerSettings.ItemSettingsOrBuilder> 
-          getItemSettingsFieldBuilder() {
-        if (itemSettingsBuilder_ == null) {
-          itemSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.RandomizerSettings.ItemSettings, proto.RandomizerSettings.ItemSettings.Builder, proto.RandomizerSettings.ItemSettingsOrBuilder>(
-                  getItemSettings(),
+          proto.RandomizerSettings.GameplaySettings, proto.RandomizerSettings.GameplaySettings.Builder, proto.RandomizerSettings.GameplaySettingsOrBuilder> 
+          getGameplaySettingsFieldBuilder() {
+        if (gameplaySettingsBuilder_ == null) {
+          gameplaySettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.GameplaySettings, proto.RandomizerSettings.GameplaySettings.Builder, proto.RandomizerSettings.GameplaySettingsOrBuilder>(
+                  getGameplaySettings(),
                   getParentForChildren(),
                   isClean());
-          itemSettings_ = null;
+          gameplaySettings_ = null;
         }
-        return itemSettingsBuilder_;
-      }
-
-      private proto.RandomizerSettings.NpcSettings npcSettings_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.NpcSettings, proto.RandomizerSettings.NpcSettings.Builder, proto.RandomizerSettings.NpcSettingsOrBuilder> npcSettingsBuilder_;
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       * @return Whether the npcSettings field is set.
-       */
-      public boolean hasNpcSettings() {
-        return npcSettingsBuilder_ != null || npcSettings_ != null;
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       * @return The npcSettings.
-       */
-      public proto.RandomizerSettings.NpcSettings getNpcSettings() {
-        if (npcSettingsBuilder_ == null) {
-          return npcSettings_ == null ? proto.RandomizerSettings.NpcSettings.getDefaultInstance() : npcSettings_;
-        } else {
-          return npcSettingsBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      public Builder setNpcSettings(proto.RandomizerSettings.NpcSettings value) {
-        if (npcSettingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          npcSettings_ = value;
-          onChanged();
-        } else {
-          npcSettingsBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      public Builder setNpcSettings(
-          proto.RandomizerSettings.NpcSettings.Builder builderForValue) {
-        if (npcSettingsBuilder_ == null) {
-          npcSettings_ = builderForValue.build();
-          onChanged();
-        } else {
-          npcSettingsBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      public Builder mergeNpcSettings(proto.RandomizerSettings.NpcSettings value) {
-        if (npcSettingsBuilder_ == null) {
-          if (npcSettings_ != null) {
-            npcSettings_ =
-              proto.RandomizerSettings.NpcSettings.newBuilder(npcSettings_).mergeFrom(value).buildPartial();
-          } else {
-            npcSettings_ = value;
-          }
-          onChanged();
-        } else {
-          npcSettingsBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      public Builder clearNpcSettings() {
-        if (npcSettingsBuilder_ == null) {
-          npcSettings_ = null;
-          onChanged();
-        } else {
-          npcSettings_ = null;
-          npcSettingsBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      public proto.RandomizerSettings.NpcSettings.Builder getNpcSettingsBuilder() {
-        
-        onChanged();
-        return getNpcSettingsFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      public proto.RandomizerSettings.NpcSettingsOrBuilder getNpcSettingsOrBuilder() {
-        if (npcSettingsBuilder_ != null) {
-          return npcSettingsBuilder_.getMessageOrBuilder();
-        } else {
-          return npcSettings_ == null ?
-              proto.RandomizerSettings.NpcSettings.getDefaultInstance() : npcSettings_;
-        }
-      }
-      /**
-       * <code>.NpcSettings npc_settings = 6;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.NpcSettings, proto.RandomizerSettings.NpcSettings.Builder, proto.RandomizerSettings.NpcSettingsOrBuilder> 
-          getNpcSettingsFieldBuilder() {
-        if (npcSettingsBuilder_ == null) {
-          npcSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.RandomizerSettings.NpcSettings, proto.RandomizerSettings.NpcSettings.Builder, proto.RandomizerSettings.NpcSettingsOrBuilder>(
-                  getNpcSettings(),
-                  getParentForChildren(),
-                  isClean());
-          npcSettings_ = null;
-        }
-        return npcSettingsBuilder_;
-      }
-
-      private proto.RandomizerSettings.NeuromodSettings neuromodSettings_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.NeuromodSettings, proto.RandomizerSettings.NeuromodSettings.Builder, proto.RandomizerSettings.NeuromodSettingsOrBuilder> neuromodSettingsBuilder_;
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       * @return Whether the neuromodSettings field is set.
-       */
-      public boolean hasNeuromodSettings() {
-        return neuromodSettingsBuilder_ != null || neuromodSettings_ != null;
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       * @return The neuromodSettings.
-       */
-      public proto.RandomizerSettings.NeuromodSettings getNeuromodSettings() {
-        if (neuromodSettingsBuilder_ == null) {
-          return neuromodSettings_ == null ? proto.RandomizerSettings.NeuromodSettings.getDefaultInstance() : neuromodSettings_;
-        } else {
-          return neuromodSettingsBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      public Builder setNeuromodSettings(proto.RandomizerSettings.NeuromodSettings value) {
-        if (neuromodSettingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          neuromodSettings_ = value;
-          onChanged();
-        } else {
-          neuromodSettingsBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      public Builder setNeuromodSettings(
-          proto.RandomizerSettings.NeuromodSettings.Builder builderForValue) {
-        if (neuromodSettingsBuilder_ == null) {
-          neuromodSettings_ = builderForValue.build();
-          onChanged();
-        } else {
-          neuromodSettingsBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      public Builder mergeNeuromodSettings(proto.RandomizerSettings.NeuromodSettings value) {
-        if (neuromodSettingsBuilder_ == null) {
-          if (neuromodSettings_ != null) {
-            neuromodSettings_ =
-              proto.RandomizerSettings.NeuromodSettings.newBuilder(neuromodSettings_).mergeFrom(value).buildPartial();
-          } else {
-            neuromodSettings_ = value;
-          }
-          onChanged();
-        } else {
-          neuromodSettingsBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      public Builder clearNeuromodSettings() {
-        if (neuromodSettingsBuilder_ == null) {
-          neuromodSettings_ = null;
-          onChanged();
-        } else {
-          neuromodSettings_ = null;
-          neuromodSettingsBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      public proto.RandomizerSettings.NeuromodSettings.Builder getNeuromodSettingsBuilder() {
-        
-        onChanged();
-        return getNeuromodSettingsFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      public proto.RandomizerSettings.NeuromodSettingsOrBuilder getNeuromodSettingsOrBuilder() {
-        if (neuromodSettingsBuilder_ != null) {
-          return neuromodSettingsBuilder_.getMessageOrBuilder();
-        } else {
-          return neuromodSettings_ == null ?
-              proto.RandomizerSettings.NeuromodSettings.getDefaultInstance() : neuromodSettings_;
-        }
-      }
-      /**
-       * <code>.NeuromodSettings neuromod_settings = 7;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.NeuromodSettings, proto.RandomizerSettings.NeuromodSettings.Builder, proto.RandomizerSettings.NeuromodSettingsOrBuilder> 
-          getNeuromodSettingsFieldBuilder() {
-        if (neuromodSettingsBuilder_ == null) {
-          neuromodSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.RandomizerSettings.NeuromodSettings, proto.RandomizerSettings.NeuromodSettings.Builder, proto.RandomizerSettings.NeuromodSettingsOrBuilder>(
-                  getNeuromodSettings(),
-                  getParentForChildren(),
-                  isClean());
-          neuromodSettings_ = null;
-        }
-        return neuromodSettingsBuilder_;
-      }
-
-      private proto.RandomizerSettings.StoryProgressionSettings storyProgressionSettings_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.StoryProgressionSettings, proto.RandomizerSettings.StoryProgressionSettings.Builder, proto.RandomizerSettings.StoryProgressionSettingsOrBuilder> storyProgressionSettingsBuilder_;
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       * @return Whether the storyProgressionSettings field is set.
-       */
-      public boolean hasStoryProgressionSettings() {
-        return storyProgressionSettingsBuilder_ != null || storyProgressionSettings_ != null;
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       * @return The storyProgressionSettings.
-       */
-      public proto.RandomizerSettings.StoryProgressionSettings getStoryProgressionSettings() {
-        if (storyProgressionSettingsBuilder_ == null) {
-          return storyProgressionSettings_ == null ? proto.RandomizerSettings.StoryProgressionSettings.getDefaultInstance() : storyProgressionSettings_;
-        } else {
-          return storyProgressionSettingsBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      public Builder setStoryProgressionSettings(proto.RandomizerSettings.StoryProgressionSettings value) {
-        if (storyProgressionSettingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          storyProgressionSettings_ = value;
-          onChanged();
-        } else {
-          storyProgressionSettingsBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      public Builder setStoryProgressionSettings(
-          proto.RandomizerSettings.StoryProgressionSettings.Builder builderForValue) {
-        if (storyProgressionSettingsBuilder_ == null) {
-          storyProgressionSettings_ = builderForValue.build();
-          onChanged();
-        } else {
-          storyProgressionSettingsBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      public Builder mergeStoryProgressionSettings(proto.RandomizerSettings.StoryProgressionSettings value) {
-        if (storyProgressionSettingsBuilder_ == null) {
-          if (storyProgressionSettings_ != null) {
-            storyProgressionSettings_ =
-              proto.RandomizerSettings.StoryProgressionSettings.newBuilder(storyProgressionSettings_).mergeFrom(value).buildPartial();
-          } else {
-            storyProgressionSettings_ = value;
-          }
-          onChanged();
-        } else {
-          storyProgressionSettingsBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      public Builder clearStoryProgressionSettings() {
-        if (storyProgressionSettingsBuilder_ == null) {
-          storyProgressionSettings_ = null;
-          onChanged();
-        } else {
-          storyProgressionSettings_ = null;
-          storyProgressionSettingsBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      public proto.RandomizerSettings.StoryProgressionSettings.Builder getStoryProgressionSettingsBuilder() {
-        
-        onChanged();
-        return getStoryProgressionSettingsFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      public proto.RandomizerSettings.StoryProgressionSettingsOrBuilder getStoryProgressionSettingsOrBuilder() {
-        if (storyProgressionSettingsBuilder_ != null) {
-          return storyProgressionSettingsBuilder_.getMessageOrBuilder();
-        } else {
-          return storyProgressionSettings_ == null ?
-              proto.RandomizerSettings.StoryProgressionSettings.getDefaultInstance() : storyProgressionSettings_;
-        }
-      }
-      /**
-       * <code>.StoryProgressionSettings story_progression_settings = 8;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RandomizerSettings.StoryProgressionSettings, proto.RandomizerSettings.StoryProgressionSettings.Builder, proto.RandomizerSettings.StoryProgressionSettingsOrBuilder> 
-          getStoryProgressionSettingsFieldBuilder() {
-        if (storyProgressionSettingsBuilder_ == null) {
-          storyProgressionSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.RandomizerSettings.StoryProgressionSettings, proto.RandomizerSettings.StoryProgressionSettings.Builder, proto.RandomizerSettings.StoryProgressionSettingsOrBuilder>(
-                  getStoryProgressionSettings(),
-                  getParentForChildren(),
-                  isClean());
-          storyProgressionSettings_ = null;
-        }
-        return storyProgressionSettingsBuilder_;
+        return gameplaySettingsBuilder_;
       }
 
       private proto.RandomizerSettings.GameStartSettings gameStartSettings_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.RandomizerSettings.GameStartSettings, proto.RandomizerSettings.GameStartSettings.Builder, proto.RandomizerSettings.GameStartSettingsOrBuilder> gameStartSettingsBuilder_;
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        * @return Whether the gameStartSettings field is set.
        */
       public boolean hasGameStartSettings() {
         return gameStartSettingsBuilder_ != null || gameStartSettings_ != null;
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        * @return The gameStartSettings.
        */
       public proto.RandomizerSettings.GameStartSettings getGameStartSettings() {
@@ -3200,7 +2759,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       public Builder setGameStartSettings(proto.RandomizerSettings.GameStartSettings value) {
         if (gameStartSettingsBuilder_ == null) {
@@ -3216,7 +2775,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       public Builder setGameStartSettings(
           proto.RandomizerSettings.GameStartSettings.Builder builderForValue) {
@@ -3230,7 +2789,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       public Builder mergeGameStartSettings(proto.RandomizerSettings.GameStartSettings value) {
         if (gameStartSettingsBuilder_ == null) {
@@ -3248,7 +2807,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       public Builder clearGameStartSettings() {
         if (gameStartSettingsBuilder_ == null) {
@@ -3262,7 +2821,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       public proto.RandomizerSettings.GameStartSettings.Builder getGameStartSettingsBuilder() {
         
@@ -3270,7 +2829,7 @@ public final class RandomizerSettings {
         return getGameStartSettingsFieldBuilder().getBuilder();
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       public proto.RandomizerSettings.GameStartSettingsOrBuilder getGameStartSettingsOrBuilder() {
         if (gameStartSettingsBuilder_ != null) {
@@ -3281,7 +2840,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>.GameStartSettings game_start_settings = 9;</code>
+       * <code>.GameStartSettings game_start_settings = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.RandomizerSettings.GameStartSettings, proto.RandomizerSettings.GameStartSettings.Builder, proto.RandomizerSettings.GameStartSettingsOrBuilder> 
@@ -3297,18 +2856,137 @@ public final class RandomizerSettings {
         return gameStartSettingsBuilder_;
       }
 
+      private proto.RandomizerSettings.MoreSettings moreSettings_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.MoreSettings, proto.RandomizerSettings.MoreSettings.Builder, proto.RandomizerSettings.MoreSettingsOrBuilder> moreSettingsBuilder_;
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       * @return Whether the moreSettings field is set.
+       */
+      public boolean hasMoreSettings() {
+        return moreSettingsBuilder_ != null || moreSettings_ != null;
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       * @return The moreSettings.
+       */
+      public proto.RandomizerSettings.MoreSettings getMoreSettings() {
+        if (moreSettingsBuilder_ == null) {
+          return moreSettings_ == null ? proto.RandomizerSettings.MoreSettings.getDefaultInstance() : moreSettings_;
+        } else {
+          return moreSettingsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      public Builder setMoreSettings(proto.RandomizerSettings.MoreSettings value) {
+        if (moreSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          moreSettings_ = value;
+          onChanged();
+        } else {
+          moreSettingsBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      public Builder setMoreSettings(
+          proto.RandomizerSettings.MoreSettings.Builder builderForValue) {
+        if (moreSettingsBuilder_ == null) {
+          moreSettings_ = builderForValue.build();
+          onChanged();
+        } else {
+          moreSettingsBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      public Builder mergeMoreSettings(proto.RandomizerSettings.MoreSettings value) {
+        if (moreSettingsBuilder_ == null) {
+          if (moreSettings_ != null) {
+            moreSettings_ =
+              proto.RandomizerSettings.MoreSettings.newBuilder(moreSettings_).mergeFrom(value).buildPartial();
+          } else {
+            moreSettings_ = value;
+          }
+          onChanged();
+        } else {
+          moreSettingsBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      public Builder clearMoreSettings() {
+        if (moreSettingsBuilder_ == null) {
+          moreSettings_ = null;
+          onChanged();
+        } else {
+          moreSettings_ = null;
+          moreSettingsBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      public proto.RandomizerSettings.MoreSettings.Builder getMoreSettingsBuilder() {
+        
+        onChanged();
+        return getMoreSettingsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      public proto.RandomizerSettings.MoreSettingsOrBuilder getMoreSettingsOrBuilder() {
+        if (moreSettingsBuilder_ != null) {
+          return moreSettingsBuilder_.getMessageOrBuilder();
+        } else {
+          return moreSettings_ == null ?
+              proto.RandomizerSettings.MoreSettings.getDefaultInstance() : moreSettings_;
+        }
+      }
+      /**
+       * <code>.MoreSettings more_settings = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.MoreSettings, proto.RandomizerSettings.MoreSettings.Builder, proto.RandomizerSettings.MoreSettingsOrBuilder> 
+          getMoreSettingsFieldBuilder() {
+        if (moreSettingsBuilder_ == null) {
+          moreSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.MoreSettings, proto.RandomizerSettings.MoreSettings.Builder, proto.RandomizerSettings.MoreSettingsOrBuilder>(
+                  getMoreSettings(),
+                  getParentForChildren(),
+                  isClean());
+          moreSettings_ = null;
+        }
+        return moreSettingsBuilder_;
+      }
+
       private proto.RandomizerSettings.CheatSettings cheatSettings_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.RandomizerSettings.CheatSettings, proto.RandomizerSettings.CheatSettings.Builder, proto.RandomizerSettings.CheatSettingsOrBuilder> cheatSettingsBuilder_;
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        * @return Whether the cheatSettings field is set.
        */
       public boolean hasCheatSettings() {
         return cheatSettingsBuilder_ != null || cheatSettings_ != null;
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        * @return The cheatSettings.
        */
       public proto.RandomizerSettings.CheatSettings getCheatSettings() {
@@ -3319,7 +2997,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       public Builder setCheatSettings(proto.RandomizerSettings.CheatSettings value) {
         if (cheatSettingsBuilder_ == null) {
@@ -3335,7 +3013,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       public Builder setCheatSettings(
           proto.RandomizerSettings.CheatSettings.Builder builderForValue) {
@@ -3349,7 +3027,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       public Builder mergeCheatSettings(proto.RandomizerSettings.CheatSettings value) {
         if (cheatSettingsBuilder_ == null) {
@@ -3367,7 +3045,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       public Builder clearCheatSettings() {
         if (cheatSettingsBuilder_ == null) {
@@ -3381,7 +3059,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       public proto.RandomizerSettings.CheatSettings.Builder getCheatSettingsBuilder() {
         
@@ -3389,7 +3067,7 @@ public final class RandomizerSettings {
         return getCheatSettingsFieldBuilder().getBuilder();
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       public proto.RandomizerSettings.CheatSettingsOrBuilder getCheatSettingsOrBuilder() {
         if (cheatSettingsBuilder_ != null) {
@@ -3400,7 +3078,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>.CheatSettings cheat_settings = 10;</code>
+       * <code>.CheatSettings cheat_settings = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.RandomizerSettings.CheatSettings, proto.RandomizerSettings.CheatSettings.Builder, proto.RandomizerSettings.CheatSettingsOrBuilder> 
@@ -3414,6 +3092,125 @@ public final class RandomizerSettings {
           cheatSettings_ = null;
         }
         return cheatSettingsBuilder_;
+      }
+
+      private proto.RandomizerSettings.ExperimentalSettings expSettings_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ExperimentalSettings, proto.RandomizerSettings.ExperimentalSettings.Builder, proto.RandomizerSettings.ExperimentalSettingsOrBuilder> expSettingsBuilder_;
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       * @return Whether the expSettings field is set.
+       */
+      public boolean hasExpSettings() {
+        return expSettingsBuilder_ != null || expSettings_ != null;
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       * @return The expSettings.
+       */
+      public proto.RandomizerSettings.ExperimentalSettings getExpSettings() {
+        if (expSettingsBuilder_ == null) {
+          return expSettings_ == null ? proto.RandomizerSettings.ExperimentalSettings.getDefaultInstance() : expSettings_;
+        } else {
+          return expSettingsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      public Builder setExpSettings(proto.RandomizerSettings.ExperimentalSettings value) {
+        if (expSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          expSettings_ = value;
+          onChanged();
+        } else {
+          expSettingsBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      public Builder setExpSettings(
+          proto.RandomizerSettings.ExperimentalSettings.Builder builderForValue) {
+        if (expSettingsBuilder_ == null) {
+          expSettings_ = builderForValue.build();
+          onChanged();
+        } else {
+          expSettingsBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      public Builder mergeExpSettings(proto.RandomizerSettings.ExperimentalSettings value) {
+        if (expSettingsBuilder_ == null) {
+          if (expSettings_ != null) {
+            expSettings_ =
+              proto.RandomizerSettings.ExperimentalSettings.newBuilder(expSettings_).mergeFrom(value).buildPartial();
+          } else {
+            expSettings_ = value;
+          }
+          onChanged();
+        } else {
+          expSettingsBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      public Builder clearExpSettings() {
+        if (expSettingsBuilder_ == null) {
+          expSettings_ = null;
+          onChanged();
+        } else {
+          expSettings_ = null;
+          expSettingsBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      public proto.RandomizerSettings.ExperimentalSettings.Builder getExpSettingsBuilder() {
+        
+        onChanged();
+        return getExpSettingsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      public proto.RandomizerSettings.ExperimentalSettingsOrBuilder getExpSettingsOrBuilder() {
+        if (expSettingsBuilder_ != null) {
+          return expSettingsBuilder_.getMessageOrBuilder();
+        } else {
+          return expSettings_ == null ?
+              proto.RandomizerSettings.ExperimentalSettings.getDefaultInstance() : expSettings_;
+        }
+      }
+      /**
+       * <code>.ExperimentalSettings exp_settings = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ExperimentalSettings, proto.RandomizerSettings.ExperimentalSettings.Builder, proto.RandomizerSettings.ExperimentalSettingsOrBuilder> 
+          getExpSettingsFieldBuilder() {
+        if (expSettingsBuilder_ == null) {
+          expSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.ExperimentalSettings, proto.RandomizerSettings.ExperimentalSettings.Builder, proto.RandomizerSettings.ExperimentalSettingsOrBuilder>(
+                  getExpSettings(),
+                  getParentForChildren(),
+                  isClean());
+          expSettings_ = null;
+        }
+        return expSettingsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -4312,8 +4109,8 @@ public final class RandomizerSettings {
 
   }
 
-  public interface ItemSettingsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ItemSettings)
+  public interface GameplaySettingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:GameplaySettings)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -4332,37 +4129,82 @@ public final class RandomizerSettings {
     proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getItemSpawnSettingsOrBuilder();
 
     /**
-     * <code>bool more_guns = 2;</code>
-     * @return The moreGuns.
+     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * @return Whether the enemySpawnSettings field is set.
      */
-    boolean getMoreGuns();
+    boolean hasEnemySpawnSettings();
+    /**
+     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * @return The enemySpawnSettings.
+     */
+    proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings();
+    /**
+     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     */
+    proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder();
 
     /**
-     * <code>bool randomize_fab_plan_costs = 3;</code>
+     * <code>bool randomize_station = 3;</code>
+     * @return The randomizeStation.
+     */
+    boolean getRandomizeStation();
+
+    /**
+     * <code>bool randomize_neuromods = 4;</code>
+     * @return The randomizeNeuromods.
+     */
+    boolean getRandomizeNeuromods();
+
+    /**
+     * <code>bool randomize_fab_plan_costs = 5;</code>
      * @return The randomizeFabPlanCosts.
      */
     boolean getRandomizeFabPlanCosts();
+
+    /**
+     * <code>bool randomize_recyclers = 6;</code>
+     * @return The randomizeRecyclers.
+     */
+    boolean getRandomizeRecyclers();
+
+    /**
+     * <code>bool randomize_dispensers = 7;</code>
+     * @return The randomizeDispensers.
+     */
+    boolean getRandomizeDispensers();
+
+    /**
+     * <code>bool randomize_breakables = 8;</code>
+     * @return The randomizeBreakables.
+     */
+    boolean getRandomizeBreakables();
+
+    /**
+     * <code>bool randomize_hackables = 9;</code>
+     * @return The randomizeHackables.
+     */
+    boolean getRandomizeHackables();
   }
   /**
-   * Protobuf type {@code ItemSettings}
+   * Protobuf type {@code GameplaySettings}
    */
-  public static final class ItemSettings extends
+  public static final class GameplaySettings extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ItemSettings)
-      ItemSettingsOrBuilder {
+      // @@protoc_insertion_point(message_implements:GameplaySettings)
+      GameplaySettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ItemSettings.newBuilder() to construct.
-    private ItemSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use GameplaySettings.newBuilder() to construct.
+    private GameplaySettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ItemSettings() {
+    private GameplaySettings() {
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new ItemSettings();
+      return new GameplaySettings();
     }
 
     @java.lang.Override
@@ -4370,7 +4212,7 @@ public final class RandomizerSettings {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ItemSettings(
+    private GameplaySettings(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4401,14 +4243,52 @@ public final class RandomizerSettings {
 
               break;
             }
-            case 16: {
+            case 18: {
+              proto.RandomizerSettings.GenericSpawnPresetFilter.Builder subBuilder = null;
+              if (enemySpawnSettings_ != null) {
+                subBuilder = enemySpawnSettings_.toBuilder();
+              }
+              enemySpawnSettings_ = input.readMessage(proto.RandomizerSettings.GenericSpawnPresetFilter.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(enemySpawnSettings_);
+                enemySpawnSettings_ = subBuilder.buildPartial();
+              }
 
-              moreGuns_ = input.readBool();
               break;
             }
             case 24: {
 
+              randomizeStation_ = input.readBool();
+              break;
+            }
+            case 32: {
+
+              randomizeNeuromods_ = input.readBool();
+              break;
+            }
+            case 40: {
+
               randomizeFabPlanCosts_ = input.readBool();
+              break;
+            }
+            case 48: {
+
+              randomizeRecyclers_ = input.readBool();
+              break;
+            }
+            case 56: {
+
+              randomizeDispensers_ = input.readBool();
+              break;
+            }
+            case 64: {
+
+              randomizeBreakables_ = input.readBool();
+              break;
+            }
+            case 72: {
+
+              randomizeHackables_ = input.readBool();
               break;
             }
             default: {
@@ -4432,15 +4312,15 @@ public final class RandomizerSettings {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.RandomizerSettings.internal_static_ItemSettings_descriptor;
+      return proto.RandomizerSettings.internal_static_GameplaySettings_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.RandomizerSettings.internal_static_ItemSettings_fieldAccessorTable
+      return proto.RandomizerSettings.internal_static_GameplaySettings_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.RandomizerSettings.ItemSettings.class, proto.RandomizerSettings.ItemSettings.Builder.class);
+              proto.RandomizerSettings.GameplaySettings.class, proto.RandomizerSettings.GameplaySettings.Builder.class);
     }
 
     public static final int ITEM_SPAWN_SETTINGS_FIELD_NUMBER = 1;
@@ -4469,26 +4349,107 @@ public final class RandomizerSettings {
       return getItemSpawnSettings();
     }
 
-    public static final int MORE_GUNS_FIELD_NUMBER = 2;
-    private boolean moreGuns_;
+    public static final int ENEMY_SPAWN_SETTINGS_FIELD_NUMBER = 2;
+    private proto.RandomizerSettings.GenericSpawnPresetFilter enemySpawnSettings_;
     /**
-     * <code>bool more_guns = 2;</code>
-     * @return The moreGuns.
+     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * @return Whether the enemySpawnSettings field is set.
      */
     @java.lang.Override
-    public boolean getMoreGuns() {
-      return moreGuns_;
+    public boolean hasEnemySpawnSettings() {
+      return enemySpawnSettings_ != null;
+    }
+    /**
+     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * @return The enemySpawnSettings.
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings() {
+      return enemySpawnSettings_ == null ? proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance() : enemySpawnSettings_;
+    }
+    /**
+     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder() {
+      return getEnemySpawnSettings();
     }
 
-    public static final int RANDOMIZE_FAB_PLAN_COSTS_FIELD_NUMBER = 3;
+    public static final int RANDOMIZE_STATION_FIELD_NUMBER = 3;
+    private boolean randomizeStation_;
+    /**
+     * <code>bool randomize_station = 3;</code>
+     * @return The randomizeStation.
+     */
+    @java.lang.Override
+    public boolean getRandomizeStation() {
+      return randomizeStation_;
+    }
+
+    public static final int RANDOMIZE_NEUROMODS_FIELD_NUMBER = 4;
+    private boolean randomizeNeuromods_;
+    /**
+     * <code>bool randomize_neuromods = 4;</code>
+     * @return The randomizeNeuromods.
+     */
+    @java.lang.Override
+    public boolean getRandomizeNeuromods() {
+      return randomizeNeuromods_;
+    }
+
+    public static final int RANDOMIZE_FAB_PLAN_COSTS_FIELD_NUMBER = 5;
     private boolean randomizeFabPlanCosts_;
     /**
-     * <code>bool randomize_fab_plan_costs = 3;</code>
+     * <code>bool randomize_fab_plan_costs = 5;</code>
      * @return The randomizeFabPlanCosts.
      */
     @java.lang.Override
     public boolean getRandomizeFabPlanCosts() {
       return randomizeFabPlanCosts_;
+    }
+
+    public static final int RANDOMIZE_RECYCLERS_FIELD_NUMBER = 6;
+    private boolean randomizeRecyclers_;
+    /**
+     * <code>bool randomize_recyclers = 6;</code>
+     * @return The randomizeRecyclers.
+     */
+    @java.lang.Override
+    public boolean getRandomizeRecyclers() {
+      return randomizeRecyclers_;
+    }
+
+    public static final int RANDOMIZE_DISPENSERS_FIELD_NUMBER = 7;
+    private boolean randomizeDispensers_;
+    /**
+     * <code>bool randomize_dispensers = 7;</code>
+     * @return The randomizeDispensers.
+     */
+    @java.lang.Override
+    public boolean getRandomizeDispensers() {
+      return randomizeDispensers_;
+    }
+
+    public static final int RANDOMIZE_BREAKABLES_FIELD_NUMBER = 8;
+    private boolean randomizeBreakables_;
+    /**
+     * <code>bool randomize_breakables = 8;</code>
+     * @return The randomizeBreakables.
+     */
+    @java.lang.Override
+    public boolean getRandomizeBreakables() {
+      return randomizeBreakables_;
+    }
+
+    public static final int RANDOMIZE_HACKABLES_FIELD_NUMBER = 9;
+    private boolean randomizeHackables_;
+    /**
+     * <code>bool randomize_hackables = 9;</code>
+     * @return The randomizeHackables.
+     */
+    @java.lang.Override
+    public boolean getRandomizeHackables() {
+      return randomizeHackables_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4508,11 +4469,29 @@ public final class RandomizerSettings {
       if (itemSpawnSettings_ != null) {
         output.writeMessage(1, getItemSpawnSettings());
       }
-      if (moreGuns_ != false) {
-        output.writeBool(2, moreGuns_);
+      if (enemySpawnSettings_ != null) {
+        output.writeMessage(2, getEnemySpawnSettings());
+      }
+      if (randomizeStation_ != false) {
+        output.writeBool(3, randomizeStation_);
+      }
+      if (randomizeNeuromods_ != false) {
+        output.writeBool(4, randomizeNeuromods_);
       }
       if (randomizeFabPlanCosts_ != false) {
-        output.writeBool(3, randomizeFabPlanCosts_);
+        output.writeBool(5, randomizeFabPlanCosts_);
+      }
+      if (randomizeRecyclers_ != false) {
+        output.writeBool(6, randomizeRecyclers_);
+      }
+      if (randomizeDispensers_ != false) {
+        output.writeBool(7, randomizeDispensers_);
+      }
+      if (randomizeBreakables_ != false) {
+        output.writeBool(8, randomizeBreakables_);
+      }
+      if (randomizeHackables_ != false) {
+        output.writeBool(9, randomizeHackables_);
       }
       unknownFields.writeTo(output);
     }
@@ -4527,13 +4506,37 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getItemSpawnSettings());
       }
-      if (moreGuns_ != false) {
+      if (enemySpawnSettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, moreGuns_);
+          .computeMessageSize(2, getEnemySpawnSettings());
+      }
+      if (randomizeStation_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, randomizeStation_);
+      }
+      if (randomizeNeuromods_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, randomizeNeuromods_);
       }
       if (randomizeFabPlanCosts_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, randomizeFabPlanCosts_);
+          .computeBoolSize(5, randomizeFabPlanCosts_);
+      }
+      if (randomizeRecyclers_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(6, randomizeRecyclers_);
+      }
+      if (randomizeDispensers_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(7, randomizeDispensers_);
+      }
+      if (randomizeBreakables_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(8, randomizeBreakables_);
+      }
+      if (randomizeHackables_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(9, randomizeHackables_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4545,20 +4548,35 @@ public final class RandomizerSettings {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.RandomizerSettings.ItemSettings)) {
+      if (!(obj instanceof proto.RandomizerSettings.GameplaySettings)) {
         return super.equals(obj);
       }
-      proto.RandomizerSettings.ItemSettings other = (proto.RandomizerSettings.ItemSettings) obj;
+      proto.RandomizerSettings.GameplaySettings other = (proto.RandomizerSettings.GameplaySettings) obj;
 
       if (hasItemSpawnSettings() != other.hasItemSpawnSettings()) return false;
       if (hasItemSpawnSettings()) {
         if (!getItemSpawnSettings()
             .equals(other.getItemSpawnSettings())) return false;
       }
-      if (getMoreGuns()
-          != other.getMoreGuns()) return false;
+      if (hasEnemySpawnSettings() != other.hasEnemySpawnSettings()) return false;
+      if (hasEnemySpawnSettings()) {
+        if (!getEnemySpawnSettings()
+            .equals(other.getEnemySpawnSettings())) return false;
+      }
+      if (getRandomizeStation()
+          != other.getRandomizeStation()) return false;
+      if (getRandomizeNeuromods()
+          != other.getRandomizeNeuromods()) return false;
       if (getRandomizeFabPlanCosts()
           != other.getRandomizeFabPlanCosts()) return false;
+      if (getRandomizeRecyclers()
+          != other.getRandomizeRecyclers()) return false;
+      if (getRandomizeDispensers()
+          != other.getRandomizeDispensers()) return false;
+      if (getRandomizeBreakables()
+          != other.getRandomizeBreakables()) return false;
+      if (getRandomizeHackables()
+          != other.getRandomizeHackables()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4574,80 +4592,99 @@ public final class RandomizerSettings {
         hash = (37 * hash) + ITEM_SPAWN_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getItemSpawnSettings().hashCode();
       }
-      hash = (37 * hash) + MORE_GUNS_FIELD_NUMBER;
+      if (hasEnemySpawnSettings()) {
+        hash = (37 * hash) + ENEMY_SPAWN_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getEnemySpawnSettings().hashCode();
+      }
+      hash = (37 * hash) + RANDOMIZE_STATION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMoreGuns());
+          getRandomizeStation());
+      hash = (37 * hash) + RANDOMIZE_NEUROMODS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeNeuromods());
       hash = (37 * hash) + RANDOMIZE_FAB_PLAN_COSTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeFabPlanCosts());
+      hash = (37 * hash) + RANDOMIZE_RECYCLERS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeRecyclers());
+      hash = (37 * hash) + RANDOMIZE_DISPENSERS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeDispensers());
+      hash = (37 * hash) + RANDOMIZE_BREAKABLES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeBreakables());
+      hash = (37 * hash) + RANDOMIZE_HACKABLES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeHackables());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(byte[] data)
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(java.io.InputStream input)
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RandomizerSettings.ItemSettings parseDelimitedFrom(java.io.InputStream input)
+    public static proto.RandomizerSettings.GameplaySettings parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.RandomizerSettings.ItemSettings parseDelimitedFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RandomizerSettings.ItemSettings parseFrom(
+    public static proto.RandomizerSettings.GameplaySettings parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4660,7 +4697,7 @@ public final class RandomizerSettings {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.RandomizerSettings.ItemSettings prototype) {
+    public static Builder newBuilder(proto.RandomizerSettings.GameplaySettings prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4676,26 +4713,26 @@ public final class RandomizerSettings {
       return builder;
     }
     /**
-     * Protobuf type {@code ItemSettings}
+     * Protobuf type {@code GameplaySettings}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ItemSettings)
-        proto.RandomizerSettings.ItemSettingsOrBuilder {
+        // @@protoc_insertion_point(builder_implements:GameplaySettings)
+        proto.RandomizerSettings.GameplaySettingsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.RandomizerSettings.internal_static_ItemSettings_descriptor;
+        return proto.RandomizerSettings.internal_static_GameplaySettings_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.RandomizerSettings.internal_static_ItemSettings_fieldAccessorTable
+        return proto.RandomizerSettings.internal_static_GameplaySettings_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.RandomizerSettings.ItemSettings.class, proto.RandomizerSettings.ItemSettings.Builder.class);
+                proto.RandomizerSettings.GameplaySettings.class, proto.RandomizerSettings.GameplaySettings.Builder.class);
       }
 
-      // Construct using proto.RandomizerSettings.ItemSettings.newBuilder()
+      // Construct using proto.RandomizerSettings.GameplaySettings.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4719,9 +4756,25 @@ public final class RandomizerSettings {
           itemSpawnSettings_ = null;
           itemSpawnSettingsBuilder_ = null;
         }
-        moreGuns_ = false;
+        if (enemySpawnSettingsBuilder_ == null) {
+          enemySpawnSettings_ = null;
+        } else {
+          enemySpawnSettings_ = null;
+          enemySpawnSettingsBuilder_ = null;
+        }
+        randomizeStation_ = false;
+
+        randomizeNeuromods_ = false;
 
         randomizeFabPlanCosts_ = false;
+
+        randomizeRecyclers_ = false;
+
+        randomizeDispensers_ = false;
+
+        randomizeBreakables_ = false;
+
+        randomizeHackables_ = false;
 
         return this;
       }
@@ -4729,17 +4782,17 @@ public final class RandomizerSettings {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.RandomizerSettings.internal_static_ItemSettings_descriptor;
+        return proto.RandomizerSettings.internal_static_GameplaySettings_descriptor;
       }
 
       @java.lang.Override
-      public proto.RandomizerSettings.ItemSettings getDefaultInstanceForType() {
-        return proto.RandomizerSettings.ItemSettings.getDefaultInstance();
+      public proto.RandomizerSettings.GameplaySettings getDefaultInstanceForType() {
+        return proto.RandomizerSettings.GameplaySettings.getDefaultInstance();
       }
 
       @java.lang.Override
-      public proto.RandomizerSettings.ItemSettings build() {
-        proto.RandomizerSettings.ItemSettings result = buildPartial();
+      public proto.RandomizerSettings.GameplaySettings build() {
+        proto.RandomizerSettings.GameplaySettings result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4747,15 +4800,25 @@ public final class RandomizerSettings {
       }
 
       @java.lang.Override
-      public proto.RandomizerSettings.ItemSettings buildPartial() {
-        proto.RandomizerSettings.ItemSettings result = new proto.RandomizerSettings.ItemSettings(this);
+      public proto.RandomizerSettings.GameplaySettings buildPartial() {
+        proto.RandomizerSettings.GameplaySettings result = new proto.RandomizerSettings.GameplaySettings(this);
         if (itemSpawnSettingsBuilder_ == null) {
           result.itemSpawnSettings_ = itemSpawnSettings_;
         } else {
           result.itemSpawnSettings_ = itemSpawnSettingsBuilder_.build();
         }
-        result.moreGuns_ = moreGuns_;
+        if (enemySpawnSettingsBuilder_ == null) {
+          result.enemySpawnSettings_ = enemySpawnSettings_;
+        } else {
+          result.enemySpawnSettings_ = enemySpawnSettingsBuilder_.build();
+        }
+        result.randomizeStation_ = randomizeStation_;
+        result.randomizeNeuromods_ = randomizeNeuromods_;
         result.randomizeFabPlanCosts_ = randomizeFabPlanCosts_;
+        result.randomizeRecyclers_ = randomizeRecyclers_;
+        result.randomizeDispensers_ = randomizeDispensers_;
+        result.randomizeBreakables_ = randomizeBreakables_;
+        result.randomizeHackables_ = randomizeHackables_;
         onBuilt();
         return result;
       }
@@ -4794,24 +4857,42 @@ public final class RandomizerSettings {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RandomizerSettings.ItemSettings) {
-          return mergeFrom((proto.RandomizerSettings.ItemSettings)other);
+        if (other instanceof proto.RandomizerSettings.GameplaySettings) {
+          return mergeFrom((proto.RandomizerSettings.GameplaySettings)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.RandomizerSettings.ItemSettings other) {
-        if (other == proto.RandomizerSettings.ItemSettings.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.RandomizerSettings.GameplaySettings other) {
+        if (other == proto.RandomizerSettings.GameplaySettings.getDefaultInstance()) return this;
         if (other.hasItemSpawnSettings()) {
           mergeItemSpawnSettings(other.getItemSpawnSettings());
         }
-        if (other.getMoreGuns() != false) {
-          setMoreGuns(other.getMoreGuns());
+        if (other.hasEnemySpawnSettings()) {
+          mergeEnemySpawnSettings(other.getEnemySpawnSettings());
+        }
+        if (other.getRandomizeStation() != false) {
+          setRandomizeStation(other.getRandomizeStation());
+        }
+        if (other.getRandomizeNeuromods() != false) {
+          setRandomizeNeuromods(other.getRandomizeNeuromods());
         }
         if (other.getRandomizeFabPlanCosts() != false) {
           setRandomizeFabPlanCosts(other.getRandomizeFabPlanCosts());
+        }
+        if (other.getRandomizeRecyclers() != false) {
+          setRandomizeRecyclers(other.getRandomizeRecyclers());
+        }
+        if (other.getRandomizeDispensers() != false) {
+          setRandomizeDispensers(other.getRandomizeDispensers());
+        }
+        if (other.getRandomizeBreakables() != false) {
+          setRandomizeBreakables(other.getRandomizeBreakables());
+        }
+        if (other.getRandomizeHackables() != false) {
+          setRandomizeHackables(other.getRandomizeHackables());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4828,11 +4909,11 @@ public final class RandomizerSettings {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.RandomizerSettings.ItemSettings parsedMessage = null;
+        proto.RandomizerSettings.GameplaySettings parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RandomizerSettings.ItemSettings) e.getUnfinishedMessage();
+          parsedMessage = (proto.RandomizerSettings.GameplaySettings) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4961,582 +5042,18 @@ public final class RandomizerSettings {
         return itemSpawnSettingsBuilder_;
       }
 
-      private boolean moreGuns_ ;
-      /**
-       * <code>bool more_guns = 2;</code>
-       * @return The moreGuns.
-       */
-      @java.lang.Override
-      public boolean getMoreGuns() {
-        return moreGuns_;
-      }
-      /**
-       * <code>bool more_guns = 2;</code>
-       * @param value The moreGuns to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMoreGuns(boolean value) {
-        
-        moreGuns_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool more_guns = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMoreGuns() {
-        
-        moreGuns_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean randomizeFabPlanCosts_ ;
-      /**
-       * <code>bool randomize_fab_plan_costs = 3;</code>
-       * @return The randomizeFabPlanCosts.
-       */
-      @java.lang.Override
-      public boolean getRandomizeFabPlanCosts() {
-        return randomizeFabPlanCosts_;
-      }
-      /**
-       * <code>bool randomize_fab_plan_costs = 3;</code>
-       * @param value The randomizeFabPlanCosts to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeFabPlanCosts(boolean value) {
-        
-        randomizeFabPlanCosts_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_fab_plan_costs = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeFabPlanCosts() {
-        
-        randomizeFabPlanCosts_ = false;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:ItemSettings)
-    }
-
-    // @@protoc_insertion_point(class_scope:ItemSettings)
-    private static final proto.RandomizerSettings.ItemSettings DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RandomizerSettings.ItemSettings();
-    }
-
-    public static proto.RandomizerSettings.ItemSettings getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ItemSettings>
-        PARSER = new com.google.protobuf.AbstractParser<ItemSettings>() {
-      @java.lang.Override
-      public ItemSettings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ItemSettings(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ItemSettings> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ItemSettings> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public proto.RandomizerSettings.ItemSettings getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface NpcSettingsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:NpcSettings)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
-     * @return Whether the enemySpawnSettings field is set.
-     */
-    boolean hasEnemySpawnSettings();
-    /**
-     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
-     * @return The enemySpawnSettings.
-     */
-    proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings();
-    /**
-     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
-     */
-    proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder();
-  }
-  /**
-   * Protobuf type {@code NpcSettings}
-   */
-  public static final class NpcSettings extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:NpcSettings)
-      NpcSettingsOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NpcSettings.newBuilder() to construct.
-    private NpcSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NpcSettings() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new NpcSettings();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private NpcSettings(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              proto.RandomizerSettings.GenericSpawnPresetFilter.Builder subBuilder = null;
-              if (enemySpawnSettings_ != null) {
-                subBuilder = enemySpawnSettings_.toBuilder();
-              }
-              enemySpawnSettings_ = input.readMessage(proto.RandomizerSettings.GenericSpawnPresetFilter.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(enemySpawnSettings_);
-                enemySpawnSettings_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RandomizerSettings.internal_static_NpcSettings_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RandomizerSettings.internal_static_NpcSettings_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RandomizerSettings.NpcSettings.class, proto.RandomizerSettings.NpcSettings.Builder.class);
-    }
-
-    public static final int ENEMY_SPAWN_SETTINGS_FIELD_NUMBER = 1;
-    private proto.RandomizerSettings.GenericSpawnPresetFilter enemySpawnSettings_;
-    /**
-     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
-     * @return Whether the enemySpawnSettings field is set.
-     */
-    @java.lang.Override
-    public boolean hasEnemySpawnSettings() {
-      return enemySpawnSettings_ != null;
-    }
-    /**
-     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
-     * @return The enemySpawnSettings.
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings() {
-      return enemySpawnSettings_ == null ? proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance() : enemySpawnSettings_;
-    }
-    /**
-     * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
-     */
-    @java.lang.Override
-    public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder() {
-      return getEnemySpawnSettings();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (enemySpawnSettings_ != null) {
-        output.writeMessage(1, getEnemySpawnSettings());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (enemySpawnSettings_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getEnemySpawnSettings());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RandomizerSettings.NpcSettings)) {
-        return super.equals(obj);
-      }
-      proto.RandomizerSettings.NpcSettings other = (proto.RandomizerSettings.NpcSettings) obj;
-
-      if (hasEnemySpawnSettings() != other.hasEnemySpawnSettings()) return false;
-      if (hasEnemySpawnSettings()) {
-        if (!getEnemySpawnSettings()
-            .equals(other.getEnemySpawnSettings())) return false;
-      }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasEnemySpawnSettings()) {
-        hash = (37 * hash) + ENEMY_SPAWN_SETTINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getEnemySpawnSettings().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.NpcSettings parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RandomizerSettings.NpcSettings prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code NpcSettings}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:NpcSettings)
-        proto.RandomizerSettings.NpcSettingsOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RandomizerSettings.internal_static_NpcSettings_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RandomizerSettings.internal_static_NpcSettings_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RandomizerSettings.NpcSettings.class, proto.RandomizerSettings.NpcSettings.Builder.class);
-      }
-
-      // Construct using proto.RandomizerSettings.NpcSettings.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (enemySpawnSettingsBuilder_ == null) {
-          enemySpawnSettings_ = null;
-        } else {
-          enemySpawnSettings_ = null;
-          enemySpawnSettingsBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RandomizerSettings.internal_static_NpcSettings_descriptor;
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.NpcSettings getDefaultInstanceForType() {
-        return proto.RandomizerSettings.NpcSettings.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.NpcSettings build() {
-        proto.RandomizerSettings.NpcSettings result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.NpcSettings buildPartial() {
-        proto.RandomizerSettings.NpcSettings result = new proto.RandomizerSettings.NpcSettings(this);
-        if (enemySpawnSettingsBuilder_ == null) {
-          result.enemySpawnSettings_ = enemySpawnSettings_;
-        } else {
-          result.enemySpawnSettings_ = enemySpawnSettingsBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RandomizerSettings.NpcSettings) {
-          return mergeFrom((proto.RandomizerSettings.NpcSettings)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RandomizerSettings.NpcSettings other) {
-        if (other == proto.RandomizerSettings.NpcSettings.getDefaultInstance()) return this;
-        if (other.hasEnemySpawnSettings()) {
-          mergeEnemySpawnSettings(other.getEnemySpawnSettings());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RandomizerSettings.NpcSettings parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RandomizerSettings.NpcSettings) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
       private proto.RandomizerSettings.GenericSpawnPresetFilter enemySpawnSettings_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> enemySpawnSettingsBuilder_;
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        * @return Whether the enemySpawnSettings field is set.
        */
       public boolean hasEnemySpawnSettings() {
         return enemySpawnSettingsBuilder_ != null || enemySpawnSettings_ != null;
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        * @return The enemySpawnSettings.
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings() {
@@ -5547,7 +5064,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       public Builder setEnemySpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -5563,7 +5080,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       public Builder setEnemySpawnSettings(
           proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
@@ -5577,7 +5094,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       public Builder mergeEnemySpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -5595,7 +5112,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       public Builder clearEnemySpawnSettings() {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -5609,7 +5126,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder getEnemySpawnSettingsBuilder() {
         
@@ -5617,7 +5134,7 @@ public final class RandomizerSettings {
         return getEnemySpawnSettingsFieldBuilder().getBuilder();
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder() {
         if (enemySpawnSettingsBuilder_ != null) {
@@ -5628,7 +5145,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 1;</code>
+       * <code>.GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
@@ -5643,1293 +5160,10 @@ public final class RandomizerSettings {
         }
         return enemySpawnSettingsBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:NpcSettings)
-    }
-
-    // @@protoc_insertion_point(class_scope:NpcSettings)
-    private static final proto.RandomizerSettings.NpcSettings DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RandomizerSettings.NpcSettings();
-    }
-
-    public static proto.RandomizerSettings.NpcSettings getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<NpcSettings>
-        PARSER = new com.google.protobuf.AbstractParser<NpcSettings>() {
-      @java.lang.Override
-      public NpcSettings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NpcSettings(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<NpcSettings> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NpcSettings> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public proto.RandomizerSettings.NpcSettings getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface NeuromodSettingsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:NeuromodSettings)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bool randomize_neuromods = 1;</code>
-     * @return The randomizeNeuromods.
-     */
-    boolean getRandomizeNeuromods();
-  }
-  /**
-   * Protobuf type {@code NeuromodSettings}
-   */
-  public static final class NeuromodSettings extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:NeuromodSettings)
-      NeuromodSettingsOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NeuromodSettings.newBuilder() to construct.
-    private NeuromodSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NeuromodSettings() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new NeuromodSettings();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private NeuromodSettings(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              randomizeNeuromods_ = input.readBool();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RandomizerSettings.internal_static_NeuromodSettings_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RandomizerSettings.internal_static_NeuromodSettings_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RandomizerSettings.NeuromodSettings.class, proto.RandomizerSettings.NeuromodSettings.Builder.class);
-    }
-
-    public static final int RANDOMIZE_NEUROMODS_FIELD_NUMBER = 1;
-    private boolean randomizeNeuromods_;
-    /**
-     * <code>bool randomize_neuromods = 1;</code>
-     * @return The randomizeNeuromods.
-     */
-    @java.lang.Override
-    public boolean getRandomizeNeuromods() {
-      return randomizeNeuromods_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (randomizeNeuromods_ != false) {
-        output.writeBool(1, randomizeNeuromods_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (randomizeNeuromods_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, randomizeNeuromods_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RandomizerSettings.NeuromodSettings)) {
-        return super.equals(obj);
-      }
-      proto.RandomizerSettings.NeuromodSettings other = (proto.RandomizerSettings.NeuromodSettings) obj;
-
-      if (getRandomizeNeuromods()
-          != other.getRandomizeNeuromods()) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + RANDOMIZE_NEUROMODS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeNeuromods());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.NeuromodSettings parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RandomizerSettings.NeuromodSettings prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code NeuromodSettings}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:NeuromodSettings)
-        proto.RandomizerSettings.NeuromodSettingsOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RandomizerSettings.internal_static_NeuromodSettings_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RandomizerSettings.internal_static_NeuromodSettings_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RandomizerSettings.NeuromodSettings.class, proto.RandomizerSettings.NeuromodSettings.Builder.class);
-      }
-
-      // Construct using proto.RandomizerSettings.NeuromodSettings.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        randomizeNeuromods_ = false;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RandomizerSettings.internal_static_NeuromodSettings_descriptor;
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.NeuromodSettings getDefaultInstanceForType() {
-        return proto.RandomizerSettings.NeuromodSettings.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.NeuromodSettings build() {
-        proto.RandomizerSettings.NeuromodSettings result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.NeuromodSettings buildPartial() {
-        proto.RandomizerSettings.NeuromodSettings result = new proto.RandomizerSettings.NeuromodSettings(this);
-        result.randomizeNeuromods_ = randomizeNeuromods_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RandomizerSettings.NeuromodSettings) {
-          return mergeFrom((proto.RandomizerSettings.NeuromodSettings)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RandomizerSettings.NeuromodSettings other) {
-        if (other == proto.RandomizerSettings.NeuromodSettings.getDefaultInstance()) return this;
-        if (other.getRandomizeNeuromods() != false) {
-          setRandomizeNeuromods(other.getRandomizeNeuromods());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RandomizerSettings.NeuromodSettings parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RandomizerSettings.NeuromodSettings) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private boolean randomizeNeuromods_ ;
-      /**
-       * <code>bool randomize_neuromods = 1;</code>
-       * @return The randomizeNeuromods.
-       */
-      @java.lang.Override
-      public boolean getRandomizeNeuromods() {
-        return randomizeNeuromods_;
-      }
-      /**
-       * <code>bool randomize_neuromods = 1;</code>
-       * @param value The randomizeNeuromods to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeNeuromods(boolean value) {
-        
-        randomizeNeuromods_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_neuromods = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeNeuromods() {
-        
-        randomizeNeuromods_ = false;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:NeuromodSettings)
-    }
-
-    // @@protoc_insertion_point(class_scope:NeuromodSettings)
-    private static final proto.RandomizerSettings.NeuromodSettings DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RandomizerSettings.NeuromodSettings();
-    }
-
-    public static proto.RandomizerSettings.NeuromodSettings getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<NeuromodSettings>
-        PARSER = new com.google.protobuf.AbstractParser<NeuromodSettings>() {
-      @java.lang.Override
-      public NeuromodSettings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NeuromodSettings(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<NeuromodSettings> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NeuromodSettings> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public proto.RandomizerSettings.NeuromodSettings getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface StoryProgressionSettingsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:StoryProgressionSettings)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bool randomize_station = 1;</code>
-     * @return The randomizeStation.
-     */
-    boolean getRandomizeStation();
-
-    /**
-     * <code>bool use_custom_spawn = 2;</code>
-     * @return The useCustomSpawn.
-     */
-    boolean getUseCustomSpawn();
-
-    /**
-     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-     * @return The enum numeric value on the wire for customSpawnLocation.
-     */
-    int getCustomSpawnLocationValue();
-    /**
-     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-     * @return The customSpawnLocation.
-     */
-    proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation getCustomSpawnLocation();
-  }
-  /**
-   * Protobuf type {@code StoryProgressionSettings}
-   */
-  public static final class StoryProgressionSettings extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:StoryProgressionSettings)
-      StoryProgressionSettingsOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use StoryProgressionSettings.newBuilder() to construct.
-    private StoryProgressionSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private StoryProgressionSettings() {
-      customSpawnLocation_ = 0;
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new StoryProgressionSettings();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private StoryProgressionSettings(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              randomizeStation_ = input.readBool();
-              break;
-            }
-            case 16: {
-
-              useCustomSpawn_ = input.readBool();
-              break;
-            }
-            case 24: {
-              int rawValue = input.readEnum();
-
-              customSpawnLocation_ = rawValue;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RandomizerSettings.internal_static_StoryProgressionSettings_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RandomizerSettings.internal_static_StoryProgressionSettings_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RandomizerSettings.StoryProgressionSettings.class, proto.RandomizerSettings.StoryProgressionSettings.Builder.class);
-    }
-
-    /**
-     * Protobuf enum {@code StoryProgressionSettings.SpawnLocation}
-     */
-    public enum SpawnLocation
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>NONE = 0;</code>
-       */
-      NONE(0),
-      /**
-       * <code>RANDOM = 1;</code>
-       */
-      RANDOM(1),
-      /**
-       * <code>LOBBY = 2;</code>
-       */
-      LOBBY(2),
-      /**
-       * <code>HARDWARE_LABS = 3;</code>
-       */
-      HARDWARE_LABS(3),
-      /**
-       * <code>PSYCHOTRONICS = 4;</code>
-       */
-      PSYCHOTRONICS(4),
-      /**
-       * <code>GUTS = 5;</code>
-       */
-      GUTS(5),
-      /**
-       * <code>ARBORETUM = 6;</code>
-       */
-      ARBORETUM(6),
-      /**
-       * <code>BRIDGE = 7;</code>
-       */
-      BRIDGE(7),
-      /**
-       * <code>CREW_QUARTERS = 8;</code>
-       */
-      CREW_QUARTERS(8),
-      /**
-       * <code>DEEP_STORAGE = 9;</code>
-       */
-      DEEP_STORAGE(9),
-      /**
-       * <code>CARGO_BAY = 10;</code>
-       */
-      CARGO_BAY(10),
-      /**
-       * <code>LIFE_SUPPORT = 11;</code>
-       */
-      LIFE_SUPPORT(11),
-      /**
-       * <code>POWER_PLANT = 12;</code>
-       */
-      POWER_PLANT(12),
-      /**
-       * <code>SHUTTLE_BAY = 13;</code>
-       */
-      SHUTTLE_BAY(13),
-      /**
-       * <code>EXTERIOR = 14;</code>
-       */
-      EXTERIOR(14),
-      /**
-       * <code>ENDGAME = 15;</code>
-       */
-      ENDGAME(15),
-      /**
-       * <code>GENDER_SELECT = 16;</code>
-       */
-      GENDER_SELECT(16),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <code>NONE = 0;</code>
-       */
-      public static final int NONE_VALUE = 0;
-      /**
-       * <code>RANDOM = 1;</code>
-       */
-      public static final int RANDOM_VALUE = 1;
-      /**
-       * <code>LOBBY = 2;</code>
-       */
-      public static final int LOBBY_VALUE = 2;
-      /**
-       * <code>HARDWARE_LABS = 3;</code>
-       */
-      public static final int HARDWARE_LABS_VALUE = 3;
-      /**
-       * <code>PSYCHOTRONICS = 4;</code>
-       */
-      public static final int PSYCHOTRONICS_VALUE = 4;
-      /**
-       * <code>GUTS = 5;</code>
-       */
-      public static final int GUTS_VALUE = 5;
-      /**
-       * <code>ARBORETUM = 6;</code>
-       */
-      public static final int ARBORETUM_VALUE = 6;
-      /**
-       * <code>BRIDGE = 7;</code>
-       */
-      public static final int BRIDGE_VALUE = 7;
-      /**
-       * <code>CREW_QUARTERS = 8;</code>
-       */
-      public static final int CREW_QUARTERS_VALUE = 8;
-      /**
-       * <code>DEEP_STORAGE = 9;</code>
-       */
-      public static final int DEEP_STORAGE_VALUE = 9;
-      /**
-       * <code>CARGO_BAY = 10;</code>
-       */
-      public static final int CARGO_BAY_VALUE = 10;
-      /**
-       * <code>LIFE_SUPPORT = 11;</code>
-       */
-      public static final int LIFE_SUPPORT_VALUE = 11;
-      /**
-       * <code>POWER_PLANT = 12;</code>
-       */
-      public static final int POWER_PLANT_VALUE = 12;
-      /**
-       * <code>SHUTTLE_BAY = 13;</code>
-       */
-      public static final int SHUTTLE_BAY_VALUE = 13;
-      /**
-       * <code>EXTERIOR = 14;</code>
-       */
-      public static final int EXTERIOR_VALUE = 14;
-      /**
-       * <code>ENDGAME = 15;</code>
-       */
-      public static final int ENDGAME_VALUE = 15;
-      /**
-       * <code>GENDER_SELECT = 16;</code>
-       */
-      public static final int GENDER_SELECT_VALUE = 16;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static SpawnLocation valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static SpawnLocation forNumber(int value) {
-        switch (value) {
-          case 0: return NONE;
-          case 1: return RANDOM;
-          case 2: return LOBBY;
-          case 3: return HARDWARE_LABS;
-          case 4: return PSYCHOTRONICS;
-          case 5: return GUTS;
-          case 6: return ARBORETUM;
-          case 7: return BRIDGE;
-          case 8: return CREW_QUARTERS;
-          case 9: return DEEP_STORAGE;
-          case 10: return CARGO_BAY;
-          case 11: return LIFE_SUPPORT;
-          case 12: return POWER_PLANT;
-          case 13: return SHUTTLE_BAY;
-          case 14: return EXTERIOR;
-          case 15: return ENDGAME;
-          case 16: return GENDER_SELECT;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          SpawnLocation> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>() {
-              public SpawnLocation findValueByNumber(int number) {
-                return SpawnLocation.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
-        }
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return proto.RandomizerSettings.StoryProgressionSettings.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final SpawnLocation[] VALUES = values();
-
-      public static SpawnLocation valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private SpawnLocation(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:StoryProgressionSettings.SpawnLocation)
-    }
-
-    public static final int RANDOMIZE_STATION_FIELD_NUMBER = 1;
-    private boolean randomizeStation_;
-    /**
-     * <code>bool randomize_station = 1;</code>
-     * @return The randomizeStation.
-     */
-    @java.lang.Override
-    public boolean getRandomizeStation() {
-      return randomizeStation_;
-    }
-
-    public static final int USE_CUSTOM_SPAWN_FIELD_NUMBER = 2;
-    private boolean useCustomSpawn_;
-    /**
-     * <code>bool use_custom_spawn = 2;</code>
-     * @return The useCustomSpawn.
-     */
-    @java.lang.Override
-    public boolean getUseCustomSpawn() {
-      return useCustomSpawn_;
-    }
-
-    public static final int CUSTOM_SPAWN_LOCATION_FIELD_NUMBER = 3;
-    private int customSpawnLocation_;
-    /**
-     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-     * @return The enum numeric value on the wire for customSpawnLocation.
-     */
-    @java.lang.Override public int getCustomSpawnLocationValue() {
-      return customSpawnLocation_;
-    }
-    /**
-     * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-     * @return The customSpawnLocation.
-     */
-    @java.lang.Override public proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation getCustomSpawnLocation() {
-      @SuppressWarnings("deprecation")
-      proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation result = proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.valueOf(customSpawnLocation_);
-      return result == null ? proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.UNRECOGNIZED : result;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (randomizeStation_ != false) {
-        output.writeBool(1, randomizeStation_);
-      }
-      if (useCustomSpawn_ != false) {
-        output.writeBool(2, useCustomSpawn_);
-      }
-      if (customSpawnLocation_ != proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.NONE.getNumber()) {
-        output.writeEnum(3, customSpawnLocation_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (randomizeStation_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, randomizeStation_);
-      }
-      if (useCustomSpawn_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, useCustomSpawn_);
-      }
-      if (customSpawnLocation_ != proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.NONE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, customSpawnLocation_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RandomizerSettings.StoryProgressionSettings)) {
-        return super.equals(obj);
-      }
-      proto.RandomizerSettings.StoryProgressionSettings other = (proto.RandomizerSettings.StoryProgressionSettings) obj;
-
-      if (getRandomizeStation()
-          != other.getRandomizeStation()) return false;
-      if (getUseCustomSpawn()
-          != other.getUseCustomSpawn()) return false;
-      if (customSpawnLocation_ != other.customSpawnLocation_) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + RANDOMIZE_STATION_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeStation());
-      hash = (37 * hash) + USE_CUSTOM_SPAWN_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getUseCustomSpawn());
-      hash = (37 * hash) + CUSTOM_SPAWN_LOCATION_FIELD_NUMBER;
-      hash = (53 * hash) + customSpawnLocation_;
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RandomizerSettings.StoryProgressionSettings parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RandomizerSettings.StoryProgressionSettings prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code StoryProgressionSettings}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:StoryProgressionSettings)
-        proto.RandomizerSettings.StoryProgressionSettingsOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RandomizerSettings.internal_static_StoryProgressionSettings_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RandomizerSettings.internal_static_StoryProgressionSettings_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RandomizerSettings.StoryProgressionSettings.class, proto.RandomizerSettings.StoryProgressionSettings.Builder.class);
-      }
-
-      // Construct using proto.RandomizerSettings.StoryProgressionSettings.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        randomizeStation_ = false;
-
-        useCustomSpawn_ = false;
-
-        customSpawnLocation_ = 0;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RandomizerSettings.internal_static_StoryProgressionSettings_descriptor;
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.StoryProgressionSettings getDefaultInstanceForType() {
-        return proto.RandomizerSettings.StoryProgressionSettings.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.StoryProgressionSettings build() {
-        proto.RandomizerSettings.StoryProgressionSettings result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public proto.RandomizerSettings.StoryProgressionSettings buildPartial() {
-        proto.RandomizerSettings.StoryProgressionSettings result = new proto.RandomizerSettings.StoryProgressionSettings(this);
-        result.randomizeStation_ = randomizeStation_;
-        result.useCustomSpawn_ = useCustomSpawn_;
-        result.customSpawnLocation_ = customSpawnLocation_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RandomizerSettings.StoryProgressionSettings) {
-          return mergeFrom((proto.RandomizerSettings.StoryProgressionSettings)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RandomizerSettings.StoryProgressionSettings other) {
-        if (other == proto.RandomizerSettings.StoryProgressionSettings.getDefaultInstance()) return this;
-        if (other.getRandomizeStation() != false) {
-          setRandomizeStation(other.getRandomizeStation());
-        }
-        if (other.getUseCustomSpawn() != false) {
-          setUseCustomSpawn(other.getUseCustomSpawn());
-        }
-        if (other.customSpawnLocation_ != 0) {
-          setCustomSpawnLocationValue(other.getCustomSpawnLocationValue());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RandomizerSettings.StoryProgressionSettings parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RandomizerSettings.StoryProgressionSettings) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
 
       private boolean randomizeStation_ ;
       /**
-       * <code>bool randomize_station = 1;</code>
+       * <code>bool randomize_station = 3;</code>
        * @return The randomizeStation.
        */
       @java.lang.Override
@@ -6937,7 +5171,7 @@ public final class RandomizerSettings {
         return randomizeStation_;
       }
       /**
-       * <code>bool randomize_station = 1;</code>
+       * <code>bool randomize_station = 3;</code>
        * @param value The randomizeStation to set.
        * @return This builder for chaining.
        */
@@ -6948,7 +5182,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>bool randomize_station = 1;</code>
+       * <code>bool randomize_station = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearRandomizeStation() {
@@ -6958,87 +5192,188 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private boolean useCustomSpawn_ ;
+      private boolean randomizeNeuromods_ ;
       /**
-       * <code>bool use_custom_spawn = 2;</code>
-       * @return The useCustomSpawn.
+       * <code>bool randomize_neuromods = 4;</code>
+       * @return The randomizeNeuromods.
        */
       @java.lang.Override
-      public boolean getUseCustomSpawn() {
-        return useCustomSpawn_;
+      public boolean getRandomizeNeuromods() {
+        return randomizeNeuromods_;
       }
       /**
-       * <code>bool use_custom_spawn = 2;</code>
-       * @param value The useCustomSpawn to set.
+       * <code>bool randomize_neuromods = 4;</code>
+       * @param value The randomizeNeuromods to set.
        * @return This builder for chaining.
        */
-      public Builder setUseCustomSpawn(boolean value) {
+      public Builder setRandomizeNeuromods(boolean value) {
         
-        useCustomSpawn_ = value;
+        randomizeNeuromods_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool use_custom_spawn = 2;</code>
+       * <code>bool randomize_neuromods = 4;</code>
        * @return This builder for chaining.
        */
-      public Builder clearUseCustomSpawn() {
+      public Builder clearRandomizeNeuromods() {
         
-        useCustomSpawn_ = false;
+        randomizeNeuromods_ = false;
         onChanged();
         return this;
       }
 
-      private int customSpawnLocation_ = 0;
+      private boolean randomizeFabPlanCosts_ ;
       /**
-       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-       * @return The enum numeric value on the wire for customSpawnLocation.
-       */
-      @java.lang.Override public int getCustomSpawnLocationValue() {
-        return customSpawnLocation_;
-      }
-      /**
-       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-       * @param value The enum numeric value on the wire for customSpawnLocation to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCustomSpawnLocationValue(int value) {
-        
-        customSpawnLocation_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-       * @return The customSpawnLocation.
+       * <code>bool randomize_fab_plan_costs = 5;</code>
+       * @return The randomizeFabPlanCosts.
        */
       @java.lang.Override
-      public proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation getCustomSpawnLocation() {
-        @SuppressWarnings("deprecation")
-        proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation result = proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.valueOf(customSpawnLocation_);
-        return result == null ? proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation.UNRECOGNIZED : result;
+      public boolean getRandomizeFabPlanCosts() {
+        return randomizeFabPlanCosts_;
       }
       /**
-       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
-       * @param value The customSpawnLocation to set.
+       * <code>bool randomize_fab_plan_costs = 5;</code>
+       * @param value The randomizeFabPlanCosts to set.
        * @return This builder for chaining.
        */
-      public Builder setCustomSpawnLocation(proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
+      public Builder setRandomizeFabPlanCosts(boolean value) {
         
-        customSpawnLocation_ = value.getNumber();
+        randomizeFabPlanCosts_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>.StoryProgressionSettings.SpawnLocation custom_spawn_location = 3;</code>
+       * <code>bool randomize_fab_plan_costs = 5;</code>
        * @return This builder for chaining.
        */
-      public Builder clearCustomSpawnLocation() {
+      public Builder clearRandomizeFabPlanCosts() {
         
-        customSpawnLocation_ = 0;
+        randomizeFabPlanCosts_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeRecyclers_ ;
+      /**
+       * <code>bool randomize_recyclers = 6;</code>
+       * @return The randomizeRecyclers.
+       */
+      @java.lang.Override
+      public boolean getRandomizeRecyclers() {
+        return randomizeRecyclers_;
+      }
+      /**
+       * <code>bool randomize_recyclers = 6;</code>
+       * @param value The randomizeRecyclers to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeRecyclers(boolean value) {
+        
+        randomizeRecyclers_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_recyclers = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeRecyclers() {
+        
+        randomizeRecyclers_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeDispensers_ ;
+      /**
+       * <code>bool randomize_dispensers = 7;</code>
+       * @return The randomizeDispensers.
+       */
+      @java.lang.Override
+      public boolean getRandomizeDispensers() {
+        return randomizeDispensers_;
+      }
+      /**
+       * <code>bool randomize_dispensers = 7;</code>
+       * @param value The randomizeDispensers to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeDispensers(boolean value) {
+        
+        randomizeDispensers_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_dispensers = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeDispensers() {
+        
+        randomizeDispensers_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeBreakables_ ;
+      /**
+       * <code>bool randomize_breakables = 8;</code>
+       * @return The randomizeBreakables.
+       */
+      @java.lang.Override
+      public boolean getRandomizeBreakables() {
+        return randomizeBreakables_;
+      }
+      /**
+       * <code>bool randomize_breakables = 8;</code>
+       * @param value The randomizeBreakables to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeBreakables(boolean value) {
+        
+        randomizeBreakables_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_breakables = 8;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeBreakables() {
+        
+        randomizeBreakables_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeHackables_ ;
+      /**
+       * <code>bool randomize_hackables = 9;</code>
+       * @return The randomizeHackables.
+       */
+      @java.lang.Override
+      public boolean getRandomizeHackables() {
+        return randomizeHackables_;
+      }
+      /**
+       * <code>bool randomize_hackables = 9;</code>
+       * @param value The randomizeHackables to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeHackables(boolean value) {
+        
+        randomizeHackables_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_hackables = 9;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeHackables() {
+        
+        randomizeHackables_ = false;
         onChanged();
         return this;
       }
@@ -7055,41 +5390,41 @@ public final class RandomizerSettings {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:StoryProgressionSettings)
+      // @@protoc_insertion_point(builder_scope:GameplaySettings)
     }
 
-    // @@protoc_insertion_point(class_scope:StoryProgressionSettings)
-    private static final proto.RandomizerSettings.StoryProgressionSettings DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:GameplaySettings)
+    private static final proto.RandomizerSettings.GameplaySettings DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.RandomizerSettings.StoryProgressionSettings();
+      DEFAULT_INSTANCE = new proto.RandomizerSettings.GameplaySettings();
     }
 
-    public static proto.RandomizerSettings.StoryProgressionSettings getDefaultInstance() {
+    public static proto.RandomizerSettings.GameplaySettings getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<StoryProgressionSettings>
-        PARSER = new com.google.protobuf.AbstractParser<StoryProgressionSettings>() {
+    private static final com.google.protobuf.Parser<GameplaySettings>
+        PARSER = new com.google.protobuf.AbstractParser<GameplaySettings>() {
       @java.lang.Override
-      public StoryProgressionSettings parsePartialFrom(
+      public GameplaySettings parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new StoryProgressionSettings(input, extensionRegistry);
+        return new GameplaySettings(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<StoryProgressionSettings> parser() {
+    public static com.google.protobuf.Parser<GameplaySettings> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<StoryProgressionSettings> getParserForType() {
+    public com.google.protobuf.Parser<GameplaySettings> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public proto.RandomizerSettings.StoryProgressionSettings getDefaultInstanceForType() {
+    public proto.RandomizerSettings.GameplaySettings getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -7726,6 +6061,779 @@ public final class RandomizerSettings {
 
   }
 
+  public interface MoreSettingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:MoreSettings)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool more_guns = 1;</code>
+     * @return The moreGuns.
+     */
+    boolean getMoreGuns();
+
+    /**
+     * <code>bool more_fab_plans = 2;</code>
+     * @return The moreFabPlans.
+     */
+    boolean getMoreFabPlans();
+
+    /**
+     * <code>bool more_neuromods = 3;</code>
+     * @return The moreNeuromods.
+     */
+    boolean getMoreNeuromods();
+
+    /**
+     * <code>bool more_chipsets = 4;</code>
+     * @return The moreChipsets.
+     */
+    boolean getMoreChipsets();
+
+    /**
+     * <code>bool more_enemies = 5;</code>
+     * @return The moreEnemies.
+     */
+    boolean getMoreEnemies();
+  }
+  /**
+   * Protobuf type {@code MoreSettings}
+   */
+  public static final class MoreSettings extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:MoreSettings)
+      MoreSettingsOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use MoreSettings.newBuilder() to construct.
+    private MoreSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private MoreSettings() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new MoreSettings();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private MoreSettings(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              moreGuns_ = input.readBool();
+              break;
+            }
+            case 16: {
+
+              moreFabPlans_ = input.readBool();
+              break;
+            }
+            case 24: {
+
+              moreNeuromods_ = input.readBool();
+              break;
+            }
+            case 32: {
+
+              moreChipsets_ = input.readBool();
+              break;
+            }
+            case 40: {
+
+              moreEnemies_ = input.readBool();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.RandomizerSettings.internal_static_MoreSettings_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.RandomizerSettings.internal_static_MoreSettings_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.RandomizerSettings.MoreSettings.class, proto.RandomizerSettings.MoreSettings.Builder.class);
+    }
+
+    public static final int MORE_GUNS_FIELD_NUMBER = 1;
+    private boolean moreGuns_;
+    /**
+     * <code>bool more_guns = 1;</code>
+     * @return The moreGuns.
+     */
+    @java.lang.Override
+    public boolean getMoreGuns() {
+      return moreGuns_;
+    }
+
+    public static final int MORE_FAB_PLANS_FIELD_NUMBER = 2;
+    private boolean moreFabPlans_;
+    /**
+     * <code>bool more_fab_plans = 2;</code>
+     * @return The moreFabPlans.
+     */
+    @java.lang.Override
+    public boolean getMoreFabPlans() {
+      return moreFabPlans_;
+    }
+
+    public static final int MORE_NEUROMODS_FIELD_NUMBER = 3;
+    private boolean moreNeuromods_;
+    /**
+     * <code>bool more_neuromods = 3;</code>
+     * @return The moreNeuromods.
+     */
+    @java.lang.Override
+    public boolean getMoreNeuromods() {
+      return moreNeuromods_;
+    }
+
+    public static final int MORE_CHIPSETS_FIELD_NUMBER = 4;
+    private boolean moreChipsets_;
+    /**
+     * <code>bool more_chipsets = 4;</code>
+     * @return The moreChipsets.
+     */
+    @java.lang.Override
+    public boolean getMoreChipsets() {
+      return moreChipsets_;
+    }
+
+    public static final int MORE_ENEMIES_FIELD_NUMBER = 5;
+    private boolean moreEnemies_;
+    /**
+     * <code>bool more_enemies = 5;</code>
+     * @return The moreEnemies.
+     */
+    @java.lang.Override
+    public boolean getMoreEnemies() {
+      return moreEnemies_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (moreGuns_ != false) {
+        output.writeBool(1, moreGuns_);
+      }
+      if (moreFabPlans_ != false) {
+        output.writeBool(2, moreFabPlans_);
+      }
+      if (moreNeuromods_ != false) {
+        output.writeBool(3, moreNeuromods_);
+      }
+      if (moreChipsets_ != false) {
+        output.writeBool(4, moreChipsets_);
+      }
+      if (moreEnemies_ != false) {
+        output.writeBool(5, moreEnemies_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (moreGuns_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, moreGuns_);
+      }
+      if (moreFabPlans_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, moreFabPlans_);
+      }
+      if (moreNeuromods_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, moreNeuromods_);
+      }
+      if (moreChipsets_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, moreChipsets_);
+      }
+      if (moreEnemies_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, moreEnemies_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.RandomizerSettings.MoreSettings)) {
+        return super.equals(obj);
+      }
+      proto.RandomizerSettings.MoreSettings other = (proto.RandomizerSettings.MoreSettings) obj;
+
+      if (getMoreGuns()
+          != other.getMoreGuns()) return false;
+      if (getMoreFabPlans()
+          != other.getMoreFabPlans()) return false;
+      if (getMoreNeuromods()
+          != other.getMoreNeuromods()) return false;
+      if (getMoreChipsets()
+          != other.getMoreChipsets()) return false;
+      if (getMoreEnemies()
+          != other.getMoreEnemies()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MORE_GUNS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getMoreGuns());
+      hash = (37 * hash) + MORE_FAB_PLANS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getMoreFabPlans());
+      hash = (37 * hash) + MORE_NEUROMODS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getMoreNeuromods());
+      hash = (37 * hash) + MORE_CHIPSETS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getMoreChipsets());
+      hash = (37 * hash) + MORE_ENEMIES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getMoreEnemies());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.MoreSettings parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.RandomizerSettings.MoreSettings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code MoreSettings}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:MoreSettings)
+        proto.RandomizerSettings.MoreSettingsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.RandomizerSettings.internal_static_MoreSettings_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.RandomizerSettings.internal_static_MoreSettings_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.RandomizerSettings.MoreSettings.class, proto.RandomizerSettings.MoreSettings.Builder.class);
+      }
+
+      // Construct using proto.RandomizerSettings.MoreSettings.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        moreGuns_ = false;
+
+        moreFabPlans_ = false;
+
+        moreNeuromods_ = false;
+
+        moreChipsets_ = false;
+
+        moreEnemies_ = false;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.RandomizerSettings.internal_static_MoreSettings_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.MoreSettings getDefaultInstanceForType() {
+        return proto.RandomizerSettings.MoreSettings.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.MoreSettings build() {
+        proto.RandomizerSettings.MoreSettings result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.MoreSettings buildPartial() {
+        proto.RandomizerSettings.MoreSettings result = new proto.RandomizerSettings.MoreSettings(this);
+        result.moreGuns_ = moreGuns_;
+        result.moreFabPlans_ = moreFabPlans_;
+        result.moreNeuromods_ = moreNeuromods_;
+        result.moreChipsets_ = moreChipsets_;
+        result.moreEnemies_ = moreEnemies_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.RandomizerSettings.MoreSettings) {
+          return mergeFrom((proto.RandomizerSettings.MoreSettings)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.RandomizerSettings.MoreSettings other) {
+        if (other == proto.RandomizerSettings.MoreSettings.getDefaultInstance()) return this;
+        if (other.getMoreGuns() != false) {
+          setMoreGuns(other.getMoreGuns());
+        }
+        if (other.getMoreFabPlans() != false) {
+          setMoreFabPlans(other.getMoreFabPlans());
+        }
+        if (other.getMoreNeuromods() != false) {
+          setMoreNeuromods(other.getMoreNeuromods());
+        }
+        if (other.getMoreChipsets() != false) {
+          setMoreChipsets(other.getMoreChipsets());
+        }
+        if (other.getMoreEnemies() != false) {
+          setMoreEnemies(other.getMoreEnemies());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.RandomizerSettings.MoreSettings parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.RandomizerSettings.MoreSettings) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean moreGuns_ ;
+      /**
+       * <code>bool more_guns = 1;</code>
+       * @return The moreGuns.
+       */
+      @java.lang.Override
+      public boolean getMoreGuns() {
+        return moreGuns_;
+      }
+      /**
+       * <code>bool more_guns = 1;</code>
+       * @param value The moreGuns to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoreGuns(boolean value) {
+        
+        moreGuns_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool more_guns = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoreGuns() {
+        
+        moreGuns_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean moreFabPlans_ ;
+      /**
+       * <code>bool more_fab_plans = 2;</code>
+       * @return The moreFabPlans.
+       */
+      @java.lang.Override
+      public boolean getMoreFabPlans() {
+        return moreFabPlans_;
+      }
+      /**
+       * <code>bool more_fab_plans = 2;</code>
+       * @param value The moreFabPlans to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoreFabPlans(boolean value) {
+        
+        moreFabPlans_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool more_fab_plans = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoreFabPlans() {
+        
+        moreFabPlans_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean moreNeuromods_ ;
+      /**
+       * <code>bool more_neuromods = 3;</code>
+       * @return The moreNeuromods.
+       */
+      @java.lang.Override
+      public boolean getMoreNeuromods() {
+        return moreNeuromods_;
+      }
+      /**
+       * <code>bool more_neuromods = 3;</code>
+       * @param value The moreNeuromods to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoreNeuromods(boolean value) {
+        
+        moreNeuromods_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool more_neuromods = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoreNeuromods() {
+        
+        moreNeuromods_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean moreChipsets_ ;
+      /**
+       * <code>bool more_chipsets = 4;</code>
+       * @return The moreChipsets.
+       */
+      @java.lang.Override
+      public boolean getMoreChipsets() {
+        return moreChipsets_;
+      }
+      /**
+       * <code>bool more_chipsets = 4;</code>
+       * @param value The moreChipsets to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoreChipsets(boolean value) {
+        
+        moreChipsets_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool more_chipsets = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoreChipsets() {
+        
+        moreChipsets_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean moreEnemies_ ;
+      /**
+       * <code>bool more_enemies = 5;</code>
+       * @return The moreEnemies.
+       */
+      @java.lang.Override
+      public boolean getMoreEnemies() {
+        return moreEnemies_;
+      }
+      /**
+       * <code>bool more_enemies = 5;</code>
+       * @param value The moreEnemies to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoreEnemies(boolean value) {
+        
+        moreEnemies_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool more_enemies = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoreEnemies() {
+        
+        moreEnemies_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:MoreSettings)
+    }
+
+    // @@protoc_insertion_point(class_scope:MoreSettings)
+    private static final proto.RandomizerSettings.MoreSettings DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.RandomizerSettings.MoreSettings();
+    }
+
+    public static proto.RandomizerSettings.MoreSettings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<MoreSettings>
+        PARSER = new com.google.protobuf.AbstractParser<MoreSettings>() {
+      @java.lang.Override
+      public MoreSettings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MoreSettings(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<MoreSettings> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<MoreSettings> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.RandomizerSettings.MoreSettings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface CheatSettingsOrBuilder extends
       // @@protoc_insertion_point(interface_extends:CheatSettings)
       com.google.protobuf.MessageOrBuilder {
@@ -7743,60 +6851,35 @@ public final class RandomizerSettings {
     boolean getUnlockAllScans();
 
     /**
-     * <code>bool wandering_humans = 3;</code>
-     * @return The wanderingHumans.
+     * <code>bool friendly_npcs = 3;</code>
+     * @return The friendlyNpcs.
      */
-    boolean getWanderingHumans();
+    boolean getFriendlyNpcs();
 
     /**
-     * <code>bool start_self_destruct = 4;</code>
-     * @return The startSelfDestruct.
+     * <code>bool use_custom_spawn = 4;</code>
+     * @return The useCustomSpawn.
      */
-    boolean getStartSelfDestruct();
+    boolean getUseCustomSpawn();
 
     /**
-     * <code>string self_destruct_timer = 5;</code>
-     * @return The selfDestructTimer.
+     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+     * @return The enum numeric value on the wire for customSpawnLocation.
      */
-    java.lang.String getSelfDestructTimer();
+    int getCustomSpawnLocationValue();
     /**
-     * <code>string self_destruct_timer = 5;</code>
-     * @return The bytes for selfDestructTimer.
+     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+     * @return The customSpawnLocation.
      */
-    com.google.protobuf.ByteString
-        getSelfDestructTimerBytes();
+    proto.RandomizerSettings.CheatSettings.SpawnLocation getCustomSpawnLocation();
 
     /**
-     * <code>string self_destruct_shuttle_timer = 6;</code>
-     * @return The selfDestructShuttleTimer.
-     */
-    java.lang.String getSelfDestructShuttleTimer();
-    /**
-     * <code>string self_destruct_shuttle_timer = 6;</code>
-     * @return The bytes for selfDestructShuttleTimer.
-     */
-    com.google.protobuf.ByteString
-        getSelfDestructShuttleTimerBytes();
-
-    /**
-     * <code>bool zero_gravity_everywhere = 7;</code>
-     * @return The zeroGravityEverywhere.
-     */
-    boolean getZeroGravityEverywhere();
-
-    /**
-     * <code>bool enable_gravity_in_ext_and_guts = 8;</code>
-     * @return The enableGravityInExtAndGuts.
-     */
-    boolean getEnableGravityInExtAndGuts();
-
-    /**
-     * <code>string game_token_overrides = 9;</code>
+     * <code>string game_token_overrides = 6;</code>
      * @return The gameTokenOverrides.
      */
     java.lang.String getGameTokenOverrides();
     /**
-     * <code>string game_token_overrides = 9;</code>
+     * <code>string game_token_overrides = 6;</code>
      * @return The bytes for gameTokenOverrides.
      */
     com.google.protobuf.ByteString
@@ -7815,8 +6898,7 @@ public final class RandomizerSettings {
       super(builder);
     }
     private CheatSettings() {
-      selfDestructTimer_ = "";
-      selfDestructShuttleTimer_ = "";
+      customSpawnLocation_ = 0;
       gameTokenOverrides_ = "";
     }
 
@@ -7862,37 +6944,21 @@ public final class RandomizerSettings {
             }
             case 24: {
 
-              wanderingHumans_ = input.readBool();
+              friendlyNpcs_ = input.readBool();
               break;
             }
             case 32: {
 
-              startSelfDestruct_ = input.readBool();
+              useCustomSpawn_ = input.readBool();
               break;
             }
-            case 42: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 40: {
+              int rawValue = input.readEnum();
 
-              selfDestructTimer_ = s;
+              customSpawnLocation_ = rawValue;
               break;
             }
             case 50: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              selfDestructShuttleTimer_ = s;
-              break;
-            }
-            case 56: {
-
-              zeroGravityEverywhere_ = input.readBool();
-              break;
-            }
-            case 64: {
-
-              enableGravityInExtAndGuts_ = input.readBool();
-              break;
-            }
-            case 74: {
               java.lang.String s = input.readStringRequireUtf8();
 
               gameTokenOverrides_ = s;
@@ -7930,6 +6996,249 @@ public final class RandomizerSettings {
               proto.RandomizerSettings.CheatSettings.class, proto.RandomizerSettings.CheatSettings.Builder.class);
     }
 
+    /**
+     * Protobuf enum {@code CheatSettings.SpawnLocation}
+     */
+    public enum SpawnLocation
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>NONE = 0;</code>
+       */
+      NONE(0),
+      /**
+       * <code>RANDOM = 1;</code>
+       */
+      RANDOM(1),
+      /**
+       * <code>LOBBY = 2;</code>
+       */
+      LOBBY(2),
+      /**
+       * <code>HARDWARE_LABS = 3;</code>
+       */
+      HARDWARE_LABS(3),
+      /**
+       * <code>PSYCHOTRONICS = 4;</code>
+       */
+      PSYCHOTRONICS(4),
+      /**
+       * <code>GUTS = 5;</code>
+       */
+      GUTS(5),
+      /**
+       * <code>ARBORETUM = 6;</code>
+       */
+      ARBORETUM(6),
+      /**
+       * <code>BRIDGE = 7;</code>
+       */
+      BRIDGE(7),
+      /**
+       * <code>CREW_QUARTERS = 8;</code>
+       */
+      CREW_QUARTERS(8),
+      /**
+       * <code>DEEP_STORAGE = 9;</code>
+       */
+      DEEP_STORAGE(9),
+      /**
+       * <code>CARGO_BAY = 10;</code>
+       */
+      CARGO_BAY(10),
+      /**
+       * <code>LIFE_SUPPORT = 11;</code>
+       */
+      LIFE_SUPPORT(11),
+      /**
+       * <code>POWER_PLANT = 12;</code>
+       */
+      POWER_PLANT(12),
+      /**
+       * <code>SHUTTLE_BAY = 13;</code>
+       */
+      SHUTTLE_BAY(13),
+      /**
+       * <code>EXTERIOR = 14;</code>
+       */
+      EXTERIOR(14),
+      /**
+       * <code>ENDGAME = 15;</code>
+       */
+      ENDGAME(15),
+      /**
+       * <code>GENDER_SELECT = 16;</code>
+       */
+      GENDER_SELECT(16),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>NONE = 0;</code>
+       */
+      public static final int NONE_VALUE = 0;
+      /**
+       * <code>RANDOM = 1;</code>
+       */
+      public static final int RANDOM_VALUE = 1;
+      /**
+       * <code>LOBBY = 2;</code>
+       */
+      public static final int LOBBY_VALUE = 2;
+      /**
+       * <code>HARDWARE_LABS = 3;</code>
+       */
+      public static final int HARDWARE_LABS_VALUE = 3;
+      /**
+       * <code>PSYCHOTRONICS = 4;</code>
+       */
+      public static final int PSYCHOTRONICS_VALUE = 4;
+      /**
+       * <code>GUTS = 5;</code>
+       */
+      public static final int GUTS_VALUE = 5;
+      /**
+       * <code>ARBORETUM = 6;</code>
+       */
+      public static final int ARBORETUM_VALUE = 6;
+      /**
+       * <code>BRIDGE = 7;</code>
+       */
+      public static final int BRIDGE_VALUE = 7;
+      /**
+       * <code>CREW_QUARTERS = 8;</code>
+       */
+      public static final int CREW_QUARTERS_VALUE = 8;
+      /**
+       * <code>DEEP_STORAGE = 9;</code>
+       */
+      public static final int DEEP_STORAGE_VALUE = 9;
+      /**
+       * <code>CARGO_BAY = 10;</code>
+       */
+      public static final int CARGO_BAY_VALUE = 10;
+      /**
+       * <code>LIFE_SUPPORT = 11;</code>
+       */
+      public static final int LIFE_SUPPORT_VALUE = 11;
+      /**
+       * <code>POWER_PLANT = 12;</code>
+       */
+      public static final int POWER_PLANT_VALUE = 12;
+      /**
+       * <code>SHUTTLE_BAY = 13;</code>
+       */
+      public static final int SHUTTLE_BAY_VALUE = 13;
+      /**
+       * <code>EXTERIOR = 14;</code>
+       */
+      public static final int EXTERIOR_VALUE = 14;
+      /**
+       * <code>ENDGAME = 15;</code>
+       */
+      public static final int ENDGAME_VALUE = 15;
+      /**
+       * <code>GENDER_SELECT = 16;</code>
+       */
+      public static final int GENDER_SELECT_VALUE = 16;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static SpawnLocation valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static SpawnLocation forNumber(int value) {
+        switch (value) {
+          case 0: return NONE;
+          case 1: return RANDOM;
+          case 2: return LOBBY;
+          case 3: return HARDWARE_LABS;
+          case 4: return PSYCHOTRONICS;
+          case 5: return GUTS;
+          case 6: return ARBORETUM;
+          case 7: return BRIDGE;
+          case 8: return CREW_QUARTERS;
+          case 9: return DEEP_STORAGE;
+          case 10: return CARGO_BAY;
+          case 11: return LIFE_SUPPORT;
+          case 12: return POWER_PLANT;
+          case 13: return SHUTTLE_BAY;
+          case 14: return EXTERIOR;
+          case 15: return ENDGAME;
+          case 16: return GENDER_SELECT;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          SpawnLocation> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>() {
+              public SpawnLocation findValueByNumber(int number) {
+                return SpawnLocation.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalStateException(
+              "Can't get the descriptor of an unrecognized enum value.");
+        }
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return proto.RandomizerSettings.CheatSettings.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final SpawnLocation[] VALUES = values();
+
+      public static SpawnLocation valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private SpawnLocation(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:CheatSettings.SpawnLocation)
+    }
+
     public static final int OPEN_STATION_FIELD_NUMBER = 1;
     private boolean openStation_;
     /**
@@ -7952,130 +7261,51 @@ public final class RandomizerSettings {
       return unlockAllScans_;
     }
 
-    public static final int WANDERING_HUMANS_FIELD_NUMBER = 3;
-    private boolean wanderingHumans_;
+    public static final int FRIENDLY_NPCS_FIELD_NUMBER = 3;
+    private boolean friendlyNpcs_;
     /**
-     * <code>bool wandering_humans = 3;</code>
-     * @return The wanderingHumans.
+     * <code>bool friendly_npcs = 3;</code>
+     * @return The friendlyNpcs.
      */
     @java.lang.Override
-    public boolean getWanderingHumans() {
-      return wanderingHumans_;
+    public boolean getFriendlyNpcs() {
+      return friendlyNpcs_;
     }
 
-    public static final int START_SELF_DESTRUCT_FIELD_NUMBER = 4;
-    private boolean startSelfDestruct_;
+    public static final int USE_CUSTOM_SPAWN_FIELD_NUMBER = 4;
+    private boolean useCustomSpawn_;
     /**
-     * <code>bool start_self_destruct = 4;</code>
-     * @return The startSelfDestruct.
+     * <code>bool use_custom_spawn = 4;</code>
+     * @return The useCustomSpawn.
      */
     @java.lang.Override
-    public boolean getStartSelfDestruct() {
-      return startSelfDestruct_;
+    public boolean getUseCustomSpawn() {
+      return useCustomSpawn_;
     }
 
-    public static final int SELF_DESTRUCT_TIMER_FIELD_NUMBER = 5;
-    private volatile java.lang.Object selfDestructTimer_;
+    public static final int CUSTOM_SPAWN_LOCATION_FIELD_NUMBER = 5;
+    private int customSpawnLocation_;
     /**
-     * <code>string self_destruct_timer = 5;</code>
-     * @return The selfDestructTimer.
+     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+     * @return The enum numeric value on the wire for customSpawnLocation.
      */
-    @java.lang.Override
-    public java.lang.String getSelfDestructTimer() {
-      java.lang.Object ref = selfDestructTimer_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        selfDestructTimer_ = s;
-        return s;
-      }
+    @java.lang.Override public int getCustomSpawnLocationValue() {
+      return customSpawnLocation_;
     }
     /**
-     * <code>string self_destruct_timer = 5;</code>
-     * @return The bytes for selfDestructTimer.
+     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+     * @return The customSpawnLocation.
      */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getSelfDestructTimerBytes() {
-      java.lang.Object ref = selfDestructTimer_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        selfDestructTimer_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    @java.lang.Override public proto.RandomizerSettings.CheatSettings.SpawnLocation getCustomSpawnLocation() {
+      @SuppressWarnings("deprecation")
+      proto.RandomizerSettings.CheatSettings.SpawnLocation result = proto.RandomizerSettings.CheatSettings.SpawnLocation.valueOf(customSpawnLocation_);
+      return result == null ? proto.RandomizerSettings.CheatSettings.SpawnLocation.UNRECOGNIZED : result;
     }
 
-    public static final int SELF_DESTRUCT_SHUTTLE_TIMER_FIELD_NUMBER = 6;
-    private volatile java.lang.Object selfDestructShuttleTimer_;
-    /**
-     * <code>string self_destruct_shuttle_timer = 6;</code>
-     * @return The selfDestructShuttleTimer.
-     */
-    @java.lang.Override
-    public java.lang.String getSelfDestructShuttleTimer() {
-      java.lang.Object ref = selfDestructShuttleTimer_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        selfDestructShuttleTimer_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string self_destruct_shuttle_timer = 6;</code>
-     * @return The bytes for selfDestructShuttleTimer.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getSelfDestructShuttleTimerBytes() {
-      java.lang.Object ref = selfDestructShuttleTimer_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        selfDestructShuttleTimer_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int ZERO_GRAVITY_EVERYWHERE_FIELD_NUMBER = 7;
-    private boolean zeroGravityEverywhere_;
-    /**
-     * <code>bool zero_gravity_everywhere = 7;</code>
-     * @return The zeroGravityEverywhere.
-     */
-    @java.lang.Override
-    public boolean getZeroGravityEverywhere() {
-      return zeroGravityEverywhere_;
-    }
-
-    public static final int ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER = 8;
-    private boolean enableGravityInExtAndGuts_;
-    /**
-     * <code>bool enable_gravity_in_ext_and_guts = 8;</code>
-     * @return The enableGravityInExtAndGuts.
-     */
-    @java.lang.Override
-    public boolean getEnableGravityInExtAndGuts() {
-      return enableGravityInExtAndGuts_;
-    }
-
-    public static final int GAME_TOKEN_OVERRIDES_FIELD_NUMBER = 9;
+    public static final int GAME_TOKEN_OVERRIDES_FIELD_NUMBER = 6;
     private volatile java.lang.Object gameTokenOverrides_;
     /**
-     * <code>string game_token_overrides = 9;</code>
+     * <code>string game_token_overrides = 6;</code>
      * @return The gameTokenOverrides.
      */
     @java.lang.Override
@@ -8092,7 +7322,7 @@ public final class RandomizerSettings {
       }
     }
     /**
-     * <code>string game_token_overrides = 9;</code>
+     * <code>string game_token_overrides = 6;</code>
      * @return The bytes for gameTokenOverrides.
      */
     @java.lang.Override
@@ -8130,26 +7360,17 @@ public final class RandomizerSettings {
       if (unlockAllScans_ != false) {
         output.writeBool(2, unlockAllScans_);
       }
-      if (wanderingHumans_ != false) {
-        output.writeBool(3, wanderingHumans_);
+      if (friendlyNpcs_ != false) {
+        output.writeBool(3, friendlyNpcs_);
       }
-      if (startSelfDestruct_ != false) {
-        output.writeBool(4, startSelfDestruct_);
+      if (useCustomSpawn_ != false) {
+        output.writeBool(4, useCustomSpawn_);
       }
-      if (!getSelfDestructTimerBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, selfDestructTimer_);
-      }
-      if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, selfDestructShuttleTimer_);
-      }
-      if (zeroGravityEverywhere_ != false) {
-        output.writeBool(7, zeroGravityEverywhere_);
-      }
-      if (enableGravityInExtAndGuts_ != false) {
-        output.writeBool(8, enableGravityInExtAndGuts_);
+      if (customSpawnLocation_ != proto.RandomizerSettings.CheatSettings.SpawnLocation.NONE.getNumber()) {
+        output.writeEnum(5, customSpawnLocation_);
       }
       if (!getGameTokenOverridesBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 9, gameTokenOverrides_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, gameTokenOverrides_);
       }
       unknownFields.writeTo(output);
     }
@@ -8168,30 +7389,20 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, unlockAllScans_);
       }
-      if (wanderingHumans_ != false) {
+      if (friendlyNpcs_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, wanderingHumans_);
+          .computeBoolSize(3, friendlyNpcs_);
       }
-      if (startSelfDestruct_ != false) {
+      if (useCustomSpawn_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, startSelfDestruct_);
+          .computeBoolSize(4, useCustomSpawn_);
       }
-      if (!getSelfDestructTimerBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, selfDestructTimer_);
-      }
-      if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, selfDestructShuttleTimer_);
-      }
-      if (zeroGravityEverywhere_ != false) {
+      if (customSpawnLocation_ != proto.RandomizerSettings.CheatSettings.SpawnLocation.NONE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(7, zeroGravityEverywhere_);
-      }
-      if (enableGravityInExtAndGuts_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(8, enableGravityInExtAndGuts_);
+          .computeEnumSize(5, customSpawnLocation_);
       }
       if (!getGameTokenOverridesBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, gameTokenOverrides_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, gameTokenOverrides_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -8212,18 +7423,11 @@ public final class RandomizerSettings {
           != other.getOpenStation()) return false;
       if (getUnlockAllScans()
           != other.getUnlockAllScans()) return false;
-      if (getWanderingHumans()
-          != other.getWanderingHumans()) return false;
-      if (getStartSelfDestruct()
-          != other.getStartSelfDestruct()) return false;
-      if (!getSelfDestructTimer()
-          .equals(other.getSelfDestructTimer())) return false;
-      if (!getSelfDestructShuttleTimer()
-          .equals(other.getSelfDestructShuttleTimer())) return false;
-      if (getZeroGravityEverywhere()
-          != other.getZeroGravityEverywhere()) return false;
-      if (getEnableGravityInExtAndGuts()
-          != other.getEnableGravityInExtAndGuts()) return false;
+      if (getFriendlyNpcs()
+          != other.getFriendlyNpcs()) return false;
+      if (getUseCustomSpawn()
+          != other.getUseCustomSpawn()) return false;
+      if (customSpawnLocation_ != other.customSpawnLocation_) return false;
       if (!getGameTokenOverrides()
           .equals(other.getGameTokenOverrides())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
@@ -8243,22 +7447,14 @@ public final class RandomizerSettings {
       hash = (37 * hash) + UNLOCK_ALL_SCANS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getUnlockAllScans());
-      hash = (37 * hash) + WANDERING_HUMANS_FIELD_NUMBER;
+      hash = (37 * hash) + FRIENDLY_NPCS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getWanderingHumans());
-      hash = (37 * hash) + START_SELF_DESTRUCT_FIELD_NUMBER;
+          getFriendlyNpcs());
+      hash = (37 * hash) + USE_CUSTOM_SPAWN_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getStartSelfDestruct());
-      hash = (37 * hash) + SELF_DESTRUCT_TIMER_FIELD_NUMBER;
-      hash = (53 * hash) + getSelfDestructTimer().hashCode();
-      hash = (37 * hash) + SELF_DESTRUCT_SHUTTLE_TIMER_FIELD_NUMBER;
-      hash = (53 * hash) + getSelfDestructShuttleTimer().hashCode();
-      hash = (37 * hash) + ZERO_GRAVITY_EVERYWHERE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getZeroGravityEverywhere());
-      hash = (37 * hash) + ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getEnableGravityInExtAndGuts());
+          getUseCustomSpawn());
+      hash = (37 * hash) + CUSTOM_SPAWN_LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + customSpawnLocation_;
       hash = (37 * hash) + GAME_TOKEN_OVERRIDES_FIELD_NUMBER;
       hash = (53 * hash) + getGameTokenOverrides().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -8398,17 +7594,11 @@ public final class RandomizerSettings {
 
         unlockAllScans_ = false;
 
-        wanderingHumans_ = false;
+        friendlyNpcs_ = false;
 
-        startSelfDestruct_ = false;
+        useCustomSpawn_ = false;
 
-        selfDestructTimer_ = "";
-
-        selfDestructShuttleTimer_ = "";
-
-        zeroGravityEverywhere_ = false;
-
-        enableGravityInExtAndGuts_ = false;
+        customSpawnLocation_ = 0;
 
         gameTokenOverrides_ = "";
 
@@ -8440,12 +7630,9 @@ public final class RandomizerSettings {
         proto.RandomizerSettings.CheatSettings result = new proto.RandomizerSettings.CheatSettings(this);
         result.openStation_ = openStation_;
         result.unlockAllScans_ = unlockAllScans_;
-        result.wanderingHumans_ = wanderingHumans_;
-        result.startSelfDestruct_ = startSelfDestruct_;
-        result.selfDestructTimer_ = selfDestructTimer_;
-        result.selfDestructShuttleTimer_ = selfDestructShuttleTimer_;
-        result.zeroGravityEverywhere_ = zeroGravityEverywhere_;
-        result.enableGravityInExtAndGuts_ = enableGravityInExtAndGuts_;
+        result.friendlyNpcs_ = friendlyNpcs_;
+        result.useCustomSpawn_ = useCustomSpawn_;
+        result.customSpawnLocation_ = customSpawnLocation_;
         result.gameTokenOverrides_ = gameTokenOverrides_;
         onBuilt();
         return result;
@@ -8501,25 +7688,14 @@ public final class RandomizerSettings {
         if (other.getUnlockAllScans() != false) {
           setUnlockAllScans(other.getUnlockAllScans());
         }
-        if (other.getWanderingHumans() != false) {
-          setWanderingHumans(other.getWanderingHumans());
+        if (other.getFriendlyNpcs() != false) {
+          setFriendlyNpcs(other.getFriendlyNpcs());
         }
-        if (other.getStartSelfDestruct() != false) {
-          setStartSelfDestruct(other.getStartSelfDestruct());
+        if (other.getUseCustomSpawn() != false) {
+          setUseCustomSpawn(other.getUseCustomSpawn());
         }
-        if (!other.getSelfDestructTimer().isEmpty()) {
-          selfDestructTimer_ = other.selfDestructTimer_;
-          onChanged();
-        }
-        if (!other.getSelfDestructShuttleTimer().isEmpty()) {
-          selfDestructShuttleTimer_ = other.selfDestructShuttleTimer_;
-          onChanged();
-        }
-        if (other.getZeroGravityEverywhere() != false) {
-          setZeroGravityEverywhere(other.getZeroGravityEverywhere());
-        }
-        if (other.getEnableGravityInExtAndGuts() != false) {
-          setEnableGravityInExtAndGuts(other.getEnableGravityInExtAndGuts());
+        if (other.customSpawnLocation_ != 0) {
+          setCustomSpawnLocationValue(other.getCustomSpawnLocationValue());
         }
         if (!other.getGameTokenOverrides().isEmpty()) {
           gameTokenOverrides_ = other.gameTokenOverrides_;
@@ -8616,285 +7792,125 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private boolean wanderingHumans_ ;
+      private boolean friendlyNpcs_ ;
       /**
-       * <code>bool wandering_humans = 3;</code>
-       * @return The wanderingHumans.
+       * <code>bool friendly_npcs = 3;</code>
+       * @return The friendlyNpcs.
        */
       @java.lang.Override
-      public boolean getWanderingHumans() {
-        return wanderingHumans_;
+      public boolean getFriendlyNpcs() {
+        return friendlyNpcs_;
       }
       /**
-       * <code>bool wandering_humans = 3;</code>
-       * @param value The wanderingHumans to set.
+       * <code>bool friendly_npcs = 3;</code>
+       * @param value The friendlyNpcs to set.
        * @return This builder for chaining.
        */
-      public Builder setWanderingHumans(boolean value) {
+      public Builder setFriendlyNpcs(boolean value) {
         
-        wanderingHumans_ = value;
+        friendlyNpcs_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool wandering_humans = 3;</code>
+       * <code>bool friendly_npcs = 3;</code>
        * @return This builder for chaining.
        */
-      public Builder clearWanderingHumans() {
+      public Builder clearFriendlyNpcs() {
         
-        wanderingHumans_ = false;
+        friendlyNpcs_ = false;
         onChanged();
         return this;
       }
 
-      private boolean startSelfDestruct_ ;
+      private boolean useCustomSpawn_ ;
       /**
-       * <code>bool start_self_destruct = 4;</code>
-       * @return The startSelfDestruct.
+       * <code>bool use_custom_spawn = 4;</code>
+       * @return The useCustomSpawn.
        */
       @java.lang.Override
-      public boolean getStartSelfDestruct() {
-        return startSelfDestruct_;
+      public boolean getUseCustomSpawn() {
+        return useCustomSpawn_;
       }
       /**
-       * <code>bool start_self_destruct = 4;</code>
-       * @param value The startSelfDestruct to set.
+       * <code>bool use_custom_spawn = 4;</code>
+       * @param value The useCustomSpawn to set.
        * @return This builder for chaining.
        */
-      public Builder setStartSelfDestruct(boolean value) {
+      public Builder setUseCustomSpawn(boolean value) {
         
-        startSelfDestruct_ = value;
+        useCustomSpawn_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool start_self_destruct = 4;</code>
+       * <code>bool use_custom_spawn = 4;</code>
        * @return This builder for chaining.
        */
-      public Builder clearStartSelfDestruct() {
+      public Builder clearUseCustomSpawn() {
         
-        startSelfDestruct_ = false;
+        useCustomSpawn_ = false;
         onChanged();
         return this;
       }
 
-      private java.lang.Object selfDestructTimer_ = "";
+      private int customSpawnLocation_ = 0;
       /**
-       * <code>string self_destruct_timer = 5;</code>
-       * @return The selfDestructTimer.
+       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+       * @return The enum numeric value on the wire for customSpawnLocation.
        */
-      public java.lang.String getSelfDestructTimer() {
-        java.lang.Object ref = selfDestructTimer_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          selfDestructTimer_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      @java.lang.Override public int getCustomSpawnLocationValue() {
+        return customSpawnLocation_;
       }
       /**
-       * <code>string self_destruct_timer = 5;</code>
-       * @return The bytes for selfDestructTimer.
-       */
-      public com.google.protobuf.ByteString
-          getSelfDestructTimerBytes() {
-        java.lang.Object ref = selfDestructTimer_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          selfDestructTimer_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string self_destruct_timer = 5;</code>
-       * @param value The selfDestructTimer to set.
+       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+       * @param value The enum numeric value on the wire for customSpawnLocation to set.
        * @return This builder for chaining.
        */
-      public Builder setSelfDestructTimer(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        selfDestructTimer_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string self_destruct_timer = 5;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearSelfDestructTimer() {
+      public Builder setCustomSpawnLocationValue(int value) {
         
-        selfDestructTimer_ = getDefaultInstance().getSelfDestructTimer();
+        customSpawnLocation_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string self_destruct_timer = 5;</code>
-       * @param value The bytes for selfDestructTimer to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSelfDestructTimerBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        selfDestructTimer_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object selfDestructShuttleTimer_ = "";
-      /**
-       * <code>string self_destruct_shuttle_timer = 6;</code>
-       * @return The selfDestructShuttleTimer.
-       */
-      public java.lang.String getSelfDestructShuttleTimer() {
-        java.lang.Object ref = selfDestructShuttleTimer_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          selfDestructShuttleTimer_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string self_destruct_shuttle_timer = 6;</code>
-       * @return The bytes for selfDestructShuttleTimer.
-       */
-      public com.google.protobuf.ByteString
-          getSelfDestructShuttleTimerBytes() {
-        java.lang.Object ref = selfDestructShuttleTimer_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          selfDestructShuttleTimer_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string self_destruct_shuttle_timer = 6;</code>
-       * @param value The selfDestructShuttleTimer to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSelfDestructShuttleTimer(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        selfDestructShuttleTimer_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string self_destruct_shuttle_timer = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearSelfDestructShuttleTimer() {
-        
-        selfDestructShuttleTimer_ = getDefaultInstance().getSelfDestructShuttleTimer();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string self_destruct_shuttle_timer = 6;</code>
-       * @param value The bytes for selfDestructShuttleTimer to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSelfDestructShuttleTimerBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        selfDestructShuttleTimer_ = value;
-        onChanged();
-        return this;
-      }
-
-      private boolean zeroGravityEverywhere_ ;
-      /**
-       * <code>bool zero_gravity_everywhere = 7;</code>
-       * @return The zeroGravityEverywhere.
+       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+       * @return The customSpawnLocation.
        */
       @java.lang.Override
-      public boolean getZeroGravityEverywhere() {
-        return zeroGravityEverywhere_;
+      public proto.RandomizerSettings.CheatSettings.SpawnLocation getCustomSpawnLocation() {
+        @SuppressWarnings("deprecation")
+        proto.RandomizerSettings.CheatSettings.SpawnLocation result = proto.RandomizerSettings.CheatSettings.SpawnLocation.valueOf(customSpawnLocation_);
+        return result == null ? proto.RandomizerSettings.CheatSettings.SpawnLocation.UNRECOGNIZED : result;
       }
       /**
-       * <code>bool zero_gravity_everywhere = 7;</code>
-       * @param value The zeroGravityEverywhere to set.
+       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
+       * @param value The customSpawnLocation to set.
        * @return This builder for chaining.
        */
-      public Builder setZeroGravityEverywhere(boolean value) {
+      public Builder setCustomSpawnLocation(proto.RandomizerSettings.CheatSettings.SpawnLocation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         
-        zeroGravityEverywhere_ = value;
+        customSpawnLocation_ = value.getNumber();
         onChanged();
         return this;
       }
       /**
-       * <code>bool zero_gravity_everywhere = 7;</code>
+       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
        * @return This builder for chaining.
        */
-      public Builder clearZeroGravityEverywhere() {
+      public Builder clearCustomSpawnLocation() {
         
-        zeroGravityEverywhere_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean enableGravityInExtAndGuts_ ;
-      /**
-       * <code>bool enable_gravity_in_ext_and_guts = 8;</code>
-       * @return The enableGravityInExtAndGuts.
-       */
-      @java.lang.Override
-      public boolean getEnableGravityInExtAndGuts() {
-        return enableGravityInExtAndGuts_;
-      }
-      /**
-       * <code>bool enable_gravity_in_ext_and_guts = 8;</code>
-       * @param value The enableGravityInExtAndGuts to set.
-       * @return This builder for chaining.
-       */
-      public Builder setEnableGravityInExtAndGuts(boolean value) {
-        
-        enableGravityInExtAndGuts_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool enable_gravity_in_ext_and_guts = 8;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearEnableGravityInExtAndGuts() {
-        
-        enableGravityInExtAndGuts_ = false;
+        customSpawnLocation_ = 0;
         onChanged();
         return this;
       }
 
       private java.lang.Object gameTokenOverrides_ = "";
       /**
-       * <code>string game_token_overrides = 9;</code>
+       * <code>string game_token_overrides = 6;</code>
        * @return The gameTokenOverrides.
        */
       public java.lang.String getGameTokenOverrides() {
@@ -8910,7 +7926,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>string game_token_overrides = 9;</code>
+       * <code>string game_token_overrides = 6;</code>
        * @return The bytes for gameTokenOverrides.
        */
       public com.google.protobuf.ByteString
@@ -8927,7 +7943,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>string game_token_overrides = 9;</code>
+       * <code>string game_token_overrides = 6;</code>
        * @param value The gameTokenOverrides to set.
        * @return This builder for chaining.
        */
@@ -8942,7 +7958,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>string game_token_overrides = 9;</code>
+       * <code>string game_token_overrides = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearGameTokenOverrides() {
@@ -8952,7 +7968,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>string game_token_overrides = 9;</code>
+       * <code>string game_token_overrides = 6;</code>
        * @param value The bytes for gameTokenOverrides to set.
        * @return This builder for chaining.
        */
@@ -9015,6 +8031,1079 @@ public final class RandomizerSettings {
 
     @java.lang.Override
     public proto.RandomizerSettings.CheatSettings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ExperimentalSettingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ExperimentalSettings)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool wandering_humans = 1;</code>
+     * @return The wanderingHumans.
+     */
+    boolean getWanderingHumans();
+
+    /**
+     * <code>bool living_corpses = 2;</code>
+     * @return The livingCorpses.
+     */
+    boolean getLivingCorpses();
+
+    /**
+     * <code>bool zero_gravity_everywhere = 3;</code>
+     * @return The zeroGravityEverywhere.
+     */
+    boolean getZeroGravityEverywhere();
+
+    /**
+     * <code>bool enable_gravity_in_ext_and_guts = 4;</code>
+     * @return The enableGravityInExtAndGuts.
+     */
+    boolean getEnableGravityInExtAndGuts();
+
+    /**
+     * <code>bool start_self_destruct = 5;</code>
+     * @return The startSelfDestruct.
+     */
+    boolean getStartSelfDestruct();
+
+    /**
+     * <code>string self_destruct_timer = 6;</code>
+     * @return The selfDestructTimer.
+     */
+    java.lang.String getSelfDestructTimer();
+    /**
+     * <code>string self_destruct_timer = 6;</code>
+     * @return The bytes for selfDestructTimer.
+     */
+    com.google.protobuf.ByteString
+        getSelfDestructTimerBytes();
+
+    /**
+     * <code>string self_destruct_shuttle_timer = 7;</code>
+     * @return The selfDestructShuttleTimer.
+     */
+    java.lang.String getSelfDestructShuttleTimer();
+    /**
+     * <code>string self_destruct_shuttle_timer = 7;</code>
+     * @return The bytes for selfDestructShuttleTimer.
+     */
+    com.google.protobuf.ByteString
+        getSelfDestructShuttleTimerBytes();
+  }
+  /**
+   * Protobuf type {@code ExperimentalSettings}
+   */
+  public static final class ExperimentalSettings extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ExperimentalSettings)
+      ExperimentalSettingsOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ExperimentalSettings.newBuilder() to construct.
+    private ExperimentalSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ExperimentalSettings() {
+      selfDestructTimer_ = "";
+      selfDestructShuttleTimer_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ExperimentalSettings();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ExperimentalSettings(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              wanderingHumans_ = input.readBool();
+              break;
+            }
+            case 16: {
+
+              livingCorpses_ = input.readBool();
+              break;
+            }
+            case 24: {
+
+              zeroGravityEverywhere_ = input.readBool();
+              break;
+            }
+            case 32: {
+
+              enableGravityInExtAndGuts_ = input.readBool();
+              break;
+            }
+            case 40: {
+
+              startSelfDestruct_ = input.readBool();
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              selfDestructTimer_ = s;
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              selfDestructShuttleTimer_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.RandomizerSettings.internal_static_ExperimentalSettings_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.RandomizerSettings.internal_static_ExperimentalSettings_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.RandomizerSettings.ExperimentalSettings.class, proto.RandomizerSettings.ExperimentalSettings.Builder.class);
+    }
+
+    public static final int WANDERING_HUMANS_FIELD_NUMBER = 1;
+    private boolean wanderingHumans_;
+    /**
+     * <code>bool wandering_humans = 1;</code>
+     * @return The wanderingHumans.
+     */
+    @java.lang.Override
+    public boolean getWanderingHumans() {
+      return wanderingHumans_;
+    }
+
+    public static final int LIVING_CORPSES_FIELD_NUMBER = 2;
+    private boolean livingCorpses_;
+    /**
+     * <code>bool living_corpses = 2;</code>
+     * @return The livingCorpses.
+     */
+    @java.lang.Override
+    public boolean getLivingCorpses() {
+      return livingCorpses_;
+    }
+
+    public static final int ZERO_GRAVITY_EVERYWHERE_FIELD_NUMBER = 3;
+    private boolean zeroGravityEverywhere_;
+    /**
+     * <code>bool zero_gravity_everywhere = 3;</code>
+     * @return The zeroGravityEverywhere.
+     */
+    @java.lang.Override
+    public boolean getZeroGravityEverywhere() {
+      return zeroGravityEverywhere_;
+    }
+
+    public static final int ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER = 4;
+    private boolean enableGravityInExtAndGuts_;
+    /**
+     * <code>bool enable_gravity_in_ext_and_guts = 4;</code>
+     * @return The enableGravityInExtAndGuts.
+     */
+    @java.lang.Override
+    public boolean getEnableGravityInExtAndGuts() {
+      return enableGravityInExtAndGuts_;
+    }
+
+    public static final int START_SELF_DESTRUCT_FIELD_NUMBER = 5;
+    private boolean startSelfDestruct_;
+    /**
+     * <code>bool start_self_destruct = 5;</code>
+     * @return The startSelfDestruct.
+     */
+    @java.lang.Override
+    public boolean getStartSelfDestruct() {
+      return startSelfDestruct_;
+    }
+
+    public static final int SELF_DESTRUCT_TIMER_FIELD_NUMBER = 6;
+    private volatile java.lang.Object selfDestructTimer_;
+    /**
+     * <code>string self_destruct_timer = 6;</code>
+     * @return The selfDestructTimer.
+     */
+    @java.lang.Override
+    public java.lang.String getSelfDestructTimer() {
+      java.lang.Object ref = selfDestructTimer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        selfDestructTimer_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string self_destruct_timer = 6;</code>
+     * @return The bytes for selfDestructTimer.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getSelfDestructTimerBytes() {
+      java.lang.Object ref = selfDestructTimer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        selfDestructTimer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SELF_DESTRUCT_SHUTTLE_TIMER_FIELD_NUMBER = 7;
+    private volatile java.lang.Object selfDestructShuttleTimer_;
+    /**
+     * <code>string self_destruct_shuttle_timer = 7;</code>
+     * @return The selfDestructShuttleTimer.
+     */
+    @java.lang.Override
+    public java.lang.String getSelfDestructShuttleTimer() {
+      java.lang.Object ref = selfDestructShuttleTimer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        selfDestructShuttleTimer_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string self_destruct_shuttle_timer = 7;</code>
+     * @return The bytes for selfDestructShuttleTimer.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getSelfDestructShuttleTimerBytes() {
+      java.lang.Object ref = selfDestructShuttleTimer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        selfDestructShuttleTimer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (wanderingHumans_ != false) {
+        output.writeBool(1, wanderingHumans_);
+      }
+      if (livingCorpses_ != false) {
+        output.writeBool(2, livingCorpses_);
+      }
+      if (zeroGravityEverywhere_ != false) {
+        output.writeBool(3, zeroGravityEverywhere_);
+      }
+      if (enableGravityInExtAndGuts_ != false) {
+        output.writeBool(4, enableGravityInExtAndGuts_);
+      }
+      if (startSelfDestruct_ != false) {
+        output.writeBool(5, startSelfDestruct_);
+      }
+      if (!getSelfDestructTimerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, selfDestructTimer_);
+      }
+      if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, selfDestructShuttleTimer_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (wanderingHumans_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, wanderingHumans_);
+      }
+      if (livingCorpses_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, livingCorpses_);
+      }
+      if (zeroGravityEverywhere_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, zeroGravityEverywhere_);
+      }
+      if (enableGravityInExtAndGuts_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, enableGravityInExtAndGuts_);
+      }
+      if (startSelfDestruct_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, startSelfDestruct_);
+      }
+      if (!getSelfDestructTimerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, selfDestructTimer_);
+      }
+      if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, selfDestructShuttleTimer_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.RandomizerSettings.ExperimentalSettings)) {
+        return super.equals(obj);
+      }
+      proto.RandomizerSettings.ExperimentalSettings other = (proto.RandomizerSettings.ExperimentalSettings) obj;
+
+      if (getWanderingHumans()
+          != other.getWanderingHumans()) return false;
+      if (getLivingCorpses()
+          != other.getLivingCorpses()) return false;
+      if (getZeroGravityEverywhere()
+          != other.getZeroGravityEverywhere()) return false;
+      if (getEnableGravityInExtAndGuts()
+          != other.getEnableGravityInExtAndGuts()) return false;
+      if (getStartSelfDestruct()
+          != other.getStartSelfDestruct()) return false;
+      if (!getSelfDestructTimer()
+          .equals(other.getSelfDestructTimer())) return false;
+      if (!getSelfDestructShuttleTimer()
+          .equals(other.getSelfDestructShuttleTimer())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + WANDERING_HUMANS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getWanderingHumans());
+      hash = (37 * hash) + LIVING_CORPSES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getLivingCorpses());
+      hash = (37 * hash) + ZERO_GRAVITY_EVERYWHERE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getZeroGravityEverywhere());
+      hash = (37 * hash) + ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getEnableGravityInExtAndGuts());
+      hash = (37 * hash) + START_SELF_DESTRUCT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getStartSelfDestruct());
+      hash = (37 * hash) + SELF_DESTRUCT_TIMER_FIELD_NUMBER;
+      hash = (53 * hash) + getSelfDestructTimer().hashCode();
+      hash = (37 * hash) + SELF_DESTRUCT_SHUTTLE_TIMER_FIELD_NUMBER;
+      hash = (53 * hash) + getSelfDestructShuttleTimer().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.ExperimentalSettings parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.RandomizerSettings.ExperimentalSettings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ExperimentalSettings}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ExperimentalSettings)
+        proto.RandomizerSettings.ExperimentalSettingsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.RandomizerSettings.internal_static_ExperimentalSettings_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.RandomizerSettings.internal_static_ExperimentalSettings_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.RandomizerSettings.ExperimentalSettings.class, proto.RandomizerSettings.ExperimentalSettings.Builder.class);
+      }
+
+      // Construct using proto.RandomizerSettings.ExperimentalSettings.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        wanderingHumans_ = false;
+
+        livingCorpses_ = false;
+
+        zeroGravityEverywhere_ = false;
+
+        enableGravityInExtAndGuts_ = false;
+
+        startSelfDestruct_ = false;
+
+        selfDestructTimer_ = "";
+
+        selfDestructShuttleTimer_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.RandomizerSettings.internal_static_ExperimentalSettings_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.ExperimentalSettings getDefaultInstanceForType() {
+        return proto.RandomizerSettings.ExperimentalSettings.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.ExperimentalSettings build() {
+        proto.RandomizerSettings.ExperimentalSettings result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.ExperimentalSettings buildPartial() {
+        proto.RandomizerSettings.ExperimentalSettings result = new proto.RandomizerSettings.ExperimentalSettings(this);
+        result.wanderingHumans_ = wanderingHumans_;
+        result.livingCorpses_ = livingCorpses_;
+        result.zeroGravityEverywhere_ = zeroGravityEverywhere_;
+        result.enableGravityInExtAndGuts_ = enableGravityInExtAndGuts_;
+        result.startSelfDestruct_ = startSelfDestruct_;
+        result.selfDestructTimer_ = selfDestructTimer_;
+        result.selfDestructShuttleTimer_ = selfDestructShuttleTimer_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.RandomizerSettings.ExperimentalSettings) {
+          return mergeFrom((proto.RandomizerSettings.ExperimentalSettings)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.RandomizerSettings.ExperimentalSettings other) {
+        if (other == proto.RandomizerSettings.ExperimentalSettings.getDefaultInstance()) return this;
+        if (other.getWanderingHumans() != false) {
+          setWanderingHumans(other.getWanderingHumans());
+        }
+        if (other.getLivingCorpses() != false) {
+          setLivingCorpses(other.getLivingCorpses());
+        }
+        if (other.getZeroGravityEverywhere() != false) {
+          setZeroGravityEverywhere(other.getZeroGravityEverywhere());
+        }
+        if (other.getEnableGravityInExtAndGuts() != false) {
+          setEnableGravityInExtAndGuts(other.getEnableGravityInExtAndGuts());
+        }
+        if (other.getStartSelfDestruct() != false) {
+          setStartSelfDestruct(other.getStartSelfDestruct());
+        }
+        if (!other.getSelfDestructTimer().isEmpty()) {
+          selfDestructTimer_ = other.selfDestructTimer_;
+          onChanged();
+        }
+        if (!other.getSelfDestructShuttleTimer().isEmpty()) {
+          selfDestructShuttleTimer_ = other.selfDestructShuttleTimer_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.RandomizerSettings.ExperimentalSettings parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.RandomizerSettings.ExperimentalSettings) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean wanderingHumans_ ;
+      /**
+       * <code>bool wandering_humans = 1;</code>
+       * @return The wanderingHumans.
+       */
+      @java.lang.Override
+      public boolean getWanderingHumans() {
+        return wanderingHumans_;
+      }
+      /**
+       * <code>bool wandering_humans = 1;</code>
+       * @param value The wanderingHumans to set.
+       * @return This builder for chaining.
+       */
+      public Builder setWanderingHumans(boolean value) {
+        
+        wanderingHumans_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool wandering_humans = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearWanderingHumans() {
+        
+        wanderingHumans_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean livingCorpses_ ;
+      /**
+       * <code>bool living_corpses = 2;</code>
+       * @return The livingCorpses.
+       */
+      @java.lang.Override
+      public boolean getLivingCorpses() {
+        return livingCorpses_;
+      }
+      /**
+       * <code>bool living_corpses = 2;</code>
+       * @param value The livingCorpses to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLivingCorpses(boolean value) {
+        
+        livingCorpses_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool living_corpses = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLivingCorpses() {
+        
+        livingCorpses_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean zeroGravityEverywhere_ ;
+      /**
+       * <code>bool zero_gravity_everywhere = 3;</code>
+       * @return The zeroGravityEverywhere.
+       */
+      @java.lang.Override
+      public boolean getZeroGravityEverywhere() {
+        return zeroGravityEverywhere_;
+      }
+      /**
+       * <code>bool zero_gravity_everywhere = 3;</code>
+       * @param value The zeroGravityEverywhere to set.
+       * @return This builder for chaining.
+       */
+      public Builder setZeroGravityEverywhere(boolean value) {
+        
+        zeroGravityEverywhere_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool zero_gravity_everywhere = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearZeroGravityEverywhere() {
+        
+        zeroGravityEverywhere_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean enableGravityInExtAndGuts_ ;
+      /**
+       * <code>bool enable_gravity_in_ext_and_guts = 4;</code>
+       * @return The enableGravityInExtAndGuts.
+       */
+      @java.lang.Override
+      public boolean getEnableGravityInExtAndGuts() {
+        return enableGravityInExtAndGuts_;
+      }
+      /**
+       * <code>bool enable_gravity_in_ext_and_guts = 4;</code>
+       * @param value The enableGravityInExtAndGuts to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnableGravityInExtAndGuts(boolean value) {
+        
+        enableGravityInExtAndGuts_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool enable_gravity_in_ext_and_guts = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEnableGravityInExtAndGuts() {
+        
+        enableGravityInExtAndGuts_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean startSelfDestruct_ ;
+      /**
+       * <code>bool start_self_destruct = 5;</code>
+       * @return The startSelfDestruct.
+       */
+      @java.lang.Override
+      public boolean getStartSelfDestruct() {
+        return startSelfDestruct_;
+      }
+      /**
+       * <code>bool start_self_destruct = 5;</code>
+       * @param value The startSelfDestruct to set.
+       * @return This builder for chaining.
+       */
+      public Builder setStartSelfDestruct(boolean value) {
+        
+        startSelfDestruct_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool start_self_destruct = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStartSelfDestruct() {
+        
+        startSelfDestruct_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object selfDestructTimer_ = "";
+      /**
+       * <code>string self_destruct_timer = 6;</code>
+       * @return The selfDestructTimer.
+       */
+      public java.lang.String getSelfDestructTimer() {
+        java.lang.Object ref = selfDestructTimer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          selfDestructTimer_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string self_destruct_timer = 6;</code>
+       * @return The bytes for selfDestructTimer.
+       */
+      public com.google.protobuf.ByteString
+          getSelfDestructTimerBytes() {
+        java.lang.Object ref = selfDestructTimer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          selfDestructTimer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string self_destruct_timer = 6;</code>
+       * @param value The selfDestructTimer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSelfDestructTimer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        selfDestructTimer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string self_destruct_timer = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSelfDestructTimer() {
+        
+        selfDestructTimer_ = getDefaultInstance().getSelfDestructTimer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string self_destruct_timer = 6;</code>
+       * @param value The bytes for selfDestructTimer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSelfDestructTimerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        selfDestructTimer_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object selfDestructShuttleTimer_ = "";
+      /**
+       * <code>string self_destruct_shuttle_timer = 7;</code>
+       * @return The selfDestructShuttleTimer.
+       */
+      public java.lang.String getSelfDestructShuttleTimer() {
+        java.lang.Object ref = selfDestructShuttleTimer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          selfDestructShuttleTimer_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string self_destruct_shuttle_timer = 7;</code>
+       * @return The bytes for selfDestructShuttleTimer.
+       */
+      public com.google.protobuf.ByteString
+          getSelfDestructShuttleTimerBytes() {
+        java.lang.Object ref = selfDestructShuttleTimer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          selfDestructShuttleTimer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string self_destruct_shuttle_timer = 7;</code>
+       * @param value The selfDestructShuttleTimer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSelfDestructShuttleTimer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        selfDestructShuttleTimer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string self_destruct_shuttle_timer = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSelfDestructShuttleTimer() {
+        
+        selfDestructShuttleTimer_ = getDefaultInstance().getSelfDestructShuttleTimer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string self_destruct_shuttle_timer = 7;</code>
+       * @param value The bytes for selfDestructShuttleTimer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSelfDestructShuttleTimerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        selfDestructShuttleTimer_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ExperimentalSettings)
+    }
+
+    // @@protoc_insertion_point(class_scope:ExperimentalSettings)
+    private static final proto.RandomizerSettings.ExperimentalSettings DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.RandomizerSettings.ExperimentalSettings();
+    }
+
+    public static proto.RandomizerSettings.ExperimentalSettings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ExperimentalSettings>
+        PARSER = new com.google.protobuf.AbstractParser<ExperimentalSettings>() {
+      @java.lang.Override
+      public ExperimentalSettings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ExperimentalSettings(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ExperimentalSettings> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ExperimentalSettings> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.RandomizerSettings.ExperimentalSettings getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -11612,35 +11701,30 @@ public final class RandomizerSettings {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_CosmeticSettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ItemSettings_descriptor;
+    internal_static_GameplaySettings_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ItemSettings_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_NpcSettings_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_NpcSettings_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_NeuromodSettings_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_NeuromodSettings_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_StoryProgressionSettings_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_StoryProgressionSettings_fieldAccessorTable;
+      internal_static_GameplaySettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_GameStartSettings_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_GameStartSettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_MoreSettings_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_MoreSettings_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_CheatSettings_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_CheatSettings_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ExperimentalSettings_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ExperimentalSettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_GenericSpawnPresetFilter_descriptor;
   private static final 
@@ -11663,56 +11747,60 @@ public final class RandomizerSettings {
       "\n\016settings.proto\"}\n\nAllPresets\0226\n\023item_s" +
       "pawn_settings\030\001 \003(\0132\031.GenericSpawnPreset" +
       "Filter\0227\n\024enemy_spawn_settings\030\002 \003(\0132\031.G" +
-      "enericSpawnPresetFilter\"\204\003\n\010Settings\022\014\n\004" +
+      "enericSpawnPresetFilter\"\316\002\n\010Settings\022\014\n\004" +
       "seed\030\001 \001(\t\022\023\n\013install_dir\030\002 \001(\t\022\027\n\017relea" +
       "se_version\030\003 \001(\t\022,\n\021cosmetic_settings\030\004 " +
-      "\001(\0132\021.CosmeticSettings\022$\n\ritem_settings\030" +
-      "\005 \001(\0132\r.ItemSettings\022\"\n\014npc_settings\030\006 \001" +
-      "(\0132\014.NpcSettings\022,\n\021neuromod_settings\030\007 " +
-      "\001(\0132\021.NeuromodSettings\022=\n\032story_progress" +
-      "ion_settings\030\010 \001(\0132\031.StoryProgressionSet" +
-      "tings\022/\n\023game_start_settings\030\t \001(\0132\022.Gam" +
-      "eStartSettings\022&\n\016cheat_settings\030\n \001(\0132\016" +
-      ".CheatSettings\"\276\001\n\020CosmeticSettings\022\030\n\020r" +
-      "andomize_bodies\030\001 \001(\010\022\034\n\024randomize_voice" +
-      "lines\030\002 \001(\010\022\027\n\017randomize_music\030\003 \001(\010\022\036\n\026" +
-      "randomize_player_model\030\004 \001(\010\022\035\n\025randomiz" +
-      "e_planet_size\030\005 \001(\010\022\032\n\022randomize_emotion" +
-      "s\030\006 \001(\010\"{\n\014ItemSettings\0226\n\023item_spawn_se" +
-      "ttings\030\001 \001(\0132\031.GenericSpawnPresetFilter\022" +
-      "\021\n\tmore_guns\030\002 \001(\010\022 \n\030randomize_fab_plan" +
-      "_costs\030\003 \001(\010\"F\n\013NpcSettings\0227\n\024enemy_spa" +
-      "wn_settings\030\001 \001(\0132\031.GenericSpawnPresetFi" +
-      "lter\"/\n\020NeuromodSettings\022\033\n\023randomize_ne" +
-      "uromods\030\001 \001(\010\"\253\003\n\030StoryProgressionSettin" +
-      "gs\022\031\n\021randomize_station\030\001 \001(\010\022\030\n\020use_cus" +
-      "tom_spawn\030\002 \001(\010\022F\n\025custom_spawn_location" +
-      "\030\003 \001(\0162\'.StoryProgressionSettings.SpawnL" +
-      "ocation\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006R" +
-      "ANDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n" +
-      "\rPSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020" +
-      "\006\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP" +
-      "_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPOR" +
-      "T\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n" +
-      "\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SELEC" +
-      "T\020\020\"l\n\021GameStartSettings\022\035\n\025add_loot_to_" +
-      "apartment\030\001 \001(\010\022\033\n\023start_on_second_day\030\002" +
-      " \001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001(\010\"\237\002\n\rCh" +
-      "eatSettings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unl" +
-      "ock_all_scans\030\002 \001(\010\022\030\n\020wandering_humans\030" +
-      "\003 \001(\010\022\033\n\023start_self_destruct\030\004 \001(\010\022\033\n\023se" +
-      "lf_destruct_timer\030\005 \001(\t\022#\n\033self_destruct" +
-      "_shuttle_timer\030\006 \001(\t\022\037\n\027zero_gravity_eve" +
-      "rywhere\030\007 \001(\010\022&\n\036enable_gravity_in_ext_a" +
-      "nd_guts\030\010 \001(\010\022\034\n\024game_token_overrides\030\t " +
-      "\001(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name\030" +
-      "\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.G" +
-      "enericSpawnPresetRule\"\220\001\n\026GenericSpawnPr" +
-      "esetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_t" +
-      "ags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_" +
-      "not_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_ta" +
-      "gs\030\005 \003(\tB\033\n\005protoB\022RandomizerSettingsb\006p" +
-      "roto3"
+      "\001(\0132\021.CosmeticSettings\022,\n\021gameplay_setti" +
+      "ngs\030\005 \001(\0132\021.GameplaySettings\022/\n\023game_sta" +
+      "rt_settings\030\006 \001(\0132\022.GameStartSettings\022$\n" +
+      "\rmore_settings\030\007 \001(\0132\r.MoreSettings\022&\n\016c" +
+      "heat_settings\030\010 \001(\0132\016.CheatSettings\022+\n\014e" +
+      "xp_settings\030\t \001(\0132\025.ExperimentalSettings" +
+      "\"\276\001\n\020CosmeticSettings\022\030\n\020randomize_bodie" +
+      "s\030\001 \001(\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n" +
+      "\017randomize_music\030\003 \001(\010\022\036\n\026randomize_play" +
+      "er_model\030\004 \001(\010\022\035\n\025randomize_planet_size\030" +
+      "\005 \001(\010\022\032\n\022randomize_emotions\030\006 \001(\010\"\323\002\n\020Ga" +
+      "meplaySettings\0226\n\023item_spawn_settings\030\001 " +
+      "\001(\0132\031.GenericSpawnPresetFilter\0227\n\024enemy_" +
+      "spawn_settings\030\002 \001(\0132\031.GenericSpawnPrese" +
+      "tFilter\022\031\n\021randomize_station\030\003 \001(\010\022\033\n\023ra" +
+      "ndomize_neuromods\030\004 \001(\010\022 \n\030randomize_fab" +
+      "_plan_costs\030\005 \001(\010\022\033\n\023randomize_recyclers" +
+      "\030\006 \001(\010\022\034\n\024randomize_dispensers\030\007 \001(\010\022\034\n\024" +
+      "randomize_breakables\030\010 \001(\010\022\033\n\023randomize_" +
+      "hackables\030\t \001(\010\"l\n\021GameStartSettings\022\035\n\025" +
+      "add_loot_to_apartment\030\001 \001(\010\022\033\n\023start_on_" +
+      "second_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscene\030" +
+      "\003 \001(\010\"~\n\014MoreSettings\022\021\n\tmore_guns\030\001 \001(\010" +
+      "\022\026\n\016more_fab_plans\030\002 \001(\010\022\026\n\016more_neuromo" +
+      "ds\030\003 \001(\010\022\025\n\rmore_chipsets\030\004 \001(\010\022\024\n\014more_" +
+      "enemies\030\005 \001(\010\"\337\003\n\rCheatSettings\022\024\n\014open_" +
+      "station\030\001 \001(\010\022\030\n\020unlock_all_scans\030\002 \001(\010\022" +
+      "\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020use_custom_spa" +
+      "wn\030\004 \001(\010\022;\n\025custom_spawn_location\030\005 \001(\0162" +
+      "\034.CheatSettings.SpawnLocation\022\034\n\024game_to" +
+      "ken_overrides\030\006 \001(\t\"\221\002\n\rSpawnLocation\022\010\n" +
+      "\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWA" +
+      "RE_LABS\020\003\022\021\n\rPSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r" +
+      "\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTE" +
+      "RS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n" +
+      "\014LIFE_SUPPORT\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUT" +
+      "TLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\r" +
+      "GENDER_SELECT\020\020\"\360\001\n\024ExperimentalSettings" +
+      "\022\030\n\020wandering_humans\030\001 \001(\010\022\026\n\016living_cor" +
+      "pses\030\002 \001(\010\022\037\n\027zero_gravity_everywhere\030\003 " +
+      "\001(\010\022&\n\036enable_gravity_in_ext_and_guts\030\004 " +
+      "\001(\010\022\033\n\023start_self_destruct\030\005 \001(\010\022\033\n\023self" +
+      "_destruct_timer\030\006 \001(\t\022#\n\033self_destruct_s" +
+      "huttle_timer\030\007 \001(\t\"`\n\030GenericSpawnPreset" +
+      "Filter\022\014\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007fi" +
+      "lters\030\003 \003(\0132\027.GenericSpawnPresetRule\"\220\001\n" +
+      "\026GenericSpawnPresetRule\022\022\n\ninput_tags\030\001 " +
+      "\003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026\n\016output_weigh" +
+      "ts\030\003 \003(\005\022\031\n\021do_not_touch_tags\030\004 \003(\t\022\032\n\022d" +
+      "o_not_output_tags\030\005 \003(\tB\033\n\005protoB\022Random" +
+      "izerSettingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11729,57 +11817,51 @@ public final class RandomizerSettings {
     internal_static_Settings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Settings_descriptor,
-        new java.lang.String[] { "Seed", "InstallDir", "ReleaseVersion", "CosmeticSettings", "ItemSettings", "NpcSettings", "NeuromodSettings", "StoryProgressionSettings", "GameStartSettings", "CheatSettings", });
+        new java.lang.String[] { "Seed", "InstallDir", "ReleaseVersion", "CosmeticSettings", "GameplaySettings", "GameStartSettings", "MoreSettings", "CheatSettings", "ExpSettings", });
     internal_static_CosmeticSettings_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_CosmeticSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CosmeticSettings_descriptor,
         new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", "RandomizePlanetSize", "RandomizeEmotions", });
-    internal_static_ItemSettings_descriptor =
+    internal_static_GameplaySettings_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_ItemSettings_fieldAccessorTable = new
+    internal_static_GameplaySettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ItemSettings_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "MoreGuns", "RandomizeFabPlanCosts", });
-    internal_static_NpcSettings_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_NpcSettings_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_NpcSettings_descriptor,
-        new java.lang.String[] { "EnemySpawnSettings", });
-    internal_static_NeuromodSettings_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_NeuromodSettings_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_NeuromodSettings_descriptor,
-        new java.lang.String[] { "RandomizeNeuromods", });
-    internal_static_StoryProgressionSettings_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_StoryProgressionSettings_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_StoryProgressionSettings_descriptor,
-        new java.lang.String[] { "RandomizeStation", "UseCustomSpawn", "CustomSpawnLocation", });
+        internal_static_GameplaySettings_descriptor,
+        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", });
     internal_static_GameStartSettings_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_GameStartSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameStartSettings_descriptor,
         new java.lang.String[] { "AddLootToApartment", "StartOnSecondDay", "SkipJovanCutscene", });
+    internal_static_MoreSettings_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_MoreSettings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_MoreSettings_descriptor,
+        new java.lang.String[] { "MoreGuns", "MoreFabPlans", "MoreNeuromods", "MoreChipsets", "MoreEnemies", });
     internal_static_CheatSettings_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_CheatSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CheatSettings_descriptor,
-        new java.lang.String[] { "OpenStation", "UnlockAllScans", "WanderingHumans", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "GameTokenOverrides", });
+        new java.lang.String[] { "OpenStation", "UnlockAllScans", "FriendlyNpcs", "UseCustomSpawn", "CustomSpawnLocation", "GameTokenOverrides", });
+    internal_static_ExperimentalSettings_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_ExperimentalSettings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ExperimentalSettings_descriptor,
+        new java.lang.String[] { "WanderingHumans", "LivingCorpses", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", });
     internal_static_GenericSpawnPresetFilter_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_GenericSpawnPresetFilter_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GenericSpawnPresetFilter_descriptor,
         new java.lang.String[] { "Name", "Desc", "Filters", });
     internal_static_GenericSpawnPresetRule_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_GenericSpawnPresetRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GenericSpawnPresetRule_descriptor,

@@ -28,16 +28,14 @@ public class CustomItemFilterHelper {
 
   public Element getEntity(String entityName, String nameInLevel, Random r) {
     // TODO: Store rules list at construction
-    GenericSpawnPresetFilter spawnPreset = settings.getItemSettings()
-        .getItemSpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getItemSpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
 
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
           .addAllDoNotOutputTags(doNotOutput);
-      if (!settings.getItemSettings()
-          .getMoreGuns()) {
+      if (!settings.getMoreSettings().getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
 
@@ -59,15 +57,13 @@ public class CustomItemFilterHelper {
   }
 
   public boolean trigger(String entityName, String nameInLevel) {
-    GenericSpawnPresetFilter spawnPreset = settings.getItemSettings()
-        .getItemSpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getItemSpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
 
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-      if (!settings.getItemSettings()
-          .getMoreGuns()) {
+      if (!settings.getMoreSettings().getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
 

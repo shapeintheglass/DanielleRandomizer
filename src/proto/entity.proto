@@ -1,10 +1,10 @@
 syntax = "proto3";
 
 option java_package = "proto";
-option java_outer_classname = "Body";
+option java_outer_classname = "Entity";
 
 message EntityDatabase {
-  repeated EntityArchetype = 1;
+  repeated EntityArchetype entity = 1;
 }
 
 

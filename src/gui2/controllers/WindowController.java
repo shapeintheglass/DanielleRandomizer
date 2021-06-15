@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Logger;
+
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.protobuf.util.JsonFormat;
+
 import gui2.Gui2Consts;
 import gui2.RandomizerService;
 import gui2.SettingsHelper;
@@ -24,27 +27,23 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import proto.RandomizerSettings.AllPresets;
 import proto.RandomizerSettings.CheatSettings;
+import proto.RandomizerSettings.CheatSettings.SpawnLocation;
 import proto.RandomizerSettings.CosmeticSettings;
+import proto.RandomizerSettings.ExperimentalSettings;
 import proto.RandomizerSettings.GameStartSettings;
+import proto.RandomizerSettings.GameplaySettings;
 import proto.RandomizerSettings.GenericSpawnPresetFilter;
 import proto.RandomizerSettings.GenericSpawnPresetRule;
-import proto.RandomizerSettings.ItemSettings;
-import proto.RandomizerSettings.NeuromodSettings;
-import proto.RandomizerSettings.NpcSettings;
+import proto.RandomizerSettings.MoreSettings;
 import proto.RandomizerSettings.Settings;
-import proto.RandomizerSettings.StoryProgressionSettings;
-import proto.RandomizerSettings.StoryProgressionSettings.SpawnLocation;
 import randomizers.generators.CustomSpawnGenerator;
 import utils.Utils;
 
@@ -74,6 +73,8 @@ public class WindowController {
   private Button litePresetButton;
   @FXML
   private Button gotsPresetButton;
+  @FXML
+  private Button livingTalosPresetButton;
 
   /* COSMETICS TAB */
   @FXML
@@ -89,21 +90,27 @@ public class WindowController {
   @FXML
   private CheckBox cosmeticCheckboxEmotions;
 
-  /* ITEMS TAB */
+  /* GAMEPLAY TAB */
   @FXML
-  private CheckBox itemsCheckboxMoreGuns;
+  private ChoiceBox<String> gameplayItemChoiceBox;
   @FXML
-  private CheckBox itemsCheckboxFabPlanCosts;
+  private ChoiceBox<String> gameplayNpcChoiceBox;
   @FXML
-  private VBox itemsOptions;
-  private ToggleGroup itemSpawnToggleGroup = new ToggleGroup();
+  private CheckBox gameplayRandomizeStation;
+  @FXML
+  private CheckBox gameplayRandomizeNeuromods;
+  @FXML
+  private CheckBox gameplayRandomizeFabPlanCosts;
+  @FXML
+  private CheckBox gameplayRandomizeRecyclers;
+  @FXML
+  private CheckBox gameplayRandomizeDispensers;
+  @FXML
+  private CheckBox gameplayRandomizeBreakables;
+  @FXML
+  private CheckBox gameplayRandomizeHackables;
 
-  /* ENEMIES TAB */
-  @FXML
-  private VBox enemiesOptions;
-  private ToggleGroup enemySpawnToggleGroup = new ToggleGroup();
-
-  /* LOADOUTS TAB */
+  /* GAME START TAB */
   @FXML
   private CheckBox startCheckboxDay2;
   @FXML
@@ -111,37 +118,47 @@ public class WindowController {
   @FXML
   private CheckBox startCheckboxSkipJovan;
 
-  /* NEUROMODS TAB */
+  /* MORE TAB */
   @FXML
-  private CheckBox neuromodsCheckboxRandomize;
-
-  /* STORY/PROGRESSION TAB */
+  private CheckBox moreGuns;
   @FXML
-  private CheckBox storyCheckboxRandomStation;
+  private CheckBox moreFabPlans;
   @FXML
-  private CheckBox storyCheckboxCustomStart;
+  private CheckBox moreNeuromods;
   @FXML
-  private ChoiceBox<String> storyChoiceBoxCustomStart;
+  private CheckBox moreChipsets;
+  @FXML
+  private CheckBox moreEnemies;
 
   /* CHEATS TAB */
   @FXML
+  private CheckBox cheatsCheckboxOpenStation;
+  @FXML
   private CheckBox cheatsCheckboxAllScans;
   @FXML
-  private CheckBox cheatsCheckboxUnlockAll;
+  private CheckBox cheatsCheckboxFriendlyNpcs;
   @FXML
-  private CheckBox cheatsCheckboxWander;
+  private CheckBox cheatsCheckboxCustomStart;
   @FXML
-  private CheckBox cheatsCheckboxGravity;
-  @FXML
-  private CheckBox cheatsCheckboxEnableGravity;
-  @FXML
-  private CheckBox cheatsCheckboxSelfDestruct;
-  @FXML
-  private TextField cheatsTextFieldTimer;
-  @FXML
-  private TextField cheatsTextFieldShuttleTimer;
+  private ChoiceBox<String> cheatsChoiceBoxCustomStart;
   @FXML
   private TextField cheatsTextFieldGameTokens;
+
+  /* EXPERIMENTAL TAB */
+  @FXML
+  private CheckBox expCheckboxWander;
+  @FXML
+  private CheckBox expLivingCorpses;
+  @FXML
+  private CheckBox expCheckboxGravity;
+  @FXML
+  private CheckBox expCheckboxEnableGravity;
+  @FXML
+  private CheckBox expCheckboxSelfDestruct;
+  @FXML
+  private TextField expTextFieldTimer;
+  @FXML
+  private TextField expTextFieldShuttleTimer;
 
   /* LOWER BUTTONS */
   @FXML
@@ -160,6 +177,7 @@ public class WindowController {
   private AllPresets allPresets;
   private Logger logger;
   private List<Node> toDisable;
+  private List<CheckBox> checkboxes;
 
   public void setStage(Stage stage) {
     this.stage = stage;
@@ -171,31 +189,35 @@ public class WindowController {
 
   @FXML
   protected void initialize() {
+    checkboxes = ImmutableList.of(cosmeticCheckboxBodies, cosmeticCheckboxVoices, cosmeticCheckboxEmotions,
+        cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel, cosmeticCheckboxPlanetSize, gameplayRandomizeStation,
+        gameplayRandomizeNeuromods, gameplayRandomizeFabPlanCosts, gameplayRandomizeRecyclers,
+        gameplayRandomizeDispensers, gameplayRandomizeBreakables, gameplayRandomizeHackables, startCheckboxDay2,
+        startCheckboxAddAllEquipment, startCheckboxSkipJovan, moreChipsets, moreEnemies, moreFabPlans, moreGuns,
+        moreNeuromods, cheatsCheckboxAllScans, cheatsCheckboxCustomStart, cheatsCheckboxFriendlyNpcs,
+        cheatsCheckboxOpenStation, expCheckboxEnableGravity, expCheckboxGravity, expCheckboxSelfDestruct,
+        expCheckboxWander, expLivingCorpses);
+
     logger = Logger.getLogger("randomizer_gui");
 
     setTooltips();
 
-    storyChoiceBoxCustomStart.getItems()
-        .add(SpawnLocation.RANDOM.name());
+    cheatsChoiceBoxCustomStart.getItems().add(SpawnLocation.RANDOM.name());
     for (SpawnLocation l : CustomSpawnGenerator.SUPPORTED_SPAWNS) {
-      storyChoiceBoxCustomStart.getItems()
-          .add(l.name());
+      cheatsChoiceBoxCustomStart.getItems().add(l.name());
     }
 
     // Attempt to read from preset definition file and saved settings file
-
     try {
       allPresets = getAllPresets();
     } catch (FileNotFoundException e) {
-      String loggerWarning =
-          String.format("Could not find presets file %s.\n", Gui2Consts.ALL_PRESETS_FILE);
+      String loggerWarning = String.format("Could not find presets file %s.\n", Gui2Consts.ALL_PRESETS_FILE);
       logger.warning(loggerWarning);
       outputWindow.appendText(loggerWarning);
       e.printStackTrace();
     } catch (IOException e) {
       outputWindow.appendText(String.format("Unable to parse %s\n", Gui2Consts.ALL_PRESETS_FILE));
-      logger
-          .info(String.format("An error occurred while parsing %s.", Gui2Consts.ALL_PRESETS_FILE));
+      logger.info(String.format("An error occurred while parsing %s.", Gui2Consts.ALL_PRESETS_FILE));
       e.printStackTrace();
       allPresets = AllPresets.getDefaultInstance();
     }
@@ -204,13 +226,11 @@ public class WindowController {
     try {
       savedSettings = getSavedSettings();
     } catch (FileNotFoundException e) {
-      String loggerWarning =
-          String.format("Could not find saved settings file %s.\n", Gui2Consts.SAVED_SETTINGS_FILE);
+      String loggerWarning = String.format("Could not find saved settings file %s.\n", Gui2Consts.SAVED_SETTINGS_FILE);
       logger.warning(loggerWarning);
       e.printStackTrace();
     } catch (IOException e) {
-      String loggerWarning =
-          Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE + "\n";
+      String loggerWarning = Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE + "\n";
       logger.warning(loggerWarning);
       outputWindow.appendText(loggerWarning);
       e.printStackTrace();
@@ -221,60 +241,89 @@ public class WindowController {
     seedText.setText(settings.getSeed());
     directoryText.setText(settings.getInstallDir());
 
-    toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton,
-        clearButton, saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton,
-        litePresetButton, gotsPresetButton, cheatsTextFieldGameTokens, cheatsTextFieldShuttleTimer,
-        cheatsTextFieldTimer, seedText, directoryText);
+    toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
+        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton,
+        gotsPresetButton, cheatsTextFieldGameTokens, expTextFieldShuttleTimer, expTextFieldTimer, seedText,
+        directoryText);
 
-    initCustomSpawnCheckboxes(allPresets, settings);
+    initCustomSpawnChoiceboxes(allPresets, settings);
 
     outputWindow.appendText("Loaded with settings:\n" + SettingsHelper.settingsToString(settings));
 
     updateUI();
+    updateItemTooltip();
+    updateNpcTooltip();
 
-    storyCheckboxCustomStart.setOnAction(new EventHandler<ActionEvent>() {
+    cheatsCheckboxCustomStart.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         if (event.getSource() instanceof CheckBox) {
-          boolean isCustomStart = storyCheckboxCustomStart.isSelected();
-          storyChoiceBoxCustomStart.setDisable(!isCustomStart);
+          boolean isCustomStart = cheatsCheckboxCustomStart.isSelected();
+          cheatsChoiceBoxCustomStart.setDisable(!isCustomStart);
         }
       }
     });
 
-    cheatsCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
+    expCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         if (event.getSource() instanceof CheckBox) {
-          boolean isSelfDestruct = cheatsCheckboxSelfDestruct.isSelected();
-          cheatsTextFieldTimer.setDisable(!isSelfDestruct);
-          cheatsTextFieldShuttleTimer.setDisable(!isSelfDestruct);
+          boolean isSelfDestruct = expCheckboxSelfDestruct.isSelected();
+          expTextFieldTimer.setDisable(!isSelfDestruct);
+          expTextFieldShuttleTimer.setDisable(!isSelfDestruct);
+        }
+      }
+    });
+
+    gameplayItemChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        if (event.getSource() instanceof ChoiceBox) {
+          updateItemTooltip();
+        }
+      }
+    });
+
+    gameplayNpcChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        if (event.getSource() instanceof ChoiceBox) {
+          updateNpcTooltip();
         }
       }
     });
   }
 
+  private void updateItemTooltip() {
+    GenericSpawnPresetFilter preset = getItemPresetByName(gameplayItemChoiceBox.getValue());
+    if (preset != null) {
+      gameplayItemChoiceBox.setTooltip(new Tooltip(preset.getDesc()));
+    }
+  }
+
+  private void updateNpcTooltip() {
+    GenericSpawnPresetFilter preset = getNpcPresetByName(gameplayNpcChoiceBox.getValue());
+    if (preset != null) {
+      gameplayNpcChoiceBox.setTooltip(new Tooltip(preset.getDesc()));
+    }
+  }
+
   private void setTooltips() {
     directoryText.setTooltip(new Tooltip("The directory where Prey is installed"));
-    changeDirButton
-        .setTooltip(new Tooltip("Open a file chooser to select the Prey install directory"));
+    changeDirButton.setTooltip(new Tooltip("Open a file chooser to select the Prey install directory"));
     seedText.setTooltip(new Tooltip("Seed to use for random generation. Must be a number (int64)"));
     newSeedButton.setTooltip(new Tooltip("Randomly picks a new seed"));
 
-    recommendedPresetButton
-        .setTooltip(new Tooltip("Updates this UI to the preset \"recommended\" experience."));
-    chaoticPresetButton
-        .setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
+    recommendedPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"recommended\" experience."));
+    chaoticPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
     litePresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"lite\" experience."));
     gotsPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"timed\" experience."));
 
-    itemsCheckboxMoreGuns
-        .setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
-    itemsCheckboxFabPlanCosts
-        .setTooltip(new Tooltip("Sets the materials costs for every fab plan to random values."));
+    moreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
+    gameplayRandomizeFabPlanCosts.setTooltip(new Tooltip(
+        "Sets the materials costs for every fab plan to random values."));
 
-    installButton
-        .setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
+    installButton.setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
     uninstallButton.setTooltip(new Tooltip(
         "Removes any mods added by this installer and reverts changes to the game directory."));
     clearButton.setTooltip(new Tooltip("Clears the output window."));
@@ -284,145 +333,76 @@ public class WindowController {
   }
 
   private void updateUI() {
-    setSpawnCheckbox(itemSpawnToggleGroup, settings.getItemSettings()
-        .getItemSpawnSettings()
-        .getName());
-    setSpawnCheckbox(enemySpawnToggleGroup, settings.getNpcSettings()
-        .getEnemySpawnSettings()
-        .getName());
+    cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
+    cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoicelines());
+    cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
+    cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
+    cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings().getRandomizePlanetSize());
+    cosmeticCheckboxEmotions.setSelected(settings.getCosmeticSettings().getRandomizeEmotions());
 
-    cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings()
-        .getRandomizeBodies());
-    cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings()
-        .getRandomizeVoicelines());
-    cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings()
-        .getRandomizeMusic());
-    cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings()
-        .getRandomizePlayerModel());
-    cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings()
-        .getRandomizePlanetSize());
-    cosmeticCheckboxEmotions.setSelected(settings.getCosmeticSettings()
-        .getRandomizeEmotions());
+    gameplayRandomizeStation.setSelected(settings.getGameplaySettings().getRandomizeStation());
+    gameplayRandomizeNeuromods.setSelected(settings.getGameplaySettings().getRandomizeNeuromods());
+    gameplayRandomizeFabPlanCosts.setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
+    gameplayRandomizeRecyclers.setSelected(settings.getGameplaySettings().getRandomizeRecyclers());
+    gameplayRandomizeDispensers.setSelected(settings.getGameplaySettings().getRandomizeDispensers());
+    gameplayRandomizeBreakables.setSelected(settings.getGameplaySettings().getRandomizeBreakables());
+    gameplayRandomizeHackables.setSelected(settings.getGameplaySettings().getRandomizeHackables());
 
-    itemsCheckboxMoreGuns.setSelected(settings.getItemSettings()
-        .getMoreGuns());
-    itemsCheckboxFabPlanCosts.setSelected(settings.getItemSettings()
-        .getRandomizeFabPlanCosts());
+    startCheckboxDay2.setSelected(settings.getGameStartSettings().getStartOnSecondDay());
+    startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings().getAddLootToApartment());
+    startCheckboxSkipJovan.setSelected(settings.getGameStartSettings().getSkipJovanCutscene());
 
-    startCheckboxDay2.setSelected(settings.getGameStartSettings()
-        .getStartOnSecondDay());
-    startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings()
-        .getAddLootToApartment());
-    startCheckboxSkipJovan.setSelected(settings.getGameStartSettings()
-        .getSkipJovanCutscene());
+    moreGuns.setSelected(settings.getMoreSettings().getMoreGuns());
+    moreFabPlans.setSelected(settings.getMoreSettings().getMoreFabPlans());
+    moreNeuromods.setSelected(settings.getMoreSettings().getMoreNeuromods());
+    moreChipsets.setSelected(settings.getMoreSettings().getMoreChipsets());
+    moreEnemies.setSelected(settings.getMoreSettings().getMoreEnemies());
 
-    neuromodsCheckboxRandomize.setSelected(settings.getNeuromodSettings()
-        .getRandomizeNeuromods());
+    cheatsCheckboxOpenStation.setSelected(settings.getCheatSettings().getOpenStation());
+    cheatsCheckboxAllScans.setSelected(settings.getCheatSettings().getUnlockAllScans());
+    cheatsCheckboxFriendlyNpcs.setSelected(settings.getCheatSettings().getFriendlyNpcs());
+    cheatsCheckboxCustomStart.setSelected(settings.getCheatSettings().getUseCustomSpawn());
+    cheatsChoiceBoxCustomStart.setDisable(!settings.getCheatSettings().getUseCustomSpawn());
+    cheatsChoiceBoxCustomStart.setValue(settings.getCheatSettings().getCustomSpawnLocation().name());
 
-    storyCheckboxRandomStation.setSelected(settings.getStoryProgressionSettings()
-        .getRandomizeStation());
-    storyCheckboxCustomStart.setSelected(settings.getStoryProgressionSettings()
-        .getUseCustomSpawn());
-    storyChoiceBoxCustomStart.setDisable(!settings.getStoryProgressionSettings()
-        .getUseCustomSpawn());
-    storyChoiceBoxCustomStart.setValue(settings.getStoryProgressionSettings()
-        .getCustomSpawnLocation()
-        .name());
-
-    cheatsCheckboxUnlockAll.setSelected(settings.getCheatSettings()
-        .getOpenStation());
-    cheatsCheckboxAllScans.setSelected(settings.getCheatSettings()
-        .getUnlockAllScans());
-    cheatsCheckboxWander.setSelected(settings.getCheatSettings()
-        .getWanderingHumans());
-    cheatsCheckboxGravity.setSelected(settings.getCheatSettings()
-        .getZeroGravityEverywhere());
-    cheatsCheckboxEnableGravity.setSelected(settings.getCheatSettings()
-        .getEnableGravityInExtAndGuts());
-    cheatsCheckboxSelfDestruct.setSelected(settings.getCheatSettings()
-        .getStartSelfDestruct());
-    cheatsTextFieldTimer.setText(settings.getCheatSettings()
-        .getSelfDestructTimer());
-    cheatsTextFieldShuttleTimer.setText(settings.getCheatSettings()
-        .getSelfDestructShuttleTimer());
-    cheatsTextFieldGameTokens.setText(settings.getCheatSettings()
-        .getGameTokenOverrides());
-
-    cheatsTextFieldTimer.setDisable(!cheatsCheckboxSelfDestruct.isSelected());
-    cheatsTextFieldShuttleTimer.setDisable(!cheatsCheckboxSelfDestruct.isSelected());
+    expCheckboxWander.setSelected(settings.getExpSettings().getWanderingHumans());
+    expCheckboxGravity.setSelected(settings.getExpSettings().getZeroGravityEverywhere());
+    expCheckboxEnableGravity.setSelected(settings.getExpSettings().getEnableGravityInExtAndGuts());
+    expCheckboxSelfDestruct.setSelected(settings.getExpSettings().getStartSelfDestruct());
+    expTextFieldTimer.setText(settings.getExpSettings().getSelfDestructTimer());
+    expTextFieldShuttleTimer.setText(settings.getExpSettings().getSelfDestructShuttleTimer());
+    expTextFieldTimer.setDisable(!expCheckboxSelfDestruct.isSelected());
+    expTextFieldShuttleTimer.setDisable(!expCheckboxSelfDestruct.isSelected());
   }
 
   private void resetUI() {
-    cosmeticCheckboxBodies.setSelected(false);
-    cosmeticCheckboxVoices.setSelected(false);
-    cosmeticCheckboxMusic.setSelected(false);
-    cosmeticCheckboxPlayerModel.setSelected(false);
-    cosmeticCheckboxPlanetSize.setSelected(false);
-    cosmeticCheckboxEmotions.setSelected(false);
-    itemsCheckboxMoreGuns.setSelected(false);
-    itemsCheckboxFabPlanCosts.setSelected(false);
-    setSpawnCheckbox(itemSpawnToggleGroup, "No item randomization");
-    setSpawnCheckbox(enemySpawnToggleGroup, "No NPC randomization");
-    startCheckboxDay2.setSelected(false);
-    startCheckboxAddAllEquipment.setSelected(false);
-    startCheckboxSkipJovan.setSelected(false);
-    neuromodsCheckboxRandomize.setSelected(false);
-    storyCheckboxRandomStation.setSelected(false);
-    storyCheckboxCustomStart.setSelected(false);
-    storyChoiceBoxCustomStart.setValue(SpawnLocation.NONE.name());
-    cheatsCheckboxAllScans.setSelected(false);
-    cheatsCheckboxUnlockAll.setSelected(false);
-    cheatsCheckboxWander.setSelected(false);
-    cheatsCheckboxGravity.setSelected(false);
-    cheatsCheckboxEnableGravity.setSelected(false);
-    cheatsCheckboxSelfDestruct.setSelected(false);
-    cheatsTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
-    cheatsTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
+    for (CheckBox c : checkboxes) {
+      c.setSelected(false);
+    }
+    gameplayItemChoiceBox.setValue("No item randomization");
+    gameplayNpcChoiceBox.setValue("No NPC randomization");
+    cheatsChoiceBoxCustomStart.setValue(SpawnLocation.NONE.name());
     cheatsTextFieldGameTokens.clear();
+    expTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
+    expTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
   }
 
-  private void initCustomSpawnCheckboxes(AllPresets allPresets, Settings settings) {
+  private void initCustomSpawnChoiceboxes(AllPresets allPresets, Settings settings) {
     // Add custom presets
     if (allPresets == null) {
       return;
     }
     for (GenericSpawnPresetFilter spj : allPresets.getItemSpawnSettingsList()) {
-      RadioButton rb = new RadioButton(spj.getName());
-      rb.setToggleGroup(itemSpawnToggleGroup);
-      rb.setTooltip(new Tooltip(spj.getDesc()));
-      if (settings.getItemSettings()
-          .getItemSpawnSettings()
-          .getName()
-          .equals(spj.getName())) {
-        rb.setSelected(true);
+      gameplayItemChoiceBox.getItems().add(spj.getName());
+      if (settings.getGameplaySettings().getItemSpawnSettings().getName().equals(spj.getName())) {
+        gameplayItemChoiceBox.setValue(spj.getName());
       }
-      itemsOptions.getChildren()
-          .add(rb);
     }
 
     for (GenericSpawnPresetFilter spj : allPresets.getEnemySpawnSettingsList()) {
-      RadioButton rb = new RadioButton(spj.getName());
-      rb.setToggleGroup(enemySpawnToggleGroup);
-      rb.setTooltip(new Tooltip(spj.getDesc()));
-      if (settings.getNpcSettings()
-          .getEnemySpawnSettings()
-          .getName()
-          .equals(spj.getName())) {
-        rb.setSelected(true);
-      }
-      enemiesOptions.getChildren()
-          .add(rb);
-    }
-  }
-
-  private void setSpawnCheckbox(ToggleGroup tg, String name) {
-    for (Toggle t : tg.getToggles()) {
-      RadioButton rb = (RadioButton) t;
-      if (rb.getText()
-          .equals(name)) {
-        rb.setSelected(true);
-      } else {
-        rb.setSelected(false);
+      gameplayNpcChoiceBox.getItems().add(spj.getName());
+      if (settings.getGameplaySettings().getEnemySpawnSettings().getName().equals(spj.getName())) {
+        gameplayNpcChoiceBox.setValue(spj.getName());
       }
     }
   }
@@ -462,15 +442,13 @@ public class WindowController {
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
-    itemsCheckboxFabPlanCosts.setSelected(true);
-    itemsCheckboxMoreGuns.setSelected(true);
-    setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items");
-    setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies");
-    neuromodsCheckboxRandomize.setSelected(true);
+    gameplayItemChoiceBox.setValue("Randomize items");
+    gameplayNpcChoiceBox.setValue("Randomize enemies");
+    gameplayRandomizeFabPlanCosts.setSelected(true);
+    gameplayRandomizeNeuromods.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
-    outputWindow.appendText(
-        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -482,27 +460,25 @@ public class WindowController {
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
-    itemsCheckboxMoreGuns.setSelected(true);
-    itemsCheckboxFabPlanCosts.setSelected(true);
-    setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items (chaotic)");
-    setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies (chaotic)");
-    neuromodsCheckboxRandomize.setSelected(true);
-    storyCheckboxRandomStation.setSelected(true);
+    gameplayItemChoiceBox.setValue("Randomize items (chaotic)");
+    gameplayNpcChoiceBox.setValue("Randomize enemies (chaotic)");
+    gameplayRandomizeFabPlanCosts.setSelected(true);
+    gameplayRandomizeNeuromods.setSelected(true);
+    gameplayRandomizeStation.setSelected(true);
+    moreGuns.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
-    outputWindow.appendText(
-        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
   protected void onPresetsLiteClicked(ActionEvent event) {
     resetUI();
-    setSpawnCheckbox(itemSpawnToggleGroup, "Randomize items within type");
-    setSpawnCheckbox(enemySpawnToggleGroup, "Randomize enemies within type");
+    gameplayItemChoiceBox.setValue("Randomize items within type");
+    gameplayNpcChoiceBox.setValue("Randomize enemies within type");
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
-    outputWindow.appendText(
-        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -510,13 +486,21 @@ public class WindowController {
     resetUI();
     startCheckboxDay2.setSelected(true);
     startCheckboxSkipJovan.setSelected(true);
-    cheatsCheckboxSelfDestruct.setSelected(true);
-    cheatsTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
-    cheatsTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
+    expCheckboxSelfDestruct.setSelected(true);
+    expTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
+    expTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("G.O.T.S. preset selected.\n");
-    outputWindow.appendText(
-        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+  }
+
+  @FXML
+  protected void onPresetsLivingTalosClicked(ActionEvent event) {
+    resetUI();
+    gameplayNpcChoiceBox.setValue("Typhon to humans");
+    expCheckboxWander.setSelected(true);
+    expLivingCorpses.setSelected(true);
+    cheatsCheckboxFriendlyNpcs.setSelected(true);
   }
 
   /*
@@ -528,10 +512,8 @@ public class WindowController {
     Settings finalSettings = getSettings();
 
     // TODO: Add a check here to see if nothing will be installed
-    validateSpawnPresets(finalSettings.getItemSettings()
-        .getItemSpawnSettings(), "items");
-    validateSpawnPresets(finalSettings.getNpcSettings()
-        .getEnemySpawnSettings(), "enemies");
+    validateSpawnPresets(finalSettings.getGameplaySettings().getItemSpawnSettings(), "items");
+    validateSpawnPresets(finalSettings.getGameplaySettings().getEnemySpawnSettings(), "enemies");
 
     try {
       writeLastUsedSettingsToFile(Gui2Consts.LAST_USED_SETTINGS_FILE, finalSettings);
@@ -585,8 +567,7 @@ public class WindowController {
     Settings toSave = getSettings();
     try {
       writeLastUsedSettingsToFile(Gui2Consts.SAVED_SETTINGS_FILE, toSave);
-      outputWindow
-          .appendText(String.format(Gui2Consts.SAVING_INFO, Gui2Consts.SAVED_SETTINGS_FILE));
+      outputWindow.appendText(String.format(Gui2Consts.SAVING_INFO, Gui2Consts.SAVED_SETTINGS_FILE));
       outputWindow.appendText(SettingsHelper.settingsToString(toSave));
     } catch (IOException e) {
       outputWindow.appendText(Gui2Consts.SAVING_FAILED);
@@ -594,14 +575,10 @@ public class WindowController {
     }
   }
 
-  private void writeLastUsedSettingsToFile(String savedSettingsFilePath, Settings toSave)
-      throws IOException {
+  private void writeLastUsedSettingsToFile(String savedSettingsFilePath, Settings toSave) throws IOException {
     File savedSettingsFile = new File(savedSettingsFilePath);
     savedSettingsFile.createNewFile();
-    String serialized = JsonFormat.printer()
-        .includingDefaultValueFields()
-        .preservingProtoFieldNames()
-        .print(toSave);
+    String serialized = JsonFormat.printer().includingDefaultValueFields().preservingProtoFieldNames().print(toSave);
     try (BufferedWriter bw = new BufferedWriter(new FileWriter(savedSettingsFile));) {
       bw.write(serialized);
     }
@@ -618,48 +595,39 @@ public class WindowController {
         .build();
   }
 
-  private ItemSettings getItemSettings() {
-    RadioButton selectedItemSpawn = (RadioButton) itemSpawnToggleGroup.getSelectedToggle();
-    String itemToSelect = selectedItemSpawn == null ? "" : selectedItemSpawn.getText();
-    GenericSpawnPresetFilter itemSpawnPreset =
-        getSpawnPresetFromList(allPresets.getItemSpawnSettingsList(), itemToSelect);
-    if (itemSpawnPreset == null) {
-      itemSpawnPreset = GenericSpawnPresetFilter.getDefaultInstance();
+  private GameplaySettings getGameplaySettings() {
+    GenericSpawnPresetFilter itemSpawnSettings = getItemPresetByName(gameplayItemChoiceBox.getValue());
+    GenericSpawnPresetFilter enemySpawnSettings = getNpcPresetByName(gameplayNpcChoiceBox.getValue());
+
+    return GameplaySettings.newBuilder()
+        .setItemSpawnSettings(itemSpawnSettings)
+        .setEnemySpawnSettings(enemySpawnSettings)
+        .setRandomizeStation(gameplayRandomizeStation.isSelected())
+        .setRandomizeNeuromods(gameplayRandomizeNeuromods.isSelected())
+        .setRandomizeFabPlanCosts(gameplayRandomizeFabPlanCosts.isSelected())
+        .setRandomizeRecyclers(gameplayRandomizeRecyclers.isSelected())
+        .setRandomizeDispensers(gameplayRandomizeDispensers.isSelected())
+        .setRandomizeBreakables(gameplayRandomizeBreakables.isSelected())
+        .setRandomizeHackables(gameplayRandomizeHackables.isSelected())
+        .build();
+  }
+
+  private GenericSpawnPresetFilter getItemPresetByName(String name) {
+    for (GenericSpawnPresetFilter preset : allPresets.getItemSpawnSettingsList()) {
+      if (preset.getName().equals(name)) {
+        return preset;
+      }
     }
-
-    return ItemSettings.newBuilder()
-        .setItemSpawnSettings(itemSpawnPreset)
-        .setMoreGuns(itemsCheckboxMoreGuns.isSelected())
-        .setRandomizeFabPlanCosts(itemsCheckboxFabPlanCosts.isSelected())
-        .build();
+    return null;
   }
 
-  private NpcSettings getNpcSettings() {
-    RadioButton selectedEnemySpawn = (RadioButton) enemySpawnToggleGroup.getSelectedToggle();
-    String enemyToSelect = selectedEnemySpawn == null ? "" : selectedEnemySpawn.getText();
-    GenericSpawnPresetFilter enemySpawnPreset =
-        getSpawnPresetFromList(allPresets.getEnemySpawnSettingsList(), enemyToSelect);
-    if (enemySpawnPreset == null) {
-      enemySpawnPreset = GenericSpawnPresetFilter.getDefaultInstance();
+  private GenericSpawnPresetFilter getNpcPresetByName(String name) {
+    for (GenericSpawnPresetFilter preset : allPresets.getEnemySpawnSettingsList()) {
+      if (preset.getName().equals(name)) {
+        return preset;
+      }
     }
-
-    return NpcSettings.newBuilder()
-        .setEnemySpawnSettings(enemySpawnPreset)
-        .build();
-  }
-
-  private NeuromodSettings getNeuromodSettings() {
-    return NeuromodSettings.newBuilder()
-        .setRandomizeNeuromods(neuromodsCheckboxRandomize.isSelected())
-        .build();
-  }
-
-  private StoryProgressionSettings getStoryProgressionSettings() {
-    return StoryProgressionSettings.newBuilder()
-        .setRandomizeStation(storyCheckboxRandomStation.isSelected())
-        .setUseCustomSpawn(storyCheckboxCustomStart.isSelected())
-        .setCustomSpawnLocation(SpawnLocation.valueOf(storyChoiceBoxCustomStart.getValue()))
-        .build();
+    return null;
   }
 
   private GameStartSettings getGameStartSettings() {
@@ -670,32 +638,37 @@ public class WindowController {
         .build();
   }
 
+  private MoreSettings getMoreSettings() {
+    return MoreSettings.newBuilder()
+        .setMoreGuns(moreGuns.isSelected())
+        .setMoreFabPlans(moreFabPlans.isSelected())
+        .setMoreNeuromods(moreNeuromods.isSelected())
+        .setMoreChipsets(moreChipsets.isSelected())
+        .setMoreEnemies(moreEnemies.isSelected())
+        .build();
+  }
+
   private CheatSettings getCheatSettings() {
     return CheatSettings.newBuilder()
-        .setOpenStation(cheatsCheckboxUnlockAll.isSelected())
+        .setOpenStation(cheatsCheckboxOpenStation.isSelected())
         .setUnlockAllScans(cheatsCheckboxAllScans.isSelected())
-        .setWanderingHumans(cheatsCheckboxWander.isSelected())
-        .setStartSelfDestruct(cheatsCheckboxSelfDestruct.isSelected())
-        .setSelfDestructTimer(cheatsTextFieldTimer.getText())
-        .setSelfDestructShuttleTimer(cheatsTextFieldShuttleTimer.getText())
-        .setZeroGravityEverywhere(cheatsCheckboxGravity.isSelected())
-        .setEnableGravityInExtAndGuts(cheatsCheckboxEnableGravity.isSelected())
+        .setFriendlyNpcs(cheatsCheckboxFriendlyNpcs.isSelected())
+        .setUseCustomSpawn(cheatsCheckboxCustomStart.isSelected())
+        .setCustomSpawnLocation(SpawnLocation.valueOf(cheatsChoiceBoxCustomStart.getValue()))
         .setGameTokenOverrides(cheatsTextFieldGameTokens.getText())
         .build();
   }
 
-  private static GenericSpawnPresetFilter getSpawnPresetFromList(
-      List<GenericSpawnPresetFilter> presetList, String name) {
-    if (presetList == null || presetList.isEmpty()) {
-      return null;
-    }
-    for (GenericSpawnPresetFilter s : presetList) {
-      if (s.getName()
-          .equals(name)) {
-        return s;
-      }
-    }
-    return presetList.get(0);
+  private ExperimentalSettings getExperimentalSettings() {
+    return ExperimentalSettings.newBuilder()
+        .setWanderingHumans(expCheckboxWander.isSelected())
+        .setLivingCorpses(expLivingCorpses.isSelected())
+        .setStartSelfDestruct(expCheckboxSelfDestruct.isSelected())
+        .setSelfDestructTimer(expTextFieldTimer.getText())
+        .setSelfDestructShuttleTimer(expTextFieldShuttleTimer.getText())
+        .setZeroGravityEverywhere(expCheckboxGravity.isSelected())
+        .setEnableGravityInExtAndGuts(expCheckboxEnableGravity.isSelected())
+        .build();
   }
 
   private Settings getSettings() {
@@ -704,22 +677,18 @@ public class WindowController {
         .setInstallDir(directoryText.getText())
         .setSeed(seedText.getText())
         .setCosmeticSettings(getCosmeticSettings())
-        .setItemSettings(getItemSettings())
-        .setNpcSettings(getNpcSettings())
-        .setNeuromodSettings(getNeuromodSettings())
-        .setStoryProgressionSettings(getStoryProgressionSettings())
+        .setGameplaySettings(getGameplaySettings())
         .setGameStartSettings(getGameStartSettings())
+        .setMoreSettings(getMoreSettings())
         .setCheatSettings(getCheatSettings())
+        .setExpSettings(getExperimentalSettings())
         .build();
-
   }
 
   private AllPresets getAllPresets() throws IOException {
     FileReader fr = new FileReader(Gui2Consts.ALL_PRESETS_FILE);
     AllPresets.Builder builder = AllPresets.newBuilder();
-    JsonFormat.parser()
-        .ignoringUnknownFields()
-        .merge(fr, builder);
+    JsonFormat.parser().ignoringUnknownFields().merge(fr, builder);
     return builder.build();
   }
 
@@ -727,22 +696,18 @@ public class WindowController {
     // Parse the saved settings file and set new defaults accordingly
     FileReader fr = new FileReader(Gui2Consts.SAVED_SETTINGS_FILE);
     Settings.Builder builder = Settings.newBuilder();
-    JsonFormat.parser()
-        .ignoringUnknownFields()
-        .merge(fr, builder);
+    JsonFormat.parser().ignoringUnknownFields().merge(fr, builder);
     return builder.build();
   }
 
   private Settings createInitialSettings(AllPresets allPresets, Settings savedSettings) {
-    if (savedSettings.getReleaseVersion()
-        .equals(Gui2Consts.VERSION)) {
+    if (savedSettings.getReleaseVersion().equals(Gui2Consts.VERSION)) {
       return savedSettings;
     } else {
-      String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH,
-          savedSettings.getReleaseVersion(), Gui2Consts.VERSION);
+      String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH, savedSettings
+          .getReleaseVersion(), Gui2Consts.VERSION);
       logger.warning(loggerWarning);
-      if (savedSettings.getReleaseVersion()
-          .isEmpty()) {
+      if (savedSettings.getReleaseVersion().isEmpty()) {
         outputWindow.appendText("No saved settings found.\n");
       } else {
         outputWindow.appendText("Saved settings version mismatch.\n");
@@ -756,12 +721,11 @@ public class WindowController {
         .setInstallDir(Gui2Consts.DEFAULT_INSTALL_DIR)
         .setSeed(Long.toString(initialSeed))
         .setCosmeticSettings(CosmeticSettings.getDefaultInstance())
-        .setItemSettings(ItemSettings.getDefaultInstance())
-        .setNpcSettings(NpcSettings.getDefaultInstance())
-        .setNeuromodSettings(NeuromodSettings.getDefaultInstance())
-        .setStoryProgressionSettings(StoryProgressionSettings.getDefaultInstance())
+        .setGameplaySettings(GameplaySettings.getDefaultInstance())
         .setGameStartSettings(GameStartSettings.getDefaultInstance())
+        .setMoreSettings(MoreSettings.getDefaultInstance())
         .setCheatSettings(CheatSettings.getDefaultInstance())
+        .setExpSettings(ExperimentalSettings.getDefaultInstance())
         .build();
   }
 
@@ -769,25 +733,18 @@ public class WindowController {
     if (gspj.getFiltersList() == null) {
       return;
     }
-    for (int i = 0; i < gspj.getFiltersList()
-        .size(); i++) {
+    for (int i = 0; i < gspj.getFiltersList().size(); i++) {
       GenericSpawnPresetRule gfj = gspj.getFilters(i);
 
       if (gfj.getOutputTagsList() == null || gfj.getOutputWeightsList() == null) {
         continue;
       }
 
-      if (gfj.getOutputWeightsList()
-          .size() != 0
-          && gfj.getOutputTagsList()
-              .size() != gfj.getOutputWeightsList()
-                  .size()) {
+      if (gfj.getOutputWeightsList().size() != 0 && gfj.getOutputTagsList().size() != gfj.getOutputWeightsList()
+          .size()) {
         logger.info(String.format(
             "Invalid filter settings for %s spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
-            name, gspj.getName(), i, gfj.getOutputTagsList()
-                .size(),
-            gfj.getOutputWeightsList()
-                .size()));
+            name, gspj.getName(), i, gfj.getOutputTagsList().size(), gfj.getOutputWeightsList().size()));
       }
     }
 

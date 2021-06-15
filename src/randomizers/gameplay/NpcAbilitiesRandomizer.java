@@ -26,7 +26,7 @@ public class NpcAbilitiesRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
-    if (settings.getNpcSettings().getEnemySpawnSettings().getFiltersCount() == 0) {
+    if (settings.getGameplaySettings().getEnemySpawnSettings().getFiltersCount() == 0) {
       return;
     }
 
@@ -35,10 +35,10 @@ public class NpcAbilitiesRandomizer extends BaseRandomizer {
 
       CustomEnemyFilterHelper cfh = new CustomEnemyFilterHelper(settings, database);
       Element root = d.getRootElement();
-      
+
       Element ethericDoppelganger = root.getChild("ArkNpcAbility_EthericDoppelganger");
       randomizeEntity(cfh, ethericDoppelganger, "doppelgangerArchetype");
-      
+
       List<Element> raisedPhantoms = root.getChildren("ArkNpcAbility_RaisePhantomFromCorpse");
       for (Element e : raisedPhantoms) {
         randomizeEntity(cfh, e, "phantomArchetypeName");

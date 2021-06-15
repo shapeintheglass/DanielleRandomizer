@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
@@ -30,9 +32,7 @@ public class PreorderLockerRandomizer extends BaseRandomizer {
 
   @Override
   public void randomize() {
-    if (settings.getItemSettings()
-        .getItemSpawnSettings()
-        .getFiltersCount() == 0) {
+    if (settings.getGameplaySettings().getItemSpawnSettings().getFiltersCount() == 0) {
       return;
     }
 
@@ -42,11 +42,9 @@ public class PreorderLockerRandomizer extends BaseRandomizer {
       CustomItemFilterHelper cfh = new CustomItemFilterHelper(settings, database);
 
       Element root = d.getRootElement();
-      List<Element> entitlementUnlocks = root.getChild("EntitlementUnlocks")
-          .getChildren();
+      List<Element> entitlementUnlocks = root.getChild("EntitlementUnlocks").getChildren();
       for (Element unlock : entitlementUnlocks) {
-        List<Element> items = unlock.getChild("Items")
-            .getChildren();
+        List<Element> items = unlock.getChild("Items").getChildren();
         for (Element item : items) {
           String archetype = item.getAttributeValue("Archetype");
           Element newArchetype = getPickup(cfh, archetype, r);
@@ -59,7 +57,6 @@ public class PreorderLockerRandomizer extends BaseRandomizer {
           }
         }
       }
-
 
       zipHelper.copyToPatch(d, PREORDER_LOCKER_FILE);
     } catch (IOException | JDOMException e) {
