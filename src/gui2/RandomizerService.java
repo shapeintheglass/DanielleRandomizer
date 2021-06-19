@@ -9,9 +9,11 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
@@ -29,18 +31,22 @@ import randomizers.gameplay.FabPlanCostRandomizer;
 import randomizers.gameplay.LevelRandomizer;
 import randomizers.gameplay.LootTableRandomizer;
 import randomizers.gameplay.NeuromodTreeRandomizer;
+import randomizers.gameplay.NightmareRandomizer;
+import randomizers.gameplay.NpcAbilitiesRandomizer;
 import randomizers.gameplay.PreorderLockerRandomizer;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.FruitTreeFilter;
 import randomizers.gameplay.filters.GravityDisablerFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
+import randomizers.gameplay.filters.LivingCorpseFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
 import randomizers.generators.BookInfoHelper;
 import randomizers.generators.BookInfoHelper.Book;
 import randomizers.generators.CustomSpawnGenerator;
+import randomizers.generators.OptionsMenuGenerator;
 import randomizers.generators.SelfDestructTimerHelper;
 import randomizers.generators.StationGenerator;
 import utils.Utils;
@@ -216,6 +222,12 @@ public class RandomizerService extends Service<Void> {
     writeLine(SettingsHelper.settingsToString(currentSettings));
 
     /* COSMETIC */
+    try {
+      OptionsMenuGenerator.addOptionsMenu(currentSettings, zipHelper);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
     if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
       try {
@@ -277,8 +289,8 @@ public class RandomizerService extends Service<Void> {
 
     new PreorderLockerRandomizer(currentSettings, zipHelper, database).randomize();
 
-    // new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
-    // new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
+    //new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
+    //new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
 
     /* GAMEPLAY, LEVEL */
     LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap).addFilter(
@@ -292,6 +304,10 @@ public class RandomizerService extends Service<Void> {
 
     if (currentSettings.getGameStartSettings().getAddLootToApartment()) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
+    }
+    
+    if (currentSettings.getExpSettings().getLivingCorpses()) {
+      levelRandomizer = levelRandomizer.addFilter(new LivingCorpseFilter());
     }
 
     CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();
@@ -336,7 +352,7 @@ public class RandomizerService extends Service<Void> {
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {
     copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES, tempPatchDir);
 
-    zipHelper.copyToPatch(LOGO, LOGO);
+    //zipHelper.copyToPatch(LOGO, LOGO);
 
     if (settings.getMoreSettings().getMoreGuns()) {
       copyFiles(MORE_GUNS_DEPENDENCIES, tempPatchDir);

@@ -70,6 +70,9 @@ public class FabPlanCostRandomizer extends BaseRandomizer {
     public FabPlan(int numResources) {
       this.numResources = numResources;
       newCount = new HashMap<>();
+      for (Material m : Material.values()) {
+        newCount.put(m, "0");
+      }
     }
 
     // Create a new fab plan with the same total cost as the old one.

@@ -19,7 +19,7 @@ import proto.RandomizerSettings.GenericSpawnPresetRule;
 public class CustomRuleHelper {
 
   // Number of attempts to make at getting a valid tag before giving up.
-  private static final int MAX_ATTEMPTS = 100;
+  private static final int MAX_ATTEMPTS = 10;
 
   // Tags to filter on
   private List<String> inputTags;

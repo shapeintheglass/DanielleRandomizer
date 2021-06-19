@@ -21,7 +21,7 @@ public class PreorderLockerRandomizer extends BaseRandomizer {
 
   private static final String PREORDER_LOCKER_FILE = "ark/entitlementunlocklibrary.xml";
 
-  private static final int MAX_ATTEMPTS = 100;
+  private static final int MAX_ATTEMPTS = 10;
 
   private TaggedDatabase database;
 

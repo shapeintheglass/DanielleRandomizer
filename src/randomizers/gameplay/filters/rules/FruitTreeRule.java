@@ -12,7 +12,7 @@ public class FruitTreeRule implements Rule {
 
   private CustomItemFilterHelper cfh;
 
-  private static final int MAX_ATTEMPTS = 100;
+  private static final int MAX_ATTEMPTS = 10;
 
   public FruitTreeRule(CustomItemFilterHelper cfh) {
     this.cfh = cfh;

@@ -16,7 +16,7 @@ import utils.Utils;
  */
 public class ContainerSpawnRule implements Rule {
 
-  private static final int MAX_ATTEMPTS = 100;
+  private static final int MAX_ATTEMPTS = 10;
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
