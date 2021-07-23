@@ -76,4 +76,6 @@ public class LevelConsts {
       "CharacterFates.DahlBrainwashed", "true", "AlexAndDahlOutcomes.DahlArrivedInShuttle", "true");
   public static final ImmutableMap<String, String> SKIP_JOVAN_TOKENS = ImmutableMap.of(
       "SimLab.Decontamination_SawMimicScene", "true");
+  public static final ImmutableMap<String, String> ALLOW_GAME_SAVE_TOKENS = ImmutableMap.of("WorldState.AllowSaveGame",
+      "true");
 }

@@ -67,6 +67,9 @@ public class LevelRandomizer extends BaseRandomizer {
     if (settings.getGameStartSettings().getSkipJovanCutscene()) {
       gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
     }
+    if (settings.getCheatSettings().getUseCustomSpawn()) {
+      gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
+    }
     if (!settings.getCheatSettings().getGameTokenOverrides().isEmpty()) {
       String[] tokens = settings.getCheatSettings().getGameTokenOverrides().split(",");
       for (String token : tokens) {

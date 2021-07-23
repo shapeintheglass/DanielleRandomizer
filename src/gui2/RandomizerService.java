@@ -289,8 +289,8 @@ public class RandomizerService extends Service<Void> {
 
     new PreorderLockerRandomizer(currentSettings, zipHelper, database).randomize();
 
-    //new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
-    //new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
+    new NightmareRandomizer(currentSettings, zipHelper, database).randomize();
+    new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
 
     /* GAMEPLAY, LEVEL */
     LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap).addFilter(

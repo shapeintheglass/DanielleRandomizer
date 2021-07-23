@@ -364,6 +364,7 @@ public class WindowController {
     cheatsCheckboxCustomStart.setSelected(settings.getCheatSettings().getUseCustomSpawn());
     cheatsChoiceBoxCustomStart.setDisable(!settings.getCheatSettings().getUseCustomSpawn());
     cheatsChoiceBoxCustomStart.setValue(settings.getCheatSettings().getCustomSpawnLocation().name());
+    cheatsTextFieldGameTokens.setText(settings.getCheatSettings().getGameTokenOverrides());
 
     expCheckboxWander.setSelected(settings.getExpSettings().getWanderingHumans());
     expCheckboxGravity.setSelected(settings.getExpSettings().getZeroGravityEverywhere());
@@ -381,7 +382,8 @@ public class WindowController {
     }
     gameplayItemChoiceBox.setValue("No item randomization");
     gameplayNpcChoiceBox.setValue("No NPC randomization");
-    cheatsChoiceBoxCustomStart.setValue(SpawnLocation.NONE.name());
+    cheatsChoiceBoxCustomStart.setValue(SpawnLocation.RANDOM.name());
+    cheatsChoiceBoxCustomStart.setDisable(true);
     cheatsTextFieldGameTokens.clear();
     expTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
     expTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
