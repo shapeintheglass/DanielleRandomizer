@@ -34,14 +34,18 @@ import randomizers.gameplay.NeuromodTreeRandomizer;
 import randomizers.gameplay.NightmareRandomizer;
 import randomizers.gameplay.NpcAbilitiesRandomizer;
 import randomizers.gameplay.PreorderLockerRandomizer;
+import randomizers.gameplay.filters.BrokenObjectFilter;
 import randomizers.gameplay.filters.EnemyFilter;
 import randomizers.gameplay.filters.FlowgraphFilter;
 import randomizers.gameplay.filters.FruitTreeFilter;
 import randomizers.gameplay.filters.GravityDisablerFilter;
 import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.LivingCorpseFilter;
+import randomizers.gameplay.filters.LockedObjectFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
+import randomizers.gameplay.filters.OperatorDispenserFilter;
+import randomizers.gameplay.filters.RecyclerFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
 import randomizers.generators.BookInfoHelper;
 import randomizers.generators.BookInfoHelper.Book;
@@ -308,6 +312,22 @@ public class RandomizerService extends Service<Void> {
     
     if (currentSettings.getExpSettings().getLivingCorpses()) {
       levelRandomizer = levelRandomizer.addFilter(new LivingCorpseFilter());
+    }
+    
+    if (currentSettings.getGameplaySettings().getRandomizeBreakables()) {
+      levelRandomizer = levelRandomizer.addFilter(new BrokenObjectFilter());
+    }
+    
+    if (currentSettings.getGameplaySettings().getRandomizeDispensers()) {
+      levelRandomizer = levelRandomizer.addFilter(new OperatorDispenserFilter());
+    }
+    
+    if (currentSettings.getGameplaySettings().getRandomizeHackables()) {
+      levelRandomizer = levelRandomizer.addFilter(new LockedObjectFilter());
+    }
+    
+    if (currentSettings.getGameplaySettings().getRandomizeRecyclers()) {
+      levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter());
     }
 
     CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();

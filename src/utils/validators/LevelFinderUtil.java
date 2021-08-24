@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -20,7 +22,7 @@ import com.google.common.collect.Maps;
  */
 public class LevelFinderUtil {
 
-  private static final String MISSION_FILE = "data/levels/research/psychotronics/mission_mission0.xml";
+  private static final String MISSION_FILE = "_data/levels/research/prototype/mission_mission0.xml";
   private static final String POS = "Pos";
 
   private static Map<String, Vector> readLevel(String levelFile) throws JDOMException, IOException {
@@ -31,10 +33,17 @@ public class LevelFinderUtil {
     Map<String, Vector> nameToPos = Maps.newHashMap();
 
     for (Element e : root.getChildren()) {
-      if (e.getAttributeValue(POS) != null && e.getAttributeValue("Archetype") != null) {
-        Vector c = new Vector(e.getAttributeValue(POS));
-        String name = e.getAttributeValue("Name") + " " + e.getAttributeValue("Archetype");
-        nameToPos.put(name, c);
+      if (e.getAttributeValue(POS) != null) {
+        if (e.getAttributeValue("Archetype") != null) {
+          Vector c = new Vector(e.getAttributeValue(POS));
+          String name = e.getAttributeValue("Name") + " " + e.getAttributeValue("Archetype");
+          nameToPos.put(name, c);
+        } else if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
+          Vector c = new Vector(e.getAttributeValue(POS));
+          String name = e.getAttributeValue("Name") + " " + 
+              e.getChild("Properties").getAttributeValue("sNpcArchetype");
+          nameToPos.put(name, c);
+        }
       }
     }
     return nameToPos;
@@ -67,7 +76,6 @@ public class LevelFinderUtil {
     }
   }
 
-
   public static void main(String[] args) {
     try (Scanner s = new Scanner(System.in)) {
 
@@ -77,8 +85,7 @@ public class LevelFinderUtil {
         // x y z r
         String line = s.nextLine();
         String[] tokens = line.split(",");
-        Vector c = new Vector(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]),
-            Float.parseFloat(tokens[2]));
+        Vector c = new Vector(Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]));
         printCloseMatches(nameToPos, c, Float.parseFloat(tokens[3]));
       }
     } catch (JDOMException | IOException e) {
