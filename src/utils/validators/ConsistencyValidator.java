@@ -62,7 +62,7 @@ public class ConsistencyValidator {
     List<GenericSpawnPresetFilter> enemySettingsList = allPresets.getEnemySpawnSettingsList();
     GenericSpawnPresetFilter enemyFilter = enemySettingsList.get(r.nextInt(enemySettingsList.size()));
 
-    List<GenericSpawnPresetFilter> itemSettingsList = allPresets.getItemSpawnSettingsList();
+    List<GenericSpawnPresetFilter> itemSettingsList = allPresets.getPickupSpawnSettingsList();
     GenericSpawnPresetFilter itemFilter = itemSettingsList.get(r.nextInt(itemSettingsList.size()));
 
     

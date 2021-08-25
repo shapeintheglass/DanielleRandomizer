@@ -183,7 +183,7 @@ public class SpawnStatsUtil {
       AllPresets allPresets = builder.build();
       Multiset<String> originalTags = getOriginalState(zipHelper);
 
-      for (GenericSpawnPresetFilter j : allPresets.getItemSpawnSettingsList()) {
+      for (GenericSpawnPresetFilter j : allPresets.getPickupSpawnSettingsList()) {
         List<Rule> rulesList = createItemRulesList(j.getFiltersList());
         describeRandomization(j, rulesList, originalTags, zipHelper);
       }

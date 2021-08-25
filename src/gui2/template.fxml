@@ -99,37 +99,116 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Gameplay">
+                  <Tab text="Items/Props">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="12.0" layoutY="21.0" text="Options that affect spawns and gameplay. Mouse over the dropdown for a few seconds for a description." />
+                              <Label layoutX="12.0" layoutY="21.0" text="Options that affect item spawns. Mouse over an option for a few seconds for a description." />
+                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
+                                 <children>
+                                    <VBox prefHeight="293.0" prefWidth="280.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="240.0" text="Pickup items" />
+                                          <ScrollPane prefHeight="292.0" prefWidth="280.0">
+                                             <content>
+                                                <VBox fx:id="pickupPresetsVBox" prefHeight="270.0" prefWidth="270.0" spacing="15.0">
+                                                   <padding>
+                                                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL" prefHeight="291.0" prefWidth="25.0" />
+                                    <VBox prefHeight="293.0" prefWidth="290.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="240.0" text="Physics props" />
+                                          <ScrollPane prefHeight="292.0" prefWidth="280.0">
+                                             <content>
+                                                <VBox fx:id="propPresetsVBox" prefHeight="270.0" prefWidth="270.0" spacing="15.0">
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <padding>
+                                                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Enemies/NPCs">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Options that affect NPC spawns. Mouse over an option for a few seconds for a description." />
+                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
+                                 <children>
+                                    <VBox prefHeight="293.0" prefWidth="280.0">
+                                       <children>
+                                          <Label text="Enemies" />
+                                          <ScrollPane prefHeight="292.0" prefWidth="290.0">
+                                             <content>
+                                                <VBox fx:id="enemyPresetsVBox" prefHeight="270.0" prefWidth="260.0" spacing="15.0">
+                                                   <padding>
+                                                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL" prefHeight="291.0" prefWidth="25.0" />
+                                    <VBox prefHeight="293.0" prefWidth="280.0">
+                                       <children>
+                                          <Label text="Friendly NPCs (Operators + Turrets)" />
+                                          <ScrollPane prefHeight="292.0" prefWidth="280.0">
+                                             <content>
+                                                <VBox fx:id="npcPresetsVBox" prefHeight="270.0" prefWidth="260.0" spacing="15.0">
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <padding>
+                                                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Gameplay">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="21.0" text="Other gameplay randomization options. Note: Picking many of these at once can dramatically increase the difficulty." />
                               <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="291.0" prefWidth="218.0" spacing="15.0">
                                        <children>
-                                          <Label prefHeight="17.0" prefWidth="240.0" text="Item randomization" />
-                                          <Label text="NPC randomization" />
-                                          <Separator prefWidth="200.0" />
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeNeuromods" mnemonicParsing="false" text="Randomize neuromods" />
                                           <CheckBox fx:id="gameplayRandomizeFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
                                           <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="Randomize recyclers/fabricators" />
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="Randomize breakable objects" />
-                                          <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="Randomize locked objects" />
+                                          <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="Randomize hackable objects" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="15.0" />
-                                       </padding>
                                        <children>
-                                          <ChoiceBox fx:id="gameplayItemChoiceBox" prefHeight="25.0" prefWidth="293.0" />
-                                          <ChoiceBox fx:id="gameplayNpcChoiceBox" prefHeight="25.0" prefWidth="294.0" />
                                           <Label text="Shuffles connections between levels." />
                                           <Label text="Shuffles neuromod upgrade tree." />
                                           <Label text="Assigns new randomly generated costs for fab plans." />
@@ -138,12 +217,18 @@
                                           <Label text="50% chance that a repairable entity will be broken." />
                                           <Label text="50% chance that a hackable entity will be locked." />
                                        </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
                                     </VBox>
                                  </children>
                               </HBox>
                            </children>
                         </AnchorPane>
-                    </content>
+                     </content>
                   </Tab>
                   <Tab text="Game Start">
                     <content>
@@ -157,6 +242,7 @@
                                           <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
                                           <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" />
+                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Start outside apartment" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
@@ -164,7 +250,7 @@
                                           <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
                                           <Label text="Does not spawn Jovan so that his cutscene won't play." />
-                                          <Label prefHeight="53.0" prefWidth="44.0">
+                                          <Label prefHeight="22.0" prefWidth="295.0" text="Starts at the Neuromod Division --&gt; Lobby door.">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -183,27 +269,33 @@
                            <children>
                               <HBox layoutX="27.0" layoutY="50.0" prefHeight="230.0" prefWidth="598.0" spacing="15.0">
                                  <children>
-                                    <VBox prefHeight="230.0" prefWidth="217.0" spacing="15.0">
+                                    <VBox prefHeight="241.0" prefWidth="225.0" spacing="15.0">
                                        <children>
+                                          <Label text="For pickup item randomization:" />
                                           <CheckBox fx:id="moreGuns" mnemonicParsing="false" text="More guns" />
-                                          <CheckBox fx:id="moreFabPlans" mnemonicParsing="false" text="More fab plans" />
-                                          <CheckBox fx:id="moreNeuromods" mnemonicParsing="false" text="More neuromods" />
-                                          <CheckBox fx:id="moreChipsets" mnemonicParsing="false" text="More chipsets" />
-                                          <CheckBox fx:id="moreEnemies" mnemonicParsing="false" text="More enemies" />
+                                          <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey Souls - Guns" />
+                                          <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="Prey Souls - Chipsets" />
+                                          <Label text="For enemy randomization:" />
+                                          <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" />
+                                          <Label text="For friendly NPC randomization:" />
+                                          <CheckBox fx:id="morePreySoulsTurrets" mnemonicParsing="false" text="Prey Souls - Turrets" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
                                        <children>
-                                          <Label text="Adds guns with almost every combination of projectile types." />
-                                          <Label text="Adds fab plans for items of variable usefulness." />
-                                          <Label text="Adds cut neuromods and neuromods based off of existing chipsets." />
-                                          <Label text="Adds cut chipsets and chipsets based off of existing neuromod abilities." />
-                                          <Label text="Adds hostile human enemies to NPC randomization." />
+                                          <Label />
+                                          <Label text="Adds 40 guns from the &quot;More Guns&quot; mod." />
+                                          <Label text="Adds 20 weapons from the Prey Souls mod." />
+                                          <Label text="Adds 2 chipsets from the Prey Souls mod." />
+                                          <Label />
+                                          <Label text="Adds 16 enemies from the Prey Souls mod." />
+                                          <Label />
+                                          <Label text="Adds 3 turrets from the Prey Souls mod." />
                                        </children>
                                     </VBox>
                                  </children>
                               </HBox>
-                              <Label layoutX="12.0" layoutY="21.0" text="If items/neuromods/NPCs are randomized, adds more entities to the pool." />
+                              <Label layoutX="12.0" layoutY="21.0" prefHeight="17.0" prefWidth="533.0" text="Adds more entities to the randomization pool. Randomization must be on for these to spawn." />
                            </children>
                         </AnchorPane>
                     </content>
@@ -219,7 +311,7 @@
                                        <children>
                                           <CheckBox fx:id="cheatsCheckboxOpenStation" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
                                           <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
-                                          <CheckBox fx:id="cheatsCheckboxFriendlyNpcs" mnemonicParsing="false" text="Friendly NPCs" />
+                                          <CheckBox fx:id="cheatsCheckboxFriendlyNpcs" mnemonicParsing="false" text="Friendly NPCs" visible="false" />
                                           <Separator prefWidth="200.0" />
                                           <CheckBox fx:id="cheatsCheckboxCustomStart" mnemonicParsing="false" text="Custom starting map (do not use)" />
                                           <Label prefHeight="41.0" prefWidth="203.0" text="Game token overrides (do not use)" />
@@ -229,7 +321,7 @@
                                        <children>
                                           <Label text="Unlocks (almost) everything except for scripted locks." />
                                           <Label text="Allows installing typhon neuromods without research." />
-                                          <Label text="All NPCS are non-hostile to the player and each other." />
+                                          <Label text="NPCS are non-hostile to the player and each other." visible="false" />
                                           <Separator prefWidth="200.0" />
                                           <ChoiceBox fx:id="cheatsChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0" />
                                           <TextField fx:id="cheatsTextFieldGameTokens" prefHeight="25.0" prefWidth="303.0" promptText="key1=value1,key2=value2,..." />

@@ -19,51 +19,99 @@ public final class RandomizerSettings {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> 
-        getItemSpawnSettingsList();
+        getPickupSpawnSettingsList();
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
-    proto.RandomizerSettings.GenericSpawnPresetFilter getItemSpawnSettings(int index);
+    proto.RandomizerSettings.GenericSpawnPresetFilter getPickupSpawnSettings(int index);
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
-    int getItemSpawnSettingsCount();
+    int getPickupSpawnSettingsCount();
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
-        getItemSpawnSettingsOrBuilderList();
+        getPickupSpawnSettingsOrBuilderList();
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
-    proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getItemSpawnSettingsOrBuilder(
+    proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getPickupSpawnSettingsOrBuilder(
         int index);
 
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> 
+        getPropSpawnSettingsList();
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    proto.RandomizerSettings.GenericSpawnPresetFilter getPropSpawnSettings(int index);
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    int getPropSpawnSettingsCount();
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+        getPropSpawnSettingsOrBuilderList();
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getPropSpawnSettingsOrBuilder(
+        int index);
+
+    /**
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> 
         getEnemySpawnSettingsList();
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings(int index);
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     int getEnemySpawnSettingsCount();
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
         getEnemySpawnSettingsOrBuilderList();
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder(
+        int index);
+
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> 
+        getNpcSpawnSettingsList();
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    proto.RandomizerSettings.GenericSpawnPresetFilter getNpcSpawnSettings(int index);
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    int getNpcSpawnSettingsCount();
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+        getNpcSpawnSettingsOrBuilderList();
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getNpcSpawnSettingsOrBuilder(
         int index);
   }
   /**
@@ -79,8 +127,10 @@ public final class RandomizerSettings {
       super(builder);
     }
     private AllPresets() {
-      itemSpawnSettings_ = java.util.Collections.emptyList();
+      pickupSpawnSettings_ = java.util.Collections.emptyList();
+      propSpawnSettings_ = java.util.Collections.emptyList();
       enemySpawnSettings_ = java.util.Collections.emptyList();
+      npcSpawnSettings_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -116,19 +166,37 @@ public final class RandomizerSettings {
               break;
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                itemSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>();
+                pickupSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              itemSpawnSettings_.add(
+              pickupSpawnSettings_.add(
                   input.readMessage(proto.RandomizerSettings.GenericSpawnPresetFilter.parser(), extensionRegistry));
               break;
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                enemySpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>();
+                propSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>();
                 mutable_bitField0_ |= 0x00000002;
               }
+              propSpawnSettings_.add(
+                  input.readMessage(proto.RandomizerSettings.GenericSpawnPresetFilter.parser(), extensionRegistry));
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+                enemySpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>();
+                mutable_bitField0_ |= 0x00000004;
+              }
               enemySpawnSettings_.add(
+                  input.readMessage(proto.RandomizerSettings.GenericSpawnPresetFilter.parser(), extensionRegistry));
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+                npcSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              npcSpawnSettings_.add(
                   input.readMessage(proto.RandomizerSettings.GenericSpawnPresetFilter.parser(), extensionRegistry));
               break;
             }
@@ -148,10 +216,16 @@ public final class RandomizerSettings {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) != 0)) {
-          itemSpawnSettings_ = java.util.Collections.unmodifiableList(itemSpawnSettings_);
+          pickupSpawnSettings_ = java.util.Collections.unmodifiableList(pickupSpawnSettings_);
         }
         if (((mutable_bitField0_ & 0x00000002) != 0)) {
+          propSpawnSettings_ = java.util.Collections.unmodifiableList(propSpawnSettings_);
+        }
+        if (((mutable_bitField0_ & 0x00000004) != 0)) {
           enemySpawnSettings_ = java.util.Collections.unmodifiableList(enemySpawnSettings_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) != 0)) {
+          npcSpawnSettings_ = java.util.Collections.unmodifiableList(npcSpawnSettings_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -170,57 +244,97 @@ public final class RandomizerSettings {
               proto.RandomizerSettings.AllPresets.class, proto.RandomizerSettings.AllPresets.Builder.class);
     }
 
-    public static final int ITEM_SPAWN_SETTINGS_FIELD_NUMBER = 1;
-    private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> itemSpawnSettings_;
+    public static final int PICKUP_SPAWN_SETTINGS_FIELD_NUMBER = 1;
+    private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> pickupSpawnSettings_;
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     @java.lang.Override
-    public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getItemSpawnSettingsList() {
-      return itemSpawnSettings_;
+    public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getPickupSpawnSettingsList() {
+      return pickupSpawnSettings_;
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     @java.lang.Override
     public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
-        getItemSpawnSettingsOrBuilderList() {
-      return itemSpawnSettings_;
+        getPickupSpawnSettingsOrBuilderList() {
+      return pickupSpawnSettings_;
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     @java.lang.Override
-    public int getItemSpawnSettingsCount() {
-      return itemSpawnSettings_.size();
+    public int getPickupSpawnSettingsCount() {
+      return pickupSpawnSettings_.size();
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     @java.lang.Override
-    public proto.RandomizerSettings.GenericSpawnPresetFilter getItemSpawnSettings(int index) {
-      return itemSpawnSettings_.get(index);
+    public proto.RandomizerSettings.GenericSpawnPresetFilter getPickupSpawnSettings(int index) {
+      return pickupSpawnSettings_.get(index);
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+     * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
      */
     @java.lang.Override
-    public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getItemSpawnSettingsOrBuilder(
+    public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getPickupSpawnSettingsOrBuilder(
         int index) {
-      return itemSpawnSettings_.get(index);
+      return pickupSpawnSettings_.get(index);
     }
 
-    public static final int ENEMY_SPAWN_SETTINGS_FIELD_NUMBER = 2;
+    public static final int PROP_SPAWN_SETTINGS_FIELD_NUMBER = 2;
+    private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> propSpawnSettings_;
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getPropSpawnSettingsList() {
+      return propSpawnSettings_;
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+        getPropSpawnSettingsOrBuilderList() {
+      return propSpawnSettings_;
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    @java.lang.Override
+    public int getPropSpawnSettingsCount() {
+      return propSpawnSettings_.size();
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.GenericSpawnPresetFilter getPropSpawnSettings(int index) {
+      return propSpawnSettings_.get(index);
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getPropSpawnSettingsOrBuilder(
+        int index) {
+      return propSpawnSettings_.get(index);
+    }
+
+    public static final int ENEMY_SPAWN_SETTINGS_FIELD_NUMBER = 3;
     private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> enemySpawnSettings_;
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     @java.lang.Override
     public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getEnemySpawnSettingsList() {
       return enemySpawnSettings_;
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     @java.lang.Override
     public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
@@ -228,26 +342,66 @@ public final class RandomizerSettings {
       return enemySpawnSettings_;
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     @java.lang.Override
     public int getEnemySpawnSettingsCount() {
       return enemySpawnSettings_.size();
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     @java.lang.Override
     public proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings(int index) {
       return enemySpawnSettings_.get(index);
     }
     /**
-     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+     * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
      */
     @java.lang.Override
     public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder(
         int index) {
       return enemySpawnSettings_.get(index);
+    }
+
+    public static final int NPC_SPAWN_SETTINGS_FIELD_NUMBER = 4;
+    private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> npcSpawnSettings_;
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    @java.lang.Override
+    public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getNpcSpawnSettingsList() {
+      return npcSpawnSettings_;
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+        getNpcSpawnSettingsOrBuilderList() {
+      return npcSpawnSettings_;
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    @java.lang.Override
+    public int getNpcSpawnSettingsCount() {
+      return npcSpawnSettings_.size();
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.GenericSpawnPresetFilter getNpcSpawnSettings(int index) {
+      return npcSpawnSettings_.get(index);
+    }
+    /**
+     * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getNpcSpawnSettingsOrBuilder(
+        int index) {
+      return npcSpawnSettings_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -264,11 +418,17 @@ public final class RandomizerSettings {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < itemSpawnSettings_.size(); i++) {
-        output.writeMessage(1, itemSpawnSettings_.get(i));
+      for (int i = 0; i < pickupSpawnSettings_.size(); i++) {
+        output.writeMessage(1, pickupSpawnSettings_.get(i));
+      }
+      for (int i = 0; i < propSpawnSettings_.size(); i++) {
+        output.writeMessage(2, propSpawnSettings_.get(i));
       }
       for (int i = 0; i < enemySpawnSettings_.size(); i++) {
-        output.writeMessage(2, enemySpawnSettings_.get(i));
+        output.writeMessage(3, enemySpawnSettings_.get(i));
+      }
+      for (int i = 0; i < npcSpawnSettings_.size(); i++) {
+        output.writeMessage(4, npcSpawnSettings_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -279,13 +439,21 @@ public final class RandomizerSettings {
       if (size != -1) return size;
 
       size = 0;
-      for (int i = 0; i < itemSpawnSettings_.size(); i++) {
+      for (int i = 0; i < pickupSpawnSettings_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, itemSpawnSettings_.get(i));
+          .computeMessageSize(1, pickupSpawnSettings_.get(i));
+      }
+      for (int i = 0; i < propSpawnSettings_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, propSpawnSettings_.get(i));
       }
       for (int i = 0; i < enemySpawnSettings_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, enemySpawnSettings_.get(i));
+          .computeMessageSize(3, enemySpawnSettings_.get(i));
+      }
+      for (int i = 0; i < npcSpawnSettings_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, npcSpawnSettings_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -302,10 +470,14 @@ public final class RandomizerSettings {
       }
       proto.RandomizerSettings.AllPresets other = (proto.RandomizerSettings.AllPresets) obj;
 
-      if (!getItemSpawnSettingsList()
-          .equals(other.getItemSpawnSettingsList())) return false;
+      if (!getPickupSpawnSettingsList()
+          .equals(other.getPickupSpawnSettingsList())) return false;
+      if (!getPropSpawnSettingsList()
+          .equals(other.getPropSpawnSettingsList())) return false;
       if (!getEnemySpawnSettingsList()
           .equals(other.getEnemySpawnSettingsList())) return false;
+      if (!getNpcSpawnSettingsList()
+          .equals(other.getNpcSpawnSettingsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -317,13 +489,21 @@ public final class RandomizerSettings {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getItemSpawnSettingsCount() > 0) {
-        hash = (37 * hash) + ITEM_SPAWN_SETTINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getItemSpawnSettingsList().hashCode();
+      if (getPickupSpawnSettingsCount() > 0) {
+        hash = (37 * hash) + PICKUP_SPAWN_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getPickupSpawnSettingsList().hashCode();
+      }
+      if (getPropSpawnSettingsCount() > 0) {
+        hash = (37 * hash) + PROP_SPAWN_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getPropSpawnSettingsList().hashCode();
       }
       if (getEnemySpawnSettingsCount() > 0) {
         hash = (37 * hash) + ENEMY_SPAWN_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getEnemySpawnSettingsList().hashCode();
+      }
+      if (getNpcSpawnSettingsCount() > 0) {
+        hash = (37 * hash) + NPC_SPAWN_SETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getNpcSpawnSettingsList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -453,24 +633,38 @@ public final class RandomizerSettings {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getItemSpawnSettingsFieldBuilder();
+          getPickupSpawnSettingsFieldBuilder();
+          getPropSpawnSettingsFieldBuilder();
           getEnemySpawnSettingsFieldBuilder();
+          getNpcSpawnSettingsFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        if (itemSpawnSettingsBuilder_ == null) {
-          itemSpawnSettings_ = java.util.Collections.emptyList();
+        if (pickupSpawnSettingsBuilder_ == null) {
+          pickupSpawnSettings_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          itemSpawnSettingsBuilder_.clear();
+          pickupSpawnSettingsBuilder_.clear();
+        }
+        if (propSpawnSettingsBuilder_ == null) {
+          propSpawnSettings_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          propSpawnSettingsBuilder_.clear();
         }
         if (enemySpawnSettingsBuilder_ == null) {
           enemySpawnSettings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
           enemySpawnSettingsBuilder_.clear();
+        }
+        if (npcSpawnSettingsBuilder_ == null) {
+          npcSpawnSettings_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          npcSpawnSettingsBuilder_.clear();
         }
         return this;
       }
@@ -499,23 +693,41 @@ public final class RandomizerSettings {
       public proto.RandomizerSettings.AllPresets buildPartial() {
         proto.RandomizerSettings.AllPresets result = new proto.RandomizerSettings.AllPresets(this);
         int from_bitField0_ = bitField0_;
-        if (itemSpawnSettingsBuilder_ == null) {
+        if (pickupSpawnSettingsBuilder_ == null) {
           if (((bitField0_ & 0x00000001) != 0)) {
-            itemSpawnSettings_ = java.util.Collections.unmodifiableList(itemSpawnSettings_);
+            pickupSpawnSettings_ = java.util.Collections.unmodifiableList(pickupSpawnSettings_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
-          result.itemSpawnSettings_ = itemSpawnSettings_;
+          result.pickupSpawnSettings_ = pickupSpawnSettings_;
         } else {
-          result.itemSpawnSettings_ = itemSpawnSettingsBuilder_.build();
+          result.pickupSpawnSettings_ = pickupSpawnSettingsBuilder_.build();
+        }
+        if (propSpawnSettingsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            propSpawnSettings_ = java.util.Collections.unmodifiableList(propSpawnSettings_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.propSpawnSettings_ = propSpawnSettings_;
+        } else {
+          result.propSpawnSettings_ = propSpawnSettingsBuilder_.build();
         }
         if (enemySpawnSettingsBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0)) {
+          if (((bitField0_ & 0x00000004) != 0)) {
             enemySpawnSettings_ = java.util.Collections.unmodifiableList(enemySpawnSettings_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           }
           result.enemySpawnSettings_ = enemySpawnSettings_;
         } else {
           result.enemySpawnSettings_ = enemySpawnSettingsBuilder_.build();
+        }
+        if (npcSpawnSettingsBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) != 0)) {
+            npcSpawnSettings_ = java.util.Collections.unmodifiableList(npcSpawnSettings_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.npcSpawnSettings_ = npcSpawnSettings_;
+        } else {
+          result.npcSpawnSettings_ = npcSpawnSettingsBuilder_.build();
         }
         onBuilt();
         return result;
@@ -565,29 +777,55 @@ public final class RandomizerSettings {
 
       public Builder mergeFrom(proto.RandomizerSettings.AllPresets other) {
         if (other == proto.RandomizerSettings.AllPresets.getDefaultInstance()) return this;
-        if (itemSpawnSettingsBuilder_ == null) {
-          if (!other.itemSpawnSettings_.isEmpty()) {
-            if (itemSpawnSettings_.isEmpty()) {
-              itemSpawnSettings_ = other.itemSpawnSettings_;
+        if (pickupSpawnSettingsBuilder_ == null) {
+          if (!other.pickupSpawnSettings_.isEmpty()) {
+            if (pickupSpawnSettings_.isEmpty()) {
+              pickupSpawnSettings_ = other.pickupSpawnSettings_;
               bitField0_ = (bitField0_ & ~0x00000001);
             } else {
-              ensureItemSpawnSettingsIsMutable();
-              itemSpawnSettings_.addAll(other.itemSpawnSettings_);
+              ensurePickupSpawnSettingsIsMutable();
+              pickupSpawnSettings_.addAll(other.pickupSpawnSettings_);
             }
             onChanged();
           }
         } else {
-          if (!other.itemSpawnSettings_.isEmpty()) {
-            if (itemSpawnSettingsBuilder_.isEmpty()) {
-              itemSpawnSettingsBuilder_.dispose();
-              itemSpawnSettingsBuilder_ = null;
-              itemSpawnSettings_ = other.itemSpawnSettings_;
+          if (!other.pickupSpawnSettings_.isEmpty()) {
+            if (pickupSpawnSettingsBuilder_.isEmpty()) {
+              pickupSpawnSettingsBuilder_.dispose();
+              pickupSpawnSettingsBuilder_ = null;
+              pickupSpawnSettings_ = other.pickupSpawnSettings_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              itemSpawnSettingsBuilder_ = 
+              pickupSpawnSettingsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getItemSpawnSettingsFieldBuilder() : null;
+                   getPickupSpawnSettingsFieldBuilder() : null;
             } else {
-              itemSpawnSettingsBuilder_.addAllMessages(other.itemSpawnSettings_);
+              pickupSpawnSettingsBuilder_.addAllMessages(other.pickupSpawnSettings_);
+            }
+          }
+        }
+        if (propSpawnSettingsBuilder_ == null) {
+          if (!other.propSpawnSettings_.isEmpty()) {
+            if (propSpawnSettings_.isEmpty()) {
+              propSpawnSettings_ = other.propSpawnSettings_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensurePropSpawnSettingsIsMutable();
+              propSpawnSettings_.addAll(other.propSpawnSettings_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.propSpawnSettings_.isEmpty()) {
+            if (propSpawnSettingsBuilder_.isEmpty()) {
+              propSpawnSettingsBuilder_.dispose();
+              propSpawnSettingsBuilder_ = null;
+              propSpawnSettings_ = other.propSpawnSettings_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              propSpawnSettingsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPropSpawnSettingsFieldBuilder() : null;
+            } else {
+              propSpawnSettingsBuilder_.addAllMessages(other.propSpawnSettings_);
             }
           }
         }
@@ -595,7 +833,7 @@ public final class RandomizerSettings {
           if (!other.enemySpawnSettings_.isEmpty()) {
             if (enemySpawnSettings_.isEmpty()) {
               enemySpawnSettings_ = other.enemySpawnSettings_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000004);
             } else {
               ensureEnemySpawnSettingsIsMutable();
               enemySpawnSettings_.addAll(other.enemySpawnSettings_);
@@ -608,12 +846,38 @@ public final class RandomizerSettings {
               enemySpawnSettingsBuilder_.dispose();
               enemySpawnSettingsBuilder_ = null;
               enemySpawnSettings_ = other.enemySpawnSettings_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000004);
               enemySpawnSettingsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getEnemySpawnSettingsFieldBuilder() : null;
             } else {
               enemySpawnSettingsBuilder_.addAllMessages(other.enemySpawnSettings_);
+            }
+          }
+        }
+        if (npcSpawnSettingsBuilder_ == null) {
+          if (!other.npcSpawnSettings_.isEmpty()) {
+            if (npcSpawnSettings_.isEmpty()) {
+              npcSpawnSettings_ = other.npcSpawnSettings_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureNpcSpawnSettingsIsMutable();
+              npcSpawnSettings_.addAll(other.npcSpawnSettings_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.npcSpawnSettings_.isEmpty()) {
+            if (npcSpawnSettingsBuilder_.isEmpty()) {
+              npcSpawnSettingsBuilder_.dispose();
+              npcSpawnSettingsBuilder_ = null;
+              npcSpawnSettings_ = other.npcSpawnSettings_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              npcSpawnSettingsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getNpcSpawnSettingsFieldBuilder() : null;
+            } else {
+              npcSpawnSettingsBuilder_.addAllMessages(other.npcSpawnSettings_);
             }
           }
         }
@@ -647,252 +911,492 @@ public final class RandomizerSettings {
       }
       private int bitField0_;
 
-      private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> itemSpawnSettings_ =
+      private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> pickupSpawnSettings_ =
         java.util.Collections.emptyList();
-      private void ensureItemSpawnSettingsIsMutable() {
+      private void ensurePickupSpawnSettingsIsMutable() {
         if (!((bitField0_ & 0x00000001) != 0)) {
-          itemSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>(itemSpawnSettings_);
+          pickupSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>(pickupSpawnSettings_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> itemSpawnSettingsBuilder_;
+          proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> pickupSpawnSettingsBuilder_;
 
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getItemSpawnSettingsList() {
-        if (itemSpawnSettingsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(itemSpawnSettings_);
+      public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getPickupSpawnSettingsList() {
+        if (pickupSpawnSettingsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(pickupSpawnSettings_);
         } else {
-          return itemSpawnSettingsBuilder_.getMessageList();
+          return pickupSpawnSettingsBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public int getItemSpawnSettingsCount() {
-        if (itemSpawnSettingsBuilder_ == null) {
-          return itemSpawnSettings_.size();
+      public int getPickupSpawnSettingsCount() {
+        if (pickupSpawnSettingsBuilder_ == null) {
+          return pickupSpawnSettings_.size();
         } else {
-          return itemSpawnSettingsBuilder_.getCount();
+          return pickupSpawnSettingsBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public proto.RandomizerSettings.GenericSpawnPresetFilter getItemSpawnSettings(int index) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          return itemSpawnSettings_.get(index);
+      public proto.RandomizerSettings.GenericSpawnPresetFilter getPickupSpawnSettings(int index) {
+        if (pickupSpawnSettingsBuilder_ == null) {
+          return pickupSpawnSettings_.get(index);
         } else {
-          return itemSpawnSettingsBuilder_.getMessage(index);
+          return pickupSpawnSettingsBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder setItemSpawnSettings(
+      public Builder setPickupSpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
-        if (itemSpawnSettingsBuilder_ == null) {
+        if (pickupSpawnSettingsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.set(index, value);
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.set(index, value);
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.setMessage(index, value);
+          pickupSpawnSettingsBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder setItemSpawnSettings(
+      public Builder setPickupSpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.set(index, builderForValue.build());
+        if (pickupSpawnSettingsBuilder_ == null) {
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.set(index, builderForValue.build());
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.setMessage(index, builderForValue.build());
+          pickupSpawnSettingsBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder addItemSpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
-        if (itemSpawnSettingsBuilder_ == null) {
+      public Builder addPickupSpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (pickupSpawnSettingsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.add(value);
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.add(value);
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.addMessage(value);
+          pickupSpawnSettingsBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder addItemSpawnSettings(
+      public Builder addPickupSpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
-        if (itemSpawnSettingsBuilder_ == null) {
+        if (pickupSpawnSettingsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.add(index, value);
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.add(index, value);
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.addMessage(index, value);
+          pickupSpawnSettingsBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder addItemSpawnSettings(
+      public Builder addPickupSpawnSettings(
           proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.add(builderForValue.build());
+        if (pickupSpawnSettingsBuilder_ == null) {
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.add(builderForValue.build());
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.addMessage(builderForValue.build());
+          pickupSpawnSettingsBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder addItemSpawnSettings(
+      public Builder addPickupSpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.add(index, builderForValue.build());
+        if (pickupSpawnSettingsBuilder_ == null) {
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.add(index, builderForValue.build());
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.addMessage(index, builderForValue.build());
+          pickupSpawnSettingsBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder addAllItemSpawnSettings(
+      public Builder addAllPickupSpawnSettings(
           java.lang.Iterable<? extends proto.RandomizerSettings.GenericSpawnPresetFilter> values) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          ensureItemSpawnSettingsIsMutable();
+        if (pickupSpawnSettingsBuilder_ == null) {
+          ensurePickupSpawnSettingsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, itemSpawnSettings_);
+              values, pickupSpawnSettings_);
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.addAllMessages(values);
+          pickupSpawnSettingsBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder clearItemSpawnSettings() {
-        if (itemSpawnSettingsBuilder_ == null) {
-          itemSpawnSettings_ = java.util.Collections.emptyList();
+      public Builder clearPickupSpawnSettings() {
+        if (pickupSpawnSettingsBuilder_ == null) {
+          pickupSpawnSettings_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.clear();
+          pickupSpawnSettingsBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public Builder removeItemSpawnSettings(int index) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          ensureItemSpawnSettingsIsMutable();
-          itemSpawnSettings_.remove(index);
+      public Builder removePickupSpawnSettings(int index) {
+        if (pickupSpawnSettingsBuilder_ == null) {
+          ensurePickupSpawnSettingsIsMutable();
+          pickupSpawnSettings_.remove(index);
           onChanged();
         } else {
-          itemSpawnSettingsBuilder_.remove(index);
+          pickupSpawnSettingsBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder getItemSpawnSettingsBuilder(
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder getPickupSpawnSettingsBuilder(
           int index) {
-        return getItemSpawnSettingsFieldBuilder().getBuilder(index);
+        return getPickupSpawnSettingsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getItemSpawnSettingsOrBuilder(
+      public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getPickupSpawnSettingsOrBuilder(
           int index) {
-        if (itemSpawnSettingsBuilder_ == null) {
-          return itemSpawnSettings_.get(index);  } else {
-          return itemSpawnSettingsBuilder_.getMessageOrBuilder(index);
+        if (pickupSpawnSettingsBuilder_ == null) {
+          return pickupSpawnSettings_.get(index);  } else {
+          return pickupSpawnSettingsBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
       public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
-           getItemSpawnSettingsOrBuilderList() {
-        if (itemSpawnSettingsBuilder_ != null) {
-          return itemSpawnSettingsBuilder_.getMessageOrBuilderList();
+           getPickupSpawnSettingsOrBuilderList() {
+        if (pickupSpawnSettingsBuilder_ != null) {
+          return pickupSpawnSettingsBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(itemSpawnSettings_);
+          return java.util.Collections.unmodifiableList(pickupSpawnSettings_);
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addItemSpawnSettingsBuilder() {
-        return getItemSpawnSettingsFieldBuilder().addBuilder(
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addPickupSpawnSettingsBuilder() {
+        return getPickupSpawnSettingsFieldBuilder().addBuilder(
             proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
-      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addItemSpawnSettingsBuilder(
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addPickupSpawnSettingsBuilder(
           int index) {
-        return getItemSpawnSettingsFieldBuilder().addBuilder(
+        return getPickupSpawnSettingsFieldBuilder().addBuilder(
             index, proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter item_spawn_settings = 1;</code>
+       * <code>repeated .GenericSpawnPresetFilter pickup_spawn_settings = 1;</code>
        */
       public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter.Builder> 
-           getItemSpawnSettingsBuilderList() {
-        return getItemSpawnSettingsFieldBuilder().getBuilderList();
+           getPickupSpawnSettingsBuilderList() {
+        return getPickupSpawnSettingsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
-          getItemSpawnSettingsFieldBuilder() {
-        if (itemSpawnSettingsBuilder_ == null) {
-          itemSpawnSettingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getPickupSpawnSettingsFieldBuilder() {
+        if (pickupSpawnSettingsBuilder_ == null) {
+          pickupSpawnSettingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder>(
-                  itemSpawnSettings_,
+                  pickupSpawnSettings_,
                   ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
-          itemSpawnSettings_ = null;
+          pickupSpawnSettings_ = null;
         }
-        return itemSpawnSettingsBuilder_;
+        return pickupSpawnSettingsBuilder_;
+      }
+
+      private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> propSpawnSettings_ =
+        java.util.Collections.emptyList();
+      private void ensurePropSpawnSettingsIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          propSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>(propSpawnSettings_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> propSpawnSettingsBuilder_;
+
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getPropSpawnSettingsList() {
+        if (propSpawnSettingsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(propSpawnSettings_);
+        } else {
+          return propSpawnSettingsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public int getPropSpawnSettingsCount() {
+        if (propSpawnSettingsBuilder_ == null) {
+          return propSpawnSettings_.size();
+        } else {
+          return propSpawnSettingsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter getPropSpawnSettings(int index) {
+        if (propSpawnSettingsBuilder_ == null) {
+          return propSpawnSettings_.get(index);
+        } else {
+          return propSpawnSettingsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder setPropSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (propSpawnSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.set(index, value);
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder setPropSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
+        if (propSpawnSettingsBuilder_ == null) {
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder addPropSpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (propSpawnSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.add(value);
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder addPropSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (propSpawnSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.add(index, value);
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder addPropSpawnSettings(
+          proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
+        if (propSpawnSettingsBuilder_ == null) {
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.add(builderForValue.build());
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder addPropSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
+        if (propSpawnSettingsBuilder_ == null) {
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder addAllPropSpawnSettings(
+          java.lang.Iterable<? extends proto.RandomizerSettings.GenericSpawnPresetFilter> values) {
+        if (propSpawnSettingsBuilder_ == null) {
+          ensurePropSpawnSettingsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, propSpawnSettings_);
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder clearPropSpawnSettings() {
+        if (propSpawnSettingsBuilder_ == null) {
+          propSpawnSettings_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public Builder removePropSpawnSettings(int index) {
+        if (propSpawnSettingsBuilder_ == null) {
+          ensurePropSpawnSettingsIsMutable();
+          propSpawnSettings_.remove(index);
+          onChanged();
+        } else {
+          propSpawnSettingsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder getPropSpawnSettingsBuilder(
+          int index) {
+        return getPropSpawnSettingsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getPropSpawnSettingsOrBuilder(
+          int index) {
+        if (propSpawnSettingsBuilder_ == null) {
+          return propSpawnSettings_.get(index);  } else {
+          return propSpawnSettingsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+           getPropSpawnSettingsOrBuilderList() {
+        if (propSpawnSettingsBuilder_ != null) {
+          return propSpawnSettingsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(propSpawnSettings_);
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addPropSpawnSettingsBuilder() {
+        return getPropSpawnSettingsFieldBuilder().addBuilder(
+            proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addPropSpawnSettingsBuilder(
+          int index) {
+        return getPropSpawnSettingsFieldBuilder().addBuilder(
+            index, proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter prop_spawn_settings = 2;</code>
+       */
+      public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter.Builder> 
+           getPropSpawnSettingsBuilderList() {
+        return getPropSpawnSettingsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+          getPropSpawnSettingsFieldBuilder() {
+        if (propSpawnSettingsBuilder_ == null) {
+          propSpawnSettingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder>(
+                  propSpawnSettings_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          propSpawnSettings_ = null;
+        }
+        return propSpawnSettingsBuilder_;
       }
 
       private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> enemySpawnSettings_ =
         java.util.Collections.emptyList();
       private void ensureEnemySpawnSettingsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!((bitField0_ & 0x00000004) != 0)) {
           enemySpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>(enemySpawnSettings_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
          }
       }
 
@@ -900,7 +1404,7 @@ public final class RandomizerSettings {
           proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> enemySpawnSettingsBuilder_;
 
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getEnemySpawnSettingsList() {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -910,7 +1414,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public int getEnemySpawnSettingsCount() {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -920,7 +1424,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilter getEnemySpawnSettings(int index) {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -930,7 +1434,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder setEnemySpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
@@ -947,7 +1451,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder setEnemySpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
@@ -961,7 +1465,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder addEnemySpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -977,7 +1481,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder addEnemySpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
@@ -994,7 +1498,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder addEnemySpawnSettings(
           proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
@@ -1008,7 +1512,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder addEnemySpawnSettings(
           int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
@@ -1022,7 +1526,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder addAllEnemySpawnSettings(
           java.lang.Iterable<? extends proto.RandomizerSettings.GenericSpawnPresetFilter> values) {
@@ -1037,12 +1541,12 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder clearEnemySpawnSettings() {
         if (enemySpawnSettingsBuilder_ == null) {
           enemySpawnSettings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
           enemySpawnSettingsBuilder_.clear();
@@ -1050,7 +1554,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public Builder removeEnemySpawnSettings(int index) {
         if (enemySpawnSettingsBuilder_ == null) {
@@ -1063,14 +1567,14 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder getEnemySpawnSettingsBuilder(
           int index) {
         return getEnemySpawnSettingsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getEnemySpawnSettingsOrBuilder(
           int index) {
@@ -1080,7 +1584,7 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
            getEnemySpawnSettingsOrBuilderList() {
@@ -1091,14 +1595,14 @@ public final class RandomizerSettings {
         }
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addEnemySpawnSettingsBuilder() {
         return getEnemySpawnSettingsFieldBuilder().addBuilder(
             proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addEnemySpawnSettingsBuilder(
           int index) {
@@ -1106,7 +1610,7 @@ public final class RandomizerSettings {
             index, proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
       }
       /**
-       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 2;</code>
+       * <code>repeated .GenericSpawnPresetFilter enemy_spawn_settings = 3;</code>
        */
       public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter.Builder> 
            getEnemySpawnSettingsBuilderList() {
@@ -1119,12 +1623,252 @@ public final class RandomizerSettings {
           enemySpawnSettingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder>(
                   enemySpawnSettings_,
-                  ((bitField0_ & 0x00000002) != 0),
+                  ((bitField0_ & 0x00000004) != 0),
                   getParentForChildren(),
                   isClean());
           enemySpawnSettings_ = null;
         }
         return enemySpawnSettingsBuilder_;
+      }
+
+      private java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> npcSpawnSettings_ =
+        java.util.Collections.emptyList();
+      private void ensureNpcSpawnSettingsIsMutable() {
+        if (!((bitField0_ & 0x00000008) != 0)) {
+          npcSpawnSettings_ = new java.util.ArrayList<proto.RandomizerSettings.GenericSpawnPresetFilter>(npcSpawnSettings_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> npcSpawnSettingsBuilder_;
+
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter> getNpcSpawnSettingsList() {
+        if (npcSpawnSettingsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(npcSpawnSettings_);
+        } else {
+          return npcSpawnSettingsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public int getNpcSpawnSettingsCount() {
+        if (npcSpawnSettingsBuilder_ == null) {
+          return npcSpawnSettings_.size();
+        } else {
+          return npcSpawnSettingsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter getNpcSpawnSettings(int index) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          return npcSpawnSettings_.get(index);
+        } else {
+          return npcSpawnSettingsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder setNpcSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.set(index, value);
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder setNpcSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder addNpcSpawnSettings(proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.add(value);
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder addNpcSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter value) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.add(index, value);
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder addNpcSpawnSettings(
+          proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.add(builderForValue.build());
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder addNpcSpawnSettings(
+          int index, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder builderForValue) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder addAllNpcSpawnSettings(
+          java.lang.Iterable<? extends proto.RandomizerSettings.GenericSpawnPresetFilter> values) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          ensureNpcSpawnSettingsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, npcSpawnSettings_);
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder clearNpcSpawnSettings() {
+        if (npcSpawnSettingsBuilder_ == null) {
+          npcSpawnSettings_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public Builder removeNpcSpawnSettings(int index) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          ensureNpcSpawnSettingsIsMutable();
+          npcSpawnSettings_.remove(index);
+          onChanged();
+        } else {
+          npcSpawnSettingsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder getNpcSpawnSettingsBuilder(
+          int index) {
+        return getNpcSpawnSettingsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder getNpcSpawnSettingsOrBuilder(
+          int index) {
+        if (npcSpawnSettingsBuilder_ == null) {
+          return npcSpawnSettings_.get(index);  } else {
+          return npcSpawnSettingsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public java.util.List<? extends proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+           getNpcSpawnSettingsOrBuilderList() {
+        if (npcSpawnSettingsBuilder_ != null) {
+          return npcSpawnSettingsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(npcSpawnSettings_);
+        }
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addNpcSpawnSettingsBuilder() {
+        return getNpcSpawnSettingsFieldBuilder().addBuilder(
+            proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public proto.RandomizerSettings.GenericSpawnPresetFilter.Builder addNpcSpawnSettingsBuilder(
+          int index) {
+        return getNpcSpawnSettingsFieldBuilder().addBuilder(
+            index, proto.RandomizerSettings.GenericSpawnPresetFilter.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .GenericSpawnPresetFilter npc_spawn_settings = 4;</code>
+       */
+      public java.util.List<proto.RandomizerSettings.GenericSpawnPresetFilter.Builder> 
+           getNpcSpawnSettingsBuilderList() {
+        return getNpcSpawnSettingsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder> 
+          getNpcSpawnSettingsFieldBuilder() {
+        if (npcSpawnSettingsBuilder_ == null) {
+          npcSpawnSettingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.RandomizerSettings.GenericSpawnPresetFilter, proto.RandomizerSettings.GenericSpawnPresetFilter.Builder, proto.RandomizerSettings.GenericSpawnPresetFilterOrBuilder>(
+                  npcSpawnSettings_,
+                  ((bitField0_ & 0x00000008) != 0),
+                  getParentForChildren(),
+                  isClean());
+          npcSpawnSettings_ = null;
+        }
+        return npcSpawnSettingsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -4162,28 +4906,112 @@ public final class RandomizerSettings {
     boolean getRandomizeFabPlanCosts();
 
     /**
-     * <code>bool randomize_recyclers = 6;</code>
+     * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+     * @return Whether the randomizeRecyclers field is set.
+     */
+    boolean hasRandomizeRecyclers();
+    /**
+     * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
      * @return The randomizeRecyclers.
      */
-    boolean getRandomizeRecyclers();
+    proto.RandomizerSettings.ToggleWithSlider getRandomizeRecyclers();
+    /**
+     * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+     */
+    proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeRecyclersOrBuilder();
 
     /**
-     * <code>bool randomize_dispensers = 7;</code>
+     * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+     * @return Whether the randomizeDispensers field is set.
+     */
+    boolean hasRandomizeDispensers();
+    /**
+     * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
      * @return The randomizeDispensers.
      */
-    boolean getRandomizeDispensers();
+    proto.RandomizerSettings.ToggleWithSlider getRandomizeDispensers();
+    /**
+     * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+     */
+    proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeDispensersOrBuilder();
 
     /**
-     * <code>bool randomize_breakables = 8;</code>
+     * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+     * @return Whether the randomizeBreakables field is set.
+     */
+    boolean hasRandomizeBreakables();
+    /**
+     * <code>.ToggleWithSlider randomize_breakables = 8;</code>
      * @return The randomizeBreakables.
      */
-    boolean getRandomizeBreakables();
+    proto.RandomizerSettings.ToggleWithSlider getRandomizeBreakables();
+    /**
+     * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+     */
+    proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeBreakablesOrBuilder();
 
     /**
-     * <code>bool randomize_hackables = 9;</code>
+     * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+     * @return Whether the randomizeHackables field is set.
+     */
+    boolean hasRandomizeHackables();
+    /**
+     * <code>.ToggleWithSlider randomize_hackables = 9;</code>
      * @return The randomizeHackables.
      */
-    boolean getRandomizeHackables();
+    proto.RandomizerSettings.ToggleWithSlider getRandomizeHackables();
+    /**
+     * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+     */
+    proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeHackablesOrBuilder();
+
+    /**
+     * <code>string pickup_preset_name = 10;</code>
+     * @return The pickupPresetName.
+     */
+    java.lang.String getPickupPresetName();
+    /**
+     * <code>string pickup_preset_name = 10;</code>
+     * @return The bytes for pickupPresetName.
+     */
+    com.google.protobuf.ByteString
+        getPickupPresetNameBytes();
+
+    /**
+     * <code>string prop_preset_name = 11;</code>
+     * @return The propPresetName.
+     */
+    java.lang.String getPropPresetName();
+    /**
+     * <code>string prop_preset_name = 11;</code>
+     * @return The bytes for propPresetName.
+     */
+    com.google.protobuf.ByteString
+        getPropPresetNameBytes();
+
+    /**
+     * <code>string enemy_preset_name = 12;</code>
+     * @return The enemyPresetName.
+     */
+    java.lang.String getEnemyPresetName();
+    /**
+     * <code>string enemy_preset_name = 12;</code>
+     * @return The bytes for enemyPresetName.
+     */
+    com.google.protobuf.ByteString
+        getEnemyPresetNameBytes();
+
+    /**
+     * <code>string npc_preset_name = 13;</code>
+     * @return The npcPresetName.
+     */
+    java.lang.String getNpcPresetName();
+    /**
+     * <code>string npc_preset_name = 13;</code>
+     * @return The bytes for npcPresetName.
+     */
+    com.google.protobuf.ByteString
+        getNpcPresetNameBytes();
   }
   /**
    * Protobuf type {@code GameplaySettings}
@@ -4198,6 +5026,10 @@ public final class RandomizerSettings {
       super(builder);
     }
     private GameplaySettings() {
+      pickupPresetName_ = "";
+      propPresetName_ = "";
+      enemyPresetName_ = "";
+      npcPresetName_ = "";
     }
 
     @java.lang.Override
@@ -4271,24 +5103,80 @@ public final class RandomizerSettings {
               randomizeFabPlanCosts_ = input.readBool();
               break;
             }
-            case 48: {
+            case 50: {
+              proto.RandomizerSettings.ToggleWithSlider.Builder subBuilder = null;
+              if (randomizeRecyclers_ != null) {
+                subBuilder = randomizeRecyclers_.toBuilder();
+              }
+              randomizeRecyclers_ = input.readMessage(proto.RandomizerSettings.ToggleWithSlider.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(randomizeRecyclers_);
+                randomizeRecyclers_ = subBuilder.buildPartial();
+              }
 
-              randomizeRecyclers_ = input.readBool();
               break;
             }
-            case 56: {
+            case 58: {
+              proto.RandomizerSettings.ToggleWithSlider.Builder subBuilder = null;
+              if (randomizeDispensers_ != null) {
+                subBuilder = randomizeDispensers_.toBuilder();
+              }
+              randomizeDispensers_ = input.readMessage(proto.RandomizerSettings.ToggleWithSlider.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(randomizeDispensers_);
+                randomizeDispensers_ = subBuilder.buildPartial();
+              }
 
-              randomizeDispensers_ = input.readBool();
               break;
             }
-            case 64: {
+            case 66: {
+              proto.RandomizerSettings.ToggleWithSlider.Builder subBuilder = null;
+              if (randomizeBreakables_ != null) {
+                subBuilder = randomizeBreakables_.toBuilder();
+              }
+              randomizeBreakables_ = input.readMessage(proto.RandomizerSettings.ToggleWithSlider.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(randomizeBreakables_);
+                randomizeBreakables_ = subBuilder.buildPartial();
+              }
 
-              randomizeBreakables_ = input.readBool();
               break;
             }
-            case 72: {
+            case 74: {
+              proto.RandomizerSettings.ToggleWithSlider.Builder subBuilder = null;
+              if (randomizeHackables_ != null) {
+                subBuilder = randomizeHackables_.toBuilder();
+              }
+              randomizeHackables_ = input.readMessage(proto.RandomizerSettings.ToggleWithSlider.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(randomizeHackables_);
+                randomizeHackables_ = subBuilder.buildPartial();
+              }
 
-              randomizeHackables_ = input.readBool();
+              break;
+            }
+            case 82: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              pickupPresetName_ = s;
+              break;
+            }
+            case 90: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              propPresetName_ = s;
+              break;
+            }
+            case 98: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              enemyPresetName_ = s;
+              break;
+            }
+            case 106: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              npcPresetName_ = s;
               break;
             }
             default: {
@@ -4409,47 +5297,259 @@ public final class RandomizerSettings {
     }
 
     public static final int RANDOMIZE_RECYCLERS_FIELD_NUMBER = 6;
-    private boolean randomizeRecyclers_;
+    private proto.RandomizerSettings.ToggleWithSlider randomizeRecyclers_;
     /**
-     * <code>bool randomize_recyclers = 6;</code>
+     * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+     * @return Whether the randomizeRecyclers field is set.
+     */
+    @java.lang.Override
+    public boolean hasRandomizeRecyclers() {
+      return randomizeRecyclers_ != null;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
      * @return The randomizeRecyclers.
      */
     @java.lang.Override
-    public boolean getRandomizeRecyclers() {
-      return randomizeRecyclers_;
+    public proto.RandomizerSettings.ToggleWithSlider getRandomizeRecyclers() {
+      return randomizeRecyclers_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeRecyclers_;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeRecyclersOrBuilder() {
+      return getRandomizeRecyclers();
     }
 
     public static final int RANDOMIZE_DISPENSERS_FIELD_NUMBER = 7;
-    private boolean randomizeDispensers_;
+    private proto.RandomizerSettings.ToggleWithSlider randomizeDispensers_;
     /**
-     * <code>bool randomize_dispensers = 7;</code>
+     * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+     * @return Whether the randomizeDispensers field is set.
+     */
+    @java.lang.Override
+    public boolean hasRandomizeDispensers() {
+      return randomizeDispensers_ != null;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
      * @return The randomizeDispensers.
      */
     @java.lang.Override
-    public boolean getRandomizeDispensers() {
-      return randomizeDispensers_;
+    public proto.RandomizerSettings.ToggleWithSlider getRandomizeDispensers() {
+      return randomizeDispensers_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeDispensers_;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeDispensersOrBuilder() {
+      return getRandomizeDispensers();
     }
 
     public static final int RANDOMIZE_BREAKABLES_FIELD_NUMBER = 8;
-    private boolean randomizeBreakables_;
+    private proto.RandomizerSettings.ToggleWithSlider randomizeBreakables_;
     /**
-     * <code>bool randomize_breakables = 8;</code>
+     * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+     * @return Whether the randomizeBreakables field is set.
+     */
+    @java.lang.Override
+    public boolean hasRandomizeBreakables() {
+      return randomizeBreakables_ != null;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_breakables = 8;</code>
      * @return The randomizeBreakables.
      */
     @java.lang.Override
-    public boolean getRandomizeBreakables() {
-      return randomizeBreakables_;
+    public proto.RandomizerSettings.ToggleWithSlider getRandomizeBreakables() {
+      return randomizeBreakables_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeBreakables_;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeBreakablesOrBuilder() {
+      return getRandomizeBreakables();
     }
 
     public static final int RANDOMIZE_HACKABLES_FIELD_NUMBER = 9;
-    private boolean randomizeHackables_;
+    private proto.RandomizerSettings.ToggleWithSlider randomizeHackables_;
     /**
-     * <code>bool randomize_hackables = 9;</code>
+     * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+     * @return Whether the randomizeHackables field is set.
+     */
+    @java.lang.Override
+    public boolean hasRandomizeHackables() {
+      return randomizeHackables_ != null;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_hackables = 9;</code>
      * @return The randomizeHackables.
      */
     @java.lang.Override
-    public boolean getRandomizeHackables() {
-      return randomizeHackables_;
+    public proto.RandomizerSettings.ToggleWithSlider getRandomizeHackables() {
+      return randomizeHackables_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeHackables_;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeHackablesOrBuilder() {
+      return getRandomizeHackables();
+    }
+
+    public static final int PICKUP_PRESET_NAME_FIELD_NUMBER = 10;
+    private volatile java.lang.Object pickupPresetName_;
+    /**
+     * <code>string pickup_preset_name = 10;</code>
+     * @return The pickupPresetName.
+     */
+    @java.lang.Override
+    public java.lang.String getPickupPresetName() {
+      java.lang.Object ref = pickupPresetName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        pickupPresetName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string pickup_preset_name = 10;</code>
+     * @return The bytes for pickupPresetName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getPickupPresetNameBytes() {
+      java.lang.Object ref = pickupPresetName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        pickupPresetName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PROP_PRESET_NAME_FIELD_NUMBER = 11;
+    private volatile java.lang.Object propPresetName_;
+    /**
+     * <code>string prop_preset_name = 11;</code>
+     * @return The propPresetName.
+     */
+    @java.lang.Override
+    public java.lang.String getPropPresetName() {
+      java.lang.Object ref = propPresetName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        propPresetName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string prop_preset_name = 11;</code>
+     * @return The bytes for propPresetName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getPropPresetNameBytes() {
+      java.lang.Object ref = propPresetName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        propPresetName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ENEMY_PRESET_NAME_FIELD_NUMBER = 12;
+    private volatile java.lang.Object enemyPresetName_;
+    /**
+     * <code>string enemy_preset_name = 12;</code>
+     * @return The enemyPresetName.
+     */
+    @java.lang.Override
+    public java.lang.String getEnemyPresetName() {
+      java.lang.Object ref = enemyPresetName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        enemyPresetName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string enemy_preset_name = 12;</code>
+     * @return The bytes for enemyPresetName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getEnemyPresetNameBytes() {
+      java.lang.Object ref = enemyPresetName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        enemyPresetName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NPC_PRESET_NAME_FIELD_NUMBER = 13;
+    private volatile java.lang.Object npcPresetName_;
+    /**
+     * <code>string npc_preset_name = 13;</code>
+     * @return The npcPresetName.
+     */
+    @java.lang.Override
+    public java.lang.String getNpcPresetName() {
+      java.lang.Object ref = npcPresetName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        npcPresetName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string npc_preset_name = 13;</code>
+     * @return The bytes for npcPresetName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNpcPresetNameBytes() {
+      java.lang.Object ref = npcPresetName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        npcPresetName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4481,17 +5581,29 @@ public final class RandomizerSettings {
       if (randomizeFabPlanCosts_ != false) {
         output.writeBool(5, randomizeFabPlanCosts_);
       }
-      if (randomizeRecyclers_ != false) {
-        output.writeBool(6, randomizeRecyclers_);
+      if (randomizeRecyclers_ != null) {
+        output.writeMessage(6, getRandomizeRecyclers());
       }
-      if (randomizeDispensers_ != false) {
-        output.writeBool(7, randomizeDispensers_);
+      if (randomizeDispensers_ != null) {
+        output.writeMessage(7, getRandomizeDispensers());
       }
-      if (randomizeBreakables_ != false) {
-        output.writeBool(8, randomizeBreakables_);
+      if (randomizeBreakables_ != null) {
+        output.writeMessage(8, getRandomizeBreakables());
       }
-      if (randomizeHackables_ != false) {
-        output.writeBool(9, randomizeHackables_);
+      if (randomizeHackables_ != null) {
+        output.writeMessage(9, getRandomizeHackables());
+      }
+      if (!getPickupPresetNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 10, pickupPresetName_);
+      }
+      if (!getPropPresetNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 11, propPresetName_);
+      }
+      if (!getEnemyPresetNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 12, enemyPresetName_);
+      }
+      if (!getNpcPresetNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 13, npcPresetName_);
       }
       unknownFields.writeTo(output);
     }
@@ -4522,21 +5634,33 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(5, randomizeFabPlanCosts_);
       }
-      if (randomizeRecyclers_ != false) {
+      if (randomizeRecyclers_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(6, randomizeRecyclers_);
+          .computeMessageSize(6, getRandomizeRecyclers());
       }
-      if (randomizeDispensers_ != false) {
+      if (randomizeDispensers_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(7, randomizeDispensers_);
+          .computeMessageSize(7, getRandomizeDispensers());
       }
-      if (randomizeBreakables_ != false) {
+      if (randomizeBreakables_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(8, randomizeBreakables_);
+          .computeMessageSize(8, getRandomizeBreakables());
       }
-      if (randomizeHackables_ != false) {
+      if (randomizeHackables_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(9, randomizeHackables_);
+          .computeMessageSize(9, getRandomizeHackables());
+      }
+      if (!getPickupPresetNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, pickupPresetName_);
+      }
+      if (!getPropPresetNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, propPresetName_);
+      }
+      if (!getEnemyPresetNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, enemyPresetName_);
+      }
+      if (!getNpcPresetNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(13, npcPresetName_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4569,14 +5693,34 @@ public final class RandomizerSettings {
           != other.getRandomizeNeuromods()) return false;
       if (getRandomizeFabPlanCosts()
           != other.getRandomizeFabPlanCosts()) return false;
-      if (getRandomizeRecyclers()
-          != other.getRandomizeRecyclers()) return false;
-      if (getRandomizeDispensers()
-          != other.getRandomizeDispensers()) return false;
-      if (getRandomizeBreakables()
-          != other.getRandomizeBreakables()) return false;
-      if (getRandomizeHackables()
-          != other.getRandomizeHackables()) return false;
+      if (hasRandomizeRecyclers() != other.hasRandomizeRecyclers()) return false;
+      if (hasRandomizeRecyclers()) {
+        if (!getRandomizeRecyclers()
+            .equals(other.getRandomizeRecyclers())) return false;
+      }
+      if (hasRandomizeDispensers() != other.hasRandomizeDispensers()) return false;
+      if (hasRandomizeDispensers()) {
+        if (!getRandomizeDispensers()
+            .equals(other.getRandomizeDispensers())) return false;
+      }
+      if (hasRandomizeBreakables() != other.hasRandomizeBreakables()) return false;
+      if (hasRandomizeBreakables()) {
+        if (!getRandomizeBreakables()
+            .equals(other.getRandomizeBreakables())) return false;
+      }
+      if (hasRandomizeHackables() != other.hasRandomizeHackables()) return false;
+      if (hasRandomizeHackables()) {
+        if (!getRandomizeHackables()
+            .equals(other.getRandomizeHackables())) return false;
+      }
+      if (!getPickupPresetName()
+          .equals(other.getPickupPresetName())) return false;
+      if (!getPropPresetName()
+          .equals(other.getPropPresetName())) return false;
+      if (!getEnemyPresetName()
+          .equals(other.getEnemyPresetName())) return false;
+      if (!getNpcPresetName()
+          .equals(other.getNpcPresetName())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4605,18 +5749,30 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_FAB_PLAN_COSTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeFabPlanCosts());
-      hash = (37 * hash) + RANDOMIZE_RECYCLERS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeRecyclers());
-      hash = (37 * hash) + RANDOMIZE_DISPENSERS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeDispensers());
-      hash = (37 * hash) + RANDOMIZE_BREAKABLES_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeBreakables());
-      hash = (37 * hash) + RANDOMIZE_HACKABLES_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeHackables());
+      if (hasRandomizeRecyclers()) {
+        hash = (37 * hash) + RANDOMIZE_RECYCLERS_FIELD_NUMBER;
+        hash = (53 * hash) + getRandomizeRecyclers().hashCode();
+      }
+      if (hasRandomizeDispensers()) {
+        hash = (37 * hash) + RANDOMIZE_DISPENSERS_FIELD_NUMBER;
+        hash = (53 * hash) + getRandomizeDispensers().hashCode();
+      }
+      if (hasRandomizeBreakables()) {
+        hash = (37 * hash) + RANDOMIZE_BREAKABLES_FIELD_NUMBER;
+        hash = (53 * hash) + getRandomizeBreakables().hashCode();
+      }
+      if (hasRandomizeHackables()) {
+        hash = (37 * hash) + RANDOMIZE_HACKABLES_FIELD_NUMBER;
+        hash = (53 * hash) + getRandomizeHackables().hashCode();
+      }
+      hash = (37 * hash) + PICKUP_PRESET_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getPickupPresetName().hashCode();
+      hash = (37 * hash) + PROP_PRESET_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getPropPresetName().hashCode();
+      hash = (37 * hash) + ENEMY_PRESET_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getEnemyPresetName().hashCode();
+      hash = (37 * hash) + NPC_PRESET_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getNpcPresetName().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4768,13 +5924,37 @@ public final class RandomizerSettings {
 
         randomizeFabPlanCosts_ = false;
 
-        randomizeRecyclers_ = false;
+        if (randomizeRecyclersBuilder_ == null) {
+          randomizeRecyclers_ = null;
+        } else {
+          randomizeRecyclers_ = null;
+          randomizeRecyclersBuilder_ = null;
+        }
+        if (randomizeDispensersBuilder_ == null) {
+          randomizeDispensers_ = null;
+        } else {
+          randomizeDispensers_ = null;
+          randomizeDispensersBuilder_ = null;
+        }
+        if (randomizeBreakablesBuilder_ == null) {
+          randomizeBreakables_ = null;
+        } else {
+          randomizeBreakables_ = null;
+          randomizeBreakablesBuilder_ = null;
+        }
+        if (randomizeHackablesBuilder_ == null) {
+          randomizeHackables_ = null;
+        } else {
+          randomizeHackables_ = null;
+          randomizeHackablesBuilder_ = null;
+        }
+        pickupPresetName_ = "";
 
-        randomizeDispensers_ = false;
+        propPresetName_ = "";
 
-        randomizeBreakables_ = false;
+        enemyPresetName_ = "";
 
-        randomizeHackables_ = false;
+        npcPresetName_ = "";
 
         return this;
       }
@@ -4815,10 +5995,30 @@ public final class RandomizerSettings {
         result.randomizeStation_ = randomizeStation_;
         result.randomizeNeuromods_ = randomizeNeuromods_;
         result.randomizeFabPlanCosts_ = randomizeFabPlanCosts_;
-        result.randomizeRecyclers_ = randomizeRecyclers_;
-        result.randomizeDispensers_ = randomizeDispensers_;
-        result.randomizeBreakables_ = randomizeBreakables_;
-        result.randomizeHackables_ = randomizeHackables_;
+        if (randomizeRecyclersBuilder_ == null) {
+          result.randomizeRecyclers_ = randomizeRecyclers_;
+        } else {
+          result.randomizeRecyclers_ = randomizeRecyclersBuilder_.build();
+        }
+        if (randomizeDispensersBuilder_ == null) {
+          result.randomizeDispensers_ = randomizeDispensers_;
+        } else {
+          result.randomizeDispensers_ = randomizeDispensersBuilder_.build();
+        }
+        if (randomizeBreakablesBuilder_ == null) {
+          result.randomizeBreakables_ = randomizeBreakables_;
+        } else {
+          result.randomizeBreakables_ = randomizeBreakablesBuilder_.build();
+        }
+        if (randomizeHackablesBuilder_ == null) {
+          result.randomizeHackables_ = randomizeHackables_;
+        } else {
+          result.randomizeHackables_ = randomizeHackablesBuilder_.build();
+        }
+        result.pickupPresetName_ = pickupPresetName_;
+        result.propPresetName_ = propPresetName_;
+        result.enemyPresetName_ = enemyPresetName_;
+        result.npcPresetName_ = npcPresetName_;
         onBuilt();
         return result;
       }
@@ -4882,17 +6082,33 @@ public final class RandomizerSettings {
         if (other.getRandomizeFabPlanCosts() != false) {
           setRandomizeFabPlanCosts(other.getRandomizeFabPlanCosts());
         }
-        if (other.getRandomizeRecyclers() != false) {
-          setRandomizeRecyclers(other.getRandomizeRecyclers());
+        if (other.hasRandomizeRecyclers()) {
+          mergeRandomizeRecyclers(other.getRandomizeRecyclers());
         }
-        if (other.getRandomizeDispensers() != false) {
-          setRandomizeDispensers(other.getRandomizeDispensers());
+        if (other.hasRandomizeDispensers()) {
+          mergeRandomizeDispensers(other.getRandomizeDispensers());
         }
-        if (other.getRandomizeBreakables() != false) {
-          setRandomizeBreakables(other.getRandomizeBreakables());
+        if (other.hasRandomizeBreakables()) {
+          mergeRandomizeBreakables(other.getRandomizeBreakables());
         }
-        if (other.getRandomizeHackables() != false) {
-          setRandomizeHackables(other.getRandomizeHackables());
+        if (other.hasRandomizeHackables()) {
+          mergeRandomizeHackables(other.getRandomizeHackables());
+        }
+        if (!other.getPickupPresetName().isEmpty()) {
+          pickupPresetName_ = other.pickupPresetName_;
+          onChanged();
+        }
+        if (!other.getPropPresetName().isEmpty()) {
+          propPresetName_ = other.propPresetName_;
+          onChanged();
+        }
+        if (!other.getEnemyPresetName().isEmpty()) {
+          enemyPresetName_ = other.enemyPresetName_;
+          onChanged();
+        }
+        if (!other.getNpcPresetName().isEmpty()) {
+          npcPresetName_ = other.npcPresetName_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5254,126 +6470,782 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private boolean randomizeRecyclers_ ;
+      private proto.RandomizerSettings.ToggleWithSlider randomizeRecyclers_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> randomizeRecyclersBuilder_;
       /**
-       * <code>bool randomize_recyclers = 6;</code>
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+       * @return Whether the randomizeRecyclers field is set.
+       */
+      public boolean hasRandomizeRecyclers() {
+        return randomizeRecyclersBuilder_ != null || randomizeRecyclers_ != null;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
        * @return The randomizeRecyclers.
        */
-      @java.lang.Override
-      public boolean getRandomizeRecyclers() {
-        return randomizeRecyclers_;
+      public proto.RandomizerSettings.ToggleWithSlider getRandomizeRecyclers() {
+        if (randomizeRecyclersBuilder_ == null) {
+          return randomizeRecyclers_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeRecyclers_;
+        } else {
+          return randomizeRecyclersBuilder_.getMessage();
+        }
       }
       /**
-       * <code>bool randomize_recyclers = 6;</code>
-       * @param value The randomizeRecyclers to set.
-       * @return This builder for chaining.
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
        */
-      public Builder setRandomizeRecyclers(boolean value) {
-        
-        randomizeRecyclers_ = value;
-        onChanged();
+      public Builder setRandomizeRecyclers(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeRecyclersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          randomizeRecyclers_ = value;
+          onChanged();
+        } else {
+          randomizeRecyclersBuilder_.setMessage(value);
+        }
+
         return this;
       }
       /**
-       * <code>bool randomize_recyclers = 6;</code>
-       * @return This builder for chaining.
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+       */
+      public Builder setRandomizeRecyclers(
+          proto.RandomizerSettings.ToggleWithSlider.Builder builderForValue) {
+        if (randomizeRecyclersBuilder_ == null) {
+          randomizeRecyclers_ = builderForValue.build();
+          onChanged();
+        } else {
+          randomizeRecyclersBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+       */
+      public Builder mergeRandomizeRecyclers(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeRecyclersBuilder_ == null) {
+          if (randomizeRecyclers_ != null) {
+            randomizeRecyclers_ =
+              proto.RandomizerSettings.ToggleWithSlider.newBuilder(randomizeRecyclers_).mergeFrom(value).buildPartial();
+          } else {
+            randomizeRecyclers_ = value;
+          }
+          onChanged();
+        } else {
+          randomizeRecyclersBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
        */
       public Builder clearRandomizeRecyclers() {
-        
-        randomizeRecyclers_ = false;
-        onChanged();
+        if (randomizeRecyclersBuilder_ == null) {
+          randomizeRecyclers_ = null;
+          onChanged();
+        } else {
+          randomizeRecyclers_ = null;
+          randomizeRecyclersBuilder_ = null;
+        }
+
         return this;
       }
-
-      private boolean randomizeDispensers_ ;
       /**
-       * <code>bool randomize_dispensers = 7;</code>
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSlider.Builder getRandomizeRecyclersBuilder() {
+        
+        onChanged();
+        return getRandomizeRecyclersFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeRecyclersOrBuilder() {
+        if (randomizeRecyclersBuilder_ != null) {
+          return randomizeRecyclersBuilder_.getMessageOrBuilder();
+        } else {
+          return randomizeRecyclers_ == null ?
+              proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeRecyclers_;
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> 
+          getRandomizeRecyclersFieldBuilder() {
+        if (randomizeRecyclersBuilder_ == null) {
+          randomizeRecyclersBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder>(
+                  getRandomizeRecyclers(),
+                  getParentForChildren(),
+                  isClean());
+          randomizeRecyclers_ = null;
+        }
+        return randomizeRecyclersBuilder_;
+      }
+
+      private proto.RandomizerSettings.ToggleWithSlider randomizeDispensers_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> randomizeDispensersBuilder_;
+      /**
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+       * @return Whether the randomizeDispensers field is set.
+       */
+      public boolean hasRandomizeDispensers() {
+        return randomizeDispensersBuilder_ != null || randomizeDispensers_ != null;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
        * @return The randomizeDispensers.
        */
-      @java.lang.Override
-      public boolean getRandomizeDispensers() {
-        return randomizeDispensers_;
+      public proto.RandomizerSettings.ToggleWithSlider getRandomizeDispensers() {
+        if (randomizeDispensersBuilder_ == null) {
+          return randomizeDispensers_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeDispensers_;
+        } else {
+          return randomizeDispensersBuilder_.getMessage();
+        }
       }
       /**
-       * <code>bool randomize_dispensers = 7;</code>
-       * @param value The randomizeDispensers to set.
-       * @return This builder for chaining.
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
        */
-      public Builder setRandomizeDispensers(boolean value) {
-        
-        randomizeDispensers_ = value;
-        onChanged();
+      public Builder setRandomizeDispensers(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeDispensersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          randomizeDispensers_ = value;
+          onChanged();
+        } else {
+          randomizeDispensersBuilder_.setMessage(value);
+        }
+
         return this;
       }
       /**
-       * <code>bool randomize_dispensers = 7;</code>
-       * @return This builder for chaining.
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+       */
+      public Builder setRandomizeDispensers(
+          proto.RandomizerSettings.ToggleWithSlider.Builder builderForValue) {
+        if (randomizeDispensersBuilder_ == null) {
+          randomizeDispensers_ = builderForValue.build();
+          onChanged();
+        } else {
+          randomizeDispensersBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+       */
+      public Builder mergeRandomizeDispensers(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeDispensersBuilder_ == null) {
+          if (randomizeDispensers_ != null) {
+            randomizeDispensers_ =
+              proto.RandomizerSettings.ToggleWithSlider.newBuilder(randomizeDispensers_).mergeFrom(value).buildPartial();
+          } else {
+            randomizeDispensers_ = value;
+          }
+          onChanged();
+        } else {
+          randomizeDispensersBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
        */
       public Builder clearRandomizeDispensers() {
-        
-        randomizeDispensers_ = false;
-        onChanged();
+        if (randomizeDispensersBuilder_ == null) {
+          randomizeDispensers_ = null;
+          onChanged();
+        } else {
+          randomizeDispensers_ = null;
+          randomizeDispensersBuilder_ = null;
+        }
+
         return this;
       }
-
-      private boolean randomizeBreakables_ ;
       /**
-       * <code>bool randomize_breakables = 8;</code>
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSlider.Builder getRandomizeDispensersBuilder() {
+        
+        onChanged();
+        return getRandomizeDispensersFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeDispensersOrBuilder() {
+        if (randomizeDispensersBuilder_ != null) {
+          return randomizeDispensersBuilder_.getMessageOrBuilder();
+        } else {
+          return randomizeDispensers_ == null ?
+              proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeDispensers_;
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_dispensers = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> 
+          getRandomizeDispensersFieldBuilder() {
+        if (randomizeDispensersBuilder_ == null) {
+          randomizeDispensersBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder>(
+                  getRandomizeDispensers(),
+                  getParentForChildren(),
+                  isClean());
+          randomizeDispensers_ = null;
+        }
+        return randomizeDispensersBuilder_;
+      }
+
+      private proto.RandomizerSettings.ToggleWithSlider randomizeBreakables_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> randomizeBreakablesBuilder_;
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       * @return Whether the randomizeBreakables field is set.
+       */
+      public boolean hasRandomizeBreakables() {
+        return randomizeBreakablesBuilder_ != null || randomizeBreakables_ != null;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
        * @return The randomizeBreakables.
        */
-      @java.lang.Override
-      public boolean getRandomizeBreakables() {
-        return randomizeBreakables_;
+      public proto.RandomizerSettings.ToggleWithSlider getRandomizeBreakables() {
+        if (randomizeBreakablesBuilder_ == null) {
+          return randomizeBreakables_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeBreakables_;
+        } else {
+          return randomizeBreakablesBuilder_.getMessage();
+        }
       }
       /**
-       * <code>bool randomize_breakables = 8;</code>
-       * @param value The randomizeBreakables to set.
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      public Builder setRandomizeBreakables(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeBreakablesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          randomizeBreakables_ = value;
+          onChanged();
+        } else {
+          randomizeBreakablesBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      public Builder setRandomizeBreakables(
+          proto.RandomizerSettings.ToggleWithSlider.Builder builderForValue) {
+        if (randomizeBreakablesBuilder_ == null) {
+          randomizeBreakables_ = builderForValue.build();
+          onChanged();
+        } else {
+          randomizeBreakablesBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      public Builder mergeRandomizeBreakables(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeBreakablesBuilder_ == null) {
+          if (randomizeBreakables_ != null) {
+            randomizeBreakables_ =
+              proto.RandomizerSettings.ToggleWithSlider.newBuilder(randomizeBreakables_).mergeFrom(value).buildPartial();
+          } else {
+            randomizeBreakables_ = value;
+          }
+          onChanged();
+        } else {
+          randomizeBreakablesBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      public Builder clearRandomizeBreakables() {
+        if (randomizeBreakablesBuilder_ == null) {
+          randomizeBreakables_ = null;
+          onChanged();
+        } else {
+          randomizeBreakables_ = null;
+          randomizeBreakablesBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSlider.Builder getRandomizeBreakablesBuilder() {
+        
+        onChanged();
+        return getRandomizeBreakablesFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeBreakablesOrBuilder() {
+        if (randomizeBreakablesBuilder_ != null) {
+          return randomizeBreakablesBuilder_.getMessageOrBuilder();
+        } else {
+          return randomizeBreakables_ == null ?
+              proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeBreakables_;
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_breakables = 8;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> 
+          getRandomizeBreakablesFieldBuilder() {
+        if (randomizeBreakablesBuilder_ == null) {
+          randomizeBreakablesBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder>(
+                  getRandomizeBreakables(),
+                  getParentForChildren(),
+                  isClean());
+          randomizeBreakables_ = null;
+        }
+        return randomizeBreakablesBuilder_;
+      }
+
+      private proto.RandomizerSettings.ToggleWithSlider randomizeHackables_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> randomizeHackablesBuilder_;
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       * @return Whether the randomizeHackables field is set.
+       */
+      public boolean hasRandomizeHackables() {
+        return randomizeHackablesBuilder_ != null || randomizeHackables_ != null;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       * @return The randomizeHackables.
+       */
+      public proto.RandomizerSettings.ToggleWithSlider getRandomizeHackables() {
+        if (randomizeHackablesBuilder_ == null) {
+          return randomizeHackables_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeHackables_;
+        } else {
+          return randomizeHackablesBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      public Builder setRandomizeHackables(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeHackablesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          randomizeHackables_ = value;
+          onChanged();
+        } else {
+          randomizeHackablesBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      public Builder setRandomizeHackables(
+          proto.RandomizerSettings.ToggleWithSlider.Builder builderForValue) {
+        if (randomizeHackablesBuilder_ == null) {
+          randomizeHackables_ = builderForValue.build();
+          onChanged();
+        } else {
+          randomizeHackablesBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      public Builder mergeRandomizeHackables(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeHackablesBuilder_ == null) {
+          if (randomizeHackables_ != null) {
+            randomizeHackables_ =
+              proto.RandomizerSettings.ToggleWithSlider.newBuilder(randomizeHackables_).mergeFrom(value).buildPartial();
+          } else {
+            randomizeHackables_ = value;
+          }
+          onChanged();
+        } else {
+          randomizeHackablesBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      public Builder clearRandomizeHackables() {
+        if (randomizeHackablesBuilder_ == null) {
+          randomizeHackables_ = null;
+          onChanged();
+        } else {
+          randomizeHackables_ = null;
+          randomizeHackablesBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSlider.Builder getRandomizeHackablesBuilder() {
+        
+        onChanged();
+        return getRandomizeHackablesFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeHackablesOrBuilder() {
+        if (randomizeHackablesBuilder_ != null) {
+          return randomizeHackablesBuilder_.getMessageOrBuilder();
+        } else {
+          return randomizeHackables_ == null ?
+              proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeHackables_;
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_hackables = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> 
+          getRandomizeHackablesFieldBuilder() {
+        if (randomizeHackablesBuilder_ == null) {
+          randomizeHackablesBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder>(
+                  getRandomizeHackables(),
+                  getParentForChildren(),
+                  isClean());
+          randomizeHackables_ = null;
+        }
+        return randomizeHackablesBuilder_;
+      }
+
+      private java.lang.Object pickupPresetName_ = "";
+      /**
+       * <code>string pickup_preset_name = 10;</code>
+       * @return The pickupPresetName.
+       */
+      public java.lang.String getPickupPresetName() {
+        java.lang.Object ref = pickupPresetName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          pickupPresetName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string pickup_preset_name = 10;</code>
+       * @return The bytes for pickupPresetName.
+       */
+      public com.google.protobuf.ByteString
+          getPickupPresetNameBytes() {
+        java.lang.Object ref = pickupPresetName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          pickupPresetName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string pickup_preset_name = 10;</code>
+       * @param value The pickupPresetName to set.
        * @return This builder for chaining.
        */
-      public Builder setRandomizeBreakables(boolean value) {
-        
-        randomizeBreakables_ = value;
+      public Builder setPickupPresetName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        pickupPresetName_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool randomize_breakables = 8;</code>
+       * <code>string pickup_preset_name = 10;</code>
        * @return This builder for chaining.
        */
-      public Builder clearRandomizeBreakables() {
+      public Builder clearPickupPresetName() {
         
-        randomizeBreakables_ = false;
+        pickupPresetName_ = getDefaultInstance().getPickupPresetName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string pickup_preset_name = 10;</code>
+       * @param value The bytes for pickupPresetName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPickupPresetNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        pickupPresetName_ = value;
         onChanged();
         return this;
       }
 
-      private boolean randomizeHackables_ ;
+      private java.lang.Object propPresetName_ = "";
       /**
-       * <code>bool randomize_hackables = 9;</code>
-       * @return The randomizeHackables.
+       * <code>string prop_preset_name = 11;</code>
+       * @return The propPresetName.
        */
-      @java.lang.Override
-      public boolean getRandomizeHackables() {
-        return randomizeHackables_;
+      public java.lang.String getPropPresetName() {
+        java.lang.Object ref = propPresetName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          propPresetName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>bool randomize_hackables = 9;</code>
-       * @param value The randomizeHackables to set.
+       * <code>string prop_preset_name = 11;</code>
+       * @return The bytes for propPresetName.
+       */
+      public com.google.protobuf.ByteString
+          getPropPresetNameBytes() {
+        java.lang.Object ref = propPresetName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          propPresetName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string prop_preset_name = 11;</code>
+       * @param value The propPresetName to set.
        * @return This builder for chaining.
        */
-      public Builder setRandomizeHackables(boolean value) {
-        
-        randomizeHackables_ = value;
+      public Builder setPropPresetName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        propPresetName_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool randomize_hackables = 9;</code>
+       * <code>string prop_preset_name = 11;</code>
        * @return This builder for chaining.
        */
-      public Builder clearRandomizeHackables() {
+      public Builder clearPropPresetName() {
         
-        randomizeHackables_ = false;
+        propPresetName_ = getDefaultInstance().getPropPresetName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string prop_preset_name = 11;</code>
+       * @param value The bytes for propPresetName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPropPresetNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        propPresetName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object enemyPresetName_ = "";
+      /**
+       * <code>string enemy_preset_name = 12;</code>
+       * @return The enemyPresetName.
+       */
+      public java.lang.String getEnemyPresetName() {
+        java.lang.Object ref = enemyPresetName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          enemyPresetName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string enemy_preset_name = 12;</code>
+       * @return The bytes for enemyPresetName.
+       */
+      public com.google.protobuf.ByteString
+          getEnemyPresetNameBytes() {
+        java.lang.Object ref = enemyPresetName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          enemyPresetName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string enemy_preset_name = 12;</code>
+       * @param value The enemyPresetName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnemyPresetName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        enemyPresetName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string enemy_preset_name = 12;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEnemyPresetName() {
+        
+        enemyPresetName_ = getDefaultInstance().getEnemyPresetName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string enemy_preset_name = 12;</code>
+       * @param value The bytes for enemyPresetName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnemyPresetNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        enemyPresetName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object npcPresetName_ = "";
+      /**
+       * <code>string npc_preset_name = 13;</code>
+       * @return The npcPresetName.
+       */
+      public java.lang.String getNpcPresetName() {
+        java.lang.Object ref = npcPresetName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          npcPresetName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string npc_preset_name = 13;</code>
+       * @return The bytes for npcPresetName.
+       */
+      public com.google.protobuf.ByteString
+          getNpcPresetNameBytes() {
+        java.lang.Object ref = npcPresetName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          npcPresetName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string npc_preset_name = 13;</code>
+       * @param value The npcPresetName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNpcPresetName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        npcPresetName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string npc_preset_name = 13;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearNpcPresetName() {
+        
+        npcPresetName_ = getDefaultInstance().getNpcPresetName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string npc_preset_name = 13;</code>
+       * @param value The bytes for npcPresetName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNpcPresetNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        npcPresetName_ = value;
         onChanged();
         return this;
       }
@@ -5430,6 +7302,567 @@ public final class RandomizerSettings {
 
   }
 
+  public interface ToggleWithSliderOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ToggleWithSlider)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool isEnabled = 1;</code>
+     * @return The isEnabled.
+     */
+    boolean getIsEnabled();
+
+    /**
+     * <code>float sliderValue = 2;</code>
+     * @return The sliderValue.
+     */
+    float getSliderValue();
+  }
+  /**
+   * Protobuf type {@code ToggleWithSlider}
+   */
+  public static final class ToggleWithSlider extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ToggleWithSlider)
+      ToggleWithSliderOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ToggleWithSlider.newBuilder() to construct.
+    private ToggleWithSlider(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ToggleWithSlider() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ToggleWithSlider();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ToggleWithSlider(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              isEnabled_ = input.readBool();
+              break;
+            }
+            case 21: {
+
+              sliderValue_ = input.readFloat();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.RandomizerSettings.internal_static_ToggleWithSlider_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.RandomizerSettings.internal_static_ToggleWithSlider_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.RandomizerSettings.ToggleWithSlider.class, proto.RandomizerSettings.ToggleWithSlider.Builder.class);
+    }
+
+    public static final int ISENABLED_FIELD_NUMBER = 1;
+    private boolean isEnabled_;
+    /**
+     * <code>bool isEnabled = 1;</code>
+     * @return The isEnabled.
+     */
+    @java.lang.Override
+    public boolean getIsEnabled() {
+      return isEnabled_;
+    }
+
+    public static final int SLIDERVALUE_FIELD_NUMBER = 2;
+    private float sliderValue_;
+    /**
+     * <code>float sliderValue = 2;</code>
+     * @return The sliderValue.
+     */
+    @java.lang.Override
+    public float getSliderValue() {
+      return sliderValue_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (isEnabled_ != false) {
+        output.writeBool(1, isEnabled_);
+      }
+      if (sliderValue_ != 0F) {
+        output.writeFloat(2, sliderValue_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (isEnabled_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, isEnabled_);
+      }
+      if (sliderValue_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, sliderValue_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.RandomizerSettings.ToggleWithSlider)) {
+        return super.equals(obj);
+      }
+      proto.RandomizerSettings.ToggleWithSlider other = (proto.RandomizerSettings.ToggleWithSlider) obj;
+
+      if (getIsEnabled()
+          != other.getIsEnabled()) return false;
+      if (java.lang.Float.floatToIntBits(getSliderValue())
+          != java.lang.Float.floatToIntBits(
+              other.getSliderValue())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ISENABLED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsEnabled());
+      hash = (37 * hash) + SLIDERVALUE_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getSliderValue());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.ToggleWithSlider parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.RandomizerSettings.ToggleWithSlider prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ToggleWithSlider}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ToggleWithSlider)
+        proto.RandomizerSettings.ToggleWithSliderOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.RandomizerSettings.internal_static_ToggleWithSlider_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.RandomizerSettings.internal_static_ToggleWithSlider_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.RandomizerSettings.ToggleWithSlider.class, proto.RandomizerSettings.ToggleWithSlider.Builder.class);
+      }
+
+      // Construct using proto.RandomizerSettings.ToggleWithSlider.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        isEnabled_ = false;
+
+        sliderValue_ = 0F;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.RandomizerSettings.internal_static_ToggleWithSlider_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.ToggleWithSlider getDefaultInstanceForType() {
+        return proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.ToggleWithSlider build() {
+        proto.RandomizerSettings.ToggleWithSlider result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.ToggleWithSlider buildPartial() {
+        proto.RandomizerSettings.ToggleWithSlider result = new proto.RandomizerSettings.ToggleWithSlider(this);
+        result.isEnabled_ = isEnabled_;
+        result.sliderValue_ = sliderValue_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.RandomizerSettings.ToggleWithSlider) {
+          return mergeFrom((proto.RandomizerSettings.ToggleWithSlider)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.RandomizerSettings.ToggleWithSlider other) {
+        if (other == proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance()) return this;
+        if (other.getIsEnabled() != false) {
+          setIsEnabled(other.getIsEnabled());
+        }
+        if (other.getSliderValue() != 0F) {
+          setSliderValue(other.getSliderValue());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.RandomizerSettings.ToggleWithSlider parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.RandomizerSettings.ToggleWithSlider) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean isEnabled_ ;
+      /**
+       * <code>bool isEnabled = 1;</code>
+       * @return The isEnabled.
+       */
+      @java.lang.Override
+      public boolean getIsEnabled() {
+        return isEnabled_;
+      }
+      /**
+       * <code>bool isEnabled = 1;</code>
+       * @param value The isEnabled to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsEnabled(boolean value) {
+        
+        isEnabled_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isEnabled = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsEnabled() {
+        
+        isEnabled_ = false;
+        onChanged();
+        return this;
+      }
+
+      private float sliderValue_ ;
+      /**
+       * <code>float sliderValue = 2;</code>
+       * @return The sliderValue.
+       */
+      @java.lang.Override
+      public float getSliderValue() {
+        return sliderValue_;
+      }
+      /**
+       * <code>float sliderValue = 2;</code>
+       * @param value The sliderValue to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSliderValue(float value) {
+        
+        sliderValue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float sliderValue = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSliderValue() {
+        
+        sliderValue_ = 0F;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ToggleWithSlider)
+    }
+
+    // @@protoc_insertion_point(class_scope:ToggleWithSlider)
+    private static final proto.RandomizerSettings.ToggleWithSlider DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.RandomizerSettings.ToggleWithSlider();
+    }
+
+    public static proto.RandomizerSettings.ToggleWithSlider getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ToggleWithSlider>
+        PARSER = new com.google.protobuf.AbstractParser<ToggleWithSlider>() {
+      @java.lang.Override
+      public ToggleWithSlider parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ToggleWithSlider(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ToggleWithSlider> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ToggleWithSlider> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSlider getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface GameStartSettingsOrBuilder extends
       // @@protoc_insertion_point(interface_extends:GameStartSettings)
       com.google.protobuf.MessageOrBuilder {
@@ -5451,6 +7884,12 @@ public final class RandomizerSettings {
      * @return The skipJovanCutscene.
      */
     boolean getSkipJovanCutscene();
+
+    /**
+     * <code>bool start_outside_apartment = 4;</code>
+     * @return The startOutsideApartment.
+     */
+    boolean getStartOutsideApartment();
   }
   /**
    * Protobuf type {@code GameStartSettings}
@@ -5510,6 +7949,11 @@ public final class RandomizerSettings {
             case 24: {
 
               skipJovanCutscene_ = input.readBool();
+              break;
+            }
+            case 32: {
+
+              startOutsideApartment_ = input.readBool();
               break;
             }
             default: {
@@ -5577,6 +8021,17 @@ public final class RandomizerSettings {
       return skipJovanCutscene_;
     }
 
+    public static final int START_OUTSIDE_APARTMENT_FIELD_NUMBER = 4;
+    private boolean startOutsideApartment_;
+    /**
+     * <code>bool start_outside_apartment = 4;</code>
+     * @return The startOutsideApartment.
+     */
+    @java.lang.Override
+    public boolean getStartOutsideApartment() {
+      return startOutsideApartment_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -5600,6 +8055,9 @@ public final class RandomizerSettings {
       if (skipJovanCutscene_ != false) {
         output.writeBool(3, skipJovanCutscene_);
       }
+      if (startOutsideApartment_ != false) {
+        output.writeBool(4, startOutsideApartment_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5620,6 +8078,10 @@ public final class RandomizerSettings {
       if (skipJovanCutscene_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(3, skipJovanCutscene_);
+      }
+      if (startOutsideApartment_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, startOutsideApartment_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5642,6 +8104,8 @@ public final class RandomizerSettings {
           != other.getStartOnSecondDay()) return false;
       if (getSkipJovanCutscene()
           != other.getSkipJovanCutscene()) return false;
+      if (getStartOutsideApartment()
+          != other.getStartOutsideApartment()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -5662,6 +8126,9 @@ public final class RandomizerSettings {
       hash = (37 * hash) + SKIP_JOVAN_CUTSCENE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getSkipJovanCutscene());
+      hash = (37 * hash) + START_OUTSIDE_APARTMENT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getStartOutsideApartment());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5801,6 +8268,8 @@ public final class RandomizerSettings {
 
         skipJovanCutscene_ = false;
 
+        startOutsideApartment_ = false;
+
         return this;
       }
 
@@ -5830,6 +8299,7 @@ public final class RandomizerSettings {
         result.addLootToApartment_ = addLootToApartment_;
         result.startOnSecondDay_ = startOnSecondDay_;
         result.skipJovanCutscene_ = skipJovanCutscene_;
+        result.startOutsideApartment_ = startOutsideApartment_;
         onBuilt();
         return result;
       }
@@ -5886,6 +8356,9 @@ public final class RandomizerSettings {
         }
         if (other.getSkipJovanCutscene() != false) {
           setSkipJovanCutscene(other.getSkipJovanCutscene());
+        }
+        if (other.getStartOutsideApartment() != false) {
+          setStartOutsideApartment(other.getStartOutsideApartment());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6008,6 +8481,37 @@ public final class RandomizerSettings {
         onChanged();
         return this;
       }
+
+      private boolean startOutsideApartment_ ;
+      /**
+       * <code>bool start_outside_apartment = 4;</code>
+       * @return The startOutsideApartment.
+       */
+      @java.lang.Override
+      public boolean getStartOutsideApartment() {
+        return startOutsideApartment_;
+      }
+      /**
+       * <code>bool start_outside_apartment = 4;</code>
+       * @param value The startOutsideApartment to set.
+       * @return This builder for chaining.
+       */
+      public Builder setStartOutsideApartment(boolean value) {
+        
+        startOutsideApartment_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool start_outside_apartment = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStartOutsideApartment() {
+        
+        startOutsideApartment_ = false;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -6072,28 +8576,28 @@ public final class RandomizerSettings {
     boolean getMoreGuns();
 
     /**
-     * <code>bool more_fab_plans = 2;</code>
-     * @return The moreFabPlans.
+     * <code>bool prey_souls_guns = 2;</code>
+     * @return The preySoulsGuns.
      */
-    boolean getMoreFabPlans();
+    boolean getPreySoulsGuns();
 
     /**
-     * <code>bool more_neuromods = 3;</code>
-     * @return The moreNeuromods.
+     * <code>bool prey_souls_chipsets = 3;</code>
+     * @return The preySoulsChipsets.
      */
-    boolean getMoreNeuromods();
+    boolean getPreySoulsChipsets();
 
     /**
-     * <code>bool more_chipsets = 4;</code>
-     * @return The moreChipsets.
+     * <code>bool prey_souls_enemies = 4;</code>
+     * @return The preySoulsEnemies.
      */
-    boolean getMoreChipsets();
+    boolean getPreySoulsEnemies();
 
     /**
-     * <code>bool more_enemies = 5;</code>
-     * @return The moreEnemies.
+     * <code>bool prey_souls_turrets = 5;</code>
+     * @return The preySoulsTurrets.
      */
-    boolean getMoreEnemies();
+    boolean getPreySoulsTurrets();
   }
   /**
    * Protobuf type {@code MoreSettings}
@@ -6147,22 +8651,22 @@ public final class RandomizerSettings {
             }
             case 16: {
 
-              moreFabPlans_ = input.readBool();
+              preySoulsGuns_ = input.readBool();
               break;
             }
             case 24: {
 
-              moreNeuromods_ = input.readBool();
+              preySoulsChipsets_ = input.readBool();
               break;
             }
             case 32: {
 
-              moreChipsets_ = input.readBool();
+              preySoulsEnemies_ = input.readBool();
               break;
             }
             case 40: {
 
-              moreEnemies_ = input.readBool();
+              preySoulsTurrets_ = input.readBool();
               break;
             }
             default: {
@@ -6208,48 +8712,48 @@ public final class RandomizerSettings {
       return moreGuns_;
     }
 
-    public static final int MORE_FAB_PLANS_FIELD_NUMBER = 2;
-    private boolean moreFabPlans_;
+    public static final int PREY_SOULS_GUNS_FIELD_NUMBER = 2;
+    private boolean preySoulsGuns_;
     /**
-     * <code>bool more_fab_plans = 2;</code>
-     * @return The moreFabPlans.
+     * <code>bool prey_souls_guns = 2;</code>
+     * @return The preySoulsGuns.
      */
     @java.lang.Override
-    public boolean getMoreFabPlans() {
-      return moreFabPlans_;
+    public boolean getPreySoulsGuns() {
+      return preySoulsGuns_;
     }
 
-    public static final int MORE_NEUROMODS_FIELD_NUMBER = 3;
-    private boolean moreNeuromods_;
+    public static final int PREY_SOULS_CHIPSETS_FIELD_NUMBER = 3;
+    private boolean preySoulsChipsets_;
     /**
-     * <code>bool more_neuromods = 3;</code>
-     * @return The moreNeuromods.
+     * <code>bool prey_souls_chipsets = 3;</code>
+     * @return The preySoulsChipsets.
      */
     @java.lang.Override
-    public boolean getMoreNeuromods() {
-      return moreNeuromods_;
+    public boolean getPreySoulsChipsets() {
+      return preySoulsChipsets_;
     }
 
-    public static final int MORE_CHIPSETS_FIELD_NUMBER = 4;
-    private boolean moreChipsets_;
+    public static final int PREY_SOULS_ENEMIES_FIELD_NUMBER = 4;
+    private boolean preySoulsEnemies_;
     /**
-     * <code>bool more_chipsets = 4;</code>
-     * @return The moreChipsets.
+     * <code>bool prey_souls_enemies = 4;</code>
+     * @return The preySoulsEnemies.
      */
     @java.lang.Override
-    public boolean getMoreChipsets() {
-      return moreChipsets_;
+    public boolean getPreySoulsEnemies() {
+      return preySoulsEnemies_;
     }
 
-    public static final int MORE_ENEMIES_FIELD_NUMBER = 5;
-    private boolean moreEnemies_;
+    public static final int PREY_SOULS_TURRETS_FIELD_NUMBER = 5;
+    private boolean preySoulsTurrets_;
     /**
-     * <code>bool more_enemies = 5;</code>
-     * @return The moreEnemies.
+     * <code>bool prey_souls_turrets = 5;</code>
+     * @return The preySoulsTurrets.
      */
     @java.lang.Override
-    public boolean getMoreEnemies() {
-      return moreEnemies_;
+    public boolean getPreySoulsTurrets() {
+      return preySoulsTurrets_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -6269,17 +8773,17 @@ public final class RandomizerSettings {
       if (moreGuns_ != false) {
         output.writeBool(1, moreGuns_);
       }
-      if (moreFabPlans_ != false) {
-        output.writeBool(2, moreFabPlans_);
+      if (preySoulsGuns_ != false) {
+        output.writeBool(2, preySoulsGuns_);
       }
-      if (moreNeuromods_ != false) {
-        output.writeBool(3, moreNeuromods_);
+      if (preySoulsChipsets_ != false) {
+        output.writeBool(3, preySoulsChipsets_);
       }
-      if (moreChipsets_ != false) {
-        output.writeBool(4, moreChipsets_);
+      if (preySoulsEnemies_ != false) {
+        output.writeBool(4, preySoulsEnemies_);
       }
-      if (moreEnemies_ != false) {
-        output.writeBool(5, moreEnemies_);
+      if (preySoulsTurrets_ != false) {
+        output.writeBool(5, preySoulsTurrets_);
       }
       unknownFields.writeTo(output);
     }
@@ -6294,21 +8798,21 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, moreGuns_);
       }
-      if (moreFabPlans_ != false) {
+      if (preySoulsGuns_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, moreFabPlans_);
+          .computeBoolSize(2, preySoulsGuns_);
       }
-      if (moreNeuromods_ != false) {
+      if (preySoulsChipsets_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, moreNeuromods_);
+          .computeBoolSize(3, preySoulsChipsets_);
       }
-      if (moreChipsets_ != false) {
+      if (preySoulsEnemies_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, moreChipsets_);
+          .computeBoolSize(4, preySoulsEnemies_);
       }
-      if (moreEnemies_ != false) {
+      if (preySoulsTurrets_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, moreEnemies_);
+          .computeBoolSize(5, preySoulsTurrets_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6327,14 +8831,14 @@ public final class RandomizerSettings {
 
       if (getMoreGuns()
           != other.getMoreGuns()) return false;
-      if (getMoreFabPlans()
-          != other.getMoreFabPlans()) return false;
-      if (getMoreNeuromods()
-          != other.getMoreNeuromods()) return false;
-      if (getMoreChipsets()
-          != other.getMoreChipsets()) return false;
-      if (getMoreEnemies()
-          != other.getMoreEnemies()) return false;
+      if (getPreySoulsGuns()
+          != other.getPreySoulsGuns()) return false;
+      if (getPreySoulsChipsets()
+          != other.getPreySoulsChipsets()) return false;
+      if (getPreySoulsEnemies()
+          != other.getPreySoulsEnemies()) return false;
+      if (getPreySoulsTurrets()
+          != other.getPreySoulsTurrets()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6349,18 +8853,18 @@ public final class RandomizerSettings {
       hash = (37 * hash) + MORE_GUNS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getMoreGuns());
-      hash = (37 * hash) + MORE_FAB_PLANS_FIELD_NUMBER;
+      hash = (37 * hash) + PREY_SOULS_GUNS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMoreFabPlans());
-      hash = (37 * hash) + MORE_NEUROMODS_FIELD_NUMBER;
+          getPreySoulsGuns());
+      hash = (37 * hash) + PREY_SOULS_CHIPSETS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMoreNeuromods());
-      hash = (37 * hash) + MORE_CHIPSETS_FIELD_NUMBER;
+          getPreySoulsChipsets());
+      hash = (37 * hash) + PREY_SOULS_ENEMIES_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMoreChipsets());
-      hash = (37 * hash) + MORE_ENEMIES_FIELD_NUMBER;
+          getPreySoulsEnemies());
+      hash = (37 * hash) + PREY_SOULS_TURRETS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMoreEnemies());
+          getPreySoulsTurrets());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6496,13 +9000,13 @@ public final class RandomizerSettings {
         super.clear();
         moreGuns_ = false;
 
-        moreFabPlans_ = false;
+        preySoulsGuns_ = false;
 
-        moreNeuromods_ = false;
+        preySoulsChipsets_ = false;
 
-        moreChipsets_ = false;
+        preySoulsEnemies_ = false;
 
-        moreEnemies_ = false;
+        preySoulsTurrets_ = false;
 
         return this;
       }
@@ -6531,10 +9035,10 @@ public final class RandomizerSettings {
       public proto.RandomizerSettings.MoreSettings buildPartial() {
         proto.RandomizerSettings.MoreSettings result = new proto.RandomizerSettings.MoreSettings(this);
         result.moreGuns_ = moreGuns_;
-        result.moreFabPlans_ = moreFabPlans_;
-        result.moreNeuromods_ = moreNeuromods_;
-        result.moreChipsets_ = moreChipsets_;
-        result.moreEnemies_ = moreEnemies_;
+        result.preySoulsGuns_ = preySoulsGuns_;
+        result.preySoulsChipsets_ = preySoulsChipsets_;
+        result.preySoulsEnemies_ = preySoulsEnemies_;
+        result.preySoulsTurrets_ = preySoulsTurrets_;
         onBuilt();
         return result;
       }
@@ -6586,17 +9090,17 @@ public final class RandomizerSettings {
         if (other.getMoreGuns() != false) {
           setMoreGuns(other.getMoreGuns());
         }
-        if (other.getMoreFabPlans() != false) {
-          setMoreFabPlans(other.getMoreFabPlans());
+        if (other.getPreySoulsGuns() != false) {
+          setPreySoulsGuns(other.getPreySoulsGuns());
         }
-        if (other.getMoreNeuromods() != false) {
-          setMoreNeuromods(other.getMoreNeuromods());
+        if (other.getPreySoulsChipsets() != false) {
+          setPreySoulsChipsets(other.getPreySoulsChipsets());
         }
-        if (other.getMoreChipsets() != false) {
-          setMoreChipsets(other.getMoreChipsets());
+        if (other.getPreySoulsEnemies() != false) {
+          setPreySoulsEnemies(other.getPreySoulsEnemies());
         }
-        if (other.getMoreEnemies() != false) {
-          setMoreEnemies(other.getMoreEnemies());
+        if (other.getPreySoulsTurrets() != false) {
+          setPreySoulsTurrets(other.getPreySoulsTurrets());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6658,126 +9162,126 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private boolean moreFabPlans_ ;
+      private boolean preySoulsGuns_ ;
       /**
-       * <code>bool more_fab_plans = 2;</code>
-       * @return The moreFabPlans.
+       * <code>bool prey_souls_guns = 2;</code>
+       * @return The preySoulsGuns.
        */
       @java.lang.Override
-      public boolean getMoreFabPlans() {
-        return moreFabPlans_;
+      public boolean getPreySoulsGuns() {
+        return preySoulsGuns_;
       }
       /**
-       * <code>bool more_fab_plans = 2;</code>
-       * @param value The moreFabPlans to set.
+       * <code>bool prey_souls_guns = 2;</code>
+       * @param value The preySoulsGuns to set.
        * @return This builder for chaining.
        */
-      public Builder setMoreFabPlans(boolean value) {
+      public Builder setPreySoulsGuns(boolean value) {
         
-        moreFabPlans_ = value;
+        preySoulsGuns_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool more_fab_plans = 2;</code>
+       * <code>bool prey_souls_guns = 2;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMoreFabPlans() {
+      public Builder clearPreySoulsGuns() {
         
-        moreFabPlans_ = false;
+        preySoulsGuns_ = false;
         onChanged();
         return this;
       }
 
-      private boolean moreNeuromods_ ;
+      private boolean preySoulsChipsets_ ;
       /**
-       * <code>bool more_neuromods = 3;</code>
-       * @return The moreNeuromods.
+       * <code>bool prey_souls_chipsets = 3;</code>
+       * @return The preySoulsChipsets.
        */
       @java.lang.Override
-      public boolean getMoreNeuromods() {
-        return moreNeuromods_;
+      public boolean getPreySoulsChipsets() {
+        return preySoulsChipsets_;
       }
       /**
-       * <code>bool more_neuromods = 3;</code>
-       * @param value The moreNeuromods to set.
+       * <code>bool prey_souls_chipsets = 3;</code>
+       * @param value The preySoulsChipsets to set.
        * @return This builder for chaining.
        */
-      public Builder setMoreNeuromods(boolean value) {
+      public Builder setPreySoulsChipsets(boolean value) {
         
-        moreNeuromods_ = value;
+        preySoulsChipsets_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool more_neuromods = 3;</code>
+       * <code>bool prey_souls_chipsets = 3;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMoreNeuromods() {
+      public Builder clearPreySoulsChipsets() {
         
-        moreNeuromods_ = false;
+        preySoulsChipsets_ = false;
         onChanged();
         return this;
       }
 
-      private boolean moreChipsets_ ;
+      private boolean preySoulsEnemies_ ;
       /**
-       * <code>bool more_chipsets = 4;</code>
-       * @return The moreChipsets.
+       * <code>bool prey_souls_enemies = 4;</code>
+       * @return The preySoulsEnemies.
        */
       @java.lang.Override
-      public boolean getMoreChipsets() {
-        return moreChipsets_;
+      public boolean getPreySoulsEnemies() {
+        return preySoulsEnemies_;
       }
       /**
-       * <code>bool more_chipsets = 4;</code>
-       * @param value The moreChipsets to set.
+       * <code>bool prey_souls_enemies = 4;</code>
+       * @param value The preySoulsEnemies to set.
        * @return This builder for chaining.
        */
-      public Builder setMoreChipsets(boolean value) {
+      public Builder setPreySoulsEnemies(boolean value) {
         
-        moreChipsets_ = value;
+        preySoulsEnemies_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool more_chipsets = 4;</code>
+       * <code>bool prey_souls_enemies = 4;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMoreChipsets() {
+      public Builder clearPreySoulsEnemies() {
         
-        moreChipsets_ = false;
+        preySoulsEnemies_ = false;
         onChanged();
         return this;
       }
 
-      private boolean moreEnemies_ ;
+      private boolean preySoulsTurrets_ ;
       /**
-       * <code>bool more_enemies = 5;</code>
-       * @return The moreEnemies.
+       * <code>bool prey_souls_turrets = 5;</code>
+       * @return The preySoulsTurrets.
        */
       @java.lang.Override
-      public boolean getMoreEnemies() {
-        return moreEnemies_;
+      public boolean getPreySoulsTurrets() {
+        return preySoulsTurrets_;
       }
       /**
-       * <code>bool more_enemies = 5;</code>
-       * @param value The moreEnemies to set.
+       * <code>bool prey_souls_turrets = 5;</code>
+       * @param value The preySoulsTurrets to set.
        * @return This builder for chaining.
        */
-      public Builder setMoreEnemies(boolean value) {
+      public Builder setPreySoulsTurrets(boolean value) {
         
-        moreEnemies_ = value;
+        preySoulsTurrets_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool more_enemies = 5;</code>
+       * <code>bool prey_souls_turrets = 5;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMoreEnemies() {
+      public Builder clearPreySoulsTurrets() {
         
-        moreEnemies_ = false;
+        preySoulsTurrets_ = false;
         onChanged();
         return this;
       }
@@ -11706,6 +14210,11 @@ public final class RandomizerSettings {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_GameplaySettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ToggleWithSlider_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ToggleWithSlider_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_GameStartSettings_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -11744,63 +14253,73 @@ public final class RandomizerSettings {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016settings.proto\"}\n\nAllPresets\0226\n\023item_s" +
-      "pawn_settings\030\001 \003(\0132\031.GenericSpawnPreset" +
-      "Filter\0227\n\024enemy_spawn_settings\030\002 \003(\0132\031.G" +
-      "enericSpawnPresetFilter\"\316\002\n\010Settings\022\014\n\004" +
-      "seed\030\001 \001(\t\022\023\n\013install_dir\030\002 \001(\t\022\027\n\017relea" +
-      "se_version\030\003 \001(\t\022,\n\021cosmetic_settings\030\004 " +
-      "\001(\0132\021.CosmeticSettings\022,\n\021gameplay_setti" +
-      "ngs\030\005 \001(\0132\021.GameplaySettings\022/\n\023game_sta" +
-      "rt_settings\030\006 \001(\0132\022.GameStartSettings\022$\n" +
-      "\rmore_settings\030\007 \001(\0132\r.MoreSettings\022&\n\016c" +
-      "heat_settings\030\010 \001(\0132\016.CheatSettings\022+\n\014e" +
-      "xp_settings\030\t \001(\0132\025.ExperimentalSettings" +
-      "\"\276\001\n\020CosmeticSettings\022\030\n\020randomize_bodie" +
-      "s\030\001 \001(\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n" +
-      "\017randomize_music\030\003 \001(\010\022\036\n\026randomize_play" +
-      "er_model\030\004 \001(\010\022\035\n\025randomize_planet_size\030" +
-      "\005 \001(\010\022\032\n\022randomize_emotions\030\006 \001(\010\"\323\002\n\020Ga" +
-      "meplaySettings\0226\n\023item_spawn_settings\030\001 " +
-      "\001(\0132\031.GenericSpawnPresetFilter\0227\n\024enemy_" +
-      "spawn_settings\030\002 \001(\0132\031.GenericSpawnPrese" +
-      "tFilter\022\031\n\021randomize_station\030\003 \001(\010\022\033\n\023ra" +
-      "ndomize_neuromods\030\004 \001(\010\022 \n\030randomize_fab" +
-      "_plan_costs\030\005 \001(\010\022\033\n\023randomize_recyclers" +
-      "\030\006 \001(\010\022\034\n\024randomize_dispensers\030\007 \001(\010\022\034\n\024" +
-      "randomize_breakables\030\010 \001(\010\022\033\n\023randomize_" +
-      "hackables\030\t \001(\010\"l\n\021GameStartSettings\022\035\n\025" +
-      "add_loot_to_apartment\030\001 \001(\010\022\033\n\023start_on_" +
-      "second_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscene\030" +
-      "\003 \001(\010\"~\n\014MoreSettings\022\021\n\tmore_guns\030\001 \001(\010" +
-      "\022\026\n\016more_fab_plans\030\002 \001(\010\022\026\n\016more_neuromo" +
-      "ds\030\003 \001(\010\022\025\n\rmore_chipsets\030\004 \001(\010\022\024\n\014more_" +
-      "enemies\030\005 \001(\010\"\337\003\n\rCheatSettings\022\024\n\014open_" +
-      "station\030\001 \001(\010\022\030\n\020unlock_all_scans\030\002 \001(\010\022" +
-      "\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020use_custom_spa" +
-      "wn\030\004 \001(\010\022;\n\025custom_spawn_location\030\005 \001(\0162" +
-      "\034.CheatSettings.SpawnLocation\022\034\n\024game_to" +
-      "ken_overrides\030\006 \001(\t\"\221\002\n\rSpawnLocation\022\010\n" +
-      "\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWA" +
-      "RE_LABS\020\003\022\021\n\rPSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r" +
-      "\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTE" +
-      "RS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n" +
-      "\014LIFE_SUPPORT\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUT" +
-      "TLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\r" +
-      "GENDER_SELECT\020\020\"\360\001\n\024ExperimentalSettings" +
-      "\022\030\n\020wandering_humans\030\001 \001(\010\022\026\n\016living_cor" +
-      "pses\030\002 \001(\010\022\037\n\027zero_gravity_everywhere\030\003 " +
-      "\001(\010\022&\n\036enable_gravity_in_ext_and_guts\030\004 " +
-      "\001(\010\022\033\n\023start_self_destruct\030\005 \001(\010\022\033\n\023self" +
-      "_destruct_timer\030\006 \001(\t\022#\n\033self_destruct_s" +
-      "huttle_timer\030\007 \001(\t\"`\n\030GenericSpawnPreset" +
-      "Filter\022\014\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007fi" +
-      "lters\030\003 \003(\0132\027.GenericSpawnPresetRule\"\220\001\n" +
-      "\026GenericSpawnPresetRule\022\022\n\ninput_tags\030\001 " +
-      "\003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026\n\016output_weigh" +
-      "ts\030\003 \003(\005\022\031\n\021do_not_touch_tags\030\004 \003(\t\022\032\n\022d" +
-      "o_not_output_tags\030\005 \003(\tB\033\n\005protoB\022Random" +
-      "izerSettingsb\006proto3"
+      "\n\016settings.proto\"\356\001\n\nAllPresets\0228\n\025picku" +
+      "p_spawn_settings\030\001 \003(\0132\031.GenericSpawnPre" +
+      "setFilter\0226\n\023prop_spawn_settings\030\002 \003(\0132\031" +
+      ".GenericSpawnPresetFilter\0227\n\024enemy_spawn" +
+      "_settings\030\003 \003(\0132\031.GenericSpawnPresetFilt" +
+      "er\0225\n\022npc_spawn_settings\030\004 \003(\0132\031.Generic" +
+      "SpawnPresetFilter\"\316\002\n\010Settings\022\014\n\004seed\030\001" +
+      " \001(\t\022\023\n\013install_dir\030\002 \001(\t\022\027\n\017release_ver" +
+      "sion\030\003 \001(\t\022,\n\021cosmetic_settings\030\004 \001(\0132\021." +
+      "CosmeticSettings\022,\n\021gameplay_settings\030\005 " +
+      "\001(\0132\021.GameplaySettings\022/\n\023game_start_set" +
+      "tings\030\006 \001(\0132\022.GameStartSettings\022$\n\rmore_" +
+      "settings\030\007 \001(\0132\r.MoreSettings\022&\n\016cheat_s" +
+      "ettings\030\010 \001(\0132\016.CheatSettings\022+\n\014exp_set" +
+      "tings\030\t \001(\0132\025.ExperimentalSettings\"\276\001\n\020C" +
+      "osmeticSettings\022\030\n\020randomize_bodies\030\001 \001(" +
+      "\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n\017rando" +
+      "mize_music\030\003 \001(\010\022\036\n\026randomize_player_mod" +
+      "el\030\004 \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022" +
+      "\032\n\022randomize_emotions\030\006 \001(\010\"\211\004\n\020Gameplay" +
+      "Settings\0226\n\023item_spawn_settings\030\001 \001(\0132\031." +
+      "GenericSpawnPresetFilter\0227\n\024enemy_spawn_" +
+      "settings\030\002 \001(\0132\031.GenericSpawnPresetFilte" +
+      "r\022\031\n\021randomize_station\030\003 \001(\010\022\033\n\023randomiz" +
+      "e_neuromods\030\004 \001(\010\022 \n\030randomize_fab_plan_" +
+      "costs\030\005 \001(\010\022.\n\023randomize_recyclers\030\006 \001(\013" +
+      "2\021.ToggleWithSlider\022/\n\024randomize_dispens" +
+      "ers\030\007 \001(\0132\021.ToggleWithSlider\022/\n\024randomiz" +
+      "e_breakables\030\010 \001(\0132\021.ToggleWithSlider\022.\n" +
+      "\023randomize_hackables\030\t \001(\0132\021.ToggleWithS" +
+      "lider\022\032\n\022pickup_preset_name\030\n \001(\t\022\030\n\020pro" +
+      "p_preset_name\030\013 \001(\t\022\031\n\021enemy_preset_name" +
+      "\030\014 \001(\t\022\027\n\017npc_preset_name\030\r \001(\t\":\n\020Toggl" +
+      "eWithSlider\022\021\n\tisEnabled\030\001 \001(\010\022\023\n\013slider" +
+      "Value\030\002 \001(\002\"\215\001\n\021GameStartSettings\022\035\n\025add" +
+      "_loot_to_apartment\030\001 \001(\010\022\033\n\023start_on_sec" +
+      "ond_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001" +
+      "(\010\022\037\n\027start_outside_apartment\030\004 \001(\010\"\217\001\n\014" +
+      "MoreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n\017prey_" +
+      "souls_guns\030\002 \001(\010\022\033\n\023prey_souls_chipsets\030" +
+      "\003 \001(\010\022\032\n\022prey_souls_enemies\030\004 \001(\010\022\032\n\022pre" +
+      "y_souls_turrets\030\005 \001(\010\"\337\003\n\rCheatSettings\022" +
+      "\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_all_scan" +
+      "s\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020use_cu" +
+      "stom_spawn\030\004 \001(\010\022;\n\025custom_spawn_locatio" +
+      "n\030\005 \001(\0162\034.CheatSettings.SpawnLocation\022\034\n" +
+      "\024game_token_overrides\030\006 \001(\t\"\221\002\n\rSpawnLoc" +
+      "ation\022\010\n\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOBBY\020\002\022\021" +
+      "\n\rHARDWARE_LABS\020\003\022\021\n\rPSYCHOTRONICS\020\004\022\010\n\004" +
+      "GUTS\020\005\022\r\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022\021\n\rCRE" +
+      "W_QUARTERS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\tCARGO_" +
+      "BAY\020\n\022\020\n\014LIFE_SUPPORT\020\013\022\017\n\013POWER_PLANT\020\014" +
+      "\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n\007ENDGA" +
+      "ME\020\017\022\021\n\rGENDER_SELECT\020\020\"\360\001\n\024Experimental" +
+      "Settings\022\030\n\020wandering_humans\030\001 \001(\010\022\026\n\016li" +
+      "ving_corpses\030\002 \001(\010\022\037\n\027zero_gravity_every" +
+      "where\030\003 \001(\010\022&\n\036enable_gravity_in_ext_and" +
+      "_guts\030\004 \001(\010\022\033\n\023start_self_destruct\030\005 \001(\010" +
+      "\022\033\n\023self_destruct_timer\030\006 \001(\t\022#\n\033self_de" +
+      "struct_shuttle_timer\030\007 \001(\t\"`\n\030GenericSpa" +
+      "wnPresetFilter\022\014\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001" +
+      "(\t\022(\n\007filters\030\003 \003(\0132\027.GenericSpawnPreset" +
+      "Rule\"\220\001\n\026GenericSpawnPresetRule\022\022\n\ninput" +
+      "_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026\n\016outp" +
+      "ut_weights\030\003 \003(\005\022\031\n\021do_not_touch_tags\030\004 " +
+      "\003(\t\022\032\n\022do_not_output_tags\030\005 \003(\tB\033\n\005proto" +
+      "B\022RandomizerSettingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11811,7 +14330,7 @@ public final class RandomizerSettings {
     internal_static_AllPresets_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_AllPresets_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", });
+        new java.lang.String[] { "PickupSpawnSettings", "PropSpawnSettings", "EnemySpawnSettings", "NpcSpawnSettings", });
     internal_static_Settings_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_Settings_fieldAccessorTable = new
@@ -11829,39 +14348,45 @@ public final class RandomizerSettings {
     internal_static_GameplaySettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameplaySettings_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", });
-    internal_static_GameStartSettings_descriptor =
+        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
+    internal_static_ToggleWithSlider_descriptor =
       getDescriptor().getMessageTypes().get(4);
+    internal_static_ToggleWithSlider_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ToggleWithSlider_descriptor,
+        new java.lang.String[] { "IsEnabled", "SliderValue", });
+    internal_static_GameStartSettings_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_GameStartSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameStartSettings_descriptor,
-        new java.lang.String[] { "AddLootToApartment", "StartOnSecondDay", "SkipJovanCutscene", });
+        new java.lang.String[] { "AddLootToApartment", "StartOnSecondDay", "SkipJovanCutscene", "StartOutsideApartment", });
     internal_static_MoreSettings_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_MoreSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MoreSettings_descriptor,
-        new java.lang.String[] { "MoreGuns", "MoreFabPlans", "MoreNeuromods", "MoreChipsets", "MoreEnemies", });
+        new java.lang.String[] { "MoreGuns", "PreySoulsGuns", "PreySoulsChipsets", "PreySoulsEnemies", "PreySoulsTurrets", });
     internal_static_CheatSettings_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_CheatSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CheatSettings_descriptor,
         new java.lang.String[] { "OpenStation", "UnlockAllScans", "FriendlyNpcs", "UseCustomSpawn", "CustomSpawnLocation", "GameTokenOverrides", });
     internal_static_ExperimentalSettings_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_ExperimentalSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ExperimentalSettings_descriptor,
         new java.lang.String[] { "WanderingHumans", "LivingCorpses", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", });
     internal_static_GenericSpawnPresetFilter_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_GenericSpawnPresetFilter_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GenericSpawnPresetFilter_descriptor,
         new java.lang.String[] { "Name", "Desc", "Filters", });
     internal_static_GenericSpawnPresetRule_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_GenericSpawnPresetRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GenericSpawnPresetRule_descriptor,

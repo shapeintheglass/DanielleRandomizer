@@ -272,7 +272,7 @@ public class BodyConsts {
       .put(FemaleHairType.HAIR04, FemaleHairColor.HAIR04_RED)
       .put(FemaleHairType.HAIR05, FemaleHairColor.HAIR05_BLACK)
       .put(FemaleHairType.HAIR05, FemaleHairColor.HAIR05_BLONDE)
-      .put(FemaleHairType.HAIR05, FemaleHairColor.HAIR05_BROWN)
+      //.put(FemaleHairType.HAIR05, FemaleHairColor.HAIR05_BROWN)
       .put(FemaleHairType.HAIR05, FemaleHairColor.HAIR05_RED)
       .put(FemaleHairType.HAIR06, FemaleHairColor.HAIR06)
       .put(FemaleHairType.MIKHAILA, FemaleHairColor.MIKHAILA)

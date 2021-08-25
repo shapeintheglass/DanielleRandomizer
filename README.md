@@ -1,4 +1,4 @@
-# Danielle Randomizer v0.31
+# Danielle Randomizer v0.4
 
 A configurable randomizer for Prey 2017 (code-named "Danielle").
 
@@ -118,11 +118,20 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
   * Renamed "Foam" guns to "Toy" guns
   * Updated textures for exotic guns so that the ammo counter is visible
   * Updated inventory and HUD icons for "more guns" guns
+* 0.4 (currently in development)
+  * Fixed an issue where station randomization could lead to a soft lock during Alex's lockdown
+  * Fixed an issue where body randomization could generate bald women
+  * Removed tentacles from the spawn presets because they were only causing trouble
+  * Adjusted fabrication plan randomization to produce more reasonable costs
+  * Added randomization options for recyclers, operator dispensers, hackable objects, and repairable objects
+  * Added a "living corpses" option that makes all corpses spawn in alive (intended for "Living Talos" preset)
+  * Split item/enemy randomization presets into item/prop and enemy/npc
 
 ## Acknowledgments
 
 A big thanks to:
 
+* Coyote for letting me use his content from Prey Souls!
 * JerryTerry for letting me use their "Natural Day 2 Start" mod!
 * Fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure
 * The brave adventrous souls who have helped me playtest and debug

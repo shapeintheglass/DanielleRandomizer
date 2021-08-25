@@ -4,8 +4,10 @@ option java_package = "proto";
 option java_outer_classname = "RandomizerSettings";
 
 message AllPresets {
-  repeated GenericSpawnPresetFilter item_spawn_settings = 1;
-  repeated GenericSpawnPresetFilter enemy_spawn_settings = 2;
+  repeated GenericSpawnPresetFilter pickup_spawn_settings = 1;
+  repeated GenericSpawnPresetFilter prop_spawn_settings = 2;
+  repeated GenericSpawnPresetFilter enemy_spawn_settings = 3;
+  repeated GenericSpawnPresetFilter npc_spawn_settings = 4;
 }
 
 message Settings {
@@ -35,24 +37,34 @@ message GameplaySettings {
   bool randomize_station = 3;
   bool randomize_neuromods = 4;
   bool randomize_fab_plan_costs = 5;
-  bool randomize_recyclers = 6;
-  bool randomize_dispensers = 7;
-  bool randomize_breakables = 8;
-  bool randomize_hackables = 9;
+  ToggleWithSlider randomize_recyclers = 6;
+  ToggleWithSlider randomize_dispensers = 7;
+  ToggleWithSlider randomize_breakables = 8;
+  ToggleWithSlider randomize_hackables = 9;
+  string pickup_preset_name = 10;
+  string prop_preset_name = 11;
+  string enemy_preset_name = 12;
+  string npc_preset_name = 13;
+}
+
+message ToggleWithSlider {
+  bool isEnabled = 1;
+  float sliderValue = 2;
 }
 
 message GameStartSettings {
   bool add_loot_to_apartment = 1;
   bool start_on_second_day = 2;
   bool skip_jovan_cutscene = 3;
+  bool start_outside_apartment = 4;
 }
 
 message MoreSettings {
   bool more_guns = 1;
-  bool more_fab_plans = 2;
-  bool more_neuromods = 3;
-  bool more_chipsets = 4;
-  bool more_enemies = 5;
+  bool prey_souls_guns = 2;
+  bool prey_souls_chipsets = 3;
+  bool prey_souls_enemies = 4;
+  bool prey_souls_turrets = 5;
 }
 
 message CheatSettings {

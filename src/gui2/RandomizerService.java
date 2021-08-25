@@ -314,19 +314,19 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(new LivingCorpseFilter());
     }
     
-    if (currentSettings.getGameplaySettings().getRandomizeBreakables()) {
+    if (currentSettings.getGameplaySettings().getRandomizeBreakables().getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new BrokenObjectFilter());
     }
     
-    if (currentSettings.getGameplaySettings().getRandomizeDispensers()) {
+    if (currentSettings.getGameplaySettings().getRandomizeDispensers().getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new OperatorDispenserFilter());
     }
     
-    if (currentSettings.getGameplaySettings().getRandomizeHackables()) {
+    if (currentSettings.getGameplaySettings().getRandomizeHackables().getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new LockedObjectFilter());
     }
     
-    if (currentSettings.getGameplaySettings().getRandomizeRecyclers()) {
+    if (currentSettings.getGameplaySettings().getRandomizeRecyclers().getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter());
     }
 
