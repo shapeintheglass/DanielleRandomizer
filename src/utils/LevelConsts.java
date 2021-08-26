@@ -78,4 +78,6 @@ public class LevelConsts {
       "SimLab.Decontamination_SawMimicScene", "true");
   public static final ImmutableMap<String, String> ALLOW_GAME_SAVE_TOKENS = ImmutableMap.of("WorldState.AllowSaveGame",
       "true");
+  public static final ImmutableMap<String, String> START_OUTSIDE_APARTMENT_TOKENS = ImmutableMap.of(
+      "LevelTransition.LevelTransitionDestination", "From_Lobby");
 }

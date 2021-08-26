@@ -70,6 +70,10 @@ public class LevelRandomizer extends BaseRandomizer {
     if (settings.getCheatSettings().getUseCustomSpawn()) {
       gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
     }
+    if (settings.getGameStartSettings().getStartOutsideApartment()) {
+      gameTokenValues.putAll(LevelConsts.START_OUTSIDE_APARTMENT_TOKENS);
+      gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
+    }
     if (!settings.getCheatSettings().getGameTokenOverrides().isEmpty()) {
       String[] tokens = settings.getCheatSettings().getGameTokenOverrides().split(",");
       for (String token : tokens) {

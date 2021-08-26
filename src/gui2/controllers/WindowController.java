@@ -302,7 +302,7 @@ public class WindowController {
     newSeedButton.setTooltip(new Tooltip("Randomly picks a new seed"));
 
     recommendedPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"recommended\" experience."));
-    chaoticPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
+    chaoticPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"basic\" experience."));
     litePresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"lite\" experience."));
     gotsPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"timed\" experience."));
 
@@ -415,12 +415,12 @@ public class WindowController {
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
-    setPickupPreset("No item randomization");
-    setPropPreset("No prop randomization");
-    setEnemyPreset("No enemy randomization");
-    setNpcPreset("No friendly robot randomization");
+    setPickupPreset("Randomize all items (no story items)");
+    setPropPreset("Randomize props within leverage tier");
+    setEnemyPreset("Randomize all enemies");
+    setNpcPreset("Randomize all friendly robots");
     gameplayRandomizeFabPlanCosts.setSelected(true);
-    gameplayRandomizeNeuromods.setSelected(true);
+    startCheckboxDay2.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
@@ -431,17 +431,22 @@ public class WindowController {
     resetUI();
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
+    cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxMusic.setSelected(true);
     cosmeticCheckboxPlayerModel.setSelected(true);
-    cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
-    setPickupPreset("No item randomization");
-    setPropPreset("No prop randomization");
-    setEnemyPreset("No enemy randomization");
-    setNpcPreset("No friendly robot randomization");
+    setPickupPreset("Randomize all items");
+    setPropPreset("Randomize all props");
+    setEnemyPreset("Randomize all enemies");
+    setNpcPreset("Randomize all friendly robots");
+    gameplayRandomizeStation.setSelected(true);
     gameplayRandomizeFabPlanCosts.setSelected(true);
     gameplayRandomizeNeuromods.setSelected(true);
-    gameplayRandomizeStation.setSelected(true);
+    gameplayRandomizeRecyclers.setSelected(true);
+    gameplayRandomizeDispensers.setSelected(true);
+    gameplayRandomizeBreakables.setSelected(true);
+    gameplayRandomizeHackables.setSelected(true);
+    startCheckboxDay2.setSelected(true);
     moreGuns.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
@@ -451,10 +456,10 @@ public class WindowController {
   @FXML
   protected void onPresetsLiteClicked(ActionEvent event) {
     resetUI();
-    setPickupPreset("No item randomization");
-    setPropPreset("No prop randomization");
-    setEnemyPreset("No enemy randomization");
-    setNpcPreset("No friendly robot randomization");
+    setPickupPreset("Randomize items within type");
+    setEnemyPreset("Randomize enemies within type");
+    setNpcPreset("Randomize friendly robots within type");
+    startCheckboxDay2.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
     outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
@@ -481,6 +486,9 @@ public class WindowController {
     expLivingCorpses.setSelected(true);
     cheatsCheckboxFriendlyNpcs.setSelected(true);
     cheatsCheckboxOpenStation.setSelected(true);
+    outputWindow.clear();
+    outputWindow.appendText("Living Talos preset selected.\n");
+    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   /*

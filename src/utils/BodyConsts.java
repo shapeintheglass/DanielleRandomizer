@@ -286,6 +286,7 @@ public class BodyConsts {
       .put(FemaleBody.SCIENTIST, "scientist/scientist_genfemalebody01")
       .put(FemaleBody.SECURITY, "security/security_genfemalebody01")
       .put(FemaleBody.GLOVELESS, "morgankarl/morgankarlgenderselect_genfemale")
+      .put(FemaleBody.PLUMBER, "plumber/plumber_genfemalebody01")
       .build();
 
   public static final ImmutableMap<MaleBody, String> MALE_BODIES_MAP = new ImmutableMap.Builder<MaleBody, String>().put(
