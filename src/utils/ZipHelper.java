@@ -69,6 +69,8 @@ public class ZipHelper {
   public static final String MUSIC_XML = "libs/gameaudio/music.xml";
 
   public static final String GLOBALACTIONS_SELFDESTRUCTTIMER = "libs/globalactions/global_selfdestructsequence.xml";
+  
+  public static final String PARTICLES_CHARACTERS = "libs/particles/characters.xml";
 
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";

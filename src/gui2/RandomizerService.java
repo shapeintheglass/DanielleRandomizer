@@ -397,6 +397,7 @@ public class RandomizerService extends Service<Void> {
       copyFile(ZipHelper.ARK_PROJECTILES_XML);
       copyFile(ZipHelper.ARK_PICKUPS_XML);
       copyFile(ZipHelper.ARK_ITEMS_XML);
+      copyFile(ZipHelper.PARTICLES_CHARACTERS);
     }
 
     if (settings.getExpSettings().getWanderingHumans()) {

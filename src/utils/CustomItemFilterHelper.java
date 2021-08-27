@@ -2,8 +2,11 @@ package utils;
 
 import java.util.List;
 import java.util.Random;
+
 import org.jdom2.Element;
+
 import com.google.common.collect.Lists;
+
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.GenericSpawnPresetFilter;
 import proto.RandomizerSettings.GenericSpawnPresetRule;
@@ -38,6 +41,10 @@ public class CustomItemFilterHelper {
       if (!settings.getMoreSettings().getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
+      if (!settings.getMoreSettings().getPreySoulsGuns()) {
+        doNotOutput.add("PreySoulsWeapons");
+      }
+
 
       CustomRuleHelper ruleHelper = new CustomRuleHelper(copy.build());
 

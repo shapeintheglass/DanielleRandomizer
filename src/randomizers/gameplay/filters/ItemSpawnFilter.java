@@ -27,6 +27,10 @@ public class ItemSpawnFilter extends BaseFilter {
       Logger.getGlobal().info("Removing randomized weapons");
       doNotOutput.add("Randomizer");
     }
+    if (!s.getMoreSettings().getPreySoulsGuns()) {
+      Logger.getGlobal().info("Removing prey souls weapons");
+      doNotOutput.add("PreySoulsWeapons");
+    }
 
     for (GenericSpawnPresetRule grj : s.getGameplaySettings().getItemSpawnSettings().getFiltersList()) {
       GenericSpawnPresetRule copy = grj.toBuilder()
