@@ -391,6 +391,13 @@ public class RandomizerService extends Service<Void> {
         }
       }
     }
+    
+    if (settings.getMoreSettings().getPreySoulsGuns()) {
+      copyFile(ZipHelper.SIGNAL_SYSTEM_PACKAGES);
+      copyFile(ZipHelper.ARK_PROJECTILES_XML);
+      copyFile(ZipHelper.ARK_PICKUPS_XML);
+      copyFile(ZipHelper.ARK_ITEMS_XML);
+    }
 
     if (settings.getExpSettings().getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES, tempPatchDir);
@@ -403,22 +410,22 @@ public class RandomizerService extends Service<Void> {
 
   private void copyFiles(ImmutableList<String> dependencies) {
     for (String s : dependencies) {
-      try {
-        zipHelper.copyToPatch(s, s);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      copyFile(s);
     }
   }
 
-  private void copyFiles(ImmutableMap<String, String> dependencies, Path tempPatchDir) throws IOException {
+  private void copyFiles(ImmutableMap<String, String> dependencies, Path tempPatchDir) {
     for (String key : dependencies.keySet()) {
-      try {
-        zipHelper.copyToPatch(key, dependencies.get(key));
-      } catch (IOException e) {
-        logger.warning(String.format("Unable to copy dependency file %s, it may already have been added.", key));
-        e.printStackTrace();
-      }
+      copyFile(key);
+    }
+  }
+  
+  private void copyFile(String file) {
+    try {
+      zipHelper.copyToPatch(file, file);
+    } catch (IOException e) {
+      logger.warning(String.format("Unable to copy dependency file %s, it may already have been added.", file));
+      e.printStackTrace();
     }
   }
 

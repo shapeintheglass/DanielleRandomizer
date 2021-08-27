@@ -27,12 +27,7 @@ public class LevelConsts {
 
   public static final List<String> DO_NOT_TOUCH_NPC_TAGS = Lists.newArrayList(
       "research/psychotronics;ArkNpcSpawner_Weaver6", "research/psychotronics;ArkNpcSpawner_Weaver2",
-      "research/psychotronics;ArkNpcSpawner_Weaver4", "research/lobby;ArkNpcSpawner_Technopath1",
-      "research/lobby;ArkNpcSpawner_BasePhantom5", "executive/arboretum;ArkNpcSpawner_Telepath1",
-      "executive/arboretum;Spawner_GreenhouseTelepath", "executive/crewfacilities;ArkNpcSpawner16",
-      "executive/crewfacilities;ArkNpcSpawner_Telepath2", "engineering/lifesupport;ArkNpcSpawner_Technopath1",
-      "station/exterior;ArkNpcSpawner_Telepath4", "engineering/lifesupport;ArkNpcSpawner_Telepath1",
-      "MilitaryOperatorCopycat", "FakeTechnopath", "Operators\\Named", "Kaspar");
+      "research/psychotronics;ArkNpcSpawner_Weaver4");
 
   public static final Set<String> CAN_BE_KILLABLE_NPC_TAGS = Sets.newHashSet("research/lobby;ArkNpcSpawner_Technopath1",
       "research/lobby;ArkNpcSpawner_BasePhantom5", "engineering/lifesupport;ArkNpcSpawner_Technopath1");

@@ -58,6 +58,8 @@ public class ZipHelper {
   public static final String NEUROMOD_PDA_LAYOUT = "ark/player/abilitiespdalayout.xml";
   public static final String NEUROMOD_RESEARCH_TOPICS = "ark/player/researchtopics.xml";
   
+  public static final String SIGNAL_SYSTEM_PACKAGES = "ark/signalsystem/packages.xml";
+  
   public static final String OPTIONS_FILE = "libs/config/gameoptions.xml";
 
   public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "libs/entityarchetypes/";

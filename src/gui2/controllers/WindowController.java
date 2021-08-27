@@ -356,6 +356,7 @@ public class WindowController {
     cheatsTextFieldGameTokens.setText(settings.getCheatSettings().getGameTokenOverrides());
 
     expCheckboxWander.setSelected(settings.getExpSettings().getWanderingHumans());
+    expLivingCorpses.setSelected(settings.getExpSettings().getLivingCorpses());
     expCheckboxGravity.setSelected(settings.getExpSettings().getZeroGravityEverywhere());
     expCheckboxEnableGravity.setSelected(settings.getExpSettings().getEnableGravityInExtAndGuts());
     expCheckboxSelfDestruct.setSelected(settings.getExpSettings().getStartSelfDestruct());
