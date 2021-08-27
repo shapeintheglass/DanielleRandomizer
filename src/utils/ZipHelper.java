@@ -35,6 +35,9 @@ public class ZipHelper {
   private ZipFile input;
 
   public static final String DATA_LEVELS = "levels";
+  
+  public static final String ANIMATIONS_DUAL_WRENCH_PLAYER_1P = "animations/mannequin/adb/arkdualwrenchplayer1p.adb";
+  public static final String ANIMATIONS_ARK_PLAYER_DATABASE_3P = "animations/mannequin/adb/arkplayerdatabase3p.adb";
 
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
 

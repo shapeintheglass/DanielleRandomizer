@@ -102,7 +102,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final String PAJAMA_FEMALE_ARMS_SKIN =
       "objects/characters/player/female/player1p_female02_arms.skin";
   private static final String PAJAMA_FEMALE_ARMS_MTL =
-      "objects/characters/player/female/player1p_female_02_arms.mtl";
+      "objects/characters/player/female/player1p_female_02_arms.mtl"; // Not a typo
   private static final String PAJAMA_FEMALE_LEGS_SKIN =
       "objects/characters/player/female/player1p_female02_pajamas.skin";
   private static final String PAJAMA_FEMALE_LEGS_MTL =

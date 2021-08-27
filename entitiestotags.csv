@@ -1357,6 +1357,7 @@ Weapons.ToyGunRecycler.Randomizer,"[ArkPickups, ArkWeaponToyGun, Randomizer, Toy
 Weapons.ToyGunTelepathic.Randomizer,"[ArkPickups, ArkWeaponToyGun, Randomizer, ToyGunTelepathic, Weapons, _MIMICABLE]"
 Weapons.ToyGunVoltaic.Randomizer,"[ArkPickups, ArkWeaponToyGun, Randomizer, ToyGunVoltaic, Weapons, _MIMICABLE]"
 Weapons.Unique.Pistol_Golden,"[ArkPickups, ArkWeaponPistol, Pistol_Golden, Unique, Weapons, _MIMICABLE]"
+Weapons.Unique.PreySoulsWeapons.DualWrenches,"[ArkPickups, ArkWeaponWrench, DualWrenches, PreySoulsWeapons, Unique, Weapons, _MIMICABLE]"
 Weapons.Unique.PreySoulsWeapons.ElectricWrench,"[ArkPickups, ArkWeaponWrench, ElectricWrench, PreySoulsWeapons, Unique, Weapons, _MIMICABLE]"
 Weapons.Unique.PreySoulsWeapons.ExplosiveShotgun,"[ArkPickups, ArkWeaponShotgun, ExplosiveShotgun, PreySoulsWeapons, Unique, Weapons, _MIMICABLE]"
 Weapons.Unique.PreySoulsWeapons.FireShotgun,"[ArkPickups, ArkWeaponShotgun, FireShotgun, PreySoulsWeapons, Unique, Weapons, _MIMICABLE]"
