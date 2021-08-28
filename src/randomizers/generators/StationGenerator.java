@@ -22,6 +22,7 @@ import utils.NetworkHelper;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
+import utils.Utils;
 
 public class StationGenerator {
 
@@ -73,8 +74,8 @@ public class StationGenerator {
         logger.info(getDebugData());
         break;
       } catch (IllegalStateException e) {
-        logger.info(String.format("Failed to find connection after %s attempts", numAttempts));
-        e.printStackTrace();
+        logger.info(String.format("Failed to find connection after %s attempts: %s", numAttempts,
+            e.getMessage()));
       }
     }
   }
@@ -163,6 +164,45 @@ public class StationGenerator {
     return sb.toString();
   }
 
+  // Transforms the network into connectivity info the mod can understand
+  protected void networkToOneWayConnectivity(ImmutableNetwork<Level, Door> network) {
+    doorConnectivity = new HashMap<String, Map<String, String>>();
+    spawnConnectivity = new HashMap<String, Map<String, String>>();
+    // Initialize with blank maps
+    for (Level l : LEVELS_TO_PROCESS) {
+      doorConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
+      spawnConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
+    }
+
+    for (Level fromLevel : LEVELS_TO_PROCESS) {
+      // Shorthand destination name to use when coming from this level
+      String fromDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(fromLevel);
+
+      // Iterate through all of its neighbors
+      for (Level toLevel : network.successors(fromLevel)) {
+        // Location ID of the neighbor
+        String toLocationId = levelsToIds.get(toLevel);
+
+        // Pick a random door to spawn at
+        Door toDoor = Utils.getRandom(StationConnectivityConsts.LEVELS_TO_DOORS.get(toLevel), r);
+
+        // Door(s) from current level to this neighboring level
+        Set<Door> fromDoors = network.edgesConnecting(fromLevel, toLevel);
+
+        for (Door fromDoor : fromDoors) {
+          String fromDoorName = StationConnectivityConsts.DOORS_TO_NAMES.get(fromDoor);
+          String toLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(toDoor);
+
+          doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
+              .put(fromDoorName, toLocationId);
+          spawnConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel))
+              .put(toLevelSpawnName, fromDestName);
+        }
+      }
+    }
+  }
+
+  // Transforms the network into connectivity information that we can use for the mod
   private void networkToConnectivity(ImmutableNetwork<Level, Door> network) {
     doorConnectivity = new HashMap<String, Map<String, String>>();
     spawnConnectivity = new HashMap<String, Map<String, String>>();
@@ -173,7 +213,7 @@ public class StationGenerator {
     }
 
     for (Level fromLevel : LEVELS_TO_PROCESS) {
-      // Destination name coming from this level
+      // Shorthand destination to use name when spawning from this level
       String fromDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(fromLevel);
       // Location ID of this level
       String fromLocationId = levelsToIds.get(fromLevel);
@@ -208,6 +248,36 @@ public class StationGenerator {
             .put(toLevelSpawnName, fromDestName);
       }
     }
+  }
+
+  protected ImmutableNetwork<Level, Door> createNewOneWayConnectivity()
+      throws IllegalStateException {
+    MutableNetwork<Level, Door> station = NetworkBuilder.directed()
+        .allowsParallelEdges(true)
+        .allowsSelfLoops(true)
+        .build();
+
+    for (Level l : LEVELS_TO_PROCESS) {
+      station.addNode(l);
+    }
+
+    List<Door> toProcess = Lists.newArrayList();
+    toProcess.addAll(DOORS_TO_PROCESS);
+    Collections.shuffle(toProcess, r);
+
+    for (int i = 0; i < toProcess.size(); i++) {
+      Door fromDoor = toProcess.get(i);
+      Door toDoor = ((i + 1) < toProcess.size()) ? toProcess.get(i + 1) : toProcess.get(0);
+
+      Level fromLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+          .get(fromDoor));
+      Level toLevel = Iterables.getOnlyElement(StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
+          .get(toDoor));
+
+      station.addEdge(fromLevel, toLevel, fromDoor);
+    }
+
+    return ImmutableNetwork.copyOf(station);
   }
 
   private ImmutableNetwork<Level, Door> createNewConnectivity() throws IllegalStateException {
@@ -347,14 +417,14 @@ public class StationGenerator {
 
     // Find out which level has the lift technopath
     Level liftTechnopathLevel = getLiftTechnopathLevel(network);
-    
+
     // Ensure that we can get from Cargo Bay to the Power Plant w/o the GUTS exit.
     // This prevents softlocks after initiating the lockdown.
     lockedDoors.add(Door.CARGO_BAY_GUTS_EXIT);
     if (!isConnected(network, lockedDoors, Level.CARGO_BAY, Level.POWER_PLANT)) {
       return false;
     }
-    
+
     lockedDoors.remove(Door.CARGO_BAY_GUTS_EXIT);
 
     // See how much of the station we can unlock w/o getting the lift
@@ -447,14 +517,9 @@ public class StationGenerator {
             .build();
 
     // Random r = new Random();
-    long seed = -1034766805608871062L;
+    long seed = 0L;
     StationGenerator sg = new StationGenerator(seed, levelsToIds);
     String station1 = sg.toString();
-
-    StationGenerator sg2 = new StationGenerator(seed, levelsToIds);
-    String station2 = sg2.toString();
     System.out.println(station1);
-    System.out.println(station2);
-    System.out.println(station1.equals(station2));
   }
 }

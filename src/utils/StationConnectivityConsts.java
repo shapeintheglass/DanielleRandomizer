@@ -59,15 +59,14 @@ public final class StationConnectivityConsts {
     LOBBY_HARDWARE_LABS_EXIT,
     HARDWARE_LABS_LOBBY_EXIT
   }
-  
-  public static final ImmutableSet<Door> LIFT_DOORS = 
-      ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT,
-      Door.LIFE_SUPPORT_LOBBY_EXIT, Door.ARBORETUM_LOBBY_EXIT);
-  public static final ImmutableSet<Door> GENERAL_ACCESS_DOORS = 
+
+  public static final ImmutableSet<Door> LIFT_DOORS = ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT,
+      Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT, Door.ARBORETUM_LOBBY_EXIT);
+  public static final ImmutableSet<Door> GENERAL_ACCESS_DOORS =
       ImmutableSet.of(Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT);
-  public static final ImmutableSet<Door> FUEL_STORAGE_DOORS = 
+  public static final ImmutableSet<Door> FUEL_STORAGE_DOORS =
       ImmutableSet.of(Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT);
-  public static final ImmutableSet<Door> CREW_QUARTERS_DOORS = 
+  public static final ImmutableSet<Door> CREW_QUARTERS_DOORS =
       ImmutableSet.of(Door.ARBORETUM_CREW_QUARTERS_EXIT);
 
   // Map of level to level id
@@ -138,6 +137,22 @@ public final class StationConnectivityConsts {
           .put(Door.PSYCHOTRONICS_LOBBY_EXIT, "Door.Door_LevelTransition_Default1")
           .put(Door.SHUTTLE_BAY_GUTS_EXIT, "LTDoor_ToGUTs")
           .put(Door.SHUTTLE_BAY_LOBBY_EXIT, "LTDoor_ToLobby")
+          .build();
+
+  public static final ImmutableMap<Level, Door> DEFAULT_SPAWN =
+      new ImmutableMap.Builder<Level, Door>().put(Level.ARBORETUM, Door.ARBORETUM_GUTS_EXIT)
+          .put(Level.BRIDGE, Door.BRIDGE_ARBORETUM_EXIT)
+          .put(Level.CARGO_BAY, Door.CARGO_BAY_LIFE_SUPPORT_EXIT)
+          .put(Level.CREW_QUARTERS, Door.CREW_QUARTERS_ARBORETUM_EXIT)
+          .put(Level.DEEP_STORAGE, Door.DEEP_STORAGE_ARBORETUM_EXIT)
+          .put(Level.GUTS, Door.GUTS_PSYCHOTRONICS_EXIT)
+          .put(Level.HARDWARE_LABS, Door.HARDWARE_LABS_LOBBY_EXIT)
+          .put(Level.LIFE_SUPPORT, Door.LIFE_SUPPORT_CARGO_BAY_EXIT)
+          .put(Level.LOBBY, Door.LOBBY_NEUROMOD_DIVISION_EXIT)
+          .put(Level.NEUROMOD_DIVISION, Door.NEUROMOD_DIVISION_LOBBY_EXIT)
+          .put(Level.POWER_PLANT, Door.POWER_PLANT_LIFE_SUPPORT_EXIT)
+          .put(Level.PSYCHOTRONICS, Door.PSYCHOTRONICS_LOBBY_EXIT)
+          .put(Level.SHUTTLE_BAY, Door.SHUTTLE_BAY_LOBBY_EXIT)
           .build();
 
   public static final ImmutableMap<Door, String> DOORS_TO_SPAWNS =
@@ -245,7 +260,7 @@ public final class StationConnectivityConsts {
   public static final ImmutableList<Door> SINGLE_CONNECTIONS =
       ImmutableList.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
           Door.POWER_PLANT_LIFE_SUPPORT_EXIT);
-  
+
   public static final ImmutableList<Door> LIFT_LOBBY_SIDE =
       ImmutableList.of(Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LOBBY_ARBORETUM_EXIT);
   public static final ImmutableList<Door> LIFT_NOT_LOBBY_SIDE =

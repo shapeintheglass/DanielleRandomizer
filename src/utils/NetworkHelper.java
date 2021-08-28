@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -37,8 +38,11 @@ public class NetworkHelper {
 
       for (Level neighbor : network.adjacentNodes(l)) {
         if (!visited.contains(neighbor)) {
-          Door d = network.edgeConnectingOrNull(l, neighbor);
-          if (!toRemove.contains(d)) {
+          //Door d = network.edgeConnectingOrNull(l, neighbor);
+          Set<Door> connectingDoors = Sets.newHashSet();
+          connectingDoors.addAll(network.edgesConnecting(l, neighbor));
+          connectingDoors.removeAll(toRemove);
+          if (!connectingDoors.isEmpty()) {
             toVisit.push(neighbor);
           }
         }
@@ -61,8 +65,10 @@ public class NetworkHelper {
 
       for (Level neighbor : network.adjacentNodes(l)) {
         if (notVisited.contains(neighbor)) {
-          Door d = network.edgeConnectingOrNull(l, neighbor);
-          if (!toRemove.contains(d)) {
+          Set<Door> connectingDoors = Sets.newHashSet();
+          connectingDoors.addAll(network.edgesConnecting(l, neighbor));
+          connectingDoors.removeAll(toRemove);
+          if (!connectingDoors.isEmpty()) {
             toVisit.push(neighbor);
           }
         }

@@ -8,17 +8,17 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.jdom2.Element;
-
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class Utils {
@@ -48,8 +48,11 @@ public class Utils {
     return r.nextInt(diff) + lowerBound;
   }
 
-  public static <T> T getRandom(ImmutableCollection<T> arr, Random r) {
-    return getRandom(arr.asList(), r);
+  public static <T extends Comparable<T>> T getRandom(ImmutableCollection<T> arr, Random r) {
+    List<T> tList = Lists.newArrayList();
+    tList.addAll(arr);
+    Collections.sort(tList);
+    return getRandom(tList, r);
   }
 
   public static <T> T getRandom(ImmutableList<T> arr, Random r) {
