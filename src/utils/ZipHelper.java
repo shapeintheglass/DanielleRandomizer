@@ -74,6 +74,8 @@ public class ZipHelper {
   public static final String GLOBALACTIONS_SELFDESTRUCTTIMER = "libs/globalactions/global_selfdestructsequence.xml";
   
   public static final String PARTICLES_CHARACTERS = "libs/particles/characters.xml";
+  
+  public static final String LOGO = "libs/ui/textures/danielle_shared_textures/prey_title.dds";
 
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";
@@ -215,6 +217,10 @@ public class ZipHelper {
     zos.putNextEntry(new ZipEntry(pathInOutputZip));
     xmlOutput.output(d, zos);
     zos.closeEntry();
+  }
+  
+  public void copyToPatch(String path) throws IOException {
+    copyToPatch(path, path);
   }
 
   public void copyToPatch(String pathInInputZip, String pathInOutputZip) throws IOException {

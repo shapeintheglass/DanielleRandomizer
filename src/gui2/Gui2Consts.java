@@ -13,6 +13,7 @@ public class Gui2Consts {
   public static final String LAST_USED_SETTINGS_FILE = "last_used_settings.json";
   public static final String LOG_OUTPUT_FILE = "log.txt";
   public static final String ALL_PRESETS_FILE = "spawn_presets.json";
+  public static final String HUMAN_READABLE_SETTINGS_FILE = "your_randomizer_settings.txt";
 
   /* OUTPUT WINDOW INFO */
   public static final String PRESET_INFO = "Settings:\n%s\n";

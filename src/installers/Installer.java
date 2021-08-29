@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
-
 import utils.LevelConsts;
 import utils.ZipHelper;
 
@@ -45,14 +44,18 @@ public class Installer {
     this.tempPatchDir = tempPatchDir;
     this.spawnLocation = spawnLocation;
 
-    patchFile = installDir.resolve(INSTALL_LOCATION).resolve(PATCH_NAME).toFile();
+    patchFile = installDir.resolve(INSTALL_LOCATION)
+        .resolve(PATCH_NAME)
+        .toFile();
     logger = Logger.getLogger("Installer");
   }
 
   public void install() throws IOException, InterruptedException {
     logger.info("Installer has begun!");
-    if (!installDir.toFile().exists()) {
-      installDir.toFile().mkdirs();
+    if (!installDir.toFile()
+        .exists()) {
+      installDir.toFile()
+          .mkdirs();
     }
 
     installPatchDir();
@@ -64,14 +67,19 @@ public class Installer {
 
   public static boolean verifyInstallDir(Logger logger, Path installDir) {
     logger.info("Verifying install directory...");
-    return installDir.resolve(INSTALL_LOCATION).toFile().exists() && installDir.resolve(LevelConsts.PREFIX)
+    return installDir.resolve(INSTALL_LOCATION)
         .toFile()
-        .exists();
+        .exists()
+        && installDir.resolve(LevelConsts.PREFIX)
+            .toFile()
+            .exists();
   }
 
   public static boolean verifyDataExists(Logger logger) {
     logger.info("Verifying existence of data/ folder...");
-    return Paths.get(ZipHelper.DATA_PAK).toFile().exists();
+    return Paths.get(ZipHelper.DATA_PAK)
+        .toFile()
+        .exists();
   }
 
   public static boolean testInstall(Logger logger, File patchFile) {
@@ -108,25 +116,32 @@ public class Installer {
     logger.info("Backing up existing level files as level_backup.pak...");
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
-      Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakNewName = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
+      Path levelPak = installDir.resolve(LevelConsts.PREFIX)
+          .resolve(levelDir)
+          .resolve(LEVEL_PAK_NAME);
+      Path levelPakNewName = installDir.resolve(LevelConsts.PREFIX)
+          .resolve(levelDir)
+          .resolve(BACKUP_LEVEL_PAK_NAME);
 
       // Create backup dir if necessary
-      levelPak.toFile().mkdirs();
+      levelPak.toFile()
+          .mkdirs();
 
       // If original does not exist, do nothing
-      if (!levelPak.toFile().exists()) {
+      if (!levelPak.toFile()
+          .exists()) {
         continue;
       }
 
       // If backup already exists, do not overwrite it!!
-      if (!levelPakNewName.toFile().exists()) {
+      if (!levelPakNewName.toFile()
+          .exists()) {
         logger.info(String.format("Backing up %s to %s. (%d/%d)", levelDir, levelPakNewName, i + 1,
             LevelConsts.LEVEL_DIRS.length));
         Files.copy(levelPak, levelPakNewName, StandardCopyOption.REPLACE_EXISTING);
       } else {
-        logger.info(String.format("Level backup file %s already exists, not overwriting. (%d/%d)", levelPakNewName, i
-            + 1, LevelConsts.LEVEL_DIRS.length));
+        logger.info(String.format("Level backup file %s already exists, not overwriting. (%d/%d)",
+            levelPakNewName, i + 1, LevelConsts.LEVEL_DIRS.length));
       }
     }
     logger.info("Finished backing up level files.");
@@ -137,8 +152,9 @@ public class Installer {
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
 
-      Path sourcePak = tempLevelDir.resolve(levelDir).resolve(ZipHelper.LEVEL_OUTPUT_PAK);
-      
+      Path sourcePak = tempLevelDir.resolve(levelDir)
+          .resolve(ZipHelper.LEVEL_OUTPUT_PAK);
+
       // Swap spawn location if applicable
       String destLevelDir = levelDir;
       if (spawnLocation != null && levelDir.equals(spawnLocation)) {
@@ -150,9 +166,12 @@ public class Installer {
       }
 
       // Copy zip over to final destination
-      Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(destLevelDir).resolve(LEVEL_PAK_NAME);
+      Path levelPak = installDir.resolve(LevelConsts.PREFIX)
+          .resolve(destLevelDir)
+          .resolve(LEVEL_PAK_NAME);
       Files.copy(sourcePak, levelPak, StandardCopyOption.REPLACE_EXISTING);
-      logger.info(String.format("Installed level file %s (%d/%d)", levelPak, i + 1, LevelConsts.LEVEL_DIRS.length));
+      logger.info(String.format("Installed level file %s (%d/%d)", levelPak, i + 1,
+          LevelConsts.LEVEL_DIRS.length));
     }
 
     logger.info("----DONE INSTALLING NEW LEVEL FILES!----");
@@ -165,30 +184,38 @@ public class Installer {
 
   public static void uninstall(Path installDir, Logger logger) {
     logger.info("Uninstalling files created by this randomizer...");
-    File patchFile = installDir.resolve(INSTALL_LOCATION).resolve(PATCH_NAME).toFile();
+    File patchFile = installDir.resolve(INSTALL_LOCATION)
+        .resolve(PATCH_NAME)
+        .toFile();
     if (patchFile.exists()) {
       logger.info(String.format("Deleting patch file %s", patchFile.getPath()));
       patchFile.delete();
     } else {
-      logger.info(String.format("Patch file (%s) not found, no need to delete", patchFile.getPath()));
+      logger
+          .info(String.format("Patch file (%s) not found, no need to delete", patchFile.getPath()));
     }
 
     // Overwrite level files with backup
     for (int i = 0; i < LevelConsts.LEVEL_DIRS.length; i++) {
       String levelDir = LevelConsts.LEVEL_DIRS[i];
-      Path levelPak = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(LEVEL_PAK_NAME);
-      Path levelPakBackup = installDir.resolve(LevelConsts.PREFIX).resolve(levelDir).resolve(BACKUP_LEVEL_PAK_NAME);
-      if (levelPakBackup.toFile().exists()) {
+      Path levelPak = installDir.resolve(LevelConsts.PREFIX)
+          .resolve(levelDir)
+          .resolve(LEVEL_PAK_NAME);
+      Path levelPakBackup = installDir.resolve(LevelConsts.PREFIX)
+          .resolve(levelDir)
+          .resolve(BACKUP_LEVEL_PAK_NAME);
+      if (levelPakBackup.toFile()
+          .exists()) {
         try {
-          logger.info(String.format("Replacing level.pak with backup file %s (%d/%d)", levelPakBackup, i + 1,
-              LevelConsts.LEVEL_DIRS.length));
+          logger.info(String.format("Replacing level.pak with backup file %s (%d/%d)",
+              levelPakBackup, i + 1, LevelConsts.LEVEL_DIRS.length));
           Files.move(levelPakBackup, levelPak, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
           e.printStackTrace();
         }
       } else {
-        logger.info(String.format("No level_backup.pak found for %s, nothing to revert (%d/%d)", levelDir, i + 1,
-            LevelConsts.LEVEL_DIRS.length));
+        logger.info(String.format("No level_backup.pak found for %s, nothing to revert (%d/%d)",
+            levelDir, i + 1, LevelConsts.LEVEL_DIRS.length));
       }
     }
     logger.info("Done uninstalling files.");

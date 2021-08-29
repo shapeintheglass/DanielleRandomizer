@@ -9,11 +9,8 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
@@ -50,7 +47,6 @@ import randomizers.gameplay.filters.StationConnectivityFilter;
 import randomizers.generators.BookInfoHelper;
 import randomizers.generators.BookInfoHelper.Book;
 import randomizers.generators.CustomSpawnGenerator;
-import randomizers.generators.OptionsMenuGenerator;
 import randomizers.generators.SelfDestructTimerHelper;
 import randomizers.generators.StationGenerator;
 import utils.Utils;
@@ -67,11 +63,12 @@ public class RandomizerService extends Service<Void> {
   private static final String TEMP_LEVEL_DIR_NAME = "level";
   private static final String DEFAULT_WORKING_DIR = ".";
 
-  private static final String LOGO = "libs/ui/textures/danielle_shared_textures/danielle_title.dds";
-  private static final ImmutableMap<String, String> MORE_GUNS_DEPENDENCIES =
-      ImmutableMap.of(ZipHelper.ARK_PICKUPS_XML, "libs/entityarchetypes/arkpickups.xml",
-          ZipHelper.ARK_PROJECTILES_XML, "libs/entityarchetypes/arkprojectiles.xml",
-          ZipHelper.ARK_ITEMS_XML, "ark/items/arkitems.xml");
+  private static final ImmutableList<String> PREY_SOULS_GUNS_DEPENDENCIES =
+      ImmutableList.of(ZipHelper.SIGNAL_SYSTEM_PACKAGES, ZipHelper.ARK_PROJECTILES_XML,
+          ZipHelper.ARK_PICKUPS_XML, ZipHelper.ARK_ITEMS_XML, ZipHelper.PARTICLES_CHARACTERS,
+          ZipHelper.ANIMATIONS_ARK_PLAYER_DATABASE_3P, ZipHelper.ANIMATIONS_DUAL_WRENCH_PLAYER_1P);
+  private static final ImmutableList<String> MORE_GUNS_DEPENDENCIES = ImmutableList
+      .of(ZipHelper.ARK_PICKUPS_XML, ZipHelper.ARK_PROJECTILES_XML, ZipHelper.ARK_ITEMS_XML);
   private static final ImmutableList<String> MORE_GUNS_MATERIALS =
       ImmutableList.of("objects/weapons/shotgun/1p/shotgun1p_phantom01.mtl",
           "objects/weapons/shotgun/3p/shotgun3p_phantom01.mtl",
@@ -108,16 +105,14 @@ public class RandomizerService extends Service<Void> {
   private static final String MORE_GUNS_FILE_LIST = "libs/ui/textures/icons_inventory/filelist.txt";
   private static final String MORE_GUNS_ICONS_DIR = "libs/ui/textures/icons_inventory/";
 
-  private static final ImmutableMap<String, String> WANDERING_HUMANS_DEPENDENCIES =
-      ImmutableMap.of(ZipHelper.AI_TREE_ARMED_HUMANS, "ark/ai/aitrees/ArmedHumanAiTree.xml",
-          ZipHelper.AI_TREE_HUMANS, "ark/ai/aitrees/HumanAiTree.xml",
-          ZipHelper.AI_TREE_UNARMED_HUMANS, "ark/ai/aitrees/UnarmedHumanAiTree.xml");
+  private static final ImmutableList<String> WANDERING_HUMANS_DEPENDENCIES = ImmutableList.of(
+      ZipHelper.AI_TREE_ARMED_HUMANS, ZipHelper.AI_TREE_HUMANS, ZipHelper.AI_TREE_UNARMED_HUMANS);
 
-  public static final ImmutableMap<String, String> SURVIVE_APEX_KILL_WALL_DEPENDENCIES =
-      ImmutableMap.of(ZipHelper.APEX_VOLUME_CONFIG, "ark/apexvolumeconfig.xml");
+  public static final ImmutableList<String> SURVIVE_APEX_KILL_WALL_DEPENDENCIES =
+      ImmutableList.of(ZipHelper.APEX_VOLUME_CONFIG);
 
-  public static final ImmutableMap<String, String> NPC_GAME_EFFECTS_DEPENDENCIES =
-      ImmutableMap.of(ZipHelper.NPC_GAME_EFFECTS, "ark/npc/npcgameeffects.xml");
+  public static final ImmutableList<String> NPC_GAME_EFFECTS_DEPENDENCIES =
+      ImmutableList.of(ZipHelper.NPC_GAME_EFFECTS);
 
   private TextArea outputWindow;
   private Settings finalSettings;
@@ -210,7 +205,11 @@ public class RandomizerService extends Service<Void> {
           .getEpochSecond()
           - startTime.toInstant()
               .getEpochSecond();
+      writeLine("");
       writeLine(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT, secondsElapsed));
+      writeLine(String.format("You can also view your settings at %s.",
+          Gui2Consts.HUMAN_READABLE_SETTINGS_FILE));
+      writeLine("");
       zipHelper.close();
       if (deleteFilesAfterwards) {
         if (tempDir.toFile()
@@ -428,13 +427,13 @@ public class RandomizerService extends Service<Void> {
   }
 
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {
-    copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES, tempPatchDir);
+    copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES);
 
-    // zipHelper.copyToPatch(LOGO, LOGO);
+    zipHelper.copyToPatch(ZipHelper.LOGO);
 
     if (settings.getMoreSettings()
         .getMoreGuns()) {
-      copyFiles(MORE_GUNS_DEPENDENCIES, tempPatchDir);
+      copyFiles(MORE_GUNS_DEPENDENCIES);
       copyFiles(MORE_GUNS_MATERIALS);
 
       try (BufferedReader br = new BufferedReader(
@@ -446,44 +445,32 @@ public class RandomizerService extends Service<Void> {
             break;
           }
           String path = MORE_GUNS_ICONS_DIR + line;
-          zipHelper.copyToPatch(path, path);
+          zipHelper.copyToPatch(path);
         }
       }
     }
 
     if (settings.getMoreSettings()
         .getPreySoulsGuns()) {
-      copyFile(ZipHelper.SIGNAL_SYSTEM_PACKAGES);
-      copyFile(ZipHelper.ARK_PROJECTILES_XML);
-      copyFile(ZipHelper.ARK_PICKUPS_XML);
-      copyFile(ZipHelper.ARK_ITEMS_XML);
-      copyFile(ZipHelper.PARTICLES_CHARACTERS);
-      copyFile(ZipHelper.ANIMATIONS_ARK_PLAYER_DATABASE_3P);
-      copyFile(ZipHelper.ANIMATIONS_DUAL_WRENCH_PLAYER_1P);
+      copyFiles(PREY_SOULS_GUNS_DEPENDENCIES);
     }
 
     if (settings.getExpSettings()
         .getWanderingHumans()) {
-      copyFiles(WANDERING_HUMANS_DEPENDENCIES, tempPatchDir);
+      copyFiles(WANDERING_HUMANS_DEPENDENCIES);
     }
 
     if (settings.getGameplaySettings()
         .getRandomizeStation()
         || settings.getExpSettings()
             .getStartSelfDestruct()) {
-      copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES, tempPatchDir);
+      copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
     }
   }
 
   private void copyFiles(ImmutableList<String> dependencies) {
     for (String s : dependencies) {
       copyFile(s);
-    }
-  }
-
-  private void copyFiles(ImmutableMap<String, String> dependencies, Path tempPatchDir) {
-    for (String key : dependencies.keySet()) {
-      copyFile(key);
     }
   }
 

@@ -41,7 +41,7 @@
                                           <Button fx:id="chaoticPresetButton" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
                                           <Label text="Special modes" />
                                           <Button fx:id="gotsPresetButton" mnemonicParsing="false" onAction="#onPresetsGotsClicked" prefHeight="25.0" prefWidth="101.0" text="G.O.T.S. (Timed)" />
-                                          <Button fx:id="livingTalosPresetButton" mnemonicParsing="false" onMouseClicked="#onPresetsLivingTalosClicked" prefHeight="25.0" prefWidth="105.0" text="Living Talos" />
+                                          <Button fx:id="livingTalosPresetButton" mnemonicParsing="false" onAction="#onPresetsLivingTalosClicked" prefHeight="25.0" prefWidth="105.0" text="Living Talos" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="275.0" prefWidth="478.0" spacing="24.0">
@@ -406,7 +406,7 @@
             </TabPane>
           <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="261.0">
                <children>
-                  <TextArea fx:id="outputWindow" editable="false" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="261.0" />
+                  <TextArea fx:id="outputWindow" editable="false" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="261.0" wrapText="true" />
                   <Label layoutX="14.0" layoutY="6.0" text="Output" />
                </children>
             </AnchorPane>
@@ -416,8 +416,9 @@
          <children>
             <HBox alignment="CENTER_RIGHT" layoutX="6.0" layoutY="3.0" prefHeight="25.0" prefWidth="888.0" spacing="25.0">
                <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="396.0" spacing="25.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="583.0" spacing="25.0">
                      <children>
+                        <Label fx:id="installTipLabel" prefHeight="17.0" prefWidth="209.0" text="Click Install to apply randomization --&gt;" textAlignment="RIGHT" />
                         <Button fx:id="installButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleInstallClicked" prefHeight="25.0" prefWidth="87.0" text="Install">
                            <font>
                               <Font name="System Bold" size="12.0" />
