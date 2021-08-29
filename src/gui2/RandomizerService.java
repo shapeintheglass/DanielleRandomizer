@@ -480,7 +480,6 @@ public class RandomizerService extends Service<Void> {
     } catch (IOException e) {
       logger.warning(String
           .format("Unable to copy dependency file %s, it may already have been added.", file));
-      e.printStackTrace();
     }
   }
 
