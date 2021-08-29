@@ -226,11 +226,11 @@ public class RandomizerService extends Service<Void> {
     writeLine(SettingsHelper.settingsToString(currentSettings));
 
     /* COSMETIC */
-    try {
-      OptionsMenuGenerator.addOptionsMenu(currentSettings, zipHelper);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    //try {
+    //  OptionsMenuGenerator.addOptionsMenu(currentSettings, zipHelper);
+    //} catch (Exception e) {
+    //  e.printStackTrace();
+    //}
     
     if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);

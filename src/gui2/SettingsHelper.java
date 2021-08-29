@@ -8,79 +8,172 @@ public class SettingsHelper {
 
     builder.append(String.format("Seed: %s\n", settings.getSeed()));
 
-    if (settings.getCosmeticSettings().getRandomizeBodies()) {
-      builder.append(String.format("\t* Randomize bodies\n"));
+    if (settings.getCosmeticSettings()
+        .getRandomizeBodies()) {
+      addOptionToBuilder(builder, "Randomize bodies");
     }
-    if (settings.getCosmeticSettings().getRandomizeVoicelines()) {
-      builder.append(String.format("\t* Randomize voicelines\n"));
+    if (settings.getCosmeticSettings()
+        .getRandomizeVoicelines()) {
+      addOptionToBuilder(builder, "Randomize voice lines");
     }
-    if (settings.getCosmeticSettings().getRandomizeEmotions()) {
-      builder.append(String.format("\t* Randomize emotions\n"));
+    if (settings.getCosmeticSettings()
+        .getRandomizeEmotions()) {
+      addOptionToBuilder(builder, "Randomize emotions");
     }
-    if (settings.getCosmeticSettings().getRandomizeMusic()) {
-      builder.append(String.format("\t* Randomize music\n"));
+    if (settings.getCosmeticSettings()
+        .getRandomizeMusic()) {
+      addOptionToBuilder(builder, "Randomize music");
     }
-    if (settings.getCosmeticSettings().getRandomizePlayerModel()) {
-      builder.append(String.format("\t* Randomize player model\n"));
+    if (settings.getCosmeticSettings()
+        .getRandomizePlayerModel()) {
+      addOptionToBuilder(builder, "Randomize player model");
     }
-    if (settings.getCosmeticSettings().getRandomizePlanetSize()) {
-      builder.append(String.format("\t* Randomize Earth/Moon/Sun\n"));
-    }
-
-    if (!settings.getGameplaySettings().getItemSpawnSettings().getFiltersList().isEmpty()) {
-      builder.append(String.format("\t* %s\n", settings.getGameplaySettings().getItemSpawnSettings().getName()));
-    }
-    if (settings.getMoreSettings().getMoreGuns()) {
-      builder.append(String.format("\t* More guns\n"));
-    }
-    if (settings.getGameplaySettings().getRandomizeFabPlanCosts()) {
-      builder.append(String.format("\t* Randomize fab plan costs\n"));
+    if (settings.getCosmeticSettings()
+        .getRandomizePlanetSize()) {
+      addOptionToBuilder(builder, "Randomize Earth/Moon/Sun");
     }
 
-    if (!settings.getGameplaySettings().getEnemySpawnSettings().getFiltersList().isEmpty()) {
-      builder.append(String.format("\t* %s\n", settings.getGameplaySettings().getEnemySpawnSettings().getName()));
+    if (!settings.getGameplaySettings()
+        .getItemSpawnSettings()
+        .getFiltersList()
+        .isEmpty()) {
+      addOptionToBuilder(builder, settings.getGameplaySettings()
+          .getItemSpawnSettings()
+          .getName());
     }
 
-    if (settings.getGameplaySettings().getRandomizeNeuromods()) {
-      builder.append(String.format("\t* Randomize neuromods\n"));
+    if (!settings.getGameplaySettings()
+        .getEnemySpawnSettings()
+        .getFiltersList()
+        .isEmpty()) {
+      addOptionToBuilder(builder, settings.getGameplaySettings()
+          .getEnemySpawnSettings()
+          .getName());
     }
 
-    if (settings.getGameplaySettings().getRandomizeStation()) {
-      builder.append(String.format("\t* Randomize station\n"));
+    if (settings.getGameplaySettings()
+        .getRandomizeStation()) {
+      addOptionToBuilder(builder, "Randomize station");
     }
-    if (settings.getCheatSettings().getUseCustomSpawn()) {
-      builder.append(String.format("\t* Start location: %s\n", settings.getCheatSettings()
+
+    if (settings.getGameplaySettings()
+        .getRandomizeNeuromods()) {
+      addOptionToBuilder(builder, "Randomize neuromods");
+    }
+
+    if (settings.getGameplaySettings()
+        .getRandomizeFabPlanCosts()) {
+      addOptionToBuilder(builder, "Randomize fab plan costs");
+    }
+
+    if (settings.getGameplaySettings()
+        .getRandomizeRecyclers()
+        .getIsEnabled()) {
+      addOptionToBuilder(builder, "Randomize recyclers");
+    }
+
+    if (settings.getGameplaySettings()
+        .getRandomizeDispensers()
+        .getIsEnabled()) {
+      addOptionToBuilder(builder, "Randomize operator dispensers");
+    }
+
+    if (settings.getGameplaySettings()
+        .getRandomizeBreakables()
+        .getIsEnabled()) {
+      addOptionToBuilder(builder, "Randomize breakable objects");
+    }
+
+    if (settings.getGameplaySettings()
+        .getRandomizeHackables()
+        .getIsEnabled()) {
+      addOptionToBuilder(builder, "Randomize hackable objects");
+    }
+
+    if (settings.getGameStartSettings()
+        .getStartOnSecondDay()) {
+      addOptionToBuilder(builder, "Start on second day");
+    }
+
+    if (settings.getGameStartSettings()
+        .getAddLootToApartment()) {
+      addOptionToBuilder(builder, "Add loot to apartment");
+    }
+
+    if (settings.getGameStartSettings()
+        .getSkipJovanCutscene()) {
+      addOptionToBuilder(builder, "Skip Jovan cutscene");
+    }
+
+    if (settings.getGameStartSettings()
+        .getStartOutsideApartment()) {
+      addOptionToBuilder(builder, "Start outside apartment");
+    }
+
+    if (settings.getMoreSettings()
+        .getMoreGuns()) {
+      addOptionToBuilder(builder, "More guns");
+    }
+
+    if (settings.getMoreSettings()
+        .getPreySoulsGuns()) {
+      addOptionToBuilder(builder, "Prey Souls - Guns");
+    }
+
+    if (settings.getMoreSettings()
+        .getPreySoulsChipsets()) {
+      addOptionToBuilder(builder, "Prey Souls - Chipsets");
+    }
+
+    if (settings.getMoreSettings()
+        .getPreySoulsEnemies()) {
+      addOptionToBuilder(builder, "Prey Souls - Enemies");
+    }
+
+    if (settings.getMoreSettings()
+        .getPreySoulsTurrets()) {
+      addOptionToBuilder(builder, "Prey Souls - Turrets");
+    }
+
+
+
+    if (settings.getCheatSettings()
+        .getOpenStation()) {
+      addOptionToBuilder(builder, "Unlock all doors/safes/workstations");
+    }
+    if (settings.getCheatSettings()
+        .getUnlockAllScans()) {
+      addOptionToBuilder(builder, "Unlock all typhon scans");
+    }
+    
+    if (settings.getCheatSettings()
+        .getUseCustomSpawn()) {
+      addOptionToBuilder(builder, String.format("Start location: %s", settings.getCheatSettings()
           .getCustomSpawnLocation()
           .name()));
     }
-
-    if (settings.getGameStartSettings().getStartOnSecondDay()) {
-      builder.append(String.format("\t* Start on second day\n"));
+    
+    if (settings.getExpSettings()
+        .getWanderingHumans()) {
+      addOptionToBuilder(builder, "Make humans wander");
     }
-    if (settings.getGameStartSettings().getAddLootToApartment()) {
-      builder.append(String.format("\t* Add loot to apartment\n"));
+    
+    if (settings.getExpSettings()
+        .getWanderingHumans()) {
+      addOptionToBuilder(builder, "Living corpses");
     }
-    if (settings.getGameStartSettings().getSkipJovanCutscene()) {
-      builder.append(String.format("\t* Skip Jovan cutscene\n"));
+    
+    if (settings.getExpSettings()
+        .getZeroGravityEverywhere()) {
+      addOptionToBuilder(builder, "Microgravity everywhere");
     }
-
-    if (settings.getCheatSettings().getOpenStation()) {
-      builder.append(String.format("\t* Unlock all doors/safes/workstations\n"));
+    if (settings.getExpSettings()
+        .getEnableGravityInExtAndGuts()) {
+      addOptionToBuilder(builder, "Gravity in Exterior + GUTS");
     }
-    if (settings.getCheatSettings().getUnlockAllScans()) {
-      builder.append(String.format("\t* Unlock all typhon scans\n"));
-    }
-    if (settings.getExpSettings().getWanderingHumans()) {
-      builder.append(String.format("\t* Make humans wander\n"));
-    }
-    if (settings.getExpSettings().getZeroGravityEverywhere()) {
-      builder.append(String.format("\t* Microgravity everywhere\n"));
-    }
-    if (settings.getExpSettings().getEnableGravityInExtAndGuts()) {
-      builder.append(String.format("\t* Enable gravity in exterior + GUTS\n"));
-    }
-    if (settings.getExpSettings().getStartSelfDestruct()) {
-      builder.append(String.format("\t* Start self-destruct sequence\n"));
+    if (settings.getExpSettings()
+        .getStartSelfDestruct()) {
+      addOptionToBuilder(builder, "Start self-destruct sequence");
       builder.append(String.format("\t\t* Self-destruct timer: %s\n", settings.getExpSettings()
           .getSelfDestructTimer()));
       builder.append(String.format("\t\t* Shuttle timer: %s\n", settings.getExpSettings()
@@ -88,5 +181,9 @@ public class SettingsHelper {
     }
 
     return builder.toString();
+  }
+
+  private static void addOptionToBuilder(StringBuilder builder, String text) {
+    builder.append(String.format("\t* %s\n", text));
   }
 }
