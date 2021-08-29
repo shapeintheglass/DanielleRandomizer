@@ -50,32 +50,44 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private void setupGameTokens() {
     // Use the settings to determine required level game tokens
-    if (settings.getCheatSettings().getUnlockAllScans()) {
+    if (settings.getCheatSettings()
+        .getUnlockAllScans()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (settings.getCheatSettings().getOpenStation()) {
+    if (settings.getCheatSettings()
+        .getOpenStation()) {
       gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
+      //gameTokenValues.putAll(LevelConsts.UNLOCK_LIFT_TOKENS);
     }
-    if (settings.getGameplaySettings().getRandomizeStation()) {
+    if (settings.getGameplaySettings()
+        .getRandomizeStation()) {
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
     }
-    if (settings.getExpSettings().getStartSelfDestruct()) {
+    if (settings.getExpSettings()
+        .getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
-    if (settings.getGameStartSettings().getSkipJovanCutscene()) {
+    if (settings.getGameStartSettings()
+        .getSkipJovanCutscene()) {
       gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
     }
-    if (settings.getCheatSettings().getUseCustomSpawn()) {
+    if (settings.getCheatSettings()
+        .getUseCustomSpawn()) {
       gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
     }
-    if (settings.getGameStartSettings().getStartOutsideApartment()) {
+    if (settings.getGameStartSettings()
+        .getStartOutsideApartment()) {
       gameTokenValues.putAll(LevelConsts.START_OUTSIDE_APARTMENT_TOKENS);
       gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
     }
-    if (!settings.getCheatSettings().getGameTokenOverrides().isEmpty()) {
-      String[] tokens = settings.getCheatSettings().getGameTokenOverrides().split(",");
+    if (!settings.getCheatSettings()
+        .getGameTokenOverrides()
+        .isEmpty()) {
+      String[] tokens = settings.getCheatSettings()
+          .getGameTokenOverrides()
+          .split(",");
       for (String token : tokens) {
         if (!token.contains("=")) {
           continue;
@@ -103,7 +115,9 @@ public class LevelRandomizer extends BaseRandomizer {
       while (!toExamine.isEmpty()) {
         String f = toExamine.pop();
         Path inputPath = Paths.get(f);
-        String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir).relativize(inputPath).toString();
+        String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir)
+            .relativize(inputPath)
+            .toString();
 
         if (zipHelper.isDirectory(f)) {
           if (f.endsWith(TOKENS_FOLDER_NAME)) {
@@ -128,15 +142,13 @@ public class LevelRandomizer extends BaseRandomizer {
               logger.warning("Unable to filter mission file for level " + levelDir);
               e.printStackTrace();
             }
-          } /*else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) {
-            // Filter movie data if applicable
-            try {
-              filterMovieDataFile(f, pathInOutputZip, levelDir);
-            } catch (IOException | JDOMException e) {
-              logger.warning("Unable to filter movie data for level " + levelDir);
-              e.printStackTrace();
-            }
-            } */else {
+          } /*
+             * else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) { // Filter movie
+             * data if applicable try { filterMovieDataFile(f, pathInOutputZip, levelDir); } catch
+             * (IOException | JDOMException e) {
+             * logger.warning("Unable to filter movie data for level " + levelDir);
+             * e.printStackTrace(); } }
+             */else {
             // Copy without filtering
             try {
               zipHelper.copyToLevelPak(f, pathInOutputZip, levelDir);
@@ -153,8 +165,8 @@ public class LevelRandomizer extends BaseRandomizer {
   /**
    * Copies level def into temp directory, while filtering.
    */
-  private void filterMissionFile(String missionFilePath, String pathInZip, String levelDir) throws IOException,
-      JDOMException {
+  private void filterMissionFile(String missionFilePath, String pathInZip, String levelDir)
+      throws IOException, JDOMException {
     Document document = zipHelper.getDocument(missionFilePath);
     Element root = document.getRootElement();
     Element objects = root.getChild("Objects");
@@ -175,15 +187,18 @@ public class LevelRandomizer extends BaseRandomizer {
     }
   }
 
-  private void filterTokensFolder(String gameTokensFolder, String levelDir) throws JDOMException, IOException {
+  private void filterTokensFolder(String gameTokensFolder, String levelDir)
+      throws JDOMException, IOException {
     for (String f : zipHelper.listFiles(gameTokensFolder)) {
-      String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir).relativize(Paths.get(f)).toString();
+      String pathInOutputZip = Paths.get(ZipHelper.DATA_LEVELS + "/" + levelDir)
+          .relativize(Paths.get(f))
+          .toString();
       filterTokensFile(f, pathInOutputZip, levelDir);
     }
   }
 
-  private void filterTokensFile(String gameTokensFile, String pathInZip, String levelDir) throws JDOMException,
-      IOException {
+  private void filterTokensFile(String gameTokensFile, String pathInZip, String levelDir)
+      throws JDOMException, IOException {
     Document document = zipHelper.getDocument(gameTokensFile);
     Element root = document.getRootElement();
     List<Element> entities = root.getChildren();
@@ -198,39 +213,22 @@ public class LevelRandomizer extends BaseRandomizer {
   }
 
   /*
-  private void filterMovieDataFile(String movieDataFile, String pathInZip, String levelDir) throws IOException,
-      JDOMException {
-    Document document = zipHelper.getDocument(movieDataFile);
-    Element root = document.getRootElement();
-    List<Element> sequences = root.getChild("Mission").getChild("SequenceData").getChildren();
-  
-    for (Element s : sequences) {
-      List<Element> nodes = s.getChild("Nodes").getChildren();
-      for (Element n : nodes) {
-        List<Element> tracks = n.getChildren();
-        for (Element t : tracks) {
-          String paramType = t.getAttributeValue("paramType");
-          if (paramType == null) {
-            continue;
-          }
-          if (!paramType.equals("Dialog")) {
-            continue;
-          }
-          List<Element> keys = t.getChildren();
-          for (Element k : keys) {
-            String dialogIdHex = k.getAttributeValue("dialogId");
-            String dialogIdDec = new BigInteger(dialogIdHex, 16).toString();
-            if (swappedLinesMap.containsKey(dialogIdDec)) {
-              String newDialogIdHex = new BigInteger(swappedLinesMap.get(dialogIdDec)).toString(16).toUpperCase();
-              k.setAttribute("dialogId", newDialogIdHex);
-            }
-          }
-        }
-  
-      }
-    }
-  
-    zipHelper.copyToLevelPak(document, pathInZip, levelDir);
-  }
-  */
+   * private void filterMovieDataFile(String movieDataFile, String pathInZip, String levelDir)
+   * throws IOException, JDOMException { Document document = zipHelper.getDocument(movieDataFile);
+   * Element root = document.getRootElement(); List<Element> sequences =
+   * root.getChild("Mission").getChild("SequenceData").getChildren();
+   * 
+   * for (Element s : sequences) { List<Element> nodes = s.getChild("Nodes").getChildren(); for
+   * (Element n : nodes) { List<Element> tracks = n.getChildren(); for (Element t : tracks) { String
+   * paramType = t.getAttributeValue("paramType"); if (paramType == null) { continue; } if
+   * (!paramType.equals("Dialog")) { continue; } List<Element> keys = t.getChildren(); for (Element
+   * k : keys) { String dialogIdHex = k.getAttributeValue("dialogId"); String dialogIdDec = new
+   * BigInteger(dialogIdHex, 16).toString(); if (swappedLinesMap.containsKey(dialogIdDec)) { String
+   * newDialogIdHex = new BigInteger(swappedLinesMap.get(dialogIdDec)).toString(16).toUpperCase();
+   * k.setAttribute("dialogId", newDialogIdHex); } } }
+   * 
+   * } }
+   * 
+   * zipHelper.copyToLevelPak(document, pathInZip, levelDir); }
+   */
 }
