@@ -68,38 +68,56 @@ public class RandomizerService extends Service<Void> {
   private static final String DEFAULT_WORKING_DIR = ".";
 
   private static final String LOGO = "libs/ui/textures/danielle_shared_textures/danielle_title.dds";
-  private static final ImmutableMap<String, String> MORE_GUNS_DEPENDENCIES = ImmutableMap.of(ZipHelper.ARK_PICKUPS_XML,
-      "libs/entityarchetypes/arkpickups.xml", ZipHelper.ARK_PROJECTILES_XML, "libs/entityarchetypes/arkprojectiles.xml",
-      ZipHelper.ARK_ITEMS_XML, "ark/items/arkitems.xml");
-  private static final ImmutableList<String> MORE_GUNS_MATERIALS = ImmutableList.of(
-      "objects/weapons/shotgun/1p/shotgun1p_phantom01.mtl", "objects/weapons/shotgun/3p/shotgun3p_phantom01.mtl",
-      "objects/weapons/shotgun/1p/shotgun1p_telepath01.mtl", "objects/weapons/shotgun/3p/shotgun3p_telepath01.mtl",
-      "objects/weapons/shotgun/1p/shotgun1p_nightmare01.mtl", "objects/weapons/shotgun/3p/shotgun3p_nightmare01.mtl",
-      "objects/weapons/shotgun/1p/shotgun1p_voltaic01.mtl", "objects/weapons/shotgun/3p/shotgun3p_voltaic01.mtl",
-      "objects/weapons/googun/1p/googun1p_phantom01.mtl", "objects/weapons/googun/3p/googun3p_phantom01.mtl",
-      "objects/weapons/googun/1p/googun1p_telepath01.mtl", "objects/weapons/googun/3p/googun3p_telepath01.mtl",
-      "objects/weapons/googun/1p/googun1p_nightmare01.mtl", "objects/weapons/googun/3p/googun3p_nightmare01.mtl",
-      "objects/weapons/googun/1p/googun1p_voltaic01.mtl", "objects/weapons/googun/3p/googun3p_voltaic01.mtl",
-      "objects/weapons/pistol/1p/pistol1p_phantom01.mtl", "objects/weapons/pistol/3p/pistol3p_phantom01.mtl",
-      "objects/weapons/pistol/1p/pistol1p_telepath01.mtl", "objects/weapons/pistol/3p/pistol3p_telepath01.mtl",
-      "objects/weapons/pistol/1p/pistol1p_nightmare01.mtl", "objects/weapons/pistol/3p/pistol3p_nightmare01.mtl",
-      "objects/weapons/pistol/1p/pistol1p_voltaic01.mtl", "objects/weapons/pistol/3p/pistol3p_voltaic01.mtl",
-      "objects/weapons/toygun/1p/toygun1p_phantom01.mtl", "objects/weapons/toygun/3p/toygun3p_phantom01.mtl",
-      "objects/weapons/toygun/1p/toygun1p_telepath01.mtl", "objects/weapons/toygun/3p/toygun3p_telepath01.mtl",
-      "objects/weapons/toygun/1p/toygun1p_nightmare01.mtl", "objects/weapons/toygun/3p/toygun3p_nightmare01.mtl",
-      "objects/weapons/toygun/1p/toygun1p_voltaic01.mtl", "objects/weapons/toygun/3p/toygun3p_voltaic01.mtl");
+  private static final ImmutableMap<String, String> MORE_GUNS_DEPENDENCIES =
+      ImmutableMap.of(ZipHelper.ARK_PICKUPS_XML, "libs/entityarchetypes/arkpickups.xml",
+          ZipHelper.ARK_PROJECTILES_XML, "libs/entityarchetypes/arkprojectiles.xml",
+          ZipHelper.ARK_ITEMS_XML, "ark/items/arkitems.xml");
+  private static final ImmutableList<String> MORE_GUNS_MATERIALS =
+      ImmutableList.of("objects/weapons/shotgun/1p/shotgun1p_phantom01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_phantom01.mtl",
+          "objects/weapons/shotgun/1p/shotgun1p_telepath01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_telepath01.mtl",
+          "objects/weapons/shotgun/1p/shotgun1p_nightmare01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_nightmare01.mtl",
+          "objects/weapons/shotgun/1p/shotgun1p_voltaic01.mtl",
+          "objects/weapons/shotgun/3p/shotgun3p_voltaic01.mtl",
+          "objects/weapons/googun/1p/googun1p_phantom01.mtl",
+          "objects/weapons/googun/3p/googun3p_phantom01.mtl",
+          "objects/weapons/googun/1p/googun1p_telepath01.mtl",
+          "objects/weapons/googun/3p/googun3p_telepath01.mtl",
+          "objects/weapons/googun/1p/googun1p_nightmare01.mtl",
+          "objects/weapons/googun/3p/googun3p_nightmare01.mtl",
+          "objects/weapons/googun/1p/googun1p_voltaic01.mtl",
+          "objects/weapons/googun/3p/googun3p_voltaic01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_phantom01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_phantom01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_telepath01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_telepath01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_nightmare01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_nightmare01.mtl",
+          "objects/weapons/pistol/1p/pistol1p_voltaic01.mtl",
+          "objects/weapons/pistol/3p/pistol3p_voltaic01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_phantom01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_phantom01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_telepath01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_telepath01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_nightmare01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_nightmare01.mtl",
+          "objects/weapons/toygun/1p/toygun1p_voltaic01.mtl",
+          "objects/weapons/toygun/3p/toygun3p_voltaic01.mtl");
   private static final String MORE_GUNS_FILE_LIST = "libs/ui/textures/icons_inventory/filelist.txt";
   private static final String MORE_GUNS_ICONS_DIR = "libs/ui/textures/icons_inventory/";
 
-  private static final ImmutableMap<String, String> WANDERING_HUMANS_DEPENDENCIES = ImmutableMap.of(
-      ZipHelper.AI_TREE_ARMED_HUMANS, "ark/ai/aitrees/ArmedHumanAiTree.xml", ZipHelper.AI_TREE_HUMANS,
-      "ark/ai/aitrees/HumanAiTree.xml", ZipHelper.AI_TREE_UNARMED_HUMANS, "ark/ai/aitrees/UnarmedHumanAiTree.xml");
+  private static final ImmutableMap<String, String> WANDERING_HUMANS_DEPENDENCIES =
+      ImmutableMap.of(ZipHelper.AI_TREE_ARMED_HUMANS, "ark/ai/aitrees/ArmedHumanAiTree.xml",
+          ZipHelper.AI_TREE_HUMANS, "ark/ai/aitrees/HumanAiTree.xml",
+          ZipHelper.AI_TREE_UNARMED_HUMANS, "ark/ai/aitrees/UnarmedHumanAiTree.xml");
 
-  public static final ImmutableMap<String, String> SURVIVE_APEX_KILL_WALL_DEPENDENCIES = ImmutableMap.of(
-      ZipHelper.APEX_VOLUME_CONFIG, "ark/apexvolumeconfig.xml");
+  public static final ImmutableMap<String, String> SURVIVE_APEX_KILL_WALL_DEPENDENCIES =
+      ImmutableMap.of(ZipHelper.APEX_VOLUME_CONFIG, "ark/apexvolumeconfig.xml");
 
-  public static final ImmutableMap<String, String> NPC_GAME_EFFECTS_DEPENDENCIES = ImmutableMap.of(
-      ZipHelper.NPC_GAME_EFFECTS, "ark/npc/npcgameeffects.xml");
+  public static final ImmutableMap<String, String> NPC_GAME_EFFECTS_DEPENDENCIES =
+      ImmutableMap.of(ZipHelper.NPC_GAME_EFFECTS, "ark/npc/npcgameeffects.xml");
 
   private TextArea outputWindow;
   private Settings finalSettings;
@@ -155,15 +173,19 @@ public class RandomizerService extends Service<Void> {
         return false;
       }
 
-      tempDir.toFile().mkdir();
-      tempLevelDir.toFile().mkdir();
-      tempPatchDir.toFile().mkdir();
+      tempDir.toFile()
+          .mkdir();
+      tempLevelDir.toFile()
+          .mkdir();
+      tempPatchDir.toFile()
+          .mkdir();
       if (!sanityChecks(finalSettings, tempPatchDir)) {
         writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
         return false;
       }
 
-      String spawnLocation = executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
+      String spawnLocation =
+          executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
 
       // Copy over dependencies files for certain settings
       copyDependencies(finalSettings, tempPatchDir);
@@ -184,11 +206,15 @@ public class RandomizerService extends Service<Void> {
       writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
     } finally {
       Date endTime = new Date();
-      secondsElapsed = endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
+      secondsElapsed = endTime.toInstant()
+          .getEpochSecond()
+          - startTime.toInstant()
+              .getEpochSecond();
       writeLine(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT, secondsElapsed));
       zipHelper.close();
       if (deleteFilesAfterwards) {
-        if (tempDir.toFile().exists()) {
+        if (tempDir.toFile()
+            .exists()) {
           Utils.deleteDirectory(tempDir.toFile());
         }
       }
@@ -210,14 +236,16 @@ public class RandomizerService extends Service<Void> {
       writeLine(Gui2Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER);
       return false;
     }
-    if (!Installer.testInstall(logger, tempPatchDir.resolve(Installer.PATCH_NAME).toFile())) {
+    if (!Installer.testInstall(logger, tempPatchDir.resolve(Installer.PATCH_NAME)
+        .toFile())) {
       writeLine(Gui2Consts.INSTALL_ERROR_CANNOT_WRITE);
       return false;
     }
     return true;
   }
 
-  private String executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
+  private String executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir,
+      Path tempPatchDir) {
     TaggedDatabase database = EntityDatabase.getInstance(zipHelper);
     if (database == null) {
       return null;
@@ -226,13 +254,14 @@ public class RandomizerService extends Service<Void> {
     writeLine(SettingsHelper.settingsToString(currentSettings));
 
     /* COSMETIC */
-    //try {
-    //  OptionsMenuGenerator.addOptionsMenu(currentSettings, zipHelper);
-    //} catch (Exception e) {
-    //  e.printStackTrace();
-    //}
-    
-    if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
+    // try {
+    // OptionsMenuGenerator.addOptionsMenu(currentSettings, zipHelper);
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
       try {
         new BodyRandomizer(currentSettings, zipHelper).randomize();
@@ -241,32 +270,39 @@ public class RandomizerService extends Service<Void> {
       }
     }
     Map<String, String> swappedLinesMap = null;
-    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines() || currentSettings.getCosmeticSettings()
-        .getRandomizeEmotions()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizeVoicelines()
+        || currentSettings.getCosmeticSettings()
+            .getRandomizeEmotions()) {
       writeLine("Randomizing dialogue...");
       VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
       vr.randomize();
       swappedLinesMap = vr.getSwappedLinesMap();
 
     }
-    if (currentSettings.getCosmeticSettings().getRandomizeMusic()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizeMusic()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);
       new MusicRandomizer(currentSettings, zipHelper).randomize();
     }
-    if (currentSettings.getCosmeticSettings().getRandomizePlayerModel()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizePlayerModel()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL);
       new PlayerModelRandomizer(currentSettings, zipHelper).randomize();
     }
-    if (currentSettings.getCosmeticSettings().getRandomizePlanetSize()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizePlanetSize()) {
       writeLine("Randomizing planet size");
       new PlanetRandomizer(currentSettings, zipHelper).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
-    if (currentSettings.getGameplaySettings().getRandomizeNeuromods()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeNeuromods()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_NEUROMOD);
       new NeuromodTreeRandomizer(currentSettings, zipHelper).randomize();
-    } else if (currentSettings.getCheatSettings().getUnlockAllScans()) {
+    } else if (currentSettings.getCheatSettings()
+        .getUnlockAllScans()) {
       new NeuromodTreeRandomizer(currentSettings, zipHelper).unlockAllScans();
     }
 
@@ -277,18 +313,21 @@ public class RandomizerService extends Service<Void> {
       e.printStackTrace();
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeFabPlanCosts()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeFabPlanCosts()) {
       writeLine("Randomizing fab plan costs...");
       new FabPlanCostRandomizer(currentSettings, zipHelper).randomize();
     }
 
-    if (currentSettings.getExpSettings().getStartSelfDestruct()) {
+    if (currentSettings.getExpSettings()
+        .getStartSelfDestruct()) {
       writeLine("Updating self-destruct timer...");
       new SelfDestructTimerHelper(currentSettings, zipHelper).randomize();
     }
 
-    EntityArchetypesRandomizer entityRandomizer = new EntityArchetypesRandomizer(currentSettings, database, zipHelper)
-        .addFilter(new FruitTreeFilter(currentSettings, database));
+    EntityArchetypesRandomizer entityRandomizer =
+        new EntityArchetypesRandomizer(currentSettings, database, zipHelper)
+            .addFilter(new FruitTreeFilter(currentSettings, database));
     entityRandomizer.randomize();
 
     new PreorderLockerRandomizer(currentSettings, zipHelper, database).randomize();
@@ -297,55 +336,72 @@ public class RandomizerService extends Service<Void> {
     new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
 
     /* GAMEPLAY, LEVEL */
-    LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap).addFilter(
-        new ItemSpawnFilter(database, currentSettings))
-        .addFilter(new FlowgraphFilter(database, currentSettings))
-        .addFilter(new EnemyFilter(database, currentSettings));
+    LevelRandomizer levelRandomizer =
+        new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap)
+            .addFilter(new ItemSpawnFilter(database, currentSettings))
+            .addFilter(new FlowgraphFilter(database, currentSettings))
+            .addFilter(new EnemyFilter(database, currentSettings));
 
-    if (currentSettings.getCheatSettings().getOpenStation()) {
+    if (currentSettings.getCheatSettings()
+        .getOpenStation()) {
       levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
     }
 
-    if (currentSettings.getGameStartSettings().getAddLootToApartment()) {
+    if (currentSettings.getGameStartSettings()
+        .getAddLootToApartment()) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
     }
-    
-    if (currentSettings.getExpSettings().getLivingCorpses()) {
+
+    if (currentSettings.getExpSettings()
+        .getLivingCorpses()) {
       levelRandomizer = levelRandomizer.addFilter(new LivingCorpseFilter());
     }
-    
-    if (currentSettings.getGameplaySettings().getRandomizeBreakables().getIsEnabled()) {
+
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeBreakables()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new BrokenObjectFilter());
     }
-    
-    if (currentSettings.getGameplaySettings().getRandomizeDispensers().getIsEnabled()) {
+
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeDispensers()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new OperatorDispenserFilter());
     }
-    
-    if (currentSettings.getGameplaySettings().getRandomizeHackables().getIsEnabled()) {
+
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeHackables()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new LockedObjectFilter());
     }
-    
-    if (currentSettings.getGameplaySettings().getRandomizeRecyclers().getIsEnabled()) {
+
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeRecyclers()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter());
     }
 
     CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();
 
-    if (currentSettings.getCheatSettings().getUseCustomSpawn()) {
+    if (currentSettings.getCheatSettings()
+        .getUseCustomSpawn()) {
       logger.info(String.format("Setting custom spawn to %s", customSpawnGenerator.getLocation()));
-      customSpawnGenerator.setSpawn(currentSettings.getCheatSettings().getCustomSpawnLocation(), zipHelper, Utils
-          .stringToLong(currentSettings.getSeed()));
+      customSpawnGenerator.setSpawn(currentSettings.getCheatSettings()
+          .getCustomSpawnLocation(), zipHelper, Utils.stringToLong(currentSettings.getSeed()));
       customSpawnGenerator.swapLocationId();
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeStation()) {
-      StationGenerator stationGenerator = new StationGenerator(Utils.stringToLong(currentSettings.getSeed()),
-          customSpawnGenerator.getLevelsToIds());
-      StationConnectivityFilter connectivity = new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
-          stationGenerator.getSpawnConnectivity(), customSpawnGenerator.getLevelsToIds());
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeStation()) {
+      StationGenerator stationGenerator =
+          new StationGenerator(Utils.stringToLong(currentSettings.getSeed()),
+              customSpawnGenerator.getLevelsToIds(), false);
+      StationConnectivityFilter connectivity =
+          new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
+              stationGenerator.getSpawnConnectivity(), customSpawnGenerator.getLevelsToIds());
       String connectivityInfo = stationGenerator.toString();
-      Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
+      Book b =
+          new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
       Map<String, Book> toOverwrite = Maps.newHashMap();
       toOverwrite.put("Bk_SL_Apt_Electronics", b);
       toOverwrite.put("Bk_TooFarTooFast1", b);
@@ -354,7 +410,8 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
 
-    if (currentSettings.getExpSettings().getEnableGravityInExtAndGuts()) {
+    if (currentSettings.getExpSettings()
+        .getEnableGravityInExtAndGuts()) {
       levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());
     }
 
@@ -362,7 +419,8 @@ public class RandomizerService extends Service<Void> {
     levelRandomizer.randomize();
     writeLine("Done processing level files.");
 
-    if (currentSettings.getCheatSettings().getUseCustomSpawn()) {
+    if (currentSettings.getCheatSettings()
+        .getUseCustomSpawn()) {
       return customSpawnGenerator.getNewSpawnLocation();
     } else {
       return null;
@@ -372,14 +430,15 @@ public class RandomizerService extends Service<Void> {
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {
     copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES, tempPatchDir);
 
-    //zipHelper.copyToPatch(LOGO, LOGO);
+    // zipHelper.copyToPatch(LOGO, LOGO);
 
-    if (settings.getMoreSettings().getMoreGuns()) {
+    if (settings.getMoreSettings()
+        .getMoreGuns()) {
       copyFiles(MORE_GUNS_DEPENDENCIES, tempPatchDir);
       copyFiles(MORE_GUNS_MATERIALS);
 
-      try (BufferedReader br = new BufferedReader(new InputStreamReader(zipHelper.getInputStream(
-          MORE_GUNS_FILE_LIST)))) {
+      try (BufferedReader br = new BufferedReader(
+          new InputStreamReader(zipHelper.getInputStream(MORE_GUNS_FILE_LIST)))) {
         String line = "";
         while (line != null) {
           line = br.readLine();
@@ -391,8 +450,9 @@ public class RandomizerService extends Service<Void> {
         }
       }
     }
-    
-    if (settings.getMoreSettings().getPreySoulsGuns()) {
+
+    if (settings.getMoreSettings()
+        .getPreySoulsGuns()) {
       copyFile(ZipHelper.SIGNAL_SYSTEM_PACKAGES);
       copyFile(ZipHelper.ARK_PROJECTILES_XML);
       copyFile(ZipHelper.ARK_PICKUPS_XML);
@@ -402,11 +462,15 @@ public class RandomizerService extends Service<Void> {
       copyFile(ZipHelper.ANIMATIONS_DUAL_WRENCH_PLAYER_1P);
     }
 
-    if (settings.getExpSettings().getWanderingHumans()) {
+    if (settings.getExpSettings()
+        .getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES, tempPatchDir);
     }
 
-    if (settings.getGameplaySettings().getRandomizeStation() || settings.getExpSettings().getStartSelfDestruct()) {
+    if (settings.getGameplaySettings()
+        .getRandomizeStation()
+        || settings.getExpSettings()
+            .getStartSelfDestruct()) {
       copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES, tempPatchDir);
     }
   }
@@ -422,12 +486,13 @@ public class RandomizerService extends Service<Void> {
       copyFile(key);
     }
   }
-  
+
   private void copyFile(String file) {
     try {
       zipHelper.copyToPatch(file, file);
     } catch (IOException e) {
-      logger.warning(String.format("Unable to copy dependency file %s, it may already have been added.", file));
+      logger.warning(String
+          .format("Unable to copy dependency file %s, it may already have been added.", file));
       e.printStackTrace();
     }
   }
