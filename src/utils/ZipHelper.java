@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -35,9 +36,18 @@ public class ZipHelper {
   private ZipFile input;
 
   public static final String DATA_LEVELS = "levels";
-  
+
+  public static final String ANIMATIONS_IMG = "animations/animations.img";
   public static final String ANIMATIONS_DUAL_WRENCH_PLAYER_1P = "animations/mannequin/adb/arkdualwrenchplayer1p.adb";
+  public static final String ANIMATIONS_ARK_ITEM_TAGS = "animations/mannequin/adb/arkitemtags.xml";
+  public static final String ANIMATIONS_ARK_PLAYER_DATABASE_1P = "animations/mannequin/adb/arkplayerdatabase1p.adb";
   public static final String ANIMATIONS_ARK_PLAYER_DATABASE_3P = "animations/mannequin/adb/arkplayerdatabase3p.adb";
+  public static final String ANIMATIONS_ARK_SLOW_SHOTGUN_PLAYER_1P = "animations/mannequin/adb/arkslowshotgunplayer1p.adb";
+  public static final String ANIMATIONS_ARK_SLOW_SHOTGUN_WEAPON = "animations/mannequin/adb/arkslowshotgunweapon.adb";
+  public static final String ANIMATIONS_ARK_UNSILENCED_PISTOL_PLAYER_1P = "animations/mannequin/adb/arkunsilencedpistolplayer1p.adb";
+  public static final String ANIMATIONS_ARK_UNSILENCED_PISTOL_WEAPON = "animations/mannequin/adb/arkunsilencedpistolweapon.adb";
+  public static final String ANIMATIONS_ARK_DUAL_PISTOL_PLAYER_1P = "animations/mannequin/adb/arkdualpistolplayer1p.adb";
+  public static final String ANIMATIONS_ARK_DUAL_PISTOL_WEAPON = "animations/mannequin/adb/arkdualpistolweapon.adb";
 
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
 
@@ -60,9 +70,9 @@ public class ZipHelper {
   public static final String NEUROMOD_ABILITIES = "ark/player/abilities.xml";
   public static final String NEUROMOD_PDA_LAYOUT = "ark/player/abilitiespdalayout.xml";
   public static final String NEUROMOD_RESEARCH_TOPICS = "ark/player/researchtopics.xml";
-  
+
   public static final String SIGNAL_SYSTEM_PACKAGES = "ark/signalsystem/packages.xml";
-  
+
   public static final String OPTIONS_FILE = "libs/config/gameoptions.xml";
 
   public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "libs/entityarchetypes/";
@@ -72,16 +82,40 @@ public class ZipHelper {
   public static final String MUSIC_XML = "libs/gameaudio/music.xml";
 
   public static final String GLOBALACTIONS_SELFDESTRUCTTIMER = "libs/globalactions/global_selfdestructsequence.xml";
-  
+
   public static final String PARTICLES_CHARACTERS = "libs/particles/characters.xml";
-  
+  public static final String PARTICLES_PLAYER_WEAPONS = "libs/particles/playerweapons.xml";
+
   public static final String LOGO = "libs/ui/textures/danielle_shared_textures/prey_title.dds";
 
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";
+  public static final String PLAYER_CDF = "objects/characters/player/player.cdf";
+
+  public static final String DUAL_PISTOL_CDF = "objects/weapons/pistol/1p/dualpistol1p.cdf";
 
   public static final String NATURAL_DAY_2_START_FILE = "flowgraphs/FG_Day2Start.xml";
   public static final String ENABLE_NIGHTMARE_MANAGER = "flowgraphs/enablenightmaremanager.xml";
+  
+  // Psy cutter-specific files (other than arkpickups, packages, playerdatabase, items, playerweapons)
+  public static final String PSY_CUTTER_ANIMATIONS_FF_EVENTS = "animations/mannequin/adb/arkswordffevents.adb";
+  public static final String PSY_CUTTER_ANIMATIONS_PLAYER_1P = "animations/mannequin/adb/arkswordplayer1p.adb";
+  public static final String PSY_CUTTER_ANIMATIONS_SOUNDS = "animations/mannequin/adb/arkswordsounds.adb";
+  public static final String PSY_CUTTER_ANIMATIONS_WEAPON = "animations/mannequin/adb/arkswordweapon.adb";
+  public static final String PSY_CUTTER_ANIMATIONS_WRENCH_WEAPON = "animations/mannequin/adb/arkwrenchweapon.adb";
+  public static final String PSY_CUTTER_INVENTORY_ICON_HUD = "libs/ui/textures/icons_inventory/ui_icon_inv_sword_HUD.dds";
+  public static final String PSY_CUTTER_INVENTORY_ICON_PICKUP = "libs/ui/textures/icons_inventory/ui_icon_psycutter_1x1.dds";
+  public static final String PSY_CUTTER_INVENTORY_ICON_INVENTORY = "libs/ui/textures/icons_inventory/ui_icon_psycutter_2x1.dds";
+  
+  // Psy cutter-specific directories
+  public static final String PSY_CUTTER_PLAYER_ANIMATIONS_DIR = "animations/characters/player/male";
+  public static final String PSY_CUTTER_ANIMATIONS_DIR = "animations/weapons/sword";
+  public static final String PSY_CUTTER_OBJECTS_ARKEFFECTS_DIR = "objects/arkeffects/weapons/psycutter";
+  public static final String PSY_CUTTER_OBJECTS_PICKUPS_DIR = "objects/pickups/ammo/psycutter";
+  public static final String PSY_CUTTER_OBJECTS_DIR = "objects/weapons/psycutter";
+  public static final String PSY_CUTTER_MATERIALS_ARKEFFECTS_DIR = "materials/arkeffects/weapon/psycutter";
+  public static final String PSY_CUTTER_TEXTURES_ARKEFFECTS_DIR = "textures/arkeffects/weapon/psycutter";
+  public static final String PSY_CUTTER_STUNGUN_TEXTURES_DIR = "textures/arkeffects/weapon/stungun";
 
   private Path tempLevelDir;
   private Path tempPatchDir;
@@ -134,7 +168,7 @@ public class ZipHelper {
 
     return true;
   }
-  
+
   private ZipOutputStream getZipOutputStreamForLevel(String level) throws FileNotFoundException {
     if (!levelZips.containsKey(level)) {
       Path levelPak = tempLevelDir.resolve(level).resolve(LEVEL_OUTPUT_PAK);
@@ -204,7 +238,7 @@ public class ZipHelper {
     ZipOutputStream zos = getZipOutputStreamForLevel(level);
     InputStream in = getInputStream(pathInInputZip);
 
-    zos.putNextEntry(new ZipEntry(pathInOutputZip));
+    zos.putNextEntry(new ZipEntry(pathInOutputZip.toLowerCase()));
     copyStreams(in, zos);
     zos.closeEntry();
   }
@@ -214,11 +248,24 @@ public class ZipHelper {
     xmlOutput.setFormat(Format.getPrettyFormat());
 
     ZipOutputStream zos = getZipOutputStreamForLevel(level);
-    zos.putNextEntry(new ZipEntry(pathInOutputZip));
+    zos.putNextEntry(new ZipEntry(pathInOutputZip.toLowerCase()));
     xmlOutput.output(d, zos);
     zos.closeEntry();
   }
-  
+
+  // Copies over all files within the given directories (works by matching the prefix)
+  public void copyDirsToPatch(List<String> dirsToCopy) throws IOException {
+    Enumeration<? extends ZipEntry> entries = input.entries();
+    while(entries.hasMoreElements()) {
+      ZipEntry entry = entries.nextElement();
+      for (String s : dirsToCopy) {
+        if (entry.getName().startsWith(s)) {
+          copyToPatch(entry.getName());
+        }
+      }
+    }
+  }
+
   public void copyToPatch(String path) throws IOException {
     copyToPatch(path, path);
   }
@@ -227,7 +274,7 @@ public class ZipHelper {
     ZipOutputStream zos = getZipOutputStreamForPatch();
     InputStream in = getInputStream(pathInInputZip);
 
-    zos.putNextEntry(new ZipEntry(pathInOutputZip));
+    zos.putNextEntry(new ZipEntry(pathInOutputZip.toLowerCase()));
     copyStreams(in, zos);
     zos.closeEntry();
   }
@@ -237,7 +284,7 @@ public class ZipHelper {
     xmlOutput.setFormat(Format.getPrettyFormat());
 
     ZipOutputStream zos = getZipOutputStreamForPatch();
-    zos.putNextEntry(new ZipEntry(pathInOutputZip));
+    zos.putNextEntry(new ZipEntry(pathInOutputZip.toLowerCase()));
     xmlOutput.output(d, zos);
     zos.closeEntry();
   }

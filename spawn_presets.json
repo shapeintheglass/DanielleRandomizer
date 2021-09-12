@@ -149,7 +149,6 @@
       "filters": [
         {
           "input_tags": [
-            "Neuromod_Calibration",
             "ArkPickups"
           ],
           "output_tags": [
@@ -196,7 +195,6 @@
       "filters": [
         {
           "input_tags": [
-            "Neuromod_Calibration",
             "ArkPickups"
           ],
           "output_tags": [
@@ -244,7 +242,6 @@
       "filters": [
         {
           "input_tags": [
-            "Neuromod_Calibration",
             "ArkPickups"
           ],
           "output_tags": [
@@ -263,11 +260,11 @@
       "filters": [
         {
           "input_tags": [
-            "Neuromod_Calibration",
             "ArkPickups"
           ],
           "output_tags": [
             "Weapons",
+            "PsiCutter",
             "Ammo",
             "Neuromod",
             "PsiHypo",
@@ -275,6 +272,7 @@
             "WeaponUpgradeKit"
           ],
           "output_weights": [
+            100,
             100,
             25,
             5,
@@ -702,6 +700,45 @@
       ]
     },
     {
+      "name": "Randomize all enemies, no nightmare",
+      "desc": "Randomizes all hostile typhon and robots, but does not add the giant fucko to the mix.",
+      "filters": [
+        {
+          "input_tags": [
+            "ArkNpcs",
+            "Operators\\Generic\\Corrupted",
+            "ArkOperatorMilitary"
+          ],
+          "output_tags": [
+            "ArkPoltergeist",
+            "MilitaryOperator",
+            "Overseers",
+            "BasePhantom",
+            "Operators\\Generic\\Corrupted",
+            "EliteMimic",
+            "Phantoms",
+            "Mimic"
+          ],
+          "output_weights": [
+            25,
+            25,
+            50,
+            75,
+            75,
+            125,
+            170,
+            300
+          ],
+          "do_not_touch_tags": [
+            "Named Phantoms"
+          ],
+          "do_not_output_tags": [
+            "Named Phantoms"
+          ]
+        }
+      ]
+    },
+    {
       "name": "All nightmares",
       "desc": "Why would you pick this? Why would you think this is a good idea?",
       "filters": [
@@ -745,6 +782,182 @@
       "filters": [
         {
           "input_tags": [
+            "ArkBeta_ArgentenoPero"
+          ],
+          "output_tags": [
+            "Gustav Leitner"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_CliveLawrence"
+          ],
+          "output_tags": [
+            "Clive Lawrence"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_CrispinBoyer"
+          ],
+          "output_tags": [
+            "Crispin Boyer"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_EnochKouneva"
+          ],
+          "output_tags": [
+            "Enoch Kouneva"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_GarfieldLangley"
+          ],
+          "output_tags": [
+            "CinematicCharacter_GarfieldLangley"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_HelenCombs"
+          ],
+          "output_tags": [
+            "Helen Croft"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_IvyPark"
+          ],
+          "output_tags": [
+            "Ivy Park"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_JeanFaure"
+          ],
+          "output_tags": [
+            "Jean Faure"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_JorgenThorstein"
+          ],
+          "output_tags": [
+            "Jorgen Thorstien"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_KirkRemmer"
+          ],
+          "output_tags": [
+            "KirkRemmer"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_LaneCarpenter"
+          ],
+          "output_tags": [
+            "Lane Carpenter"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_LawrenceBaxter"
+          ],
+          "output_tags": [
+            "Lawrence Baxter"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_MaliahFowles"
+          ],
+          "output_tags": [
+            "Maliah Fowles"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_NicoleHague"
+          ],
+          "output_tags": [
+            "Kevin Hague "
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "ArkBeta_ReginaSellers"
+          ],
+          "output_tags": [
+            "Regina Sellers"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
+            "Etheric_RandolfHutchinson"
+          ],
+          "output_tags": [
+            "Randolf Hutchinson"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        },
+        {
+          "input_tags": [
             "ArkNpcs",
             "Operators\\Generic\\Corrupted",
             "ArkOperatorMilitary"
@@ -757,7 +970,17 @@
           "do_not_output_tags": [
             "Player",
             "HumanPlaceholders",
-            "Commander Dahl"
+            "Commander Dahl",
+            "CinematicCharacters",
+            "_ArkHumanScientistFemale",
+            "_ArkHumanScientist",
+            "_ArkHumanEngineer",
+            "_ArkHumanEngineerFemale",
+            "_ArkHumanAdmin",
+            "_ArkHumanAdminFemale",
+            "_ArkHumanSecurity",
+            "_ArkHumanSecurityFemale",
+            "_ArkHumanVolunteer"
           ]
         }
       ]
@@ -890,7 +1113,7 @@
     },
     {
       "name": "All turrets",
-      "desc": "All friendly robots are turrets",
+      "desc": "All friendly robots are turrets.",
       "filters": [
         {
           "input_tags": [

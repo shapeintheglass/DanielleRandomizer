@@ -48,16 +48,11 @@ public class Utils {
     return r.nextInt(diff) + lowerBound;
   }
 
-  public static <T extends Comparable<T>> T getRandom(ImmutableCollection<T> arr, Random r) {
+  public static <T extends Comparable<T>> T getRandomFromCollection(ImmutableCollection<T> arr, Random r) {
     List<T> tList = Lists.newArrayList();
     tList.addAll(arr);
     Collections.sort(tList);
     return getRandom(tList, r);
-  }
-
-  public static <T> T getRandom(ImmutableList<T> arr, Random r) {
-    int index = r.nextInt(arr.size());
-    return arr.get(index);
   }
 
   public static <T> T getRandom(List<T> arr, Random r) {

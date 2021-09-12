@@ -159,7 +159,7 @@ public class SettingsHelper {
     }
     
     if (settings.getExpSettings()
-        .getWanderingHumans()) {
+        .getLivingCorpses()) {
       addOptionToBuilder(builder, "Living corpses");
     }
     

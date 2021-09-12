@@ -278,11 +278,11 @@ public class BodyGenerator {
 
   private HairType generateHairForHeadFemale(FemaleHead headModel, Random r) {
     ImmutableCollection<FemaleHair> compatibleHairs = BodyConsts.FEMALE_HEAD_HAIR_COMPATIBILITY.get(headModel);
-    FemaleHair hairType = Utils.getRandom(compatibleHairs, r);
+    FemaleHair hairType = Utils.getRandomFromCollection(compatibleHairs, r);
     String hairModel = BodyConsts.FEMALE_HAIRS_MAP.get(hairType);
     FemaleHairType genericHairType = BodyConsts.FEMALE_HAIR_TO_HAIR_TYPE.get(hairType); 
     ImmutableCollection<FemaleHairColor> compatibleColors = BodyConsts.FEMALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
-    FemaleHairColor hairColor = Utils.getRandom(compatibleColors, r);
+    FemaleHairColor hairColor = Utils.getRandomFromCollection(compatibleColors, r);
     String hairColorMtl = BodyConsts.FEMALE_HAIR_COLORS_MAP.get(hairColor);
     addAttachment("hair_skin", hairModel, hairColorMtl);
     
@@ -297,11 +297,11 @@ public class BodyGenerator {
     }
     
     ImmutableCollection<MaleHair> compatibleHairs = BodyConsts.MALE_HEAD_HAIR_COMPATIBILITY.get(headModel);
-    MaleHair hairType = Utils.getRandom(compatibleHairs, r);
+    MaleHair hairType = Utils.getRandomFromCollection(compatibleHairs, r);
     String hairModel = BodyConsts.MALE_HAIRS_MAP.get(hairType);
     MaleHairType genericHairType = BodyConsts.MALE_HAIR_TO_HAIR_TYPE.get(hairType); 
     ImmutableCollection<MaleHairColor> compatibleColors = BodyConsts.MALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
-    MaleHairColor hairColor = Utils.getRandom(compatibleColors, r);
+    MaleHairColor hairColor = Utils.getRandomFromCollection(compatibleColors, r);
     String hairColorMtl = BodyConsts.MALE_HAIR_COLORS_MAP.get(hairColor);
     addAttachment("hair_skin", hairModel, hairColorMtl);
     

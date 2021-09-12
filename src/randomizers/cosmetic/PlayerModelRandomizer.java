@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
+import utils.Utils;
 import utils.ZipHelper;
 
 public class PlayerModelRandomizer extends BaseRandomizer {
@@ -42,6 +43,10 @@ public class PlayerModelRandomizer extends BaseRandomizer {
     PajamaFemale,
     GlovelessMale
   }
+  
+  private static final ImmutableList<BodyType> BODY_TYPES_FOR_RANDOM = ImmutableList.of(BodyType.Volunteer, BodyType.Security, BodyType.Engineer,
+      BodyType.Scientist, BodyType.Corporate, BodyType.LabCoat, BodyType.Dahl, BodyType.Cosmonaut, BodyType.PajamaFemale, BodyType.PajamaMale,
+      BodyType.GlovelessMale);
 
   private static final ImmutableList<BodyType> PAJAMA_COMPATIBLE_BODIES =
       ImmutableList.of(BodyType.Volunteer, BodyType.Security, BodyType.Engineer, BodyType.Scientist,
@@ -267,8 +272,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   }
 
   private BodyType getRandomBodyType(Random r) {
-    int index = r.nextInt(BodyType.values().length);
-    return BodyType.values()[index];
+    return Utils.getRandom(BODY_TYPES_FOR_RANDOM, r);
   }
 
   private BodyType getRandomPajamaBodyType(Random r) {

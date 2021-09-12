@@ -7,6 +7,10 @@ import java.util.Set;
 
 import org.jdom2.Element;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.GenericSpawnPresetRule;
 
@@ -20,6 +24,30 @@ public class CustomRuleHelper {
 
   // Number of attempts to make at getting a valid tag before giving up.
   private static final int MAX_ATTEMPTS = 10;
+
+  // Keep track of classes that support randomization.
+  private static final ImmutableSet<String> RANDOM_CLASSES = ImmutableSet.of("Crafting.Ingredients", "Food",
+      "Crafting.RecyclerJunk", "Mods.Psychoscope", "Mods.Suit", "Crafting.FabricationPlans.Pharma",
+      "Crafting.FabricationPlans.Ammo", "Crafting.FabricationPlans.Weapon", "Crafting.FabricationPlans.SuitMaint",
+      "Crafting.FabricationPlans.Charge", "Food.Alcohol", "Medical.TraumaPharmas");
+
+  // Map of randomizable tags to the list of random classes that support them.
+  // If a given tag matches one of these, use the in-game random class instead of
+  // our scuffed fixed randomization.
+  private static final ImmutableMap<String, ImmutableList<String>> TAGS_TO_RANDOM_CLASS = new ImmutableMap.Builder<String, ImmutableList<String>>()
+      .put("Ingredients", ImmutableList.of("Crafting.Ingredients.Random"))
+      .put("Food", ImmutableList.of("Food.Random"))
+      .put("RecyclerJunk", ImmutableList.of("Crafting.RecyclerJunk.Random"))
+      .put("Mods", ImmutableList.of("Mods.Psychoscope.Random", "Mods.Suit.Random"))
+      .put("FabricationPlans", ImmutableList.of("Crafting.FabricationPlans.Ammo.Random",
+          "Crafting.FabricationPlans.Weapon.Random", "Crafting.FabricationPlans.Charge.Random",
+          "Crafting.FabricationPlans.SuitMaint.Random", "Crafting.FabricationPlans.Pharma.Random"))
+      .put("Alcohol", ImmutableList.of("Food.Alcohol.Random"))
+      .put("TraumaPharmas", ImmutableList.of("Medical.TraumaPharmas.Random"))
+      .build();
+
+  // Weights to use for fabrication plans randomization
+  private static final ImmutableList<Integer> FAB_PLAN_RANDOM_WEIGHTS = ImmutableList.of(5, 5, 5, 1, 1);
 
   // Tags to filter on
   private List<String> inputTags;
@@ -89,6 +117,19 @@ public class CustomRuleHelper {
 
     for (int i = 0; i < MAX_ATTEMPTS; i++) {
       String tag = Utils.getRandomWeighted(outputTags, outputTagsWeights, r);
+
+      // New: If this tag exactly matches a tag that's already supported by an in-game
+      // randomization, use the built-in random type instead.
+      if (TAGS_TO_RANDOM_CLASS.containsKey(tag)) {
+        String newClass = "";
+        if (tag.equals("FabricationPlans")) {
+          newClass = Utils.getRandomWeighted(TAGS_TO_RANDOM_CLASS.get(tag), FAB_PLAN_RANDOM_WEIGHTS, r);
+        } else {
+          newClass = Utils.getRandom(TAGS_TO_RANDOM_CLASS.get(tag), r);
+        }
+        return database.getEntityByName(newClass);
+      }
+
       for (int j = 0; j < MAX_ATTEMPTS; j++) {
         toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
 
