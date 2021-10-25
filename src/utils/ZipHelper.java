@@ -91,6 +91,10 @@ public class ZipHelper {
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";
   public static final String PLAYER_CDF = "objects/characters/player/player.cdf";
+  public static final String PLAYER_FEMALE_CDF = "objects/characters/player/playerfemale.cdf";
+  public static final String PLAYER_MALE_PAJAMA_CDF = "objects/characters/player/playermale_pajamas.cdf";
+  public static final String PLAYER_FEMALE_PAJAMA_CDF = "objects/characters/player/playerfemale_pajamas.cdf";
+  public static final String PLAYER_ALIEN_CDF = "objects/characters/player/playermalealien.cdf";
 
   public static final String DUAL_PISTOL_CDF = "objects/weapons/pistol/1p/dualpistol1p.cdf";
 
