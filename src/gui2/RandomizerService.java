@@ -1,16 +1,17 @@
 package gui2;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
+
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
 import installers.Installer;
@@ -102,8 +103,6 @@ public class RandomizerService extends Service<Void> {
       "objects/weapons/toygun/1p/toygun1p_telepath01.mtl", "objects/weapons/toygun/3p/toygun3p_telepath01.mtl",
       "objects/weapons/toygun/1p/toygun1p_nightmare01.mtl", "objects/weapons/toygun/3p/toygun3p_nightmare01.mtl",
       "objects/weapons/toygun/1p/toygun1p_voltaic01.mtl", "objects/weapons/toygun/3p/toygun3p_voltaic01.mtl");
-  private static final String MORE_GUNS_FILE_LIST = "libs/ui/textures/icons_inventory/filelist.txt";
-  private static final String MORE_GUNS_ICONS_DIR = "libs/ui/textures/icons_inventory/";
 
   private static final ImmutableList<String> WANDERING_HUMANS_DEPENDENCIES = ImmutableList.of(
       ZipHelper.AI_TREE_ARMED_HUMANS, ZipHelper.AI_TREE_HUMANS, ZipHelper.AI_TREE_UNARMED_HUMANS);
@@ -389,23 +388,14 @@ public class RandomizerService extends Service<Void> {
     copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES);
 
     zipHelper.copyToPatch(ZipHelper.LOGO);
+    
+    if (settings.getMoreSettings().getMoreGuns() || settings.getMoreSettings().getPreySoulsGuns()) {
+      zipHelper.copyDirsToPatch(Lists.newArrayList(ZipHelper.ICONS_INVENTORY_DIR));
+    }
 
     if (settings.getMoreSettings().getMoreGuns()) {
       copyFiles(MORE_GUNS_DEPENDENCIES);
       copyFiles(MORE_GUNS_MATERIALS);
-
-      try (BufferedReader br = new BufferedReader(new InputStreamReader(zipHelper.getInputStream(
-          MORE_GUNS_FILE_LIST)))) {
-        String line = "";
-        while (line != null) {
-          line = br.readLine();
-          if (line == null) {
-            break;
-          }
-          String path = MORE_GUNS_ICONS_DIR + line;
-          zipHelper.copyToPatch(path);
-        }
-      }
     }
 
     if (settings.getMoreSettings().getPreySoulsGuns()) {

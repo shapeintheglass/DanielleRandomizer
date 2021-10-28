@@ -31,7 +31,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   }
 
   private static final ImmutableList<BodyType> BODY_TYPES_FOR_RANDOM = ImmutableList.of(BodyType.Volunteer,
-      BodyType.Security, BodyType.Engineer, BodyType.Scientist, BodyType.Corporate, BodyType.LabCoat, BodyType.Dahl,
+      BodyType.Security, BodyType.Engineer, BodyType.Scientist, BodyType.Corporate, BodyType.Dahl,
       BodyType.Cosmonaut, BodyType.PajamaFemale, BodyType.PajamaMale, BodyType.GlovelessMale);
 
   private static final ImmutableMap<BodyType, String> BODY_SKIN = new ImmutableMap.Builder<BodyType, String>().put(
@@ -58,6 +58,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.GlovelessMale, "objects/characters/humans/morgankarl/morgan_genmalebody01_cut_scene.mtl")
       .build();
 
+  // TODO: Fix the labcoat skin (this has THREE parts- body, hands, legs)
   private static final String LAB_COAT_HANDS_SKIN = "objects/characters/humans/labcoat/labcoat_genmalehands01.skin";
   private static final String LAB_COAT_HANDS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
   private static final String LAB_COAT_LEGS_SKIN = "objects/characters/humans/labcoat/labcoat_genmalelegs01.skin";

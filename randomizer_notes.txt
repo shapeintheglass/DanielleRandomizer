@@ -1,0 +1,51 @@
+Notes:
+Fix descriptions for Prey Souls guns
+Add unique inventory icons for Prey Souls gun
+Update count for "More Guns" to be more accurate
+Add lock for Morgan's office door
+Fix Labcoat skin (missing body)
+Add warning messages for 50/50 options
+Make sure fruit trees cannot spawn trauma pharmas
+Use "Available for random" on weapons
+Restore randomized cinematic dialogue
+Update preset so that nightmare is not affected
+
+Enemy types:
+ - Solar hunter (phantom)
+ - Cystoid phantom
+ - King Phantom (assassination target)
+ - King Phantom 2 (assassination target)
+ - King Phantom 3 (assassination target)
+ - King Phantom 4 (assassination target)
+ - King Phantom 5 (assassination target)
+ - King Telepath (assassination target)
+ - King Technopath (assassination target)
+ - Loot Mimic
+ - Cystoid 2?
+ - Solar Phantom
+ - Blood Phantom
+ - Prowler Phantom
+ - Hunter Phantom
+ - Hunter Phantom 2
+ - Chameleon Phantom
+ - Pyro Mimic
+ - Volt Mimic
+ - Reaver Mimic
+ - Solar Weaver
+ - Follower Phantom (follower?)
+ - Follower Phantom 2 (elite blood phantom)
+ - Follower Phantom 1 (elite blood phantom)
+ - Danielle Sho (follower)
+ - Zombie
+
+
+Other
+ - Save card
+ - Melee chipset (Berserker Mod)
+ - Jump height chipset (Kozar Benders)
+
+Turrets
+ - Laser
+ - Burst
+ - Flamethrower
+ - 

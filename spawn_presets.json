@@ -264,7 +264,6 @@
           ],
           "output_tags": [
             "Weapons",
-            "PsiCutter",
             "Ammo",
             "Neuromod",
             "PsiHypo",
@@ -272,7 +271,6 @@
             "WeaponUpgradeKit"
           ],
           "output_weights": [
-            100,
             100,
             25,
             5,
@@ -642,17 +640,12 @@
         },
         {
           "input_tags": [
-            "Overseers",
-            "ArkNightmare"
+            "Overseers"
           ],
           "output_tags": [
-            "Overseers",
-            "ArkNightmare"
+            "Overseers"
           ],
-          "output_weights": [
-            5,
-            1
-          ],
+          "output_weights": [],
           "do_not_touch_tags": [],
           "do_not_output_tags": []
         }
@@ -691,7 +684,8 @@
             300
           ],
           "do_not_touch_tags": [
-            "Named Phantoms"
+            "Named Phantoms",
+            "ArkNightmare"
           ],
           "do_not_output_tags": [
             "Named Phantoms"
@@ -701,7 +695,7 @@
     },
     {
       "name": "Randomize all enemies, no nightmare",
-      "desc": "Randomizes all hostile typhon and robots, but does not add the giant fucko to the mix.",
+      "desc": "Randomizes all hostile typhon and robots, but does not add the giant honker to the mix.",
       "filters": [
         {
           "input_tags": [
@@ -730,7 +724,8 @@
             300
           ],
           "do_not_touch_tags": [
-            "Named Phantoms"
+            "Named Phantoms",
+            "ArkNightmare"
           ],
           "do_not_output_tags": [
             "Named Phantoms"

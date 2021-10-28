@@ -193,7 +193,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="12.0" layoutY="21.0" text="Other gameplay randomization options. Note: Picking many of these at once can dramatically increase the difficulty." />
+                              <Label layoutX="12.0" layoutY="21.0" text="Other gameplay randomization options." />
                               <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="291.0" prefWidth="218.0" spacing="15.0">
@@ -201,8 +201,9 @@
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeNeuromods" mnemonicParsing="false" text="Randomize neuromods" />
                                           <CheckBox fx:id="gameplayRandomizeFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
-                                          <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="Randomize recyclers/fabricators" />
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
+                                          <Label text="Danger Zone" />
+                                          <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="Randomize recyclers/fabricators" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="Randomize breakable objects" />
                                           <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="Randomize hackable objects" />
                                        </children>
@@ -212,8 +213,9 @@
                                           <Label text="Shuffles connections between levels." />
                                           <Label text="Shuffles neuromod upgrade tree." />
                                           <Label text="Assigns new randomly generated costs for fab plans." />
-                                          <Label text="Redistributes recyclers/fabricators with an equal ratio." />
                                           <Label text="Redistributes operator dispensers with an equal ratio." />
+                                          <Label text="These options can make the game significantly harder:" />
+                                          <Label text="Redistributes recyclers/fabricators with an equal ratio." />
                                           <Label text="50% chance that a repairable entity will be broken." />
                                           <Label text="50% chance that a hackable entity will be locked." />
                                        </children>
@@ -274,7 +276,7 @@
                                           <Label text="For pickup item randomization:" />
                                           <CheckBox fx:id="moreGuns" mnemonicParsing="false" text="More guns" />
                                           <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey Souls - Guns" />
-                                          <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="Prey Souls - Chipsets" />
+                                          <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="Prey Souls - Chipsets" visible="false" />
                                           <Label text="For enemy randomization:" />
                                           <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" />
                                           <Label text="For friendly NPC randomization:" />
@@ -284,9 +286,9 @@
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
                                        <children>
                                           <Label />
-                                          <Label text="Adds 40 guns from the &quot;More Guns&quot; mod." />
-                                          <Label text="Adds 20 weapons from the Prey Souls mod." />
-                                          <Label text="Adds 2 chipsets from the Prey Souls mod." />
+                                          <Label text="Adds 24 guns from the &quot;More Guns&quot; mod." />
+                                          <Label text="Adds 16 weapons from the Prey Souls mod." />
+                                          <Label text="Adds 2 chipsets from the Prey Souls mod." visible="false" />
                                           <Label />
                                           <Label text="Adds 16 enemies from the Prey Souls mod." />
                                           <Label />

@@ -20,7 +20,7 @@ import com.google.common.collect.Maps;
 
 public class MoreGunGenerator {
 
-  private static final String SOURCE = "_data/libs/entityarchetypes/arkpickups.xml";
+  private static final String SOURCE = "_data/libs/entityarchetypes/arkpickups_backup.xml";
   private static final String DEST = "_data/libs/entityarchetypes/arkpickups_new.xml";
 
   private static final String SOURCE_PROJECTILES = "_data/libs/entityarchetypes/arkprojectiles.xml";
@@ -47,10 +47,10 @@ public class MoreGunGenerator {
       .put("ArkProjectiles.Bullets.MoreGuns.Telepath", "Telepathic")
       .put("ArkProjectiles.Bullets.MoreGuns.Nightmare", "Nightmarish")
       .put("ArkProjectiles.Bullets.MoreGuns.Voltaic", "Voltaic")
-      .put("ArkProjectiles.Charges.Lure", "Lure")
-      .put("ArkProjectiles.Charges.Nullwave", "Nullwave")
-      .put("ArkProjectiles.Charges.Recycler", "Recycler")
-      .put("ArkProjectiles.Charges.EMP", "EMP")
+      //.put("ArkProjectiles.Charges.Lure", "Lure")
+      //.put("ArkProjectiles.Charges.Nullwave", "Nullwave")
+      //.put("ArkProjectiles.Charges.Recycler", "Recycler")
+      //.put("ArkProjectiles.Charges.EMP", "EMP")
       .put("ArkProjectiles.Gloo.GlooShot", "GLOO")
       .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
       .put("ArkProjectiles.Bullets.ToygunDart_Default", "Toy")
@@ -61,10 +61,10 @@ public class MoreGunGenerator {
       .put("ArkProjectiles.Bullets.MoreGuns.Telepath", "telepath")
       .put("ArkProjectiles.Bullets.MoreGuns.Nightmare", "nightmare")
       .put("ArkProjectiles.Bullets.MoreGuns.Voltaic", "voltaic")
-      .put("ArkProjectiles.Charges.Lure", "lure")
-      .put("ArkProjectiles.Charges.Nullwave", "nullwave")
-      .put("ArkProjectiles.Charges.Recycler", "recycler")
-      .put("ArkProjectiles.Charges.EMP", "emp")
+      //.put("ArkProjectiles.Charges.Lure", "lure")
+      //.put("ArkProjectiles.Charges.Nullwave", "nullwave")
+      //.put("ArkProjectiles.Charges.Recycler", "recycler")
+      //.put("ArkProjectiles.Charges.EMP", "emp")
       .put("ArkProjectiles.Gloo.GlooShot", "gloo")
       .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
       .put("ArkProjectiles.Bullets.ToygunDart_Default", "foam")
@@ -114,7 +114,7 @@ public class MoreGunGenerator {
           String readableProjectileName = PROJECTILE_NAME_TO_READABLE_NAME.get(projectileName);
           String newName = weaponName + readableProjectileName + ".Randomizer";
           String newReadableName = readableProjectileName + " " + readableWeaponName;
-          String newDescription = String.format("A %s with %s projectiles.", readableWeaponName,
+          String newDescription = String.format("A %s with %s projectiles. Use exotic ammunition to fire this weapon.", readableWeaponName,
               readableProjectileName);
           long newIdLong = r.nextLong();
           if (newIdLong < 0L) {
@@ -140,7 +140,8 @@ public class MoreGunGenerator {
           properties.setAttribute("textDisplayName", newReadableName)
               .setAttribute("sStylizedIcon", hudName)
               .setAttribute("sHUDIcon", hudName)
-              .setAttribute("textDescription", newDescription);
+              .setAttribute("textDescription", newDescription)
+              .setAttribute("bAvailableForRandom", "1");
 
           if (EXOTIC_PROJECTILE_TYPES.contains(projectileUiName)) {
             properties.setAttribute("material_MaterialFP", mtl1p).setAttribute("material_MaterialTP", mtl3p);

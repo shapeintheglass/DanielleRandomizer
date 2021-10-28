@@ -87,6 +87,7 @@ public class ZipHelper {
   public static final String PARTICLES_PLAYER_WEAPONS = "libs/particles/playerweapons.xml";
 
   public static final String LOGO = "libs/ui/textures/danielle_shared_textures/prey_title.dds";
+  public static final String ICONS_INVENTORY_DIR = "libs/ui/textures/icons_inventory/";
 
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";
@@ -100,8 +101,9 @@ public class ZipHelper {
 
   public static final String NATURAL_DAY_2_START_FILE = "flowgraphs/FG_Day2Start.xml";
   public static final String ENABLE_NIGHTMARE_MANAGER = "flowgraphs/enablenightmaremanager.xml";
-  
-  // Psy cutter-specific files (other than arkpickups, packages, playerdatabase, items, playerweapons)
+
+  // Psy cutter-specific files (other than arkpickups, packages, playerdatabase,
+  // items, playerweapons)
   public static final String PSY_CUTTER_ANIMATIONS_FF_EVENTS = "animations/mannequin/adb/arkswordffevents.adb";
   public static final String PSY_CUTTER_ANIMATIONS_PLAYER_1P = "animations/mannequin/adb/arkswordplayer1p.adb";
   public static final String PSY_CUTTER_ANIMATIONS_SOUNDS = "animations/mannequin/adb/arkswordsounds.adb";
@@ -110,7 +112,7 @@ public class ZipHelper {
   public static final String PSY_CUTTER_INVENTORY_ICON_HUD = "libs/ui/textures/icons_inventory/ui_icon_inv_sword_HUD.dds";
   public static final String PSY_CUTTER_INVENTORY_ICON_PICKUP = "libs/ui/textures/icons_inventory/ui_icon_psycutter_1x1.dds";
   public static final String PSY_CUTTER_INVENTORY_ICON_INVENTORY = "libs/ui/textures/icons_inventory/ui_icon_psycutter_2x1.dds";
-  
+
   // Psy cutter-specific directories
   public static final String PSY_CUTTER_PLAYER_ANIMATIONS_DIR = "animations/characters/player/male";
   public static final String PSY_CUTTER_ANIMATIONS_DIR = "animations/weapons/sword";
