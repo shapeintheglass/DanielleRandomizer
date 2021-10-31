@@ -10,6 +10,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
+import com.google.common.collect.Lists;
+
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
@@ -22,6 +24,7 @@ import utils.ZipHelper;
 public class LootTableRandomizer extends BaseRandomizer {
 
   private static final int MAX_ATTEMPTS = 10;
+  private static final int ITEMS_PER_SLOT = 10;
 
   private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
 
@@ -74,8 +77,12 @@ public class LootTableRandomizer extends BaseRandomizer {
       // Randomize the items
       List<Element> items = slot.getChild("Items")
           .getChildren();
+      int slotsToAdd = ITEMS_PER_SLOT;
+      List<String> oldArchetypes = Lists.newArrayList();
+      
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
+        oldArchetypes.add(oldArchetype);
 
         Element newArchetype = getPickup(cfh, oldArchetype, r);
         if (newArchetype != null) {
@@ -85,9 +92,29 @@ public class LootTableRandomizer extends BaseRandomizer {
           item.setAttribute("CountMin", Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
           item.setAttribute("CountMax", Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
         }
+        slotsToAdd--;
+      }
+
+      // Hack to add additional loot slots based on existing old archetypes
+      for (int i = 0; i < slotsToAdd; i++) {
+        // Pick a random items from the existing slots
+        String oldArchetype = Utils.getRandom(oldArchetypes, r);
+
+        Element newItem = new Element("ArkLootItem");
+        Element newArchetype = getPickup(cfh, oldArchetype, r);
+        if (newArchetype != null) {
+          Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
+          String newArchetypeStr = Utils.getNameForEntity(newArchetype);
+          newItem.setAttribute("Archetype", newArchetypeStr);
+          newItem.setAttribute("CountMin", Integer.toString(ItemMultiplierHelper.getMinForTier(t)));
+          newItem.setAttribute("CountMax", Integer.toString(ItemMultiplierHelper.getMaxForTier(t)));
+        }
+        items.add(newItem);
       }
     }
   }
+  
+  
 
   private Element getPickup(CustomItemFilterHelper cfh, String archetype, Random r) {
     // Try different items until we get a valid pickup item
