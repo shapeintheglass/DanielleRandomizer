@@ -1,13 +1,28 @@
 Notes:
-Restore randomized cinematic dialogue?
+ - Prey Souls enemies
+ - Prey Souls turrets
+
+Turret types:
+
 
 
 Enemy types:
 
 Mimics
- - Pyro Mimic
- - Volt Mimic
- - Reaver Mimic
+ - Pyro Mimic (EliteMimic2)
+   - Attachement effect 12635110349638538565
+   - Receiver config aliensignalreceiverconfig3
+   - abilitycontext id 21111111334111121
+ - Volt Mimic (EliteMimic3)
+   - health 1250
+   - attachment effect 12635110349638536018
+   - signal modifier 5310807215636213093
+   - signal receiver aliensignalreceiverconfig4
+   - abilitycontext id 2111111111111111111111113
+ - Reaver Mimic (EliteMimic4)
+   - health 1350
+   - signal modifier 5310807215636213093
+   - abilitycontext id 21111121334111121
 
 Phantoms
  - Solar hunter (phantom)
@@ -21,7 +36,7 @@ Phantoms
    - abilitycontext id: 13680621263385306699
    - Thermogenesis effects: 12635110349638600069
    
- - Cystoid phantom
+ - Cystoid phantom (Phantoms.BasePhantomegg)
    - ai tree: phantomaitree6
    - loot table: prowler2
    - corpse name: "Cystoid Phantom"
@@ -32,18 +47,50 @@ Phantoms
    - abilitycontext id: 13680621263389631577
    - Arkmoveinfo moveshift = 0
  
- - Solar Phantom
+ - Solar Phantom (EthericDoppelganger)
+   - Health: 1700
+   - cdf: phantomelite44.cdf
+   - Abilitycontext id: 2000105
+
+ - Blood Phantom (EthericDoppelganger2)
+   - Health: 2200
+   - cdf: Phantomeliteblood.cdf
+   - abilitycontext id: 2000106
+
+ - Prowler Phantom (EthericDoppelganger3)
+   - Health: 1700
+   - cdf: PhantomElite22v.cdf
+   - abilitycontext id: 2000107
+   - Signal modifier: 13680621263389630779
+
+ - Hunter Phantom (EthericDoppelganger4)
+   - aitree: phantomaitree4.xml
+   - Health: 2500
+   - cdf: phantomelitebloodhunt.cdf
+   - abilitycontext id: 1000001333434
+
+ - Hunter Phantom 2 (EthericDoppelganger5)
+   - aitree: phantomaitree5.xml
+   - everything else is exactly the same as the Hunter Phantom
+
+ - Chameleon Phantom (EthericDoppelganger6)
+   - health: 1500
+   - cdf: phantomelite22cham.cdf
+   - Hitreactionmaterialanimation = 3
+   
+ - Follower Phantom (ArkBeta_HelenCombs) (unused)
+
+ - Absolute Phantom Tier 1 (ArkBeta_HelenCombs6661)
+   - aitree: PhantomAiTree3.xml
+   - health: 3000
+   - cdf: phantomelitebloodf.cdf
+   - abilitycontext id: 200010223341
  
- - Blood Phantom
- - Solar Phantom
- - Blood Phantom
- - Prowler Phantom
- - Hunter Phantom
- - Hunter Phantom 2
- - Chameleon Phantom
- - Follower Phantom (follower?)
- - Follower Phantom 2 (elite blood phantom)
- - Follower Phantom 1 (elite blood phantom)
+ - Absolute Phantom Tier 2 (ArkBeta_HelenCombs6662)
+   - aitree: phantomaitree3.xml
+   - health: 4500
+   - cdf: phantomelietebloodf.cdf
+   - abilitycontext id: 200010223342
  
 Assassination targets
  - Elite Etheric Phantom (assassination target 1)
@@ -60,10 +107,20 @@ Cystoids
 
 
 Weaver
- - Solar Weaver
+ - Kinetic Weaver
+   - Health 2600
+   - check abilitycontext for weaver
+ - Solar Weaver (Weaver2)
+   - aitree: weaveraitree2.xml
+   - health 4600
+   - cdf: weaver2.cdf
+   - abilitycontext id: 1002002222
 
 Nightmare
  - Absolute Nightmare
+   - health: 8800
+   - signalreceiver: nightmaresignalreceiverconfig2
+   - check abilitycontext for nightmare
 
 Human
  - Danielle Sho (follower)

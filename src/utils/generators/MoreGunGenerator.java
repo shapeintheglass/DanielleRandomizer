@@ -54,6 +54,7 @@ public class MoreGunGenerator {
       .put("ArkProjectiles.Gloo.GlooShot", "GLOO")
       .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
       .put("ArkProjectiles.Bullets.ToygunDart_Default", "Toy")
+      //.put("ArkNpcs.Cystoids.Cystoid_IgnorePlayer", "Cystoid")
       .build();
 
   private static final ImmutableMap<String, String> PROJECTILE_NAME_TO_UI_NAME = new ImmutableMap.Builder<String, String>()
@@ -68,6 +69,7 @@ public class MoreGunGenerator {
       .put("ArkProjectiles.Gloo.GlooShot", "gloo")
       .put("ArkProjectiles.Bullets.PistolRound_Default", "9mm")
       .put("ArkProjectiles.Bullets.ToygunDart_Default", "foam")
+      //.put("ArkNpcs.Cystoids.Cystoid_IgnorePlayer", "cystoid")
       .build();
 
   private static final ImmutableMap<String, String> REDUNDANT_PROJECTILE_TYPES = new ImmutableMap.Builder<String, String>()
