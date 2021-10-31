@@ -114,8 +114,9 @@ public class MoreGunGenerator {
           String readableProjectileName = PROJECTILE_NAME_TO_READABLE_NAME.get(projectileName);
           String newName = weaponName + readableProjectileName + ".Randomizer";
           String newReadableName = readableProjectileName + " " + readableWeaponName;
-          String newDescription = String.format("A %s with %s projectiles. Use exotic ammunition to fire this weapon.", readableWeaponName,
+          String newDescription = String.format("A %s with %s projectiles.", readableWeaponName,
               readableProjectileName);
+          
           long newIdLong = r.nextLong();
           if (newIdLong < 0L) {
             newIdLong = -1 * newIdLong;
@@ -126,6 +127,10 @@ public class MoreGunGenerator {
           String projectileUiName = PROJECTILE_NAME_TO_UI_NAME.get(projectileName);
           String iconName = String.format("ui_icon_inv_%s_%s", projectileUiName, uiName);
           String hudName = iconName + "_HUD";
+          boolean isExotic = EXOTIC_PROJECTILE_TYPES.contains(projectileUiName);
+          if (isExotic) {
+            newDescription += " Use exotic ammunition to fire this weapon.";
+          }
 
           String mtl1p = String.format(MATERIALS_DIR + FIRST_PARTY_MTL, uiName, uiName, projectileUiName).toLowerCase();
           String mtl3p = String.format(MATERIALS_DIR + THIRD_PARTY_MTL, uiName, uiName, projectileUiName).toLowerCase();
@@ -143,7 +148,7 @@ public class MoreGunGenerator {
               .setAttribute("textDescription", newDescription)
               .setAttribute("bAvailableForRandom", "1");
 
-          if (EXOTIC_PROJECTILE_TYPES.contains(projectileUiName)) {
+          if (isExotic) {
             properties.setAttribute("material_MaterialFP", mtl1p).setAttribute("material_MaterialTP", mtl3p);
             System.out.printf("\"%s.mtl\", \"%s.mtl\", ", mtl1p.replace("\\", "/"), mtl3p.replace("\\", "/"));
           }

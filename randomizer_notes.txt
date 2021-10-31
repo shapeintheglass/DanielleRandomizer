@@ -1,44 +1,75 @@
 Notes:
-Fix descriptions for Prey Souls guns
-Add unique inventory icons for Prey Souls gun
-Update count for "More Guns" to be more accurate
-Add lock for Morgan's office door
-Fix Labcoat skin (missing body)
-Add warning messages for 50/50 options
-Make sure fruit trees cannot spawn trauma pharmas
-Use "Available for random" on weapons
-Restore randomized cinematic dialogue
-Update preset so that nightmare is not affected
-Add more rotatable slots for loot tables
+Restore randomized cinematic dialogue?
+
 
 Enemy types:
+
+Mimics
+ - Pyro Mimic
+ - Volt Mimic
+ - Reaver Mimic
+
+Phantoms
  - Solar hunter (phantom)
+   - ai tree: phantomaitreesolhunt
+   - meta tags: same as base phantom
+   - loot table: npc_prowler2sol
+   - cdf: phantomelitebloodhuntsol.cdf
+   - corpse name: "Solar Hunter"
+   - Health: 4800
+   - signalreceiver: elitephantomsignalreceiver
+   - abilitycontext id: 13680621263385306699
+   - Thermogenesis effects: 12635110349638600069
+   
  - Cystoid phantom
- - King Phantom (assassination target)
- - King Phantom 2 (assassination target)
- - King Phantom 3 (assassination target)
- - King Phantom 4 (assassination target)
- - King Phantom 5 (assassination target)
- - King Telepath (assassination target)
- - King Technopath (assassination target)
- - Loot Mimic
- - Cystoid 2?
+   - ai tree: phantomaitree6
+   - loot table: prowler2
+   - corpse name: "Cystoid Phantom"
+   - health: 4000
+   - cdf: phantomegg.cdf
+   - ng+health increase: 950
+   - Scanning display name: Cystoid phantom
+   - abilitycontext id: 13680621263389631577
+   - Arkmoveinfo moveshift = 0
+ 
+ - Solar Phantom
+ 
+ - Blood Phantom
  - Solar Phantom
  - Blood Phantom
  - Prowler Phantom
  - Hunter Phantom
  - Hunter Phantom 2
  - Chameleon Phantom
- - Pyro Mimic
- - Volt Mimic
- - Reaver Mimic
- - Solar Weaver
  - Follower Phantom (follower?)
  - Follower Phantom 2 (elite blood phantom)
  - Follower Phantom 1 (elite blood phantom)
+ 
+Assassination targets
+ - Elite Etheric Phantom (assassination target 1)
+ - Elite Blood Phantom (assassination target 2)
+ - Elite Solar? Phantom (assassination target 3)
+ - Elite Thermal Phantom (assassination target 4)
+ - King Voltaic 5 (assassination target 5)
+ - King Telepath (assassination target)
+ - King Technopath (assassination target)
+ - King Mimic
+
+Cystoids
+ - Cystoid 2
+
+
+Weaver
+ - Solar Weaver
+
+Nightmare
+ - Absolute Nightmare
+
+Human
  - Danielle Sho (follower)
  - Zombie
 
+Note: New lore entires can be added by adding new metadata tags
 
 Other
  - Save card
@@ -49,4 +80,3 @@ Turrets
  - Laser
  - Burst
  - Flamethrower
- - 

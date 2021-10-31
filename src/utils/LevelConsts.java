@@ -1,11 +1,9 @@
 package utils;
 
 import java.util.List;
-import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 public class LevelConsts {
   public static final char DELIMITER = ';';
@@ -16,6 +14,8 @@ public class LevelConsts {
       "executive/bridge", "executive/corporateit", "executive/crewfacilities", "research/lobby",
       "research/prototype", "research/psychotronics", "research/shuttlebay",
       "research/simulationlabs", "research/zerog_utilitytunnels", "station/exterior"};
+  
+  public static final String LOBBY = "research/lobby";
 
   public static final List<String> DO_NOT_TOUCH_ITEM_TAGS =
       Lists.newArrayList("Data", "MissionItems", "_PROGRESSION", "_PLOT_CRITICAL", "ArkRobots",

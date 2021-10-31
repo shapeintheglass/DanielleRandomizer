@@ -80,7 +80,7 @@ public class FruitTreeRule implements Rule {
       // Ensure that this has the tag "ArkPickups" to represent that it can be added
       // to an inventory
       Set<String> tags = Utils.getTags(toSwap);
-      if (tags.contains("ArkPickups")) {
+      if (tags.contains("ArkPickups") && !tags.contains("_SURVIVAL")) {
         return Utils.getNameForEntity(toSwap);
       }
     }

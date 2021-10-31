@@ -41,6 +41,7 @@ import randomizers.gameplay.filters.ItemSpawnFilter;
 import randomizers.gameplay.filters.LivingCorpseFilter;
 import randomizers.gameplay.filters.LockedObjectFilter;
 import randomizers.gameplay.filters.MorgansApartmentFilter;
+import randomizers.gameplay.filters.MorgansOfficeLockFilter;
 import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.OperatorDispenserFilter;
 import randomizers.gameplay.filters.RecyclerFilter;
@@ -80,10 +81,11 @@ public class RandomizerService extends Service<Void> {
       ZipHelper.PSY_CUTTER_OBJECTS_ARKEFFECTS_DIR, ZipHelper.PSY_CUTTER_OBJECTS_PICKUPS_DIR,
       ZipHelper.PSY_CUTTER_OBJECTS_DIR, ZipHelper.PSY_CUTTER_MATERIALS_ARKEFFECTS_DIR,
       ZipHelper.PSY_CUTTER_TEXTURES_ARKEFFECTS_DIR, ZipHelper.PSY_CUTTER_STUNGUN_TEXTURES_DIR);
-  private static final ImmutableList<String> PSI_CUTTER_DEPENDENCIES = ImmutableList.of(ZipHelper.PSY_CUTTER_ANIMATIONS_FF_EVENTS,
-      ZipHelper.PSY_CUTTER_ANIMATIONS_PLAYER_1P, ZipHelper.PSY_CUTTER_ANIMATIONS_SOUNDS, ZipHelper.PSY_CUTTER_ANIMATIONS_WEAPON,
-      ZipHelper.PSY_CUTTER_ANIMATIONS_WRENCH_WEAPON, ZipHelper.PSY_CUTTER_INVENTORY_ICON_HUD, ZipHelper.PSY_CUTTER_INVENTORY_ICON_PICKUP,
-      ZipHelper.PSY_CUTTER_INVENTORY_ICON_INVENTORY);
+  private static final ImmutableList<String> PSI_CUTTER_DEPENDENCIES = ImmutableList.of(
+      ZipHelper.PSY_CUTTER_ANIMATIONS_FF_EVENTS, ZipHelper.PSY_CUTTER_ANIMATIONS_PLAYER_1P,
+      ZipHelper.PSY_CUTTER_ANIMATIONS_SOUNDS, ZipHelper.PSY_CUTTER_ANIMATIONS_WEAPON,
+      ZipHelper.PSY_CUTTER_ANIMATIONS_WRENCH_WEAPON, ZipHelper.PSY_CUTTER_INVENTORY_ICON_HUD,
+      ZipHelper.PSY_CUTTER_INVENTORY_ICON_PICKUP, ZipHelper.PSY_CUTTER_INVENTORY_ICON_INVENTORY);
   private static final ImmutableList<String> MORE_GUNS_DEPENDENCIES = ImmutableList.of(ZipHelper.ARK_PICKUPS_XML,
       ZipHelper.ARK_PROJECTILES_XML, ZipHelper.ARK_ITEMS_XML, ZipHelper.SIGNAL_SYSTEM_PACKAGES);
   private static final ImmutableList<String> MORE_GUNS_MATERIALS = ImmutableList.of(
@@ -315,7 +317,8 @@ public class RandomizerService extends Service<Void> {
     LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap).addFilter(
         new ItemSpawnFilter(database, currentSettings))
         .addFilter(new FlowgraphFilter(database, currentSettings))
-        .addFilter(new EnemyFilter(database, currentSettings));
+        .addFilter(new EnemyFilter(database, currentSettings))
+        .addFilter(new MorgansOfficeLockFilter());
 
     if (currentSettings.getCheatSettings().getOpenStation()) {
       levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
@@ -388,7 +391,7 @@ public class RandomizerService extends Service<Void> {
     copyFiles(NPC_GAME_EFFECTS_DEPENDENCIES);
 
     zipHelper.copyToPatch(ZipHelper.LOGO);
-    
+
     if (settings.getMoreSettings().getMoreGuns() || settings.getMoreSettings().getPreySoulsGuns()) {
       zipHelper.copyDirsToPatch(Lists.newArrayList(ZipHelper.ICONS_INVENTORY_DIR));
     }

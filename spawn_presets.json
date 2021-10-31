@@ -36,8 +36,7 @@
           "do_not_output_tags": [
             "MissionItems",
             "_PLOT_CRITICAL",
-            "_PROGRESSION",
-            "Ammo"
+            "_PROGRESSION"
           ]
         },
         {
@@ -272,7 +271,7 @@
           ],
           "output_weights": [
             100,
-            25,
+            75,
             5,
             5,
             5,
@@ -1070,54 +1069,6 @@
             "EngineeringOperator",
             "MedicalOperator",
             "ScienceOperator",
-            "Turrets"
-          ],
-          "output_weights": [],
-          "do_not_touch_tags": [],
-          "do_not_output_tags": []
-        }
-      ]
-    },
-    {
-      "name": "All operators",
-      "desc": "All friendly robots are operators. Also spawns named operators such as January.",
-      "filters": [
-        {
-          "input_tags": [
-            "EngineeringOperator",
-            "MedicalOperator",
-            "ScienceOperator",
-            "Turrets"
-          ],
-          "output_tags": [
-            "EngineeringOperator",
-            "MedicalOperator",
-            "ScienceOperator",
-            "Operators\\Named"
-          ],
-          "output_weights": [
-            10,
-            10,
-            10,
-            1
-          ],
-          "do_not_touch_tags": [],
-          "do_not_output_tags": []
-        }
-      ]
-    },
-    {
-      "name": "All turrets",
-      "desc": "All friendly robots are turrets.",
-      "filters": [
-        {
-          "input_tags": [
-            "EngineeringOperator",
-            "MedicalOperator",
-            "ScienceOperator",
-            "Turrets"
-          ],
-          "output_tags": [
             "Turrets"
           ],
           "output_weights": [],

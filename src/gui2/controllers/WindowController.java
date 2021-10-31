@@ -707,11 +707,15 @@ public class WindowController {
         getPickupPreset());
     GenericSpawnPresetFilter propPresetFilter = getPresetFilterByName(allPresets.getPropSpawnSettingsList(),
         getPropPreset());
+    // Hack: Turrets are technically items so we need to add the friendly npc settings here
+    GenericSpawnPresetFilter npcPresetFilter = getPresetFilterByName(allPresets.getNpcSpawnSettingsList(),
+        getNpcPreset());
     return GenericSpawnPresetFilter.newBuilder()
         .setName(pickupPresetFilter.getName() + " + " + propPresetFilter.getName())
         .setDesc(pickupPresetFilter.getDesc() + " + " + propPresetFilter.getDesc())
         .addAllFilters(pickupPresetFilter.getFiltersList())
         .addAllFilters(propPresetFilter.getFiltersList())
+        .addAllFilters(npcPresetFilter.getFiltersList())
         .build();
   }
 

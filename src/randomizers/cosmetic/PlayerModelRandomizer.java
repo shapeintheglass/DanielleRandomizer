@@ -32,7 +32,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
 
   private static final ImmutableList<BodyType> BODY_TYPES_FOR_RANDOM = ImmutableList.of(BodyType.Volunteer,
       BodyType.Security, BodyType.Engineer, BodyType.Scientist, BodyType.Corporate, BodyType.Dahl,
-      BodyType.Cosmonaut, BodyType.PajamaFemale, BodyType.PajamaMale, BodyType.GlovelessMale);
+      BodyType.Cosmonaut, BodyType.PajamaFemale, BodyType.PajamaMale);
 
   private static final ImmutableMap<BodyType, String> BODY_SKIN = new ImmutableMap.Builder<BodyType, String>().put(
       BodyType.Volunteer, "Objects/characters/Humans/Volunteer/Volunteer_GenMaleBody01.skin")
