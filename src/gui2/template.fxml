@@ -244,7 +244,7 @@
                                           <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
                                           <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" />
-                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Start outside apartment" />
+                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Start outside apartment" visible="false" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
@@ -252,7 +252,7 @@
                                           <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
                                           <Label text="Does not spawn Jovan so that his cutscene won't play." />
-                                          <Label prefHeight="22.0" prefWidth="295.0" text="Starts at the Neuromod Division --&gt; Lobby door.">
+                                          <Label prefHeight="22.0" prefWidth="295.0" text="Starts at the Neuromod Division --&gt; Lobby door." visible="false">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>

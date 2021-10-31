@@ -9,6 +9,7 @@ Make sure fruit trees cannot spawn trauma pharmas
 Use "Available for random" on weapons
 Restore randomized cinematic dialogue
 Update preset so that nightmare is not affected
+Add more rotatable slots for loot tables
 
 Enemy types:
  - Solar hunter (phantom)
