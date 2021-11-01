@@ -34,6 +34,10 @@ import utils.Utils;
  */
 public class BodyGenerator {
 
+  private static final String HEAD_SKIN = "head_skin2"; // If we call this "head_skin", husked people will have their faces disappear.
+
+  private static final String HAIR_SKIN = "hair_skin2"; // If we call this "hair_skin", this makes Patricia Varma bald.
+
   private static final int ADD_ACCESSORY_PERCENT_CHANCE = 10; // out of 100
 
   private static final int ADD_HELMET_PERCENT_CHANCE = 5; // out of 100
@@ -187,7 +191,7 @@ public class BodyGenerator {
             // Add a jetpack if we weren't giving one already
             addJetpack = true;
           }
-          Element head = addAttachmentVerbatim("1", "head_skin", headModel + ".skin", headMtl + ".mtl", "0");
+          Element head = addAttachmentVerbatim("1", HEAD_SKIN, headModel + ".skin", headMtl + ".mtl", "0");
           head.setAttribute("SkinJointsOverrideSkeleton", "1");
           return FemaleHead.HELMET;
         } else {
@@ -207,7 +211,7 @@ public class BodyGenerator {
         break;
     }
 
-    Element head = createAttachment("head_skin", headModel, headMtl, "0");
+    Element head = createAttachment(HEAD_SKIN, headModel, headMtl, "0");
     head.setAttribute("SkinJointsOverrideSkeleton", "1");
 
     return headType;
@@ -284,7 +288,7 @@ public class BodyGenerator {
     ImmutableCollection<FemaleHairColor> compatibleColors = BodyConsts.FEMALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
     FemaleHairColor hairColor = Utils.getRandomFromCollection(compatibleColors, r);
     String hairColorMtl = BodyConsts.FEMALE_HAIR_COLORS_MAP.get(hairColor);
-    addAttachment("hair_skin", hairModel, hairColorMtl);
+    addAttachment(HAIR_SKIN, hairModel, hairColorMtl);
     
     color = hairColor;
     
@@ -303,7 +307,7 @@ public class BodyGenerator {
     ImmutableCollection<MaleHairColor> compatibleColors = BodyConsts.MALE_HAIR_COLOR_COMPATIBILITY.get(genericHairType);
     MaleHairColor hairColor = Utils.getRandomFromCollection(compatibleColors, r);
     String hairColorMtl = BodyConsts.MALE_HAIR_COLORS_MAP.get(hairColor);
-    addAttachment("hair_skin", hairModel, hairColorMtl);
+    addAttachment(HAIR_SKIN, hairModel, hairColorMtl);
     
     color = hairColor;
     
@@ -328,7 +332,7 @@ public class BodyGenerator {
     
     String hairModel = BodyConsts.LARGE_MALE_HAIRS_MAP.get(largeMaleHair);
     
-    addAttachment("hair_skin", hairModel, hairModel);
+    addAttachment(HAIR_SKIN, hairModel, hairModel);
     return largeMaleHair;
   }
 

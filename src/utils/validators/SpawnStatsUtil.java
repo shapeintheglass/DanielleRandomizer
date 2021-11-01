@@ -57,7 +57,7 @@ public class SpawnStatsUtil {
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
           .build();
-      CustomRuleHelper crh = new CustomRuleHelper(copy);
+      CustomRuleHelper crh = new CustomRuleHelper(copy, database);
       rulesList.add(new ArchetypeSwapRule(database, crh));
     }
     return rulesList;
@@ -70,7 +70,7 @@ public class SpawnStatsUtil {
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
           .build();
-      CustomRuleHelper crh = new CustomRuleHelper(copy);
+      CustomRuleHelper crh = new CustomRuleHelper(copy, database);
       rulesList.add(new NpcSpawnerSwapRule(database, crh));
     }
     return rulesList;

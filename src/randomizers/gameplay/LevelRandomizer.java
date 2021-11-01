@@ -130,7 +130,8 @@ public class LevelRandomizer extends BaseRandomizer {
               logger.warning("Unable to filter mission file for level " + levelDir);
               e.printStackTrace();
             }
-          } else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) { // Filter movie data if applicable
+          } else if (swappedLinesMap != null && f.endsWith("moviedata.xml")) {
+            // Filter movie data if applicable
             try {
               filterMovieDataFile(f, pathInOutputZip, levelDir);
             } catch (IOException | JDOMException e) {

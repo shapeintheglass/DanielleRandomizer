@@ -2,7 +2,6 @@ package randomizers.gameplay.filters.rules;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.jdom2.Element;
 
@@ -15,8 +14,6 @@ import utils.Utils;
  *
  */
 public class ContainerSpawnRule implements Rule {
-
-  private static final int MAX_ATTEMPTS = 10;
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
 
@@ -53,20 +50,12 @@ public class ContainerSpawnRule implements Rule {
           continue;
         }
 
-        // Try different items until we get a valid pickup item
-        // TODO: Make this smarter by just removing non-pickup items from the list first
-        for (int i = 0; i < MAX_ATTEMPTS; i++) {
-          Element toSwap = filterHelper.getEntity(archetypeStr, null, r);
-
-          // Ensure that this has the tag "ArkPickups" to represent that it can be added
-          // to an inventory
-          Set<String> tags = Utils.getTags(toSwap);
-          if (tags.contains("ArkPickups")) {
-            inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
-            int multiplier = ItemMultiplierHelper.getMultiplierForEntity(tags, r);
-            inputs.setAttribute("quantity", Integer.toString(multiplier));
-            break;
-          }
+        // Replace with a valid pickup item
+        Element toSwap = filterHelper.getPickupEntity(archetypeStr, null, r);
+        if (toSwap != null) {
+          inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
+          int multiplier = ItemMultiplierHelper.getMultiplierForEntity(toSwap, r);
+          inputs.setAttribute("quantity", Integer.toString(multiplier));
         }
       }
     }

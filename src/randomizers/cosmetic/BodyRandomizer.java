@@ -18,7 +18,6 @@ public class BodyRandomizer extends BaseRandomizer {
 
   private static final String BODIES_FILE = "objects/characters/humansfinal/humansfinal.json";
 
-
   private HumansFinal bodies;
 
   public BodyRandomizer(Settings s, ZipHelper zipHelper) throws IOException {

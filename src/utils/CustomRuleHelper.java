@@ -1,7 +1,8 @@
 package utils;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -9,7 +10,9 @@ import org.jdom2.Element;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.GenericSpawnPresetRule;
@@ -24,12 +27,6 @@ public class CustomRuleHelper {
 
   // Number of attempts to make at getting a valid tag before giving up.
   private static final int MAX_ATTEMPTS = 10;
-
-  // Keep track of classes that support randomization.
-  private static final ImmutableSet<String> RANDOM_CLASSES = ImmutableSet.of("Crafting.Ingredients", "Food",
-      "Crafting.RecyclerJunk", "Mods.Psychoscope", "Mods.Suit", "Crafting.FabricationPlans.Pharma",
-      "Crafting.FabricationPlans.Ammo", "Crafting.FabricationPlans.Weapon", "Crafting.FabricationPlans.SuitMaint",
-      "Crafting.FabricationPlans.Charge", "Food.Alcohol", "Medical.TraumaPharmas");
 
   // Map of randomizable tags to the list of random classes that support them.
   // If a given tag matches one of these, use the in-game random class instead of
@@ -49,28 +46,45 @@ public class CustomRuleHelper {
   // Weights to use for fabrication plans randomization
   private static final ImmutableList<Integer> FAB_PLAN_RANDOM_WEIGHTS = ImmutableList.of(5, 5, 5, 1, 1);
 
-  // Tags to filter on
-  private List<String> inputTags;
+  // Tags not to affect, includes specific names of entities in specific levels (in level;name format)
+  private List<String> doNotTouchTags;
   // Tags to pull randomly from
   private List<String> outputTags;
   // Relative weights to assign to the spawn rates for these tags
   private List<Integer> outputTagsWeights;
-  // Tags not to filter on. Takes priority.
-  private List<String> doNotTouchTags;
-  // Tags not to output. Takes priority.
-  private List<String> doNotOutputTags;
 
-  public CustomRuleHelper(GenericSpawnPresetRule gfj) {
-    this.inputTags = gfj.getInputTagsList();
+  // Set of valid entities that can be swapped
+  private Set<String> validEntities = Sets.newHashSet();
+  // Map of output tag to list of valid entities to swap in
+  private Map<String, List<String>> availableEntities = Maps.newHashMap();
+
+  public CustomRuleHelper(GenericSpawnPresetRule gfj, TaggedDatabase database) {
+    this.doNotTouchTags = gfj.getDoNotTouchTagsList();
     this.outputTags = gfj.getOutputTagsList();
-    if (gfj.getOutputWeightsList() != null) {
-      this.outputTagsWeights = gfj.getOutputWeightsList();
+    this.outputTagsWeights = gfj.getOutputWeightsList();
+
+    // Make a list of all valid entities that can be used as input
+    for (String s : gfj.getInputTagsList()) {
+      validEntities.addAll(database.getAllForTag(s));
     }
-    if (gfj.getDoNotTouchTagsList() != null) {
-      this.doNotTouchTags = gfj.getDoNotTouchTagsList();
+    for (String s : gfj.getDoNotTouchTagsList()) {
+      validEntities.removeAll(database.getAllForTag(s));
     }
-    if (gfj.getDoNotOutputTagsList() != null) {
-      this.doNotOutputTags = gfj.getDoNotOutputTagsList();
+    // Make a map of all valid entities for output, keyed by the output tag
+    Set<String> doNotOutput = Sets.newHashSet();
+    for (String s : gfj.getDoNotOutputTagsList()) {
+      doNotOutput.addAll(database.getAllForTag(s));
+    }
+    for (String s : outputTags) {
+      Set<String> availableEntitiesForTag = Sets.newHashSet();
+      availableEntitiesForTag.addAll(database.getAllForTag(s));
+      availableEntitiesForTag.removeAll(doNotOutput);
+      if (!availableEntitiesForTag.isEmpty()) {
+        List<String> outputTagsList = Lists.newArrayList(availableEntitiesForTag);
+        // Sort the output tags list to ensure this is still deterministic
+        Collections.sort(outputTagsList);
+        availableEntities.put(s, outputTagsList);
+      }
     }
   }
 
@@ -81,19 +95,9 @@ public class CustomRuleHelper {
    * @return
    */
   public boolean trigger(TaggedDatabase database, String entityName, String nameInLevel) {
-    // TODO: Intelligently detect if this has a library prefix
-    entityName = Utils.stripPrefix(entityName);
-
-    List<String> tags = getTagsForEntity(database, entityName);
-    if (tags == null) {
-      return false;
-    }
-
-    boolean entityInAllowlist = Utils.getCommonElement(tags, inputTags) != null;
-    boolean entityInBlocklist = Utils.getCommonElement(tags, doNotTouchTags) != null;
+    entityName = Utils.stripLibraryPrefixForEntity(entityName);
     boolean nameInBlocklist = nameInLevel != null && doNotTouchTags != null && doNotTouchTags.contains(nameInLevel);
-
-    return entityInAllowlist && !(entityInBlocklist || nameInBlocklist);
+    return !nameInBlocklist && validEntities.contains(entityName);
   }
 
   /**
@@ -108,17 +112,14 @@ public class CustomRuleHelper {
   /**
    * Retrieves a random entity name that matches the given conditions.
    * 
-   * @return
+   * @return a new element to sub in, or null if none could be found.
    */
   public Element getEntityToSwap(TaggedDatabase database, Random r) {
-    // Set a maximum on the number of attempts in case the tag block lists are
-    // mutually exclusive
-    Element toSwap = null;
-
+    // Re-roll entity until we find a valid one
     for (int i = 0; i < MAX_ATTEMPTS; i++) {
       String tag = Utils.getRandomWeighted(outputTags, outputTagsWeights, r);
 
-      // New: If this tag exactly matches a tag that's already supported by an in-game
+      // If this tag exactly matches a tag that's already supported by an in-game
       // randomization, use the built-in random type instead.
       if (TAGS_TO_RANDOM_CLASS.containsKey(tag)) {
         String newClass = "";
@@ -130,39 +131,12 @@ public class CustomRuleHelper {
         return database.getEntityByName(newClass);
       }
 
-      for (int j = 0; j < MAX_ATTEMPTS; j++) {
-        toSwap = DatabaseUtils.getRandomEntityByTag(database, r, tag);
-
-        // Check that this doesn't match one of the "do not output" tags
-        if (generatedElementIsValid(toSwap, doNotOutputTags)) {
-          return toSwap;
-        }
+      if (availableEntities.containsKey(tag)) {
+        return database.getEntityByName(Utils.getRandom(availableEntities.get(tag), r));
+      } else {
+        // There are no valid entity archetypes for this tag, continue
       }
     }
-    return toSwap;
-  }
-
-  public static boolean generatedElementIsValid(Element toSwap, List<String> doNotOutputTags) {
-    Set<String> tags = Utils.getTags(toSwap);
-    return Utils.getCommonElement(tags, doNotOutputTags) == null;
-  }
-
-  private static ArrayList<String> getTagsForEntity(TaggedDatabase database, String entityName) {
-    Element fullEntity = database.getEntityByName(entityName);
-    if (fullEntity == null) {
-      return null;
-    }
-
-    ArrayList<String> tags = new ArrayList<>();
-    tags.addAll(Utils.getTags(fullEntity));
-    return tags;
-  }
-
-  public void addDoNotOutputTags(List<String> doNotOutput) {
-    doNotOutputTags.addAll(doNotOutput);
-  }
-
-  public void addDoNotTouchTags(List<String> doNotTouch) {
-    doNotTouchTags.addAll(doNotTouch);
+    return null;
   }
 }

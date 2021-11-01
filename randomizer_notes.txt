@@ -4,7 +4,9 @@ Notes:
 
 Turret types:
 
-
+ - Flamethrower
+ - Machine gun
+ - Laser gun
 
 Enemy types:
 
@@ -126,14 +128,21 @@ Human
  - Danielle Sho (follower)
  - Zombie
 
-Note: New lore entires can be added by adding new metadata tags
+Note: New lore entries can be added by adding new metadata tags
 
 Other
  - Save card
  - Melee chipset (Berserker Mod)
  - Jump height chipset (Kozar Benders)
 
-Turrets
- - Laser
- - Burst
- - Flamethrower
+New:
+
+Weapons
+ - Defibrillator (stungun that heals humans)
+ - Recalibrator (wrench that heals robots)
+ - Neowave charge (nullwave grenade that heals typhon)
+ - Cystoid gun
+ 
+Chipsets
+ - ELE_<WEAPON>_<TYPE> apply TYPE damage for WEAPON weapon
+   - pistol, wrench, stungun, shotgun, q-beam

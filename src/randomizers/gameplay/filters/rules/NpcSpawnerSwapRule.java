@@ -25,11 +25,14 @@ public class NpcSpawnerSwapRule implements Rule {
     this.crh = crh;
   }
 
+  public CustomRuleHelper getCustomRuleHelper() {
+    return crh;
+  }
+
   @Override
   public boolean trigger(Element e, Random r, String filename) {
     // Triggers on ArkNpcSpawners
-    if (e.getAttributeValue("EntityClass") != null
-        && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
+    if (e.getAttributeValue("EntityClass") != null && e.getAttributeValue("EntityClass").equals("ArkNpcSpawner")) {
       // Parse to get the spawned entity
       Element properties = e.getChild("Properties");
       if (properties == null) {
@@ -47,8 +50,6 @@ public class NpcSpawnerSwapRule implements Rule {
   public void apply(Element e, Random r, String filename) {
     String toSwapStr = crh.getEntityToSwapStr(database, r);
     Element properties = e.getChild("Properties");
-    // String originalArchetype = properties.getAttributeValue(S_NPC_ARCHETYPE);
     properties.setAttribute(S_NPC_ARCHETYPE, toSwapStr);
-    // Logger.getGlobal().info(String.format("Npc swap: %s --> %s", originalArchetype, toSwapStr));
   }
 }

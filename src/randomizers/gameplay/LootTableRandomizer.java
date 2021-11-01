@@ -3,8 +3,6 @@ package randomizers.gameplay;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -23,7 +21,6 @@ import utils.ZipHelper;
 
 public class LootTableRandomizer extends BaseRandomizer {
 
-  private static final int MAX_ATTEMPTS = 10;
   private static final int ITEMS_PER_SLOT = 10;
 
   private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
@@ -84,7 +81,7 @@ public class LootTableRandomizer extends BaseRandomizer {
         String oldArchetype = item.getAttributeValue("Archetype");
         oldArchetypes.add(oldArchetype);
 
-        Element newArchetype = getPickup(cfh, oldArchetype, r);
+        Element newArchetype = cfh.getPickupEntity(oldArchetype, null, r);
         if (newArchetype != null) {
           Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
           String newArchetypeStr = Utils.getNameForEntity(newArchetype);
@@ -101,7 +98,7 @@ public class LootTableRandomizer extends BaseRandomizer {
         String oldArchetype = Utils.getRandom(oldArchetypes, r);
 
         Element newItem = new Element("ArkLootItem");
-        Element newArchetype = getPickup(cfh, oldArchetype, r);
+        Element newArchetype = cfh.getPickupEntity(oldArchetype, null, r);
         if (newArchetype != null) {
           Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
           String newArchetypeStr = Utils.getNameForEntity(newArchetype);
@@ -112,27 +109,5 @@ public class LootTableRandomizer extends BaseRandomizer {
         items.add(newItem);
       }
     }
-  }
-  
-  
-
-  private Element getPickup(CustomItemFilterHelper cfh, String archetype, Random r) {
-    // Try different items until we get a valid pickup item
-    // TODO: Make this smarter by just removing non-pickup items from the list first
-    for (int i = 0; i < MAX_ATTEMPTS; i++) {
-      Element toSwap = cfh.getEntity(archetype, null, r);
-
-      if (toSwap == null) {
-        continue;
-      }
-
-      // Ensure that this has the tag "ArkPickups" to represent that it can be added
-      // to an inventory
-      Set<String> tags = Utils.getTags(toSwap);
-      if (tags.contains("ArkPickups")) {
-        return toSwap;
-      }
-    }
-    return null;
   }
 }

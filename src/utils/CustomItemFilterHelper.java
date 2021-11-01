@@ -2,6 +2,7 @@ package utils;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.jdom2.Element;
 
@@ -11,50 +12,109 @@ import databases.TaggedDatabase;
 import proto.RandomizerSettings.GenericSpawnPresetFilter;
 import proto.RandomizerSettings.GenericSpawnPresetRule;
 import proto.RandomizerSettings.Settings;
+import randomizers.gameplay.filters.rules.ArchetypeSwapRule;
 
+/*
+ * Helper for filtering an entity given the randomizer settings.
+ */
 public class CustomItemFilterHelper {
+  private static final int MAX_ATTEMPTS = 100;
+  private static final String ARK_PICKUPS_TAG = "ArkPickups";
+  private static final String SURVIVAL_MODE_ONLY_TAG = "_SURVIVAL";
 
-  private Settings settings;
   private TaggedDatabase database;
-
-  List<String> doNotOutput;
+  private List<ArchetypeSwapRule> ruleSet;
 
   public CustomItemFilterHelper(Settings settings, TaggedDatabase database) {
-    this.settings = settings;
     this.database = database;
-    doNotOutput = Lists.newArrayList();
-  }
 
-  public void addDoNotOutput(List<String> doNotOutput) {
-    this.doNotOutput.addAll(doNotOutput);
-  }
+    ruleSet = Lists.newArrayList();
 
-  public Element getEntity(String entityName, String nameInLevel, Random r) {
-    // TODO: Store rules list at construction
     GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getItemSpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
-
       GenericSpawnPresetRule.Builder copy = rule.toBuilder()
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
-          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS)
-          .addAllDoNotOutputTags(doNotOutput);
+          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
       if (!settings.getMoreSettings().getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
       if (!settings.getMoreSettings().getPreySoulsGuns()) {
-        doNotOutput.add("PreySoulsWeapons");
+        copy.addDoNotOutputTags("PreySoulsWeapons");
       }
+      if (!settings.getMoreSettings().getPreySoulsTurrets()) {
+        copy.addDoNotOutputTags("PreySoulsTurrets");
+      }
+      ruleSet.add(new ArchetypeSwapRule(database, new CustomRuleHelper(copy.build(), database)));
+    }
+  }
 
+  public List<ArchetypeSwapRule> getRuleSet() {
+    return ruleSet;
+  }
 
-      CustomRuleHelper ruleHelper = new CustomRuleHelper(copy.build());
-
-      if (ruleHelper.trigger(database, entityName, nameInLevel)) {
-        return ruleHelper.getEntityToSwap(database, r);
+  /**
+   * Specifically gets an entity that contains the tag "ArkPickups".
+   * @param entityName
+   * @param nameInLevel
+   * @param r
+   * @return
+   */
+  public Element getPickupEntity(String entityName, String nameInLevel, Random r) {
+    for (int i = 0; i < MAX_ATTEMPTS; i++) {
+      Element e = getEntity(entityName, nameInLevel, r);
+      if (e == null) {
+        // Nothing matched
+        return null;
+      }
+      Set<String> tags = Utils.getTags(e);
+      if (tags.contains(ARK_PICKUPS_TAG)) {
+        return e;
       }
     }
     return null;
   }
 
+  /**
+   * Specifically gets an entity that contains the tag "ArkPickups" and isn't survival mode only.
+   * @param entityName
+   * @param nameInLevel
+   * @param r
+   * @return
+   */
+  public Element getPickupNonSurvivalEntity(String entityName, String nameInLevel, Random r) {
+    for (int i = 0; i < MAX_ATTEMPTS; i++) {
+      Element e = getEntity(entityName, nameInLevel, r);
+      Set<String> tags = Utils.getTags(e);
+      if (tags.contains(ARK_PICKUPS_TAG) && !tags.contains(SURVIVAL_MODE_ONLY_TAG)) {
+        return e;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns an entity that matches the current settings.
+   * @param entityName Library name of the existing entity to replace.
+   * @param nameInLevel Name of the existing entity within its level.
+   * @param r
+   * @return A new entity to replace the given one, or null if none could be found.
+   */
+  public Element getEntity(String entityName, String nameInLevel, Random r) {
+    for (ArchetypeSwapRule rule : ruleSet) {
+      if (rule.getCustomRuleHelper().trigger(database, entityName, nameInLevel)) {
+        return rule.getCustomRuleHelper().getEntityToSwap(database, r);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Same as getEntity but returns the string form of the entity name instead of the entire entity.
+   * @param entityName
+   * @param nameInLevel
+   * @param r
+   * @return
+   */
   public String getEntityStr(String entityName, String nameInLevel, Random r) {
     Element entityToSwap = getEntity(entityName, nameInLevel, r);
     if (entityToSwap == null) {
@@ -63,19 +123,15 @@ public class CustomItemFilterHelper {
     return Utils.getNameForEntity(entityToSwap);
   }
 
+  /**
+   * Determines if we should trigger based on the given settings.
+   * @param entityName
+   * @param nameInLevel
+   * @return
+   */
   public boolean trigger(String entityName, String nameInLevel) {
-    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getItemSpawnSettings();
-    for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
-
-      GenericSpawnPresetRule.Builder copy = rule.toBuilder()
-          .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
-          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-      if (!settings.getMoreSettings().getMoreGuns()) {
-        copy.addDoNotOutputTags("Randomizer");
-      }
-
-      CustomRuleHelper crh = new CustomRuleHelper(copy.build());
-      if (crh.trigger(database, entityName, nameInLevel)) {
+    for (ArchetypeSwapRule rule : ruleSet) {
+      if (rule.getCustomRuleHelper().trigger(database, entityName, nameInLevel)) {
         return true;
       }
     }

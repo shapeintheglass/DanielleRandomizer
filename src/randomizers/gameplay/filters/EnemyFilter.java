@@ -18,7 +18,7 @@ public class EnemyFilter extends BaseFilter {
           .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_NPC_TAGS)
           .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_NPC_TAGS)
           .build();
-      CustomRuleHelper crh = new CustomRuleHelper(copy);
+      CustomRuleHelper crh = new CustomRuleHelper(copy, database);
       rules.add(new NpcSpawnerSwapRule(database, crh));
     }
   }

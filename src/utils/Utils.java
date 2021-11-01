@@ -14,9 +14,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.jdom2.Element;
+
 import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -31,6 +32,9 @@ public class Utils {
       "Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan_Cinematic",
       "Crafting.FabricationPlans.AlexStationKeyFabPlan", "Crafting.FabricationPlans.MorganStationKeyFabPlan",
       "Crafting.FabricationPlans.CoralScanModFabPlan");
+  
+  private static final ImmutableSet<String> LIBRARY_PREFIXES = ImmutableSet.of("ArkGameplayArchitecture", "ArkGameplayObjects", "ArkHumans", "ArkNpcs",
+      "ArkPhysicsProps", "ArkPickups", "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons");
 
   public static Path createTempDir(Path workingDir, String name) {
     long now = new Date().getTime();
@@ -233,6 +237,13 @@ public class Utils {
         tags.add("_LEVERAGE_III");
         return;
     }
+  }
+  
+  public static String stripLibraryPrefixForEntity(String e) {
+    if (e.contains(".") && LIBRARY_PREFIXES.contains(e.substring(0, e.indexOf('.')))) {
+      return e.substring(e.indexOf('.') + 1);
+    }
+    return e;
   }
 
   public static String getNameForEntity(Element e) {

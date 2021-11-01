@@ -8,10 +8,6 @@ import utils.CustomItemFilterHelper;
 public class FruitTreeFilter extends BaseFilter {
 
   public FruitTreeFilter(Settings currentSettings, TaggedDatabase database) {
-    if (currentSettings.getGameplaySettings().getItemSpawnSettings().getFiltersList().size() == 0) {
-      return;
-    }
-
     CustomItemFilterHelper filterHelper = new CustomItemFilterHelper(currentSettings, database);
     rules.add(new FruitTreeRule(filterHelper));
   }
