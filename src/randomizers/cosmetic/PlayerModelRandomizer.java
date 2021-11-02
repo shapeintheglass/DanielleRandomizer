@@ -27,12 +27,11 @@ public class PlayerModelRandomizer extends BaseRandomizer {
 
   private static enum BodyType {
     Volunteer, Security, Engineer, Scientist, Corporate, LabCoat, Dahl, Etheric, Cosmonaut, PajamaMale, PajamaFemale,
-    GlovelessMale
+    GlovelessMale, Typhon
   }
 
   private static final ImmutableList<BodyType> BODY_TYPES_FOR_RANDOM = ImmutableList.of(BodyType.Volunteer,
-      BodyType.Security, BodyType.Engineer, BodyType.Scientist, BodyType.Corporate, BodyType.Dahl,
-      BodyType.Cosmonaut, BodyType.PajamaFemale, BodyType.PajamaMale);
+      BodyType.Security, BodyType.Engineer, BodyType.Scientist, BodyType.Corporate);
 
   private static final ImmutableMap<BodyType, String> BODY_SKIN = new ImmutableMap.Builder<BodyType, String>().put(
       BodyType.Volunteer, "Objects/characters/Humans/Volunteer/Volunteer_GenMaleBody01.skin")
@@ -43,6 +42,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.LabCoat, "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.skin")
       .put(BodyType.Dahl, "Objects/characters/Humans/Dahl/Dahl_GenMaleBody01.skin")
       .put(BodyType.Etheric, "objects/characters/humans/genmale/genmale_mesh.skin")
+      .put(BodyType.Typhon, "objects/characters/humans/genmale/genmale_mesh.skin")
       .put(BodyType.GlovelessMale, "objects/characters/humans/morgankarl/morgankarlgenderselect_genmale.skin")
       .build();
 

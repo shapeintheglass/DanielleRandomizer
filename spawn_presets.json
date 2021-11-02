@@ -272,10 +272,10 @@
           "output_weights": [
             100,
             75,
-            5,
-            5,
-            5,
-            5
+            25,
+            10,
+            10,
+            10
           ],
           "do_not_touch_tags": [],
           "do_not_output_tags": []
@@ -1070,6 +1070,26 @@
             "EngineeringOperator",
             "MedicalOperator",
             "ScienceOperator",
+            "Turrets"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        }
+      ]
+    },
+    {
+      "name": "All turrets",
+      "desc": "All friendly robots are turrets.",
+      "filters": [
+        {
+          "input_tags": [
+            "EngineeringOperator",
+            "MedicalOperator",
+            "ScienceOperator",
+            "Turrets"
+          ],
+          "output_tags": [
             "Turrets"
           ],
           "output_weights": [],

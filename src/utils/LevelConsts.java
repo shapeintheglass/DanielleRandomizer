@@ -20,7 +20,7 @@ public class LevelConsts {
   public static final List<String> DO_NOT_TOUCH_ITEM_TAGS =
       Lists.newArrayList("Data", "MissionItems", "_PROGRESSION", "_PLOT_CRITICAL",
           "ArkLight", "research/simulationlabs;Weapons.Wrench1", "MedKit_Wall_Mounted",
-          "ArkContainer", "Light_Fixtures");
+          "ArkContainer", "Light_Fixtures", "Neuromod_Calibration");
 
   public static final List<String> DO_NOT_OUTPUT_ITEM_TAGS = Lists.newArrayList("Architecture",
       "Gameplay", "Industrial", "Space", "Light_Fixtures", "Static_ArkLights", "Shotgun_Golden",

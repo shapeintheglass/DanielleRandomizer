@@ -39,6 +39,8 @@ public class ZipHelper {
 
   public static final String ANIMATIONS_IMG = "animations/animations.img";
   public static final String ANIMATIONS_DUAL_WRENCH_PLAYER_1P = "animations/mannequin/adb/arkdualwrenchplayer1p.adb";
+  public static final String ANIMATIONS_ARK_FLAMETHROWER_TURRET = "animations/mannequin/adb/arkflamethrowerturretentity.adb";
+  public static final String ANIMATIONS_ARK_LASER_TURRET = "animations/mannequin/adb/arklaserturretentity.adb";
   public static final String ANIMATIONS_ARK_ITEM_TAGS = "animations/mannequin/adb/arkitemtags.xml";
   public static final String ANIMATIONS_ARK_PLAYER_DATABASE_1P = "animations/mannequin/adb/arkplayerdatabase1p.adb";
   public static final String ANIMATIONS_ARK_PLAYER_DATABASE_3P = "animations/mannequin/adb/arkplayerdatabase3p.adb";
@@ -50,6 +52,7 @@ public class ZipHelper {
   public static final String ANIMATIONS_ARK_DUAL_PISTOL_WEAPON = "animations/mannequin/adb/arkdualpistolweapon.adb";
 
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
+  public static final String PROJECTILE_POOLS = "ark/arkprojectilepooldefinitions.xml";
 
   public static final String AI_TREE_ARMED_HUMANS = "ark/ai/aitrees/armedhumanaitree.xml";
   public static final String AI_TREE_HUMANS = "ark/ai/aitrees/humanaitree.xml";
@@ -78,6 +81,7 @@ public class ZipHelper {
   public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "libs/entityarchetypes/";
   public static final String ARK_PICKUPS_XML = "libs/entityarchetypes/arkpickups.xml";
   public static final String ARK_PROJECTILES_XML = "libs/entityarchetypes/arkprojectiles.xml";
+  public static final String ARK_ROBOTS_XML = "libs/entityarchetypes/arkrobots.xml";
 
   public static final String MUSIC_XML = "libs/gameaudio/music.xml";
 

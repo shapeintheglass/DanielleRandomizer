@@ -73,7 +73,7 @@ public class RandomizerService extends Service<Void> {
       ZipHelper.ANIMATIONS_ARK_UNSILENCED_PISTOL_WEAPON, ZipHelper.ANIMATIONS_ARK_SLOW_SHOTGUN_PLAYER_1P,
       ZipHelper.ANIMATIONS_ARK_SLOW_SHOTGUN_WEAPON, ZipHelper.PLAYER_CDF,
       ZipHelper.ANIMATIONS_ARK_DUAL_PISTOL_PLAYER_1P, ZipHelper.ANIMATIONS_ARK_DUAL_PISTOL_WEAPON,
-      ZipHelper.DUAL_PISTOL_CDF, ZipHelper.PARTICLES_PLAYER_WEAPONS);
+      ZipHelper.DUAL_PISTOL_CDF, ZipHelper.PARTICLES_PLAYER_WEAPONS, ZipHelper.PROJECTILE_POOLS);
 
   // The number of psi cutter dependencies is too damn high
   private static final ImmutableList<String> PSI_CUTTER_DIR_DEPENDENCIES = ImmutableList.of(
@@ -86,8 +86,14 @@ public class RandomizerService extends Service<Void> {
       ZipHelper.PSY_CUTTER_ANIMATIONS_SOUNDS, ZipHelper.PSY_CUTTER_ANIMATIONS_WEAPON,
       ZipHelper.PSY_CUTTER_ANIMATIONS_WRENCH_WEAPON, ZipHelper.PSY_CUTTER_INVENTORY_ICON_HUD,
       ZipHelper.PSY_CUTTER_INVENTORY_ICON_PICKUP, ZipHelper.PSY_CUTTER_INVENTORY_ICON_INVENTORY);
+  private static final ImmutableList<String> PREY_SOULS_TURRETS_DEPENDENCIES = ImmutableList.of(
+      ZipHelper.ANIMATIONS_ARK_FLAMETHROWER_TURRET, ZipHelper.ANIMATIONS_ARK_LASER_TURRET,
+      ZipHelper.SIGNAL_SYSTEM_PACKAGES, ZipHelper.ARK_PROJECTILES_XML, ZipHelper.ARK_ROBOTS_XML,
+      ZipHelper.PARTICLES_CHARACTERS, ZipHelper.PARTICLES_PLAYER_WEAPONS, ZipHelper.PROJECTILE_POOLS);
+
   private static final ImmutableList<String> MORE_GUNS_DEPENDENCIES = ImmutableList.of(ZipHelper.ARK_PICKUPS_XML,
-      ZipHelper.ARK_PROJECTILES_XML, ZipHelper.ARK_ITEMS_XML, ZipHelper.SIGNAL_SYSTEM_PACKAGES);
+      ZipHelper.ARK_PROJECTILES_XML, ZipHelper.ARK_ITEMS_XML, ZipHelper.SIGNAL_SYSTEM_PACKAGES,
+      ZipHelper.PROJECTILE_POOLS);
   private static final ImmutableList<String> MORE_GUNS_MATERIALS = ImmutableList.of(
       "objects/weapons/shotgun/1p/shotgun1p_phantom01.mtl", "objects/weapons/shotgun/3p/shotgun3p_phantom01.mtl",
       "objects/weapons/shotgun/1p/shotgun1p_telepath01.mtl", "objects/weapons/shotgun/3p/shotgun3p_telepath01.mtl",
@@ -405,6 +411,10 @@ public class RandomizerService extends Service<Void> {
       copyFiles(PREY_SOULS_GUNS_DEPENDENCIES);
       copyFiles(PSI_CUTTER_DEPENDENCIES);
       zipHelper.copyDirsToPatch(PSI_CUTTER_DIR_DEPENDENCIES);
+    }
+
+    if (settings.getMoreSettings().getPreySoulsTurrets()) {
+      copyFiles(PREY_SOULS_TURRETS_DEPENDENCIES);
     }
 
     if (settings.getExpSettings().getWanderingHumans()) {
