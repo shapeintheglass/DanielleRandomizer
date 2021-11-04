@@ -11,7 +11,9 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
@@ -38,6 +40,7 @@ public class ZipHelper {
   public static final String DATA_LEVELS = "levels";
 
   public static final String ANIMATIONS_IMG = "animations/animations.img";
+  public static final String ANIMATIONS_ADB_DIR = "animations/mannequin/adb";
   public static final String ANIMATIONS_DUAL_WRENCH_PLAYER_1P = "animations/mannequin/adb/arkdualwrenchplayer1p.adb";
   public static final String ANIMATIONS_ARK_FLAMETHROWER_TURRET = "animations/mannequin/adb/arkflamethrowerturretentity.adb";
   public static final String ANIMATIONS_ARK_LASER_TURRET = "animations/mannequin/adb/arklaserturretentity.adb";
@@ -53,13 +56,16 @@ public class ZipHelper {
 
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
   public static final String PROJECTILE_POOLS = "ark/arkprojectilepooldefinitions.xml";
+  public static final String ARK_META_TAGS = "ark/arkmetatags.xml";
 
   public static final String AI_TREE_ARMED_HUMANS = "ark/ai/aitrees/armedhumanaitree.xml";
   public static final String AI_TREE_HUMANS = "ark/ai/aitrees/humanaitree.xml";
   public static final String AI_TREE_UNARMED_HUMANS = "ark/ai/aitrees/unarmedhumanaitree.xml";
+  public static final String AI_SIGNAL_RECEIVER_THERMAL_MIMIC = "ark/ai/aisignalreceiverconfigs/thermalmimicsignalreceiverconfig.xml";
 
   public static final String BOOKS_XML = "ark/campaign/books.xml";
   public static final String LOCATIONS_XML = "ark/campaign/locations.xml";
+  public static final String LORE_LIBRARY = "ark/campaign/lorelibrary.xml";
 
   public static final String VOICES_PATH = "ark/dialog/voices";
   public static final String DIALOGIC_PATH = "ark/dialog/dialoglogic";
@@ -67,6 +73,9 @@ public class ZipHelper {
   public static final String ARK_ITEMS_XML = "ark/items/arkitems.xml";
   public static final String LOOT_TABLE_FILE = "ark/items/loottables.xml";
 
+  public static final String NPC_ABILITIES = "ark/npc/npcabilities.xml";
+  public static final String NPC_ABILITY_CONTEXTS = "ark/npc/npcabilitycontexts.xml";
+  public static final String NPC_ABILITY_CONTEXT_PROFILES = "ark/npc/npcabilitycontextprofiles.xml";
   public static final String NPC_GAME_EFFECTS = "ark/npc/npcgameeffects.xml";
   public static final String NIGHTMARE_MANAGER = "ark/npc/nightmaremanager.xml";
 
@@ -74,11 +83,15 @@ public class ZipHelper {
   public static final String NEUROMOD_PDA_LAYOUT = "ark/player/abilitiespdalayout.xml";
   public static final String NEUROMOD_RESEARCH_TOPICS = "ark/player/researchtopics.xml";
 
+  public static final String SIGNAL_SYSTEM_MODIFIERS = "ark/signalsystem/modifiers.xml";
   public static final String SIGNAL_SYSTEM_PACKAGES = "ark/signalsystem/packages.xml";
 
+  public static final String CHARACTER_ATTACHMENT_EFFECTS = "ark/visualeffects/characterattachmenteffects.xml";
+  
   public static final String OPTIONS_FILE = "libs/config/gameoptions.xml";
 
   public static final String ENTITY_ARCHETYPES_SOURCE_DIR = "libs/entityarchetypes/";
+  public static final String ARK_NPCS_XML = "libs/entityarchetypes/arknpcs.xml";
   public static final String ARK_PICKUPS_XML = "libs/entityarchetypes/arkpickups.xml";
   public static final String ARK_PROJECTILES_XML = "libs/entityarchetypes/arkprojectiles.xml";
   public static final String ARK_ROBOTS_XML = "libs/entityarchetypes/arkrobots.xml";
@@ -93,8 +106,14 @@ public class ZipHelper {
   public static final String LOGO = "libs/ui/textures/danielle_shared_textures/prey_title.dds";
   public static final String ICONS_INVENTORY_DIR = "libs/ui/textures/icons_inventory/";
 
+  public static final String PHANTOM_BLOOD_PROJECTILE_ROUND = "objects/arkeffects/characters/aliens/phantom/bloodprojectileround.mtl";
+  public static final String PHANTOM_SOLAR_PROJECTILE_ROUND = "objects/arkeffects/characters/aliens/phantom/solarprojectileround.mtl";
+
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";
+  public static final String PLAYER_TYPHON_SKIN_INNER = "objects/characters/player/etherskin_inner.mtl";
+  public static final String PLAYER_TYPHON_SKIN_OUTER = "objects/characters/player/etherskin_outer.mtl";
+  public static final String PLAYER_TYPHON_SKIN_SCROLL = "objects/characters/player/etherskin_particlescroll.mtl";
   public static final String PLAYER_CDF = "objects/characters/player/player.cdf";
   public static final String PLAYER_FEMALE_CDF = "objects/characters/player/playerfemale.cdf";
   public static final String PLAYER_MALE_PAJAMA_CDF = "objects/characters/player/playermale_pajamas.cdf";
@@ -263,10 +282,11 @@ public class ZipHelper {
     zos.closeEntry();
   }
 
-  // Copies over all files within the given directories (works by matching the prefix)
+  // Copies over all files within the given directories (works by matching the
+  // prefix)
   public void copyDirsToPatch(List<String> dirsToCopy) throws IOException {
     Enumeration<? extends ZipEntry> entries = input.entries();
-    while(entries.hasMoreElements()) {
+    while (entries.hasMoreElements()) {
       ZipEntry entry = entries.nextElement();
       for (String s : dirsToCopy) {
         if (entry.getName().startsWith(s)) {
@@ -284,9 +304,13 @@ public class ZipHelper {
     ZipOutputStream zos = getZipOutputStreamForPatch();
     InputStream in = getInputStream(pathInInputZip);
 
-    zos.putNextEntry(new ZipEntry(pathInOutputZip.toLowerCase()));
-    copyStreams(in, zos);
-    zos.closeEntry();
+    try {
+      zos.putNextEntry(new ZipEntry(pathInOutputZip.toLowerCase()));
+      copyStreams(in, zos);
+      zos.closeEntry();
+    } catch (ZipException e) {
+      Logger.getGlobal().info("Unable to copy file " + pathInInputZip + " file may already exist in zip");
+    }
   }
 
   public void copyToPatch(Document d, String pathInOutputZip) throws IOException {

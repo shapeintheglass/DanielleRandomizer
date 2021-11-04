@@ -56,6 +56,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.Dahl, "Objects/characters/Humans/Dahl/Dahl_GenMaleBody01.mtl")
       .put(BodyType.Etheric, "Objects/characters/Player/EtherDuplicate_00.mtl")
       .put(BodyType.GlovelessMale, "objects/characters/humans/morgankarl/morgan_genmalebody01_cut_scene.mtl")
+      .put(BodyType.Typhon, "Objects/characters/Player/etherskin_inner")
       .build();
 
   // TODO: Fix the labcoat skin (this has THREE parts- body, hands, legs)
@@ -63,6 +64,11 @@ public class PlayerModelRandomizer extends BaseRandomizer {
   private static final String LAB_COAT_HANDS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
   private static final String LAB_COAT_LEGS_SKIN = "objects/characters/humans/labcoat/labcoat_genmalelegs01.skin";
   private static final String LAB_COAT_LEGS_MTL = "objects/characters/humans/scientist/scientist_genmalebody01.mtl";
+  private static final String LAB_COAT_BODY_SKIN = "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.skin";
+  private static final String LAB_COAT_BODY_MTL = "Objects/characters/Humans/Labcoat/Labcoat_GenMaleBody01.mtl";
+
+  private static final String TYPHON_LEGS_OUTER_MTL = "Objects/characters/Player/etherskin_outer";
+  private static final String TYPHON_LEGS_SCROLL_MTL = "Objects/characters/Player/etherskin_outer";
 
   private static final String PAJAMA_MALE_ARMS_SKIN = "objects/characters/player/male/player1p_male02_arms.skin";
   private static final String PAJAMA_MALE_ARMS_MTL = "objects/characters/player/male/player1p_male02_arms.mtl";
@@ -92,6 +98,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.Scientist, BODY_SKIN.get(BodyType.Scientist))
       .put(BodyType.Security, BODY_SKIN.get(BodyType.Security))
       .put(BodyType.Volunteer, BODY_SKIN.get(BodyType.Volunteer))
+      .put(BodyType.Typhon, BODY_SKIN.get(BodyType.Typhon))
       .build();
 
   private static final ImmutableMap<BodyType, String> BODY_TYPE_TO_ARMS_MTL = new ImmutableMap.Builder<BodyType, String>()
@@ -106,6 +113,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.Scientist, BODY_MTL.get(BodyType.Scientist))
       .put(BodyType.Security, BODY_MTL.get(BodyType.Security))
       .put(BodyType.Volunteer, BODY_MTL.get(BodyType.Volunteer))
+      .put(BodyType.Typhon, BODY_MTL.get(BodyType.Typhon))
       .build();
 
   private static final ImmutableMap<BodyType, String> BODY_TYPE_TO_LEGS_SKIN = new ImmutableMap.Builder<BodyType, String>()
@@ -113,6 +121,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.LabCoat, LAB_COAT_LEGS_SKIN)
       .put(BodyType.PajamaFemale, PAJAMA_FEMALE_LEGS_SKIN)
       .put(BodyType.PajamaMale, PAJAMA_MALE_LEGS_SKIN)
+      .put(BodyType.Typhon, BODY_SKIN.get(BodyType.Typhon))
       .build();
 
   private static final ImmutableMap<BodyType, String> BODY_TYPE_TO_LEGS_MTL = new ImmutableMap.Builder<BodyType, String>()
@@ -120,6 +129,7 @@ public class PlayerModelRandomizer extends BaseRandomizer {
       .put(BodyType.LabCoat, LAB_COAT_LEGS_MTL)
       .put(BodyType.PajamaFemale, PAJAMA_FEMALE_LEGS_MTL)
       .put(BodyType.PajamaMale, PAJAMA_MALE_LEGS_MTL)
+      .put(BodyType.Typhon, TYPHON_LEGS_OUTER_MTL)
       .build();
 
   public PlayerModelRandomizer(Settings s, ZipHelper zipHelper) {
@@ -158,6 +168,24 @@ public class PlayerModelRandomizer extends BaseRandomizer {
             attachment.setAttribute("Material", "");
           }
         }
+      }
+      if (bodyType == BodyType.LabCoat) {
+        Element newAttachment = new Element("Attachment").setAttribute("Inheritable", "0")
+            .setAttribute("Type", "CA_SKIN")
+            .setAttribute("AName", "labcoat")
+            .setAttribute("Binding", LAB_COAT_BODY_SKIN)
+            .setAttribute("Material", LAB_COAT_BODY_MTL)
+            .setAttribute("Flags", "0");
+        attachments.addContent(newAttachment);
+      }
+      if (bodyType == BodyType.Typhon) {
+        Element newAttachment = new Element("Attachment").setAttribute("Inheritable", "0")
+            .setAttribute("Type", "CA_SKIN")
+            .setAttribute("AName", "scroll")
+            .setAttribute("Binding", BODY_SKIN.get(BodyType.Typhon))
+            .setAttribute("Material", TYPHON_LEGS_SCROLL_MTL)
+            .setAttribute("Flags", "0");
+        attachments.addContent(newAttachment);
       }
 
       zipHelper.copyToPatch(document, out);

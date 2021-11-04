@@ -65,6 +65,9 @@ public class RandomizerService extends Service<Void> {
   private static final String TEMP_LEVEL_DIR_NAME = "level";
   private static final String DEFAULT_WORKING_DIR = ".";
 
+  private static final ImmutableList<String> PLAYER_MODEL_RANDOMIZATION_DEPENDENCIES = ImmutableList.of(
+      ZipHelper.PLAYER_TYPHON_SKIN_INNER, ZipHelper.PLAYER_TYPHON_SKIN_OUTER, ZipHelper.PLAYER_TYPHON_SKIN_SCROLL);
+
   private static final ImmutableList<String> PREY_SOULS_GUNS_DEPENDENCIES = ImmutableList.of(
       ZipHelper.SIGNAL_SYSTEM_PACKAGES, ZipHelper.ARK_PROJECTILES_XML, ZipHelper.ARK_PICKUPS_XML,
       ZipHelper.ARK_ITEMS_XML, ZipHelper.PARTICLES_CHARACTERS, ZipHelper.ANIMATIONS_ARK_PLAYER_DATABASE_3P,
@@ -111,6 +114,16 @@ public class RandomizerService extends Service<Void> {
       "objects/weapons/toygun/1p/toygun1p_telepath01.mtl", "objects/weapons/toygun/3p/toygun3p_telepath01.mtl",
       "objects/weapons/toygun/1p/toygun1p_nightmare01.mtl", "objects/weapons/toygun/3p/toygun3p_nightmare01.mtl",
       "objects/weapons/toygun/1p/toygun1p_voltaic01.mtl", "objects/weapons/toygun/3p/toygun3p_voltaic01.mtl");
+
+  private static final ImmutableList<String> PREY_SOULS_ENEMIES_DEPENDENCIES = ImmutableList.of(
+      ZipHelper.AI_SIGNAL_RECEIVER_THERMAL_MIMIC, ZipHelper.NPC_ABILITIES, ZipHelper.NPC_ABILITY_CONTEXT_PROFILES,
+      ZipHelper.NPC_ABILITY_CONTEXTS, ZipHelper.NPC_GAME_EFFECTS, ZipHelper.SIGNAL_SYSTEM_MODIFIERS,
+      ZipHelper.SIGNAL_SYSTEM_PACKAGES, ZipHelper.ARK_NPCS_XML, ZipHelper.ARK_PROJECTILES_XML,
+      ZipHelper.PARTICLES_CHARACTERS, ZipHelper.PHANTOM_BLOOD_PROJECTILE_ROUND,
+      ZipHelper.PHANTOM_SOLAR_PROJECTILE_ROUND, ZipHelper.CHARACTER_ATTACHMENT_EFFECTS,
+      ZipHelper.ARK_META_TAGS, ZipHelper.LORE_LIBRARY, ZipHelper.NEUROMOD_RESEARCH_TOPICS);
+  private static final ImmutableList<String> PREY_SOULS_ENEMIES_DIR_DEPENDENCIES = ImmutableList.of(
+      ZipHelper.ANIMATIONS_ADB_DIR);
 
   private static final ImmutableList<String> WANDERING_HUMANS_DEPENDENCIES = ImmutableList.of(
       ZipHelper.AI_TREE_ARMED_HUMANS, ZipHelper.AI_TREE_HUMANS, ZipHelper.AI_TREE_UNARMED_HUMANS);
@@ -417,12 +430,21 @@ public class RandomizerService extends Service<Void> {
       copyFiles(PREY_SOULS_TURRETS_DEPENDENCIES);
     }
 
+    if (settings.getMoreSettings().getPreySoulsEnemies()) {
+      copyFiles(PREY_SOULS_ENEMIES_DEPENDENCIES);
+      zipHelper.copyDirsToPatch(PREY_SOULS_ENEMIES_DIR_DEPENDENCIES);
+    }
+
     if (settings.getExpSettings().getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES);
     }
 
     if (settings.getGameplaySettings().getRandomizeStation() || settings.getExpSettings().getStartSelfDestruct()) {
       copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
+    }
+
+    if (settings.getCosmeticSettings().getRandomizePlayerModel()) {
+      copyFiles(PLAYER_MODEL_RANDOMIZATION_DEPENDENCIES);
     }
   }
 

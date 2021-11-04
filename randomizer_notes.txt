@@ -10,9 +10,30 @@ Turret types:
 
 Enemy types:
 
+Projectiles:
+value="ArkProjectiles.Bullets.PistolRound_Golden"/> - Solar attack
+ - signal package 10641886185795227267, 3149325216917795170
+ (TODO: change to 3149325216917795171)
+ - particle effect characters Projectile_Mesh_006661
+ - particle trail effect characters Trail_016661
+value="ArkProjectiles.Mods.Psychoscope.PSIRegenfb"/> - Bleed attack
+ - signal package 10641886185795227267, 10641886185795233513
+ (TODO: change to 10641886185795233514)
+ - particle effect characters Projectile_Mesh_006662
+ - particle trail effect characters Trail_016662
+value="ArkProjectiles.Mods.Psychoscope.FearBombfb"/> - Lightning bolt attack?
+ - signal package 10641886185795227267, 3149325216966419730
+ (TODO: change to 3149325216966419731)
+value="ArkProjectiles.Medical.TraumaPharmas.AntiConcussionfb"/> - new attack for thermal phantoms
+ - signal package 12348086275151031638, 12348086275151031638
+ - particle effect Explode_01, Ignite_0144 (characters)
+value="ArkProjectiles.Mods.Suit.LeverageAssistfb"/> - new attack for etheric phantoms
+ - signal package 10641886185795229340, 10641886185795229340
+ - particle effect Ignite_0177, FireBody_Med77 (characters)
+
 Mimics
  - Pyro Mimic (EliteMimic2)
-   - Attachement effect 12635110349638538565
+   - Attachment effect 12635110349638538565
    - Receiver config aliensignalreceiverconfig3
    - abilitycontext id 21111111334111121
  - Volt Mimic (EliteMimic3)
@@ -26,7 +47,20 @@ Mimics
    - signal modifier 5310807215636213093
    - abilitycontext id 21111121334111121
 
-Phantoms
+
+Mimics
+ * Pyro Mimic - Typhon cacoplasmus psychothermal
+ * Volt Mimic - Typhon cacoplasmus psychovoltaic
+ * Reaver Mimic - Typhon cacoplasmus psychokinetic
+ * Solar Phantom - Typhon anthrophantasmus sol
+ * Cystoid Phantom - Typhon anthrophantasmus cystis
+ * Chameleon Phantom - Typhon anthrophantasmus chamaeleonidae
+ * Blood Phantom - Typhon anthrophantasmus sanguis
+ * Absolute Phantom - Typhon anthrophantasmus potens
+ * Solar Weaver - Typhon geneocratis sol
+ * Absolute Nightmare - Typhon rex potens
+
+
  - Solar hunter (phantom)
    - ai tree: phantomaitreesolhunt
    - meta tags: same as base phantom
@@ -37,6 +71,12 @@ Phantoms
    - signalreceiver: elitephantomsignalreceiver
    - abilitycontext id: 13680621263385306699
    - Thermogenesis effects: 12635110349638600069
+   - attacks:
+      - Poltergeist lift
+      - Launch Cystoids
+      - LightningBall
+      - Telepath repel blast
+      
    
  - Cystoid phantom (Phantoms.BasePhantomegg)
    - ai tree: phantomaitree6
@@ -48,21 +88,31 @@ Phantoms
    - Scanning display name: Cystoid phantom
    - abilitycontext id: 13680621263389631577
    - Arkmoveinfo moveshift = 0
+   - attacks:
+       - launch cystoids
+       - everything else a normal phantom does
  
- - Solar Phantom (EthericDoppelganger)
+ - Solar Phantom (EthericDoppelganger) - has a radiation aura, fires irradiated missiles
    - Health: 1700
    - cdf: phantomelite44.cdf
    - Abilitycontext id: 2000105
+       - Everything a normal phantom does
+       - Solar lightning ball
+       - Telepath repel blast
 
- - Blood Phantom (EthericDoppelganger2)
+ - Blood Phantom (EthericDoppelganger2) - Fires burst bleed projectiles
    - Health: 2200
    - cdf: Phantomeliteblood.cdf
    - abilitycontext id: 2000106
+       - Everything a normal phantom does
+       - Bleed lightning ball
 
- - Prowler Phantom (EthericDoppelganger3)
+ - Prowler Phantom (EthericDoppelganger3) - immune to physical attacks, fires nullwave blasts
    - Health: 1700
    - cdf: PhantomElite22v.cdf
    - abilitycontext id: 2000107
+    - Lightningball
+    - Repel blast
    - Signal modifier: 13680621263389630779
 
  - Hunter Phantom (EthericDoppelganger4)
@@ -70,6 +120,7 @@ Phantoms
    - Health: 2500
    - cdf: phantomelitebloodhunt.cdf
    - abilitycontext id: 1000001333434
+       - Poltergeist lift
 
  - Hunter Phantom 2 (EthericDoppelganger5)
    - aitree: phantomaitree5.xml
@@ -87,6 +138,7 @@ Phantoms
    - health: 3000
    - cdf: phantomelitebloodf.cdf
    - abilitycontext id: 200010223341
+     - 
  
  - Absolute Phantom Tier 2 (ArkBeta_HelenCombs6662)
    - aitree: phantomaitree3.xml
@@ -146,3 +198,44 @@ Weapons
 Chipsets
  - ELE_<WEAPON>_<TYPE> apply TYPE damage for WEAPON weapon
    - pistol, wrench, stungun, shotgun, q-beam
+   
+   
+-Prey souls documentation-
+
+Added new enemy types.
+-Solar phantom-
+Has an aura of radiation around them
+Fires irradiated projectile attacks
+
+-Blood phantom-
+Fires projectiles in rapid bursts.. Very dangerous in the open
+Causes bleed damage
+
+-Prowler Phantom-
+Cannot be harmed by projectiles or collisions
+Fires projectile attacks that nullify the players ability to use psionic powers
+Has an aura that stops psionic attacks from being used
+
+-Hunter phantom-
+Melee specialist phantom that is hyper aggressive and fast, also employs some new hit and run ai tactics.
+
+-Chameleon Phantom-
+Phantom capable of becoming invisible 
+
+
+-Pyro mimic-
+Immune to fire
+Has an aura of fire damage around itself
+Is stronger then a normal elite mimic
+
+-Volt mimic-
+Immune to electric
+Has an aura of lightning damage around itself, also causes emp effect
+Is stronger then a normal elite mimic
+
+-Reaver mimic-
+Can fire projectiles at the player
+
+-Husks-
+Walking dead humans that suicide explode much like mind controlled humans do
+Will naturally spawn into the game, unlike scripted mind controlled humans.
