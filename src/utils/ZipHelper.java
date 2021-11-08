@@ -58,6 +58,7 @@ public class ZipHelper {
   public static final String PROJECTILE_POOLS = "ark/arkprojectilepooldefinitions.xml";
   public static final String ARK_META_TAGS = "ark/arkmetatags.xml";
 
+  public static final String AI_TREE_ABSOLUTE_NIGHTMARE = "ark/ai/aitrees/absolutenightmareaitree.xml";
   public static final String AI_TREE_ARMED_HUMANS = "ark/ai/aitrees/armedhumanaitree.xml";
   public static final String AI_TREE_HUMANS = "ark/ai/aitrees/humanaitree.xml";
   public static final String AI_TREE_UNARMED_HUMANS = "ark/ai/aitrees/unarmedhumanaitree.xml";
@@ -109,6 +110,8 @@ public class ZipHelper {
   public static final String PHANTOM_BLOOD_PROJECTILE_ROUND = "objects/arkeffects/characters/aliens/phantom/bloodprojectileround.mtl";
   public static final String PHANTOM_SOLAR_PROJECTILE_ROUND = "objects/arkeffects/characters/aliens/phantom/solarprojectileround.mtl";
 
+  public static final String PHANTOM_SKINS_DIR = "objects/characters/aliens/phantom";
+  public static final String WEAVER_SKINS_DIR = "objects/characters/aliens/weaver";
   public static final String HUMANS_FINAL_DIR = "objects/characters/humansfinal";
   public static final String PLAYER_DIR = "objects/characters/player";
   public static final String PLAYER_TYPHON_SKIN_INNER = "objects/characters/player/etherskin_inner.mtl";
@@ -119,6 +122,7 @@ public class ZipHelper {
   public static final String PLAYER_MALE_PAJAMA_CDF = "objects/characters/player/playermale_pajamas.cdf";
   public static final String PLAYER_FEMALE_PAJAMA_CDF = "objects/characters/player/playerfemale_pajamas.cdf";
   public static final String PLAYER_ALIEN_CDF = "objects/characters/player/playermalealien.cdf";
+  public static final String ZOMBIE_CDF = "objects/characters/humansfinal/zombie.cdf";
 
   public static final String DUAL_PISTOL_CDF = "objects/weapons/pistol/1p/dualpistol1p.cdf";
 

@@ -762,9 +762,7 @@
             "ArkOperatorMilitary"
           ],
           "output_tags": [
-            "ThermalMimic",
-            "VoltaicMimic",
-            "ReaverMimic"
+            "Mimic"
           ],
           "output_weights": [],
           "do_not_touch_tags": [],
@@ -1011,6 +1009,25 @@
           ],
           "output_tags": [
             "MarcoSimmons"
+          ],
+          "output_weights": [],
+          "do_not_touch_tags": [],
+          "do_not_output_tags": []
+        }
+      ]
+    },
+    {
+      "name": "All Prey Souls",
+      "desc": "All typhon and hostile operators are Prey Souls enemies.",
+      "filters": [
+        {
+          "input_tags": [
+            "ArkNpcs",
+            "Operators\\Generic\\Corrupted",
+            "ArkOperatorMilitary"
+          ],
+          "output_tags": [
+            "PreySoulsEnemies"
           ],
           "output_weights": [],
           "do_not_touch_tags": [],

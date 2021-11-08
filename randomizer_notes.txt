@@ -1,6 +1,9 @@
 Notes:
- - Prey Souls enemies
- - Prey Souls turrets
+ - Voltaic mimic is immortal again
+ - Absolute nightmare is using old attacks
+ - Blood phantom is not using projectiles
+ - Add lore cards for turrets
+ - Fix card for Absolute Phantom
 
 Turret types:
 
@@ -48,7 +51,7 @@ Mimics
    - abilitycontext id 21111121334111121
 
 
-Mimics
+
  * Pyro Mimic - Typhon cacoplasmus psychothermal
  * Volt Mimic - Typhon cacoplasmus psychovoltaic
  * Reaver Mimic - Typhon cacoplasmus psychokinetic
@@ -59,7 +62,8 @@ Mimics
  * Absolute Phantom - Typhon anthrophantasmus potens
  * Solar Weaver - Typhon geneocratis sol
  * Absolute Nightmare - Typhon rex potens
-
+ * Animated Husk
+ * ???
 
  - Solar hunter (phantom)
    - ai tree: phantomaitreesolhunt
@@ -99,6 +103,8 @@ Mimics
        - Everything a normal phantom does
        - Solar lightning ball
        - Telepath repel blast
+       
+objects/characters/aliens/phantom
 
  - Blood Phantom (EthericDoppelganger2) - Fires burst bleed projectiles
    - Health: 2200
