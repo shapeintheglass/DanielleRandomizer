@@ -37,7 +37,7 @@
                                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
                                        <children>
                                           <Button fx:id="litePresetButton" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="Lite" />
-                                          <Button fx:id="recommendedPresetButton" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Basic" />
+                                          <Button fx:id="recommendedPresetButton" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Recommended" />
                                           <Button fx:id="chaoticPresetButton" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
                                           <Label text="Special modes" />
                                           <Button fx:id="gotsPresetButton" mnemonicParsing="false" onAction="#onPresetsGotsClicked" prefHeight="25.0" prefWidth="101.0" text="G.O.T.S. (Timed)" />
@@ -47,7 +47,7 @@
                                     <VBox prefHeight="275.0" prefWidth="478.0" spacing="24.0">
                                        <children>
                                           <Label text="Minimal amount of randomization. Recommended starting point for first timers." />
-                                          <Label text="As random as possible without breaking the game." />
+                                          <Label text="A recommended blend of randomization- fun but not too chaotic." />
                                           <Label text="As many settings as possible. Potential sequence breaking / soft locks." />
                                           <Separator prefHeight="29.0" prefWidth="478.0" />
                                           <Label text="&quot;Get Off The Station&quot; mode. Can you escape Talos I before time is up?">
@@ -86,7 +86,7 @@
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
                                        <children>
                                           <Label text="Generates new appearances for every human NPC." />
-                                          <Label text="Randomizes voice lines by voice actor (except for certain cutscenes)." />
+                                          <Label text="Randomizes voice lines by voice actor" />
                                           <Label text="Assigns a random facial expression to every voice line." />
                                           <Label text="Shuffles in-game music. Some tracks may not be affected." />
                                           <Label text="Changes the first person player model to a random character." />
@@ -198,11 +198,11 @@
                                  <children>
                                     <VBox prefHeight="291.0" prefWidth="218.0" spacing="15.0">
                                        <children>
-                                          <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeNeuromods" mnemonicParsing="false" text="Randomize neuromods" />
                                           <CheckBox fx:id="gameplayRandomizeFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
-                                          <Label text="Danger Zone" />
+                                          <Label text="Danger Zone: Warning!" />
+                                          <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="Randomize recyclers/fabricators" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="Randomize breakable objects" />
                                           <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="Randomize hackable objects" />
@@ -210,11 +210,11 @@
                                     </VBox>
                                     <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
                                        <children>
-                                          <Label text="Shuffles connections between levels." />
                                           <Label text="Shuffles neuromod upgrade tree." />
                                           <Label text="Assigns new randomly generated costs for fab plans." />
                                           <Label text="Redistributes operator dispensers with an equal ratio." />
-                                          <Label text="These options can make the game significantly harder:" />
+                                          <Label text="The following options can make the game much harder!" />
+                                          <Label text="Shuffles connections between levels." />
                                           <Label text="Redistributes recyclers/fabricators with an equal ratio." />
                                           <Label text="50% chance that a repairable entity will be broken." />
                                           <Label text="50% chance that a hackable entity will be locked." />
@@ -277,8 +277,8 @@
                                           <CheckBox fx:id="moreGuns" mnemonicParsing="false" text="More guns" />
                                           <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey Souls - Guns" />
                                           <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="Prey Souls - Chipsets" visible="false" />
-                                          <Label text="For enemy randomization:" />
-                                          <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" />
+                                          <Label text="For enemy randomization:" visible="false" />
+                                          <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" visible="false" />
                                           <Label text="For friendly NPC randomization:" />
                                           <CheckBox fx:id="morePreySoulsTurrets" mnemonicParsing="false" text="Prey Souls - Turrets" />
                                        </children>
@@ -290,7 +290,7 @@
                                           <Label text="Adds 16 weapons from the Prey Souls mod." />
                                           <Label text="Adds 2 chipsets from the Prey Souls mod." visible="false" />
                                           <Label />
-                                          <Label text="Adds 16 enemies from the Prey Souls mod." />
+                                          <Label text="Adds 16 enemies from the Prey Souls mod." visible="false" />
                                           <Label />
                                           <Label text="Adds 3 turrets from the Prey Souls mod." />
                                        </children>

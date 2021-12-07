@@ -214,40 +214,46 @@ public class WindowController {
 
   @FXML
   protected void initialize() {
-    checkboxes = ImmutableList.of(cosmeticCheckboxBodies, cosmeticCheckboxVoices, cosmeticCheckboxEmotions,
-        cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel, cosmeticCheckboxPlanetSize, gameplayRandomizeStation,
-        gameplayRandomizeNeuromods, gameplayRandomizeFabPlanCosts, gameplayRandomizeRecyclers,
-        gameplayRandomizeDispensers, gameplayRandomizeBreakables, gameplayRandomizeHackables, startCheckboxDay2,
-        startCheckboxAddAllEquipment, startCheckboxSkipJovan, startCheckboxOutsideApartment, moreGuns,
-        morePreySoulsGuns, morePreySoulsChipsets, morePreySoulsEnemies, morePreySoulsTurrets, cheatsCheckboxAllScans,
-        cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, expCheckboxEnableGravity, expCheckboxGravity,
+    checkboxes = ImmutableList.of(cosmeticCheckboxBodies, cosmeticCheckboxVoices,
+        cosmeticCheckboxEmotions, cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel,
+        cosmeticCheckboxPlanetSize, gameplayRandomizeStation, gameplayRandomizeNeuromods,
+        gameplayRandomizeFabPlanCosts, gameplayRandomizeRecyclers, gameplayRandomizeDispensers,
+        gameplayRandomizeBreakables, gameplayRandomizeHackables, startCheckboxDay2,
+        startCheckboxAddAllEquipment, startCheckboxSkipJovan, startCheckboxOutsideApartment,
+        moreGuns, morePreySoulsGuns, morePreySoulsChipsets, morePreySoulsEnemies,
+        morePreySoulsTurrets, cheatsCheckboxAllScans, cheatsCheckboxCustomStart,
+        cheatsCheckboxOpenStation, expCheckboxEnableGravity, expCheckboxGravity,
         expCheckboxSelfDestruct, expCheckboxWander, expLivingCorpses);
 
-    toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton, clearButton,
-        saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton, litePresetButton,
-        gotsPresetButton, livingTalosPresetButton, cheatsTextFieldGameTokens, expTextFieldShuttleTimer,
-        expTextFieldTimer, seedText, directoryText);
+    toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton,
+        clearButton, saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton,
+        litePresetButton, gotsPresetButton, livingTalosPresetButton, cheatsTextFieldGameTokens,
+        expTextFieldShuttleTimer, expTextFieldTimer, seedText, directoryText);
 
     logger = Logger.getLogger("randomizer_gui");
 
     setTooltips();
 
-    cheatsChoiceBoxCustomStart.getItems().add(SpawnLocation.RANDOM.name());
+    cheatsChoiceBoxCustomStart.getItems()
+        .add(SpawnLocation.RANDOM.name());
     for (SpawnLocation l : CustomSpawnGenerator.SUPPORTED_SPAWNS) {
-      cheatsChoiceBoxCustomStart.getItems().add(l.name());
+      cheatsChoiceBoxCustomStart.getItems()
+          .add(l.name());
     }
 
     // Attempt to read from preset definition file and saved settings file
     try {
       allPresets = getAllPresets();
     } catch (FileNotFoundException e) {
-      String loggerWarning = String.format("Could not find presets file %s.\n", Gui2Consts.ALL_PRESETS_FILE);
+      String loggerWarning =
+          String.format("Could not find presets file %s.\n", Gui2Consts.ALL_PRESETS_FILE);
       logger.warning(loggerWarning);
       outputWindow.appendText(loggerWarning);
       e.printStackTrace();
     } catch (IOException e) {
       outputWindow.appendText(String.format("Unable to parse %s\n", Gui2Consts.ALL_PRESETS_FILE));
-      logger.info(String.format("An error occurred while parsing %s.", Gui2Consts.ALL_PRESETS_FILE));
+      logger
+          .info(String.format("An error occurred while parsing %s.", Gui2Consts.ALL_PRESETS_FILE));
       e.printStackTrace();
       allPresets = AllPresets.getDefaultInstance();
     }
@@ -287,21 +293,27 @@ public class WindowController {
 
   private void setTooltips() {
     directoryText.setTooltip(new Tooltip("The directory where Prey is installed"));
-    changeDirButton.setTooltip(new Tooltip("Open a file chooser to select the Prey install directory"));
+    changeDirButton
+        .setTooltip(new Tooltip("Open a file chooser to select the Prey install directory"));
     seedText.setTooltip(new Tooltip("Seed to use for random generation. Must be a number (int64)"));
     newSeedButton.setTooltip(new Tooltip("Randomly picks a new seed"));
 
-    recommendedPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"basic\" experience."));
-    chaoticPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
+    recommendedPresetButton
+        .setTooltip(new Tooltip("Updates this UI to the preset \"recommended\" experience."));
+    chaoticPresetButton
+        .setTooltip(new Tooltip("Updates this UI to the preset \"chaotic\" experience."));
     litePresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"lite\" experience."));
     gotsPresetButton.setTooltip(new Tooltip("Updates this UI to the preset \"timed\" experience."));
-    livingTalosPresetButton.setTooltip(new Tooltip("Updates the UI to the preset \"Living Talos\" experience."));
+    livingTalosPresetButton
+        .setTooltip(new Tooltip("Updates the UI to the preset \"Living Talos\" experience."));
 
-    moreGuns.setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
-    gameplayRandomizeFabPlanCosts.setTooltip(new Tooltip(
-        "Sets the materials costs for every fab plan to random values."));
+    moreGuns
+        .setTooltip(new Tooltip("Adds additional weapons from \"More Guns\" to the item pool."));
+    gameplayRandomizeFabPlanCosts
+        .setTooltip(new Tooltip("Sets the materials costs for every fab plan to random values."));
 
-    installButton.setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
+    installButton
+        .setTooltip(new Tooltip("Generates randomized game and installs to the game directory."));
     uninstallButton.setTooltip(new Tooltip(
         "Removes any mods added by this installer and reverts changes to the game directory."));
     clearButton.setTooltip(new Tooltip("Clears the output window."));
@@ -312,47 +324,88 @@ public class WindowController {
 
   private void updateUI() {
     updateAllPresets();
-    cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
-    cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoicelines());
-    cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
-    cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
-    cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings().getRandomizePlanetSize());
-    cosmeticCheckboxEmotions.setSelected(settings.getCosmeticSettings().getRandomizeEmotions());
+    cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings()
+        .getRandomizeBodies());
+    cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings()
+        .getRandomizeVoicelines());
+    cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings()
+        .getRandomizeMusic());
+    cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings()
+        .getRandomizePlayerModel());
+    cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings()
+        .getRandomizePlanetSize());
+    cosmeticCheckboxEmotions.setSelected(settings.getCosmeticSettings()
+        .getRandomizeEmotions());
 
-    gameplayRandomizeStation.setSelected(settings.getGameplaySettings().getRandomizeStation());
-    gameplayRandomizeNeuromods.setSelected(settings.getGameplaySettings().getRandomizeNeuromods());
-    gameplayRandomizeFabPlanCosts.setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
-    gameplayRandomizeRecyclers.setSelected(settings.getGameplaySettings().getRandomizeRecyclers().getIsEnabled());
-    gameplayRandomizeDispensers.setSelected(settings.getGameplaySettings().getRandomizeDispensers().getIsEnabled());
-    gameplayRandomizeBreakables.setSelected(settings.getGameplaySettings().getRandomizeBreakables().getIsEnabled());
-    gameplayRandomizeHackables.setSelected(settings.getGameplaySettings().getRandomizeHackables().getIsEnabled());
+    gameplayRandomizeStation.setSelected(settings.getGameplaySettings()
+        .getRandomizeStation());
+    gameplayRandomizeNeuromods.setSelected(settings.getGameplaySettings()
+        .getRandomizeNeuromods());
+    gameplayRandomizeFabPlanCosts.setSelected(settings.getGameplaySettings()
+        .getRandomizeFabPlanCosts());
+    gameplayRandomizeRecyclers.setSelected(settings.getGameplaySettings()
+        .getRandomizeRecyclers()
+        .getIsEnabled());
+    gameplayRandomizeDispensers.setSelected(settings.getGameplaySettings()
+        .getRandomizeDispensers()
+        .getIsEnabled());
+    gameplayRandomizeBreakables.setSelected(settings.getGameplaySettings()
+        .getRandomizeBreakables()
+        .getIsEnabled());
+    gameplayRandomizeHackables.setSelected(settings.getGameplaySettings()
+        .getRandomizeHackables()
+        .getIsEnabled());
 
-    startCheckboxDay2.setSelected(settings.getGameStartSettings().getStartOnSecondDay());
-    startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings().getAddLootToApartment());
-    startCheckboxSkipJovan.setSelected(settings.getGameStartSettings().getSkipJovanCutscene());
-    startCheckboxOutsideApartment.setSelected(settings.getGameStartSettings().getStartOutsideApartment());
+    startCheckboxDay2.setSelected(settings.getGameStartSettings()
+        .getStartOnSecondDay());
+    startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings()
+        .getAddLootToApartment());
+    startCheckboxSkipJovan.setSelected(settings.getGameStartSettings()
+        .getSkipJovanCutscene());
+    startCheckboxOutsideApartment.setSelected(settings.getGameStartSettings()
+        .getStartOutsideApartment());
 
-    moreGuns.setSelected(settings.getMoreSettings().getMoreGuns());
-    morePreySoulsGuns.setSelected(settings.getMoreSettings().getPreySoulsGuns());
-    morePreySoulsChipsets.setSelected(settings.getMoreSettings().getPreySoulsChipsets());
-    morePreySoulsEnemies.setSelected(settings.getMoreSettings().getPreySoulsEnemies());
-    morePreySoulsTurrets.setSelected(settings.getMoreSettings().getPreySoulsTurrets());
+    moreGuns.setSelected(settings.getMoreSettings()
+        .getMoreGuns());
+    morePreySoulsGuns.setSelected(settings.getMoreSettings()
+        .getPreySoulsGuns());
+    morePreySoulsChipsets.setSelected(settings.getMoreSettings()
+        .getPreySoulsChipsets());
+    morePreySoulsEnemies.setSelected(settings.getMoreSettings()
+        .getPreySoulsEnemies());
+    morePreySoulsTurrets.setSelected(settings.getMoreSettings()
+        .getPreySoulsTurrets());
 
-    cheatsCheckboxOpenStation.setSelected(settings.getCheatSettings().getOpenStation());
-    cheatsCheckboxAllScans.setSelected(settings.getCheatSettings().getUnlockAllScans());
-    cheatsCheckboxFriendlyNpcs.setSelected(settings.getCheatSettings().getFriendlyNpcs());
-    cheatsCheckboxCustomStart.setSelected(settings.getCheatSettings().getUseCustomSpawn());
-    cheatsChoiceBoxCustomStart.setDisable(!settings.getCheatSettings().getUseCustomSpawn());
-    cheatsChoiceBoxCustomStart.setValue(settings.getCheatSettings().getCustomSpawnLocation().name());
-    cheatsTextFieldGameTokens.setText(settings.getCheatSettings().getGameTokenOverrides());
+    cheatsCheckboxOpenStation.setSelected(settings.getCheatSettings()
+        .getOpenStation());
+    cheatsCheckboxAllScans.setSelected(settings.getCheatSettings()
+        .getUnlockAllScans());
+    cheatsCheckboxFriendlyNpcs.setSelected(settings.getCheatSettings()
+        .getFriendlyNpcs());
+    cheatsCheckboxCustomStart.setSelected(settings.getCheatSettings()
+        .getUseCustomSpawn());
+    cheatsChoiceBoxCustomStart.setDisable(!settings.getCheatSettings()
+        .getUseCustomSpawn());
+    cheatsChoiceBoxCustomStart.setValue(settings.getCheatSettings()
+        .getCustomSpawnLocation()
+        .name());
+    cheatsTextFieldGameTokens.setText(settings.getCheatSettings()
+        .getGameTokenOverrides());
 
-    expCheckboxWander.setSelected(settings.getExpSettings().getWanderingHumans());
-    expLivingCorpses.setSelected(settings.getExpSettings().getLivingCorpses());
-    expCheckboxGravity.setSelected(settings.getExpSettings().getZeroGravityEverywhere());
-    expCheckboxEnableGravity.setSelected(settings.getExpSettings().getEnableGravityInExtAndGuts());
-    expCheckboxSelfDestruct.setSelected(settings.getExpSettings().getStartSelfDestruct());
-    expTextFieldTimer.setText(settings.getExpSettings().getSelfDestructTimer());
-    expTextFieldShuttleTimer.setText(settings.getExpSettings().getSelfDestructShuttleTimer());
+    expCheckboxWander.setSelected(settings.getExpSettings()
+        .getWanderingHumans());
+    expLivingCorpses.setSelected(settings.getExpSettings()
+        .getLivingCorpses());
+    expCheckboxGravity.setSelected(settings.getExpSettings()
+        .getZeroGravityEverywhere());
+    expCheckboxEnableGravity.setSelected(settings.getExpSettings()
+        .getEnableGravityInExtAndGuts());
+    expCheckboxSelfDestruct.setSelected(settings.getExpSettings()
+        .getStartSelfDestruct());
+    expTextFieldTimer.setText(settings.getExpSettings()
+        .getSelfDestructTimer());
+    expTextFieldShuttleTimer.setText(settings.getExpSettings()
+        .getSelfDestructShuttleTimer());
     expTextFieldTimer.setDisable(!expCheckboxSelfDestruct.isSelected());
     expTextFieldShuttleTimer.setDisable(!expCheckboxSelfDestruct.isSelected());
   }
@@ -407,15 +460,22 @@ public class WindowController {
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxEmotions.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
-    setPickupPreset("Randomize all items (no story items)");
+    setPickupPreset("Randomize items within type");
     setPropPreset("Randomize props within leverage tier");
-    setEnemyPreset("Randomize all enemies");
+    setEnemyPreset("Randomize all enemies (no nightmare)");
     setNpcPreset("Randomize friendly robots within type");
     gameplayRandomizeFabPlanCosts.setSelected(true);
+    gameplayRandomizeNeuromods.setSelected(true);
+    gameplayRandomizeDispensers.setSelected(true);
     startCheckboxDay2.setSelected(true);
+    moreGuns.setSelected(true);
+    morePreySoulsGuns.setSelected(true);
+    morePreySoulsTurrets.setSelected(true);
+    cheatsCheckboxAllScans.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(
+        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -441,12 +501,11 @@ public class WindowController {
     startCheckboxDay2.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
-    morePreySoulsEnemies.setSelected(true);
     morePreySoulsTurrets.setSelected(true);
-    morePreySoulsChipsets.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(
+        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -458,7 +517,8 @@ public class WindowController {
     startCheckboxDay2.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(
+        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -471,7 +531,8 @@ public class WindowController {
     expTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
     outputWindow.clear();
     outputWindow.appendText("G.O.T.S. preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(
+        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   @FXML
@@ -485,7 +546,8 @@ public class WindowController {
     cheatsCheckboxOpenStation.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Living Talos preset selected.\n");
-    outputWindow.appendText(String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
+    outputWindow.appendText(
+        String.format(Gui2Consts.PRESET_INFO, SettingsHelper.settingsToString(getSettings())));
   }
 
   /*
@@ -497,8 +559,10 @@ public class WindowController {
     Settings finalSettings = getSettings();
 
     // TODO: Add a check here to see if nothing will be installed
-    validateSpawnPresets(finalSettings.getGameplaySettings().getItemSpawnSettings(), "items");
-    validateSpawnPresets(finalSettings.getGameplaySettings().getEnemySpawnSettings(), "enemies");
+    validateSpawnPresets(finalSettings.getGameplaySettings()
+        .getItemSpawnSettings(), "items");
+    validateSpawnPresets(finalSettings.getGameplaySettings()
+        .getEnemySpawnSettings(), "enemies");
 
     try {
       writeLastUsedSettingsToFile(Gui2Consts.LAST_USED_SETTINGS_FILE, finalSettings);
@@ -553,7 +617,8 @@ public class WindowController {
     Settings toSave = getSettings();
     try {
       writeLastUsedSettingsToFile(Gui2Consts.SAVED_SETTINGS_FILE, toSave);
-      outputWindow.appendText(String.format(Gui2Consts.SAVING_INFO, Gui2Consts.SAVED_SETTINGS_FILE));
+      outputWindow
+          .appendText(String.format(Gui2Consts.SAVING_INFO, Gui2Consts.SAVED_SETTINGS_FILE));
       outputWindow.appendText(SettingsHelper.settingsToString(toSave));
       outputWindow.appendText(String.format(
           "These will be the default the next time you open this UI. You can delete %s to delete these saved settings.\n",
@@ -564,16 +629,21 @@ public class WindowController {
     }
   }
 
-  private void writeLastUsedSettingsToFile(String savedSettingsFilePath, Settings toSave) throws IOException {
+  private void writeLastUsedSettingsToFile(String savedSettingsFilePath, Settings toSave)
+      throws IOException {
     File savedSettingsFile = new File(savedSettingsFilePath);
     savedSettingsFile.createNewFile();
-    String serialized = JsonFormat.printer().includingDefaultValueFields().preservingProtoFieldNames().print(toSave);
+    String serialized = JsonFormat.printer()
+        .includingDefaultValueFields()
+        .preservingProtoFieldNames()
+        .print(toSave);
     try (BufferedWriter bwJson = new BufferedWriter(new FileWriter(savedSettingsFile));) {
       bwJson.write(serialized);
     }
   }
 
-  private void writeHumanReadableSettingsToFile(String filePath, Settings toSave) throws IOException {
+  private void writeHumanReadableSettingsToFile(String filePath, Settings toSave)
+      throws IOException {
     String humanReadable = SettingsHelper.settingsToString(toSave);
     humanReadable += String.format("Generated on %s.", new Date().toString());
     File humanReadableSettingsFile = new File(filePath);
@@ -584,18 +654,22 @@ public class WindowController {
   }
 
   private void updateAllPresets() {
-    initPresetRadioButtons(pickupPresetsVBox, allPresets.getPickupSpawnSettingsList(), pickupToggleGroup, settings
-        .getGameplaySettings()
-        .getPickupPresetName(), pickupDefault);
-    initPresetRadioButtons(propPresetsVBox, allPresets.getPropSpawnSettingsList(), propToggleGroup, settings
-        .getGameplaySettings()
-        .getPropPresetName(), propDefault);
-    initPresetRadioButtons(enemyPresetsVBox, allPresets.getEnemySpawnSettingsList(), enemyToggleGroup, settings
-        .getGameplaySettings()
-        .getEnemyPresetName(), enemyDefault);
-    initPresetRadioButtons(npcPresetsVBox, allPresets.getNpcSpawnSettingsList(), npcToggleGroup, settings
-        .getGameplaySettings()
-        .getNpcPresetName(), npcDefault);
+    initPresetRadioButtons(pickupPresetsVBox, allPresets.getPickupSpawnSettingsList(),
+        pickupToggleGroup, settings.getGameplaySettings()
+            .getPickupPresetName(),
+        pickupDefault);
+    initPresetRadioButtons(propPresetsVBox, allPresets.getPropSpawnSettingsList(), propToggleGroup,
+        settings.getGameplaySettings()
+            .getPropPresetName(),
+        propDefault);
+    initPresetRadioButtons(enemyPresetsVBox, allPresets.getEnemySpawnSettingsList(),
+        enemyToggleGroup, settings.getGameplaySettings()
+            .getEnemyPresetName(),
+        enemyDefault);
+    initPresetRadioButtons(npcPresetsVBox, allPresets.getNpcSpawnSettingsList(), npcToggleGroup,
+        settings.getGameplaySettings()
+            .getNpcPresetName(),
+        npcDefault);
   }
 
   private void setPickupPreset(String name) {
@@ -647,8 +721,8 @@ public class WindowController {
   }
 
   // Adds all options from the given preset list into the given vbox
-  private void initPresetRadioButtons(VBox vbox, List<GenericSpawnPresetFilter> presets, ToggleGroup toggleGroup,
-      String selected, String defaultSelected) {
+  private void initPresetRadioButtons(VBox vbox, List<GenericSpawnPresetFilter> presets,
+      ToggleGroup toggleGroup, String selected, String defaultSelected) {
     if (Strings.isNullOrEmpty(selected)) {
       selected = defaultSelected;
     }
@@ -659,7 +733,8 @@ public class WindowController {
       if (selected.equals(preset.getName())) {
         rb.setSelected(true);
       }
-      vbox.getChildren().add(rb);
+      vbox.getChildren()
+          .add(rb);
     }
   }
 
@@ -672,7 +747,8 @@ public class WindowController {
   private void setSelectedPreset(ToggleGroup toggleGroup, String name) {
     for (Toggle t : toggleGroup.getToggles()) {
       RadioButton rb = (RadioButton) t;
-      if (rb.getText().equals(name)) {
+      if (rb.getText()
+          .equals(name)) {
         rb.setSelected(true);
       } else {
         rb.setSelected(false);
@@ -691,9 +767,11 @@ public class WindowController {
         .build();
   }
 
-  private GenericSpawnPresetFilter getPresetFilterByName(List<GenericSpawnPresetFilter> presets, String presetName) {
+  private GenericSpawnPresetFilter getPresetFilterByName(List<GenericSpawnPresetFilter> presets,
+      String presetName) {
     for (GenericSpawnPresetFilter preset : presets) {
-      if (preset.getName().equals(presetName)) {
+      if (preset.getName()
+          .equals(presetName)) {
         return preset;
       }
     }
@@ -703,13 +781,13 @@ public class WindowController {
   // Create an item spawn filter by merging the selected item and prop spawn
   // presets
   private GenericSpawnPresetFilter mergeItemSpawnPresets() {
-    GenericSpawnPresetFilter pickupPresetFilter = getPresetFilterByName(allPresets.getPickupSpawnSettingsList(),
-        getPickupPreset());
-    GenericSpawnPresetFilter propPresetFilter = getPresetFilterByName(allPresets.getPropSpawnSettingsList(),
-        getPropPreset());
+    GenericSpawnPresetFilter pickupPresetFilter =
+        getPresetFilterByName(allPresets.getPickupSpawnSettingsList(), getPickupPreset());
+    GenericSpawnPresetFilter propPresetFilter =
+        getPresetFilterByName(allPresets.getPropSpawnSettingsList(), getPropPreset());
     // Hack: Turrets are technically items so we need to add the friendly npc settings here
-    GenericSpawnPresetFilter npcPresetFilter = getPresetFilterByName(allPresets.getNpcSpawnSettingsList(),
-        getNpcPreset());
+    GenericSpawnPresetFilter npcPresetFilter =
+        getPresetFilterByName(allPresets.getNpcSpawnSettingsList(), getNpcPreset());
     return GenericSpawnPresetFilter.newBuilder()
         .setName(pickupPresetFilter.getName() + " + " + propPresetFilter.getName())
         .setDesc(pickupPresetFilter.getDesc() + " + " + propPresetFilter.getDesc())
@@ -722,10 +800,10 @@ public class WindowController {
   // Create an enemy spawn filter by merging the selected enemy and npc spawn
   // presets
   private GenericSpawnPresetFilter mergeEnemySpawnPresets() {
-    GenericSpawnPresetFilter enemyPresetFilter = getPresetFilterByName(allPresets.getEnemySpawnSettingsList(),
-        getEnemyPreset());
-    GenericSpawnPresetFilter npcPresetFilter = getPresetFilterByName(allPresets.getNpcSpawnSettingsList(),
-        getNpcPreset());
+    GenericSpawnPresetFilter enemyPresetFilter =
+        getPresetFilterByName(allPresets.getEnemySpawnSettingsList(), getEnemyPreset());
+    GenericSpawnPresetFilter npcPresetFilter =
+        getPresetFilterByName(allPresets.getNpcSpawnSettingsList(), getNpcPreset());
     return GenericSpawnPresetFilter.newBuilder()
         .setName(enemyPresetFilter.getName() + " + " + npcPresetFilter.getName())
         .setDesc(enemyPresetFilter.getDesc() + " + " + npcPresetFilter.getDesc())
@@ -744,10 +822,14 @@ public class WindowController {
         .setRandomizeStation(gameplayRandomizeStation.isSelected())
         .setRandomizeNeuromods(gameplayRandomizeNeuromods.isSelected())
         .setRandomizeFabPlanCosts(gameplayRandomizeFabPlanCosts.isSelected())
-        .setRandomizeRecyclers(ToggleWithSlider.newBuilder().setIsEnabled(gameplayRandomizeRecyclers.isSelected()))
-        .setRandomizeDispensers(ToggleWithSlider.newBuilder().setIsEnabled(gameplayRandomizeDispensers.isSelected()))
-        .setRandomizeBreakables(ToggleWithSlider.newBuilder().setIsEnabled(gameplayRandomizeBreakables.isSelected()))
-        .setRandomizeHackables(ToggleWithSlider.newBuilder().setIsEnabled(gameplayRandomizeHackables.isSelected()))
+        .setRandomizeRecyclers(ToggleWithSlider.newBuilder()
+            .setIsEnabled(gameplayRandomizeRecyclers.isSelected()))
+        .setRandomizeDispensers(ToggleWithSlider.newBuilder()
+            .setIsEnabled(gameplayRandomizeDispensers.isSelected()))
+        .setRandomizeBreakables(ToggleWithSlider.newBuilder()
+            .setIsEnabled(gameplayRandomizeBreakables.isSelected()))
+        .setRandomizeHackables(ToggleWithSlider.newBuilder()
+            .setIsEnabled(gameplayRandomizeHackables.isSelected()))
         .setPickupPresetName(getPickupPreset())
         .setPropPresetName(getPropPreset())
         .setEnemyPresetName(getEnemyPreset())
@@ -814,7 +896,9 @@ public class WindowController {
   private AllPresets getAllPresets() throws IOException {
     FileReader fr = new FileReader(Gui2Consts.ALL_PRESETS_FILE);
     AllPresets.Builder builder = AllPresets.newBuilder();
-    JsonFormat.parser().ignoringUnknownFields().merge(fr, builder);
+    JsonFormat.parser()
+        .ignoringUnknownFields()
+        .merge(fr, builder);
     return builder.build();
   }
 
@@ -822,16 +906,20 @@ public class WindowController {
     // Parse the saved settings file and set new defaults accordingly
     File f = new File(Gui2Consts.SAVED_SETTINGS_FILE);
     if (!f.exists()) {
-      String loggerWarning = String.format("Could not find saved settings file %s.\n", Gui2Consts.SAVED_SETTINGS_FILE);
+      String loggerWarning =
+          String.format("Could not find saved settings file %s.\n", Gui2Consts.SAVED_SETTINGS_FILE);
       logger.info(loggerWarning);
       return Settings.getDefaultInstance();
     }
     try (FileReader fr = new FileReader(Gui2Consts.SAVED_SETTINGS_FILE)) {
       Settings.Builder builder = Settings.newBuilder();
-      JsonFormat.parser().ignoringUnknownFields().merge(fr, builder);
+      JsonFormat.parser()
+          .ignoringUnknownFields()
+          .merge(fr, builder);
       return builder.build();
     } catch (IOException e) {
-      String loggerWarning = Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE + "\n";
+      String loggerWarning =
+          Gui2Consts.ERROR_COULD_NOT_PARSE_FILE + Gui2Consts.SAVED_SETTINGS_FILE + "\n";
       logger.warning(loggerWarning);
       outputWindow.appendText(loggerWarning);
       return Settings.getDefaultInstance();
@@ -839,16 +927,18 @@ public class WindowController {
   }
 
   private Settings createInitialSettings(AllPresets allPresets, Settings savedSettings) {
-    if (savedSettings.getReleaseVersion().equals(Gui2Consts.VERSION)) {
+    if (savedSettings.getReleaseVersion()
+        .equals(Gui2Consts.VERSION)) {
       return savedSettings;
     } else {
-      if (savedSettings.getReleaseVersion().isEmpty()) {
+      if (savedSettings.getReleaseVersion()
+          .isEmpty()) {
         outputWindow.appendText("No saved settings found.\n");
         logger.info("No saved settings found.");
       } else {
         outputWindow.appendText("Saved settings version mismatch.\n");
-        String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH, savedSettings
-            .getReleaseVersion(), Gui2Consts.VERSION);
+        String loggerWarning = String.format(Gui2Consts.WARNING_SAVED_SETTINGS_VERSION_MISMATCH,
+            savedSettings.getReleaseVersion(), Gui2Consts.VERSION);
         logger.warning(loggerWarning);
       }
       outputWindow.appendText("Falling back to default settings.\n");
@@ -872,18 +962,25 @@ public class WindowController {
     if (gspj.getFiltersList() == null) {
       return;
     }
-    for (int i = 0; i < gspj.getFiltersList().size(); i++) {
+    for (int i = 0; i < gspj.getFiltersList()
+        .size(); i++) {
       GenericSpawnPresetRule gfj = gspj.getFilters(i);
 
       if (gfj.getOutputTagsList() == null || gfj.getOutputWeightsList() == null) {
         continue;
       }
 
-      if (gfj.getOutputWeightsList().size() != 0 && gfj.getOutputTagsList().size() != gfj.getOutputWeightsList()
-          .size()) {
+      if (gfj.getOutputWeightsList()
+          .size() != 0
+          && gfj.getOutputTagsList()
+              .size() != gfj.getOutputWeightsList()
+                  .size()) {
         logger.info(String.format(
             "Invalid filter settings for %s spawns, preset name %s, filter %d. Output tags length (%d) and output weights length (%d) are not identical.",
-            name, gspj.getName(), i, gfj.getOutputTagsList().size(), gfj.getOutputWeightsList().size()));
+            name, gspj.getName(), i, gfj.getOutputTagsList()
+                .size(),
+            gfj.getOutputWeightsList()
+                .size()));
       }
     }
 

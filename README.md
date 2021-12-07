@@ -26,6 +26,10 @@ Here are some of the options the randomizer offers:
 * Randomized neuromod upgrade tree
 * Randomized station connectivity
 * Randomized fab plan costs
+* [New in v0.4] Randomized operator dispensers
+* [New in v0.4] Randomized recyclers/fabricators
+* [New in v0.4] Randomized breakables
+* [New in v0.4] Randomized hackables
 
 **Other features:**
 
@@ -35,6 +39,9 @@ Here are some of the options the randomizer offers:
 * Unlock all doors/safes/workstations
 * Get Off The Station mode (timed challenge mode)
 * Enable/disable gravity (experimental and not recommended for serious runs)
+* [New in v0.4] Prey Souls guns/turrets
+* [New in v0.4] All corpses are alive
+* [New in v0.4] Morgan's office door can lock from the inside
 
 ## Getting Started
 
@@ -47,30 +54,30 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
 ## Version History
 
 * 0.0
-    * Early prototyping/testing
+  * Early prototyping/testing
 * 0.1
-    * Bug fixes with settings, log files
-    * Adjust presets
-    * Add tooltips to GUI
+  * Bug fixes with settings, log files
+  * Adjust presets
+  * Add tooltips to GUI
 * 0.2 (beta)
-    * Fix bug with multiple custom filters
-    * Adjust presets
-    * Add neuromod randomization
-    * Add station randomization
-    * Add "start on 2nd day"
-    * Add game token override support
-    * Add save settings support
-    * Add "new seed" support
+  * Fix bug with multiple custom filters
+  * Adjust presets
+  * Add neuromod randomization
+  * Add station randomization
+  * Add "start on 2nd day"
+  * Add game token override support
+  * Add save settings support
+  * Add "new seed" support
 * 0.2
-	* Adjust station randomization to reduce unplayable scenarios
-	* Adjust costs for randomized neuromods so that they are proportional to their attainment order
-	* Remove station randomization dependency on "open talos"
-	* Change "open talos" option to "unlock everything"
-	* Update item/enemy spawn presets to have a "recommended", "chaotic", and "lite" option
-	* Various minor bug fixes, refactors, and improvements
+  * Adjust station randomization to reduce unplayable scenarios
+  * Adjust costs for randomized neuromods so that they are proportional to their attainment order
+  * Remove station randomization dependency on "open talos"
+  * Change "open talos" option to "unlock everything"
+  * Update item/enemy spawn presets to have a "recommended", "chaotic", and "lite" option
+  * Various minor bug fixes, refactors, and improvements
 * 0.21
-	* Quick fix for randomized station, where Shuttle Bay --> GUTS door was not getting properly setting
-	* Added "More guns" option
+  * Quick fix for randomized station, where Shuttle Bay --> GUTS door was not getting properly setting
+  * Added "More guns" option
 * 0.22
   * Adjusted chaotic presets so that they crash the game less
   * Implemented better threading support for installer
@@ -118,20 +125,33 @@ Report issues to [/u/Shape_in_the_Glass](https://reddit.com/u/shape_in_the_glass
   * Renamed "Foam" guns to "Toy" guns
   * Updated textures for exotic guns so that the ammo counter is visible
   * Updated inventory and HUD icons for "more guns" guns
-* 0.4 (currently in development)
+* 0.4
   * Fixed an issue where station randomization could lead to a soft lock during Alex's lockdown
   * Fixed an issue where body randomization could generate bald women
+  * Fixed an issue with body randomization so that Jovan, Bellamy, and Ingram can have randomized heads without their head disappearing
+  * Fixed an issue with fabrication plans not properly spawning in the "lite" preset
+  * Fixed an issue with player model randomization where Morgan's arms would be grey
+  * Fixed an issue with "More Guns" exotic guns where firing them would kill you immediately
   * Removed tentacles from the spawn presets because they were only causing trouble
-  * Adjusted fabrication plan randomization to produce more reasonable costs
+  * Removed grenade guns from "More Guns"
+  * Split item/enemy randomization presets into item/prop and enemy/npc
+  * Optimized level randomization to decrease install time
+  * Updated neuromod and new item descriptions to be more clear (ex. randomized neuromods will have accurate info, exotic guns will say what kind of ammo is needed)
+  * Modified fabrication plan randomization to produce more reasonable costs
+  * Modified presets for "Lite", "Recommended", and "Chaotic"
+  * Modified enemy randomization so that certain enemies are no longer whitelisted (the lift phantom, the lift technopath, the water treatment technopath)
+  * Modified dialog randomization to also randomize cutscene dialog
+  * Modified pickup item randomization to utilize in-game randomness (ex. fruit trees can yield different random junk)
+  * Added new spawn preset options, such as splitting "with nightmare" into a separate enemy randomization option, or "randomize within theme" for props
   * Added randomization options for recyclers, operator dispensers, hackable objects, and repairable objects
   * Added a "living corpses" option that makes all corpses spawn in alive (intended for "Living Talos" preset)
-  * Split item/enemy randomization presets into item/prop and enemy/npc
+  * Added Prey Souls guns and turrets (icons and materials are different from the original mod, some guns such as the psi cutter, laser assault rifle, time shotgun, and gauss rifle are not present)
 
 ## Acknowledgments
 
 A big thanks to:
 
-* Coyote for letting me use his content from Prey Souls!
+* Coyote for letting me use his content from Prey Souls!													
 * JerryTerry for letting me use their "Natural Day 2 Start" mod!
 * Fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure
 * The brave adventrous souls who have helped me playtest and debug

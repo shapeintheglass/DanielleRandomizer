@@ -693,8 +693,8 @@
       ]
     },
     {
-      "name": "Randomize all enemies, no nightmare",
-      "desc": "Randomizes all hostile typhon and robots, but does not add the giant honker to the mix.",
+      "name": "Randomize all enemies (no nightmare)",
+      "desc": "Randomizes all hostile typhon and robots, but does not add the giant honker",
       "filters": [
         {
           "input_tags": [

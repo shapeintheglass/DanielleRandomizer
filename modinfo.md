@@ -18,8 +18,12 @@ We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url]﻿! Feel 
 [*]Voice lines
 [*]Music
 [*]Player model
-[*](new in v0.31) Fabrication plan costs
-[*](new in v0.31) Earth/moon/sun size
+[*]Fabrication plan costs
+[*]Earth/moon/sun size
+[*][new in 0.4] Operator dispensers
+[*][new in 0.4] Recyclers/fabricators
+[*][new in 0.4] Repairable objects (50/50 chance of requiring repair to use)
+[*][new in 0.4] Hackable objects (50/50 chance of requiring hack to use)
 [/list]
 
 [b][u]OTHER OPTIONS[/u][/b]
@@ -31,7 +35,10 @@ We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url]﻿! Feel 
 [*]Start on second day (Now new and improved, thanks to JerryTerry letting me use their [url=https://www.nexusmods.com/prey2017/mods/68]"Natural Day 2 Start"[/url] mod!)
 [*]More guns - Adds [url=https://www.nexusmods.com/prey2017/mods/69]guns with randomized projectiles[/url]﻿ to the item spawn pool.
 [*]G.O.T.S. (Get Off The Station) mode - The station's self destruct will start as soon as you wake up in the Neuromod Division. Can you escape before time runs out?
-[*](new in v0.31) Gravity toggles - enable 0G everywhere, or 1G in the Exterior+GUTS. Not intended for serious playthroughs.
+[*]Gravity toggles - enable 0G everywhere, or 1G in the Exterior+GUTS. Not intended for serious playthroughs.
+[*][new in 0.4] Living Talos mode - Changes all typhon to humans and makes all humans wander around the station. Human corpses are resurrected as well. Most of the station is unlocked.
+[*][new in 0.4] Prey Souls guns - Adds 16 guns from the Prey Souls mod. Note: Some changes were made to the guns during porting, such as lack of custom skins, and 5 guns have not been ported (psi cutter, laser rifle, gauss rifle, quantum shotgun).
+[*][new in 0.4] Prey Souls turrets - Adds 3 turrets from the Prey Souls mod. Friendly robot randomization must be enabled for these to spawn in place of existing turrets.
 [/list]
 
 [b][u]QUICK START INSTRUCTIONS[/u][/b]
@@ -59,7 +66,7 @@ This is because unfortunately Prey does not always cleanly delete old files befo
 [size=4]Dependencies[/size]
 
 [list]
-[*]Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded)
+[*]Requires a valid copy of Prey 2017 on Steam or GOG (the Windows Store version of Prey 2017 cannot be modded) (untested on the Bethesda Launcher version)
 [*]Must have [url=http://java.com/download]Java for Windows[/url] installed
 [/list]
 
@@ -144,44 +151,17 @@ To uninstall the randomizer installer GUI itself, just delete danielle_randomize
 
 This randomizer offers three basic presets as a starting point. These can be customized further, or you can build up your desired settings from scratch.
 
-[size=4]Recommended[/size]
-
-This preset pushes randomization as far as it can go without openly inviting a potential game crash or soft lock.
-
-Settings:
-[list]
-[*]Randomize all items - Randomizes all items and props. Does not spawn story items early, or any hazardous items. Pickups can only become other pickups, and physics props can only become other physics props.
-[*]Randomize all enemies - Randomizes all typhon/corrupted operators. Does not spawn unkillable entities such as turrets or tentacles. Also randomizes friendly operators.
-[*]Randomize neuromods - Randomizes the neuromod skill tree within each category
-[*]Randomize fab plan costs
-[*]More guns - adds randomized guns to the item spawn pool
-[*]All cosmetic randomizations
-[/list]
-
-[size=4]Chaotic[/size]
-
-Intended for brave souls who would like to go a little further than the safe zone. Anything can happen. Warning: Chaotic randomization is known to cause the most crashes/soft locks.
-
-Settings:
-[list]
-[*]Randomize all items (chaotic) - Randomizes all items/props. Can potentially spawn story items early (such as the psychoscope or arming keys), which can lead to sequence breaking. Can also spawn hazardous items such as radioactive tanks. May also result in large furniture showing up in unexpected places.
-[*]Randomize all enemies (chaotic) - Randomizes all typhon/corrupted operators. May spawn unkillable entities such as turrets or tentacles. Also randomizes friendly operators.
-[*]Randomize neuromods - Randomizes the neuromod skill tree within each category
-[*]More guns - adds randomized guns to the item spawn pool
-[*]Randomize station - randomizes station connectivity
-[*]Randomize fab plan costs
-[*]All cosmetic randomizations
-[/list]
-
 [size=4]Lite[/size]
 
 Preserves as much of the Prey experience as possible, but with a small bit of randomization. If you're trying out the randomizer for the first time, try starting out with this option and adding a few other customizations that you're comfortable with.
 
-Settings:
-[list]
-[*]Randomize items within type - Items are randomized according to their type. Weapons can become other weapons, fab plans can become other fab plans, etc. Physics props are not affected.
-[*]Randomize enemies within type - Enemies are randomized according to their difficulty. Easy enemies can become other easy enemies, difficult enemies can become other difficult enemies, etc. Friendly operators are also randomized.
-[/list]
+[size=4]Recommended[/size]
+
+This preset is intended for people who want wacky random fun while still making the game (mostly) playable.
+
+[size=4]Chaotic[/size]
+
+Picks basically every option available that is hypothetically compatible. High chance of wacky situations and soft locks.
 
 [size=4]G.O.T.S. (timed challenge mode)[/size]
 
@@ -195,15 +175,12 @@ Quick guide on how to use either escape method:
 
 [b]Escape pod[/b] - Alex's escape pod requires the EP101 key card, which can be found in his cabin in Crew Quarters. The keycard for Alex's cabin is in the safe in his office.
 
-Settings:
-[list]
-[*]Self destruct enabled at game start - Self destruct timer set to 60 minutes and shuttle leaving timer set to 30 minutes
-[*]Start on 2nd day - Skips the intro to the 2nd day to save time
-[*]Skip Jovan's cutscene - Skips the cutscene where Jovan dies to save time (note: This results in Jovan and the mimics in the connected office not spawning in at all)
-[/list]
-
 Note that because the shuttle is at Talos I, this also means that the station is in a state where Dahl and his operators have arrived. For a more interesting challenge, try decreasing the timer values or enabling some randomization options, such as station connectivity.
 [/spoiler]
+
+[size=4]Living Talos[/size]
+
+Replaces all typhon with humans and resurrects all human corpses. Experience a glimpse of  Talos I before the outbreak. Tip: To remove husk faces, enable body randomization.
 
 [size=5]Other options provided by the randomizer[/size]
 
@@ -226,12 +203,17 @@ Here is some more in-depth information on the other options that this randomizer
 [*]Randomize station - Shuffles the connections between various parts of the station.
 [*]More guns - Adds more guns to the loot table. Some exotic variants use typhon organs as ammo. Make sure not to recycle the organs by mistake!
 [*]Make humans wander - Alters human AI so that their idle behavior is to wander rather than stand in place. Intended to be used with "typhon to humans" option to add some realism.
-[*](new in 0.31) Randomize emotions - Assigns a random facial expression to every line of dialog. Weirdly, most conversations still make sense no matter whether the NPC looks surprised, scared, happy, etc so it's hard to tell if this is actually working.
-[*](new in 0.31) Randomize fabrication plan cost - Non-intelligently randomizes the materials requirement for every fab plan. Note that this can potentially create fab plans with 0 cost, although it is unlikely.
-[*](new in 0.31) Microgravity in all maps - Turns every map that would normally be 1G into a 0G zone. Probably not playable. Not recommended for serious playthroughs.
-[*](new in 0.31) Gravity in GUTS and exterior - Adds gravity to the GUTS and Exterior. If both this and "enable microgravity everywhere" are on, GUTS and Exterior will have gravity. Definitely not playable. For masochists only.
-[*](new in 0.31) Custom starting map (for testing purposes only) - A WIP feature that is a little broken but at least functions in terms of starting you in the given map. This literally just swaps the given map with the neuromod division. Saving may not work, and story triggers may not occur. Intended for testing purposes only. 
-[*](new in 0.31) Game token overrides (for testing purposes only)- Specify initial starting values for any game tokens you wish (both level and global). If you don't know what game tokens are, you don't need this feature. Intended for testing purposes only.
+[*] Randomize emotions - Assigns a random facial expression to every line of dialog. To be honest, I don't know how effective this option actually is.
+[*] Randomize fabrication plan cost - Randomizes the materials requirement for every fab plan. As of v0.4, this is now done intelligently so that low-cost items still have a low cost.
+[*] Microgravity in all maps - Turns every map that would normally be 1G into a 0G zone. Probably not playable. Not recommended for serious playthroughs.
+[*] Gravity in GUTS and exterior - Adds gravity to the GUTS and Exterior. If both this and "enable microgravity everywhere" are on, GUTS and Exterior will have gravity. Definitely not playable. For masochists only.
+[*] Custom starting map (for testing purposes only) - A WIP feature that is a little broken but at least functions in terms of starting you in the given map. This literally just swaps the given map with the neuromod division. Saving may not work, and story triggers may not occur. Intended for testing purposes only.
+[*] Game token overrides (for testing purposes only) - Specify initial starting values for any game tokens you wish (both level and global). If you don't know what game tokens are, you don't need this feature. Intended for testing purposes only.
+[*] [new in 0.4] Randomize recyclers/fabricators - Redistributes non-essential recyclers/fabricators across the station with a 50/50 ratio. May sound fun in theory, although may seem less fun if you fight your way to Morgan's office with full pockets only to find two fabricators.
+[*] [new in 0.4] Randomize breakable objects - If an object is breakable/repairable (ex. electrical junctions, recyclers, fabricators, etc), there is a 50% chance it is broken and will require repair to use. May sound fun in theory, although may seem less fun if you fight your way to Morgan's office with full pockets only to find two fabricators and they're now also broken.
+[*] [new in 0.4] Randomize hackable objects - If an object is hackable (ex. workstations), there is a 50% chance it is locked and will require hack to use.
+[*] [new in 0.4] Prey Souls guns - Adds 16 guns from Prey Souls to the item spawn pool. Some changes have been made during the porting process (removing the custom skins), and 5 weapons from the mod (psi cutter, laser rifle, unique laser rifle, gauss rifle, quantum shotgun) have not been ported.
+[*] [new in 0.4] Prey Souls turrets - Adds 3 turrets from the Prey Souls mod. Friendly robot randomization must been enabled for these to spawn in place of existing turrets.
 [/list]
 
 [size=4]Loot in Morgan's Apartment[/size]
@@ -420,7 +402,7 @@ To find out what tags are valid, consult the included files tagstoentities.csv�
 
 [img]https://imgur.com/mkYVA8c.jpg[/img]
 
-Issues when using "More guns":
+Issues when using "More guns" or "Prey Souls guns":
 
 [list]
 [*][b]tl;dr Avoid saving the game in the Neuromod Division at the very beginning of the game.[/b] If you have one of the new randomized guns in your inventory while in the Neuromod Division at the very beginning of the game, quit Prey entirely, then reload, you will be unable to equip any weapons. To fix this issue, simply leave the Neuromod Division, then save the game again. You may have to re-equip and re-favorite the new weapon.
@@ -435,11 +417,9 @@ G.O.T.S. mode:
 Some entities are not randomized:
 
 [list]
-[*]Voice lines in certain cutscenes are not randomized.
 [*]Certain items/NPCs required for progression are hard coded to not be randomized to avoid messing with the game scripting, such as Patricia Varma's wrench and the lift technopath.
 [*]Certain station connections are left as-is to prevent soft lock situations.
 [*]Some music tracks may not be randomized with the "Randomize music" option.
-[*]The randomized player model will not be visible until after leaving the neuromod division.
 [/list]
 
 Sidequest related issues:
@@ -464,11 +444,8 @@ Game crashing issues:
 Other issues:
 
 [list]
-[*]If randomizing the neuromod skill tree, ability descriptions will no longer be accurate (ex. toughness III tells you it'll raise your HP to 300, but that assumes that you've already gotten toughness I and II).
 [*]If installer fails while running, there may not be an indication of this in the UI. If it takes too long, check the log.txt file for more info on what happened.
 [*]Temporary directories may not be deleted if there was an issue during randomization/install. If these start to pile up, feel free to delete them manually.
-[*]Invisible nightmares - Unknown cause, still investigating.
-[*]Bald women when randomizing bodies - Still investigating. Note: Bald Alex is a feature, not a bug.
 [/list]
 [/spoiler]
 
@@ -506,21 +483,9 @@ Game crashes on loading into level
 [*]Send me a copy of your last_used_settings.json and tell me which level caused the issue so I can reproduce it.
 [/list]
 
-Please report issues to [url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or [url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿!
+We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url] for the randomizer for feedback and bug reports!
 
-We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url] for the randomizer as well for feedback and bug reports.
-
-Also feel free to share your ideas on how to expand the mod! Here are some features that are tentatively planned down the line:
-[list]
-[*]Tweaked neuromod abilities (ex. expanded range of typhon created by Phantom Genesis)
-[*]Randomized weapon models (cosmetic)
-[*]Randomized enemy attacks
-[*]Randomized keycards
-[*]Randomized recyclers/fabricators
-[*]Mooncrash compatibility
-[*]Randomize within level
-[/list]
-[/spoiler]
+Also feel free to share your ideas on how to expand the mod!
 
 [size=5]Authors/Version History[/size]
 
@@ -606,12 +571,34 @@ Source code can be found on [url=https://github.com/shapeintheglass/DanielleRan
   * Renamed "Foam" guns to "Toy" guns
   * Updated textures for exotic guns so that the ammo counter is visible
   * Updated inventory and HUD icons for "more guns" guns
+* 0.4
+  * Fixed an issue where station randomization could lead to a soft lock during Alex's lockdown
+  * Fixed an issue where body randomization could generate bald women
+  * Fixed an issue with body randomization so that Jovan, Bellamy, and Ingram can have randomized heads without their head disappearing
+  * Fixed an issue with fabrication plans not properly spawning in the "lite" preset
+  * Fixed an issue with player model randomization where Morgan's arms would be grey
+  * Fixed an issue with "More Guns" exotic guns where firing them would kill you immediately
+  * Removed tentacles from the spawn presets because they were only causing trouble
+  * Removed grenade guns from "More Guns"
+  * Split item/enemy randomization presets into item/prop and enemy/npc
+  * Optimized level randomization to decrease install time
+  * Updated neuromod and new item descriptions to be more clear (ex. randomized neuromods will have accurate info, exotic guns will say what kind of ammo is needed)
+  * Modified fabrication plan randomization to produce more reasonable costs
+  * Modified presets for "Lite", "Recommended", and "Chaotic"
+  * Modified enemy randomization so that certain enemies are no longer whitelisted (the lift phantom, the lift technopath, the water treatment technopath)
+  * Modified dialog randomization to also randomize cutscene dialog
+  * Modified pickup item randomization to utilize in-game randomness (ex. fruit trees can yield different random junk)
+  * Added new spawn preset options, such as splitting "with nightmare" into a separate enemy randomization option, or "randomize within theme" for props
+  * Added randomization options for recyclers, operator dispensers, hackable objects, and repairable objects
+  * Added a "living corpses" option that makes all corpses spawn in alive (intended for "Living Talos" preset)
+  * Added Prey Souls guns and turrets (icons and materials are different from the original mod, some guns such as the psi cutter, laser assault rifle, time shotgun, and gauss rifle are not present)
 [/spoiler]
 
 [size=4]Acknowledgments[/size]
 
 A big thanks to:
 
+* Coyote for letting me use his content from Prey Souls!
 * JerryTerry for allowing the use of their [url=https://www.nexusmods.com/prey2017/mods/68]"Natural Day 2 Start"[/url] mod!
 * Fellow Prey modders such as Rosodude, jmx777, and coyote, who have helped me understand more about the file structure
 * The brave adventrous souls who have helped me playtest and debug
