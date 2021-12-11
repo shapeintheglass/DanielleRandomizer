@@ -7516,10 +7516,10 @@ public final class RandomizerSettings {
     boolean getIsEnabled();
 
     /**
-     * <code>float sliderValue = 2;</code>
+     * <code>int32 sliderValue = 2;</code>
      * @return The sliderValue.
      */
-    float getSliderValue();
+    int getSliderValue();
   }
   /**
    * Protobuf type {@code ToggleWithSlider}
@@ -7571,9 +7571,9 @@ public final class RandomizerSettings {
               isEnabled_ = input.readBool();
               break;
             }
-            case 21: {
+            case 16: {
 
-              sliderValue_ = input.readFloat();
+              sliderValue_ = input.readInt32();
               break;
             }
             default: {
@@ -7620,13 +7620,13 @@ public final class RandomizerSettings {
     }
 
     public static final int SLIDERVALUE_FIELD_NUMBER = 2;
-    private float sliderValue_;
+    private int sliderValue_;
     /**
-     * <code>float sliderValue = 2;</code>
+     * <code>int32 sliderValue = 2;</code>
      * @return The sliderValue.
      */
     @java.lang.Override
-    public float getSliderValue() {
+    public int getSliderValue() {
       return sliderValue_;
     }
 
@@ -7647,8 +7647,8 @@ public final class RandomizerSettings {
       if (isEnabled_ != false) {
         output.writeBool(1, isEnabled_);
       }
-      if (sliderValue_ != 0F) {
-        output.writeFloat(2, sliderValue_);
+      if (sliderValue_ != 0) {
+        output.writeInt32(2, sliderValue_);
       }
       unknownFields.writeTo(output);
     }
@@ -7663,9 +7663,9 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, isEnabled_);
       }
-      if (sliderValue_ != 0F) {
+      if (sliderValue_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(2, sliderValue_);
+          .computeInt32Size(2, sliderValue_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7684,9 +7684,8 @@ public final class RandomizerSettings {
 
       if (getIsEnabled()
           != other.getIsEnabled()) return false;
-      if (java.lang.Float.floatToIntBits(getSliderValue())
-          != java.lang.Float.floatToIntBits(
-              other.getSliderValue())) return false;
+      if (getSliderValue()
+          != other.getSliderValue()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -7702,8 +7701,7 @@ public final class RandomizerSettings {
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getIsEnabled());
       hash = (37 * hash) + SLIDERVALUE_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getSliderValue());
+      hash = (53 * hash) + getSliderValue();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7839,7 +7837,7 @@ public final class RandomizerSettings {
         super.clear();
         isEnabled_ = false;
 
-        sliderValue_ = 0F;
+        sliderValue_ = 0;
 
         return this;
       }
@@ -7920,7 +7918,7 @@ public final class RandomizerSettings {
         if (other.getIsEnabled() != false) {
           setIsEnabled(other.getIsEnabled());
         }
-        if (other.getSliderValue() != 0F) {
+        if (other.getSliderValue() != 0) {
           setSliderValue(other.getSliderValue());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -7983,33 +7981,33 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private float sliderValue_ ;
+      private int sliderValue_ ;
       /**
-       * <code>float sliderValue = 2;</code>
+       * <code>int32 sliderValue = 2;</code>
        * @return The sliderValue.
        */
       @java.lang.Override
-      public float getSliderValue() {
+      public int getSliderValue() {
         return sliderValue_;
       }
       /**
-       * <code>float sliderValue = 2;</code>
+       * <code>int32 sliderValue = 2;</code>
        * @param value The sliderValue to set.
        * @return This builder for chaining.
        */
-      public Builder setSliderValue(float value) {
+      public Builder setSliderValue(int value) {
         
         sliderValue_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float sliderValue = 2;</code>
+       * <code>int32 sliderValue = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearSliderValue() {
         
-        sliderValue_ = 0F;
+        sliderValue_ = 0;
         onChanged();
         return this;
       }
@@ -14562,7 +14560,7 @@ public final class RandomizerSettings {
       "\n\020prop_preset_name\030\013 \001(\t\022\031\n\021enemy_preset" +
       "_name\030\014 \001(\t\022\027\n\017npc_preset_name\030\r \001(\t\":\n\020" +
       "ToggleWithSlider\022\021\n\tisEnabled\030\001 \001(\010\022\023\n\013s" +
-      "liderValue\030\002 \001(\002\"\215\001\n\021GameStartSettings\022\035" +
+      "liderValue\030\002 \001(\005\"\215\001\n\021GameStartSettings\022\035" +
       "\n\025add_loot_to_apartment\030\001 \001(\010\022\033\n\023start_o" +
       "n_second_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscen" +
       "e\030\003 \001(\010\022\037\n\027start_outside_apartment\030\004 \001(\010" +

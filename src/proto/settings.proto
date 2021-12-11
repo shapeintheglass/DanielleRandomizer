@@ -50,7 +50,7 @@ message GameplaySettings {
 
 message ToggleWithSlider {
   bool isEnabled = 1;
-  float sliderValue = 2;
+  int32 sliderValue = 2;
 }
 
 message GameStartSettings {

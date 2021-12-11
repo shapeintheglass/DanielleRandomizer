@@ -17,6 +17,7 @@ import com.google.protobuf.util.JsonFormat;
 import gui2.Gui2Consts;
 import gui2.RandomizerService;
 import gui2.SettingsHelper;
+import gui2.ToggleWithSliderHelper;
 import installers.Installer;
 import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
@@ -134,28 +135,36 @@ public class WindowController {
   @FXML
   private Slider gameplayRecyclerSlider;
   @FXML
-  private TextField gameplayRecyclerTextbox;
+  private Label gameplayRecyclerTextbox;
+  @FXML
+  private Label gameplayRecyclerPercent;
 
   @FXML
   private CheckBox gameplayRandomizeBreakables;
   @FXML
   private Slider gameplayBreakableSlider;
   @FXML
-  private TextField gameplayBreakableTextbox;
+  private Label gameplayBreakableTextbox;
+  @FXML
+  private Label gameplayBreakablePercent;
 
   @FXML
   private CheckBox gameplayRandomizeHackables;
   @FXML
   private Slider gameplayHackableSlider;
   @FXML
-  private TextField gameplayHackableTextbox;
+  private Label gameplayHackableTextbox;
+  @FXML
+  private Label gameplayHackablePercent;
 
   @FXML
   private CheckBox gameplayRandomizeMimics;
   @FXML
   private Slider gameplayMimicSlider;
   @FXML
-  private TextField gameplayMimicTextbox;
+  private Label gameplayMimicTextbox;
+  @FXML
+  private Label gameplayMimicPercent;
 
   /* GAME START TAB */
   @FXML
@@ -232,6 +241,11 @@ public class WindowController {
   private List<Node> toDisable;
   private List<CheckBox> checkboxes;
 
+  private ToggleWithSliderHelper recyclerSlider;
+  private ToggleWithSliderHelper breakableSlider;
+  private ToggleWithSliderHelper hackableSlider;
+  private ToggleWithSliderHelper mimicSlider;
+
   public void setStage(Stage stage) {
     this.stage = stage;
   }
@@ -296,6 +310,15 @@ public class WindowController {
 
     outputWindow.appendText("Loaded with settings:\n" + SettingsHelper.settingsToString(settings));
 
+    recyclerSlider = new ToggleWithSliderHelper(gameplayRandomizeRecyclers, gameplayRecyclerSlider,
+        gameplayRecyclerTextbox, gameplayRecyclerPercent);
+    breakableSlider = new ToggleWithSliderHelper(gameplayRandomizeBreakables,
+        gameplayBreakableSlider, gameplayBreakableTextbox, gameplayBreakablePercent);
+    hackableSlider = new ToggleWithSliderHelper(gameplayRandomizeHackables, gameplayHackableSlider,
+        gameplayHackableTextbox, gameplayHackablePercent);
+    mimicSlider = new ToggleWithSliderHelper(gameplayRandomizeMimics, gameplayMimicSlider,
+        gameplayMimicTextbox, gameplayMimicPercent);
+    
     updateUI();
 
     cheatsCheckboxCustomStart.setOnAction(new EventHandler<ActionEvent>() {
@@ -318,6 +341,8 @@ public class WindowController {
         }
       }
     });
+
+
   }
 
   private void setTooltips() {
@@ -372,21 +397,17 @@ public class WindowController {
         .getRandomizeNeuromods());
     gameplayRandomizeFabPlanCosts.setSelected(settings.getGameplaySettings()
         .getRandomizeFabPlanCosts());
-    gameplayRandomizeRecyclers.setSelected(settings.getGameplaySettings()
-        .getRandomizeRecyclers()
-        .getIsEnabled());
     gameplayRandomizeDispensers.setSelected(settings.getGameplaySettings()
         .getRandomizeDispensers()
         .getIsEnabled());
-    gameplayRandomizeBreakables.setSelected(settings.getGameplaySettings()
-        .getRandomizeBreakables()
-        .getIsEnabled());
-    gameplayRandomizeHackables.setSelected(settings.getGameplaySettings()
-        .getRandomizeHackables()
-        .getIsEnabled());
-    gameplayRandomizeMimics.setSelected(settings.getGameplaySettings()
-        .getRandomizeMimics()
-        .getIsEnabled());
+    recyclerSlider.set(settings.getGameplaySettings()
+        .getRandomizeRecyclers());
+    breakableSlider.set(settings.getGameplaySettings()
+        .getRandomizeBreakables());
+    hackableSlider.set(settings.getGameplaySettings()
+        .getRandomizeHackables());
+    mimicSlider.set(settings.getGameplaySettings()
+        .getRandomizeMimics());
 
     startCheckboxDay2.setSelected(settings.getGameStartSettings()
         .getStartOnSecondDay());
@@ -856,16 +877,20 @@ public class WindowController {
         .setRandomizeStation(gameplayRandomizeStation.isSelected())
         .setRandomizeNeuromods(gameplayRandomizeNeuromods.isSelected())
         .setRandomizeFabPlanCosts(gameplayRandomizeFabPlanCosts.isSelected())
-        .setRandomizeRecyclers(ToggleWithSlider.newBuilder()
-            .setIsEnabled(gameplayRandomizeRecyclers.isSelected()))
         .setRandomizeDispensers(ToggleWithSlider.newBuilder()
             .setIsEnabled(gameplayRandomizeDispensers.isSelected()))
+        .setRandomizeRecyclers(ToggleWithSlider.newBuilder()
+            .setIsEnabled(recyclerSlider.isEnabled())
+            .setSliderValue(recyclerSlider.getValue()))
         .setRandomizeBreakables(ToggleWithSlider.newBuilder()
-            .setIsEnabled(gameplayRandomizeBreakables.isSelected()))
+            .setIsEnabled(breakableSlider.isEnabled())
+            .setSliderValue(breakableSlider.getValue()))
         .setRandomizeHackables(ToggleWithSlider.newBuilder()
-            .setIsEnabled(gameplayRandomizeHackables.isSelected()))
+            .setIsEnabled(hackableSlider.isEnabled())
+            .setSliderValue(hackableSlider.getValue()))
         .setRandomizeMimics(ToggleWithSlider.newBuilder()
-            .setIsEnabled(gameplayRandomizeMimics.isSelected()))
+            .setIsEnabled(mimicSlider.isEnabled())
+            .setSliderValue(mimicSlider.getValue()))
         .setPickupPresetName(getPickupPreset())
         .setPropPresetName(getPropPreset())
         .setEnemyPresetName(getEnemyPreset())

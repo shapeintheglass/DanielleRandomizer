@@ -188,6 +188,11 @@ public class Utils {
 
   public static Set<String> getTags(Element e) {
     Set<String> tags = new HashSet<>();
+
+    if (e == null) {
+      return tags;
+    }
+
     // Split name on dots
     String name = e.getAttributeValue("Name");
     String[] nameTags = name.split("\\.");

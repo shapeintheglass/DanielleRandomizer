@@ -13,6 +13,7 @@ import utils.ZipHelper;
 
 public class AddEntityHelper {
 
+  private static final float MIMIC_POSITION_FUDGE = 1.0f;
   private static final ImmutableMap<String, String> LEVEL_TO_MAIN_SCRIPTING_LAYER =
       new ImmutableMap.Builder<String, String>()
           .put(LevelConsts.NEUROMOD_DIVISION, "Simulation_Scripting_MAIN")
@@ -152,17 +153,16 @@ public class AddEntityHelper {
     entity.addContent(properties);
     return entity;
   }
-  
+
   private static String getNewPos(String originalPos, Random r) {
-    float threshold = 3.0f;
     // Parse position into coordinates
     String[] tokens = originalPos.split(",");
     // Fudge x and y by a certain threshold
-    float xFudge = r.nextFloat() * 2 * threshold;
-    float yFudge = r.nextFloat() * 2 * threshold;
-    float newX = Float.parseFloat(tokens[0]) - threshold + xFudge;
-    float newY = Float.parseFloat(tokens[1]) - threshold + yFudge;
-    return String.format("%.4f,%.4f,%s", newX, newY, tokens[2]);
+    float xFudge = r.nextFloat() * 2 * MIMIC_POSITION_FUDGE;
+    float yFudge = r.nextFloat() * 2 * MIMIC_POSITION_FUDGE;
+    float newX = Float.parseFloat(tokens[0]) - MIMIC_POSITION_FUDGE + xFudge;
+    float newY = Float.parseFloat(tokens[1]) - MIMIC_POSITION_FUDGE + yFudge;
+    return String.format("%.5f,%.5f,%s", newX, newY, tokens[2]);
   }
 
   public static void addEntities(Element objects, String filename, Settings settings,
@@ -225,22 +225,13 @@ public class AddEntityHelper {
       Element flowGraphNodes = new Element("Nodes");
       Element flowGraphEdges = new Element("Edges");
       int nodeIndexCounter = 1;
-      
-      String gamestartNodeId = Integer.toString(nodeIndexCounter++);
-      Element gamestartNode = new Element("Node").setAttribute("Id", gamestartNodeId)
-          .setAttribute("Class", "Game:Start")
-          .setAttribute("pos", "0,0,0")
-          .addContent(new Element("Inputs").setAttribute("InGame", "1")
-              .setAttribute("InEditor", "1")
-              .setAttribute("InEditorPlayFromHere", "1"));
-      flowGraphNodes.addContent(gamestartNode);
 
       for (Element e : mimicEntities) {
         // Nab the Entity GUID of the object to mimic and its coordinates
         String objectGuid = e.getAttributeValue("EntityGuid");
         String objectPosition = e.getAttributeValue("Pos");
         String objectName = e.getAttributeValue("Name");
-        
+
         if (objectGuid == null || objectPosition == null || objectName == null) {
           continue;
         }
@@ -251,17 +242,16 @@ public class AddEntityHelper {
             .toUpperCase());
 
         // Generate a GUID for the mimic
-        String mimicGuid = Long.toHexString(r.nextLong())
+        String mimicGuid = Integer.toHexString(r.nextInt())
             .toUpperCase();
 
         // Generate a GUID for the mimic node
         String mimicNodeGuid = String.format("{%s}", UUID.randomUUID()
             .toString()
             .toUpperCase());
-        String mimicId = Integer.toString(r.nextInt());
-        
+        String mimicId = Integer.toString(r.nextInt() / 2);
+
         String mimicPos = getNewPos(objectPosition, r);
-        System.out.printf("%s --> %s\n", objectPosition, mimicPos);
 
         // Create the flowgraph nodes and edges
         String spawnerNodeId = Integer.toString(nodeIndexCounter++);
@@ -287,11 +277,6 @@ public class AddEntityHelper {
                 .setAttribute("EntityToMimic", "0")
                 .setAttribute("Reason", "3")
                 .setAttribute("Replace", "0"));
-        // Indicates that the entity should spawn when the game starts
-        Element gamestartEdge = new Element("Edge").setAttribute("nodeIn", spawnerNodeId)
-            .setAttribute("nodeOut", gamestartNodeId)
-            .setAttribute("portIn", "Spawn")
-            .setAttribute("portOut", "output");
         // Indicates that the mimicking should start once spawning has succeeded
         Element startEdge = new Element("Edge").setAttribute("nodeIn", startMimickingNodeId)
             .setAttribute("nodeOut", spawnerNodeId)
@@ -310,11 +295,11 @@ public class AddEntityHelper {
             .setAttribute("portIn", "EntityToMimic")
             .setAttribute("portOut", "Id")
             .setAttribute("enabled", "1");
-        flowGraphNodes
-            .addContent(spawnerNode)
+        flowGraphNodes.addContent(spawnerNode)
             .addContent(entityIdNode)
             .addContent(startMimickingNode);
-        flowGraphEdges.addContent(gamestartEdge)
+        flowGraphEdges
+            // .addContent(gamestartEdge)
             .addContent(startEdge)
             .addContent(entityIdEdge)
             .addContent(entityToMimicEdge);
@@ -338,7 +323,7 @@ public class AddEntityHelper {
                 .setAttribute("bSpawnBroken", "0")
                 .setAttribute("bSpawnCorpse", "0")
                 .setAttribute("bSpawnDormant", "0")
-                .setAttribute("bSpawnOnGameStart", "0");
+                .setAttribute("bSpawnOnGameStart", "1");
         Element mimicProperties2 = new Element("Properties2")
             .setAttribute("roomContainer_wanderRoomsContainer", "")
             .addContent(new Element("ArkDialogOverride").setAttribute("fPlayerApproachCDFar", "-1")

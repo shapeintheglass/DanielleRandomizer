@@ -402,7 +402,7 @@ public class RandomizerService extends Service<Void> {
     if (currentSettings.getGameplaySettings()
         .getRandomizeBreakables()
         .getIsEnabled()) {
-      levelRandomizer = levelRandomizer.addFilter(new BrokenObjectFilter());
+      levelRandomizer = levelRandomizer.addFilter(new BrokenObjectFilter(currentSettings));
     }
 
     if (currentSettings.getGameplaySettings()
@@ -414,13 +414,13 @@ public class RandomizerService extends Service<Void> {
     if (currentSettings.getGameplaySettings()
         .getRandomizeHackables()
         .getIsEnabled()) {
-      levelRandomizer = levelRandomizer.addFilter(new LockedObjectFilter());
+      levelRandomizer = levelRandomizer.addFilter(new LockedObjectFilter(currentSettings));
     }
 
     if (currentSettings.getGameplaySettings()
         .getRandomizeRecyclers()
         .getIsEnabled()) {
-      levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter());
+      levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter(currentSettings));
     }
 
     CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();

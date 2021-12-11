@@ -203,10 +203,10 @@
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeKeycards" mnemonicParsing="false" text="Randomize keycards" />
-                                          <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" prefHeight="25.0" text="\% recyclers (compared to fabricators)" />
-                                          <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" prefHeight="25.0" text="\% repairable objects that are broken" />
-                                          <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" prefHeight="25.0" text="\% hackable objects that are locked" />
-                                          <CheckBox fx:id="gameplayRandomizeMimics" mnemonicParsing="false" prefHeight="25.0" text="\% objects that are secretly mimics" />
+                                          <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="\% recyclers (compared to fabricators)" />
+                                          <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="\% repairable objects that are broken" />
+                                          <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="\% hackable objects that are locked" />
+                                          <CheckBox fx:id="gameplayRandomizeMimics" mnemonicParsing="false" text="\% objects that are secretly mimics" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
@@ -218,30 +218,34 @@
                                           <Label text="Shuffles keycards." />
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
-                                                <Slider fx:id="gameplayRecyclerSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
+                                                <Slider fx:id="gameplayRecyclerSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <TextField fx:id="gameplayRecyclerTextbox" prefHeight="17.0" prefWidth="28.0" text="50" />
+                                                <Label fx:id="gameplayRecyclerTextbox" disable="true" text="50" />
+                                                <Label fx:id="gameplayRecyclerPercent" disable="true" text="\%" />
                                              </children>
                                           </HBox>
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
-                                                <Slider fx:id="gameplayBreakableSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
+                                                <Slider fx:id="gameplayBreakableSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <TextField fx:id="gameplayBreakableTextbox" prefHeight="17.0" prefWidth="28.0" text="50" />
+                                                <Label fx:id="gameplayBreakableTextbox" disable="true" text="50" />
+                                                <Label fx:id="gameplayBreakablePercent" disable="true" text="\%" />
                                              </children>
                                           </HBox>
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
-                                                <Slider fx:id="gameplayHackableSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
+                                                <Slider fx:id="gameplayHackableSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <TextField fx:id="gameplayHackableTextbox" prefHeight="17.0" prefWidth="28.0" text="50" />
+                                                <Label fx:id="gameplayHackableTextbox" disable="true" text="50" />
+                                                <Label fx:id="gameplayHackablePercent" disable="true" text="\%" />
                                              </children>
                                           </HBox>
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
-                                                <Slider fx:id="gameplayMimicSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="1.0" />
+                                                <Slider fx:id="gameplayMimicSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="1.0" />
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <TextField fx:id="gameplayMimicTextbox" prefHeight="17.0" prefWidth="28.0" text="1" />
+                                                <Label fx:id="gameplayMimicTextbox" disable="true" text="50" />
+                                                <Label fx:id="gameplayMimicPercent" disable="true" text="\%" />
                                              </children>
                                           </HBox>
                                        </children>

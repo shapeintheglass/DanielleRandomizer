@@ -13,6 +13,7 @@ import java.util.Stack;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import databases.TaggedDatabase;
@@ -33,7 +34,16 @@ import utils.ZipHelper;
  */
 public class LevelRandomizer extends BaseRandomizer {
 
-  private static final double MIMIC_SLIDER = 1.0;
+  private static final double MORGAN_SPAWN_Z = 6.7267303;
+  private static final double MORGAN_SPAWN_Y = 1586.2552;
+  private static final double MORGAN_SPAWN_X = 862.20569;
+  private static final double MORGAN_SPAWN_DISTANCE_THRESHOLD = 50.0;
+  private static final ImmutableSet<String> PROP_MIMICABLE_TAGS =
+      ImmutableSet.of("ArkPhysicsProps", "_MIMICABLE", "_CARRYABLE");
+  private static final ImmutableSet<String> PROP_MIMICABLE_TAGS_BLOCKLIST =
+      ImmutableSet.of("_LEVERAGE_I", "_LEVERAGE_II", "_LEVERAGE_III", "Tech", "Space");
+  private static final ImmutableSet<String> PICKUP_MIMICABLE_TAGS = ImmutableSet.of("ArkPickups",
+      "_MIMICABLE", "_CARRYABLE", "RigidBodyEx", "_CAN_TRIGGER_AREAS");
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
   private static final String TOKENS_FOLDER_NAME = "gametokens/";
 
@@ -45,7 +55,10 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private GameTokenRule gameTokenRule;
 
-  private Set<String> mimickableArchetypes;
+
+  TaggedDatabase database;
+
+  private float mimicSlider;
 
   public LevelRandomizer(Settings s, ZipHelper zipHelper, Map<String, String> swappedLinesMap,
       TaggedDatabase database) {
@@ -53,9 +66,12 @@ public class LevelRandomizer extends BaseRandomizer {
     filterList = new LinkedList<>();
     this.gameTokenValues = new HashMap<>();
     this.swappedLinesMap = swappedLinesMap;
+    this.database = database;
     setupGameTokens();
 
-    mimickableArchetypes = Sets.newHashSet(database.getAllForTag("_MIMICABLE"));
+    mimicSlider = 1.0f * s.getGameplaySettings()
+        .getRandomizeMimics()
+        .getSliderValue() / 100.0f;
   }
 
   private void setupGameTokens() {
@@ -174,6 +190,26 @@ public class LevelRandomizer extends BaseRandomizer {
     }
   }
 
+  private boolean tooCloseToMorgan(String levelDir, Element levelEntity) {
+    // Get the distance between this object and Morgan's starting spawn in ND
+    if (!levelDir.equals("research/simulationlabs")) {
+      return false;
+    }
+    String pos = levelEntity.getAttributeValue("Pos");
+    if (pos == null) {
+      return false;
+    }
+    String[] tokens = pos.split(",");
+    double x = Double.parseDouble(tokens[0]);
+    double y = Double.parseDouble(tokens[1]);
+    double z = Double.parseDouble(tokens[2]);
+
+    double distFromMorgan = Math.sqrt(Math.pow(x - MORGAN_SPAWN_X, 2)
+        + Math.pow(y - MORGAN_SPAWN_Y, 2) + Math.pow(z - MORGAN_SPAWN_Z, 2));
+
+    return distFromMorgan < MORGAN_SPAWN_DISTANCE_THRESHOLD;
+  }
+
   /**
    * Copies level def into temp directory, while filtering.
    */
@@ -190,17 +226,28 @@ public class LevelRandomizer extends BaseRandomizer {
       String archetype = e.getAttributeValue("Archetype");
       if (settings.getGameplaySettings()
           .getRandomizeMimics()
-          .getIsEnabled() && archetype != null) {
-        // Allow mimic-able pickup items, or mimic-able small physics props
-        String shortened = Utils.stripLibraryPrefixForEntity(archetype);
-        if (archetype.startsWith("ArkPickups") && mimickableArchetypes.contains(shortened)) {
-          boolean mimicThisItem = r.nextFloat() < MIMIC_SLIDER;
+          .getIsEnabled() && archetype != null && !tooCloseToMorgan(levelDir, e)) {
+
+        String shortArchetypeName = Utils.stripLibraryPrefixForEntity(archetype);
+
+        Set<String> tags = Utils.getTags(database.getEntityByName(shortArchetypeName));
+
+        boolean isPickupAndMimicable = tags.containsAll(PICKUP_MIMICABLE_TAGS);
+        boolean isPropAndMimicable = tags.containsAll(PROP_MIMICABLE_TAGS)
+            && Sets.intersection(tags, PROP_MIMICABLE_TAGS_BLOCKLIST)
+                .isEmpty();
+
+        if (isPickupAndMimicable || isPropAndMimicable) {
+          System.out.println(archetype);
+          boolean mimicThisItem = r.nextFloat() < mimicSlider;
           if (mimicThisItem) {
             validMimickableEntities.add(e);
           }
         }
       }
     }
+    logger.info(String.format("Identified %d mimickable objects in %s",
+        validMimickableEntities.size(), levelDir));
 
     AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper, validMimickableEntities, r);
 
