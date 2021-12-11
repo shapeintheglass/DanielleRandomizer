@@ -41,6 +41,7 @@ message GameplaySettings {
   ToggleWithSlider randomize_dispensers = 7;
   ToggleWithSlider randomize_breakables = 8;
   ToggleWithSlider randomize_hackables = 9;
+  ToggleWithSlider randomize_mimics = 14;
   string pickup_preset_name = 10;
   string prop_preset_name = 11;
   string enemy_preset_name = 12;
@@ -100,6 +101,7 @@ message ExperimentalSettings {
   bool living_corpses = 2;
   bool zero_gravity_everywhere = 3;
   bool enable_gravity_in_ext_and_guts = 4;
+  bool fluctuating_gravity = 8;
   bool start_self_destruct = 5;
   string self_destruct_timer = 6;
   string self_destruct_shuttle_timer = 7;

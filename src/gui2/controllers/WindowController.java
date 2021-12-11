@@ -29,6 +29,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -123,13 +124,38 @@ public class WindowController {
   @FXML
   private CheckBox gameplayRandomizeFabPlanCosts;
   @FXML
+  private CheckBox gameplayRandomizeDispensers;
+  @FXML
+  private CheckBox gameplayRandomizeKeycards;
+
+
+  @FXML
   private CheckBox gameplayRandomizeRecyclers;
   @FXML
-  private CheckBox gameplayRandomizeDispensers;
+  private Slider gameplayRecyclerSlider;
+  @FXML
+  private TextField gameplayRecyclerTextbox;
+
   @FXML
   private CheckBox gameplayRandomizeBreakables;
   @FXML
+  private Slider gameplayBreakableSlider;
+  @FXML
+  private TextField gameplayBreakableTextbox;
+
+  @FXML
   private CheckBox gameplayRandomizeHackables;
+  @FXML
+  private Slider gameplayHackableSlider;
+  @FXML
+  private TextField gameplayHackableTextbox;
+
+  @FXML
+  private CheckBox gameplayRandomizeMimics;
+  @FXML
+  private Slider gameplayMimicSlider;
+  @FXML
+  private TextField gameplayMimicTextbox;
 
   /* GAME START TAB */
   @FXML
@@ -177,6 +203,8 @@ public class WindowController {
   @FXML
   private CheckBox expCheckboxEnableGravity;
   @FXML
+  private CheckBox expCheckboxFluctuatingGravity;
+  @FXML
   private CheckBox expCheckboxSelfDestruct;
   @FXML
   private TextField expTextFieldTimer;
@@ -217,13 +245,14 @@ public class WindowController {
     checkboxes = ImmutableList.of(cosmeticCheckboxBodies, cosmeticCheckboxVoices,
         cosmeticCheckboxEmotions, cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel,
         cosmeticCheckboxPlanetSize, gameplayRandomizeStation, gameplayRandomizeNeuromods,
-        gameplayRandomizeFabPlanCosts, gameplayRandomizeRecyclers, gameplayRandomizeDispensers,
-        gameplayRandomizeBreakables, gameplayRandomizeHackables, startCheckboxDay2,
-        startCheckboxAddAllEquipment, startCheckboxSkipJovan, startCheckboxOutsideApartment,
-        moreGuns, morePreySoulsGuns, morePreySoulsChipsets, morePreySoulsEnemies,
-        morePreySoulsTurrets, cheatsCheckboxAllScans, cheatsCheckboxCustomStart,
-        cheatsCheckboxOpenStation, expCheckboxEnableGravity, expCheckboxGravity,
-        expCheckboxSelfDestruct, expCheckboxWander, expLivingCorpses);
+        gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeRecyclers,
+        gameplayRandomizeDispensers, gameplayRandomizeBreakables, gameplayRandomizeHackables,
+        gameplayRandomizeMimics, startCheckboxDay2, startCheckboxAddAllEquipment,
+        startCheckboxSkipJovan, startCheckboxOutsideApartment, moreGuns, morePreySoulsGuns,
+        morePreySoulsChipsets, morePreySoulsEnemies, morePreySoulsTurrets, cheatsCheckboxAllScans,
+        cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, expCheckboxEnableGravity,
+        expCheckboxGravity, expCheckboxFluctuatingGravity, expCheckboxSelfDestruct,
+        expCheckboxWander, expLivingCorpses);
 
     toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton,
         clearButton, saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton,
@@ -355,6 +384,9 @@ public class WindowController {
     gameplayRandomizeHackables.setSelected(settings.getGameplaySettings()
         .getRandomizeHackables()
         .getIsEnabled());
+    gameplayRandomizeMimics.setSelected(settings.getGameplaySettings()
+        .getRandomizeMimics()
+        .getIsEnabled());
 
     startCheckboxDay2.setSelected(settings.getGameStartSettings()
         .getStartOnSecondDay());
@@ -400,6 +432,8 @@ public class WindowController {
         .getZeroGravityEverywhere());
     expCheckboxEnableGravity.setSelected(settings.getExpSettings()
         .getEnableGravityInExtAndGuts());
+    expCheckboxFluctuatingGravity.setSelected(settings.getExpSettings()
+        .getFluctuatingGravity());
     expCheckboxSelfDestruct.setSelected(settings.getExpSettings()
         .getStartSelfDestruct());
     expTextFieldTimer.setText(settings.getExpSettings()
@@ -490,7 +524,7 @@ public class WindowController {
     setPickupPreset("Randomize all items");
     setPropPreset("Randomize all props");
     setEnemyPreset("Randomize all enemies");
-    setNpcPreset("Randomize all friendly robots");
+    setNpcPreset("Randomize friendly robots within type");
     gameplayRandomizeStation.setSelected(true);
     gameplayRandomizeFabPlanCosts.setSelected(true);
     gameplayRandomizeNeuromods.setSelected(true);
@@ -830,6 +864,8 @@ public class WindowController {
             .setIsEnabled(gameplayRandomizeBreakables.isSelected()))
         .setRandomizeHackables(ToggleWithSlider.newBuilder()
             .setIsEnabled(gameplayRandomizeHackables.isSelected()))
+        .setRandomizeMimics(ToggleWithSlider.newBuilder()
+            .setIsEnabled(gameplayRandomizeMimics.isSelected()))
         .setPickupPresetName(getPickupPreset())
         .setPropPresetName(getPropPreset())
         .setEnemyPresetName(getEnemyPreset())
@@ -876,6 +912,7 @@ public class WindowController {
         .setSelfDestructShuttleTimer(expTextFieldShuttleTimer.getText())
         .setZeroGravityEverywhere(expCheckboxGravity.isSelected())
         .setEnableGravityInExtAndGuts(expCheckboxEnableGravity.isSelected())
+        .setFluctuatingGravity(expCheckboxFluctuatingGravity.isSelected())
         .build();
   }
 

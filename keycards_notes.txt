@@ -1,0 +1,119 @@
+Keycard randomization
+
+
+---
+ 
+Split keycards and their locations into categories:
+
+Keycards:
+ - Necessary for progress
+ - Useful for progress
+ - Not necessary for progress
+ 
+ 
+Locations:
+ - 
+
+
+---
+
+Neuromod Division 4
+ * Grave's Office 12889009724998311610
+ * Sim Labs 12889009724996576042
+ * Dahl's Stash 14667999412528404640 (If Dahl is here)
+ * December's Key 12889009725036165856 (unused, this key is just called "December")
+
+Lobby 8
+ * General Access (reqs. access to HW Labs and Exterior) 15659330456309530410
+ * Trauma Center 1713490239391479434 (x2)
+ * Devries Office 13680621263411175870
+ * Morgan's Room Key 13680621263398566320
+ * Security Office 844024417314372118
+ * Teleconferencing 1713490239448502258
+ * EP101 14667999412535817654 (unused)
+
+Hardware Labs 5
+ * Calvino's Workshop (Physically part of the exterior map) 844024417264850262
+ * Calvino's Room Key 761057047959608375
+ * Ballistics Lab 761057047957716142
+ * Employee Entrance 844024417264848561
+ * Prototype director (Thorstein) room key 844024417264850195
+
+Shuttle Bay 2
+ * Dahl's Stash 14667999412528404640 (If Dahl is here)
+ * Control Room 14667999412539377155 (Appears twice)
+
+Psychotronics 4
+ * Morgue 11824555372636319847
+ * Bellamy Room Key 844024417289133188
+ * Kelstrup Room Key 844024417289636866
+ * Director Office 6732635291222790585
+
+GUTS 3
+ * Maintenance Shaft Key 761057047955726988
+ * Fuel Room Key 761057047955908816
+ * Blackbox lab 761057047996404704
+
+Arboretum 5
+ * Crew Quarters 844024417269161838
+ * Lover's Key 14667999412531426939
+ * Alex Room Key 13680621263398555661
+ * Dahl's Stash 14667999412528404640 (If Dahl is here)
+ * Captain Marks Room Key 844024417289132055
+
+Crew Quarters 10
+ * EP101 14667999412535817654
+ * Abigail's Room Key 844024417273225818
+ * Will Mitchell's Room Key 844024417296040047 (x2, one is the cinematic version)
+ * Secured Pharmaceuticals 12889009724999938970 (x2)
+ * Kitchen 844024417287725050
+ * Yellow Tulip Closet 844024417289724089
+ * Igwe's Room 844024417289128959
+ * Morgan's Room 13680621263398566320 (Inaccessible?)
+
+Deep Storage 2
+ * Security 1713490239430510631
+ * Self Destruct Key (no ID)
+
+Exterior 1
+ * Calvino's Workshop (technically part of the HW Labs map)
+
+Cargo Bay 3
+ * Cargo Bay Back Door 4349723564917331725
+ * Sarah Key 844024417289133282
+ * Igwe's Room Key 844024417289128959
+
+Life Support 2
+ * Security Office 13856881013199799876
+ * IT Closet 13856881013202738023
+
+Power Plant 4
+ * Reactor 11824555372644363968 (x2)
+ * Jean Faure 11824555372655840193
+ * Cooling Plant 11824555372665894444
+
+Bridge 4
+ * Briefing Room Door 4349723564935470793 (unused) (x2)
+ * EP101 14667999412535817654
+ * Captain Marks Room Key 844024417289132055
+ 
+Unused? 20
+ * Kevin's Room Key 844024417287750454
+ * Emma's Pod Key 844024417287750402
+ * Annalise's Room Key 11824555372643155576
+ * One of the ballistics lab keys 844024417268198678
+ * Prototype lab director's key 844024417268198728
+ * Psychotronics Conference Room 11824555372635387996
+ * Morgan's Self-Destruct Key 12889009725001857448
+ * Alex's Self-Destruct Key 14667999412528404951
+ * Shuttle Bay Access 14667999412525465482
+ * Eel research Room 13856881013191426067
+ * Cook Pod Key 844024417287725031
+ * Danielle's Room 844024417289131142
+ * December Key 12889009725036165856
+ * Bianca Key 844024417289132141
+ * Mikhaila Key 12889009725042907357
+ * Devries Room Key 844024417289637214
+ * Cargo Bay GUTS area door 4349723564940559493
+ * Deep Storage High Clearance 1713490239409087783
+ * Power Plant Parts Storage 11824555372644361399

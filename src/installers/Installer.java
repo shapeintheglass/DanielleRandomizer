@@ -67,12 +67,29 @@ public class Installer {
 
   public static boolean verifyInstallDir(Logger logger, Path installDir) {
     logger.info("Verifying install directory...");
-    return installDir.resolve(INSTALL_LOCATION)
-        .toFile()
-        .exists()
-        && installDir.resolve(LevelConsts.PREFIX)
-            .toFile()
-            .exists();
+    if (!installDir.toFile().exists()) {
+      logger.info(String.format("Unable to locate install directory (%s)", installDir));
+      return false;
+    }
+    
+    Path installLoc = installDir.resolve(INSTALL_LOCATION);
+    if (!installLoc.toFile().exists()) {
+      // Create the Precache folder if it does not exist
+      boolean success = installLoc.toFile().mkdir();
+      if (success) {
+        logger.info("Created a Precache directory");
+        return true;
+      } else {
+        logger.info("Unable to create Precache directory!");
+        return false;
+      }
+    }
+    Path levelLoc = installDir.resolve(LevelConsts.PREFIX);
+    if (!levelLoc.toFile().exists()) {
+      logger.info(String.format("Level folder does not exist! (%s)", levelLoc));
+      return false;
+    }
+    return true;
   }
 
   public static boolean verifyDataExists(Logger logger) {

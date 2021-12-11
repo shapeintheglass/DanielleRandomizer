@@ -20,10 +20,10 @@ We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url]﻿! Feel 
 [*]Player model
 [*]Fabrication plan costs
 [*]Earth/moon/sun size
-[*][new in 0.4] Operator dispensers
-[*][new in 0.4] Recyclers/fabricators
-[*][new in 0.4] Repairable objects (50/50 chance of requiring repair to use)
-[*][new in 0.4] Hackable objects (50/50 chance of requiring hack to use)
+[*](new in 0.4) Operator dispensers
+[*](new in 0.4) Recyclers/fabricators
+[*](new in 0.4) Repairable objects (50/50 chance of requiring repair to use)
+[*](new in 0.4) Hackable objects (50/50 chance of requiring hack to use)
 [/list]
 
 [b][u]OTHER OPTIONS[/u][/b]
@@ -36,9 +36,9 @@ We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url]﻿! Feel 
 [*]More guns - Adds [url=https://www.nexusmods.com/prey2017/mods/69]guns with randomized projectiles[/url]﻿ to the item spawn pool.
 [*]G.O.T.S. (Get Off The Station) mode - The station's self destruct will start as soon as you wake up in the Neuromod Division. Can you escape before time runs out?
 [*]Gravity toggles - enable 0G everywhere, or 1G in the Exterior+GUTS. Not intended for serious playthroughs.
-[*][new in 0.4] Living Talos mode - Changes all typhon to humans and makes all humans wander around the station. Human corpses are resurrected as well. Most of the station is unlocked.
-[*][new in 0.4] Prey Souls guns - Adds 16 guns from the Prey Souls mod. Note: Some changes were made to the guns during porting, such as lack of custom skins, and 5 guns have not been ported (psi cutter, laser rifle, gauss rifle, quantum shotgun).
-[*][new in 0.4] Prey Souls turrets - Adds 3 turrets from the Prey Souls mod. Friendly robot randomization must be enabled for these to spawn in place of existing turrets.
+[*](new in 0.4) Living Talos mode - Changes all typhon to humans and makes all humans wander around the station. Human corpses are resurrected as well. Most of the station is unlocked.
+[*](new in 0.4) Prey Souls guns - Adds 16 guns from the Prey Souls mod. Note: Some changes were made to the guns during porting, such as lack of custom skins, and 5 guns have not been ported (psi cutter, laser rifle, gauss rifle, quantum shotgun).
+[*](new in 0.4) Prey Souls turrets - Adds 3 turrets from the Prey Souls mod. Friendly robot randomization must be enabled for these to spawn in place of existing turrets.
 [/list]
 
 [b][u]QUICK START INSTRUCTIONS[/u][/b]
@@ -54,9 +54,7 @@ Important note: Randomized runs will only work on a new game of Prey. There is a
 
 [size=5]Install instructions[/size]
 
-[spoiler]
-
-[img]https://i.imgur.com/9MXNnpN.jpg[/img]
+[spoiler][img]https://i.imgur.com/9MXNnpN.jpg[/img]
 
 [b]IMPORTANT! This mod is intended to be used on a new game. If you plan to start a new randomized game in an existing save slot...[/b]
 manually delete the old save data in that slot first (and ensure cloud save doesn't try to restore it). By default this should be in `C:\Users\<Name>\Saved Games\Arkane Studios\Prey\SaveGames\Campaign<0/1/2>`. Campaign 0 is the first slot, Campaign 1 is the second slot, and Campaign 2 is the third slot.
@@ -132,9 +130,7 @@ I haven't tested a lot of mod compatibility, but here are some of my other mods 
 [/spoiler]
 
 [size=5]Uninstall instructions[/size]
-[spoiler]
-
-[img]https://imgur.com/JJOh2wp.jpg[/img]
+[spoiler][img]https://imgur.com/JJOh2wp.jpg[/img]
 
 To revert the changes made by this mod, use the "Uninstall" button in the GUI. Note that any save slots created while the mod was in effect will be in a bad state as a result of this. Attempting to load those again may crash the game, or be in a weird state of partly randomized partly not randomized, depending on what settings you used.
 
@@ -145,9 +141,7 @@ To uninstall the randomizer installer GUI itself, just delete danielle_randomize
 
 [size=5]Basic presets[/size]
 
-[spoiler]
-
-[img]https://imgur.com/PkEtzIl.jpg[/img]
+[spoiler][img]https://imgur.com/PkEtzIl.jpg[/img]
 
 This randomizer offers three basic presets as a starting point. These can be customized further, or you can build up your desired settings from scratch.
 
@@ -176,17 +170,16 @@ Quick guide on how to use either escape method:
 [b]Escape pod[/b] - Alex's escape pod requires the EP101 key card, which can be found in his cabin in Crew Quarters. The keycard for Alex's cabin is in the safe in his office.
 
 Note that because the shuttle is at Talos I, this also means that the station is in a state where Dahl and his operators have arrived. For a more interesting challenge, try decreasing the timer values or enabling some randomization options, such as station connectivity.
-[/spoiler]
 
 [size=4]Living Talos[/size]
 
 Replaces all typhon with humans and resurrects all human corpses. Experience a glimpse of  Talos I before the outbreak. Tip: To remove husk faces, enable body randomization.
 
+[/spoiler]
+
 [size=5]Other options provided by the randomizer[/size]
 
-[spoiler]
-
-[img]https://imgur.com/w6BF6Vz.jpg[/img]
+[spoiler][img]https://imgur.com/w6BF6Vz.jpg[/img]
 
 Here is some more in-depth information on the other options that this randomizer provides:
 
@@ -209,11 +202,11 @@ Here is some more in-depth information on the other options that this randomizer
 [*] Gravity in GUTS and exterior - Adds gravity to the GUTS and Exterior. If both this and "enable microgravity everywhere" are on, GUTS and Exterior will have gravity. Definitely not playable. For masochists only.
 [*] Custom starting map (for testing purposes only) - A WIP feature that is a little broken but at least functions in terms of starting you in the given map. This literally just swaps the given map with the neuromod division. Saving may not work, and story triggers may not occur. Intended for testing purposes only.
 [*] Game token overrides (for testing purposes only) - Specify initial starting values for any game tokens you wish (both level and global). If you don't know what game tokens are, you don't need this feature. Intended for testing purposes only.
-[*] [new in 0.4] Randomize recyclers/fabricators - Redistributes non-essential recyclers/fabricators across the station with a 50/50 ratio. May sound fun in theory, although may seem less fun if you fight your way to Morgan's office with full pockets only to find two fabricators.
-[*] [new in 0.4] Randomize breakable objects - If an object is breakable/repairable (ex. electrical junctions, recyclers, fabricators, etc), there is a 50% chance it is broken and will require repair to use. May sound fun in theory, although may seem less fun if you fight your way to Morgan's office with full pockets only to find two fabricators and they're now also broken.
-[*] [new in 0.4] Randomize hackable objects - If an object is hackable (ex. workstations), there is a 50% chance it is locked and will require hack to use.
-[*] [new in 0.4] Prey Souls guns - Adds 16 guns from Prey Souls to the item spawn pool. Some changes have been made during the porting process (removing the custom skins), and 5 weapons from the mod (psi cutter, laser rifle, unique laser rifle, gauss rifle, quantum shotgun) have not been ported.
-[*] [new in 0.4] Prey Souls turrets - Adds 3 turrets from the Prey Souls mod. Friendly robot randomization must been enabled for these to spawn in place of existing turrets.
+[*] (new in 0.4) Randomize recyclers/fabricators - Redistributes non-essential recyclers/fabricators across the station with a 50/50 ratio. May sound fun in theory, although may seem less fun if you fight your way to Morgan's office with full pockets only to find two fabricators.
+[*] (new in 0.4) Randomize breakable objects - If an object is breakable/repairable (ex. electrical junctions, recyclers, fabricators, etc), there is a 50% chance it is broken and will require repair to use. May sound fun in theory, although may seem less fun if you fight your way to Morgan's office with full pockets only to find two fabricators and they're now also broken.
+[*] (new in 0.4) Randomize hackable objects - If an object is hackable (ex. workstations), there is a 50% chance it is locked and will require hack to use.
+[*] (new in 0.4) Prey Souls guns - Adds 16 guns from Prey Souls to the item spawn pool. Some changes have been made during the porting process (removing the custom skins), and 5 weapons from the mod (psi cutter, laser rifle, unique laser rifle, gauss rifle, quantum shotgun) have not been ported.
+[*] (new in 0.4) Prey Souls turrets - Adds 3 turrets from the Prey Souls mod. Friendly robot randomization must been enabled for these to spawn in place of existing turrets.
 [/list]
 
 [size=4]Loot in Morgan's Apartment[/size]
@@ -310,9 +303,7 @@ If you find this challenge fun, I'd also recommend trying it out with some of th
 
 [size=5]Configuring your own item/NPC spawn presets[/size]
 
-[spoiler]
-
-[img]https://imgur.com/26XkfL5.jpg[/img]
+[spoiler][img]https://imgur.com/26XkfL5.jpg[/img]
 
 If you'd like to tweak the preset spawn rates for items and enemies, you can modify them yourself or add your own in spawn_presets.json.
 
@@ -398,9 +389,7 @@ To find out what tags are valid, consult the included files tagstoentities.csv�
 
 [size=5]Known issues[/size]
 
-[spoiler]
-
-[img]https://imgur.com/mkYVA8c.jpg[/img]
+[spoiler][img]https://imgur.com/mkYVA8c.jpg[/img]
 
 Issues when using "More guns" or "Prey Souls guns":
 
@@ -451,9 +440,7 @@ Other issues:
 
 [size=5]Troubleshooting[/size]
 
-[spoiler]
-
-[img]https://imgur.com/R6J7ICx.jpg[/img]
+[spoiler][img]https://imgur.com/R6J7ICx.jpg[/img]
 
 In general, check the generated log.txt file to see if there were any issues. Please report any issues you find! Ideally, also attach the log.txt file, screenshots, and the seed/settings you used.
 
@@ -486,12 +473,11 @@ Game crashes on loading into level
 We now have a [url=https://discord.gg/MNGZjucxDE]Discord server[/url] for the randomizer for feedback and bug reports!
 
 Also feel free to share your ideas on how to expand the mod!
+[/spoiler]
 
 [size=5]Authors/Version History[/size]
 
-[spoiler]
-
-[img]https://imgur.com/QmNBYpL.jpg[/img]
+[spoiler][img]https://imgur.com/QmNBYpL.jpg[/img]
 
 Report issues and/or feature requests to[url=https://reddit.com/u/shape_in_the_glass]/u/Shape_in_the_Glass[/url]﻿ or [url=https://www.reddit.com/user/Tsundereployer/]/u/Tsundereployer[/url]﻿, or leave a post here.
 

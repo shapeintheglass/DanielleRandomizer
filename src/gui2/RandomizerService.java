@@ -378,7 +378,7 @@ public class RandomizerService extends Service<Void> {
 
     /* GAMEPLAY, LEVEL */
     LevelRandomizer levelRandomizer =
-        new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap)
+        new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap, database)
             .addFilter(new ItemSpawnFilter(database, currentSettings))
             .addFilter(new FlowgraphFilter(database, currentSettings))
             .addFilter(new EnemyFilter(database, currentSettings))

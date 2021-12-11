@@ -28,18 +28,22 @@ public class Utils {
       "Player.Psychoscope", "Mods.Psychoscope.CanScanCoral", "MissionItems.BigNullwaveTransmitter",
       "MissionItems.BigNullwave_Alex_Cinematic", "MissionItems.SelfDestructKey_Alex",
       "MissionItems.SelfDestructKey_Morgan", "MissionItems.SelfDestructKey_Morgan_Cinematic",
-      "Crafting.FabricationPlans.PropulsionSystemFabPlan", "Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan",
+      "Crafting.FabricationPlans.PropulsionSystemFabPlan",
+      "Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan",
       "Crafting.FabricationPlans.BigNullwaveTransmitterFabPlan_Cinematic",
-      "Crafting.FabricationPlans.AlexStationKeyFabPlan", "Crafting.FabricationPlans.MorganStationKeyFabPlan",
+      "Crafting.FabricationPlans.AlexStationKeyFabPlan",
+      "Crafting.FabricationPlans.MorganStationKeyFabPlan",
       "Crafting.FabricationPlans.CoralScanModFabPlan");
-  
-  private static final ImmutableSet<String> LIBRARY_PREFIXES = ImmutableSet.of("ArkGameplayArchitecture", "ArkGameplayObjects", "ArkHumans", "ArkNpcs",
-      "ArkPhysicsProps", "ArkPickups", "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons");
+
+  private static final ImmutableSet<String> LIBRARY_PREFIXES =
+      ImmutableSet.of("ArkGameplayArchitecture", "ArkGameplayObjects", "ArkHumans", "ArkNpcs",
+          "ArkPhysicsProps", "ArkPickups", "ArkProjectiles", "ArkRobots", "ArkSpecialWeapons");
 
   public static Path createTempDir(Path workingDir, String name) {
     long now = new Date().getTime();
     Path newTempDir = workingDir.resolve(String.format("temp_%8d_%s", now, name));
-    newTempDir.toFile().mkdirs();
+    newTempDir.toFile()
+        .mkdirs();
     return newTempDir;
   }
 
@@ -52,7 +56,8 @@ public class Utils {
     return r.nextInt(diff) + lowerBound;
   }
 
-  public static <T extends Comparable<T>> T getRandomFromCollection(ImmutableCollection<T> arr, Random r) {
+  public static <T extends Comparable<T>> T getRandomFromCollection(ImmutableCollection<T> arr,
+      Random r) {
     List<T> tList = Lists.newArrayList();
     tList.addAll(arr);
     Collections.sort(tList);
@@ -103,7 +108,8 @@ public class Utils {
   }
 
   public static <T> T getRandomWeighted(T[] arr, Integer[] weights, Random r) {
-    int sum = Arrays.stream(weights).reduce(0, Integer::sum);
+    int sum = Arrays.stream(weights)
+        .reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -127,8 +133,9 @@ public class Utils {
         weights.add(1);
       }
     }
-    
-    int sum = weights.stream().reduce(0, Integer::sum);
+
+    int sum = weights.stream()
+        .reduce(0, Integer::sum);
     if (sum == 0) {
       return null;
     }
@@ -160,7 +167,9 @@ public class Utils {
   public static void copyDirectory(File fromDir, Path toDir) throws IOException {
     if (fromDir.isDirectory()) {
       for (File f : fromDir.listFiles()) {
-        toDir.resolve(f.getName()).toFile().mkdir();
+        toDir.resolve(f.getName())
+            .toFile()
+            .mkdir();
         copyDirectory(f, toDir.resolve(f.getName()));
       }
     } else {
@@ -182,7 +191,8 @@ public class Utils {
     // Split name on dots
     String name = e.getAttributeValue("Name");
     String[] nameTags = name.split("\\.");
-    Arrays.stream(nameTags).forEach(s -> tags.add(s));
+    Arrays.stream(nameTags)
+        .forEach(s -> tags.add(s));
     tags.add(e.getAttributeValue("Class"));
     tags.add(e.getAttributeValue("Library"));
 
@@ -197,21 +207,24 @@ public class Utils {
     addTagForBoolean(tags, properties, "bIsPlotCritical", "_PLOT_CRITICAL");
     addTagForBoolean(tags, properties, "bIsRandom", "_RANDOM");
     addTagForBoolean(tags, properties, "bSurvivalMode", "_SURVIVAL");
+    addTagForBoolean(tags, properties, "bCanTriggerAreas", "_CAN_TRIGGER_AREAS");
     addCarryRequirementTag(tags, properties);
 
     if (PROGRESSION_ITEMS.contains(name)) {
       tags.add("_PROGRESSION");
     }
-    
+
     return tags;
   }
 
-  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName, String tagName) {
+  private static void addTagForBoolean(Set<String> tags, Element properties, String propertyName,
+      String tagName) {
     if (properties == null || properties.getAttributeValue(propertyName) == null) {
       return;
     }
 
-    if (properties.getAttributeValue(propertyName).equals("1")) {
+    if (properties.getAttributeValue(propertyName)
+        .equals("1")) {
       tags.add(tagName);
     }
   }
@@ -238,7 +251,7 @@ public class Utils {
         return;
     }
   }
-  
+
   public static String stripLibraryPrefixForEntity(String e) {
     if (e.contains(".") && LIBRARY_PREFIXES.contains(e.substring(0, e.indexOf('.')))) {
       return e.substring(e.indexOf('.') + 1);
@@ -258,7 +271,7 @@ public class Utils {
   public static long getNewSeed() {
     return new Random().nextLong();
   }
-  
+
   public static boolean listAContainsListB(List<String> listA, List<String> listB) {
     if (listA == null || listA.isEmpty()) {
       return false;
@@ -271,7 +284,7 @@ public class Utils {
     }
     return true;
   }
-  
+
   public static long stringToLong(String s) {
     try {
       return Long.parseLong(s);

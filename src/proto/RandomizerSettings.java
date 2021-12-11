@@ -4966,6 +4966,21 @@ public final class RandomizerSettings {
     proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeHackablesOrBuilder();
 
     /**
+     * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+     * @return Whether the randomizeMimics field is set.
+     */
+    boolean hasRandomizeMimics();
+    /**
+     * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+     * @return The randomizeMimics.
+     */
+    proto.RandomizerSettings.ToggleWithSlider getRandomizeMimics();
+    /**
+     * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+     */
+    proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeMimicsOrBuilder();
+
+    /**
      * <code>string pickup_preset_name = 10;</code>
      * @return The pickupPresetName.
      */
@@ -5177,6 +5192,19 @@ public final class RandomizerSettings {
               java.lang.String s = input.readStringRequireUtf8();
 
               npcPresetName_ = s;
+              break;
+            }
+            case 114: {
+              proto.RandomizerSettings.ToggleWithSlider.Builder subBuilder = null;
+              if (randomizeMimics_ != null) {
+                subBuilder = randomizeMimics_.toBuilder();
+              }
+              randomizeMimics_ = input.readMessage(proto.RandomizerSettings.ToggleWithSlider.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(randomizeMimics_);
+                randomizeMimics_ = subBuilder.buildPartial();
+              }
+
               break;
             }
             default: {
@@ -5400,6 +5428,32 @@ public final class RandomizerSettings {
       return getRandomizeHackables();
     }
 
+    public static final int RANDOMIZE_MIMICS_FIELD_NUMBER = 14;
+    private proto.RandomizerSettings.ToggleWithSlider randomizeMimics_;
+    /**
+     * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+     * @return Whether the randomizeMimics field is set.
+     */
+    @java.lang.Override
+    public boolean hasRandomizeMimics() {
+      return randomizeMimics_ != null;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+     * @return The randomizeMimics.
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSlider getRandomizeMimics() {
+      return randomizeMimics_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeMimics_;
+    }
+    /**
+     * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeMimicsOrBuilder() {
+      return getRandomizeMimics();
+    }
+
     public static final int PICKUP_PRESET_NAME_FIELD_NUMBER = 10;
     private volatile java.lang.Object pickupPresetName_;
     /**
@@ -5605,6 +5659,9 @@ public final class RandomizerSettings {
       if (!getNpcPresetNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 13, npcPresetName_);
       }
+      if (randomizeMimics_ != null) {
+        output.writeMessage(14, getRandomizeMimics());
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5662,6 +5719,10 @@ public final class RandomizerSettings {
       if (!getNpcPresetNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(13, npcPresetName_);
       }
+      if (randomizeMimics_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(14, getRandomizeMimics());
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -5712,6 +5773,11 @@ public final class RandomizerSettings {
       if (hasRandomizeHackables()) {
         if (!getRandomizeHackables()
             .equals(other.getRandomizeHackables())) return false;
+      }
+      if (hasRandomizeMimics() != other.hasRandomizeMimics()) return false;
+      if (hasRandomizeMimics()) {
+        if (!getRandomizeMimics()
+            .equals(other.getRandomizeMimics())) return false;
       }
       if (!getPickupPresetName()
           .equals(other.getPickupPresetName())) return false;
@@ -5764,6 +5830,10 @@ public final class RandomizerSettings {
       if (hasRandomizeHackables()) {
         hash = (37 * hash) + RANDOMIZE_HACKABLES_FIELD_NUMBER;
         hash = (53 * hash) + getRandomizeHackables().hashCode();
+      }
+      if (hasRandomizeMimics()) {
+        hash = (37 * hash) + RANDOMIZE_MIMICS_FIELD_NUMBER;
+        hash = (53 * hash) + getRandomizeMimics().hashCode();
       }
       hash = (37 * hash) + PICKUP_PRESET_NAME_FIELD_NUMBER;
       hash = (53 * hash) + getPickupPresetName().hashCode();
@@ -5948,6 +6018,12 @@ public final class RandomizerSettings {
           randomizeHackables_ = null;
           randomizeHackablesBuilder_ = null;
         }
+        if (randomizeMimicsBuilder_ == null) {
+          randomizeMimics_ = null;
+        } else {
+          randomizeMimics_ = null;
+          randomizeMimicsBuilder_ = null;
+        }
         pickupPresetName_ = "";
 
         propPresetName_ = "";
@@ -6014,6 +6090,11 @@ public final class RandomizerSettings {
           result.randomizeHackables_ = randomizeHackables_;
         } else {
           result.randomizeHackables_ = randomizeHackablesBuilder_.build();
+        }
+        if (randomizeMimicsBuilder_ == null) {
+          result.randomizeMimics_ = randomizeMimics_;
+        } else {
+          result.randomizeMimics_ = randomizeMimicsBuilder_.build();
         }
         result.pickupPresetName_ = pickupPresetName_;
         result.propPresetName_ = propPresetName_;
@@ -6093,6 +6174,9 @@ public final class RandomizerSettings {
         }
         if (other.hasRandomizeHackables()) {
           mergeRandomizeHackables(other.getRandomizeHackables());
+        }
+        if (other.hasRandomizeMimics()) {
+          mergeRandomizeMimics(other.getRandomizeMimics());
         }
         if (!other.getPickupPresetName().isEmpty()) {
           pickupPresetName_ = other.pickupPresetName_;
@@ -6944,6 +7028,125 @@ public final class RandomizerSettings {
           randomizeHackables_ = null;
         }
         return randomizeHackablesBuilder_;
+      }
+
+      private proto.RandomizerSettings.ToggleWithSlider randomizeMimics_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> randomizeMimicsBuilder_;
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       * @return Whether the randomizeMimics field is set.
+       */
+      public boolean hasRandomizeMimics() {
+        return randomizeMimicsBuilder_ != null || randomizeMimics_ != null;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       * @return The randomizeMimics.
+       */
+      public proto.RandomizerSettings.ToggleWithSlider getRandomizeMimics() {
+        if (randomizeMimicsBuilder_ == null) {
+          return randomizeMimics_ == null ? proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeMimics_;
+        } else {
+          return randomizeMimicsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      public Builder setRandomizeMimics(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeMimicsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          randomizeMimics_ = value;
+          onChanged();
+        } else {
+          randomizeMimicsBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      public Builder setRandomizeMimics(
+          proto.RandomizerSettings.ToggleWithSlider.Builder builderForValue) {
+        if (randomizeMimicsBuilder_ == null) {
+          randomizeMimics_ = builderForValue.build();
+          onChanged();
+        } else {
+          randomizeMimicsBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      public Builder mergeRandomizeMimics(proto.RandomizerSettings.ToggleWithSlider value) {
+        if (randomizeMimicsBuilder_ == null) {
+          if (randomizeMimics_ != null) {
+            randomizeMimics_ =
+              proto.RandomizerSettings.ToggleWithSlider.newBuilder(randomizeMimics_).mergeFrom(value).buildPartial();
+          } else {
+            randomizeMimics_ = value;
+          }
+          onChanged();
+        } else {
+          randomizeMimicsBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      public Builder clearRandomizeMimics() {
+        if (randomizeMimicsBuilder_ == null) {
+          randomizeMimics_ = null;
+          onChanged();
+        } else {
+          randomizeMimics_ = null;
+          randomizeMimicsBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSlider.Builder getRandomizeMimicsBuilder() {
+        
+        onChanged();
+        return getRandomizeMimicsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      public proto.RandomizerSettings.ToggleWithSliderOrBuilder getRandomizeMimicsOrBuilder() {
+        if (randomizeMimicsBuilder_ != null) {
+          return randomizeMimicsBuilder_.getMessageOrBuilder();
+        } else {
+          return randomizeMimics_ == null ?
+              proto.RandomizerSettings.ToggleWithSlider.getDefaultInstance() : randomizeMimics_;
+        }
+      }
+      /**
+       * <code>.ToggleWithSlider randomize_mimics = 14;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder> 
+          getRandomizeMimicsFieldBuilder() {
+        if (randomizeMimicsBuilder_ == null) {
+          randomizeMimicsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.RandomizerSettings.ToggleWithSlider, proto.RandomizerSettings.ToggleWithSlider.Builder, proto.RandomizerSettings.ToggleWithSliderOrBuilder>(
+                  getRandomizeMimics(),
+                  getParentForChildren(),
+                  isClean());
+          randomizeMimics_ = null;
+        }
+        return randomizeMimicsBuilder_;
       }
 
       private java.lang.Object pickupPresetName_ = "";
@@ -10569,6 +10772,12 @@ public final class RandomizerSettings {
     boolean getEnableGravityInExtAndGuts();
 
     /**
+     * <code>bool fluctuating_gravity = 8;</code>
+     * @return The fluctuatingGravity.
+     */
+    boolean getFluctuatingGravity();
+
+    /**
      * <code>bool start_self_destruct = 5;</code>
      * @return The startSelfDestruct.
      */
@@ -10682,6 +10891,11 @@ public final class RandomizerSettings {
               selfDestructShuttleTimer_ = s;
               break;
             }
+            case 64: {
+
+              fluctuatingGravity_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -10756,6 +10970,17 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getEnableGravityInExtAndGuts() {
       return enableGravityInExtAndGuts_;
+    }
+
+    public static final int FLUCTUATING_GRAVITY_FIELD_NUMBER = 8;
+    private boolean fluctuatingGravity_;
+    /**
+     * <code>bool fluctuating_gravity = 8;</code>
+     * @return The fluctuatingGravity.
+     */
+    @java.lang.Override
+    public boolean getFluctuatingGravity() {
+      return fluctuatingGravity_;
     }
 
     public static final int START_SELF_DESTRUCT_FIELD_NUMBER = 5;
@@ -10880,6 +11105,9 @@ public final class RandomizerSettings {
       if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 7, selfDestructShuttleTimer_);
       }
+      if (fluctuatingGravity_ != false) {
+        output.writeBool(8, fluctuatingGravity_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -10915,6 +11143,10 @@ public final class RandomizerSettings {
       if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, selfDestructShuttleTimer_);
       }
+      if (fluctuatingGravity_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(8, fluctuatingGravity_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -10938,6 +11170,8 @@ public final class RandomizerSettings {
           != other.getZeroGravityEverywhere()) return false;
       if (getEnableGravityInExtAndGuts()
           != other.getEnableGravityInExtAndGuts()) return false;
+      if (getFluctuatingGravity()
+          != other.getFluctuatingGravity()) return false;
       if (getStartSelfDestruct()
           != other.getStartSelfDestruct()) return false;
       if (!getSelfDestructTimer()
@@ -10967,6 +11201,9 @@ public final class RandomizerSettings {
       hash = (37 * hash) + ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getEnableGravityInExtAndGuts());
+      hash = (37 * hash) + FLUCTUATING_GRAVITY_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getFluctuatingGravity());
       hash = (37 * hash) + START_SELF_DESTRUCT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getStartSelfDestruct());
@@ -11115,6 +11352,8 @@ public final class RandomizerSettings {
 
         enableGravityInExtAndGuts_ = false;
 
+        fluctuatingGravity_ = false;
+
         startSelfDestruct_ = false;
 
         selfDestructTimer_ = "";
@@ -11151,6 +11390,7 @@ public final class RandomizerSettings {
         result.livingCorpses_ = livingCorpses_;
         result.zeroGravityEverywhere_ = zeroGravityEverywhere_;
         result.enableGravityInExtAndGuts_ = enableGravityInExtAndGuts_;
+        result.fluctuatingGravity_ = fluctuatingGravity_;
         result.startSelfDestruct_ = startSelfDestruct_;
         result.selfDestructTimer_ = selfDestructTimer_;
         result.selfDestructShuttleTimer_ = selfDestructShuttleTimer_;
@@ -11213,6 +11453,9 @@ public final class RandomizerSettings {
         }
         if (other.getEnableGravityInExtAndGuts() != false) {
           setEnableGravityInExtAndGuts(other.getEnableGravityInExtAndGuts());
+        }
+        if (other.getFluctuatingGravity() != false) {
+          setFluctuatingGravity(other.getFluctuatingGravity());
         }
         if (other.getStartSelfDestruct() != false) {
           setStartSelfDestruct(other.getStartSelfDestruct());
@@ -11374,6 +11617,37 @@ public final class RandomizerSettings {
       public Builder clearEnableGravityInExtAndGuts() {
         
         enableGravityInExtAndGuts_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean fluctuatingGravity_ ;
+      /**
+       * <code>bool fluctuating_gravity = 8;</code>
+       * @return The fluctuatingGravity.
+       */
+      @java.lang.Override
+      public boolean getFluctuatingGravity() {
+        return fluctuatingGravity_;
+      }
+      /**
+       * <code>bool fluctuating_gravity = 8;</code>
+       * @param value The fluctuatingGravity to set.
+       * @return This builder for chaining.
+       */
+      public Builder setFluctuatingGravity(boolean value) {
+        
+        fluctuatingGravity_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool fluctuating_gravity = 8;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearFluctuatingGravity() {
+        
+        fluctuatingGravity_ = false;
         onChanged();
         return this;
       }
@@ -14272,7 +14546,7 @@ public final class RandomizerSettings {
       "\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n\017rando" +
       "mize_music\030\003 \001(\010\022\036\n\026randomize_player_mod" +
       "el\030\004 \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022" +
-      "\032\n\022randomize_emotions\030\006 \001(\010\"\211\004\n\020Gameplay" +
+      "\032\n\022randomize_emotions\030\006 \001(\010\"\266\004\n\020Gameplay" +
       "Settings\0226\n\023item_spawn_settings\030\001 \001(\0132\031." +
       "GenericSpawnPresetFilter\0227\n\024enemy_spawn_" +
       "settings\030\002 \001(\0132\031.GenericSpawnPresetFilte" +
@@ -14283,43 +14557,45 @@ public final class RandomizerSettings {
       "ers\030\007 \001(\0132\021.ToggleWithSlider\022/\n\024randomiz" +
       "e_breakables\030\010 \001(\0132\021.ToggleWithSlider\022.\n" +
       "\023randomize_hackables\030\t \001(\0132\021.ToggleWithS" +
-      "lider\022\032\n\022pickup_preset_name\030\n \001(\t\022\030\n\020pro" +
-      "p_preset_name\030\013 \001(\t\022\031\n\021enemy_preset_name" +
-      "\030\014 \001(\t\022\027\n\017npc_preset_name\030\r \001(\t\":\n\020Toggl" +
-      "eWithSlider\022\021\n\tisEnabled\030\001 \001(\010\022\023\n\013slider" +
-      "Value\030\002 \001(\002\"\215\001\n\021GameStartSettings\022\035\n\025add" +
-      "_loot_to_apartment\030\001 \001(\010\022\033\n\023start_on_sec" +
-      "ond_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscene\030\003 \001" +
-      "(\010\022\037\n\027start_outside_apartment\030\004 \001(\010\"\217\001\n\014" +
-      "MoreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n\017prey_" +
-      "souls_guns\030\002 \001(\010\022\033\n\023prey_souls_chipsets\030" +
-      "\003 \001(\010\022\032\n\022prey_souls_enemies\030\004 \001(\010\022\032\n\022pre" +
-      "y_souls_turrets\030\005 \001(\010\"\337\003\n\rCheatSettings\022" +
-      "\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_all_scan" +
-      "s\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020use_cu" +
-      "stom_spawn\030\004 \001(\010\022;\n\025custom_spawn_locatio" +
-      "n\030\005 \001(\0162\034.CheatSettings.SpawnLocation\022\034\n" +
-      "\024game_token_overrides\030\006 \001(\t\"\221\002\n\rSpawnLoc" +
-      "ation\022\010\n\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOBBY\020\002\022\021" +
-      "\n\rHARDWARE_LABS\020\003\022\021\n\rPSYCHOTRONICS\020\004\022\010\n\004" +
-      "GUTS\020\005\022\r\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022\021\n\rCRE" +
-      "W_QUARTERS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\tCARGO_" +
-      "BAY\020\n\022\020\n\014LIFE_SUPPORT\020\013\022\017\n\013POWER_PLANT\020\014" +
-      "\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n\007ENDGA" +
-      "ME\020\017\022\021\n\rGENDER_SELECT\020\020\"\360\001\n\024Experimental" +
-      "Settings\022\030\n\020wandering_humans\030\001 \001(\010\022\026\n\016li" +
-      "ving_corpses\030\002 \001(\010\022\037\n\027zero_gravity_every" +
-      "where\030\003 \001(\010\022&\n\036enable_gravity_in_ext_and" +
-      "_guts\030\004 \001(\010\022\033\n\023start_self_destruct\030\005 \001(\010" +
-      "\022\033\n\023self_destruct_timer\030\006 \001(\t\022#\n\033self_de" +
-      "struct_shuttle_timer\030\007 \001(\t\"`\n\030GenericSpa" +
-      "wnPresetFilter\022\014\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001" +
-      "(\t\022(\n\007filters\030\003 \003(\0132\027.GenericSpawnPreset" +
-      "Rule\"\220\001\n\026GenericSpawnPresetRule\022\022\n\ninput" +
-      "_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026\n\016outp" +
-      "ut_weights\030\003 \003(\005\022\031\n\021do_not_touch_tags\030\004 " +
-      "\003(\t\022\032\n\022do_not_output_tags\030\005 \003(\tB\033\n\005proto" +
-      "B\022RandomizerSettingsb\006proto3"
+      "lider\022+\n\020randomize_mimics\030\016 \001(\0132\021.Toggle" +
+      "WithSlider\022\032\n\022pickup_preset_name\030\n \001(\t\022\030" +
+      "\n\020prop_preset_name\030\013 \001(\t\022\031\n\021enemy_preset" +
+      "_name\030\014 \001(\t\022\027\n\017npc_preset_name\030\r \001(\t\":\n\020" +
+      "ToggleWithSlider\022\021\n\tisEnabled\030\001 \001(\010\022\023\n\013s" +
+      "liderValue\030\002 \001(\002\"\215\001\n\021GameStartSettings\022\035" +
+      "\n\025add_loot_to_apartment\030\001 \001(\010\022\033\n\023start_o" +
+      "n_second_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscen" +
+      "e\030\003 \001(\010\022\037\n\027start_outside_apartment\030\004 \001(\010" +
+      "\"\217\001\n\014MoreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n\017" +
+      "prey_souls_guns\030\002 \001(\010\022\033\n\023prey_souls_chip" +
+      "sets\030\003 \001(\010\022\032\n\022prey_souls_enemies\030\004 \001(\010\022\032" +
+      "\n\022prey_souls_turrets\030\005 \001(\010\"\337\003\n\rCheatSett" +
+      "ings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_all" +
+      "_scans\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020u" +
+      "se_custom_spawn\030\004 \001(\010\022;\n\025custom_spawn_lo" +
+      "cation\030\005 \001(\0162\034.CheatSettings.SpawnLocati" +
+      "on\022\034\n\024game_token_overrides\030\006 \001(\t\"\221\002\n\rSpa" +
+      "wnLocation\022\010\n\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOBB" +
+      "Y\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\rPSYCHOTRONICS\020" +
+      "\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022\021" +
+      "\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\tC" +
+      "ARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT\020\013\022\017\n\013POWER_PL" +
+      "ANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n\007" +
+      "ENDGAME\020\017\022\021\n\rGENDER_SELECT\020\020\"\215\002\n\024Experim" +
+      "entalSettings\022\030\n\020wandering_humans\030\001 \001(\010\022" +
+      "\026\n\016living_corpses\030\002 \001(\010\022\037\n\027zero_gravity_" +
+      "everywhere\030\003 \001(\010\022&\n\036enable_gravity_in_ex" +
+      "t_and_guts\030\004 \001(\010\022\033\n\023fluctuating_gravity\030" +
+      "\010 \001(\010\022\033\n\023start_self_destruct\030\005 \001(\010\022\033\n\023se" +
+      "lf_destruct_timer\030\006 \001(\t\022#\n\033self_destruct" +
+      "_shuttle_timer\030\007 \001(\t\"`\n\030GenericSpawnPres" +
+      "etFilter\022\014\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007" +
+      "filters\030\003 \003(\0132\027.GenericSpawnPresetRule\"\220" +
+      "\001\n\026GenericSpawnPresetRule\022\022\n\ninput_tags\030" +
+      "\001 \003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026\n\016output_wei" +
+      "ghts\030\003 \003(\005\022\031\n\021do_not_touch_tags\030\004 \003(\t\022\032\n" +
+      "\022do_not_output_tags\030\005 \003(\tB\033\n\005protoB\022Rand" +
+      "omizerSettingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -14348,7 +14624,7 @@ public final class RandomizerSettings {
     internal_static_GameplaySettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameplaySettings_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
+        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
     internal_static_ToggleWithSlider_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_ToggleWithSlider_fieldAccessorTable = new
@@ -14378,7 +14654,7 @@ public final class RandomizerSettings {
     internal_static_ExperimentalSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ExperimentalSettings_descriptor,
-        new java.lang.String[] { "WanderingHumans", "LivingCorpses", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", });
+        new java.lang.String[] { "WanderingHumans", "LivingCorpses", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "FluctuatingGravity", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", });
     internal_static_GenericSpawnPresetFilter_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_GenericSpawnPresetFilter_fieldAccessorTable = new

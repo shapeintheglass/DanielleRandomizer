@@ -201,11 +201,12 @@
                                           <CheckBox fx:id="gameplayRandomizeNeuromods" mnemonicParsing="false" text="Randomize neuromods" />
                                           <CheckBox fx:id="gameplayRandomizeFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
-                                          <Label text="Danger Zone: Warning!" />
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
-                                          <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="Randomize recyclers/fabricators" />
-                                          <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="Randomize breakable objects" />
-                                          <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="Randomize hackable objects" />
+                                          <CheckBox fx:id="gameplayRandomizeKeycards" mnemonicParsing="false" text="Randomize keycards" />
+                                          <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" prefHeight="25.0" text="\% recyclers (compared to fabricators)" />
+                                          <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" prefHeight="25.0" text="\% repairable objects that are broken" />
+                                          <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" prefHeight="25.0" text="\% hackable objects that are locked" />
+                                          <CheckBox fx:id="gameplayRandomizeMimics" mnemonicParsing="false" prefHeight="25.0" text="\% objects that are secretly mimics" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
@@ -213,11 +214,36 @@
                                           <Label text="Shuffles neuromod upgrade tree." />
                                           <Label text="Assigns new randomly generated costs for fab plans." />
                                           <Label text="Redistributes operator dispensers with an equal ratio." />
-                                          <Label text="The following options can make the game much harder!" />
                                           <Label text="Shuffles connections between levels." />
-                                          <Label text="Redistributes recyclers/fabricators with an equal ratio." />
-                                          <Label text="50% chance that a repairable entity will be broken." />
-                                          <Label text="50% chance that a hackable entity will be locked." />
+                                          <Label text="Shuffles keycards." />
+                                          <HBox prefHeight="17.0" prefWidth="305.0">
+                                             <children>
+                                                <Slider fx:id="gameplayRecyclerSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
+                                                <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                                <TextField fx:id="gameplayRecyclerTextbox" prefHeight="17.0" prefWidth="28.0" text="50" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="305.0">
+                                             <children>
+                                                <Slider fx:id="gameplayBreakableSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
+                                                <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                                <TextField fx:id="gameplayBreakableTextbox" prefHeight="17.0" prefWidth="28.0" text="50" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="305.0">
+                                             <children>
+                                                <Slider fx:id="gameplayHackableSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
+                                                <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                                <TextField fx:id="gameplayHackableTextbox" prefHeight="17.0" prefWidth="28.0" text="50" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="17.0" prefWidth="305.0">
+                                             <children>
+                                                <Slider fx:id="gameplayMimicSlider" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="1.0" />
+                                                <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                                <TextField fx:id="gameplayMimicTextbox" prefHeight="17.0" prefWidth="28.0" text="1" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
@@ -244,7 +270,7 @@
                                           <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
                                           <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" />
-                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Start outside apartment" visible="false" />
+                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Start outside apartment" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
@@ -252,7 +278,7 @@
                                           <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
                                           <Label text="Does not spawn Jovan so that his cutscene won't play." />
-                                          <Label prefHeight="22.0" prefWidth="295.0" text="Starts at the Neuromod Division --&gt; Lobby door." visible="false">
+                                          <Label prefHeight="22.0" prefWidth="295.0" text="Starts at the Neuromod Division --&gt; Lobby door.">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -277,8 +303,8 @@
                                           <CheckBox fx:id="moreGuns" mnemonicParsing="false" text="More guns" />
                                           <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey Souls - Guns" />
                                           <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="Prey Souls - Chipsets" visible="false" />
-                                          <Label text="For enemy randomization:" visible="false" />
-                                          <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" visible="false" />
+                                          <Label text="For enemy randomization:" />
+                                          <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" />
                                           <Label text="For friendly NPC randomization:" />
                                           <CheckBox fx:id="morePreySoulsTurrets" mnemonicParsing="false" text="Prey Souls - Turrets" />
                                        </children>
@@ -290,7 +316,7 @@
                                           <Label text="Adds 16 weapons from the Prey Souls mod." />
                                           <Label text="Adds 2 chipsets from the Prey Souls mod." visible="false" />
                                           <Label />
-                                          <Label text="Adds 16 enemies from the Prey Souls mod." visible="false" />
+                                          <Label text="Adds 16 enemies from the Prey Souls mod." />
                                           <Label />
                                           <Label text="Adds 3 turrets from the Prey Souls mod." />
                                        </children>
@@ -349,6 +375,7 @@
                                           <CheckBox fx:id="expCheckboxGravity" mnemonicParsing="false" text="Zero gravity everywhere" />
                                           <CheckBox fx:id="expCheckboxEnableGravity" mnemonicParsing="false" text="Enable gravity in Exterior and GUTS" />
                                           <CheckBox fx:id="expCheckboxSelfDestruct" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
+                                          <CheckBox fx:id="expCheckboxFluctuatingGravity" mnemonicParsing="false" text="Constantly changing gravity" />
                                           <HBox prefHeight="21.0" prefWidth="307.0">
                                              <children>
                                                 <Label text="Self-destruct timer (minutes):">
@@ -386,6 +413,7 @@
                                           <Label text="Adds 0G to every map. Breaks most cutscenes." />
                                           <Label text="For masochists only." />
                                           <Label text="Intended for the &quot;G.O.T.S.&quot; mode." />
+                                          <Label text="Gravity periodically toggles on/off" />
                                           <Label text="Time before the station self-destructs.">
                                              <VBox.margin>
                                                 <Insets bottom="3.0" top="3.0" />
