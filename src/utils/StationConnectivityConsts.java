@@ -85,6 +85,7 @@ public final class StationConnectivityConsts {
           .put(Level.PSYCHOTRONICS, "research/psychotronics")
           .put(Level.SHUTTLE_BAY, "research/shuttlebay")
           .put(Level.EXTERIOR, "station/exterior")
+          .put(Level.GENDER_SELECT, "playergenderselect")
           .build();
 
   // Map of level to associated spawn name

@@ -36,8 +36,12 @@ public class ToggleWithSliderHelper {
   }
 
   public void set(ToggleWithSlider toggleWithSlider) {
-    checkbox.setSelected(toggleWithSlider.getIsEnabled());
-    slider.setValue((double) toggleWithSlider.getSliderValue());
+    set(toggleWithSlider.getIsEnabled(), (double) toggleWithSlider.getSliderValue());
+  }
+
+  public void set(boolean isEnabled, double value) {
+    checkbox.setSelected(isEnabled);
+    slider.setValue(value);
     update();
   }
 

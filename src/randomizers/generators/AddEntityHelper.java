@@ -1,6 +1,7 @@
 package randomizers.generators;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -13,7 +14,9 @@ import utils.ZipHelper;
 
 public class AddEntityHelper {
 
+  // Maximum distance (meters) where we can fudge the position of a mimicked object
   private static final float MIMIC_POSITION_FUDGE = 1.0f;
+
   private static final ImmutableMap<String, String> LEVEL_TO_MAIN_SCRIPTING_LAYER =
       new ImmutableMap.Builder<String, String>()
           .put(LevelConsts.NEUROMOD_DIVISION, "Simulation_Scripting_MAIN")
@@ -136,7 +139,7 @@ public class AddEntityHelper {
             .setAttribute("Layer", "AlwaysLoaded");
     Element properties = new Element("Properties").setAttribute("bActive", "1")
         .setAttribute("bAffectsParticleEmitterPosition", "0")
-        .setAttribute("FalloffInner", "0")
+        .setAttribute("FalloffInner", "1")
         .setAttribute("vector_ImpulseActivate", "0,0,0")
         .setAttribute("vector_ImpulseDeactivate", "0,0,0")
         .setAttribute("bUniform", "1");
@@ -163,6 +166,15 @@ public class AddEntityHelper {
     float newX = Float.parseFloat(tokens[0]) - MIMIC_POSITION_FUDGE + xFudge;
     float newY = Float.parseFloat(tokens[1]) - MIMIC_POSITION_FUDGE + yFudge;
     return String.format("%.5f,%.5f,%s", newX, newY, tokens[2]);
+  }
+
+  private static String getNewRot(Random r) {
+    // First coordinate of quaternion can be -1 <= w <= 1
+    float w = (r.nextFloat() * 2) - 1;
+    // Last coordinate is the complement so that w^2 + z^2 = 1
+    // Therefore, z = sqrt( 1 - w^2 )
+    float z = (float) Math.sqrt(1 - Math.pow(w, 2));
+    return String.format("%.5f,%.5f,%.5f,%.5f", z, 0.0f, 0.0f, w);
   }
 
   public static void addEntities(Element objects, String filename, Settings settings,
@@ -197,6 +209,8 @@ public class AddEntityHelper {
     if (settings.getGameplaySettings()
         .getRandomizeMimics()
         .getIsEnabled() && LEVEL_TO_MAIN_SCRIPTING_LAYER.containsKey(filename)) {
+      
+
       // Generate a flowgraph entity
       String flowgraphEntityId = "999999999"; // Must be unique per level file
       String entityGuid = "AAAAAAAA"; // Must be unique per level file
@@ -235,6 +249,9 @@ public class AddEntityHelper {
         if (objectGuid == null || objectPosition == null || objectName == null) {
           continue;
         }
+
+        // Modify the rotation of the original object
+        e.setAttribute("Rotate", getNewRot(r));
 
         // Generate a GUID for the object node
         String objectNodeGuid = String.format("{%s}", UUID.randomUUID()

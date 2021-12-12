@@ -24,12 +24,15 @@ public class LevelConsts {
   public static final String LIFE_SUPPORT = "engineering/lifesupport";
   public static final String POWER_PLANT = "engineering/powersource";
   public static final String EXTERIOR = "station/exterior";
+  public static final String ENDGAME = "endgame";
+  public static final String PLAYER_GENDER_SELECT = "playergenderselect";
 
-  public static final String[] LEVEL_DIRS = {"endgame", "engineering/cargobay",
-      "engineering/lifesupport", "engineering/powersource", "executive/arboretum",
-      "executive/bridge", "executive/corporateit", "executive/crewfacilities", "research/lobby",
-      "research/prototype", "research/psychotronics", "research/shuttlebay",
-      "research/simulationlabs", "research/zerog_utilitytunnels", "station/exterior"};
+  public static final String[] LEVEL_DIRS =
+      {"endgame", "engineering/cargobay", "engineering/lifesupport", "engineering/powersource",
+          "executive/arboretum", "executive/bridge", "executive/corporateit",
+          "executive/crewfacilities", "research/lobby", "research/prototype",
+          "research/psychotronics", "research/shuttlebay", "research/simulationlabs",
+          "research/zerog_utilitytunnels", "station/exterior", "playergenderselect"};
 
   public static final List<String> DO_NOT_TOUCH_ITEM_TAGS =
       Lists.newArrayList("Data", "MissionItems", "_PROGRESSION", "_PLOT_CRITICAL", "ArkLight",

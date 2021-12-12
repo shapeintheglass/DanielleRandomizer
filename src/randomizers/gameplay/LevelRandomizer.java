@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,9 @@ public class LevelRandomizer extends BaseRandomizer {
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
   private static final String TOKENS_FOLDER_NAME = "gametokens/";
 
+  // Maximum number of mimics to spawn into a level
+  private static final int MAX_MIMICS = 315;
+
   private List<BaseFilter> filterList;
 
   private Map<String, String> gameTokenValues;
@@ -85,7 +89,6 @@ public class LevelRandomizer extends BaseRandomizer {
       gameTokenValues.putAll(LevelConsts.UNLOCK_QUESTS_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.UNLOCK_EXTERIOR_GAME_TOKENS);
       gameTokenValues.putAll(LevelConsts.PSYCHOTRONICS_SKIP_CALIBRATION_TOKENS);
-      // gameTokenValues.putAll(LevelConsts.UNLOCK_LIFT_TOKENS);
     }
     if (settings.getGameplaySettings()
         .getRandomizeStation()) {
@@ -210,6 +213,15 @@ public class LevelRandomizer extends BaseRandomizer {
     return distFromMorgan < MORGAN_SPAWN_DISTANCE_THRESHOLD;
   }
 
+  private boolean isUsedAsDynamicObstacle(Element levelEntity) {
+    Element properties2 = levelEntity.getChild("Properties2");
+    if (properties2 == null) {
+      return false;
+    }
+    String isDynamicObstacle = properties2.getAttributeValue("bUsedAsDynamicObstacle");
+    return isDynamicObstacle != null && isDynamicObstacle.equals("1");
+  }
+
   /**
    * Copies level def into temp directory, while filtering.
    */
@@ -219,14 +231,22 @@ public class LevelRandomizer extends BaseRandomizer {
     Element root = document.getRootElement();
     Element objects = root.getChild("Objects");
 
-    List<Element> validMimickableEntities = Lists.newArrayList();
+    // List of pickup items that take priority for mimicking.
+    List<Element> priorityMimickableEntities = Lists.newArrayList();
+    // List of props that take backup priority for mimicking.
+    // If there are too many mimics, some of these can be dropped.
+    List<Element> backupMimickableEntities = Lists.newArrayList();
 
     for (Element e : objects.getChildren()) {
+      // Perform regular filtering
       filterEntityXml(e, levelDir);
+
+      // Observe whether this is an entity we should mimic
       String archetype = e.getAttributeValue("Archetype");
       if (settings.getGameplaySettings()
           .getRandomizeMimics()
-          .getIsEnabled() && archetype != null && !tooCloseToMorgan(levelDir, e)) {
+          .getIsEnabled() && archetype != null && isUsedAsDynamicObstacle(e)
+          && !tooCloseToMorgan(levelDir, e)) {
 
         String shortArchetypeName = Utils.stripLibraryPrefixForEntity(archetype);
 
@@ -237,19 +257,43 @@ public class LevelRandomizer extends BaseRandomizer {
             && Sets.intersection(tags, PROP_MIMICABLE_TAGS_BLOCKLIST)
                 .isEmpty();
 
-        if (isPickupAndMimicable || isPropAndMimicable) {
-          System.out.println(archetype);
+        // Store mimic-able entities in either the priority or the backup list.
+        if (isPickupAndMimicable) {
           boolean mimicThisItem = r.nextFloat() < mimicSlider;
           if (mimicThisItem) {
-            validMimickableEntities.add(e);
+            priorityMimickableEntities.add(e);
+          }
+        } else if (isPropAndMimicable) {
+          boolean mimicThisItem = r.nextFloat() < mimicSlider;
+          if (mimicThisItem) {
+            backupMimickableEntities.add(e);
           }
         }
       }
     }
-    logger.info(String.format("Identified %d mimickable objects in %s",
-        validMimickableEntities.size(), levelDir));
+    Collections.shuffle(priorityMimickableEntities, r);
+    Collections.shuffle(backupMimickableEntities, r);
 
-    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper, validMimickableEntities, r);
+    int priorityListSize = priorityMimickableEntities.size();
+    if (priorityListSize > MAX_MIMICS) {
+      // If the priority list is larger than the max allowable size, trim it down.
+      priorityMimickableEntities = priorityMimickableEntities.subList(0, MAX_MIMICS);
+    } else if (priorityListSize < MAX_MIMICS) {
+      // If the priority list is smaller than the max allowable size, fill with backup entities.
+      int backfillNeeded = MAX_MIMICS - priorityListSize;
+      if (backupMimickableEntities.size() < backfillNeeded) {
+        priorityMimickableEntities.addAll(backupMimickableEntities);
+      } else {
+        priorityMimickableEntities.addAll(backupMimickableEntities.subList(0, backfillNeeded));
+      }
+
+    }
+
+    logger.info(String.format("Identified %d mimickable objects in %s",
+        priorityMimickableEntities.size(), levelDir, MAX_MIMICS));
+
+    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper, priorityMimickableEntities,
+        r);
 
     zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }

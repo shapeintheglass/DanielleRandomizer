@@ -259,11 +259,10 @@ public class WindowController {
     checkboxes = ImmutableList.of(cosmeticCheckboxBodies, cosmeticCheckboxVoices,
         cosmeticCheckboxEmotions, cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel,
         cosmeticCheckboxPlanetSize, gameplayRandomizeStation, gameplayRandomizeNeuromods,
-        gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeRecyclers,
-        gameplayRandomizeDispensers, gameplayRandomizeBreakables, gameplayRandomizeHackables,
-        gameplayRandomizeMimics, startCheckboxDay2, startCheckboxAddAllEquipment,
-        startCheckboxSkipJovan, startCheckboxOutsideApartment, moreGuns, morePreySoulsGuns,
-        morePreySoulsChipsets, morePreySoulsEnemies, morePreySoulsTurrets, cheatsCheckboxAllScans,
+        gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeDispensers,
+        startCheckboxDay2, startCheckboxAddAllEquipment, startCheckboxSkipJovan,
+        startCheckboxOutsideApartment, moreGuns, morePreySoulsGuns, morePreySoulsChipsets,
+        morePreySoulsEnemies, morePreySoulsTurrets, cheatsCheckboxAllScans,
         cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, expCheckboxEnableGravity,
         expCheckboxGravity, expCheckboxFluctuatingGravity, expCheckboxSelfDestruct,
         expCheckboxWander, expLivingCorpses);
@@ -318,7 +317,7 @@ public class WindowController {
         gameplayHackableTextbox, gameplayHackablePercent);
     mimicSlider = new ToggleWithSliderHelper(gameplayRandomizeMimics, gameplayMimicSlider,
         gameplayMimicTextbox, gameplayMimicPercent);
-    
+
     updateUI();
 
     cheatsCheckboxCustomStart.setOnAction(new EventHandler<ActionEvent>() {
@@ -473,6 +472,10 @@ public class WindowController {
     resetPropPreset();
     resetEnemyPreset();
     resetNpcPreset();
+    recyclerSlider.set(false, 0.0);
+    breakableSlider.set(false, 0.0);
+    hackableSlider.set(false, 0.0);
+    mimicSlider.set(false, 0.0);
     cheatsChoiceBoxCustomStart.setValue(SpawnLocation.RANDOM.name());
     cheatsChoiceBoxCustomStart.setDisable(true);
     cheatsTextFieldGameTokens.clear();
@@ -549,10 +552,11 @@ public class WindowController {
     gameplayRandomizeStation.setSelected(true);
     gameplayRandomizeFabPlanCosts.setSelected(true);
     gameplayRandomizeNeuromods.setSelected(true);
-    gameplayRandomizeRecyclers.setSelected(true);
     gameplayRandomizeDispensers.setSelected(true);
-    gameplayRandomizeBreakables.setSelected(true);
-    gameplayRandomizeHackables.setSelected(true);
+    recyclerSlider.set(true, 50.0);
+    breakableSlider.set(true, 50.0);
+    hackableSlider.set(true, 50.0);
+    mimicSlider.set(true, 1.0);
     startCheckboxDay2.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
