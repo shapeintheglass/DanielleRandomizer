@@ -1,11 +1,10 @@
-Planned features for v0.451:
+Todo:
  - Fix crashing issue on Chaotic preset (likely due to turrets --> operator)
  - Localization support
  - Remaining 5 Prey Souls guns
  - Prey Souls Enemies
  - Make Prey Souls turrets scannable
  - Make 50/50 options into sliders
- - Add mimic slider
  - More guns
  - Randomized keycards
  - Less <X>
@@ -17,11 +16,6 @@ Notes:
  - Add lore cards for turrets
  - Fix card for Absolute Phantom
 
-Turret types:
-
- - Flamethrower
- - Machine gun
- - Laser gun
 
 Enemy types:
 

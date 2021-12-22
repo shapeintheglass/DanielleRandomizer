@@ -1,7 +1,6 @@
 package randomizers.generators;
 
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -176,6 +175,16 @@ public class AddEntityHelper {
     float z = (float) Math.sqrt(1 - Math.pow(w, 2));
     return String.format("%.5f,%.5f,%.5f,%.5f", z, 0.0f, 0.0f, w);
   }
+  
+  private static Element createMimicNode(String startMimickingNodeId, boolean replace) {
+    return new Element("Node").setAttribute("Id", startMimickingNodeId)
+        .setAttribute("Class", "Ark:NPC:Mimic:StartMimicking")
+        .setAttribute("pos", "0,0,0")
+        .addContent(new Element("Inputs").setAttribute("entityId", "0")
+            .setAttribute("EntityToMimic", "0")
+            .setAttribute("Reason", "3")
+            .setAttribute("Replace", replace ? "1" : "0"));
+  }
 
   public static void addEntities(Element objects, String filename, Settings settings,
       ZipHelper zipHelper, List<Element> mimicEntities, Random r) {
@@ -209,7 +218,7 @@ public class AddEntityHelper {
     if (settings.getGameplaySettings()
         .getRandomizeMimics()
         .getIsEnabled() && LEVEL_TO_MAIN_SCRIPTING_LAYER.containsKey(filename)) {
-      
+
 
       // Generate a flowgraph entity
       String flowgraphEntityId = "999999999"; // Must be unique per level file
@@ -251,7 +260,7 @@ public class AddEntityHelper {
         }
 
         // Modify the rotation of the original object
-        e.setAttribute("Rotate", getNewRot(r));
+        //e.setAttribute("Rotate", getNewRot(r));
 
         // Generate a GUID for the object node
         String objectNodeGuid = String.format("{%s}", UUID.randomUUID()
@@ -287,13 +296,7 @@ public class AddEntityHelper {
             .setAttribute("EntityGUID", objectNodeGuid)
             .setAttribute("EntityGUID_64", objectGuid)
             .addContent(new Element("Inputs").setAttribute("entityId", "0"));
-        Element startMimickingNode = new Element("Node").setAttribute("Id", startMimickingNodeId)
-            .setAttribute("Class", "Ark:NPC:Mimic:StartMimicking")
-            .setAttribute("pos", "0,0,0")
-            .addContent(new Element("Inputs").setAttribute("entityId", "0")
-                .setAttribute("EntityToMimic", "0")
-                .setAttribute("Reason", "3")
-                .setAttribute("Replace", "0"));
+        Element startMimickingNode = createMimicNode(startMimickingNodeId, /* replace */ true);
         // Indicates that the mimicking should start once spawning has succeeded
         Element startEdge = new Element("Edge").setAttribute("nodeIn", startMimickingNodeId)
             .setAttribute("nodeOut", spawnerNodeId)

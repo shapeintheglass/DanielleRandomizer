@@ -560,6 +560,7 @@ public class WindowController {
     startCheckboxDay2.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
+    morePreySoulsEnemies.setSelected(true);
     morePreySoulsTurrets.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");

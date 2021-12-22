@@ -42,14 +42,16 @@ public class LevelRandomizer extends BaseRandomizer {
   private static final ImmutableSet<String> PROP_MIMICABLE_TAGS =
       ImmutableSet.of("ArkPhysicsProps", "_MIMICABLE", "_CARRYABLE");
   private static final ImmutableSet<String> PROP_MIMICABLE_TAGS_BLOCKLIST =
-      ImmutableSet.of("_LEVERAGE_I", "_LEVERAGE_II", "_LEVERAGE_III", "Tech", "Space");
+      ImmutableSet.of("_LEVERAGE_I", "_LEVERAGE_II", "_LEVERAGE_III", "Tech", "Space", "_IMPORTANT",
+          "_MISSION_ITEMS", "_PLOT_CRITICAL", "_PROGRESSION", "Data", "ArkLight", "ArkFruitTree",
+          "TurretFabPlan", "NB_OxygenFuse", "Wrench");
   private static final ImmutableSet<String> PICKUP_MIMICABLE_TAGS = ImmutableSet.of("ArkPickups",
       "_MIMICABLE", "_CARRYABLE", "RigidBodyEx", "_CAN_TRIGGER_AREAS");
   private static final String MISSION_FILE_NAME = "mission_mission0.xml";
   private static final String TOKENS_FOLDER_NAME = "gametokens/";
 
   // Maximum number of mimics to spawn into a level
-  private static final int MAX_MIMICS = 315;
+  private static final int MAX_MIMICS = 400;
 
   private List<BaseFilter> filterList;
 
@@ -58,7 +60,6 @@ public class LevelRandomizer extends BaseRandomizer {
   private Map<String, String> swappedLinesMap;
 
   private GameTokenRule gameTokenRule;
-
 
   TaggedDatabase database;
 

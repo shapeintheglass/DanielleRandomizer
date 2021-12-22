@@ -206,7 +206,7 @@
                                           <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="\% recyclers (compared to fabricators)" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="\% repairable objects that are broken" />
                                           <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="\% hackable objects that are locked" />
-                                          <CheckBox fx:id="gameplayRandomizeMimics" mnemonicParsing="false" text="\% objects that are secretly mimics" />
+                                          <CheckBox fx:id="gameplayRandomizeMimics" mnemonicParsing="false" text="\% items that are secretly mimics" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
