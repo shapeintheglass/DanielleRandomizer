@@ -60,8 +60,8 @@ public final class StationConnectivityConsts {
     HARDWARE_LABS_LOBBY_EXIT
   }
 
-  public static final ImmutableSet<Door> LIFT_DOORS = ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT,
-      Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT, Door.ARBORETUM_LOBBY_EXIT);
+  public static final ImmutableSet<Door> LIFT_DOORS =
+      ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT);
   public static final ImmutableSet<Door> GENERAL_ACCESS_DOORS =
       ImmutableSet.of(Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT);
   public static final ImmutableSet<Door> FUEL_STORAGE_DOORS =
@@ -258,16 +258,23 @@ public final class StationConnectivityConsts {
           .put(Door.SHUTTLE_BAY_LOBBY_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT)
           .build();
 
+  // These doors cannot connect to each other due to only being a single exit
   public static final ImmutableList<Door> SINGLE_CONNECTIONS =
       ImmutableList.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
-          Door.POWER_PLANT_LIFE_SUPPORT_EXIT);
+          Door.POWER_PLANT_LIFE_SUPPORT_EXIT, Door.DEEP_STORAGE_ARBORETUM_EXIT,
+          Door.HARDWARE_LABS_LOBBY_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT);
 
+  // Doors adjacent to the lift
   public static final ImmutableList<Door> LIFT_LOBBY_SIDE =
       ImmutableList.of(Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LOBBY_ARBORETUM_EXIT);
   public static final ImmutableList<Door> LIFT_NOT_LOBBY_SIDE =
       ImmutableList.of(Door.ARBORETUM_LOBBY_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT);
+
+  // Doors blocked by an apex kill wall
   public static final ImmutableList<Door> APEX_LOCKED_KILL_WALL_SIDE =
-      ImmutableList.of(Door.LOBBY_HARDWARE_LABS_EXIT, Door.ARBORETUM_CREW_QUARTERS_EXIT);
+      ImmutableList.of(Door.LOBBY_HARDWARE_LABS_EXIT, Door.ARBORETUM_CREW_QUARTERS_EXIT,
+          Door.ARBORETUM_DEEP_STORAGE_EXIT);
   public static final ImmutableList<Door> APEX_LOCKED_NO_KILL_WALL_SIDE =
-      ImmutableList.of(Door.HARDWARE_LABS_LOBBY_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT);
+      ImmutableList.of(Door.HARDWARE_LABS_LOBBY_EXIT, Door.CREW_QUARTERS_ARBORETUM_EXIT,
+          Door.DEEP_STORAGE_ARBORETUM_EXIT);
 }

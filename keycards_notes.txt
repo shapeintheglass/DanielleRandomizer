@@ -1,18 +1,37 @@
 Keycard randomization
 
 
----
- 
-Split keycards and their locations into categories:
+High priority keycards:
 
-Keycards:
- - Necessary for progress
- - Useful for progress
- - Not necessary for progress
- 
- 
-Locations:
- - 
+Necessary for full connectivity: (must be accessible prior to the area they unlock)
+	Crew Quarters
+	Fuel Room
+	General Access
+	Maintenance Tunnel
+
+Necessary during a time when certain areas are inaccessible: (must be accessible during lockdown)
+	Reactor
+	Coolant Chamber
+
+Potentially necessary for objectives: (must be accessible without strict requirements)
+	Foy's Cabin
+	Mitchell's Cabin
+	Kelstrup's Office
+
+
+---
+
+Keycard Categories:
+ - Necessary for progress - High priority
+ - Necessary to access an area but not for completion - Medium priority
+ - Not necessary for progress - Low priority
+ - Unused
+
+Location Accessibility Categories:
+ - Always accessible - High
+ - May become inaccessible later or requires an ability - Medium
+ - Must be unlocked by another keycard/keycode/password, or requires killing a human NPC - Low
+ - Inaccessible
 
 
 ---
@@ -93,7 +112,7 @@ Power Plant 4
  * Cooling Plant 11824555372665894444
 
 Bridge 4
- * Briefing Room Door 4349723564935470793 (unused) (x2)
+ * Briefing Room Door 4349723564935470793 (x2)
  * EP101 14667999412535817654
  * Captain Marks Room Key 844024417289132055
  

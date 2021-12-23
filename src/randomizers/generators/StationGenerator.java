@@ -15,10 +15,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.common.graph.GraphBuilder;
-import com.google.common.graph.ImmutableGraph;
 import com.google.common.graph.ImmutableNetwork;
-import com.google.common.graph.MutableGraph;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 import utils.NetworkHelper;
@@ -26,6 +23,11 @@ import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
 
+/**
+ * 
+ * A helper class that generates randomized station connectivity.
+ *
+ */
 public class StationGenerator {
 
   public static final ImmutableList<Door> DOORS_TO_PROCESS = ImmutableList.of(
@@ -39,11 +41,12 @@ public class StationGenerator {
       Door.CREW_QUARTERS_ARBORETUM_EXIT, Door.CARGO_BAY_GUTS_EXIT, Door.CARGO_BAY_LIFE_SUPPORT_EXIT,
       Door.LIFE_SUPPORT_CARGO_BAY_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT,
       Door.LIFE_SUPPORT_POWER_PLANT_EXIT, Door.POWER_PLANT_LIFE_SUPPORT_EXIT,
-      Door.LOBBY_HARDWARE_LABS_EXIT, Door.HARDWARE_LABS_LOBBY_EXIT);
+      Door.LOBBY_HARDWARE_LABS_EXIT, Door.HARDWARE_LABS_LOBBY_EXIT,
+      Door.DEEP_STORAGE_ARBORETUM_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT);
   public static final ImmutableList<Level> LEVELS_TO_PROCESS =
       ImmutableList.of(Level.ARBORETUM, Level.BRIDGE, Level.CARGO_BAY, Level.CREW_QUARTERS,
           Level.GUTS, Level.HARDWARE_LABS, Level.LIFE_SUPPORT, Level.LOBBY, Level.NEUROMOD_DIVISION,
-          Level.POWER_PLANT, Level.PSYCHOTRONICS, Level.SHUTTLE_BAY);
+          Level.POWER_PLANT, Level.PSYCHOTRONICS, Level.SHUTTLE_BAY, Level.DEEP_STORAGE);
 
   private static final int UNLOCK_ATTEMPTS = 10;
   private static final int MAX_ATTEMPTS = 100;
@@ -56,46 +59,44 @@ public class StationGenerator {
   private Random r;
   private long seed;
   ImmutableBiMap<Level, String> levelsToIds;
+  private boolean randomizeKeycards;
 
   public StationGenerator(long seed, ImmutableBiMap<Level, String> levelsToIds,
-      boolean oneWayRandomization) {
+      boolean randomizeKeycards) {
     this.seed = seed;
     this.levelsToIds = levelsToIds;
+    this.randomizeKeycards = randomizeKeycards;
     r = new Random(seed);
     logger = Logger.getLogger("StationConnectivity");
 
-    for (int numAttempts = 1; numAttempts <= MAX_ATTEMPTS; numAttempts++) {
-      try {
-        logger.info(String.format("Attempt #%d", numAttempts));
-        if (oneWayRandomization) {
-          createOneWayNetworkAndConnectivity();
-        } else {
-          createNetworkAndConnectivity();
-        }
+    boolean configurationFound = false;
+    int numAttempts = 1;
+    for (; numAttempts <= MAX_ATTEMPTS; numAttempts++) {
+      logger.info(String.format("Station generation attempt #%d/%d...", numAttempts, MAX_ATTEMPTS));
+      boolean success = createNetworkAndConnectivity();
+      if (success) {
+        configurationFound = true;
         break;
-      } catch (IllegalStateException e) {
-        logger.info(String.format("Failed to find connection after %s attempts: %s", numAttempts,
-            e.getMessage()));
       }
+    }
+    if (!configurationFound) {
+      logger.info(
+          String.format("Failed to generate station connectivity after %s attempts", numAttempts));
+    } else {
+      logger.info(String.format("Successfully generated station connectivity after %s attempts",
+          numAttempts));
     }
   }
 
-  private void createNetworkAndConnectivity() {
+  private boolean createNetworkAndConnectivity() {
     ImmutableNetwork<Level, Door> network = createNewConnectivity();
-    if (!validate(network)) {
-      throw new IllegalStateException("Configuration invalid! (not connected)");
+
+    if (network == null || !validate(network)) {
+      return false;
     }
     networkToConnectivity(network);
     logger.info(getDebugData());
-  }
-
-  private void createOneWayNetworkAndConnectivity() {
-    ImmutableGraph<Door> network = createNewOneWayConnectivity();
-    /*if (!validateOneWay(network)) {
-      throw new IllegalStateException("Configuration invalid! (not connected)");
-    }*/
-    networkToOneWayConnectivity(network);
-    logger.info(getDebugData());
+    return true;
   }
 
   public Map<String, Map<String, String>> getDoorConnectivity() {
@@ -106,6 +107,7 @@ public class StationGenerator {
     return spawnConnectivity;
   }
 
+  // Generates a debug string representing the connectivity.
   public String getDebugData() {
     StringBuilder sb = new StringBuilder();
     sb.append("CONNECTIVITY DEBUG DATA:\n");
@@ -146,10 +148,11 @@ public class StationGenerator {
     return sb.toString();
   }
 
+  // Generates a human-readable string representing the connectivity.
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("Connectivity for Deep Storage and the Exterior are not affected.\n");
+    sb.append("Connectivity for the Exterior is not affected.\n");
     for (Level l : LEVELS_TO_PROCESS) {
       String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);
       sb.append(String.format("%s:\n", l));
@@ -178,7 +181,7 @@ public class StationGenerator {
     return sb.toString();
   }
 
-  // Transforms the network into connectivity information that we can use for the mod
+  // Transforms the network into connectivity information that we can use for the mod.
   private void networkToConnectivity(ImmutableNetwork<Level, Door> network) {
     doorConnectivity = new HashMap<String, Map<String, String>>();
     spawnConnectivity = new HashMap<String, Map<String, String>>();
@@ -226,62 +229,8 @@ public class StationGenerator {
     }
   }
 
-  // Transforms the network into connectivity info the mod can understand
-  protected void networkToOneWayConnectivity(ImmutableGraph<Door> network) {
-    doorConnectivity = new HashMap<String, Map<String, String>>();
-    spawnConnectivity = new HashMap<String, Map<String, String>>();
-    // Initialize with blank maps
-    for (Level l : LEVELS_TO_PROCESS) {
-      doorConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
-      spawnConnectivity.put(StationConnectivityConsts.LEVELS_TO_NAMES.get(l), new HashMap<>());
-    }
-
-    for (Door fromDoor : DOORS_TO_PROCESS) {
-
-      Level fromLevel = getLevelForDoor(fromDoor);
-      String fromDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(fromLevel);
-
-      for (Door toDoor : network.successors(fromDoor)) {
-        Level toLevel = getLevelForDoor(toDoor);
-
-        String toLocationId = levelsToIds.get(toLevel);
-
-        String fromDoorName = StationConnectivityConsts.DOORS_TO_NAMES.get(fromDoor);
-        String toLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(toDoor);
-
-        doorConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(fromLevel))
-            .put(fromDoorName, toLocationId);
-        spawnConnectivity.get(StationConnectivityConsts.LEVELS_TO_NAMES.get(toLevel))
-            .put(toLevelSpawnName, fromDestName);
-      }
-    }
-  }
-
-  protected ImmutableGraph<Door> createNewOneWayConnectivity() throws IllegalStateException {
-    MutableGraph<Door> station = GraphBuilder.directed()
-        .allowsSelfLoops(true)
-        .build();
-
-    for (Door d : DOORS_TO_PROCESS) {
-      station.addNode(d);
-    }
-
-    List<Door> toProcess = Lists.newArrayList();
-    toProcess.addAll(DOORS_TO_PROCESS);
-    Collections.shuffle(toProcess, r);
-
-    // Literally connect every door to the one next to it
-    for (int i = 0; i < toProcess.size(); i++) {
-      Door fromDoor = toProcess.get(i);
-      // Connect the final door to the first door
-      Door toDoor = ((i + 1) < toProcess.size()) ? toProcess.get(i + 1) : toProcess.get(0);
-      station.putEdge(fromDoor, toDoor);
-    }
-
-    return ImmutableGraph.copyOf(station);
-  }
-
-  private ImmutableNetwork<Level, Door> createNewConnectivity() throws IllegalStateException {
+  // Generates naive two-way connectivity. May or may not be valid.
+  private ImmutableNetwork<Level, Door> createNewConnectivity() {
     MutableNetwork<Level, Door> station = NetworkBuilder.directed()
         .allowsParallelEdges(true)
         .allowsSelfLoops(false)
@@ -293,7 +242,6 @@ public class StationGenerator {
 
     ArrayDeque<Door> connectionsToProcess = new ArrayDeque<Door>();
     // Enqueue special cases first
-    connectionsToProcess.addAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
     DOORS_TO_PROCESS.stream()
@@ -316,7 +264,9 @@ public class StationGenerator {
       } else if (validConnections.size() == 1) {
         toDoor = validConnections.get(0);
       } else {
-        throw new IllegalStateException("Could not find a valid connection!");
+        logger.warning(String.format("No valid connections found. %d doors remaining.",
+            remainingConnections.size()));
+        return null;
       }
       connectionsToProcess.remove(toDoor);
 
@@ -330,28 +280,10 @@ public class StationGenerator {
     return ImmutableNetwork.copyOf(station);
   }
 
+  // Given a door, returns a list of valid doors that can connect to it.
   private List<Door> getValidConnections(Door door, ImmutableSet<Door> remainingConnections,
       MutableNetwork<Level, Door> station) {
-    // Start with special cases that can only be matched with each other
-    if (StationConnectivityConsts.LIFT_LOBBY_SIDE.contains(door)) {
-      List<Door> toReturn = Lists.newArrayList();
-      for (Door d : remainingConnections) {
-        if (StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE.contains(d)) {
-          toReturn.add(d);
-        }
-      }
-      return toReturn;
-    }
-    if (StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE.contains(door)) {
-      List<Door> toReturn = Lists.newArrayList();
-      for (Door d : remainingConnections) {
-        if (StationConnectivityConsts.LIFT_LOBBY_SIDE.contains(d)) {
-          toReturn.add(d);
-        }
-      }
-      return toReturn;
-    }
-
+    // Levels blocked by an apex kill wall can only connect to other blocked levels.
     if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(door)) {
       List<Door> toReturn = Lists.newArrayList();
       for (Door d : remainingConnections) {
@@ -371,9 +303,8 @@ public class StationGenerator {
       return toReturn;
     }
 
+    // For all other types, eliminate the special cases first
     Set<Door> validConnections = Sets.newHashSet(remainingConnections);
-    validConnections.removeAll(StationConnectivityConsts.LIFT_LOBBY_SIDE);
-    validConnections.removeAll(StationConnectivityConsts.LIFT_NOT_LOBBY_SIDE);
     validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
     validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE);
 
@@ -398,111 +329,36 @@ public class StationGenerator {
     return remaining;
   }
 
-  /*private boolean validateOneWay(ImmutableGraph<Door> network) {
-    // Assert that everything can be unlocked
-    boolean hasGeneralKeycard = false;
-    boolean hasFuelStorageKeycard = false;
-    boolean hasCrewQuartersKeycard = false;
-    boolean unlockedLift = false;
-    int numAttempts = 0;
-
-    // Remove locked connections
-    Set<Door> lockedDoors = new HashSet<>();
-    lockedDoors.addAll(StationConnectivityConsts.LIFT_DOORS);
-    lockedDoors.addAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
-    lockedDoors.addAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
-    lockedDoors.addAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
-
-    // Ensure that we can get from Cargo Bay to the Power Plant w/o the GUTS exit.
-    // This prevents softlocks after initiating the lockdown.
-    lockedDoors.add(Door.CARGO_BAY_GUTS_EXIT);
-    if (!GraphHelper.isConnected(network, lockedDoors, Door.CARGO_BAY_LIFE_SUPPORT_EXIT,
-        Door.POWER_PLANT_LIFE_SUPPORT_EXIT)) {
-      return false;
-    }
-    lockedDoors.remove(Door.CARGO_BAY_GUTS_EXIT);
-
-    Set<Door> lobbyDoors = ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_HARDWARE_LABS_EXIT,
-        Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LOBBY_NEUROMOD_DIVISION_EXIT,
-        Door.LOBBY_PSYCHOTRONICS_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT);
-
-    // See how much of the station we can unlock
-    while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard
-        && hasCrewQuartersKeycard && unlockedLift)) {
-      // If we can get to the Lobby and Hardware Labs, we can get the General Access keycard.
-      if (!hasGeneralKeycard
-          && GraphHelper.isConnected(network, lockedDoors, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
-              lobbyDoors)
-          && GraphHelper.isConnected(network, lockedDoors, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
-              Door.HARDWARE_LABS_LOBBY_EXIT)) {
-        lockedDoors.removeAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
-        hasGeneralKeycard = true;
-      }
-      // If we can get to the GUTS, we can get the Fuel Storage keycard.
-      if (!hasFuelStorageKeycard && GraphHelper.isConnected(network, lockedDoors,
-          Door.NEUROMOD_DIVISION_LOBBY_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT)) {
-        lockedDoors.removeAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
-        hasFuelStorageKeycard = true;
-      }
-      // If we can get to the lift technopath, we can unlock the lift.
-      if (!hasCrewQuartersKeycard
-          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, liftTechnopathLevel)) {
-        lockedDoors.removeAll(StationConnectivityConsts.LIFT_DOORS);
-        hasCrewQuartersKeycard = true;
-      }
-      // If we get to the arboretum, we can unlock crew quarters.
-      if (!unlockedLift
-          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.ARBORETUM)) {
-        lockedDoors.removeAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
-        unlockedLift = true;
-      }
-    }
-
-    if (!hasGeneralKeycard) {
-      logger.warning("Unable to obtain general access keycard!");
-    }
-
-    if (!hasFuelStorageKeycard) {
-      logger.warning("Unable to obtain fuel storage keycard!");
-    }
-
-    if (!unlockedLift) {
-      logger.warning("Unable to unlock the lift!");
-    }
-
-    if (!hasCrewQuartersKeycard) {
-      logger.warning("Unable to unlock crew quarters!");
-    }
-
-    return isConnected(network, lockedDoors);
-  }*/
-
-
+  // Determines whether a generated network is actually playable.
   private boolean validate(ImmutableNetwork<Level, Door> network) {
-    // Assert that everything can be unlocked
-    boolean hasGeneralKeycard = false;
-    boolean hasFuelStorageKeycard = false;
-    boolean hasCrewQuartersKeycard = false;
+    // Assert that everything can be unlocked.
+    // If we are randomizing keycards, ignore keycards for now.
+    boolean hasGeneralKeycard = randomizeKeycards;
+    boolean hasFuelStorageKeycard = randomizeKeycards;
+    boolean hasCrewQuartersKeycard = randomizeKeycards;
     boolean unlockedLift = false;
     int numAttempts = 0;
-
-    // Remove locked connections
-    Set<Door> lockedDoors = new HashSet<>();
-    lockedDoors.addAll(StationConnectivityConsts.LIFT_DOORS);
-    lockedDoors.addAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
-    lockedDoors.addAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
-    lockedDoors.addAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
 
     // Find out which level has the lift technopath
     Level liftTechnopathLevel = getLiftTechnopathLevel(network);
+
+    // Remove locked connections
+    Set<Door> lockedDoors = new HashSet<>();
+    lockedDoors.addAll(StationConnectivityConsts.LIFT_DOORS);
+    // If we are randomizing keycards, assume for now that all connectivity is unlocked.
+    if (!randomizeKeycards) {
+      lockedDoors.addAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
+      lockedDoors.addAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
+      lockedDoors.addAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
+    }
 
     // Ensure that we can get from Cargo Bay to the Power Plant w/o the GUTS exit.
     // This prevents softlocks after initiating the lockdown.
     lockedDoors.add(Door.CARGO_BAY_GUTS_EXIT);
     if (!isConnected(network, lockedDoors, Level.CARGO_BAY, Level.POWER_PLANT)) {
+      logger.warning("Unable to reach power plant during lockdown.");
       return false;
     }
-
     lockedDoors.remove(Door.CARGO_BAY_GUTS_EXIT);
 
     // See how much of the station we can unlock w/o getting the lift
@@ -522,16 +378,17 @@ public class StationGenerator {
         lockedDoors.removeAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
         hasFuelStorageKeycard = true;
       }
-      // If we can get to the lift technopath, we can unlock the lift.
-      if (!hasCrewQuartersKeycard
-          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, liftTechnopathLevel)) {
-        lockedDoors.removeAll(StationConnectivityConsts.LIFT_DOORS);
-        hasCrewQuartersKeycard = true;
-      }
       // If we get to the arboretum, we can unlock crew quarters.
-      if (!unlockedLift
+      if (!hasCrewQuartersKeycard
           && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.ARBORETUM)) {
         lockedDoors.removeAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
+        hasCrewQuartersKeycard = true;
+      }
+      // If we can get to the lift technopath, we can unlock the lift and get the crew quarters
+      // keycard.
+      if (!unlockedLift
+          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, liftTechnopathLevel)) {
+        lockedDoors.removeAll(StationConnectivityConsts.LIFT_DOORS);
         unlockedLift = true;
       }
     }
@@ -552,26 +409,17 @@ public class StationGenerator {
       logger.warning("Unable to unlock crew quarters!");
     }
 
-    return isConnected(network, lockedDoors);
-  }
-
-  private Set<Level> getLevelsConnectedToDoor(ImmutableGraph<Door> network, Door door) {
-    // Find the door that is connected to the LOBBY_ARBORETUM_EXIT.
-    Set<Door> doors = network.adjacentNodes(door);
-    Set<Level> levels = Sets.newHashSet();
-    doors.stream()
-        .forEach(d -> levels.add(getLevelForDoor(d)));
-    return levels;
+    if (!isConnected(network, lockedDoors)) {
+      logger.warning("Generated station is not connected.");
+      return false;
+    }
+    return true;
   }
 
   private Level getLiftTechnopathLevel(ImmutableNetwork<Level, Door> network) {
     // Find the level that is connected to the LOBBY_ARBORETUM_EXIT.
-    Set<Door> doors = network.adjacentEdges(Door.LOBBY_ARBORETUM_EXIT);
-    if (doors.contains(Door.LIFE_SUPPORT_LOBBY_EXIT)) {
-      return Level.LIFE_SUPPORT;
-    } else {
-      return Level.ARBORETUM;
-    }
+    return network.incidentNodes(Door.LOBBY_ARBORETUM_EXIT)
+        .nodeV();
   }
 
   private boolean isConnected(ImmutableNetwork<Level, Door> networkToCopy, Set<Door> toRemove,
@@ -610,8 +458,9 @@ public class StationGenerator {
 
     // Random r = new Random();
     long seed = 0L;
-    StationGenerator sg = new StationGenerator(seed, levelsToIds, true);
+    StationGenerator sg = new StationGenerator(seed, levelsToIds, false);
     String station1 = sg.getDebugData();
     System.out.println(station1);
+    System.out.println(sg);
   }
 }
