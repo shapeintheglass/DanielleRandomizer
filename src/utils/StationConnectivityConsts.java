@@ -62,6 +62,8 @@ public final class StationConnectivityConsts {
 
   public static final ImmutableSet<Door> LIFT_DOORS =
       ImmutableSet.of(Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT);
+  public static final ImmutableSet<Door> DEEP_STORAGE_DOORS =
+      ImmutableSet.of(Door.ARBORETUM_DEEP_STORAGE_EXIT);
   public static final ImmutableSet<Door> GENERAL_ACCESS_DOORS =
       ImmutableSet.of(Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT);
   public static final ImmutableSet<Door> FUEL_STORAGE_DOORS =

@@ -438,6 +438,7 @@ public class RandomizerService extends Service<Void> {
       StationGenerator stationGenerator =
           new StationGenerator(Utils.stringToLong(currentSettings.getSeed()),
               customSpawnGenerator.getLevelsToIds(), false);
+      logger.info(stationGenerator.getDebugData());
       StationConnectivityFilter connectivity =
           new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
               stationGenerator.getSpawnConnectivity(), customSpawnGenerator.getLevelsToIds());

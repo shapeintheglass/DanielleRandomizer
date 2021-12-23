@@ -22,7 +22,7 @@ import com.google.common.collect.Maps;
  */
 public class LevelFinderUtil {
 
-  private static final String MISSION_FILE = "_data/levels/research/prototype/mission_mission0.xml";
+  private static final String MISSION_FILE = "_data/levels/research/lobby/mission_mission0.xml";
   private static final String POS = "Pos";
 
   private static Map<String, Vector> readLevel(String levelFile) throws JDOMException, IOException {
@@ -42,6 +42,10 @@ public class LevelFinderUtil {
           Vector c = new Vector(e.getAttributeValue(POS));
           String name = e.getAttributeValue("Name") + " " + 
               e.getChild("Properties").getAttributeValue("sNpcArchetype");
+          nameToPos.put(name, c);
+        } else {
+          Vector c = new Vector(e.getAttributeValue(POS));
+          String name = e.getAttributeValue("Name");
           nameToPos.put(name, c);
         }
       }

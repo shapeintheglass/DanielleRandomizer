@@ -247,7 +247,7 @@ public class LevelRandomizer extends BaseRandomizer {
       if (settings.getGameplaySettings()
           .getRandomizeMimics()
           .getIsEnabled() && archetype != null && isUsedAsDynamicObstacle(e)
-          && !tooCloseToMorgan(levelDir, e)) {
+          && !tooCloseToMorgan(levelDir, e) && !levelDir.equals("endgame")) {
 
         String shortArchetypeName = Utils.stripLibraryPrefixForEntity(archetype);
 
@@ -290,8 +290,12 @@ public class LevelRandomizer extends BaseRandomizer {
 
     }
 
-    logger.info(String.format("Identified %d mimickable objects in %s",
-        priorityMimickableEntities.size(), levelDir, MAX_MIMICS));
+    if (settings.getGameplaySettings()
+        .getRandomizeMimics()
+        .getIsEnabled()) {
+      logger.info(String.format("Identified %d mimickable objects in %s",
+          priorityMimickableEntities.size(), levelDir, MAX_MIMICS));
+    }
 
     AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper, priorityMimickableEntities,
         r);

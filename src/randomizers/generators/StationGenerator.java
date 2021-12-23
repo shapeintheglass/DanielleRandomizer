@@ -14,7 +14,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.google.common.graph.EndpointPair;
 import com.google.common.graph.ImmutableNetwork;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
@@ -30,26 +32,14 @@ import utils.StationConnectivityConsts.Level;
  */
 public class StationGenerator {
 
-  public static final ImmutableList<Door> DOORS_TO_PROCESS = ImmutableList.of(
-      Door.NEUROMOD_DIVISION_LOBBY_EXIT, Door.LOBBY_NEUROMOD_DIVISION_EXIT,
-      Door.LOBBY_SHUTTLE_BAY_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT, Door.LOBBY_ARBORETUM_EXIT,
-      Door.LOBBY_LIFE_SUPPORT_EXIT, Door.PSYCHOTRONICS_LOBBY_EXIT, Door.PSYCHOTRONICS_GUTS_EXIT,
-      Door.SHUTTLE_BAY_LOBBY_EXIT, Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_PSYCHOTRONICS_EXIT,
-      Door.GUTS_SHUTTLE_BAY_EXIT, Door.GUTS_CARGO_BAY_EXIT, Door.GUTS_ARBORETUM_EXIT,
-      Door.ARBORETUM_GUTS_EXIT, Door.ARBORETUM_BRIDGE_EXIT, Door.ARBORETUM_LOBBY_EXIT,
-      Door.ARBORETUM_CREW_QUARTERS_EXIT, Door.BRIDGE_ARBORETUM_EXIT,
-      Door.CREW_QUARTERS_ARBORETUM_EXIT, Door.CARGO_BAY_GUTS_EXIT, Door.CARGO_BAY_LIFE_SUPPORT_EXIT,
-      Door.LIFE_SUPPORT_CARGO_BAY_EXIT, Door.LIFE_SUPPORT_LOBBY_EXIT,
-      Door.LIFE_SUPPORT_POWER_PLANT_EXIT, Door.POWER_PLANT_LIFE_SUPPORT_EXIT,
-      Door.LOBBY_HARDWARE_LABS_EXIT, Door.HARDWARE_LABS_LOBBY_EXIT,
-      Door.DEEP_STORAGE_ARBORETUM_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT);
+  public static final ImmutableList<Door> DOORS_TO_PROCESS = ImmutableList.copyOf(Door.values());
   public static final ImmutableList<Level> LEVELS_TO_PROCESS =
       ImmutableList.of(Level.ARBORETUM, Level.BRIDGE, Level.CARGO_BAY, Level.CREW_QUARTERS,
           Level.GUTS, Level.HARDWARE_LABS, Level.LIFE_SUPPORT, Level.LOBBY, Level.NEUROMOD_DIVISION,
           Level.POWER_PLANT, Level.PSYCHOTRONICS, Level.SHUTTLE_BAY, Level.DEEP_STORAGE);
 
-  private static final int UNLOCK_ATTEMPTS = 10;
-  private static final int MAX_ATTEMPTS = 100;
+  private static final int UNLOCK_ATTEMPTS = 100;
+  private static final int MAX_ATTEMPTS = 500;
   // Map of filename to door name to location id
   private Map<String, Map<String, String>> doorConnectivity;
   // Map of filename to spawn name to destination name
@@ -60,6 +50,8 @@ public class StationGenerator {
   private long seed;
   ImmutableBiMap<Level, String> levelsToIds;
   private boolean randomizeKeycards;
+  ImmutableNetwork<Level, Door> network;
+  private int numAttempts;
 
   public StationGenerator(long seed, ImmutableBiMap<Level, String> levelsToIds,
       boolean randomizeKeycards) {
@@ -70,8 +62,8 @@ public class StationGenerator {
     logger = Logger.getLogger("StationConnectivity");
 
     boolean configurationFound = false;
-    int numAttempts = 1;
-    for (; numAttempts <= MAX_ATTEMPTS; numAttempts++) {
+    numAttempts = 0;
+    for (; numAttempts < MAX_ATTEMPTS; numAttempts++) {
       logger.info(String.format("Station generation attempt #%d/%d...", numAttempts, MAX_ATTEMPTS));
       boolean success = createNetworkAndConnectivity();
       if (success) {
@@ -89,13 +81,13 @@ public class StationGenerator {
   }
 
   private boolean createNetworkAndConnectivity() {
-    ImmutableNetwork<Level, Door> network = createNewConnectivity();
+    network = createNewConnectivity();
 
     if (network == null || !validate(network)) {
       return false;
     }
     networkToConnectivity(network);
-    logger.info(getDebugData());
+    // logger.info(getDebugData());
     return true;
   }
 
@@ -105,6 +97,14 @@ public class StationGenerator {
 
   public Map<String, Map<String, String>> getSpawnConnectivity() {
     return spawnConnectivity;
+  }
+
+  public ImmutableNetwork<Level, Door> getNetwork() {
+    return network;
+  }
+
+  public int getNumAttempts() {
+    return numAttempts;
   }
 
   // Generates a debug string representing the connectivity.
@@ -242,7 +242,6 @@ public class StationGenerator {
 
     ArrayDeque<Door> connectionsToProcess = new ArrayDeque<Door>();
     // Enqueue special cases first
-    connectionsToProcess.addAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
     connectionsToProcess.addAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
     DOORS_TO_PROCESS.stream()
         .forEach(door -> {
@@ -283,30 +282,7 @@ public class StationGenerator {
   // Given a door, returns a list of valid doors that can connect to it.
   private List<Door> getValidConnections(Door door, ImmutableSet<Door> remainingConnections,
       MutableNetwork<Level, Door> station) {
-    // Levels blocked by an apex kill wall can only connect to other blocked levels.
-    if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(door)) {
-      List<Door> toReturn = Lists.newArrayList();
-      for (Door d : remainingConnections) {
-        if (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(d)) {
-          toReturn.add(d);
-        }
-      }
-      return toReturn;
-    }
-    if (StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE.contains(door)) {
-      List<Door> toReturn = Lists.newArrayList();
-      for (Door d : remainingConnections) {
-        if (StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE.contains(d)) {
-          toReturn.add(d);
-        }
-      }
-      return toReturn;
-    }
-
-    // For all other types, eliminate the special cases first
     Set<Door> validConnections = Sets.newHashSet(remainingConnections);
-    validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_KILL_WALL_SIDE);
-    validConnections.removeAll(StationConnectivityConsts.APEX_LOCKED_NO_KILL_WALL_SIDE);
 
     // If this is a "single" type connection, invalidate all other single type
     // connections
@@ -322,6 +298,9 @@ public class StationGenerator {
     for (Level l : existingConnections) {
       validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(l));
     }
+    // Remove the door this would be connected to in vanilla
+    Door vanillaDoor = StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(door);
+    validConnections.remove(vanillaDoor);
 
     // Put into a deterministic order
     List<Door> remaining = Lists.newArrayList(validConnections);
@@ -337,6 +316,7 @@ public class StationGenerator {
     boolean hasFuelStorageKeycard = randomizeKeycards;
     boolean hasCrewQuartersKeycard = randomizeKeycards;
     boolean unlockedLift = false;
+    boolean unlockedDeepStorage = false;
     int numAttempts = 0;
 
     // Find out which level has the lift technopath
@@ -345,6 +325,7 @@ public class StationGenerator {
     // Remove locked connections
     Set<Door> lockedDoors = new HashSet<>();
     lockedDoors.addAll(StationConnectivityConsts.LIFT_DOORS);
+    lockedDoors.addAll(StationConnectivityConsts.DEEP_STORAGE_DOORS);
     // If we are randomizing keycards, assume for now that all connectivity is unlocked.
     if (!randomizeKeycards) {
       lockedDoors.addAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
@@ -361,9 +342,9 @@ public class StationGenerator {
     }
     lockedDoors.remove(Door.CARGO_BAY_GUTS_EXIT);
 
-    // See how much of the station we can unlock w/o getting the lift
+    // Traverse the station until we can unlock everything necessary
     while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard
-        && hasCrewQuartersKeycard && unlockedLift)) {
+        && hasCrewQuartersKeycard && unlockedLift && unlockedDeepStorage)) {
       // If we can get to the Lobby and Hardware Labs, we can get the General Access
       // keycard.
       if (!hasGeneralKeycard
@@ -390,6 +371,12 @@ public class StationGenerator {
           && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, liftTechnopathLevel)) {
         lockedDoors.removeAll(StationConnectivityConsts.LIFT_DOORS);
         unlockedLift = true;
+      }
+      // If we can get to Crew Quarters, we can unlock Deep Storage.
+      if (!unlockedDeepStorage
+          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.CREW_QUARTERS)) {
+        lockedDoors.removeAll(StationConnectivityConsts.DEEP_STORAGE_DOORS);
+        unlockedDeepStorage = true;
       }
     }
 
@@ -439,7 +426,6 @@ public class StationGenerator {
   }
 
   public static void main(String[] args) {
-
     ImmutableBiMap<Level, String> levelsToIds =
         new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "1713490239386284818")
             .put(Level.BRIDGE, "844024417275035158")
@@ -456,11 +442,84 @@ public class StationGenerator {
             .put(Level.SHUTTLE_BAY, "1713490239386284988")
             .build();
 
-    // Random r = new Random();
-    long seed = 0L;
-    StationGenerator sg = new StationGenerator(seed, levelsToIds, false);
-    String station1 = sg.getDebugData();
-    System.out.println(station1);
-    System.out.println(sg);
+
+    Map<Level, Map<Level, Integer>> levelStats = Maps.newHashMap();
+    for (Level l : LEVELS_TO_PROCESS) {
+      levelStats.put(l, Maps.newHashMap());
+    }
+
+    Map<Door, Map<Door, Integer>> doorStats = Maps.newHashMap();
+    for (Door d : DOORS_TO_PROCESS) {
+      doorStats.put(d, Maps.newHashMap());
+    }
+
+    float avgNumAttempts = 0f;
+    int maxAttempts = Integer.MIN_VALUE;
+    int minAttempts = Integer.MAX_VALUE;
+
+    int numIterations = 1000;
+
+    for (int i = 0; i < numIterations; i++) {
+      Random r = new Random();
+      long seed = r.nextLong();
+      StationGenerator sg = new StationGenerator(seed, levelsToIds, false);
+
+      int attempts = sg.getNumAttempts();
+      avgNumAttempts += attempts;
+      if (attempts > maxAttempts) {
+        maxAttempts = attempts;
+      }
+      if (attempts < minAttempts) {
+        minAttempts = attempts;
+      }
+
+      ImmutableNetwork<Level, Door> n = sg.network;
+      for (Level l : LEVELS_TO_PROCESS) {
+        for (Level l2 : n.adjacentNodes(l)) {
+          int prev = levelStats.get(l)
+              .getOrDefault(l2, 0);
+          levelStats.get(l)
+              .put(l2, prev + 1);
+        }
+      }
+
+      for (Door d : DOORS_TO_PROCESS) {
+        EndpointPair<Level> connectingLevels = n.incidentNodes(d);
+        Door adjacentDoor =
+            n.edgeConnectingOrNull(connectingLevels.nodeV(), connectingLevels.nodeU());
+        int prev = doorStats.get(d)
+            .getOrDefault(adjacentDoor, 0);
+        doorStats.get(d)
+            .put(adjacentDoor, prev + 1);
+      }
+    }
+
+    avgNumAttempts /= numIterations;
+
+    for (Level l : LEVELS_TO_PROCESS) {
+      System.out.println(l);
+      for (Level l2 : LEVELS_TO_PROCESS) {
+        if (levelStats.get(l)
+            .containsKey(l2)) {
+          System.out.printf("\t%s: %.0f%%\n", l2, 100.0 * levelStats.get(l)
+              .get(l2) / numIterations);
+        }
+      }
+    }
+
+    for (Door d : DOORS_TO_PROCESS) {
+      System.out.println(d);
+      for (Door d2 : DOORS_TO_PROCESS) {
+        if (doorStats.get(d)
+            .containsKey(d2)) {
+          System.out.printf("\t%s: %.0f%%\n", d2, 100.0 * doorStats.get(d)
+              .get(d2) / numIterations);
+        }
+      }
+    }
+
+    System.out.printf("Average number of attempts: %.0f\n", avgNumAttempts);
+    System.out.printf("Max number of attempts: %d\n", maxAttempts);
+    System.out.printf("Min number of attempts: %d\n", minAttempts);
   }
 }
