@@ -8,6 +8,10 @@ Todo:
  - More guns
  - Randomized keycards
  - Less <X>
+ - Avoid spawning 1G creatures in 0G
+ - Pharma fab plans not working in survival mode
+ - Whitelist turrets that use scripting
+ - Lift technopath won't spawn as a nightmare
 
 Notes:
  - Voltaic mimic is immortal again

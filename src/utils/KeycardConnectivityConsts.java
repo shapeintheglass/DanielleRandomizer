@@ -3,6 +3,7 @@ package utils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
+import utils.StationConnectivityConsts.Level;
 
 public class KeycardConnectivityConsts {
   public static enum Keycard {
@@ -120,29 +121,135 @@ public class KeycardConnectivityConsts {
       Keycard.LO_GENERAL_ACCESS, Keycard.PP_REACTOR, Keycard.PP_COOLANT_CHAMBER,
       Keycard.CQ_CABIN_FOY, Keycard.CQ_CABIN_MITCHELL, Keycard.PY_KELSTRUPS_OFFICE);
 
+  // Keycard locations that the player may never even encounter in their run.
+  // Only spawn duplicates here.
   public static final ImmutableList<Location> LOCATIONS_DUPE_ONLY =
       ImmutableList.of(Location.AR_NPC_DAHL, Location.BR_NPC_JANUARY, Location.CQ_NPC_LUKA,
           Location.CQ_NPC_LUKA_QUEST, Location.LO_NPC_JANUARY, Location.LO_NPC_JANUARY_GIVEN,
-          Location.LS_NPC_DAHL, Location.ND_NPC_DAHL, Location.SB_NPC_DAHL);
+          Location.LS_NPC_DAHL, Location.ND_NPC_DAHL, Location.SB_NPC_DAHL, Location.LS_NPC_FOLSON);
 
+  // Keycard locations that are locked behind other keycards or require killing a friendly NPC.
+  // Low priority keycards will generally end up here.
+  // Medium priority keycards may end up here.
   public static final ImmutableList<Location> LOCATIONS_LOW_ACCESSIBILITY =
       ImmutableList.of(Location.CB_NPC_ELAZAR, Location.CB_NPC_COOL, Location.CQ_ALEX_CABIN,
-          Location.HL_NPC_CALVINO, Location.LS_NPC_FOLSON);
+          Location.HL_NPC_CALVINO, Location.PP_NPC_CROAL, Location.PP_NPC_STILLWATER);
 
-  public static final ImmutableList<Location> LOCATIONS_MEDIUM_ACCESSIBILITY = ImmutableList.of(
-      Location.AR_ALEX_SAFE, Location.AR_LOVERS_KEY, Location.CQ_FATAL_FORTRESS,
-      Location.CQ_NPC_SELLERS, Location.CQ_NPC_TIZZY, Location.DS_DANIELLES_OFFICE,
-      Location.GT_NPC_KLINE, Location.GT_NPC_DALTON, Location.HL_NPC_SCHMIDT,
-      Location.HL_CALVINOS_SAFE, Location.HL_NPC_LARSON, Location.HL_NPC_THORSTEIN,
-      Location.LO_NPC_DEVRIES, Location.LO_IT, Location.ND_BELLAMY_DESK, Location.ND_NPC_STEELE,
-      Location.PP_NPC_CROAL, Location.PP_NPC_FAURE, Location.PP_NPC_STILLWATER, Location.PY_MORGUE);
+  // Keycard locations that may be blocked by ability requirements or are just a pain to get to.
+  // Medium priority keycards will generally end up here.
+  // There is a chance that high priority keycards may end up here.
+  public static final ImmutableList<Location> LOCATIONS_MEDIUM_ACCESSIBILITY =
+      ImmutableList.of(Location.AR_ALEX_SAFE, Location.AR_LOVERS_KEY, Location.GT_NPC_KLINE,
+          Location.GT_NPC_DALTON, Location.LO_NPC_DEVRIES, Location.LO_IT, Location.PY_MORGUE,
+          Location.PP_NPC_FAURE, Location.ND_NPC_STEELE);
 
+  // Keycard locations that can always be accessed regardless of progression.
+  // High priority keycards will generally end up here.
   public static final ImmutableList<Location> LOCATIONS_HIGH_ACCESSIBILITY = ImmutableList.of(
       Location.AR_NPC_KYRKOS, Location.AR_NPC_WEST, Location.BR_NPC_GREENE, Location.BR_NPC_MARKS,
       Location.BR_NPC_BOLIVAR, Location.GT_NPC_LAVALLEY, Location.LO_MORGAN_OFFICE_DESK,
       Location.LO_MORGAN_OFFICE_WORKSHOP, Location.LO_RECEPTION, Location.LO_GOODWIN_OFFICE,
       Location.LS_NPC_WEBER, Location.PP_NPC_BROOKS, Location.PY_NPC_KELSTRUP,
-      Location.PY_NPC_KELSTRUP_2, Location.SB_NPC_PARKER, Location.SB_PILOT_LOUNGE);
+      Location.PY_NPC_KELSTRUP_2, Location.SB_NPC_PARKER, Location.SB_PILOT_LOUNGE,
+      Location.HL_NPC_LARSON, Location.HL_NPC_THORSTEIN, Location.ND_BELLAMY_DESK,
+      Location.CQ_FATAL_FORTRESS, Location.CQ_NPC_SELLERS, Location.CQ_NPC_TIZZY,
+      Location.DS_DANIELLES_OFFICE, Location.HL_NPC_SCHMIDT, Location.HL_CALVINOS_SAFE);
+
+  public static final ImmutableMap<Keycard, Level> KEYCARD_TO_LEVEL =
+      new ImmutableMap.Builder<Keycard, Level>().put(Keycard.AR_CREW_QUARTERS, Level.ARBORETUM)
+          .put(Keycard.AR_EP101, Level.ARBORETUM)
+          .put(Keycard.AR_LOVERS_KEY, Level.ARBORETUM)
+          .put(Keycard.BR_BRIEFING_ROOM, Level.BRIDGE)
+          .put(Keycard.CB_SHIPPING_AND_RECEIVING, Level.CARGO_BAY)
+          .put(Keycard.CQ_CABIN_ALEX, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_CALVINO, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_FOY, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_KELSTRUP, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_MARKS, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_MITCHELL, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_MORGAN, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_ELAZAR, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_THORSTEIN, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_KITCHEN, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_YELLOW_TULIP_STORAGE, Level.CREW_QUARTERS)
+          .put(Keycard.DS_SECURITY, Level.DEEP_STORAGE)
+          .put(Keycard.GT_MAINTENANCE_TUNNEL, Level.GUTS)
+          .put(Keycard.GT_FUEL_STORAGE, Level.GUTS)
+          .put(Keycard.HL_BALLISTICS, Level.HARDWARE_LABS)
+          .put(Keycard.HL_BLACKBOX, Level.HARDWARE_LABS)
+          .put(Keycard.HL_CALVINO_WORKSHOP, Level.HARDWARE_LABS)
+          .put(Keycard.HL_EMPLOYEE_ENTRANCE, Level.HARDWARE_LABS)
+          .put(Keycard.LO_GENERAL_ACCESS, Level.LOBBY)
+          .put(Keycard.LO_IT_CLOSET, Level.LOBBY)
+          .put(Keycard.LO_SECURITY, Level.LOBBY)
+          .put(Keycard.LO_TELECONFERENCING, Level.LOBBY)
+          .put(Keycard.LO_SECURED_PHARMACEUTICALS, Level.LOBBY)
+          .put(Keycard.LO_DEVRIES_OFFICE, Level.LOBBY)
+          .put(Keycard.LO_TRAUMA_CENTER, Level.LOBBY)
+          .put(Keycard.LS_ATMOSPHERE_CONTROLS, Level.LIFE_SUPPORT)
+          .put(Keycard.LS_SECURITY, Level.LIFE_SUPPORT)
+          .put(Keycard.ND_GRAVES_OFFICE, Level.NEUROMOD_DIVISION)
+          .put(Keycard.ND_SIM_LABS, Level.NEUROMOD_DIVISION)
+          .put(Keycard.PP_COOLANT_CHAMBER, Level.POWER_PLANT)
+          .put(Keycard.PP_REACTOR, Level.POWER_PLANT)
+          .put(Keycard.PY_KELSTRUPS_OFFICE, Level.PSYCHOTRONICS)
+          .put(Keycard.PY_MORGUE, Level.PSYCHOTRONICS)
+          .put(Keycard.SB_CONTROL_ROOM, Level.SHUTTLE_BAY)
+          .put(Keycard.SB_DAHLS_SHUTTLE, Level.SHUTTLE_BAY)
+          .build();
+
+  public static final ImmutableMultimap<Level, Location> LEVEL_TO_LOCATIONS =
+      new ImmutableMultimap.Builder<Level, Location>().put(Level.ARBORETUM, Location.AR_ALEX_SAFE)
+          .put(Level.ARBORETUM, Location.AR_LOVERS_KEY)
+          .put(Level.ARBORETUM, Location.AR_NPC_DAHL)
+          .put(Level.ARBORETUM, Location.AR_NPC_KYRKOS)
+          .put(Level.ARBORETUM, Location.AR_NPC_WEST)
+          .put(Level.BRIDGE, Location.BR_NPC_BOLIVAR)
+          .put(Level.BRIDGE, Location.BR_NPC_GREENE)
+          .put(Level.BRIDGE, Location.BR_NPC_JANUARY)
+          .put(Level.BRIDGE, Location.BR_NPC_MARKS)
+          .put(Level.CARGO_BAY, Location.CB_NPC_COOL)
+          .put(Level.CARGO_BAY, Location.CB_NPC_ELAZAR)
+          .put(Level.CREW_QUARTERS, Location.CQ_ALEX_CABIN)
+          .put(Level.CREW_QUARTERS, Location.CQ_FATAL_FORTRESS)
+          .put(Level.CREW_QUARTERS, Location.CQ_NPC_LUKA)
+          .put(Level.CREW_QUARTERS, Location.CQ_NPC_LUKA_QUEST)
+          .put(Level.CREW_QUARTERS, Location.CQ_NPC_SELLERS)
+          .put(Level.CREW_QUARTERS, Location.CQ_NPC_TIZZY)
+          .put(Level.DEEP_STORAGE, Location.DS_DANIELLES_OFFICE)
+          .put(Level.GUTS, Location.GT_NPC_DALTON)
+          .put(Level.GUTS, Location.GT_NPC_KLINE)
+          .put(Level.GUTS, Location.GT_NPC_LAVALLEY)
+          .put(Level.HARDWARE_LABS, Location.HL_CALVINOS_SAFE)
+          .put(Level.HARDWARE_LABS, Location.HL_NPC_CALVINO)
+          .put(Level.HARDWARE_LABS, Location.HL_NPC_LARSON)
+          .put(Level.HARDWARE_LABS, Location.HL_NPC_SCHMIDT)
+          .put(Level.HARDWARE_LABS, Location.HL_NPC_THORSTEIN)
+          .put(Level.LIFE_SUPPORT, Location.LS_NPC_DAHL)
+          .put(Level.LIFE_SUPPORT, Location.LS_NPC_FOLSON)
+          .put(Level.LIFE_SUPPORT, Location.LS_NPC_WEBER)
+          .put(Level.LOBBY, Location.LO_GOODWIN_OFFICE)
+          .put(Level.LOBBY, Location.LO_IT)
+          .put(Level.LOBBY, Location.LO_MORGAN_OFFICE_DESK)
+          .put(Level.LOBBY, Location.LO_MORGAN_OFFICE_WORKSHOP)
+          .put(Level.LOBBY, Location.LO_NPC_DEVRIES)
+          .put(Level.LOBBY, Location.LO_NPC_JANUARY)
+          .put(Level.LOBBY, Location.LO_NPC_JANUARY_GIVEN)
+          .put(Level.LOBBY, Location.LO_RECEPTION)
+          .put(Level.NEUROMOD_DIVISION, Location.ND_BELLAMY_DESK)
+          .put(Level.NEUROMOD_DIVISION, Location.ND_NPC_DAHL)
+          .put(Level.NEUROMOD_DIVISION, Location.ND_NPC_STEELE)
+          .put(Level.POWER_PLANT, Location.PP_NPC_BROOKS)
+          .put(Level.POWER_PLANT, Location.PP_NPC_CROAL)
+          .put(Level.POWER_PLANT, Location.PP_NPC_FAURE)
+          .put(Level.POWER_PLANT, Location.PP_NPC_STILLWATER)
+          .put(Level.PSYCHOTRONICS, Location.PY_MORGUE)
+          .put(Level.PSYCHOTRONICS, Location.PY_NPC_KELSTRUP)
+          .put(Level.PSYCHOTRONICS, Location.PY_NPC_KELSTRUP_2)
+          .put(Level.SHUTTLE_BAY, Location.SB_NPC_DAHL)
+          .put(Level.SHUTTLE_BAY, Location.SB_NPC_PARKER)
+          .put(Level.SHUTTLE_BAY, Location.SB_PILOT_LOUNGE)
+          .build();
 
   public static final ImmutableMultimap<Keycard, Location> DEFAULT_CONNECTIVITY =
       new ImmutableMultimap.Builder<Keycard, Location>()
@@ -199,7 +306,8 @@ public class KeycardConnectivityConsts {
           .build();
 
   public static final ImmutableMap<Keycard, String> KEYCARD_TO_ID =
-      new ImmutableMap.Builder<Keycard, String>().put(Keycard.AR_CREW_QUARTERS, "844024417269161838")
+      new ImmutableMap.Builder<Keycard, String>()
+          .put(Keycard.AR_CREW_QUARTERS, "844024417269161838")
           .put(Keycard.AR_EP101, "14667999412535817654")
           .put(Keycard.AR_LOVERS_KEY, "14667999412531426939")
           .put(Keycard.BR_BRIEFING_ROOM, "4349723564935470793")

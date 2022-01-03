@@ -53,25 +53,27 @@ public class StationGenerator {
   ImmutableNetwork<Level, Door> network;
   private int numAttempts;
 
+  private boolean successfullyGenerated;
+
   public StationGenerator(long seed, ImmutableBiMap<Level, String> levelsToIds,
       boolean randomizeKeycards) {
     this.seed = seed;
     this.levelsToIds = levelsToIds;
     this.randomizeKeycards = randomizeKeycards;
+    this.successfullyGenerated = false;
     r = new Random(seed);
     logger = Logger.getLogger("StationConnectivity");
 
-    boolean configurationFound = false;
     numAttempts = 0;
     for (; numAttempts < MAX_ATTEMPTS; numAttempts++) {
       logger.info(String.format("Station generation attempt #%d/%d...", numAttempts, MAX_ATTEMPTS));
       boolean success = createNetworkAndConnectivity();
       if (success) {
-        configurationFound = true;
+        successfullyGenerated = true;
         break;
       }
     }
-    if (!configurationFound) {
+    if (!successfullyGenerated) {
       logger.info(
           String.format("Failed to generate station connectivity after %s attempts", numAttempts));
     } else {
@@ -87,7 +89,6 @@ public class StationGenerator {
       return false;
     }
     networkToConnectivity(network);
-    // logger.info(getDebugData());
     return true;
   }
 
@@ -105,6 +106,10 @@ public class StationGenerator {
 
   public int getNumAttempts() {
     return numAttempts;
+  }
+
+  public boolean getSuccess() {
+    return successfullyGenerated;
   }
 
   // Generates a debug string representing the connectivity.
@@ -284,10 +289,12 @@ public class StationGenerator {
       MutableNetwork<Level, Door> station) {
     Set<Door> validConnections = Sets.newHashSet(remainingConnections);
 
-    // If this is a "single" type connection, invalidate all other single type
-    // connections
     if (StationConnectivityConsts.SINGLE_CONNECTIONS.contains(door)) {
       validConnections.removeAll(StationConnectivityConsts.SINGLE_CONNECTIONS);
+    }
+
+    if (StationConnectivityConsts.ONE_WAY_LOCKS.contains(door)) {
+      validConnections.removeAll(StationConnectivityConsts.ONE_WAY_LOCKS);
     }
 
     // Remove all connections leading from itself
@@ -299,8 +306,8 @@ public class StationGenerator {
       validConnections.removeAll(StationConnectivityConsts.LEVELS_TO_DOORS.get(l));
     }
     // Remove the door this would be connected to in vanilla
-    Door vanillaDoor = StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(door);
-    validConnections.remove(vanillaDoor);
+    // Door vanillaDoor = StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(door);
+    // validConnections.remove(vanillaDoor);
 
     // Put into a deterministic order
     List<Door> remaining = Lists.newArrayList(validConnections);
@@ -310,15 +317,6 @@ public class StationGenerator {
 
   // Determines whether a generated network is actually playable.
   private boolean validate(ImmutableNetwork<Level, Door> network) {
-    // Assert that everything can be unlocked.
-    // If we are randomizing keycards, ignore keycards for now.
-    boolean hasGeneralKeycard = randomizeKeycards;
-    boolean hasFuelStorageKeycard = randomizeKeycards;
-    boolean hasCrewQuartersKeycard = randomizeKeycards;
-    boolean unlockedLift = false;
-    boolean unlockedDeepStorage = false;
-    int numAttempts = 0;
-
     // Find out which level has the lift technopath
     Level liftTechnopathLevel = getLiftTechnopathLevel(network);
 
@@ -326,12 +324,9 @@ public class StationGenerator {
     Set<Door> lockedDoors = new HashSet<>();
     lockedDoors.addAll(StationConnectivityConsts.LIFT_DOORS);
     lockedDoors.addAll(StationConnectivityConsts.DEEP_STORAGE_DOORS);
-    // If we are randomizing keycards, assume for now that all connectivity is unlocked.
-    if (!randomizeKeycards) {
-      lockedDoors.addAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
-      lockedDoors.addAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
-      lockedDoors.addAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
-    }
+    lockedDoors.addAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
+    lockedDoors.addAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
+    lockedDoors.addAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
 
     // Ensure that we can get from Cargo Bay to the Power Plant w/o the GUTS exit.
     // This prevents softlocks after initiating the lockdown.
@@ -342,26 +337,35 @@ public class StationGenerator {
     }
     lockedDoors.remove(Door.CARGO_BAY_GUTS_EXIT);
 
+    // Assert that everything can be unlocked.
+    // If we are randomizing keycards, ignore keycards for now.
+    boolean hasGeneralKeycard = randomizeKeycards;
+    boolean hasFuelStorageKeycard = randomizeKeycards;
+    boolean hasCrewQuartersKeycard = randomizeKeycards;
+    boolean unlockedLift = false;
+    boolean unlockedDeepStorage = false;
+    int numAttempts = 0;
+
     // Traverse the station until we can unlock everything necessary
     while (numAttempts++ < UNLOCK_ATTEMPTS && !(hasGeneralKeycard && hasFuelStorageKeycard
         && hasCrewQuartersKeycard && unlockedLift && unlockedDeepStorage)) {
       // If we can get to the Lobby and Hardware Labs, we can get the General Access
       // keycard.
-      if (!hasGeneralKeycard
+      if (hasGeneralKeycard || (!hasGeneralKeycard
           && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.LOBBY)
-          && isConnected(network, lockedDoors, Level.LOBBY, Level.HARDWARE_LABS)) {
+          && isConnected(network, lockedDoors, Level.LOBBY, Level.HARDWARE_LABS))) {
         lockedDoors.removeAll(StationConnectivityConsts.GENERAL_ACCESS_DOORS);
         hasGeneralKeycard = true;
       }
       // If we can get to the GUTS, we can get the Fuel Storage keycard.
-      if (!hasFuelStorageKeycard
-          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.GUTS)) {
+      if (hasFuelStorageKeycard || (!hasFuelStorageKeycard
+          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.GUTS))) {
         lockedDoors.removeAll(StationConnectivityConsts.FUEL_STORAGE_DOORS);
         hasFuelStorageKeycard = true;
       }
       // If we get to the arboretum, we can unlock crew quarters.
-      if (!hasCrewQuartersKeycard
-          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.ARBORETUM)) {
+      if (hasCrewQuartersKeycard || (!hasCrewQuartersKeycard
+          && isConnected(network, lockedDoors, Level.NEUROMOD_DIVISION, Level.ARBORETUM))) {
         lockedDoors.removeAll(StationConnectivityConsts.CREW_QUARTERS_DOORS);
         hasCrewQuartersKeycard = true;
       }
@@ -456,6 +460,7 @@ public class StationGenerator {
     float avgNumAttempts = 0f;
     int maxAttempts = Integer.MIN_VALUE;
     int minAttempts = Integer.MAX_VALUE;
+    float percentSuccess = 0f;
 
     int numIterations = 1000;
 
@@ -463,6 +468,10 @@ public class StationGenerator {
       Random r = new Random();
       long seed = r.nextLong();
       StationGenerator sg = new StationGenerator(seed, levelsToIds, false);
+
+      if (sg.successfullyGenerated) {
+        percentSuccess++;
+      }
 
       int attempts = sg.getNumAttempts();
       avgNumAttempts += attempts;
@@ -495,6 +504,8 @@ public class StationGenerator {
     }
 
     avgNumAttempts /= numIterations;
+    percentSuccess /= numIterations;
+    percentSuccess *= 100.0;
 
     for (Level l : LEVELS_TO_PROCESS) {
       System.out.println(l);
@@ -518,6 +529,7 @@ public class StationGenerator {
       }
     }
 
+    System.out.printf("Success rate: %.0f%%\n", percentSuccess);
     System.out.printf("Average number of attempts: %.0f\n", avgNumAttempts);
     System.out.printf("Max number of attempts: %d\n", maxAttempts);
     System.out.printf("Min number of attempts: %d\n", minAttempts);

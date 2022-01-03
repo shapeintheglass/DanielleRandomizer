@@ -5,6 +5,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.graph.ImmutableNetwork;
+import com.google.common.graph.MutableNetwork;
+import com.google.common.graph.NetworkBuilder;
+import utils.StationConnectivityConsts.Door;
+import utils.StationConnectivityConsts.Level;
 
 public final class StationConnectivityConsts {
 
@@ -70,6 +76,10 @@ public final class StationConnectivityConsts {
       ImmutableSet.of(Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT);
   public static final ImmutableSet<Door> CREW_QUARTERS_DOORS =
       ImmutableSet.of(Door.ARBORETUM_CREW_QUARTERS_EXIT);
+  public static final ImmutableSet<Door> ONE_WAY_LOCKS =
+      ImmutableSet.of(Door.ARBORETUM_CREW_QUARTERS_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT,
+          Door.LOBBY_PSYCHOTRONICS_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT, Door.SHUTTLE_BAY_GUTS_EXIT,
+          Door.GUTS_SHUTTLE_BAY_EXIT, Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT);
 
   // Map of level to level id
   public static final ImmutableBiMap<Level, String> LEVELS_TO_NAMES =
@@ -259,6 +269,30 @@ public final class StationConnectivityConsts {
           .put(Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT)
           .put(Door.SHUTTLE_BAY_LOBBY_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT)
           .build();
+
+  private static ImmutableNetwork<Level, Door> defaultNetwork = null;
+
+  public static final ImmutableNetwork<Level, Door> getDefaultNetwork() {
+    if (defaultNetwork != null) {
+      return defaultNetwork;
+    }
+    MutableNetwork<Level, Door> station = NetworkBuilder.directed()
+        .allowsParallelEdges(true)
+        .allowsSelfLoops(false)
+        .build();
+
+    for (Door d : DEFAULT_CONNECTIVITY.keySet()) {
+      Door d2 = DEFAULT_CONNECTIVITY.get(d);
+      Level sourceLevel = Iterables.getOnlyElement(LEVELS_TO_DOORS.inverse()
+          .get(d));
+      Level destLevel = Iterables.getOnlyElement(LEVELS_TO_DOORS.inverse()
+          .get(d2));
+      station.addEdge(sourceLevel, destLevel, d);
+    }
+
+    defaultNetwork = ImmutableNetwork.copyOf(station);
+    return defaultNetwork;
+  }
 
   // These doors cannot connect to each other due to only being a single exit
   public static final ImmutableList<Door> SINGLE_CONNECTIONS =

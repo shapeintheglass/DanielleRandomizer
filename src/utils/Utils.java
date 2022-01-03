@@ -296,4 +296,15 @@ public class Utils {
       return s.hashCode();
     }
   }
+  
+  public static <T> List<T> intersectLists(List<T> a, List<T> b) {
+    List<T> result = Lists.newArrayList();
+    Set<T> setA = Sets.newHashSet(a);
+    for (T t : b) {
+      if (setA.contains(t)) {
+        result.add(t);
+      }
+    }
+    return result;
+  }
 }
