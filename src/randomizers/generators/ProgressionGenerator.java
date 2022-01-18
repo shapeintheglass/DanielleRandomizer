@@ -4,19 +4,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.ListMultimap;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import com.google.common.graph.ImmutableNetwork;
-import proto.RandomizerSettings.Settings;
 import utils.KeycardConnectivityConsts;
 import utils.KeycardConnectivityConsts.Keycard;
 import utils.KeycardConnectivityConsts.Location;
 import utils.ProgressionGraph;
-import utils.ProgressionGraph.LevelProgression;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
@@ -26,59 +21,60 @@ public class ProgressionGenerator {
 
   private static final int MAX_ATTEMPTS = 10;
 
-  // Map of filename to door name to location id
-  private Map<String, Map<String, String>> doorConnectivity;
-  // Map of filename to spawn name to destination name
-  private Map<String, Map<String, String>> spawnConnectivity;
   // Map of level name (level;name) to keycard ID
-  private Map<String, String> keycardConnectivity;
-  private ImmutableMultimap<Location, Keycard> keycardPlacement;
-  private Settings s;
+  private ImmutableMap<String, String> keycardConnectivity;
+  private ImmutableNetwork<Level, Door> stationConnectivity;
+  private ImmutableMap<Location, Keycard> locationsToKeycards;
+  private Map<Keycard, String> keycardsToReadableLocation;
 
   private ProgressionGraph progressionGraph;
+  private long seed;
   private Random r;
 
-  public ProgressionGenerator(Settings s, ImmutableNetwork<Level, Door> stationConnectivity,
-      Random r) {
-    this.s = s;
-    this.r = r;
-    doorConnectivity = Maps.newHashMap();
-    spawnConnectivity = Maps.newHashMap();
-    keycardConnectivity = Maps.newHashMap();
+  public ProgressionGenerator(ImmutableNetwork<Level, Door> stationConnectivity, long seed) {
+    this.stationConnectivity = stationConnectivity;
+    this.seed = seed;
+    this.r = new Random(seed);
 
     int numAttempts = 0;
     // Attempt to generate a station
     for (; numAttempts < MAX_ATTEMPTS; numAttempts++) {
-      keycardPlacement = generate();
+      locationsToKeycards = generate();
       if (verify()) {
         break;
       }
     }
+
+    multimapToConnectivity();
   }
 
-  public Map<String, Map<String, String>> getDoorConnectivity() {
-    return doorConnectivity;
-  }
-
-  public Map<String, Map<String, String>> getSpawnConnectivity() {
-    return spawnConnectivity;
-  }
-
-  public Map<String, String> getKeycardConnectivity() {
+  public ImmutableMap<String, String> getKeycardConnectivity() {
     return keycardConnectivity;
   }
 
-  public ImmutableMultimap<Location, Keycard> getKeycardPlacement() {
-    return keycardPlacement;
+  public ImmutableMap<Location, Keycard> getKeycardPlacement() {
+    return locationsToKeycards;
   }
 
   public ProgressionGraph getProgressionGraph() {
     return progressionGraph;
   }
 
-  private ImmutableMultimap<Location, Keycard> generate() {
+  private void multimapToConnectivity() {
+    Map<String, String> map = Maps.newHashMap();
+    keycardsToReadableLocation = Maps.newHashMap();
+    for (Location l : Location.values()) {
+      Keycard k = locationsToKeycards.get(l);
+      map.put(KeycardConnectivityConsts.LOCATION_TO_LEVEL_NAME.get(l),
+          KeycardConnectivityConsts.KEYCARD_TO_ID.get(k));
+      keycardsToReadableLocation.put(k, l.toString());
+    }
+    keycardConnectivity = ImmutableMap.copyOf(map);
+  }
+
+  private ImmutableMap<Location, Keycard> generate() {
     // Map of location to keycard
-    ListMultimap<Location, Keycard> keycardPlacement = ArrayListMultimap.create();
+    Map<Location, Keycard> keycardPlacement = Maps.newHashMap();
 
     // Place high priority keycards first.
     List<Keycard> highPriority =
@@ -110,11 +106,11 @@ public class ProgressionGenerator {
     // Fill remaining locations with random keycards
     fillLocations(Keycard.values(), locationsToUse, keycardPlacement);
 
-    return ImmutableMultimap.copyOf(keycardPlacement);
+    return ImmutableMap.copyOf(keycardPlacement);
   }
 
   private void placeKeycard(List<Keycard> keycardsToPlace, List<Location> locationsToUse,
-      Multimap<Location, Keycard> keycardPlacement) {
+      Map<Location, Keycard> keycardPlacement) {
     for (int j = 0; j < keycardsToPlace.size(); j++) {
       Keycard k = keycardsToPlace.get(j);
       for (int i = 0; i < MAX_ATTEMPTS; i++) {
@@ -123,7 +119,6 @@ public class ProgressionGenerator {
         if (!keycardPlacement.containsKey(l)) {
           keycardPlacement.put(l, k);
           locationsToUse.remove(locationIndex);
-          System.out.printf("[%s] --> [%s]\n", k, l);
           break;
         }
       }
@@ -131,7 +126,7 @@ public class ProgressionGenerator {
   }
 
   private void fillLocations(Keycard[] keycardsToPlace, List<Location> locationsToUse,
-      Multimap<Location, Keycard> keycardPlacement) {
+      Map<Location, Keycard> keycardPlacement) {
     for (Location l : locationsToUse) {
       Keycard k = Utils.getRandom(keycardsToPlace, r);
       keycardPlacement.put(l, k);
@@ -139,16 +134,25 @@ public class ProgressionGenerator {
   }
 
   private boolean verify() {
-    ImmutableNetwork<Level, Door> stationConnectivity =
-        StationConnectivityConsts.getDefaultNetwork();
-    ProgressionGraph pg = new ProgressionGraph(stationConnectivity, keycardPlacement, 0L);
+    ProgressionGraph pg = new ProgressionGraph(stationConnectivity, locationsToKeycards, seed);
     return pg.verify();
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    for (Keycard k : Keycard.values()) {
+      sb.append(String.format("[%s] --> [%s]\n", k, keycardsToReadableLocation.get(k)));
+    }
+
+    return sb.toString();
   }
 
   public static void main(String[] args) {
     Random r = new Random(0L);
     ProgressionGenerator pg =
-        new ProgressionGenerator(null, StationConnectivityConsts.getDefaultNetwork(), r);
-    System.out.println(pg.getKeycardPlacement());
+        new ProgressionGenerator(StationConnectivityConsts.getDefaultNetwork(), 0L);
+    System.out.println(pg);
   }
 }

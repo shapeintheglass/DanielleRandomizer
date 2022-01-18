@@ -8,9 +8,8 @@ import java.util.Set;
 import java.util.Stack;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -25,18 +24,20 @@ import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
 
 public class ProgressionGraph {
+  private static final int MAX_NUMBER_LEVEL_TRANSITIONS = 1000;
   private ImmutableNetwork<Level, Door> stationConnectivity;
-  private ImmutableMultimap<Location, Keycard> keycardConnectivity;
-  private Random r;
+  private ImmutableMap<Location, Keycard> keycardConnectivity;
 
   private Map<Level, LevelProgression> levelsToMilestones;
 
   private Level liftTechnopathLevel;
   private Door liftTechnopathDoor;
   private Door liftLowerDoor;
+  private Set<ProgressionNode> progress;
+  private Random r;
 
   public ProgressionGraph(ImmutableNetwork<Level, Door> stationConnectivity,
-      ImmutableMultimap<Location, Keycard> keycardConnectivity, long seed) {
+      ImmutableMap<Location, Keycard> keycardConnectivity, long seed) {
     this.stationConnectivity = stationConnectivity;
     this.keycardConnectivity = keycardConnectivity;
     this.r = new Random(seed);
@@ -54,89 +55,89 @@ public class ProgressionGraph {
     }
   }
 
+  public String getVerifyResult() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(String.format("Left neuromod division: %s\n",
+        progress.contains(Door.NEUROMOD_DIVISION_LOBBY_EXIT)));
+    sb.append(String.format("Got morgan's arming key: %s\n",
+        progress.contains(ProgressionMilestone.DS_MORGANS_ARMING_KEY)));
+    sb.append(String.format("Rebooted station: %s\n",
+        progress.contains(ProgressionMilestone.PP_REBOOT_COMPLETED)));
+    sb.append(String.format("Dahl arrived: %s\n",
+        progress.contains(ProgressionMilestone.AR_DAHL_ARRIVAL)));
+    sb.append(String.format("Got alex's arming key: %s\n",
+        progress.contains(ProgressionMilestone.AR_ALEX_ARMING_KEY)));
+    sb.append(String.format("Primed nullwave: %s\n",
+        progress.contains(ProgressionMilestone.PY_NULLWAVE_PRIMED)));
+    sb.append(String.format("Primed keys: %s\n",
+        progress.contains(ProgressionMilestone.PP_ARMING_KEYS_PRIMED)));
+    sb.append(String.format("Listened to first video: %s\n",
+        progress.contains(ProgressionMilestone.LO_LG_VIDEO_PART_1)));
+    sb.append(String.format("Listened to second video: %s\n",
+        progress.contains(ProgressionMilestone.LO_LG_VIDEO_PART_2)));
+    sb.append(String.format("Got general access keycard: %s\n",
+        progress.contains(Keycard.LO_GENERAL_ACCESS)));
+    sb.append(String.format("Got fuel storage keycard: %s\n",
+        progress.contains(Keycard.GT_FUEL_STORAGE)));
+    sb.append(String.format("Unlocked the lift: %s\n",
+        progress.contains(ProgressionMilestone.LO_UNLOCKED_LIFT)));
+    sb.append(progress.toString());
+    sb.append("\n");
+    sb.append(
+        String.format("Finished game: %s\n", progress.contains(ProgressionMilestone.BR_GOAL)));
+
+    return sb.toString();
+  }
+
   public boolean verify() {
     // Start at neuromod division, see if we can wind up at the goal.
-    Set<ProgressionNode> progress = Sets.newHashSet();
+    progress = Sets.newHashSet();
     Level currentLevel = Level.NEUROMOD_DIVISION;
     boolean ejected = false;
 
-    for (int i = 0; i < 100; i++) {
-      System.out.println();
-      System.out.println();
-      System.out.println("ITERATION " + i);
-
+    for (int i = 0; i < MAX_NUMBER_LEVEL_TRANSITIONS; i++) {
       Stack<Level> toVisit = new Stack<>();
       Set<Level> visited = Sets.newHashSet();
       toVisit.add(currentLevel);
-      boolean progressMade = false;
       while (!toVisit.isEmpty()) {
         currentLevel = toVisit.pop();
         if (visited.contains(currentLevel)) {
           continue;
         }
         visited.add(currentLevel);
-        int progressBefore = progress.size();
-        List<Level> next = traverseStation(progress, currentLevel);
-        if (!progressMade && progress.size() != progressBefore) {
-          progressMade = true;
-        }
+        List<Level> next = traverseStation(currentLevel);
 
         // If we are visiting Deep Storage, we are effectively teleported to Cargo Bay afterwards.
         if (!ejected && currentLevel == Level.DEEP_STORAGE) {
           // Throw out the stack and start at Cargo Bay
-          //System.out.println("Ejected! Teleporting to Cargo Bay as start");
           currentLevel = Level.CARGO_BAY;
           ejected = true;
           break;
         }
 
+        // Pick a random non-visited level to go to next
+        List<Level> validLevels = Lists.newArrayList();
         for (Level n : next) {
           if (!visited.contains(n)) {
-            toVisit.add(n);
+            validLevels.add(n);
           }
         }
+        if (!validLevels.isEmpty()) {
+          toVisit.add(Utils.getRandom(validLevels, r));
+        }
+
         if (progress.contains(ProgressionMilestone.BR_GOAL)) {
           return true;
         }
       }
-      if (!progressMade) {
-        break;
-      }
-      System.out.printf("Watched Morgan's first video: %s\n",
-          progress.contains(ProgressionMilestone.LO_LG_VIDEO_PART_1));
-      System.out.printf("Watched Morgan's second video: %s\n",
-          progress.contains(ProgressionMilestone.LO_LG_VIDEO_PART_2));
-      System.out.printf("Got general access keycard: %s\n",
-          progress.contains(Keycard.LO_GENERAL_ACCESS));
-      System.out.printf("Unlocked the lift: %s\n",
-          progress.contains(ProgressionMilestone.LO_UNLOCKED_LIFT));
-      System.out.printf("Found morgan's arming key: %s\n",
-          progress.contains(ProgressionMilestone.DS_MORGANS_ARMING_KEY));
-      System.out.printf("Rebooted the station: %s\n",
-          progress.contains(ProgressionMilestone.PP_REBOOT_COMPLETED));
-      System.out.printf("Found alex's arming key: %s\n",
-          progress.contains(ProgressionMilestone.AR_ALEX_ARMING_KEY));
-      System.out.printf("Dahl arrived: %s\n",
-          progress.contains(ProgressionMilestone.AR_DAHL_ARRIVAL));
-      System.out.printf("Kaspar neutralized: %s\n",
-          progress.contains(ProgressionMilestone.EX_KASPAR_NEUTRALIZED)
-              && progress.contains(ProgressionMilestone.HL_KASPAR_NEUTRALIZED)
-              && progress.contains(ProgressionMilestone.PY_KASPAR_NEUTRALIZED)
-              && progress.contains(ProgressionMilestone.PY_KASPAR_NEUTRALIZED));
     }
 
     return progress.contains(ProgressionMilestone.BR_GOAL);
   }
 
-
-
-  private List<Level> traverseStation(Set<ProgressionNode> progress, Level l) {
+  private List<Level> traverseStation(Level l) {
     // Make progress in this level
-    Set<ProgressionNode> newProgress = getLevel(l).updateProgress(progress);
-    if (!newProgress.isEmpty()) {
-      System.out.println(l);
-      System.out.println(newProgress);
-    }
+    getLevel(l).updateProgress(progress);
     List<Level> toVisitNext = Lists.newArrayList();
 
     // Check all doors connected to this level
@@ -152,14 +153,12 @@ public class ProgressionGraph {
           && !progress.contains(ProgressionMilestone.PP_REBOOT_COMPLETED)
           && (StationConnectivityConsts.AIRLOCKS.contains(d) || d == liftTechnopathDoor
               || d == liftLowerDoor || d == Door.CARGO_BAY_GUTS_EXIT)) {
-        System.out.println("Director lockdown in effect, cannot take door " + d);
         continue;
       }
 
       // If the apex is here, all airlocks are down
       if (progress.contains(ProgressionMilestone.AR_APEX_IS_HERE)
           && StationConnectivityConsts.AIRLOCKS.contains(d)) {
-        System.out.println("Apex is here, cannot take door " + d);
         continue;
       }
 
@@ -279,7 +278,8 @@ public class ProgressionGraph {
       case POWER_PLANT:
         levelMilestone =
             new LevelProgression(Level.POWER_PLANT).addNeighbor(ProgressionMilestone.PP_AIRLOCK)
-                .addNeighbor(ProgressionMilestone.PP_REBOOT_COMPLETED, Keycard.PP_COOLANT_CHAMBER, ProgressionMilestone.DS_DIRECTOR_LOCKDOWN)
+                .addNeighbor(ProgressionMilestone.PP_REBOOT_COMPLETED, Keycard.PP_COOLANT_CHAMBER,
+                    ProgressionMilestone.DS_DIRECTOR_LOCKDOWN)
                 .addNeighbor(ProgressionMilestone.PP_ARMING_KEYS_PRIMED,
                     ProgressionMilestone.DS_MORGANS_ARMING_KEY,
                     ProgressionMilestone.AR_ALEX_ARMING_KEY);
@@ -382,7 +382,7 @@ public class ProgressionGraph {
 
     // Look up keycards that are relatively accessible
     for (Location keycardLocation : KeycardConnectivityConsts.LEVEL_TO_LOCATIONS.get(l)) {
-      Keycard keycard = Iterables.getOnlyElement(keycardConnectivity.get(keycardLocation));
+      Keycard keycard = keycardConnectivity.get(keycardLocation);
       switch (keycardLocation) {
         // TODO: Special cases for keycards that have requirements
         case LO_NPC_DEVRIES:
@@ -464,10 +464,6 @@ public class ProgressionGraph {
     // Attempt to make progress in this level given existing progress
     public Set<ProgressionNode> updateProgress(Set<ProgressionNode> progress) {
       Set<ProgressionNode> newProgress = Sets.newHashSet();
-      System.out.println();
-      System.out.println();
-      System.out.println(level);
-
       int prevSize = -1;
       // Revisit this node until all possible progress is unlocked and nothing further can be done.
       while (prevSize != newProgress.size()) {
@@ -485,8 +481,6 @@ public class ProgressionGraph {
               progress.add(candidate);
               newProgress.add(candidate);
               break;
-            } else {
-              System.out.printf("\t%s (blocked by %s)\n", candidate, gates);
             }
           }
         }
@@ -556,21 +550,21 @@ public class ProgressionGraph {
 
     for (int i = 0; i < 1; i++) {
       Random r = new Random();
-      long seed = -2283299401051162083L;//r.nextLong();
+      long seed = 0L;// r.nextLong();
       System.out.println(seed);
-      StationGenerator sg = new StationGenerator(seed, levelsToIds, false);
+      StationGenerator sg = new StationGenerator(seed, levelsToIds);
 
       ImmutableNetwork<Level, Door> stationConnectivity = sg.getNetwork();
-      // StationConnectivityConsts.getDefaultNetwork();
-      System.out.println(sg);
+          //StationConnectivityConsts.getDefaultNetwork();
 
       ProgressionGraph pg = new ProgressionGraph(stationConnectivity,
-          KeycardConnectivityConsts.DEFAULT_CONNECTIVITY.inverse(), seed);
+          KeycardConnectivityConsts.DEFAULT_CONNECTIVITY, 0L);
 
       boolean result = pg.verify();
       System.out.println(result);
       if (!result) {
         System.out.println(seed);
+        System.out.println(pg.getVerifyResult());
         break;
       }
     }

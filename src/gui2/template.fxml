@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="mainWindow" prefHeight="451.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui2.controllers.WindowController">
+<VBox fx:id="mainWindow" prefHeight="500.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui2.controllers.WindowController">
   <children>
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="900.0">
          <children>
@@ -22,7 +22,7 @@
             <TextField fx:id="seedText" layoutX="665.0" layoutY="3.0" />
          </children>
       </AnchorPane>
-      <SplitPane dividerPositions="0.7068965517241379" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="391.0" prefWidth="902.0">
+      <SplitPane dividerPositions="0.7068965517241379" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="438.0" prefWidth="902.0">
         <items>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -77,20 +77,22 @@
                                        <children>
                                           <CheckBox fx:id="cosmeticCheckboxBodies" mnemonicParsing="false" text="Randomize human bodies" />
                                           <CheckBox fx:id="cosmeticCheckboxVoices" mnemonicParsing="false" text="Randomize voice lines" />
-                                          <CheckBox fx:id="cosmeticCheckboxEmotions" mnemonicParsing="false" text="Randomize emotions" />
                                           <CheckBox fx:id="cosmeticCheckboxMusic" mnemonicParsing="false" text="Randomize music" />
                                           <CheckBox fx:id="cosmeticCheckboxPlayerModel" mnemonicParsing="false" text="Randomize player model" />
                                           <CheckBox fx:id="cosmeticCheckboxPlanetSize" mnemonicParsing="false" text="Randomize Earth/Moon/Sun size" />
+                                          <CheckBox fx:id="cosmeticCheckboxCustomTips" mnemonicParsing="false" text="Add custom loading screen tips" />
+                                          <CheckBox fx:id="cosmeticCheckboxEmotions" mnemonicParsing="false" text="Randomize emotions" visible="false" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
                                        <children>
                                           <Label text="Generates new appearances for every human NPC." />
                                           <Label text="Randomizes voice lines by voice actor" />
-                                          <Label text="Assigns a random facial expression to every voice line." />
                                           <Label text="Shuffles in-game music. Some tracks may not be affected." />
                                           <Label text="Changes the first person player model to a random character." />
                                           <Label text="Changes the size of the Earth/Moon/Sun." />
+                                          <Label text="Adds helpful tips to the loading screens." />
+                                          <Label text="Assigns a random facial expression to every voice line." visible="false" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -104,12 +106,12 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Options that affect item spawns. Mouse over an option for a few seconds for a description." />
-                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
+                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="347.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="293.0" prefWidth="280.0">
                                        <children>
                                           <Label prefHeight="17.0" prefWidth="240.0" text="Pickup items" />
-                                          <ScrollPane prefHeight="292.0" prefWidth="280.0">
+                                          <ScrollPane prefHeight="329.0" prefWidth="280.0">
                                              <content>
                                                 <VBox fx:id="pickupPresetsVBox" prefHeight="270.0" prefWidth="270.0" spacing="15.0">
                                                    <padding>
@@ -124,7 +126,7 @@
                                     <VBox prefHeight="293.0" prefWidth="290.0">
                                        <children>
                                           <Label prefHeight="17.0" prefWidth="240.0" text="Physics props" />
-                                          <ScrollPane prefHeight="292.0" prefWidth="280.0">
+                                          <ScrollPane prefHeight="329.0" prefWidth="290.0">
                                              <content>
                                                 <VBox fx:id="propPresetsVBox" prefHeight="270.0" prefWidth="270.0" spacing="15.0">
                                                    <opaqueInsets>
@@ -149,12 +151,12 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Options that affect NPC spawns. Mouse over an option for a few seconds for a description." />
-                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
+                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="359.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="293.0" prefWidth="280.0">
                                        <children>
                                           <Label text="Enemies" />
-                                          <ScrollPane prefHeight="292.0" prefWidth="290.0">
+                                          <ScrollPane prefHeight="330.0" prefWidth="280.0">
                                              <content>
                                                 <VBox fx:id="enemyPresetsVBox" prefHeight="270.0" prefWidth="260.0" spacing="15.0">
                                                    <padding>
@@ -169,7 +171,7 @@
                                     <VBox prefHeight="293.0" prefWidth="280.0">
                                        <children>
                                           <Label text="Friendly NPCs (Operators + Turrets)" />
-                                          <ScrollPane prefHeight="292.0" prefWidth="280.0">
+                                          <ScrollPane prefHeight="329.0" prefWidth="280.0">
                                              <content>
                                                 <VBox fx:id="npcPresetsVBox" prefHeight="270.0" prefWidth="260.0" spacing="15.0">
                                                    <opaqueInsets>
@@ -191,10 +193,10 @@
                   </Tab>
                   <Tab text="Gameplay">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="631.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" text="Other gameplay randomization options." />
-                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="291.0" prefWidth="596.0">
+                              <HBox layoutX="28.0" layoutY="50.0" prefHeight="349.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="291.0" prefWidth="218.0" spacing="15.0">
                                        <children>
@@ -438,9 +440,9 @@
                   </Tab>
               </tabs>
             </TabPane>
-          <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="261.0">
+          <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="261.0">
                <children>
-                  <TextArea fx:id="outputWindow" editable="false" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="261.0" wrapText="true" />
+                  <TextArea fx:id="outputWindow" editable="false" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="261.0" wrapText="true" />
                   <Label layoutX="14.0" layoutY="6.0" text="Output" />
                </children>
             </AnchorPane>

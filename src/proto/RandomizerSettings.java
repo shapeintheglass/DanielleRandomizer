@@ -4048,6 +4048,12 @@ public final class RandomizerSettings {
      * @return The randomizeEmotions.
      */
     boolean getRandomizeEmotions();
+
+    /**
+     * <code>bool custom_loading_tips = 7;</code>
+     * @return The customLoadingTips.
+     */
+    boolean getCustomLoadingTips();
   }
   /**
    * Protobuf type {@code CosmeticSettings}
@@ -4122,6 +4128,11 @@ public final class RandomizerSettings {
             case 48: {
 
               randomizeEmotions_ = input.readBool();
+              break;
+            }
+            case 56: {
+
+              customLoadingTips_ = input.readBool();
               break;
             }
             default: {
@@ -4222,6 +4233,17 @@ public final class RandomizerSettings {
       return randomizeEmotions_;
     }
 
+    public static final int CUSTOM_LOADING_TIPS_FIELD_NUMBER = 7;
+    private boolean customLoadingTips_;
+    /**
+     * <code>bool custom_loading_tips = 7;</code>
+     * @return The customLoadingTips.
+     */
+    @java.lang.Override
+    public boolean getCustomLoadingTips() {
+      return customLoadingTips_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -4253,6 +4275,9 @@ public final class RandomizerSettings {
       }
       if (randomizeEmotions_ != false) {
         output.writeBool(6, randomizeEmotions_);
+      }
+      if (customLoadingTips_ != false) {
+        output.writeBool(7, customLoadingTips_);
       }
       unknownFields.writeTo(output);
     }
@@ -4287,6 +4312,10 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(6, randomizeEmotions_);
       }
+      if (customLoadingTips_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(7, customLoadingTips_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -4314,6 +4343,8 @@ public final class RandomizerSettings {
           != other.getRandomizePlanetSize()) return false;
       if (getRandomizeEmotions()
           != other.getRandomizeEmotions()) return false;
+      if (getCustomLoadingTips()
+          != other.getCustomLoadingTips()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4343,6 +4374,9 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_EMOTIONS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeEmotions());
+      hash = (37 * hash) + CUSTOM_LOADING_TIPS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getCustomLoadingTips());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4488,6 +4522,8 @@ public final class RandomizerSettings {
 
         randomizeEmotions_ = false;
 
+        customLoadingTips_ = false;
+
         return this;
       }
 
@@ -4520,6 +4556,7 @@ public final class RandomizerSettings {
         result.randomizePlayerModel_ = randomizePlayerModel_;
         result.randomizePlanetSize_ = randomizePlanetSize_;
         result.randomizeEmotions_ = randomizeEmotions_;
+        result.customLoadingTips_ = customLoadingTips_;
         onBuilt();
         return result;
       }
@@ -4585,6 +4622,9 @@ public final class RandomizerSettings {
         }
         if (other.getRandomizeEmotions() != false) {
           setRandomizeEmotions(other.getRandomizeEmotions());
+        }
+        if (other.getCustomLoadingTips() != false) {
+          setCustomLoadingTips(other.getCustomLoadingTips());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4800,6 +4840,37 @@ public final class RandomizerSettings {
         onChanged();
         return this;
       }
+
+      private boolean customLoadingTips_ ;
+      /**
+       * <code>bool custom_loading_tips = 7;</code>
+       * @return The customLoadingTips.
+       */
+      @java.lang.Override
+      public boolean getCustomLoadingTips() {
+        return customLoadingTips_;
+      }
+      /**
+       * <code>bool custom_loading_tips = 7;</code>
+       * @param value The customLoadingTips to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCustomLoadingTips(boolean value) {
+        
+        customLoadingTips_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool custom_loading_tips = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCustomLoadingTips() {
+        
+        customLoadingTips_ = false;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4892,6 +4963,12 @@ public final class RandomizerSettings {
      * @return The randomizeStation.
      */
     boolean getRandomizeStation();
+
+    /**
+     * <code>bool randomize_keycards = 15;</code>
+     * @return The randomizeKeycards.
+     */
+    boolean getRandomizeKeycards();
 
     /**
      * <code>bool randomize_neuromods = 4;</code>
@@ -5207,6 +5284,11 @@ public final class RandomizerSettings {
 
               break;
             }
+            case 120: {
+
+              randomizeKeycards_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -5300,6 +5382,17 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getRandomizeStation() {
       return randomizeStation_;
+    }
+
+    public static final int RANDOMIZE_KEYCARDS_FIELD_NUMBER = 15;
+    private boolean randomizeKeycards_;
+    /**
+     * <code>bool randomize_keycards = 15;</code>
+     * @return The randomizeKeycards.
+     */
+    @java.lang.Override
+    public boolean getRandomizeKeycards() {
+      return randomizeKeycards_;
     }
 
     public static final int RANDOMIZE_NEUROMODS_FIELD_NUMBER = 4;
@@ -5662,6 +5755,9 @@ public final class RandomizerSettings {
       if (randomizeMimics_ != null) {
         output.writeMessage(14, getRandomizeMimics());
       }
+      if (randomizeKeycards_ != false) {
+        output.writeBool(15, randomizeKeycards_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5723,6 +5819,10 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(14, getRandomizeMimics());
       }
+      if (randomizeKeycards_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(15, randomizeKeycards_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -5750,6 +5850,8 @@ public final class RandomizerSettings {
       }
       if (getRandomizeStation()
           != other.getRandomizeStation()) return false;
+      if (getRandomizeKeycards()
+          != other.getRandomizeKeycards()) return false;
       if (getRandomizeNeuromods()
           != other.getRandomizeNeuromods()) return false;
       if (getRandomizeFabPlanCosts()
@@ -5809,6 +5911,9 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_STATION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeStation());
+      hash = (37 * hash) + RANDOMIZE_KEYCARDS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeKeycards());
       hash = (37 * hash) + RANDOMIZE_NEUROMODS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeNeuromods());
@@ -5990,6 +6095,8 @@ public final class RandomizerSettings {
         }
         randomizeStation_ = false;
 
+        randomizeKeycards_ = false;
+
         randomizeNeuromods_ = false;
 
         randomizeFabPlanCosts_ = false;
@@ -6069,6 +6176,7 @@ public final class RandomizerSettings {
           result.enemySpawnSettings_ = enemySpawnSettingsBuilder_.build();
         }
         result.randomizeStation_ = randomizeStation_;
+        result.randomizeKeycards_ = randomizeKeycards_;
         result.randomizeNeuromods_ = randomizeNeuromods_;
         result.randomizeFabPlanCosts_ = randomizeFabPlanCosts_;
         if (randomizeRecyclersBuilder_ == null) {
@@ -6156,6 +6264,9 @@ public final class RandomizerSettings {
         }
         if (other.getRandomizeStation() != false) {
           setRandomizeStation(other.getRandomizeStation());
+        }
+        if (other.getRandomizeKeycards() != false) {
+          setRandomizeKeycards(other.getRandomizeKeycards());
         }
         if (other.getRandomizeNeuromods() != false) {
           setRandomizeNeuromods(other.getRandomizeNeuromods());
@@ -6488,6 +6599,37 @@ public final class RandomizerSettings {
       public Builder clearRandomizeStation() {
         
         randomizeStation_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeKeycards_ ;
+      /**
+       * <code>bool randomize_keycards = 15;</code>
+       * @return The randomizeKeycards.
+       */
+      @java.lang.Override
+      public boolean getRandomizeKeycards() {
+        return randomizeKeycards_;
+      }
+      /**
+       * <code>bool randomize_keycards = 15;</code>
+       * @param value The randomizeKeycards to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeKeycards(boolean value) {
+        
+        randomizeKeycards_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_keycards = 15;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeKeycards() {
+        
+        randomizeKeycards_ = false;
         onChanged();
         return this;
       }
@@ -14539,61 +14681,62 @@ public final class RandomizerSettings {
       "tings\030\006 \001(\0132\022.GameStartSettings\022$\n\rmore_" +
       "settings\030\007 \001(\0132\r.MoreSettings\022&\n\016cheat_s" +
       "ettings\030\010 \001(\0132\016.CheatSettings\022+\n\014exp_set" +
-      "tings\030\t \001(\0132\025.ExperimentalSettings\"\276\001\n\020C" +
+      "tings\030\t \001(\0132\025.ExperimentalSettings\"\333\001\n\020C" +
       "osmeticSettings\022\030\n\020randomize_bodies\030\001 \001(" +
       "\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n\017rando" +
       "mize_music\030\003 \001(\010\022\036\n\026randomize_player_mod" +
       "el\030\004 \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022" +
-      "\032\n\022randomize_emotions\030\006 \001(\010\"\266\004\n\020Gameplay" +
-      "Settings\0226\n\023item_spawn_settings\030\001 \001(\0132\031." +
-      "GenericSpawnPresetFilter\0227\n\024enemy_spawn_" +
-      "settings\030\002 \001(\0132\031.GenericSpawnPresetFilte" +
-      "r\022\031\n\021randomize_station\030\003 \001(\010\022\033\n\023randomiz" +
-      "e_neuromods\030\004 \001(\010\022 \n\030randomize_fab_plan_" +
-      "costs\030\005 \001(\010\022.\n\023randomize_recyclers\030\006 \001(\013" +
-      "2\021.ToggleWithSlider\022/\n\024randomize_dispens" +
-      "ers\030\007 \001(\0132\021.ToggleWithSlider\022/\n\024randomiz" +
-      "e_breakables\030\010 \001(\0132\021.ToggleWithSlider\022.\n" +
-      "\023randomize_hackables\030\t \001(\0132\021.ToggleWithS" +
-      "lider\022+\n\020randomize_mimics\030\016 \001(\0132\021.Toggle" +
-      "WithSlider\022\032\n\022pickup_preset_name\030\n \001(\t\022\030" +
-      "\n\020prop_preset_name\030\013 \001(\t\022\031\n\021enemy_preset" +
-      "_name\030\014 \001(\t\022\027\n\017npc_preset_name\030\r \001(\t\":\n\020" +
-      "ToggleWithSlider\022\021\n\tisEnabled\030\001 \001(\010\022\023\n\013s" +
-      "liderValue\030\002 \001(\005\"\215\001\n\021GameStartSettings\022\035" +
-      "\n\025add_loot_to_apartment\030\001 \001(\010\022\033\n\023start_o" +
-      "n_second_day\030\002 \001(\010\022\033\n\023skip_jovan_cutscen" +
-      "e\030\003 \001(\010\022\037\n\027start_outside_apartment\030\004 \001(\010" +
-      "\"\217\001\n\014MoreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n\017" +
-      "prey_souls_guns\030\002 \001(\010\022\033\n\023prey_souls_chip" +
-      "sets\030\003 \001(\010\022\032\n\022prey_souls_enemies\030\004 \001(\010\022\032" +
-      "\n\022prey_souls_turrets\030\005 \001(\010\"\337\003\n\rCheatSett" +
-      "ings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_all" +
-      "_scans\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020u" +
-      "se_custom_spawn\030\004 \001(\010\022;\n\025custom_spawn_lo" +
-      "cation\030\005 \001(\0162\034.CheatSettings.SpawnLocati" +
-      "on\022\034\n\024game_token_overrides\030\006 \001(\t\"\221\002\n\rSpa" +
-      "wnLocation\022\010\n\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOBB" +
-      "Y\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\rPSYCHOTRONICS\020" +
-      "\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022\021" +
-      "\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\tC" +
-      "ARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT\020\013\022\017\n\013POWER_PL" +
-      "ANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n\007" +
-      "ENDGAME\020\017\022\021\n\rGENDER_SELECT\020\020\"\215\002\n\024Experim" +
-      "entalSettings\022\030\n\020wandering_humans\030\001 \001(\010\022" +
-      "\026\n\016living_corpses\030\002 \001(\010\022\037\n\027zero_gravity_" +
-      "everywhere\030\003 \001(\010\022&\n\036enable_gravity_in_ex" +
-      "t_and_guts\030\004 \001(\010\022\033\n\023fluctuating_gravity\030" +
-      "\010 \001(\010\022\033\n\023start_self_destruct\030\005 \001(\010\022\033\n\023se" +
-      "lf_destruct_timer\030\006 \001(\t\022#\n\033self_destruct" +
-      "_shuttle_timer\030\007 \001(\t\"`\n\030GenericSpawnPres" +
-      "etFilter\022\014\n\004name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007" +
-      "filters\030\003 \003(\0132\027.GenericSpawnPresetRule\"\220" +
-      "\001\n\026GenericSpawnPresetRule\022\022\n\ninput_tags\030" +
-      "\001 \003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026\n\016output_wei" +
-      "ghts\030\003 \003(\005\022\031\n\021do_not_touch_tags\030\004 \003(\t\022\032\n" +
-      "\022do_not_output_tags\030\005 \003(\tB\033\n\005protoB\022Rand" +
-      "omizerSettingsb\006proto3"
+      "\032\n\022randomize_emotions\030\006 \001(\010\022\033\n\023custom_lo" +
+      "ading_tips\030\007 \001(\010\"\322\004\n\020GameplaySettings\0226\n" +
+      "\023item_spawn_settings\030\001 \001(\0132\031.GenericSpaw" +
+      "nPresetFilter\0227\n\024enemy_spawn_settings\030\002 " +
+      "\001(\0132\031.GenericSpawnPresetFilter\022\031\n\021random" +
+      "ize_station\030\003 \001(\010\022\032\n\022randomize_keycards\030" +
+      "\017 \001(\010\022\033\n\023randomize_neuromods\030\004 \001(\010\022 \n\030ra" +
+      "ndomize_fab_plan_costs\030\005 \001(\010\022.\n\023randomiz" +
+      "e_recyclers\030\006 \001(\0132\021.ToggleWithSlider\022/\n\024" +
+      "randomize_dispensers\030\007 \001(\0132\021.ToggleWithS" +
+      "lider\022/\n\024randomize_breakables\030\010 \001(\0132\021.To" +
+      "ggleWithSlider\022.\n\023randomize_hackables\030\t " +
+      "\001(\0132\021.ToggleWithSlider\022+\n\020randomize_mimi" +
+      "cs\030\016 \001(\0132\021.ToggleWithSlider\022\032\n\022pickup_pr" +
+      "eset_name\030\n \001(\t\022\030\n\020prop_preset_name\030\013 \001(" +
+      "\t\022\031\n\021enemy_preset_name\030\014 \001(\t\022\027\n\017npc_pres" +
+      "et_name\030\r \001(\t\":\n\020ToggleWithSlider\022\021\n\tisE" +
+      "nabled\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(\005\"\215\001\n\021Ga" +
+      "meStartSettings\022\035\n\025add_loot_to_apartment" +
+      "\030\001 \001(\010\022\033\n\023start_on_second_day\030\002 \001(\010\022\033\n\023s" +
+      "kip_jovan_cutscene\030\003 \001(\010\022\037\n\027start_outsid" +
+      "e_apartment\030\004 \001(\010\"\217\001\n\014MoreSettings\022\021\n\tmo" +
+      "re_guns\030\001 \001(\010\022\027\n\017prey_souls_guns\030\002 \001(\010\022\033" +
+      "\n\023prey_souls_chipsets\030\003 \001(\010\022\032\n\022prey_soul" +
+      "s_enemies\030\004 \001(\010\022\032\n\022prey_souls_turrets\030\005 " +
+      "\001(\010\"\337\003\n\rCheatSettings\022\024\n\014open_station\030\001 " +
+      "\001(\010\022\030\n\020unlock_all_scans\030\002 \001(\010\022\025\n\rfriendl" +
+      "y_npcs\030\003 \001(\010\022\030\n\020use_custom_spawn\030\004 \001(\010\022;" +
+      "\n\025custom_spawn_location\030\005 \001(\0162\034.CheatSet" +
+      "tings.SpawnLocation\022\034\n\024game_token_overri" +
+      "des\030\006 \001(\t\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n" +
+      "\006RANDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022" +
+      "\021\n\rPSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETU" +
+      "M\020\006\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DE" +
+      "EP_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPP" +
+      "ORT\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022" +
+      "\014\n\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SEL" +
+      "ECT\020\020\"\215\002\n\024ExperimentalSettings\022\030\n\020wander" +
+      "ing_humans\030\001 \001(\010\022\026\n\016living_corpses\030\002 \001(\010" +
+      "\022\037\n\027zero_gravity_everywhere\030\003 \001(\010\022&\n\036ena" +
+      "ble_gravity_in_ext_and_guts\030\004 \001(\010\022\033\n\023flu" +
+      "ctuating_gravity\030\010 \001(\010\022\033\n\023start_self_des" +
+      "truct\030\005 \001(\010\022\033\n\023self_destruct_timer\030\006 \001(\t" +
+      "\022#\n\033self_destruct_shuttle_timer\030\007 \001(\t\"`\n" +
+      "\030GenericSpawnPresetFilter\022\014\n\004name\030\001 \001(\t\022" +
+      "\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.Generic" +
+      "SpawnPresetRule\"\220\001\n\026GenericSpawnPresetRu" +
+      "le\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 " +
+      "\003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_not_to" +
+      "uch_tags\030\004 \003(\t\022\032\n\022do_not_output_tags\030\005 \003" +
+      "(\tB\033\n\005protoB\022RandomizerSettingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -14616,13 +14759,13 @@ public final class RandomizerSettings {
     internal_static_CosmeticSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CosmeticSettings_descriptor,
-        new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", "RandomizePlanetSize", "RandomizeEmotions", });
+        new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", "RandomizePlanetSize", "RandomizeEmotions", "CustomLoadingTips", });
     internal_static_GameplaySettings_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_GameplaySettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameplaySettings_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
+        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeKeycards", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
     internal_static_ToggleWithSlider_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_ToggleWithSlider_fieldAccessorTable = new

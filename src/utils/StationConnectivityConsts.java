@@ -91,11 +91,12 @@ public final class StationConnectivityConsts {
           Door.PSYCHOTRONICS_AIRLOCK, Door.SHUTTLE_BAY_AIRLOCK, Door.EXTERIOR_ARBORETUM_AIRLOCK,
           Door.EXTERIOR_HARDWARE_LABS_AIRLOCK, Door.EXTERIOR_POWER_PLANT_AIRLOCK,
           Door.EXTERIOR_PSYCHOTRONICS_AIRLOCK, Door.EXTERIOR_SHUTTLE_BAY_AIRLOCK);
-  public static final ImmutableSet<Door> ONE_WAY_LOCKS =
-      ImmutableSet.of(Door.ARBORETUM_CREW_QUARTERS_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT, Door.DEEP_STORAGE_ARBORETUM_EXIT,
-          Door.LOBBY_PSYCHOTRONICS_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT, Door.SHUTTLE_BAY_GUTS_EXIT,
-          Door.GUTS_SHUTTLE_BAY_EXIT, Door.LOBBY_ARBORETUM_EXIT, Door.LOBBY_LIFE_SUPPORT_EXIT,
-          Door.LIFE_SUPPORT_POWER_PLANT_EXIT);
+  // Doors that lock in one direction and should likely not connect to each other.
+  public static final ImmutableSet<Door> ONE_WAY_LOCKS = ImmutableSet.of(
+      Door.ARBORETUM_CREW_QUARTERS_EXIT, Door.ARBORETUM_DEEP_STORAGE_EXIT,
+      Door.DEEP_STORAGE_ARBORETUM_EXIT, Door.LOBBY_PSYCHOTRONICS_EXIT, Door.LOBBY_SHUTTLE_BAY_EXIT,
+      Door.SHUTTLE_BAY_GUTS_EXIT, Door.GUTS_SHUTTLE_BAY_EXIT, Door.LOBBY_ARBORETUM_EXIT,
+      Door.LOBBY_LIFE_SUPPORT_EXIT, Door.LIFE_SUPPORT_POWER_PLANT_EXIT);
   // These doors cannot connect to each other due to only being a single exit
   public static final ImmutableList<Door> SINGLE_CONNECTIONS =
       ImmutableList.of(Door.BRIDGE_ARBORETUM_EXIT, Door.NEUROMOD_DIVISION_LOBBY_EXIT,
