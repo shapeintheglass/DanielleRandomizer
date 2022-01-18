@@ -52,8 +52,11 @@ public class NetworkHelper {
     return false;
   }
 
-  public boolean isConnected(Level start) {
+  public boolean isConnected(Level start, Set<Level> toIgnore) {
     Set<Level> notVisited = Sets.newHashSet(network.nodes());
+    if (toIgnore != null) {
+      notVisited.removeAll(toIgnore);
+    }
     Stack<Level> toVisit = new Stack<>();
 
     toVisit.push(start);

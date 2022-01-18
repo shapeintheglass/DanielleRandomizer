@@ -28,6 +28,9 @@ public class BrokenObjectRule implements Rule {
           "ArkGameplayObjects.RepairableObject.WaterRegulator",
           "ArkGameplayObjects.RepairableObject.HeatExchangeMonitor");
 
+  // TODO: Add whitelisted objects
+  private static final ImmutableSet<String> DO_NOT_TOUCH = ImmutableSet.of();
+
   private float brokenObjectRatio;
 
   public BrokenObjectRule(float brokenObjectRatio) {
@@ -45,7 +48,6 @@ public class BrokenObjectRule implements Rule {
   @Override
   public void apply(Element e, Random r, String filename) {
     boolean isBroken = r.nextFloat() < brokenObjectRatio;
-    e.getChild("Properties2")
-        .setAttribute("bStartsBroken", isBroken ? "1" : "0");
+    e.getChild("Properties2").setAttribute("bStartsBroken", isBroken ? "1" : "0");
   }
 }

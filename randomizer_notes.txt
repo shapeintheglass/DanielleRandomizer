@@ -12,13 +12,19 @@ Todo:
  - Pharma fab plans not working in survival mode
  - Whitelist turrets that use scripting
  - Lift technopath won't spawn as a nightmare
+ - Whitelist Arboretum medical operator for saving Dahl sidequest
 
 Notes:
  - Voltaic mimic is immortal again
- - Absolute nightmare is using old attacks
- - Blood phantom is not using projectiles
  - Add lore cards for turrets
- - Fix card for Absolute Phantom
+ - Fix card for Absolute Phantom (just says "Phantom)
+ - Remove labcoat skin from randomization?
+ - HUD disappearing bug
+ - Adjust "all enemies" preset to be compatible with Prey Souls
+ - Fix status conditions for new enemies (ex. Turret (Broken) should be Laser Turret (Broken))
+ - Option to skip handling cutscenes for new weapons
+ - Why is the nightmare appearing in the "no nightmare" mode
+ - Fix heads for mind-controlled humans not disappearing (needs proper name)
 
 
 Enemy types:
@@ -208,8 +214,9 @@ New:
 Weapons
  - Defibrillator (stungun that heals humans)
  - Recalibrator (wrench that heals robots)
- - Neowave charge (nullwave grenade that heals typhon)
+ - Mindjack chart (nullwave grenade that heals typhon and mindjacks them)
  - Cystoid gun
+
  
 Chipsets
  - ELE_<WEAPON>_<TYPE> apply TYPE damage for WEAPON weapon

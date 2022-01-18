@@ -29,6 +29,7 @@ message CosmeticSettings {
   bool randomize_player_model = 4;
   bool randomize_planet_size = 5;
   bool randomize_emotions = 6;
+  bool custom_loading_tips = 7;
 }
 
 message GameplaySettings {

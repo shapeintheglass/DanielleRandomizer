@@ -26,6 +26,9 @@ public class LockedObjectRule implements Rule {
           "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Military",
           "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Engineering",
           "ArkGameplayObjects.Keypad.CargoBay.Keypad_CargoBay");
+  
+  // TODO: Add whitelisted objects
+  private static final ImmutableSet<String> DO_NOT_TOUCH = ImmutableSet.of();
 
   /*
    * private static final ImmutableSet<String> HACKABLE_DOOR_ARCHETYPES = ImmutableSet.of(
