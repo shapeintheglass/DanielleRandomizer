@@ -15,6 +15,7 @@ public class KeycardConnectivityConsts {
     BR_BRIEFING_ROOM,
     CB_SHIPPING_AND_RECEIVING,
     CQ_CABIN_ALEX,
+    CQ_CABIN_BELLAMY,
     CQ_CABIN_CALVINO,
     CQ_CABIN_FOY,
     CQ_CABIN_KELSTRUP,
@@ -97,6 +98,7 @@ public class KeycardConnectivityConsts {
     PP_NPC_FAURE,
     PP_NPC_STILLWATER,
     PP_NPC_BROOKS,
+    PY_NPC_BELLAMY,
     PY_NPC_KELSTRUP,
     PY_NPC_KELSTRUP_2,
     PY_MORGUE,
@@ -123,6 +125,7 @@ public class KeycardConnectivityConsts {
           Keycard.AR_LOVERS_KEY,
           Keycard.CQ_CABIN_MARKS,
           Keycard.BR_BRIEFING_ROOM,
+          Keycard.CQ_CABIN_BELLAMY,
           Keycard.CQ_CABIN_FOY,
           Keycard.CQ_CABIN_MITCHELL,
           Keycard.CQ_KITCHEN,
@@ -152,9 +155,8 @@ public class KeycardConnectivityConsts {
           Keycard.PP_REACTOR,
           Keycard.PP_COOLANT_CHAMBER);
 
-  // Keycard locations that the player may never even encounter in their run.
-  // Only spawn duplicates here.
-  public static final ImmutableList<Location> LOCATIONS_DUPE_ONLY =
+  // Keycard locations that are missable.
+  public static final ImmutableList<Location> LOCATIONS_LOW_ACCESSIBILITY =
       ImmutableList.of(
           Location.AR_NPC_DAHL,
           Location.BR_NPC_JANUARY,
@@ -162,6 +164,7 @@ public class KeycardConnectivityConsts {
           Location.CB_NPC_COOL,
           Location.CQ_NPC_LUKA,
           Location.CQ_NPC_LUKA_QUEST,
+          Location.HL_NPC_CALVINO,
           Location.LO_NPC_JANUARY,
           Location.LO_NPC_JANUARY_GIVEN,
           Location.LS_NPC_DAHL,
@@ -169,27 +172,26 @@ public class KeycardConnectivityConsts {
           Location.ND_NPC_DAHL,
           Location.SB_NPC_DAHL);
 
-  // Keycard locations that are locked behind other keycards.
-  public static final ImmutableList<Location> LOCATIONS_LOW_ACCESSIBILITY =
-      ImmutableList.of(
-          Location.CQ_ALEX_CABIN,
-          Location.HL_CALVINOS_SAFE,
-          Location.HL_NPC_CALVINO,
-          Location.PP_NPC_CROAL,
-          Location.PP_NPC_FAURE,
-          Location.PP_NPC_STILLWATER);
-
   // Keycard locations that may be blocked by ability requirements or are just a pain to get to.
   public static final ImmutableList<Location> LOCATIONS_MEDIUM_ACCESSIBILITY =
       ImmutableList.of(
           Location.AR_ALEX_SAFE,
           Location.AR_LOVERS_KEY,
-          Location.GT_NPC_DALTON,
+          Location.CQ_ALEX_CABIN,
+          Location.CQ_NPC_SELLERS,
+          Location.HL_NPC_THORSTEIN,
+          Location.HL_CALVINOS_SAFE,
           Location.LO_NPC_DEVRIES,
           Location.LO_IT,
           Location.LS_NPC_WEBER,
           Location.ND_NPC_STEELE,
-          Location.PY_MORGUE);
+          Location.PY_NPC_BELLAMY,
+          Location.PY_MORGUE,
+          Location.PP_NPC_BROOKS,
+          Location.PP_NPC_CROAL,
+          Location.PP_NPC_FAURE,
+          Location.PP_NPC_STILLWATER,
+          Location.SB_PILOT_LOUNGE);
 
   // Keycard locations that can always be accessed regardless of progression.
   public static final ImmutableList<Location> LOCATIONS_HIGH_ACCESSIBILITY = ImmutableList.of(
@@ -200,24 +202,21 @@ public class KeycardConnectivityConsts {
       Location.BR_NPC_BOLIVAR,
       Location.CQ_FATAL_FORTRESS,
       Location.CQ_NPC_KOHL,
-      Location.CQ_NPC_SELLERS,
       Location.CQ_NPC_TIZZY,
       Location.DS_DANIELLES_OFFICE,
+      Location.GT_NPC_DALTON,
       Location.GT_NPC_KLINE,
       Location.GT_NPC_LAVALLEY,
       Location.HL_NPC_SCHMIDT,
       Location.HL_NPC_LARSON,
-      Location.HL_NPC_THORSTEIN,
       Location.LO_MORGAN_OFFICE_DESK,
       Location.LO_MORGAN_OFFICE_WORKSHOP,
       Location.LO_RECEPTION,
       Location.LO_GOODWIN_OFFICE,
       Location.ND_BELLAMY_DESK,
-      Location.PP_NPC_BROOKS,
       Location.PY_NPC_KELSTRUP,
       Location.PY_NPC_KELSTRUP_2,
-      Location.SB_NPC_PARKER,
-      Location.SB_PILOT_LOUNGE);
+      Location.SB_NPC_PARKER);
 
   public static final ImmutableMap<Keycard, Level> KEYCARD_TO_LEVEL =
       new ImmutableMap.Builder<Keycard, Level>().put(Keycard.AR_CREW_QUARTERS, Level.ARBORETUM)
@@ -226,6 +225,7 @@ public class KeycardConnectivityConsts {
           .put(Keycard.BR_BRIEFING_ROOM, Level.BRIDGE)
           .put(Keycard.CB_SHIPPING_AND_RECEIVING, Level.CARGO_BAY)
           .put(Keycard.CQ_CABIN_ALEX, Level.CREW_QUARTERS)
+          .put(Keycard.CQ_CABIN_BELLAMY, Level.CREW_QUARTERS)
           .put(Keycard.CQ_CABIN_CALVINO, Level.CREW_QUARTERS)
           .put(Keycard.CQ_CABIN_FOY, Level.CREW_QUARTERS)
           .put(Keycard.CQ_CABIN_KELSTRUP, Level.CREW_QUARTERS)
@@ -308,6 +308,7 @@ public class KeycardConnectivityConsts {
           .put(Level.POWER_PLANT, Location.PP_NPC_CROAL)
           .put(Level.POWER_PLANT, Location.PP_NPC_FAURE)
           .put(Level.POWER_PLANT, Location.PP_NPC_STILLWATER)
+          .put(Level.PSYCHOTRONICS, Location.PY_NPC_BELLAMY)
           .put(Level.PSYCHOTRONICS, Location.PY_MORGUE)
           .put(Level.PSYCHOTRONICS, Location.PY_NPC_KELSTRUP)
           .put(Level.PSYCHOTRONICS, Location.PY_NPC_KELSTRUP_2)
@@ -360,6 +361,7 @@ public class KeycardConnectivityConsts {
       .put(Location.PP_NPC_BROOKS, Keycard.PP_COOLANT_CHAMBER)
       .put(Location.PP_NPC_STILLWATER, Keycard.PP_REACTOR)
       .put(Location.PP_NPC_CROAL, Keycard.PP_REACTOR)
+      .put(Location.PY_NPC_BELLAMY, Keycard.CQ_CABIN_BELLAMY)
       .put(Location.PY_NPC_KELSTRUP_2, Keycard.PY_KELSTRUPS_OFFICE)
       .put(Location.PY_MORGUE, Keycard.PY_MORGUE)
       .put(Location.SB_PILOT_LOUNGE, Keycard.SB_CONTROL_ROOM)
@@ -378,6 +380,7 @@ public class KeycardConnectivityConsts {
           .put(Keycard.BR_BRIEFING_ROOM, "4349723564935470793")
           .put(Keycard.CB_SHIPPING_AND_RECEIVING, "4349723564917331725")
           .put(Keycard.CQ_CABIN_ALEX, "13680621263398555661")
+          .put(Keycard.CQ_CABIN_BELLAMY, "844024417289133188")
           .put(Keycard.CQ_CABIN_CALVINO, "761057047959608375")
           .put(Keycard.CQ_CABIN_FOY, "844024417273225818")
           .put(Keycard.CQ_CABIN_KELSTRUP, "844024417289636866")
@@ -461,6 +464,7 @@ public class KeycardConnectivityConsts {
           .put(Location.PP_NPC_FAURE, "engineering/powersource;Data.Keycard4")
           .put(Location.PP_NPC_STILLWATER, "engineering/powersource;Data.Keycard2")
           .put(Location.PP_NPC_BROOKS, "engineering/powersource;Data.Keycard3")
+          .put(Location.PY_NPC_BELLAMY, "research/psychotronics;Data.Keycard4")
           .put(Location.PY_NPC_KELSTRUP, "research/psychotronics;Data.Keycard5")
           .put(Location.PY_NPC_KELSTRUP_2, "research/psychotronics;Data.Keycard6")
           .put(Location.PY_MORGUE, "research/psychotronics;Data.Keycard2")

@@ -95,17 +95,21 @@ public class ProgressionGraph {
     Level currentLevel = Level.NEUROMOD_DIVISION;
     boolean ejected = false;
 
+    int numVisitsPerLevel = 2;
+
     for (int i = 0; i < MAX_NUMBER_LEVEL_TRANSITIONS; i++) {
       Stack<Level> toVisit = new Stack<>();
-      Set<Level> visited = Sets.newHashSet();
+      Map<Level, Integer> visitedCount = Maps.newHashMap();
       toVisit.add(currentLevel);
       while (!toVisit.isEmpty()) {
         currentLevel = toVisit.pop();
-        if (visited.contains(currentLevel)) {
+        if (visitedCount.getOrDefault(currentLevel, 0) >= numVisitsPerLevel) {
           continue;
         }
-        visited.add(currentLevel);
-        List<Level> next = traverseStation(currentLevel);
+
+        List<Level> next =
+            visitLevel(currentLevel, visitedCount.getOrDefault(currentLevel, 0) == 0);
+        visitedCount.put(currentLevel, visitedCount.getOrDefault(currentLevel, 0) + 1);
 
         // If we are visiting Deep Storage, we are effectively teleported to Cargo Bay afterwards.
         if (!ejected && currentLevel == Level.DEEP_STORAGE) {
@@ -118,7 +122,7 @@ public class ProgressionGraph {
         // Pick a random non-visited level to go to next
         List<Level> validLevels = Lists.newArrayList();
         for (Level n : next) {
-          if (!visited.contains(n)) {
+          if (visitedCount.getOrDefault(n, 0) < numVisitsPerLevel) {
             validLevels.add(n);
           }
         }
@@ -135,9 +139,9 @@ public class ProgressionGraph {
     return progress.contains(ProgressionMilestone.BR_GOAL);
   }
 
-  private List<Level> traverseStation(Level l) {
+  private List<Level> visitLevel(Level l, boolean firstVisit) {
     // Make progress in this level
-    getLevel(l).updateProgress(progress);
+    getLevel(l).updateProgress(progress, firstVisit);
     List<Level> toVisitNext = Lists.newArrayList();
 
     // Check all doors connected to this level
@@ -384,19 +388,8 @@ public class ProgressionGraph {
     for (Location keycardLocation : KeycardConnectivityConsts.LEVEL_TO_LOCATIONS.get(l)) {
       Keycard keycard = keycardConnectivity.get(keycardLocation);
       switch (keycardLocation) {
-        // TODO: Special cases for keycards that have requirements
-        case LO_NPC_DEVRIES:
-          levelMilestone.addNeighbor(keycard, ProgressionMilestone.LO_UNLOCKED_LIFT);
-          break;
-        case LO_NPC_JANUARY:
-        case LO_NPC_JANUARY_GIVEN:
-          levelMilestone.addNeighbor(keycard, ProgressionMilestone.LO_LG_VIDEO_PART_2);
-          break;
-        case HL_NPC_CALVINO:
-          levelMilestone.addNeighbor(keycard, ProgressionMilestone.HL_VISITED_HARDWARE_LABS);
-          break;
-        case HL_CALVINOS_SAFE:
-          levelMilestone.addNeighbor(keycard, Keycard.HL_CALVINO_WORKSHOP);
+        case CQ_ALEX_CABIN:
+          levelMilestone.addNeighbor(keycard, Keycard.CQ_CABIN_ALEX);
           break;
         case CQ_NPC_LUKA:
           levelMilestone.addNeighbor(keycard, ProgressionMilestone.CQ_KITCHEN_ACCESS);
@@ -405,17 +398,39 @@ public class ProgressionGraph {
           levelMilestone.addNeighbor(keycard,
               ProgressionMilestone.CQ_CAFETERIA_TELEPATH_NEUTRALIZED);
           break;
-        case CB_NPC_ELAZAR:
-        case CB_NPC_COOL:
-          levelMilestone.addNeighbor(keycard, ProgressionMilestone.DS_DIRECTOR_LOCKDOWN);
+        case HL_CALVINOS_SAFE:
+          levelMilestone.addNeighbor(keycard, Keycard.HL_CALVINO_WORKSHOP);
+          break;
+        case HL_NPC_CALVINO:
+          levelMilestone.addNeighbor(keycard, ProgressionMilestone.HL_VISITED_HARDWARE_LABS);
+          break;
+        case LO_NPC_DEVRIES:
+          levelMilestone.addNeighbor(keycard, ProgressionMilestone.LO_UNLOCKED_LIFT);
+          break;
+        case LO_NPC_JANUARY:
+        case LO_NPC_JANUARY_GIVEN:
+          levelMilestone.addNeighbor(keycard, ProgressionMilestone.LO_LG_VIDEO_PART_2);
+          break;
+        case LS_NPC_FOLSON:
+          levelMilestone.addNeighbor(keycard, ProgressionMilestone.AR_DAHL_ARRIVAL);
+          break;
+        case ND_NPC_STEELE:
+          levelMilestone.addNeighbor(keycard, ProgressionMilestone.LO_NEUROMOD_DIVISION_PASSWORD);
+          break;
+        case PY_NPC_BELLAMY:
+          levelMilestone.addNeighbor(keycard, Keycard.PY_MORGUE);
+          break;
+        case PY_MORGUE:
+          levelMilestone.addNeighbor(keycard, Keycard.PY_MORGUE);
           break;
         case PP_NPC_CROAL:
         case PP_NPC_STILLWATER:
         case PP_NPC_FAURE:
           levelMilestone.addNeighbor(keycard, Keycard.PP_COOLANT_CHAMBER);
           break;
-        case ND_NPC_STEELE:
-          levelMilestone.addNeighbor(keycard, ProgressionMilestone.LO_NEUROMOD_DIVISION_PASSWORD);
+        case CB_NPC_ELAZAR:
+        case CB_NPC_COOL:
+          levelMilestone.addNeighbor(keycard, ProgressionMilestone.DS_DIRECTOR_LOCKDOWN);
           break;
         case BR_NPC_JANUARY:
           levelMilestone.addNeighbor(keycard, ProgressionMilestone.PP_ARMING_KEYS_PRIMED);
@@ -424,9 +439,6 @@ public class ProgressionGraph {
         case LS_NPC_DAHL:
         case ND_NPC_DAHL:
         case SB_NPC_DAHL:
-          levelMilestone.addNeighbor(keycard, ProgressionMilestone.AR_DAHL_ARRIVAL);
-          break;
-        case LS_NPC_FOLSON:
           levelMilestone.addNeighbor(keycard, ProgressionMilestone.AR_DAHL_ARRIVAL);
           break;
         default:
@@ -462,7 +474,7 @@ public class ProgressionGraph {
     }
 
     // Attempt to make progress in this level given existing progress
-    public Set<ProgressionNode> updateProgress(Set<ProgressionNode> progress) {
+    public Set<ProgressionNode> updateProgress(Set<ProgressionNode> progress, boolean doorsOnly) {
       Set<ProgressionNode> newProgress = Sets.newHashSet();
       int prevSize = -1;
       // Revisit this node until all possible progress is unlocked and nothing further can be done.
@@ -473,6 +485,17 @@ public class ProgressionGraph {
           if (progress.contains(candidate)) {
             continue;
           }
+
+          // If we're only looking for doors and this is not a door, skip
+          try {
+            if (doorsOnly) {
+              // Throws IllegalArgumentException if this is not a door
+              Door.valueOf(candidate.toString());
+            }
+          } catch (IllegalArgumentException e) {
+            continue;
+          }
+
           // Get all possible gates to this neighboring node
           Collection<Gate> gates = unlocks.get(candidate);
           for (Gate g : gates) {
@@ -555,7 +578,7 @@ public class ProgressionGraph {
       StationGenerator sg = new StationGenerator(seed, levelsToIds);
 
       ImmutableNetwork<Level, Door> stationConnectivity = sg.getNetwork();
-          //StationConnectivityConsts.getDefaultNetwork();
+      // StationConnectivityConsts.getDefaultNetwork();
 
       ProgressionGraph pg = new ProgressionGraph(stationConnectivity,
           KeycardConnectivityConsts.DEFAULT_CONNECTIVITY, 0L);

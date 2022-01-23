@@ -14,7 +14,13 @@ import com.google.common.collect.ImmutableSet;
  */
 public class LockedObjectRule implements Rule {
 
-  private static ImmutableSet<String> GUIDS_NOT_TO_RANDOMIZE = ImmutableSet.of();
+  private static ImmutableSet<String> GUIDS_NOT_TO_RANDOMIZE =
+      ImmutableSet.of("447194BB0290765D", "42BF0DEA76575A07", "4BEB844D268043E3",
+          "405719E0325B1B26", "4D1B614D731FE75E", "4F05DE7A5FA35027", "4A36467AED0BFFE1",
+          "47AB35CAF4B1B040", "438D3CFBEB37D79B", "4F25B7F4BE3C5996", "4F06C309CB74C283",
+          "4000B4E17D27E1CE", "4000B4E17D27E1CE", "4F20531B49813BA4", "470F2B17DD46244E",
+          "45379497EED0F578", "4C89A08F42BDE4C9", "4EE9354DB6A30976", "43AE6D273E15CD9F",
+          "43F82AA86E85F963");
 
   private static final ImmutableSet<String> HACKABLE_ARCHETYPES =
       ImmutableSet.of("ArkGameplayObjects.Keypad.Keypad_Default",
@@ -26,9 +32,6 @@ public class LockedObjectRule implements Rule {
           "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Military",
           "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Engineering",
           "ArkGameplayObjects.Keypad.CargoBay.Keypad_CargoBay");
-  
-  // TODO: Add whitelisted objects
-  private static final ImmutableSet<String> DO_NOT_TOUCH = ImmutableSet.of();
 
   /*
    * private static final ImmutableSet<String> HACKABLE_DOOR_ARCHETYPES = ImmutableSet.of(
@@ -72,10 +75,8 @@ public class LockedObjectRule implements Rule {
   @Override
   public void apply(Element e, Random r, String filename) {
     boolean isLocked = r.nextFloat() < lockedRatio;
-    e.getChild("Properties2")
-        .setAttribute("bStartsUnlocked", isLocked ? "0" : "1");
-    e.getChild("Properties2")
-        .setAttribute("bStartsLocked", isLocked ? "1" : "0");
+    e.getChild("Properties2").setAttribute("bStartsUnlocked", isLocked ? "0" : "1");
+    e.getChild("Properties2").setAttribute("bStartsLocked", isLocked ? "1" : "0");
   }
 
 }
