@@ -345,7 +345,7 @@
                                        <children>
                                           <CheckBox fx:id="cheatsCheckboxOpenStation" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
                                           <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
-                                          <CheckBox fx:id="cheatsCheckboxFriendlyNpcs" mnemonicParsing="false" text="Friendly NPCs" visible="false" />
+                                          <CheckBox fx:id="cheatsCheckboxFriendlyNpcs" mnemonicParsing="false" text="Friendly NPCs" />
                                           <Separator prefWidth="200.0" />
                                           <CheckBox fx:id="cheatsCheckboxCustomStart" mnemonicParsing="false" text="Custom starting map (do not use)" />
                                           <Label prefHeight="41.0" prefWidth="203.0" text="Game token overrides (do not use)" />
@@ -355,7 +355,7 @@
                                        <children>
                                           <Label text="Unlocks (almost) everything except for scripted locks." />
                                           <Label text="Allows installing typhon neuromods without research." />
-                                          <Label text="NPCS are non-hostile to the player and each other." visible="false" />
+                                          <Label text="NPCS are non-hostile to the player." />
                                           <Separator prefWidth="200.0" />
                                           <ChoiceBox fx:id="cheatsChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0" />
                                           <TextField fx:id="cheatsTextFieldGameTokens" prefHeight="25.0" prefWidth="303.0" promptText="key1=value1,key2=value2,..." />

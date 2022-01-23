@@ -54,6 +54,7 @@ public class ZipHelper {
   public static final String ANIMATIONS_ARK_DUAL_PISTOL_PLAYER_1P = "animations/mannequin/adb/arkdualpistolplayer1p.adb";
   public static final String ANIMATIONS_ARK_DUAL_PISTOL_WEAPON = "animations/mannequin/adb/arkdualpistolweapon.adb";
 
+  public static final String ARK_FACTIONS = "ark/arkfactions.xml";
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
   public static final String PROJECTILE_POOLS = "ark/arkprojectilepooldefinitions.xml";
   public static final String ARK_META_TAGS = "ark/arkmetatags.xml";

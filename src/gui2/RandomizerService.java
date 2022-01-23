@@ -214,9 +214,12 @@ public class RandomizerService extends Service<Void> {
         return false;
       }
 
-      tempDir.toFile().mkdir();
-      tempLevelDir.toFile().mkdir();
-      tempPatchDir.toFile().mkdir();
+      tempDir.toFile()
+          .mkdir();
+      tempLevelDir.toFile()
+          .mkdir();
+      tempPatchDir.toFile()
+          .mkdir();
       if (!sanityChecks(finalSettings, tempPatchDir)) {
         writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
         return false;
@@ -244,8 +247,10 @@ public class RandomizerService extends Service<Void> {
       writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
     } finally {
       Date endTime = new Date();
-      secondsElapsed =
-          endTime.toInstant().getEpochSecond() - startTime.toInstant().getEpochSecond();
+      secondsElapsed = endTime.toInstant()
+          .getEpochSecond()
+          - startTime.toInstant()
+              .getEpochSecond();
       writeLine("");
       writeLine(String.format(Gui2Consts.INSTALL_STATUS_COMPLETE_TEXT, secondsElapsed));
       writeLine(String.format("You can also view your settings at %s.",
@@ -253,7 +258,8 @@ public class RandomizerService extends Service<Void> {
       writeLine("");
       zipHelper.close();
       if (deleteFilesAfterwards) {
-        if (tempDir.toFile().exists()) {
+        if (tempDir.toFile()
+            .exists()) {
           Utils.deleteDirectory(tempDir.toFile());
         }
       }
@@ -275,7 +281,8 @@ public class RandomizerService extends Service<Void> {
       writeLine(Gui2Consts.INSTALL_ERROR_INVALID_INSTALL_FOLDER);
       return false;
     }
-    if (!Installer.testInstall(logger, tempPatchDir.resolve(Installer.PATCH_NAME).toFile())) {
+    if (!Installer.testInstall(logger, tempPatchDir.resolve(Installer.PATCH_NAME)
+        .toFile())) {
       writeLine(Gui2Consts.INSTALL_ERROR_CANNOT_WRITE);
       return false;
     }
@@ -300,7 +307,8 @@ public class RandomizerService extends Service<Void> {
     // e.printStackTrace();
     // }
 
-    if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
       try {
         new BodyRandomizer(currentSettings, zipHelper).randomize();
@@ -309,34 +317,41 @@ public class RandomizerService extends Service<Void> {
       }
     }
     Map<String, String> swappedLinesMap = null;
-    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines()
-        || currentSettings.getCosmeticSettings().getRandomizeEmotions()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizeVoicelines()
+        || currentSettings.getCosmeticSettings()
+            .getRandomizeEmotions()) {
       writeLine("Randomizing dialogue...");
       VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
       vr.randomize();
       swappedLinesMap = vr.getSwappedLinesMap();
-      BinkRandomizer binkRandomizer = 
+      BinkRandomizer binkRandomizer =
           new BinkRandomizer(currentSettings, zipHelper, swappedLinesMap);
       binkRandomizer.randomize();
     }
-    if (currentSettings.getCosmeticSettings().getRandomizeMusic()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizeMusic()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);
       new MusicRandomizer(currentSettings, zipHelper).randomize();
     }
-    if (currentSettings.getCosmeticSettings().getRandomizePlayerModel()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizePlayerModel()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_PLAYER_MODEL);
       new PlayerModelRandomizer(currentSettings, zipHelper).randomize();
     }
-    if (currentSettings.getCosmeticSettings().getRandomizePlanetSize()) {
+    if (currentSettings.getCosmeticSettings()
+        .getRandomizePlanetSize()) {
       writeLine("Randomizing planet size");
       new PlanetRandomizer(currentSettings, zipHelper).randomize();
     }
 
     /* GAMEPLAY, NON-LEVEL */
-    if (currentSettings.getGameplaySettings().getRandomizeNeuromods()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeNeuromods()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_NEUROMOD);
       new NeuromodTreeRandomizer(currentSettings, zipHelper).randomize();
-    } else if (currentSettings.getCheatSettings().getUnlockAllScans()) {
+    } else if (currentSettings.getCheatSettings()
+        .getUnlockAllScans()) {
       new NeuromodTreeRandomizer(currentSettings, zipHelper).unlockAllScans();
     }
 
@@ -347,12 +362,14 @@ public class RandomizerService extends Service<Void> {
       e.printStackTrace();
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeFabPlanCosts()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeFabPlanCosts()) {
       writeLine("Randomizing fab plan costs...");
       new FabPlanCostRandomizer(currentSettings, zipHelper).randomize();
     }
 
-    if (currentSettings.getExpSettings().getStartSelfDestruct()) {
+    if (currentSettings.getExpSettings()
+        .getStartSelfDestruct()) {
       writeLine("Updating self-destruct timer...");
       new SelfDestructTimerHelper(currentSettings, zipHelper).randomize();
     }
@@ -375,46 +392,59 @@ public class RandomizerService extends Service<Void> {
             .addFilter(new EnemyFilter(database, currentSettings))
     /* .addFilter(new MorgansOfficeLockFilter()) */;
 
-    if (currentSettings.getCheatSettings().getOpenStation()) {
+    if (currentSettings.getCheatSettings()
+        .getOpenStation()) {
       levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
     }
 
-    if (currentSettings.getGameStartSettings().getAddLootToApartment()) {
+    if (currentSettings.getGameStartSettings()
+        .getAddLootToApartment()) {
       levelRandomizer = levelRandomizer.addFilter(new MorgansApartmentFilter());
     }
 
-    if (currentSettings.getExpSettings().getLivingCorpses()) {
+    if (currentSettings.getExpSettings()
+        .getLivingCorpses()) {
       levelRandomizer = levelRandomizer.addFilter(new LivingCorpseFilter());
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeBreakables().getIsEnabled()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeBreakables()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new BrokenObjectFilter(currentSettings));
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeDispensers().getIsEnabled()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeDispensers()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new OperatorDispenserFilter());
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeHackables().getIsEnabled()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeHackables()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new LockedObjectFilter(currentSettings));
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeRecyclers().getIsEnabled()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeRecyclers()
+        .getIsEnabled()) {
       levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter(currentSettings));
     }
 
     CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();
 
-    if (currentSettings.getCheatSettings().getUseCustomSpawn()) {
+    if (currentSettings.getCheatSettings()
+        .getUseCustomSpawn()) {
       logger.info(String.format("Setting custom spawn to %s", customSpawnGenerator.getLocation()));
-      customSpawnGenerator.setSpawn(currentSettings.getCheatSettings().getCustomSpawnLocation(),
-          zipHelper, seed);
+      customSpawnGenerator.setSpawn(currentSettings.getCheatSettings()
+          .getCustomSpawnLocation(), zipHelper, seed);
       customSpawnGenerator.swapLocationId();
     }
 
     ImmutableNetwork<Level, Door> stationConnectivity =
         StationConnectivityConsts.getDefaultNetwork();
-    if (currentSettings.getGameplaySettings().getRandomizeStation()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeStation()) {
       StationGenerator stationGenerator =
           new StationGenerator(seed, customSpawnGenerator.getLevelsToIds());
       stationConnectivity = stationGenerator.getNetwork();
@@ -433,14 +463,17 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
 
-    if (currentSettings.getGameplaySettings().getRandomizeKeycards()) {
+    if (currentSettings.getGameplaySettings()
+        .getRandomizeKeycards()) {
       ProgressionGenerator progressionGenerator =
           new ProgressionGenerator(stationConnectivity, seed);
-      KeycardFilter keycardFilter = new KeycardFilter(progressionGenerator.getKeycardConnectivity());
+      KeycardFilter keycardFilter =
+          new KeycardFilter(progressionGenerator.getKeycardConnectivity());
       levelRandomizer = levelRandomizer.addFilter(keycardFilter);
     }
 
-    if (currentSettings.getExpSettings().getEnableGravityInExtAndGuts()) {
+    if (currentSettings.getExpSettings()
+        .getEnableGravityInExtAndGuts()) {
       levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());
     }
 
@@ -448,7 +481,8 @@ public class RandomizerService extends Service<Void> {
     levelRandomizer.randomize();
     writeLine("Done processing level files.");
 
-    if (currentSettings.getCheatSettings().getUseCustomSpawn()) {
+    if (currentSettings.getCheatSettings()
+        .getUseCustomSpawn()) {
       return customSpawnGenerator.getNewSpawnLocation();
     } else {
       return null;
@@ -460,41 +494,57 @@ public class RandomizerService extends Service<Void> {
 
     zipHelper.copyToPatch(ZipHelper.LOGO);
 
-    if (settings.getMoreSettings().getMoreGuns() || settings.getMoreSettings().getPreySoulsGuns()) {
+    if (settings.getMoreSettings()
+        .getMoreGuns()
+        || settings.getMoreSettings()
+            .getPreySoulsGuns()) {
       zipHelper.copyDirsToPatch(Lists.newArrayList(ZipHelper.ICONS_INVENTORY_DIR));
     }
 
-    if (settings.getMoreSettings().getMoreGuns()) {
+    if (settings.getMoreSettings()
+        .getMoreGuns()) {
       copyFiles(MORE_GUNS_DEPENDENCIES);
       copyFiles(MORE_GUNS_MATERIALS);
     }
 
-    if (settings.getMoreSettings().getPreySoulsGuns()) {
+    if (settings.getMoreSettings()
+        .getPreySoulsGuns()) {
       copyFiles(PREY_SOULS_GUNS_DEPENDENCIES);
       copyFiles(PSI_CUTTER_DEPENDENCIES);
       zipHelper.copyDirsToPatch(PSI_CUTTER_DIR_DEPENDENCIES);
     }
 
-    if (settings.getMoreSettings().getPreySoulsTurrets()) {
+    if (settings.getMoreSettings()
+        .getPreySoulsTurrets()) {
       copyFiles(PREY_SOULS_TURRETS_DEPENDENCIES);
     }
 
-    if (settings.getMoreSettings().getPreySoulsEnemies()) {
+    if (settings.getMoreSettings()
+        .getPreySoulsEnemies()) {
       copyFiles(PREY_SOULS_ENEMIES_DEPENDENCIES);
       zipHelper.copyDirsToPatch(PREY_SOULS_ENEMIES_DIR_DEPENDENCIES);
     }
 
-    if (settings.getExpSettings().getWanderingHumans()) {
+    if (settings.getExpSettings()
+        .getWanderingHumans()) {
       copyFiles(WANDERING_HUMANS_DEPENDENCIES);
     }
 
-    if (settings.getGameplaySettings().getRandomizeStation()
-        || settings.getExpSettings().getStartSelfDestruct()) {
+    if (settings.getGameplaySettings()
+        .getRandomizeStation()
+        || settings.getExpSettings()
+            .getStartSelfDestruct()) {
       copyFiles(SURVIVE_APEX_KILL_WALL_DEPENDENCIES);
     }
 
-    if (settings.getCosmeticSettings().getRandomizePlayerModel()) {
+    if (settings.getCosmeticSettings()
+        .getRandomizePlayerModel()) {
       copyFiles(PLAYER_MODEL_RANDOMIZATION_DEPENDENCIES);
+    }
+
+    if (settings.getCheatSettings()
+        .getFriendlyNpcs()) {
+      zipHelper.copyToPatch(ZipHelper.ARK_FACTIONS);
     }
   }
 

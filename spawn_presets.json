@@ -738,9 +738,7 @@
       "filters": [
         {
           "input_tags": [
-            "ArkNpcs",
-            "Operators\\Generic\\Corrupted",
-            "ArkOperatorMilitary"
+            "ArkNpcs"
           ],
           "output_tags": [
             "ArkNightmare"
@@ -753,13 +751,11 @@
     },
     {
       "name": "All mimics",
-      "desc": "All typhon and hostile operators are mimics.",
+      "desc": "All typhon are mimics.",
       "filters": [
         {
           "input_tags": [
-            "ArkNpcs",
-            "Operators\\Generic\\Corrupted",
-            "ArkOperatorMilitary"
+            "ArkNpcs"
           ],
           "output_tags": [
             "Mimic"
@@ -1000,7 +996,7 @@
     },
     {
       "name": "All Simmons",
-      "desc": "Replaces all typhon and corrupted operators with Simmons. Only the enlightened will understand.",
+      "desc": "Only the enlightened will understand.",
       "filters": [
         {
           "input_tags": [
