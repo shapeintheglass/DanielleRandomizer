@@ -18,6 +18,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
 import proto.RandomizerSettings.Settings;
+import randomizers.cosmetic.BinkRandomizer;
 import randomizers.cosmetic.BodyRandomizer;
 import randomizers.cosmetic.MusicRandomizer;
 import randomizers.cosmetic.PlanetRandomizer;
@@ -314,7 +315,9 @@ public class RandomizerService extends Service<Void> {
       VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
       vr.randomize();
       swappedLinesMap = vr.getSwappedLinesMap();
-
+      BinkRandomizer binkRandomizer = 
+          new BinkRandomizer(currentSettings, zipHelper, swappedLinesMap);
+      binkRandomizer.randomize();
     }
     if (currentSettings.getCosmeticSettings().getRandomizeMusic()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_MUSIC);

@@ -70,6 +70,7 @@ public class ZipHelper {
 
   public static final String VOICES_PATH = "ark/dialog/voices";
   public static final String DIALOGIC_PATH = "ark/dialog/dialoglogic";
+  public static final String BINK_SUBTITLES_PATH = "ark/dialog/binksubtitles";
 
   public static final String ARK_ITEMS_XML = "ark/items/arkitems.xml";
   public static final String LOOT_TABLE_FILE = "ark/items/loottables.xml";
