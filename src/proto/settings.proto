@@ -39,6 +39,7 @@ message GameplaySettings {
   bool randomize_keycards = 15;
   bool randomize_neuromods = 4;
   bool randomize_fab_plan_costs = 5;
+  bool randomize_neuromod_requirements = 16;
   ToggleWithSlider randomize_recyclers = 6;
   ToggleWithSlider randomize_dispensers = 7;
   ToggleWithSlider randomize_breakables = 8;

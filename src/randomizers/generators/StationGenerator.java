@@ -166,6 +166,7 @@ public class StationGenerator {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
+    sb.append("Station Connectivity:\n");
     sb.append("Connectivity for the Exterior is not affected.\n");
     for (Level l : LEVELS_TO_PROCESS) {
       String levelName = StationConnectivityConsts.LEVELS_TO_NAMES.get(l);

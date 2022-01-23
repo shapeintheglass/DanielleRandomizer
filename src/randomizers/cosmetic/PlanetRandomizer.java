@@ -16,7 +16,7 @@ public class PlanetRandomizer extends BaseRandomizer {
 
   private static final float MIN_SCALE_EARTH = 1.0f;
   private static final float MAX_SCALE_EARTH = 10.0f;
-  private static final float MIN_SCALE_MOON = 0.5f;
+  private static final float MIN_SCALE_MOON = 0.1f;
   private static final float MAX_SCALE_MOON = 2.0f;
   private static final float MIN_SCALE_SUN = 1.0f;
   private static final float MAX_SCALE_SUN = 20.0f;

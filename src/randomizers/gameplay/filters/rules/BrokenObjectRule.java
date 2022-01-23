@@ -17,19 +17,12 @@ public class BrokenObjectRule implements Rule {
   private static ImmutableSet<String> GUIDS_NOT_TO_RANDOMIZE = ImmutableSet.of();
 
   private static final ImmutableSet<String> BREAKABLE_ARCHETYPES =
-      ImmutableSet.of("ArkGameplayArchitecture.ElectricalBox.ElectricBox_DurationIndefinite",
-          "ArkGameplayObjects.Recycler.Recycler_Default",
+      ImmutableSet.of("ArkGameplayObjects.Recycler.Recycler_Default",
           "ArkGameplayObjects.Fabricator.Fabricator_Default",
-          "ArkGameplayObjects.RepairableObject.RepairBox",
-          "ArkGameplayObjects.RepairableObject.RepairBox_Level2",
-          "ArkGameplayObjects.RepairableObject.RepairBox_Level3",
           "ArkGameplayObjects.RepairableObject.BrokenGroundingResistor",
           "ArkGameplayObjects.RepairableObject.BrokenDivertor",
           "ArkGameplayObjects.RepairableObject.WaterRegulator",
-          "ArkGameplayObjects.RepairableObject.HeatExchangeMonitor");
-
-  // TODO: Add whitelisted objects
-  private static final ImmutableSet<String> DO_NOT_TOUCH = ImmutableSet.of();
+          "ArkRobots.Turrets.Turret_Default");
 
   private float brokenObjectRatio;
 

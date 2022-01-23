@@ -414,6 +414,7 @@ public class RandomizerService extends Service<Void> {
 
     ImmutableNetwork<Level, Door> stationConnectivity =
         StationConnectivityConsts.getDefaultNetwork();
+    StringBuilder connectivityInfo = new StringBuilder();
     if (currentSettings.getGameplaySettings().getRandomizeStation()) {
       StationGenerator stationGenerator =
           new StationGenerator(seed, customSpawnGenerator.getLevelsToIds());
@@ -422,23 +423,31 @@ public class RandomizerService extends Service<Void> {
       StationConnectivityFilter connectivity =
           new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
               stationGenerator.getSpawnConnectivity(), customSpawnGenerator.getLevelsToIds());
-      String connectivityInfo = stationGenerator.toString();
-      Book b =
-          new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info", connectivityInfo);
-      Map<String, Book> toOverwrite = Maps.newHashMap();
-      toOverwrite.put("Bk_SL_Apt_Electronics", b);
-      toOverwrite.put("Bk_TooFarTooFast1", b);
-      BookInfoHelper bih = new BookInfoHelper(zipHelper);
-      bih.installNewBooks(toOverwrite);
+      connectivityInfo.append(stationGenerator.toString());
+      connectivityInfo.append("\n");
+
       levelRandomizer = levelRandomizer.addFilter(connectivity);
     }
 
     if (currentSettings.getGameplaySettings().getRandomizeKeycards()) {
       ProgressionGenerator progressionGenerator =
           new ProgressionGenerator(stationConnectivity, seed);
-      KeycardFilter keycardFilter = new KeycardFilter(progressionGenerator.getKeycardConnectivity());
+      connectivityInfo.append(progressionGenerator.toString());
+      KeycardFilter keycardFilter =
+          new KeycardFilter(progressionGenerator.getKeycardConnectivity());
       levelRandomizer = levelRandomizer.addFilter(keycardFilter);
     }
+
+    if (!connectivityInfo.toString().isEmpty()) {
+      Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info",
+          connectivityInfo.toString());
+      Map<String, Book> toOverwrite = Maps.newHashMap();
+      toOverwrite.put("Bk_SL_Apt_Electronics", b);
+      toOverwrite.put("Bk_TooFarTooFast1", b);
+      BookInfoHelper bih = new BookInfoHelper(zipHelper);
+      bih.installNewBooks(toOverwrite);
+    }
+
 
     if (currentSettings.getExpSettings().getEnableGravityInExtAndGuts()) {
       levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());
