@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "proto";
+option java_outer_classname = "Voice";
+
+// Organizes all dialog ids in the game.
+message Dialog {
+  repeated ActorVoice actor_voice_lines = 1;
+}
+
+// All dialog for a particular actor.
+message ActorVoice {
+  string actor_id = 1;
+  repeated string voice_lines = 2;
+}

@@ -69,6 +69,7 @@ public class ZipHelper {
   public static final String LORE_LIBRARY = "ark/campaign/lorelibrary.xml";
 
   public static final String VOICES_PATH = "ark/dialog/voices";
+  public static final String PREPROCESSED_VOICES_PATH = "ark/dialog/voices/voices.json";
   public static final String DIALOGIC_PATH = "ark/dialog/dialoglogic";
   public static final String BINK_SUBTITLES_PATH = "ark/dialog/binksubtitles";
 
