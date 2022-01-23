@@ -57,7 +57,7 @@ public class LevelConsts {
 
   public static final List<String> DO_NOT_OUTPUT_NPC_TAGS =
       Lists.newArrayList("Tentacle_Large_Guard", "Tentacle_Medium_Guard", "Tentacle_Small_Guard",
-          "FakeTechnopath", "Cystoid_IgnorePlayer", "EthericDoppelganger");
+          "FakeTechnopath", "Cystoid_IgnorePlayer", "EthericDoppelganger", "MilitaryOperatorFriendly");
 
   // Sets global quest states to unlock important areas.
   public static final ImmutableMap<String, String> UNLOCK_QUESTS_GAME_TOKENS =
