@@ -21,7 +21,7 @@ import utils.ZipHelper;
 
 public class LootTableRandomizer extends BaseRandomizer {
 
-  private static final int ITEMS_PER_SLOT = 10;
+  private static final int ITEMS_PER_SLOT = 100;
 
   private static final String DO_NOT_TOUCH_PREFIX = "RANDOMIZER_";
 
@@ -64,23 +64,28 @@ public class LootTableRandomizer extends BaseRandomizer {
   }
 
   private void filterLootTable(Element lootTable) {
+    // If this table was added for the randomizer, do not touch.
     if (lootTable.getAttributeValue("Name")
         .contains(DO_NOT_TOUCH_PREFIX)) {
       return;
     }
     List<Element> slots = lootTable.getChild("Slots")
         .getChildren();
+    // For each ArkLootSlot
     for (Element slot : slots) {
       // Randomize the items
       List<Element> items = slot.getChild("Items")
           .getChildren();
+      // Keep track of how many additional items we should add per slot
       int slotsToAdd = ITEMS_PER_SLOT;
+      // Keep track of the archetypes used in the original slots
       List<String> oldArchetypes = Lists.newArrayList();
       
       for (Element item : items) {
         String oldArchetype = item.getAttributeValue("Archetype");
         oldArchetypes.add(oldArchetype);
 
+        // Replace with an appropriate pickup entity based on the original archetype.
         Element newArchetype = cfh.getPickupEntity(oldArchetype, null, r);
         if (newArchetype != null) {
           Tier t = ItemMultiplierHelper.getTierForEntity(newArchetype);
