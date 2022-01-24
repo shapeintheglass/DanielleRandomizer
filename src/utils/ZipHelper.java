@@ -58,6 +58,7 @@ public class ZipHelper {
   public static final String APEX_VOLUME_CONFIG = "ark/apexvolumeconfig.xml";
   public static final String PROJECTILE_POOLS = "ark/arkprojectilepooldefinitions.xml";
   public static final String ARK_META_TAGS = "ark/arkmetatags.xml";
+  public static final String ARK_TIP_LIBRARY = "ark/tiplibrary.xml";
 
   public static final String AI_TREE_ABSOLUTE_NIGHTMARE = "ark/ai/aitrees/absolutenightmareaitree.xml";
   public static final String AI_TREE_ARMED_HUMANS = "ark/ai/aitrees/armedhumanaitree.xml";

@@ -505,6 +505,14 @@ public class RandomizerService extends Service<Void> {
     if (settings.getCosmeticSettings().getRandomizePlayerModel()) {
       copyFiles(PLAYER_MODEL_RANDOMIZATION_DEPENDENCIES);
     }
+    
+    if (settings.getCheatSettings().getFriendlyNpcs()) {
+      zipHelper.copyToPatch(ZipHelper.ARK_FACTIONS);
+    }
+    
+    if (settings.getCosmeticSettings().getCustomLoadingTips()) {
+      zipHelper.copyToPatch(ZipHelper.ARK_TIP_LIBRARY);
+    }
   }
 
   private void copyFiles(ImmutableList<String> dependencies) {

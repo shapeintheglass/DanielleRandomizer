@@ -384,6 +384,7 @@ public class WindowController {
         .setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
     cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings().getRandomizePlanetSize());
     cosmeticCheckboxEmotions.setSelected(settings.getCosmeticSettings().getRandomizeEmotions());
+    cosmeticCheckboxCustomTips.setSelected(settings.getCosmeticSettings().getCustomLoadingTips());
 
     gameplayRandomizeStation.setSelected(settings.getGameplaySettings().getRandomizeStation());
     gameplayRandomizeKeycards.setSelected(settings.getGameplaySettings().getRandomizeKeycards());

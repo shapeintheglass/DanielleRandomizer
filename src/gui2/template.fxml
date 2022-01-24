@@ -244,9 +244,9 @@
                                           </HBox>
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
-                                                <Slider fx:id="gameplayMimicSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="1.0" />
+                                                <Slider fx:id="gameplayMimicSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="5.0" />
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <Label fx:id="gameplayMimicTextbox" disable="true" text="50" />
+                                                <Label fx:id="gameplayMimicTextbox" disable="true" text="5" />
                                                 <Label fx:id="gameplayMimicPercent" disable="true" text="\%" />
                                              </children>
                                           </HBox>
