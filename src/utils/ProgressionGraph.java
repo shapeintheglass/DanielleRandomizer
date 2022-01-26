@@ -159,6 +159,15 @@ public class ProgressionGraph {
               || d == liftLowerDoor || d == Door.CARGO_BAY_GUTS_EXIT)) {
         continue;
       }
+      
+      // If Dahl is here and Kaspar has not been taken care of,
+      // all doors that would normally lead to Cargo Bay are locked.
+      if ((d == Door.LIFE_SUPPORT_CARGO_BAY_EXIT || d == Door.GUTS_CARGO_BAY_EXIT) 
+          && progress.contains(ProgressionMilestone.AR_DAHL_ARRIVAL)
+          && !progress.contains(ProgressionMilestone.EX_KASPAR_NEUTRALIZED)
+          && !progress.contains(ProgressionMilestone.ND_KASPAR_NEUTRALIZED)
+          && !progress.contains(ProgressionMilestone.PY_KASPAR_NEUTRALIZED)
+          && !progress.contains(ProgressionMilestone.HL_KASPAR_NEUTRALIZED))
 
       // If the apex is here, all airlocks are down
       if (progress.contains(ProgressionMilestone.AR_APEX_IS_HERE)

@@ -48,8 +48,7 @@ public class VoiceRandomizer extends BaseRandomizer {
     this.tempPatchDir = tempPatchDir;
     this.randomizeVoice = s.getCosmeticSettings()
         .getRandomizeVoicelines();
-    this.randomizeEmotion = s.getCosmeticSettings()
-        .getRandomizeEmotions();
+    this.randomizeEmotion = true;
   }
 
   /**

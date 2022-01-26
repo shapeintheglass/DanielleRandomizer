@@ -309,8 +309,7 @@ public class RandomizerService extends Service<Void> {
       }
     }
     Map<String, String> swappedLinesMap = null;
-    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines()
-        || currentSettings.getCosmeticSettings().getRandomizeEmotions()) {
+    if (currentSettings.getCosmeticSettings().getRandomizeVoicelines()) {
       writeLine("Randomizing dialogue...");
       VoiceRandomizer vr = new VoiceRandomizer(currentSettings, tempPatchDir, zipHelper);
       vr.randomize();

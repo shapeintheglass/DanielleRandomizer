@@ -17,10 +17,6 @@ public class SettingsHelper {
       addOptionToBuilder(builder, "Randomize voice lines");
     }
     if (settings.getCosmeticSettings()
-        .getRandomizeEmotions()) {
-      addOptionToBuilder(builder, "Randomize emotions");
-    }
-    if (settings.getCosmeticSettings()
         .getRandomizeMusic()) {
       addOptionToBuilder(builder, "Randomize music");
     }

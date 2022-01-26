@@ -28,8 +28,7 @@ message CosmeticSettings {
   bool randomize_music = 3;
   bool randomize_player_model = 4;
   bool randomize_planet_size = 5;
-  bool randomize_emotions = 6;
-  bool custom_loading_tips = 7;
+  bool custom_loading_tips = 6;
 }
 
 message GameplaySettings {
@@ -40,6 +39,7 @@ message GameplaySettings {
   bool randomize_neuromods = 4;
   bool randomize_fab_plan_costs = 5;
   bool randomize_neuromod_requirements = 16;
+  bool randomize_gravity = 17;
   ToggleWithSlider randomize_recyclers = 6;
   ToggleWithSlider randomize_dispensers = 7;
   ToggleWithSlider randomize_breakables = 8;
@@ -104,7 +104,6 @@ message ExperimentalSettings {
   bool living_corpses = 2;
   bool zero_gravity_everywhere = 3;
   bool enable_gravity_in_ext_and_guts = 4;
-  bool fluctuating_gravity = 8;
   bool start_self_destruct = 5;
   string self_destruct_timer = 6;
   string self_destruct_shuttle_timer = 7;

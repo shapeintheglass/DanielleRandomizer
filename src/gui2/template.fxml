@@ -80,7 +80,7 @@
                                           <CheckBox fx:id="cosmeticCheckboxMusic" mnemonicParsing="false" text="Randomize music" />
                                           <CheckBox fx:id="cosmeticCheckboxPlayerModel" mnemonicParsing="false" text="Randomize player model" />
                                           <CheckBox fx:id="cosmeticCheckboxPlanetSize" mnemonicParsing="false" text="Randomize Earth/Moon/Sun size" />
-                                          <CheckBox fx:id="cosmeticCheckboxCustomTips" mnemonicParsing="false" text="Add custom loading screen tips" />
+                                          <CheckBox fx:id="cosmeticCheckboxCustomTips" mnemonicParsing="false" text="New loading screen tips" />
                                           <CheckBox fx:id="cosmeticCheckboxEmotions" mnemonicParsing="false" text="Randomize emotions" visible="false" />
                                        </children>
                                     </VBox>
@@ -91,7 +91,7 @@
                                           <Label text="Shuffles in-game music. Some tracks may not be affected." />
                                           <Label text="Changes the first person player model to a random character." />
                                           <Label text="Changes the size of the Earth/Moon/Sun." />
-                                          <Label text="Adds helpful tips to the loading screens." />
+                                          <Label text="Replaces loading screen tips with tips relevant to the randomizer." />
                                           <Label text="Assigns a random facial expression to every voice line." visible="false" />
                                        </children>
                                     </VBox>
@@ -205,19 +205,21 @@
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeKeycards" mnemonicParsing="false" text="Randomize keycards" />
+                                          <CheckBox fx:id="gameplayRandomizeGravity" mnemonicParsing="false" text="Randomize gravity" />
                                           <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="\% recyclers (compared to fabricators)" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="\% repairable objects that are broken" />
                                           <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="\% hackable objects that are locked" />
                                           <CheckBox fx:id="gameplayRandomizeMimics" mnemonicParsing="false" text="\% items that are secretly mimics" />
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="291.0" prefWidth="320.0" spacing="15.0">
+                                    <VBox prefHeight="349.0" prefWidth="358.0" spacing="15.0">
                                        <children>
                                           <Label text="Shuffles neuromod upgrade tree." />
                                           <Label text="Assigns new randomly generated costs for fab plans." />
                                           <Label text="Redistributes operator dispensers with an equal ratio." />
-                                          <Label text="Shuffles connections between levels." />
-                                          <Label text="Shuffles keycards." />
+                                          <Label prefHeight="17.0" prefWidth="321.0" text="Shuffles connections between levels." />
+                                          <Label prefHeight="17.0" prefWidth="337.0" text="Shuffles keycards." />
+                                          <Label text="Randomizes gravity for every map other than GUTS/Exterior." />
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
                                                 <Slider fx:id="gameplayRecyclerSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
@@ -308,7 +310,7 @@
                                           <Label text="For pickup item randomization:" />
                                           <CheckBox fx:id="moreGuns" mnemonicParsing="false" text="More guns" />
                                           <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey Souls - Guns" />
-                                          <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="Prey Souls - Chipsets" visible="false" />
+                                          <CheckBox fx:id="morePreySoulsChipsets" mnemonicParsing="false" text="More items" />
                                           <Label text="For enemy randomization:" />
                                           <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey Souls - Enemies" />
                                           <Label text="For friendly NPC randomization:" />
@@ -320,7 +322,7 @@
                                           <Label />
                                           <Label text="Adds 24 guns from the &quot;More Guns&quot; mod." />
                                           <Label text="Adds 16 weapons from the Prey Souls mod." />
-                                          <Label text="Adds 2 chipsets from the Prey Souls mod." visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="360.0" text="Adds new chipsets (2 from Prey Souls) and fabrication plans." />
                                           <Label />
                                           <Label text="Adds 16 enemies from the Prey Souls mod." />
                                           <Label />
@@ -381,7 +383,6 @@
                                           <CheckBox fx:id="expCheckboxGravity" mnemonicParsing="false" text="Zero gravity everywhere" />
                                           <CheckBox fx:id="expCheckboxEnableGravity" mnemonicParsing="false" text="Enable gravity in Exterior and GUTS" />
                                           <CheckBox fx:id="expCheckboxSelfDestruct" mnemonicParsing="false" text="Enable self-destruct at the beginning" />
-                                          <CheckBox fx:id="expCheckboxFluctuatingGravity" mnemonicParsing="false" text="Constantly changing gravity" />
                                           <HBox prefHeight="21.0" prefWidth="307.0">
                                              <children>
                                                 <Label text="Self-destruct timer (minutes):">
@@ -419,7 +420,6 @@
                                           <Label text="Adds 0G to every map. Breaks most cutscenes." />
                                           <Label text="For masochists only." />
                                           <Label text="Intended for the &quot;G.O.T.S.&quot; mode." />
-                                          <Label text="Gravity periodically toggles on/off" />
                                           <Label text="Time before the station self-destructs.">
                                              <VBox.margin>
                                                 <Insets bottom="3.0" top="3.0" />

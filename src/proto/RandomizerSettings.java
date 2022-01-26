@@ -4044,13 +4044,7 @@ public final class RandomizerSettings {
     boolean getRandomizePlanetSize();
 
     /**
-     * <code>bool randomize_emotions = 6;</code>
-     * @return The randomizeEmotions.
-     */
-    boolean getRandomizeEmotions();
-
-    /**
-     * <code>bool custom_loading_tips = 7;</code>
+     * <code>bool custom_loading_tips = 6;</code>
      * @return The customLoadingTips.
      */
     boolean getCustomLoadingTips();
@@ -4126,11 +4120,6 @@ public final class RandomizerSettings {
               break;
             }
             case 48: {
-
-              randomizeEmotions_ = input.readBool();
-              break;
-            }
-            case 56: {
 
               customLoadingTips_ = input.readBool();
               break;
@@ -4222,21 +4211,10 @@ public final class RandomizerSettings {
       return randomizePlanetSize_;
     }
 
-    public static final int RANDOMIZE_EMOTIONS_FIELD_NUMBER = 6;
-    private boolean randomizeEmotions_;
-    /**
-     * <code>bool randomize_emotions = 6;</code>
-     * @return The randomizeEmotions.
-     */
-    @java.lang.Override
-    public boolean getRandomizeEmotions() {
-      return randomizeEmotions_;
-    }
-
-    public static final int CUSTOM_LOADING_TIPS_FIELD_NUMBER = 7;
+    public static final int CUSTOM_LOADING_TIPS_FIELD_NUMBER = 6;
     private boolean customLoadingTips_;
     /**
-     * <code>bool custom_loading_tips = 7;</code>
+     * <code>bool custom_loading_tips = 6;</code>
      * @return The customLoadingTips.
      */
     @java.lang.Override
@@ -4273,11 +4251,8 @@ public final class RandomizerSettings {
       if (randomizePlanetSize_ != false) {
         output.writeBool(5, randomizePlanetSize_);
       }
-      if (randomizeEmotions_ != false) {
-        output.writeBool(6, randomizeEmotions_);
-      }
       if (customLoadingTips_ != false) {
-        output.writeBool(7, customLoadingTips_);
+        output.writeBool(6, customLoadingTips_);
       }
       unknownFields.writeTo(output);
     }
@@ -4308,13 +4283,9 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(5, randomizePlanetSize_);
       }
-      if (randomizeEmotions_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(6, randomizeEmotions_);
-      }
       if (customLoadingTips_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(7, customLoadingTips_);
+          .computeBoolSize(6, customLoadingTips_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4341,8 +4312,6 @@ public final class RandomizerSettings {
           != other.getRandomizePlayerModel()) return false;
       if (getRandomizePlanetSize()
           != other.getRandomizePlanetSize()) return false;
-      if (getRandomizeEmotions()
-          != other.getRandomizeEmotions()) return false;
       if (getCustomLoadingTips()
           != other.getCustomLoadingTips()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
@@ -4371,9 +4340,6 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_PLANET_SIZE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizePlanetSize());
-      hash = (37 * hash) + RANDOMIZE_EMOTIONS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeEmotions());
       hash = (37 * hash) + CUSTOM_LOADING_TIPS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getCustomLoadingTips());
@@ -4520,8 +4486,6 @@ public final class RandomizerSettings {
 
         randomizePlanetSize_ = false;
 
-        randomizeEmotions_ = false;
-
         customLoadingTips_ = false;
 
         return this;
@@ -4555,7 +4519,6 @@ public final class RandomizerSettings {
         result.randomizeMusic_ = randomizeMusic_;
         result.randomizePlayerModel_ = randomizePlayerModel_;
         result.randomizePlanetSize_ = randomizePlanetSize_;
-        result.randomizeEmotions_ = randomizeEmotions_;
         result.customLoadingTips_ = customLoadingTips_;
         onBuilt();
         return result;
@@ -4619,9 +4582,6 @@ public final class RandomizerSettings {
         }
         if (other.getRandomizePlanetSize() != false) {
           setRandomizePlanetSize(other.getRandomizePlanetSize());
-        }
-        if (other.getRandomizeEmotions() != false) {
-          setRandomizeEmotions(other.getRandomizeEmotions());
         }
         if (other.getCustomLoadingTips() != false) {
           setCustomLoadingTips(other.getCustomLoadingTips());
@@ -4810,40 +4770,9 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private boolean randomizeEmotions_ ;
-      /**
-       * <code>bool randomize_emotions = 6;</code>
-       * @return The randomizeEmotions.
-       */
-      @java.lang.Override
-      public boolean getRandomizeEmotions() {
-        return randomizeEmotions_;
-      }
-      /**
-       * <code>bool randomize_emotions = 6;</code>
-       * @param value The randomizeEmotions to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeEmotions(boolean value) {
-        
-        randomizeEmotions_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_emotions = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeEmotions() {
-        
-        randomizeEmotions_ = false;
-        onChanged();
-        return this;
-      }
-
       private boolean customLoadingTips_ ;
       /**
-       * <code>bool custom_loading_tips = 7;</code>
+       * <code>bool custom_loading_tips = 6;</code>
        * @return The customLoadingTips.
        */
       @java.lang.Override
@@ -4851,7 +4780,7 @@ public final class RandomizerSettings {
         return customLoadingTips_;
       }
       /**
-       * <code>bool custom_loading_tips = 7;</code>
+       * <code>bool custom_loading_tips = 6;</code>
        * @param value The customLoadingTips to set.
        * @return This builder for chaining.
        */
@@ -4862,7 +4791,7 @@ public final class RandomizerSettings {
         return this;
       }
       /**
-       * <code>bool custom_loading_tips = 7;</code>
+       * <code>bool custom_loading_tips = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearCustomLoadingTips() {
@@ -4981,6 +4910,18 @@ public final class RandomizerSettings {
      * @return The randomizeFabPlanCosts.
      */
     boolean getRandomizeFabPlanCosts();
+
+    /**
+     * <code>bool randomize_neuromod_requirements = 16;</code>
+     * @return The randomizeNeuromodRequirements.
+     */
+    boolean getRandomizeNeuromodRequirements();
+
+    /**
+     * <code>bool randomize_gravity = 17;</code>
+     * @return The randomizeGravity.
+     */
+    boolean getRandomizeGravity();
 
     /**
      * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
@@ -5289,6 +5230,16 @@ public final class RandomizerSettings {
               randomizeKeycards_ = input.readBool();
               break;
             }
+            case 128: {
+
+              randomizeNeuromodRequirements_ = input.readBool();
+              break;
+            }
+            case 136: {
+
+              randomizeGravity_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -5415,6 +5366,28 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getRandomizeFabPlanCosts() {
       return randomizeFabPlanCosts_;
+    }
+
+    public static final int RANDOMIZE_NEUROMOD_REQUIREMENTS_FIELD_NUMBER = 16;
+    private boolean randomizeNeuromodRequirements_;
+    /**
+     * <code>bool randomize_neuromod_requirements = 16;</code>
+     * @return The randomizeNeuromodRequirements.
+     */
+    @java.lang.Override
+    public boolean getRandomizeNeuromodRequirements() {
+      return randomizeNeuromodRequirements_;
+    }
+
+    public static final int RANDOMIZE_GRAVITY_FIELD_NUMBER = 17;
+    private boolean randomizeGravity_;
+    /**
+     * <code>bool randomize_gravity = 17;</code>
+     * @return The randomizeGravity.
+     */
+    @java.lang.Override
+    public boolean getRandomizeGravity() {
+      return randomizeGravity_;
     }
 
     public static final int RANDOMIZE_RECYCLERS_FIELD_NUMBER = 6;
@@ -5758,6 +5731,12 @@ public final class RandomizerSettings {
       if (randomizeKeycards_ != false) {
         output.writeBool(15, randomizeKeycards_);
       }
+      if (randomizeNeuromodRequirements_ != false) {
+        output.writeBool(16, randomizeNeuromodRequirements_);
+      }
+      if (randomizeGravity_ != false) {
+        output.writeBool(17, randomizeGravity_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5823,6 +5802,14 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(15, randomizeKeycards_);
       }
+      if (randomizeNeuromodRequirements_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(16, randomizeNeuromodRequirements_);
+      }
+      if (randomizeGravity_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(17, randomizeGravity_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -5856,6 +5843,10 @@ public final class RandomizerSettings {
           != other.getRandomizeNeuromods()) return false;
       if (getRandomizeFabPlanCosts()
           != other.getRandomizeFabPlanCosts()) return false;
+      if (getRandomizeNeuromodRequirements()
+          != other.getRandomizeNeuromodRequirements()) return false;
+      if (getRandomizeGravity()
+          != other.getRandomizeGravity()) return false;
       if (hasRandomizeRecyclers() != other.hasRandomizeRecyclers()) return false;
       if (hasRandomizeRecyclers()) {
         if (!getRandomizeRecyclers()
@@ -5920,6 +5911,12 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_FAB_PLAN_COSTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeFabPlanCosts());
+      hash = (37 * hash) + RANDOMIZE_NEUROMOD_REQUIREMENTS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeNeuromodRequirements());
+      hash = (37 * hash) + RANDOMIZE_GRAVITY_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomizeGravity());
       if (hasRandomizeRecyclers()) {
         hash = (37 * hash) + RANDOMIZE_RECYCLERS_FIELD_NUMBER;
         hash = (53 * hash) + getRandomizeRecyclers().hashCode();
@@ -6101,6 +6098,10 @@ public final class RandomizerSettings {
 
         randomizeFabPlanCosts_ = false;
 
+        randomizeNeuromodRequirements_ = false;
+
+        randomizeGravity_ = false;
+
         if (randomizeRecyclersBuilder_ == null) {
           randomizeRecyclers_ = null;
         } else {
@@ -6179,6 +6180,8 @@ public final class RandomizerSettings {
         result.randomizeKeycards_ = randomizeKeycards_;
         result.randomizeNeuromods_ = randomizeNeuromods_;
         result.randomizeFabPlanCosts_ = randomizeFabPlanCosts_;
+        result.randomizeNeuromodRequirements_ = randomizeNeuromodRequirements_;
+        result.randomizeGravity_ = randomizeGravity_;
         if (randomizeRecyclersBuilder_ == null) {
           result.randomizeRecyclers_ = randomizeRecyclers_;
         } else {
@@ -6273,6 +6276,12 @@ public final class RandomizerSettings {
         }
         if (other.getRandomizeFabPlanCosts() != false) {
           setRandomizeFabPlanCosts(other.getRandomizeFabPlanCosts());
+        }
+        if (other.getRandomizeNeuromodRequirements() != false) {
+          setRandomizeNeuromodRequirements(other.getRandomizeNeuromodRequirements());
+        }
+        if (other.getRandomizeGravity() != false) {
+          setRandomizeGravity(other.getRandomizeGravity());
         }
         if (other.hasRandomizeRecyclers()) {
           mergeRandomizeRecyclers(other.getRandomizeRecyclers());
@@ -6692,6 +6701,68 @@ public final class RandomizerSettings {
       public Builder clearRandomizeFabPlanCosts() {
         
         randomizeFabPlanCosts_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeNeuromodRequirements_ ;
+      /**
+       * <code>bool randomize_neuromod_requirements = 16;</code>
+       * @return The randomizeNeuromodRequirements.
+       */
+      @java.lang.Override
+      public boolean getRandomizeNeuromodRequirements() {
+        return randomizeNeuromodRequirements_;
+      }
+      /**
+       * <code>bool randomize_neuromod_requirements = 16;</code>
+       * @param value The randomizeNeuromodRequirements to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeNeuromodRequirements(boolean value) {
+        
+        randomizeNeuromodRequirements_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_neuromod_requirements = 16;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeNeuromodRequirements() {
+        
+        randomizeNeuromodRequirements_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean randomizeGravity_ ;
+      /**
+       * <code>bool randomize_gravity = 17;</code>
+       * @return The randomizeGravity.
+       */
+      @java.lang.Override
+      public boolean getRandomizeGravity() {
+        return randomizeGravity_;
+      }
+      /**
+       * <code>bool randomize_gravity = 17;</code>
+       * @param value The randomizeGravity to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomizeGravity(boolean value) {
+        
+        randomizeGravity_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool randomize_gravity = 17;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomizeGravity() {
+        
+        randomizeGravity_ = false;
         onChanged();
         return this;
       }
@@ -10912,12 +10983,6 @@ public final class RandomizerSettings {
     boolean getEnableGravityInExtAndGuts();
 
     /**
-     * <code>bool fluctuating_gravity = 8;</code>
-     * @return The fluctuatingGravity.
-     */
-    boolean getFluctuatingGravity();
-
-    /**
      * <code>bool start_self_destruct = 5;</code>
      * @return The startSelfDestruct.
      */
@@ -11031,11 +11096,6 @@ public final class RandomizerSettings {
               selfDestructShuttleTimer_ = s;
               break;
             }
-            case 64: {
-
-              fluctuatingGravity_ = input.readBool();
-              break;
-            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -11110,17 +11170,6 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getEnableGravityInExtAndGuts() {
       return enableGravityInExtAndGuts_;
-    }
-
-    public static final int FLUCTUATING_GRAVITY_FIELD_NUMBER = 8;
-    private boolean fluctuatingGravity_;
-    /**
-     * <code>bool fluctuating_gravity = 8;</code>
-     * @return The fluctuatingGravity.
-     */
-    @java.lang.Override
-    public boolean getFluctuatingGravity() {
-      return fluctuatingGravity_;
     }
 
     public static final int START_SELF_DESTRUCT_FIELD_NUMBER = 5;
@@ -11245,9 +11294,6 @@ public final class RandomizerSettings {
       if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 7, selfDestructShuttleTimer_);
       }
-      if (fluctuatingGravity_ != false) {
-        output.writeBool(8, fluctuatingGravity_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -11283,10 +11329,6 @@ public final class RandomizerSettings {
       if (!getSelfDestructShuttleTimerBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, selfDestructShuttleTimer_);
       }
-      if (fluctuatingGravity_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(8, fluctuatingGravity_);
-      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -11310,8 +11352,6 @@ public final class RandomizerSettings {
           != other.getZeroGravityEverywhere()) return false;
       if (getEnableGravityInExtAndGuts()
           != other.getEnableGravityInExtAndGuts()) return false;
-      if (getFluctuatingGravity()
-          != other.getFluctuatingGravity()) return false;
       if (getStartSelfDestruct()
           != other.getStartSelfDestruct()) return false;
       if (!getSelfDestructTimer()
@@ -11341,9 +11381,6 @@ public final class RandomizerSettings {
       hash = (37 * hash) + ENABLE_GRAVITY_IN_EXT_AND_GUTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getEnableGravityInExtAndGuts());
-      hash = (37 * hash) + FLUCTUATING_GRAVITY_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getFluctuatingGravity());
       hash = (37 * hash) + START_SELF_DESTRUCT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getStartSelfDestruct());
@@ -11492,8 +11529,6 @@ public final class RandomizerSettings {
 
         enableGravityInExtAndGuts_ = false;
 
-        fluctuatingGravity_ = false;
-
         startSelfDestruct_ = false;
 
         selfDestructTimer_ = "";
@@ -11530,7 +11565,6 @@ public final class RandomizerSettings {
         result.livingCorpses_ = livingCorpses_;
         result.zeroGravityEverywhere_ = zeroGravityEverywhere_;
         result.enableGravityInExtAndGuts_ = enableGravityInExtAndGuts_;
-        result.fluctuatingGravity_ = fluctuatingGravity_;
         result.startSelfDestruct_ = startSelfDestruct_;
         result.selfDestructTimer_ = selfDestructTimer_;
         result.selfDestructShuttleTimer_ = selfDestructShuttleTimer_;
@@ -11593,9 +11627,6 @@ public final class RandomizerSettings {
         }
         if (other.getEnableGravityInExtAndGuts() != false) {
           setEnableGravityInExtAndGuts(other.getEnableGravityInExtAndGuts());
-        }
-        if (other.getFluctuatingGravity() != false) {
-          setFluctuatingGravity(other.getFluctuatingGravity());
         }
         if (other.getStartSelfDestruct() != false) {
           setStartSelfDestruct(other.getStartSelfDestruct());
@@ -11757,37 +11788,6 @@ public final class RandomizerSettings {
       public Builder clearEnableGravityInExtAndGuts() {
         
         enableGravityInExtAndGuts_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean fluctuatingGravity_ ;
-      /**
-       * <code>bool fluctuating_gravity = 8;</code>
-       * @return The fluctuatingGravity.
-       */
-      @java.lang.Override
-      public boolean getFluctuatingGravity() {
-        return fluctuatingGravity_;
-      }
-      /**
-       * <code>bool fluctuating_gravity = 8;</code>
-       * @param value The fluctuatingGravity to set.
-       * @return This builder for chaining.
-       */
-      public Builder setFluctuatingGravity(boolean value) {
-        
-        fluctuatingGravity_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool fluctuating_gravity = 8;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearFluctuatingGravity() {
-        
-        fluctuatingGravity_ = false;
         onChanged();
         return this;
       }
@@ -14681,19 +14681,20 @@ public final class RandomizerSettings {
       "tings\030\006 \001(\0132\022.GameStartSettings\022$\n\rmore_" +
       "settings\030\007 \001(\0132\r.MoreSettings\022&\n\016cheat_s" +
       "ettings\030\010 \001(\0132\016.CheatSettings\022+\n\014exp_set" +
-      "tings\030\t \001(\0132\025.ExperimentalSettings\"\333\001\n\020C" +
+      "tings\030\t \001(\0132\025.ExperimentalSettings\"\277\001\n\020C" +
       "osmeticSettings\022\030\n\020randomize_bodies\030\001 \001(" +
       "\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n\017rando" +
       "mize_music\030\003 \001(\010\022\036\n\026randomize_player_mod" +
       "el\030\004 \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022" +
-      "\032\n\022randomize_emotions\030\006 \001(\010\022\033\n\023custom_lo" +
-      "ading_tips\030\007 \001(\010\"\322\004\n\020GameplaySettings\0226\n" +
-      "\023item_spawn_settings\030\001 \001(\0132\031.GenericSpaw" +
-      "nPresetFilter\0227\n\024enemy_spawn_settings\030\002 " +
-      "\001(\0132\031.GenericSpawnPresetFilter\022\031\n\021random" +
-      "ize_station\030\003 \001(\010\022\032\n\022randomize_keycards\030" +
-      "\017 \001(\010\022\033\n\023randomize_neuromods\030\004 \001(\010\022 \n\030ra" +
-      "ndomize_fab_plan_costs\030\005 \001(\010\022.\n\023randomiz" +
+      "\033\n\023custom_loading_tips\030\006 \001(\010\"\226\005\n\020Gamepla" +
+      "ySettings\0226\n\023item_spawn_settings\030\001 \001(\0132\031" +
+      ".GenericSpawnPresetFilter\0227\n\024enemy_spawn" +
+      "_settings\030\002 \001(\0132\031.GenericSpawnPresetFilt" +
+      "er\022\031\n\021randomize_station\030\003 \001(\010\022\032\n\022randomi" +
+      "ze_keycards\030\017 \001(\010\022\033\n\023randomize_neuromods" +
+      "\030\004 \001(\010\022 \n\030randomize_fab_plan_costs\030\005 \001(\010" +
+      "\022\'\n\037randomize_neuromod_requirements\030\020 \001(" +
+      "\010\022\031\n\021randomize_gravity\030\021 \001(\010\022.\n\023randomiz" +
       "e_recyclers\030\006 \001(\0132\021.ToggleWithSlider\022/\n\024" +
       "randomize_dispensers\030\007 \001(\0132\021.ToggleWithS" +
       "lider\022/\n\024randomize_breakables\030\010 \001(\0132\021.To" +
@@ -14723,20 +14724,20 @@ public final class RandomizerSettings {
       "EP_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPP" +
       "ORT\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022" +
       "\014\n\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SEL" +
-      "ECT\020\020\"\215\002\n\024ExperimentalSettings\022\030\n\020wander" +
+      "ECT\020\020\"\360\001\n\024ExperimentalSettings\022\030\n\020wander" +
       "ing_humans\030\001 \001(\010\022\026\n\016living_corpses\030\002 \001(\010" +
       "\022\037\n\027zero_gravity_everywhere\030\003 \001(\010\022&\n\036ena" +
-      "ble_gravity_in_ext_and_guts\030\004 \001(\010\022\033\n\023flu" +
-      "ctuating_gravity\030\010 \001(\010\022\033\n\023start_self_des" +
-      "truct\030\005 \001(\010\022\033\n\023self_destruct_timer\030\006 \001(\t" +
-      "\022#\n\033self_destruct_shuttle_timer\030\007 \001(\t\"`\n" +
-      "\030GenericSpawnPresetFilter\022\014\n\004name\030\001 \001(\t\022" +
-      "\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.Generic" +
-      "SpawnPresetRule\"\220\001\n\026GenericSpawnPresetRu" +
-      "le\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 " +
-      "\003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_not_to" +
-      "uch_tags\030\004 \003(\t\022\032\n\022do_not_output_tags\030\005 \003" +
-      "(\tB\033\n\005protoB\022RandomizerSettingsb\006proto3"
+      "ble_gravity_in_ext_and_guts\030\004 \001(\010\022\033\n\023sta" +
+      "rt_self_destruct\030\005 \001(\010\022\033\n\023self_destruct_" +
+      "timer\030\006 \001(\t\022#\n\033self_destruct_shuttle_tim" +
+      "er\030\007 \001(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004" +
+      "name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(" +
+      "\0132\027.GenericSpawnPresetRule\"\220\001\n\026GenericSp" +
+      "awnPresetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013out" +
+      "put_tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031" +
+      "\n\021do_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_outp" +
+      "ut_tags\030\005 \003(\tB\033\n\005protoB\022RandomizerSettin" +
+      "gsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -14759,13 +14760,13 @@ public final class RandomizerSettings {
     internal_static_CosmeticSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CosmeticSettings_descriptor,
-        new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", "RandomizePlanetSize", "RandomizeEmotions", "CustomLoadingTips", });
+        new java.lang.String[] { "RandomizeBodies", "RandomizeVoicelines", "RandomizeMusic", "RandomizePlayerModel", "RandomizePlanetSize", "CustomLoadingTips", });
     internal_static_GameplaySettings_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_GameplaySettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameplaySettings_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeKeycards", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
+        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeKeycards", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeNeuromodRequirements", "RandomizeGravity", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
     internal_static_ToggleWithSlider_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_ToggleWithSlider_fieldAccessorTable = new
@@ -14795,7 +14796,7 @@ public final class RandomizerSettings {
     internal_static_ExperimentalSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ExperimentalSettings_descriptor,
-        new java.lang.String[] { "WanderingHumans", "LivingCorpses", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "FluctuatingGravity", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", });
+        new java.lang.String[] { "WanderingHumans", "LivingCorpses", "ZeroGravityEverywhere", "EnableGravityInExtAndGuts", "StartSelfDestruct", "SelfDestructTimer", "SelfDestructShuttleTimer", });
     internal_static_GenericSpawnPresetFilter_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_GenericSpawnPresetFilter_fieldAccessorTable = new
