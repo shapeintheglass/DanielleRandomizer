@@ -162,11 +162,11 @@ public class ProgressionGenerator {
       keycardStats.put(k, Maps.newHashMap());
     }
 
-    int numIterations = 500;
+    int numIterations = 1;
 
     for (int i = 0; i < numIterations; i++) {
       Random r = new Random();
-      long seed = r.nextLong();
+      long seed = -3299655590852521848L;//r.nextLong();
 
       ImmutableBiMap<Level, String> levelsToIds = new ImmutableBiMap.Builder<Level, String>()
           .put(Level.ARBORETUM, "1713490239386284818").put(Level.BRIDGE, "844024417275035158")
@@ -193,6 +193,12 @@ public class ProgressionGenerator {
         keycardStats.get(k).put(l, prev + 1);
       }
       System.out.println(i);
+      
+      if (numIterations == 1)
+      {
+        System.out.println(sg.toString());
+        System.out.println(pg.toString());
+      }
     }
 
     // for (Keycard k : Keycard.values()) {

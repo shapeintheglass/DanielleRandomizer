@@ -15,6 +15,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.common.graph.ImmutableNetwork;
+import randomizers.generators.ProgressionGenerator;
 import randomizers.generators.StationGenerator;
 import utils.KeycardConnectivityConsts.Keycard;
 import utils.KeycardConnectivityConsts.Location;
@@ -24,6 +25,9 @@ import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
 
 public class ProgressionGraph {
+  // Number of player simulations to run.
+  private static final int NUM_VERIFICATION_ATTEMPTS = 10;
+  // Maximum number of level transitions per simulation.
   private static final int MAX_NUMBER_LEVEL_TRANSITIONS = 1000;
   private ImmutableNetwork<Level, Door> stationConnectivity;
   private ImmutableMap<Location, Keycard> keycardConnectivity;
@@ -90,6 +94,16 @@ public class ProgressionGraph {
   }
 
   public boolean verify() {
+    for (int i = 0; i < NUM_VERIFICATION_ATTEMPTS; i++) {
+      if (!simulatePlayerTraversal()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+  private boolean simulatePlayerTraversal() {
     // Start at neuromod division, see if we can wind up at the goal.
     progress = Sets.newHashSet();
     Level currentLevel = Level.NEUROMOD_DIVISION;
@@ -99,6 +113,7 @@ public class ProgressionGraph {
 
     for (int i = 0; i < MAX_NUMBER_LEVEL_TRANSITIONS; i++) {
       Stack<Level> toVisit = new Stack<>();
+      // Keep track of the number of times we have visited a level.
       Map<Level, Integer> visitedCount = Maps.newHashMap();
       toVisit.add(currentLevel);
       while (!toVisit.isEmpty()) {
@@ -107,6 +122,7 @@ public class ProgressionGraph {
           continue;
         }
 
+        // If we are visiting a level for the first time, do not pick up any keys.
         List<Level> next =
             visitLevel(currentLevel, visitedCount.getOrDefault(currentLevel, 0) == 0);
         visitedCount.put(currentLevel, visitedCount.getOrDefault(currentLevel, 0) + 1);
@@ -156,18 +172,21 @@ public class ProgressionGraph {
       if (progress.contains(ProgressionMilestone.DS_DIRECTOR_LOCKDOWN)
           && !progress.contains(ProgressionMilestone.PP_REBOOT_COMPLETED)
           && (StationConnectivityConsts.AIRLOCKS.contains(d) || d == liftTechnopathDoor
-              || d == liftLowerDoor || d == Door.CARGO_BAY_GUTS_EXIT)) {
+              || d == liftLowerDoor || d == Door.CARGO_BAY_GUTS_EXIT
+              || d == Door.LIFE_SUPPORT_LOBBY_EXIT || d == Door.ARBORETUM_LOBBY_EXIT)) {
         continue;
       }
-      
+
       // If Dahl is here and Kaspar has not been taken care of,
       // all doors that would normally lead to Cargo Bay are locked.
-      if ((d == Door.LIFE_SUPPORT_CARGO_BAY_EXIT || d == Door.GUTS_CARGO_BAY_EXIT) 
+      if ((d == Door.LIFE_SUPPORT_CARGO_BAY_EXIT || d == Door.GUTS_CARGO_BAY_EXIT)
           && progress.contains(ProgressionMilestone.AR_DAHL_ARRIVAL)
           && !progress.contains(ProgressionMilestone.EX_KASPAR_NEUTRALIZED)
           && !progress.contains(ProgressionMilestone.ND_KASPAR_NEUTRALIZED)
           && !progress.contains(ProgressionMilestone.PY_KASPAR_NEUTRALIZED)
-          && !progress.contains(ProgressionMilestone.HL_KASPAR_NEUTRALIZED))
+          && !progress.contains(ProgressionMilestone.HL_KASPAR_NEUTRALIZED)) {
+        continue;
+      }
 
       // If the apex is here, all airlocks are down
       if (progress.contains(ProgressionMilestone.AR_APEX_IS_HERE)
@@ -336,17 +355,6 @@ public class ProgressionGraph {
       // TODO: Special cases for locked doors
 
       switch (d) {
-        case ARBORETUM_CREW_QUARTERS_EXIT:
-          reqs.add(Keycard.AR_CREW_QUARTERS);
-          break;
-        case ARBORETUM_DEEP_STORAGE_EXIT:
-          reqs.add(ProgressionMilestone.CQ_VOICE_OVERRIDE);
-          reqs.add(ProgressionMilestone.CQ_RECORDINGS_90_PERCENT);
-          reqs.add(ProgressionMilestone.LO_TRAUMA_CENTER_RECORDING_20_PERCENT);
-          reqs.add(ProgressionMilestone.CQ_ABIGAIL_CABIN_RECORDING_10_PERCENT);
-          reqs.add(ProgressionMilestone.CQ_FREEZER_RECORDING_20_PERCENT);
-          reqs.add(ProgressionMilestone.CQ_MITCHELL_CABIN_RECORDING_10_PERCENT);
-          break;
         case ARBORETUM_AIRLOCK:
         case EXTERIOR_ARBORETUM_AIRLOCK:
           reqs.add(ProgressionMilestone.AR_AIRLOCK);
@@ -366,6 +374,17 @@ public class ProgressionGraph {
         case SHUTTLE_BAY_AIRLOCK:
         case EXTERIOR_SHUTTLE_BAY_AIRLOCK:
           reqs.add(ProgressionMilestone.SB_AIRLOCK);
+          break;
+        case ARBORETUM_CREW_QUARTERS_EXIT:
+          reqs.add(Keycard.AR_CREW_QUARTERS);
+          break;
+        case ARBORETUM_DEEP_STORAGE_EXIT:
+          reqs.add(ProgressionMilestone.CQ_VOICE_OVERRIDE);
+          reqs.add(ProgressionMilestone.CQ_RECORDINGS_90_PERCENT);
+          reqs.add(ProgressionMilestone.LO_TRAUMA_CENTER_RECORDING_20_PERCENT);
+          reqs.add(ProgressionMilestone.CQ_ABIGAIL_CABIN_RECORDING_10_PERCENT);
+          reqs.add(ProgressionMilestone.CQ_FREEZER_RECORDING_20_PERCENT);
+          reqs.add(ProgressionMilestone.CQ_MITCHELL_CABIN_RECORDING_10_PERCENT);
           break;
         case LOBBY_ARBORETUM_EXIT:
         case LOBBY_LIFE_SUPPORT_EXIT:
@@ -580,21 +599,32 @@ public class ProgressionGraph {
         .put(Level.SHUTTLE_BAY, "1713490239386284988").put(Level.EXTERIOR, "1713490239386284337")
         .build();
 
-    for (int i = 0; i < 1; i++) {
+    int numTestCases = 1;
+    for (int i = 0; i < numTestCases; i++) {
       Random r = new Random();
-      long seed = 0L;// r.nextLong();
+      long seed =  -3299655590852521848L;//6025717307696252058L;//r.nextLong();
       System.out.println(seed);
       StationGenerator sg = new StationGenerator(seed, levelsToIds);
 
       ImmutableNetwork<Level, Door> stationConnectivity = sg.getNetwork();
       // StationConnectivityConsts.getDefaultNetwork();
+      
+      ProgressionGenerator pGen = new ProgressionGenerator(stationConnectivity, seed);
+      pGen.getProgressionGraph();
 
       ProgressionGraph pg = new ProgressionGraph(stationConnectivity,
-          KeycardConnectivityConsts.DEFAULT_CONNECTIVITY, 0L);
+          KeycardConnectivityConsts.DEFAULT_CONNECTIVITY, seed);
 
       boolean result = pg.verify();
       System.out.println(result);
+
+      if (numTestCases == 1) {
+        System.out.println(sg.toString());
+        System.out.println(pg.getVerifyResult());
+      }
+
       if (!result) {
+        System.out.println("Failed! " + numTestCases);
         System.out.println(seed);
         System.out.println(pg.getVerifyResult());
         break;

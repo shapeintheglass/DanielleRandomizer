@@ -143,21 +143,23 @@
       ]
     },
     {
-      "name": "Randomize all items (no story items)",
-      "desc": "Randomizes all items. Does not spawn story items early (ex. Arming Keys, Psychoscope, etc), to avoid sequence breaking.",
+      "name": "Randomize all items (no early story items)",
+      "desc": "Randomizes all items. Does not spawn story items early (ex. Arming Keys), to avoid sequence breaking.",
       "filters": [
         {
           "input_tags": [
             "ArkPickups"
           ],
           "output_tags": [
+            "ZeroGSuit",
+            "Psychoscope",
             "Stickynote_Mimic",
             "FabricationPlans",
             "WeaponUpgradeKit",
             "SuitPatchKit",
-            "Medical",
             "Mods",
             "SpareParts",
+            "Medical",
             "Neuromod",
             "Ingredients",
             "Weapons",
@@ -167,12 +169,14 @@
           ],
           "output_weights": [
             1,
+            1,
+            1,
             25,
             50,
             50,
             75,
             75,
-            75,
+            80,
             80,
             100,
             100,
@@ -190,7 +194,7 @@
     },
     {
       "name": "Randomize all items",
-      "desc": "Has a chance of spawning story progression items early (ex. the arming keys or psychoscope), which can lead to sequence breaking.",
+      "desc": "Has a chance of spawning story progression items early, which could lead to sequence breaking.",
       "filters": [
         {
           "input_tags": [
@@ -254,7 +258,7 @@
       ]
     },
     {
-      "name": "All weapons and neuromods",
+      "name": "All items are weapons",
       "desc": "All items are weapons, neuromods, or ammo",
       "filters": [
         {

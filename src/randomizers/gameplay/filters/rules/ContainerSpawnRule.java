@@ -16,6 +16,7 @@ import utils.Utils;
 public class ContainerSpawnRule implements Rule {
 
   private static final String ITEM_ADD_KEYWORD = "Inventory:ItemAdd";
+  private static final String SPAWN_ARCHETYPE_KEYWORD = "Entity:SpawnArchetype";
 
   private CustomItemFilterHelper filterHelper;
 
@@ -31,7 +32,8 @@ public class ContainerSpawnRule implements Rule {
       return false;
     }
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
+      String classAttr = n.getAttributeValue("Class"); 
+      if (classAttr.equals(ITEM_ADD_KEYWORD) || classAttr.equals(SPAWN_ARCHETYPE_KEYWORD)) {
         return true;
       }
     }
@@ -43,7 +45,8 @@ public class ContainerSpawnRule implements Rule {
     List<Element> nodes = getNodes(e);
 
     for (Element n : nodes) {
-      if (n.getAttributeValue("Class").equals(ITEM_ADD_KEYWORD)) {
+      String classAttr = n.getAttributeValue("Class"); 
+      if (classAttr.equals(ITEM_ADD_KEYWORD)) {
         Element inputs = n.getChild("Inputs");
         String archetypeStr = inputs.getAttributeValue("archetype");
         if (archetypeStr == null || archetypeStr.isEmpty() || !filterHelper.trigger(archetypeStr, null)) {
@@ -56,6 +59,18 @@ public class ContainerSpawnRule implements Rule {
           inputs.setAttribute("archetype", Utils.getNameForEntity(toSwap));
           int multiplier = ItemMultiplierHelper.getMultiplierForEntity(toSwap, r);
           inputs.setAttribute("quantity", Integer.toString(multiplier));
+        }
+      } else if (classAttr.equals(SPAWN_ARCHETYPE_KEYWORD)) {
+        Element inputs = n.getChild("Inputs");
+        String archetypeStr = inputs.getAttributeValue("Archetype");
+        if (archetypeStr == null || archetypeStr.isEmpty() || !filterHelper.trigger(archetypeStr, null)) {
+          continue;
+        }
+
+        // Replace with an appropriate item
+        Element toSwap = filterHelper.getEntity(archetypeStr, filename, r);
+        if (toSwap != null) {
+          inputs.setAttribute("Archetype", Utils.getNameForEntity(toSwap));
         }
       }
     }

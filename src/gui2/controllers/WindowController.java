@@ -305,13 +305,13 @@ public class WindowController {
     outputWindow.appendText("Loaded with settings:\n" + SettingsHelper.settingsToString(settings));
 
     recyclerSlider = new ToggleWithSliderHelper(gameplayRandomizeRecyclers, gameplayRecyclerSlider,
-        gameplayRecyclerTextbox, gameplayRecyclerPercent);
+        gameplayRecyclerTextbox, gameplayRecyclerPercent, 50.0);
     breakableSlider = new ToggleWithSliderHelper(gameplayRandomizeBreakables,
-        gameplayBreakableSlider, gameplayBreakableTextbox, gameplayBreakablePercent);
+        gameplayBreakableSlider, gameplayBreakableTextbox, gameplayBreakablePercent, 50.0);
     hackableSlider = new ToggleWithSliderHelper(gameplayRandomizeHackables, gameplayHackableSlider,
-        gameplayHackableTextbox, gameplayHackablePercent);
+        gameplayHackableTextbox, gameplayHackablePercent, 50.0);
     mimicSlider = new ToggleWithSliderHelper(gameplayRandomizeMimics, gameplayMimicSlider,
-        gameplayMimicTextbox, gameplayMimicPercent);
+        gameplayMimicTextbox, gameplayMimicPercent, 5.0);
 
     updateUI();
 
@@ -434,10 +434,10 @@ public class WindowController {
     resetPropPreset();
     resetEnemyPreset();
     resetNpcPreset();
-    recyclerSlider.set(false, 0.0);
-    breakableSlider.set(false, 0.0);
-    hackableSlider.set(false, 0.0);
-    mimicSlider.set(false, 0.0);
+    recyclerSlider.set(false, 50.0);
+    breakableSlider.set(false, 5.0);
+    hackableSlider.set(false, 50.0);
+    mimicSlider.set(false, 5.0);
     cheatsChoiceBoxCustomStart.setValue(SpawnLocation.RANDOM.name());
     cheatsChoiceBoxCustomStart.setDisable(true);
     cheatsTextFieldGameTokens.clear();
@@ -520,7 +520,7 @@ public class WindowController {
     startCheckboxDay2.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
-    morePreySoulsEnemies.setSelected(true);
+    // morePreySoulsEnemies.setSelected(true);
     morePreySoulsTurrets.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
@@ -561,7 +561,7 @@ public class WindowController {
     setEnemyPreset("Typhon to humans");
     expCheckboxWander.setSelected(true);
     expLivingCorpses.setSelected(true);
-    startCheckboxOutsideApartment.setSelected(true);
+    // startCheckboxOutsideApartment.setSelected(true);
     cheatsCheckboxFriendlyNpcs.setSelected(true);
     cheatsCheckboxOpenStation.setSelected(true);
     outputWindow.clear();
@@ -927,10 +927,31 @@ public class WindowController {
     }
 
     long initialSeed = Utils.getNewSeed();
+
+    // TODO: Make this less of a hack
+    GameplaySettings gs = GameplaySettings.getDefaultInstance().toBuilder()
+        .setRandomizeBreakables(ToggleWithSlider.newBuilder()
+              .setIsEnabled(false)
+              .setSliderValue(50)
+              .build())
+        .setRandomizeHackables(ToggleWithSlider.newBuilder()
+              .setIsEnabled(false)
+              .setSliderValue(50)
+              .build())
+        .setRandomizeRecyclers(ToggleWithSlider.newBuilder()
+              .setIsEnabled(false)
+              .setSliderValue(50)
+              .build())
+        .setRandomizeMimics(ToggleWithSlider.newBuilder()
+              .setIsEnabled(false)
+              .setSliderValue(5)
+              .build())
+            .build();
+
     return Settings.newBuilder().setReleaseVersion(Gui2Consts.VERSION)
         .setInstallDir(Gui2Consts.DEFAULT_INSTALL_DIR).setSeed(Long.toString(initialSeed))
         .setCosmeticSettings(CosmeticSettings.getDefaultInstance())
-        .setGameplaySettings(GameplaySettings.getDefaultInstance())
+        .setGameplaySettings(gs)
         .setGameStartSettings(GameStartSettings.getDefaultInstance())
         .setMoreSettings(MoreSettings.getDefaultInstance())
         .setCheatSettings(CheatSettings.getDefaultInstance())

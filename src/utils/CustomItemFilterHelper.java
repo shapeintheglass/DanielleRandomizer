@@ -30,22 +30,18 @@ public class CustomItemFilterHelper {
 
     ruleSet = Lists.newArrayList();
 
-    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings()
-        .getItemSpawnSettings();
+    GenericSpawnPresetFilter spawnPreset = settings.getGameplaySettings().getItemSpawnSettings();
     for (GenericSpawnPresetRule rule : spawnPreset.getFiltersList()) {
-      GenericSpawnPresetRule.Builder copy = rule.toBuilder()
-          .addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
-          .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
-      if (!settings.getMoreSettings()
-          .getMoreGuns()) {
+      GenericSpawnPresetRule.Builder copy =
+          rule.toBuilder().addAllDoNotTouchTags(LevelConsts.DO_NOT_TOUCH_ITEM_TAGS)
+              .addAllDoNotOutputTags(LevelConsts.DO_NOT_OUTPUT_ITEM_TAGS);
+      if (!settings.getMoreSettings().getMoreGuns()) {
         copy.addDoNotOutputTags("Randomizer");
       }
-      if (!settings.getMoreSettings()
-          .getPreySoulsGuns()) {
+      if (!settings.getMoreSettings().getPreySoulsGuns()) {
         copy.addDoNotOutputTags("PreySoulsWeapons");
       }
-      if (!settings.getMoreSettings()
-          .getPreySoulsTurrets()) {
+      if (!settings.getMoreSettings().getPreySoulsTurrets()) {
         copy.addDoNotOutputTags("PreySoulsTurrets");
       }
       ruleSet.add(new ArchetypeSwapRule(database, new CustomRuleHelper(copy.build(), database)));
@@ -72,8 +68,7 @@ public class CustomItemFilterHelper {
         if (entityName != null) {
           Element toReturn =
               database.getEntityByName(Utils.stripLibraryPrefixForEntity(entityName));
-          if (Utils.getTags(toReturn)
-              .contains("ArkPickups")) {
+          if (Utils.getTags(toReturn).contains("ArkPickups")) {
             return toReturn;
           }
         }
@@ -87,8 +82,7 @@ public class CustomItemFilterHelper {
     // No replacement found, return the original archetype as long as it's a pickup item
     if (entityName != null) {
       Element toReturn = database.getEntityByName(entityName);
-      if (Utils.getTags(toReturn)
-          .contains("ArkPickups")) {
+      if (Utils.getTags(toReturn).contains("ArkPickups")) {
         return toReturn;
       }
     }
@@ -96,18 +90,21 @@ public class CustomItemFilterHelper {
   }
 
   /**
-   * Specifically gets an entity that contains the tag "ArkPickups" and isn't survival mode only.
+   * 
+   * Specifically gets an entity that can be in a harvestable object. Some entity types don't show
+   * up in the pickup log and may appear bugged.
    * 
    * @param entityName
    * @param nameInLevel
    * @param r
    * @return
    */
-  public Element getPickupNonSurvivalEntity(String entityName, String nameInLevel, Random r) {
+  public Element getPickupHarvestableEntity(String entityName, String nameInLevel, Random r) {
     for (int i = 0; i < MAX_ATTEMPTS; i++) {
       Element e = getEntity(entityName, nameInLevel, r);
       Set<String> tags = Utils.getTags(e);
-      if (tags.contains(ARK_PICKUPS_TAG) && !tags.contains(SURVIVAL_MODE_ONLY_TAG)) {
+      if (tags.contains(ARK_PICKUPS_TAG) && !tags.contains(SURVIVAL_MODE_ONLY_TAG)
+          && !tags.contains("FabricationPlans") && !tags.contains("Mods")) {
         return e;
       }
     }
@@ -124,10 +121,8 @@ public class CustomItemFilterHelper {
    */
   public Element getEntity(String entityName, String nameInLevel, Random r) {
     for (ArchetypeSwapRule rule : ruleSet) {
-      if (rule.getCustomRuleHelper()
-          .trigger(database, entityName, nameInLevel)) {
-        return rule.getCustomRuleHelper()
-            .getEntityToSwap(database, r);
+      if (rule.getCustomRuleHelper().trigger(database, entityName, nameInLevel)) {
+        return rule.getCustomRuleHelper().getEntityToSwap(database, r);
       }
     }
     return null;
@@ -158,8 +153,7 @@ public class CustomItemFilterHelper {
    */
   public boolean trigger(String entityName, String nameInLevel) {
     for (ArchetypeSwapRule rule : ruleSet) {
-      if (rule.getCustomRuleHelper()
-          .trigger(database, entityName, nameInLevel)) {
+      if (rule.getCustomRuleHelper().trigger(database, entityName, nameInLevel)) {
         return true;
       }
     }

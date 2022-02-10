@@ -35,10 +35,13 @@ import utils.ZipHelper;
  */
 public class LevelRandomizer extends BaseRandomizer {
 
+  private static final double[] MORGAN_SPAWN = {862.20569, 1586.2552, 6.7267303};
+  private static final String MORGAN_SPAWN_LEVEL = "research/simulationlabs";
   private static final double MORGAN_SPAWN_Z = 6.7267303;
   private static final double MORGAN_SPAWN_Y = 1586.2552;
   private static final double MORGAN_SPAWN_X = 862.20569;
-  private static final double MORGAN_SPAWN_DISTANCE_THRESHOLD = 50.0;
+
+  private static final double SPAWN_DISTANCE_THRESHOLD = 50.0;
   private static final ImmutableSet<String> PROP_MIMICABLE_TAGS =
       ImmutableSet.of("ArkPhysicsProps", "_MIMICABLE", "_CARRYABLE");
   private static final ImmutableSet<String> PROP_MIMICABLE_TAGS_BLOCKLIST =
@@ -211,7 +214,7 @@ public class LevelRandomizer extends BaseRandomizer {
     double distFromMorgan = Math.sqrt(Math.pow(x - MORGAN_SPAWN_X, 2)
         + Math.pow(y - MORGAN_SPAWN_Y, 2) + Math.pow(z - MORGAN_SPAWN_Z, 2));
 
-    return distFromMorgan < MORGAN_SPAWN_DISTANCE_THRESHOLD;
+    return distFromMorgan < SPAWN_DISTANCE_THRESHOLD;
   }
 
   private boolean isUsedAsDynamicObstacle(Element levelEntity) {

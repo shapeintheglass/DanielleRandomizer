@@ -13,12 +13,15 @@ public class ToggleWithSliderHelper {
   private Slider slider;
   private Label text;
   private Label percent;
+  private double defaultValue;
 
-  public ToggleWithSliderHelper(CheckBox checkbox, Slider slider, Label text, Label percent) {
+  public ToggleWithSliderHelper(CheckBox checkbox, Slider slider, Label text, Label percent, double defaultValue) {
     this.checkbox = checkbox;
     this.slider = slider;
     this.text = text;
     this.percent = percent;
+    this.defaultValue = defaultValue;
+    set(false, defaultValue);
 
     update();
 
@@ -33,6 +36,10 @@ public class ToggleWithSliderHelper {
 
     text.textProperty()
         .bind(Bindings.format("%.0f", slider.valueProperty()));
+  }
+  
+  public double getDefaultValue() {
+    return defaultValue;
   }
 
   public void set(ToggleWithSlider toggleWithSlider) {

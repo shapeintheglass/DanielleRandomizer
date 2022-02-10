@@ -371,11 +371,11 @@ public class StationGenerator {
     int minAttempts = Integer.MAX_VALUE;
     float percentSuccess = 0f;
 
-    int numIterations = 100;
+    int numIterations = 1;
 
     for (int i = 0; i < numIterations; i++) {
       Random r = new Random();
-      long seed = r.nextLong();
+      long seed = 6025717307696252058L;//r.nextLong();
       StationGenerator sg = new StationGenerator(seed, levelsToIds);
 
       if (sg.successfullyGenerated) {

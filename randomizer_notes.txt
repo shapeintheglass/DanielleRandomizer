@@ -13,6 +13,21 @@ Todo:
  - Whitelist turrets that use scripting
  - Lift technopath won't spawn as a nightmare
  - Whitelist Arboretum medical operator for saving Dahl sidequest
+ 
+Test run notes:
+ - Keycard connectivity - log in log, and remember that duplicate keycards exist
+ - Mimic slider - ensure that mimics don't spawn near human npcs
+     - Luka, Morgan's Office, Cargo Bay survivors
+ - Military operator dispenser - make it dispense friendlies
+ - Keycard names
+ - Assume the player is not able to complete the cook quest?
+ - Explosive tank health causing crashes?
+ - Don't unlock kletka door
+ - Randomize named phantoms
+ - Prerendered cutscene randomizer only does subtitles
+ - Include generic character lines in voice randomization
+ - Options for voice/body randomization
+ - body type swap?
 
 Notes:
  - Voltaic mimic is immortal again

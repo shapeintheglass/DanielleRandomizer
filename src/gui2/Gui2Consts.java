@@ -2,7 +2,7 @@ package gui2;
 
 public class Gui2Consts {
   public static final String WINDOW_TITLE = "Danielle Randomizer v%s";
-  public static final String VERSION = "0.451";
+  public static final String VERSION = "0.41";
 
   public static final String DEFAULT_SELF_DESTRUCT_TIMER = "60.000000";
   public static final String DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER = "30.000000";

@@ -431,7 +431,9 @@ public class RandomizerService extends Service<Void> {
     if (currentSettings.getGameplaySettings().getRandomizeKeycards()) {
       ProgressionGenerator progressionGenerator =
           new ProgressionGenerator(stationConnectivity, seed);
-      connectivityInfo.append(progressionGenerator.toString());
+      String progressionGenerationStr = progressionGenerator.toString(); 
+      connectivityInfo.append(progressionGenerationStr);
+      logger.info(progressionGenerationStr);
       KeycardFilter keycardFilter =
           new KeycardFilter(progressionGenerator.getKeycardConnectivity());
       levelRandomizer = levelRandomizer.addFilter(keycardFilter);

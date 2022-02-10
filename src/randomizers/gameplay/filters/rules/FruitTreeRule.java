@@ -37,7 +37,7 @@ public class FruitTreeRule implements Rule {
     String archetype = properties.getAttributeValue("archetype_PickupToHarvest");
 
     if (!archetype.isEmpty() && cfh.trigger(archetype, null)) {
-      String newArchetype = Utils.getNameForEntity(cfh.getPickupNonSurvivalEntity(archetype, null, r));
+      String newArchetype = Utils.getNameForEntity(cfh.getPickupHarvestableEntity(archetype, null, r));
 
       if (newArchetype != null) {
         properties.setAttribute("archetype_PickupToHarvest", newArchetype);
@@ -51,7 +51,7 @@ public class FruitTreeRule implements Rule {
     for (Element spawnOption : spawns) {
       String archetype = spawnOption.getAttributeValue("archetype_PickupToSpawn");
       if (!archetype.isEmpty() && cfh.trigger(archetype, null)) {
-        String newArchetype = Utils.getNameForEntity(cfh.getPickupNonSurvivalEntity(archetype, null, r));
+        String newArchetype = Utils.getNameForEntity(cfh.getPickupHarvestableEntity(archetype, null, r));
 
         if (newArchetype != null) {
           spawnOption.setAttribute("archetype_PickupToSpawn", newArchetype);
