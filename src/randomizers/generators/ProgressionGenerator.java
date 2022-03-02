@@ -4,10 +4,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.google.common.graph.ImmutableNetwork;
 import utils.KeycardConnectivityConsts;
 import utils.KeycardConnectivityConsts.Keycard;
@@ -25,7 +27,7 @@ public class ProgressionGenerator {
   private ImmutableMap<String, String> keycardConnectivity;
   private ImmutableNetwork<Level, Door> stationConnectivity;
   private ImmutableMap<Location, Keycard> locationsToKeycards;
-  private Map<Keycard, String> keycardsToReadableLocation;
+  private Multimap<Keycard, String> keycardsToReadableLocation;
 
   private ProgressionGraph progressionGraph;
   private long seed;
@@ -62,7 +64,7 @@ public class ProgressionGenerator {
 
   private void multimapToConnectivity() {
     Map<String, String> map = Maps.newHashMap();
-    keycardsToReadableLocation = Maps.newHashMap();
+    keycardsToReadableLocation = HashMultimap.create();
     for (Location l : Location.values()) {
       Keycard k = locationsToKeycards.get(l);
       map.put(KeycardConnectivityConsts.LOCATION_TO_LEVEL_NAME.get(l),
@@ -166,7 +168,7 @@ public class ProgressionGenerator {
 
     for (int i = 0; i < numIterations; i++) {
       Random r = new Random();
-      long seed = -3299655590852521848L;//r.nextLong();
+      long seed = 6025717307696252058L;//r.nextLong();
 
       ImmutableBiMap<Level, String> levelsToIds = new ImmutableBiMap.Builder<Level, String>()
           .put(Level.ARBORETUM, "1713490239386284818").put(Level.BRIDGE, "844024417275035158")

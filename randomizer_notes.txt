@@ -4,14 +4,10 @@ Todo:
  - Remaining 5 Prey Souls guns
  - Prey Souls Enemies
  - Make Prey Souls turrets scannable
- - Make 50/50 options into sliders
  - More guns
- - Randomized keycards
  - Less <X>
- - Avoid spawning 1G creatures in 0G
- - Pharma fab plans not working in survival mode
  - Whitelist turrets that use scripting
- - Lift technopath won't spawn as a nightmare
+ - Lift technopath, phantom won't spawn as a nightmare
  - Whitelist Arboretum medical operator for saving Dahl sidequest
  
 Test run notes:
