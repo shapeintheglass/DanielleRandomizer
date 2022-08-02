@@ -457,12 +457,17 @@ public class WindowController {
   @FXML
   protected void onChangeDirClicked(ActionEvent event) {
     DirectoryChooser dirChooser = new DirectoryChooser();
-    dirChooser.setInitialDirectory(new File(settings.getInstallDir()));
+    // Assert the initial directory is an actual file
+    File initialDir = new File(settings.getInstallDir());
+    if (initialDir.exists()) {
+      dirChooser.setInitialDirectory(initialDir);
+    }
     dirChooser.setTitle("Choose Prey Directory");
-    File chosenDir = dirChooser.showDialog(stage);
+
     try {
+      File chosenDir = dirChooser.showDialog(stage);
       directoryText.setText(chosenDir.getCanonicalPath());
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -930,28 +935,19 @@ public class WindowController {
 
     // TODO: Make this less of a hack
     GameplaySettings gs = GameplaySettings.getDefaultInstance().toBuilder()
-        .setRandomizeBreakables(ToggleWithSlider.newBuilder()
-              .setIsEnabled(false)
-              .setSliderValue(50)
-              .build())
-        .setRandomizeHackables(ToggleWithSlider.newBuilder()
-              .setIsEnabled(false)
-              .setSliderValue(50)
-              .build())
-        .setRandomizeRecyclers(ToggleWithSlider.newBuilder()
-              .setIsEnabled(false)
-              .setSliderValue(50)
-              .build())
-        .setRandomizeMimics(ToggleWithSlider.newBuilder()
-              .setIsEnabled(false)
-              .setSliderValue(5)
-              .build())
-            .build();
+        .setRandomizeBreakables(
+            ToggleWithSlider.newBuilder().setIsEnabled(false).setSliderValue(50).build())
+        .setRandomizeHackables(
+            ToggleWithSlider.newBuilder().setIsEnabled(false).setSliderValue(50).build())
+        .setRandomizeRecyclers(
+            ToggleWithSlider.newBuilder().setIsEnabled(false).setSliderValue(50).build())
+        .setRandomizeMimics(
+            ToggleWithSlider.newBuilder().setIsEnabled(false).setSliderValue(5).build())
+        .build();
 
     return Settings.newBuilder().setReleaseVersion(Gui2Consts.VERSION)
         .setInstallDir(Gui2Consts.DEFAULT_INSTALL_DIR).setSeed(Long.toString(initialSeed))
-        .setCosmeticSettings(CosmeticSettings.getDefaultInstance())
-        .setGameplaySettings(gs)
+        .setCosmeticSettings(CosmeticSettings.getDefaultInstance()).setGameplaySettings(gs)
         .setGameStartSettings(GameStartSettings.getDefaultInstance())
         .setMoreSettings(MoreSettings.getDefaultInstance())
         .setCheatSettings(CheatSettings.getDefaultInstance())
