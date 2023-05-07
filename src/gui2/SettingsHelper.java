@@ -113,22 +113,22 @@ public class SettingsHelper {
 
     if (settings.getMoreSettings()
         .getPreySoulsGuns()) {
-      addOptionToBuilder(builder, "Prey Souls - Guns");
+      addOptionToBuilder(builder, "Prey For Death - Guns");
     }
 
     if (settings.getMoreSettings()
         .getPreySoulsChipsets()) {
-      addOptionToBuilder(builder, "Prey Souls - Chipsets");
+      addOptionToBuilder(builder, "Prey For Death - Chipsets");
     }
 
     if (settings.getMoreSettings()
         .getPreySoulsEnemies()) {
-      addOptionToBuilder(builder, "Prey Souls - Enemies");
+      addOptionToBuilder(builder, "Prey For Death - Enemies");
     }
 
     if (settings.getMoreSettings()
         .getPreySoulsTurrets()) {
-      addOptionToBuilder(builder, "Prey Souls - Turrets");
+      addOptionToBuilder(builder, "Prey For Death - Turrets");
     }
 
 

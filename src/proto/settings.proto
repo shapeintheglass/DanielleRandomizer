@@ -20,6 +20,7 @@ message Settings {
   MoreSettings more_settings = 7;
   CheatSettings cheat_settings = 8;
   ExperimentalSettings exp_settings = 9;
+  repeated StartItem starting_items = 10;
 }
 
 message CosmeticSettings {
@@ -121,4 +122,9 @@ message GenericSpawnPresetRule {
   repeated int32 output_weights = 3;
   repeated string do_not_touch_tags = 4;
   repeated string do_not_output_tags = 5;
+}
+
+message StartItem {
+  string archetype = 1;
+  int32 quantity = 2;
 }

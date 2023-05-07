@@ -148,7 +148,8 @@
       "filters": [
         {
           "input_tags": [
-            "ArkPickups"
+            "ArkPickups",
+            "Neuromod_Calibration"
           ],
           "output_tags": [
             "ZeroGSuit",
@@ -198,7 +199,8 @@
       "filters": [
         {
           "input_tags": [
-            "ArkPickups"
+            "ArkPickups",
+            "Neuromod_Calibration"
           ],
           "output_tags": [
             "MissionItems",
@@ -245,7 +247,8 @@
       "filters": [
         {
           "input_tags": [
-            "ArkPickups"
+            "ArkPickups",
+            "Neuromod_Calibration"
           ],
           "output_tags": [
             "Bourbon",
@@ -1009,25 +1012,6 @@
           ],
           "output_tags": [
             "MarcoSimmons"
-          ],
-          "output_weights": [],
-          "do_not_touch_tags": [],
-          "do_not_output_tags": []
-        }
-      ]
-    },
-    {
-      "name": "All Prey Souls",
-      "desc": "All typhon and hostile operators are Prey Souls enemies.",
-      "filters": [
-        {
-          "input_tags": [
-            "ArkNpcs",
-            "Operators\\Generic\\Corrupted",
-            "ArkOperatorMilitary"
-          ],
-          "output_tags": [
-            "BloodPhantom"
           ],
           "output_weights": [],
           "do_not_touch_tags": [],

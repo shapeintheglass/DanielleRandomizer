@@ -205,7 +205,6 @@
                                           <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeKeycards" mnemonicParsing="false" text="Randomize keycards" />
-                                          <CheckBox fx:id="gameplayRandomizeGravity" disable="true" mnemonicParsing="false" text="Randomize gravity" />
                                           <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="\% recyclers (compared to fabricators)" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="\% repairable objects that are broken" />
                                           <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="\% hackable objects that are locked" />
@@ -219,7 +218,6 @@
                                           <Label text="Redistributes operator dispensers with an equal ratio." />
                                           <Label prefHeight="17.0" prefWidth="321.0" text="Shuffles connections between levels." />
                                           <Label prefHeight="17.0" prefWidth="337.0" text="Shuffles keycards." />
-                                          <Label disable="true" text="Randomizes gravity for every map other than GUTS/Exterior." />
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
                                                 <Slider fx:id="gameplayRecyclerSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
@@ -252,6 +250,7 @@
                                                 <Label fx:id="gameplayMimicPercent" disable="true" text="\%" />
                                              </children>
                                           </HBox>
+                                          <Label prefHeight="15.0" prefWidth="323.0" text="Note: Mimic slider &gt;50% can have performance issues." />
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
@@ -309,24 +308,22 @@
                                        <children>
                                           <Label text="For pickup item randomization:" />
                                           <CheckBox fx:id="moreGuns" mnemonicParsing="false" text="More guns" />
-                                          <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey Souls - Guns" />
-                                          <CheckBox fx:id="morePreySoulsChipsets" disable="true" mnemonicParsing="false" text="More items" />
+                                          <CheckBox fx:id="morePreySoulsGuns" mnemonicParsing="false" text="Prey For Death - Guns" />
                                           <Label text="For enemy randomization:" />
-                                          <CheckBox fx:id="morePreySoulsEnemies" disable="true" mnemonicParsing="false" text="Prey Souls - Enemies" />
+                                          <CheckBox fx:id="morePreySoulsEnemies" mnemonicParsing="false" text="Prey For Death - Enemies" />
                                           <Label text="For friendly NPC randomization:" />
-                                          <CheckBox fx:id="morePreySoulsTurrets" mnemonicParsing="false" text="Prey Souls - Turrets" />
+                                          <CheckBox fx:id="morePreySoulsTurrets" mnemonicParsing="false" text="Prey For Death - Turrets" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="230.0" prefWidth="389.0" spacing="15.0">
                                        <children>
                                           <Label />
                                           <Label text="Adds 24 guns from the &quot;More Guns&quot; mod." />
-                                          <Label text="Adds 16 weapons from the Prey Souls mod." />
-                                          <Label disable="true" prefHeight="17.0" prefWidth="360.0" text="Adds new chipsets (2 from Prey Souls) and fabrication plans." />
+                                          <Label text="Adds 16 weapons from the Prey For Death mod." />
                                           <Label />
-                                          <Label disable="true" text="Adds 16 enemies from the Prey Souls mod." />
+                                          <Label text="Adds new enemies, mostly from the Prey For Death mod." />
                                           <Label />
-                                          <Label text="Adds 3 turrets from the Prey Souls mod." />
+                                          <Label text="Adds 3 turrets from the Prey For Death mod." />
                                        </children>
                                     </VBox>
                                  </children>

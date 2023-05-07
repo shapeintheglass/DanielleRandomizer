@@ -2052,6 +2052,30 @@ public final class RandomizerSettings {
      * <code>.ExperimentalSettings exp_settings = 9;</code>
      */
     proto.RandomizerSettings.ExperimentalSettingsOrBuilder getExpSettingsOrBuilder();
+
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    java.util.List<proto.RandomizerSettings.StartItem> 
+        getStartingItemsList();
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    proto.RandomizerSettings.StartItem getStartingItems(int index);
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    int getStartingItemsCount();
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    java.util.List<? extends proto.RandomizerSettings.StartItemOrBuilder> 
+        getStartingItemsOrBuilderList();
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    proto.RandomizerSettings.StartItemOrBuilder getStartingItemsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code Settings}
@@ -2069,6 +2093,7 @@ public final class RandomizerSettings {
       seed_ = "";
       installDir_ = "";
       releaseVersion_ = "";
+      startingItems_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -2091,6 +2116,7 @@ public final class RandomizerSettings {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -2197,6 +2223,15 @@ public final class RandomizerSettings {
 
               break;
             }
+            case 82: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                startingItems_ = new java.util.ArrayList<proto.RandomizerSettings.StartItem>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              startingItems_.add(
+                  input.readMessage(proto.RandomizerSettings.StartItem.parser(), extensionRegistry));
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -2212,6 +2247,9 @@ public final class RandomizerSettings {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          startingItems_ = java.util.Collections.unmodifiableList(startingItems_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -2499,6 +2537,46 @@ public final class RandomizerSettings {
       return getExpSettings();
     }
 
+    public static final int STARTING_ITEMS_FIELD_NUMBER = 10;
+    private java.util.List<proto.RandomizerSettings.StartItem> startingItems_;
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    @java.lang.Override
+    public java.util.List<proto.RandomizerSettings.StartItem> getStartingItemsList() {
+      return startingItems_;
+    }
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends proto.RandomizerSettings.StartItemOrBuilder> 
+        getStartingItemsOrBuilderList() {
+      return startingItems_;
+    }
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    @java.lang.Override
+    public int getStartingItemsCount() {
+      return startingItems_.size();
+    }
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.StartItem getStartingItems(int index) {
+      return startingItems_.get(index);
+    }
+    /**
+     * <code>repeated .StartItem starting_items = 10;</code>
+     */
+    @java.lang.Override
+    public proto.RandomizerSettings.StartItemOrBuilder getStartingItemsOrBuilder(
+        int index) {
+      return startingItems_.get(index);
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2539,6 +2617,9 @@ public final class RandomizerSettings {
       }
       if (expSettings_ != null) {
         output.writeMessage(9, getExpSettings());
+      }
+      for (int i = 0; i < startingItems_.size(); i++) {
+        output.writeMessage(10, startingItems_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -2581,6 +2662,10 @@ public final class RandomizerSettings {
       if (expSettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(9, getExpSettings());
+      }
+      for (int i = 0; i < startingItems_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(10, startingItems_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2633,6 +2718,8 @@ public final class RandomizerSettings {
         if (!getExpSettings()
             .equals(other.getExpSettings())) return false;
       }
+      if (!getStartingItemsList()
+          .equals(other.getStartingItemsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2673,6 +2760,10 @@ public final class RandomizerSettings {
       if (hasExpSettings()) {
         hash = (37 * hash) + EXP_SETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getExpSettings().hashCode();
+      }
+      if (getStartingItemsCount() > 0) {
+        hash = (37 * hash) + STARTING_ITEMS_FIELD_NUMBER;
+        hash = (53 * hash) + getStartingItemsList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -2802,6 +2893,7 @@ public final class RandomizerSettings {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getStartingItemsFieldBuilder();
         }
       }
       @java.lang.Override
@@ -2849,6 +2941,12 @@ public final class RandomizerSettings {
           expSettings_ = null;
           expSettingsBuilder_ = null;
         }
+        if (startingItemsBuilder_ == null) {
+          startingItems_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          startingItemsBuilder_.clear();
+        }
         return this;
       }
 
@@ -2875,6 +2973,7 @@ public final class RandomizerSettings {
       @java.lang.Override
       public proto.RandomizerSettings.Settings buildPartial() {
         proto.RandomizerSettings.Settings result = new proto.RandomizerSettings.Settings(this);
+        int from_bitField0_ = bitField0_;
         result.seed_ = seed_;
         result.installDir_ = installDir_;
         result.releaseVersion_ = releaseVersion_;
@@ -2907,6 +3006,15 @@ public final class RandomizerSettings {
           result.expSettings_ = expSettings_;
         } else {
           result.expSettings_ = expSettingsBuilder_.build();
+        }
+        if (startingItemsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            startingItems_ = java.util.Collections.unmodifiableList(startingItems_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.startingItems_ = startingItems_;
+        } else {
+          result.startingItems_ = startingItemsBuilder_.build();
         }
         onBuilt();
         return result;
@@ -2986,6 +3094,32 @@ public final class RandomizerSettings {
         if (other.hasExpSettings()) {
           mergeExpSettings(other.getExpSettings());
         }
+        if (startingItemsBuilder_ == null) {
+          if (!other.startingItems_.isEmpty()) {
+            if (startingItems_.isEmpty()) {
+              startingItems_ = other.startingItems_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureStartingItemsIsMutable();
+              startingItems_.addAll(other.startingItems_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.startingItems_.isEmpty()) {
+            if (startingItemsBuilder_.isEmpty()) {
+              startingItemsBuilder_.dispose();
+              startingItemsBuilder_ = null;
+              startingItems_ = other.startingItems_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              startingItemsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getStartingItemsFieldBuilder() : null;
+            } else {
+              startingItemsBuilder_.addAllMessages(other.startingItems_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -3014,6 +3148,7 @@ public final class RandomizerSettings {
         }
         return this;
       }
+      private int bitField0_;
 
       private java.lang.Object seed_ = "";
       /**
@@ -3955,6 +4090,246 @@ public final class RandomizerSettings {
           expSettings_ = null;
         }
         return expSettingsBuilder_;
+      }
+
+      private java.util.List<proto.RandomizerSettings.StartItem> startingItems_ =
+        java.util.Collections.emptyList();
+      private void ensureStartingItemsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          startingItems_ = new java.util.ArrayList<proto.RandomizerSettings.StartItem>(startingItems_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.RandomizerSettings.StartItem, proto.RandomizerSettings.StartItem.Builder, proto.RandomizerSettings.StartItemOrBuilder> startingItemsBuilder_;
+
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public java.util.List<proto.RandomizerSettings.StartItem> getStartingItemsList() {
+        if (startingItemsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(startingItems_);
+        } else {
+          return startingItemsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public int getStartingItemsCount() {
+        if (startingItemsBuilder_ == null) {
+          return startingItems_.size();
+        } else {
+          return startingItemsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public proto.RandomizerSettings.StartItem getStartingItems(int index) {
+        if (startingItemsBuilder_ == null) {
+          return startingItems_.get(index);
+        } else {
+          return startingItemsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder setStartingItems(
+          int index, proto.RandomizerSettings.StartItem value) {
+        if (startingItemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStartingItemsIsMutable();
+          startingItems_.set(index, value);
+          onChanged();
+        } else {
+          startingItemsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder setStartingItems(
+          int index, proto.RandomizerSettings.StartItem.Builder builderForValue) {
+        if (startingItemsBuilder_ == null) {
+          ensureStartingItemsIsMutable();
+          startingItems_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          startingItemsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder addStartingItems(proto.RandomizerSettings.StartItem value) {
+        if (startingItemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStartingItemsIsMutable();
+          startingItems_.add(value);
+          onChanged();
+        } else {
+          startingItemsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder addStartingItems(
+          int index, proto.RandomizerSettings.StartItem value) {
+        if (startingItemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStartingItemsIsMutable();
+          startingItems_.add(index, value);
+          onChanged();
+        } else {
+          startingItemsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder addStartingItems(
+          proto.RandomizerSettings.StartItem.Builder builderForValue) {
+        if (startingItemsBuilder_ == null) {
+          ensureStartingItemsIsMutable();
+          startingItems_.add(builderForValue.build());
+          onChanged();
+        } else {
+          startingItemsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder addStartingItems(
+          int index, proto.RandomizerSettings.StartItem.Builder builderForValue) {
+        if (startingItemsBuilder_ == null) {
+          ensureStartingItemsIsMutable();
+          startingItems_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          startingItemsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder addAllStartingItems(
+          java.lang.Iterable<? extends proto.RandomizerSettings.StartItem> values) {
+        if (startingItemsBuilder_ == null) {
+          ensureStartingItemsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, startingItems_);
+          onChanged();
+        } else {
+          startingItemsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder clearStartingItems() {
+        if (startingItemsBuilder_ == null) {
+          startingItems_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          startingItemsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public Builder removeStartingItems(int index) {
+        if (startingItemsBuilder_ == null) {
+          ensureStartingItemsIsMutable();
+          startingItems_.remove(index);
+          onChanged();
+        } else {
+          startingItemsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public proto.RandomizerSettings.StartItem.Builder getStartingItemsBuilder(
+          int index) {
+        return getStartingItemsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public proto.RandomizerSettings.StartItemOrBuilder getStartingItemsOrBuilder(
+          int index) {
+        if (startingItemsBuilder_ == null) {
+          return startingItems_.get(index);  } else {
+          return startingItemsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public java.util.List<? extends proto.RandomizerSettings.StartItemOrBuilder> 
+           getStartingItemsOrBuilderList() {
+        if (startingItemsBuilder_ != null) {
+          return startingItemsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(startingItems_);
+        }
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public proto.RandomizerSettings.StartItem.Builder addStartingItemsBuilder() {
+        return getStartingItemsFieldBuilder().addBuilder(
+            proto.RandomizerSettings.StartItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public proto.RandomizerSettings.StartItem.Builder addStartingItemsBuilder(
+          int index) {
+        return getStartingItemsFieldBuilder().addBuilder(
+            index, proto.RandomizerSettings.StartItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .StartItem starting_items = 10;</code>
+       */
+      public java.util.List<proto.RandomizerSettings.StartItem.Builder> 
+           getStartingItemsBuilderList() {
+        return getStartingItemsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.RandomizerSettings.StartItem, proto.RandomizerSettings.StartItem.Builder, proto.RandomizerSettings.StartItemOrBuilder> 
+          getStartingItemsFieldBuilder() {
+        if (startingItemsBuilder_ == null) {
+          startingItemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.RandomizerSettings.StartItem, proto.RandomizerSettings.StartItem.Builder, proto.RandomizerSettings.StartItemOrBuilder>(
+                  startingItems_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          startingItems_ = null;
+        }
+        return startingItemsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -14603,6 +14978,644 @@ public final class RandomizerSettings {
 
   }
 
+  public interface StartItemOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:StartItem)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string archetype = 1;</code>
+     * @return The archetype.
+     */
+    java.lang.String getArchetype();
+    /**
+     * <code>string archetype = 1;</code>
+     * @return The bytes for archetype.
+     */
+    com.google.protobuf.ByteString
+        getArchetypeBytes();
+
+    /**
+     * <code>int32 quantity = 2;</code>
+     * @return The quantity.
+     */
+    int getQuantity();
+  }
+  /**
+   * Protobuf type {@code StartItem}
+   */
+  public static final class StartItem extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:StartItem)
+      StartItemOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use StartItem.newBuilder() to construct.
+    private StartItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private StartItem() {
+      archetype_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new StartItem();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private StartItem(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              archetype_ = s;
+              break;
+            }
+            case 16: {
+
+              quantity_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.RandomizerSettings.internal_static_StartItem_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.RandomizerSettings.internal_static_StartItem_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.RandomizerSettings.StartItem.class, proto.RandomizerSettings.StartItem.Builder.class);
+    }
+
+    public static final int ARCHETYPE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object archetype_;
+    /**
+     * <code>string archetype = 1;</code>
+     * @return The archetype.
+     */
+    @java.lang.Override
+    public java.lang.String getArchetype() {
+      java.lang.Object ref = archetype_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        archetype_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string archetype = 1;</code>
+     * @return The bytes for archetype.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getArchetypeBytes() {
+      java.lang.Object ref = archetype_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        archetype_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int QUANTITY_FIELD_NUMBER = 2;
+    private int quantity_;
+    /**
+     * <code>int32 quantity = 2;</code>
+     * @return The quantity.
+     */
+    @java.lang.Override
+    public int getQuantity() {
+      return quantity_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getArchetypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, archetype_);
+      }
+      if (quantity_ != 0) {
+        output.writeInt32(2, quantity_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getArchetypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, archetype_);
+      }
+      if (quantity_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, quantity_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.RandomizerSettings.StartItem)) {
+        return super.equals(obj);
+      }
+      proto.RandomizerSettings.StartItem other = (proto.RandomizerSettings.StartItem) obj;
+
+      if (!getArchetype()
+          .equals(other.getArchetype())) return false;
+      if (getQuantity()
+          != other.getQuantity()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ARCHETYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getArchetype().hashCode();
+      hash = (37 * hash) + QUANTITY_FIELD_NUMBER;
+      hash = (53 * hash) + getQuantity();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.StartItem parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.StartItem parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.RandomizerSettings.StartItem parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.RandomizerSettings.StartItem prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code StartItem}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:StartItem)
+        proto.RandomizerSettings.StartItemOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.RandomizerSettings.internal_static_StartItem_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.RandomizerSettings.internal_static_StartItem_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.RandomizerSettings.StartItem.class, proto.RandomizerSettings.StartItem.Builder.class);
+      }
+
+      // Construct using proto.RandomizerSettings.StartItem.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        archetype_ = "";
+
+        quantity_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.RandomizerSettings.internal_static_StartItem_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.StartItem getDefaultInstanceForType() {
+        return proto.RandomizerSettings.StartItem.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.StartItem build() {
+        proto.RandomizerSettings.StartItem result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.RandomizerSettings.StartItem buildPartial() {
+        proto.RandomizerSettings.StartItem result = new proto.RandomizerSettings.StartItem(this);
+        result.archetype_ = archetype_;
+        result.quantity_ = quantity_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.RandomizerSettings.StartItem) {
+          return mergeFrom((proto.RandomizerSettings.StartItem)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.RandomizerSettings.StartItem other) {
+        if (other == proto.RandomizerSettings.StartItem.getDefaultInstance()) return this;
+        if (!other.getArchetype().isEmpty()) {
+          archetype_ = other.archetype_;
+          onChanged();
+        }
+        if (other.getQuantity() != 0) {
+          setQuantity(other.getQuantity());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.RandomizerSettings.StartItem parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.RandomizerSettings.StartItem) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object archetype_ = "";
+      /**
+       * <code>string archetype = 1;</code>
+       * @return The archetype.
+       */
+      public java.lang.String getArchetype() {
+        java.lang.Object ref = archetype_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          archetype_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string archetype = 1;</code>
+       * @return The bytes for archetype.
+       */
+      public com.google.protobuf.ByteString
+          getArchetypeBytes() {
+        java.lang.Object ref = archetype_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          archetype_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string archetype = 1;</code>
+       * @param value The archetype to set.
+       * @return This builder for chaining.
+       */
+      public Builder setArchetype(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        archetype_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string archetype = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearArchetype() {
+        
+        archetype_ = getDefaultInstance().getArchetype();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string archetype = 1;</code>
+       * @param value The bytes for archetype to set.
+       * @return This builder for chaining.
+       */
+      public Builder setArchetypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        archetype_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int quantity_ ;
+      /**
+       * <code>int32 quantity = 2;</code>
+       * @return The quantity.
+       */
+      @java.lang.Override
+      public int getQuantity() {
+        return quantity_;
+      }
+      /**
+       * <code>int32 quantity = 2;</code>
+       * @param value The quantity to set.
+       * @return This builder for chaining.
+       */
+      public Builder setQuantity(int value) {
+        
+        quantity_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 quantity = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearQuantity() {
+        
+        quantity_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:StartItem)
+    }
+
+    // @@protoc_insertion_point(class_scope:StartItem)
+    private static final proto.RandomizerSettings.StartItem DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.RandomizerSettings.StartItem();
+    }
+
+    public static proto.RandomizerSettings.StartItem getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<StartItem>
+        PARSER = new com.google.protobuf.AbstractParser<StartItem>() {
+      @java.lang.Override
+      public StartItem parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new StartItem(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<StartItem> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<StartItem> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.RandomizerSettings.StartItem getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_AllPresets_descriptor;
   private static final 
@@ -14658,6 +15671,11 @@ public final class RandomizerSettings {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_GenericSpawnPresetRule_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_StartItem_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_StartItem_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -14673,7 +15691,7 @@ public final class RandomizerSettings {
       ".GenericSpawnPresetFilter\0227\n\024enemy_spawn" +
       "_settings\030\003 \003(\0132\031.GenericSpawnPresetFilt" +
       "er\0225\n\022npc_spawn_settings\030\004 \003(\0132\031.Generic" +
-      "SpawnPresetFilter\"\316\002\n\010Settings\022\014\n\004seed\030\001" +
+      "SpawnPresetFilter\"\362\002\n\010Settings\022\014\n\004seed\030\001" +
       " \001(\t\022\023\n\013install_dir\030\002 \001(\t\022\027\n\017release_ver" +
       "sion\030\003 \001(\t\022,\n\021cosmetic_settings\030\004 \001(\0132\021." +
       "CosmeticSettings\022,\n\021gameplay_settings\030\005 " +
@@ -14681,63 +15699,65 @@ public final class RandomizerSettings {
       "tings\030\006 \001(\0132\022.GameStartSettings\022$\n\rmore_" +
       "settings\030\007 \001(\0132\r.MoreSettings\022&\n\016cheat_s" +
       "ettings\030\010 \001(\0132\016.CheatSettings\022+\n\014exp_set" +
-      "tings\030\t \001(\0132\025.ExperimentalSettings\"\277\001\n\020C" +
-      "osmeticSettings\022\030\n\020randomize_bodies\030\001 \001(" +
-      "\010\022\034\n\024randomize_voicelines\030\002 \001(\010\022\027\n\017rando" +
-      "mize_music\030\003 \001(\010\022\036\n\026randomize_player_mod" +
-      "el\030\004 \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022" +
-      "\033\n\023custom_loading_tips\030\006 \001(\010\"\226\005\n\020Gamepla" +
-      "ySettings\0226\n\023item_spawn_settings\030\001 \001(\0132\031" +
-      ".GenericSpawnPresetFilter\0227\n\024enemy_spawn" +
-      "_settings\030\002 \001(\0132\031.GenericSpawnPresetFilt" +
-      "er\022\031\n\021randomize_station\030\003 \001(\010\022\032\n\022randomi" +
-      "ze_keycards\030\017 \001(\010\022\033\n\023randomize_neuromods" +
-      "\030\004 \001(\010\022 \n\030randomize_fab_plan_costs\030\005 \001(\010" +
-      "\022\'\n\037randomize_neuromod_requirements\030\020 \001(" +
-      "\010\022\031\n\021randomize_gravity\030\021 \001(\010\022.\n\023randomiz" +
-      "e_recyclers\030\006 \001(\0132\021.ToggleWithSlider\022/\n\024" +
-      "randomize_dispensers\030\007 \001(\0132\021.ToggleWithS" +
-      "lider\022/\n\024randomize_breakables\030\010 \001(\0132\021.To" +
-      "ggleWithSlider\022.\n\023randomize_hackables\030\t " +
-      "\001(\0132\021.ToggleWithSlider\022+\n\020randomize_mimi" +
-      "cs\030\016 \001(\0132\021.ToggleWithSlider\022\032\n\022pickup_pr" +
-      "eset_name\030\n \001(\t\022\030\n\020prop_preset_name\030\013 \001(" +
-      "\t\022\031\n\021enemy_preset_name\030\014 \001(\t\022\027\n\017npc_pres" +
-      "et_name\030\r \001(\t\":\n\020ToggleWithSlider\022\021\n\tisE" +
-      "nabled\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(\005\"\215\001\n\021Ga" +
-      "meStartSettings\022\035\n\025add_loot_to_apartment" +
-      "\030\001 \001(\010\022\033\n\023start_on_second_day\030\002 \001(\010\022\033\n\023s" +
-      "kip_jovan_cutscene\030\003 \001(\010\022\037\n\027start_outsid" +
-      "e_apartment\030\004 \001(\010\"\217\001\n\014MoreSettings\022\021\n\tmo" +
-      "re_guns\030\001 \001(\010\022\027\n\017prey_souls_guns\030\002 \001(\010\022\033" +
-      "\n\023prey_souls_chipsets\030\003 \001(\010\022\032\n\022prey_soul" +
-      "s_enemies\030\004 \001(\010\022\032\n\022prey_souls_turrets\030\005 " +
-      "\001(\010\"\337\003\n\rCheatSettings\022\024\n\014open_station\030\001 " +
-      "\001(\010\022\030\n\020unlock_all_scans\030\002 \001(\010\022\025\n\rfriendl" +
-      "y_npcs\030\003 \001(\010\022\030\n\020use_custom_spawn\030\004 \001(\010\022;" +
-      "\n\025custom_spawn_location\030\005 \001(\0162\034.CheatSet" +
-      "tings.SpawnLocation\022\034\n\024game_token_overri" +
-      "des\030\006 \001(\t\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n" +
-      "\006RANDOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022" +
-      "\021\n\rPSYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETU" +
-      "M\020\006\022\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DE" +
-      "EP_STORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPP" +
-      "ORT\020\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022" +
-      "\014\n\010EXTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SEL" +
-      "ECT\020\020\"\360\001\n\024ExperimentalSettings\022\030\n\020wander" +
-      "ing_humans\030\001 \001(\010\022\026\n\016living_corpses\030\002 \001(\010" +
-      "\022\037\n\027zero_gravity_everywhere\030\003 \001(\010\022&\n\036ena" +
-      "ble_gravity_in_ext_and_guts\030\004 \001(\010\022\033\n\023sta" +
-      "rt_self_destruct\030\005 \001(\010\022\033\n\023self_destruct_" +
-      "timer\030\006 \001(\t\022#\n\033self_destruct_shuttle_tim" +
-      "er\030\007 \001(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004" +
-      "name\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(" +
-      "\0132\027.GenericSpawnPresetRule\"\220\001\n\026GenericSp" +
-      "awnPresetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013out" +
-      "put_tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031" +
-      "\n\021do_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_outp" +
-      "ut_tags\030\005 \003(\tB\033\n\005protoB\022RandomizerSettin" +
-      "gsb\006proto3"
+      "tings\030\t \001(\0132\025.ExperimentalSettings\022\"\n\016st" +
+      "arting_items\030\n \003(\0132\n.StartItem\"\277\001\n\020Cosme" +
+      "ticSettings\022\030\n\020randomize_bodies\030\001 \001(\010\022\034\n" +
+      "\024randomize_voicelines\030\002 \001(\010\022\027\n\017randomize" +
+      "_music\030\003 \001(\010\022\036\n\026randomize_player_model\030\004" +
+      " \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022\033\n\023c" +
+      "ustom_loading_tips\030\006 \001(\010\"\226\005\n\020GameplaySet" +
+      "tings\0226\n\023item_spawn_settings\030\001 \001(\0132\031.Gen" +
+      "ericSpawnPresetFilter\0227\n\024enemy_spawn_set" +
+      "tings\030\002 \001(\0132\031.GenericSpawnPresetFilter\022\031" +
+      "\n\021randomize_station\030\003 \001(\010\022\032\n\022randomize_k" +
+      "eycards\030\017 \001(\010\022\033\n\023randomize_neuromods\030\004 \001" +
+      "(\010\022 \n\030randomize_fab_plan_costs\030\005 \001(\010\022\'\n\037" +
+      "randomize_neuromod_requirements\030\020 \001(\010\022\031\n" +
+      "\021randomize_gravity\030\021 \001(\010\022.\n\023randomize_re" +
+      "cyclers\030\006 \001(\0132\021.ToggleWithSlider\022/\n\024rand" +
+      "omize_dispensers\030\007 \001(\0132\021.ToggleWithSlide" +
+      "r\022/\n\024randomize_breakables\030\010 \001(\0132\021.Toggle" +
+      "WithSlider\022.\n\023randomize_hackables\030\t \001(\0132" +
+      "\021.ToggleWithSlider\022+\n\020randomize_mimics\030\016" +
+      " \001(\0132\021.ToggleWithSlider\022\032\n\022pickup_preset" +
+      "_name\030\n \001(\t\022\030\n\020prop_preset_name\030\013 \001(\t\022\031\n" +
+      "\021enemy_preset_name\030\014 \001(\t\022\027\n\017npc_preset_n" +
+      "ame\030\r \001(\t\":\n\020ToggleWithSlider\022\021\n\tisEnabl" +
+      "ed\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(\005\"\215\001\n\021GameSt" +
+      "artSettings\022\035\n\025add_loot_to_apartment\030\001 \001" +
+      "(\010\022\033\n\023start_on_second_day\030\002 \001(\010\022\033\n\023skip_" +
+      "jovan_cutscene\030\003 \001(\010\022\037\n\027start_outside_ap" +
+      "artment\030\004 \001(\010\"\217\001\n\014MoreSettings\022\021\n\tmore_g" +
+      "uns\030\001 \001(\010\022\027\n\017prey_souls_guns\030\002 \001(\010\022\033\n\023pr" +
+      "ey_souls_chipsets\030\003 \001(\010\022\032\n\022prey_souls_en" +
+      "emies\030\004 \001(\010\022\032\n\022prey_souls_turrets\030\005 \001(\010\"" +
+      "\337\003\n\rCheatSettings\022\024\n\014open_station\030\001 \001(\010\022" +
+      "\030\n\020unlock_all_scans\030\002 \001(\010\022\025\n\rfriendly_np" +
+      "cs\030\003 \001(\010\022\030\n\020use_custom_spawn\030\004 \001(\010\022;\n\025cu" +
+      "stom_spawn_location\030\005 \001(\0162\034.CheatSetting" +
+      "s.SpawnLocation\022\034\n\024game_token_overrides\030" +
+      "\006 \001(\t\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RAN" +
+      "DOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\rP" +
+      "SYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006\022" +
+      "\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_S" +
+      "TORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT\020" +
+      "\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010E" +
+      "XTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SELECT\020" +
+      "\020\"\360\001\n\024ExperimentalSettings\022\030\n\020wandering_" +
+      "humans\030\001 \001(\010\022\026\n\016living_corpses\030\002 \001(\010\022\037\n\027" +
+      "zero_gravity_everywhere\030\003 \001(\010\022&\n\036enable_" +
+      "gravity_in_ext_and_guts\030\004 \001(\010\022\033\n\023start_s" +
+      "elf_destruct\030\005 \001(\010\022\033\n\023self_destruct_time" +
+      "r\030\006 \001(\t\022#\n\033self_destruct_shuttle_timer\030\007" +
+      " \001(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name" +
+      "\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027." +
+      "GenericSpawnPresetRule\"\220\001\n\026GenericSpawnP" +
+      "resetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_" +
+      "tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do" +
+      "_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_t" +
+      "ags\030\005 \003(\t\"0\n\tStartItem\022\021\n\tarchetype\030\001 \001(" +
+      "\t\022\020\n\010quantity\030\002 \001(\005B\033\n\005protoB\022Randomizer" +
+      "Settingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -14754,7 +15774,7 @@ public final class RandomizerSettings {
     internal_static_Settings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Settings_descriptor,
-        new java.lang.String[] { "Seed", "InstallDir", "ReleaseVersion", "CosmeticSettings", "GameplaySettings", "GameStartSettings", "MoreSettings", "CheatSettings", "ExpSettings", });
+        new java.lang.String[] { "Seed", "InstallDir", "ReleaseVersion", "CosmeticSettings", "GameplaySettings", "GameStartSettings", "MoreSettings", "CheatSettings", "ExpSettings", "StartingItems", });
     internal_static_CosmeticSettings_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_CosmeticSettings_fieldAccessorTable = new
@@ -14809,6 +15829,12 @@ public final class RandomizerSettings {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GenericSpawnPresetRule_descriptor,
         new java.lang.String[] { "InputTags", "OutputTags", "OutputWeights", "DoNotTouchTags", "DoNotOutputTags", });
+    internal_static_StartItem_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_StartItem_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_StartItem_descriptor,
+        new java.lang.String[] { "Archetype", "Quantity", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

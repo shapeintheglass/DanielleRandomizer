@@ -26,10 +26,10 @@ public class ItemMultiplierHelper {
 
   private static ImmutableSet<String> FUCK_IT_TIER = ImmutableSet.of("Ingredients");
   private static ImmutableSet<String> MAYBE_A_LOT_TIER = ImmutableSet.of("Ammo");
-  private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("Food", "EMPGrenades",
+  private static ImmutableSet<String> MAYBE_A_FEW_TIER = ImmutableSet.of("EMPGrenades",
       "LureGrenades", "RecyclerGrenades", "NullwaveTransmitter", "RecyclerJunk");
   private static ImmutableSet<String> ONLY_ONE_TIER =
-      ImmutableSet.of("FabricationPlans", "Weapons", "ArkPhysicsProps");
+      ImmutableSet.of("FabricationPlans", "Weapons", "ArkPhysicsProps", "Food");
 
   public static Tier getTierForEntity(Element e) {
     Set<String> tags = Utils.getTags(e);

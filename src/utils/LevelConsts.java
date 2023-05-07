@@ -44,20 +44,36 @@ public class LevelConsts {
       "DoubleWrench", "Mimic_Placeholder", "OperatorGrenade", "ShotgunPreorderFabPlan",
       "ArkContainer", "MedKit_Wall_Mounted", "ExplosiveTank_Dynamic");
 
+  // Hard-coded list of tags that must never be randomized to avoid softlocking the game.
   public static final List<String> DO_NOT_TOUCH_NPC_TAGS = Lists.newArrayList(
+      // Changing the weavers in Psychotronics will softlock the game at live extraction.
       "research/psychotronics;ArkNpcSpawner_Weaver6",
       "research/psychotronics;ArkNpcSpawner_Weaver2",
-      "research/psychotronics;ArkNpcSpawner_Weaver4", "executive/arboretum;ArkNpcSpawner_Telepath1",
-      "executive/arboretum;Spawner_GreenhouseTelepath", "executive/crewfacilities;ArkNpcSpawner16",
+      "research/psychotronics;ArkNpcSpawner_Weaver4",
+      "executive/arboretum;ArkNpcSpawner_Telepath1",
+      "executive/arboretum;Spawner_GreenhouseTelepath",
+      // Changing the telepaths in Crew Quarters will softlock the cook's sidequest. 
+      "executive/crewfacilities;ArkNpcSpawner16",
       "executive/crewfacilities;ArkNpcSpawner_Telepath2",
-      "station/exterior;ArkNpcSpawner_Telepath4", "engineering/lifesupport;ArkNpcSpawner_Telepath1",
-      "MilitaryOperatorCopycat", "FakeTechnopath", "Operators\\Named", "Kaspar",
-      "engineering/cargobay;ArkNpcSpawner_Weaver3", "engineering/cargobay;ArkNpcSpawner_Weaver",
-      "engineering/cargobay;ArkNpcSpawner_Weaver5");
+      "station/exterior;ArkNpcSpawner_Telepath4",
+      "engineering/lifesupport;ArkNpcSpawner_Telepath1",
+      "MilitaryOperatorCopycat",
+      "Operators\\Named",
+      "Kaspar",
+      "engineering/cargobay;ArkNpcSpawner_Weaver3",
+      "engineering/cargobay;ArkNpcSpawner_Weaver",
+      "engineering/cargobay;ArkNpcSpawner_Weaver5",
+      // The lift technopath and phantom
+      "research/lobby;ArkNpcSpawner_Technopath1",
+      "research/lobby;ArkNpcSpawner_BasePhantom5",
+      // Life support technopath
+      "FakeTechnopath",
+      "engineering/lifesupport;ArkNpcSpawner_Technopath1");
 
+  // Hard-coded list of tags that must never be spawned to avoid causing issues with gameplay
   public static final List<String> DO_NOT_OUTPUT_NPC_TAGS =
       Lists.newArrayList("Tentacle_Large_Guard", "Tentacle_Medium_Guard", "Tentacle_Small_Guard",
-          "FakeTechnopath", "Cystoid_IgnorePlayer", "EthericDoppelganger", "MilitaryOperatorFriendly");
+          "FakeTechnopath",                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "Cystoid_IgnorePlayer", "EthericDoppelganger", "MilitaryOperatorFriendly");
 
   // Sets global quest states to unlock important areas.
   public static final ImmutableMap<String, String> UNLOCK_QUESTS_GAME_TOKENS =
@@ -90,4 +106,5 @@ public class LevelConsts {
   // Note: These don't work
   public static final ImmutableMap<String, String> UNLOCK_LIFT_TOKENS =
       ImmutableMap.of("Lobby.TechnoPathDeadForElevator", "true", "Lobby.LiftAtTop", "true");
+ 
 }

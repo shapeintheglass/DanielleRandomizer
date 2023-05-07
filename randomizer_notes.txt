@@ -1,3 +1,38 @@
+     <Node Id="1251" Class="Inventory:ItemAdd" pos="980,510,0">
+      <Inputs entityId="0" archetype="ArkPickups.Player.Neuromod" quantity="1" playfanfare="1"/>
+     </Node>
+
+     <Node Id="1252" Class="Actor:LocalPlayer" pos="620,570,0">
+      <Inputs />
+     </Node>
+
+     <Node Id="2481" Class="Inventory:ItemAdd" pos="1360,520,0">
+      <Inputs entityId="0" archetype="ArkPickups.Crafting.FabricationPlans.PsiHypoFabPlan" quantity="1" playfanfare="1"/>
+     </Node>
+     
+     <Node Id="1254" Class="Ark:Dialog:ConversationEvent" pos="360,430,0">
+      <Inputs conversation_Conversation="4349723564913612474"/>
+     </Node>
+     
+
+
+     <Edge nodeIn="1251" nodeOut="1252" portIn="entityId" portOut="entityId" enabled="1"/>
+     <Edge nodeIn="2481" nodeOut="1252" portIn="entityId" portOut="entityId" enabled="1"/>
+     <Edge nodeIn="1251" nodeOut="1254" portIn="add" portOut="OnComplete" enabled="1"/>
+     <Edge nodeIn="1251" nodeOut="1254" portIn="add" portOut="OnInterrupt" enabled="1"/>
+     
+Notes:
+ - Grant a wrench and gloo gun directly into inventory (allows bypassing GUTS fan)
+ - Skip cutscenes
+ - Teleport player to random map
+ - Fix anti-mimic zones, they don't seem to work
+ - Fix heads for NPCs (incorporate husks)
+ - Fix jetpack for helmet npcs
+ - Remove gravity randomization, it's not fun
+ - Add friendly mil op + friendly mil op dispenser for dispenser rando
+ - whitelist the crystal in alex's office so we can break it
+ - whitelist aaron ingram terminal
+
 Todo:
  - Fix crashing issue on Chaotic preset (likely due to turrets --> operator)
  - Localization support

@@ -129,8 +129,6 @@ public class WindowController {
   @FXML
   private CheckBox gameplayRandomizeKeycards;
   @FXML
-  private CheckBox gameplayRandomizeGravity;
-  @FXML
   private CheckBox gameplayRandomizeRecyclers;
   @FXML
   private Slider gameplayRecyclerSlider;
@@ -181,8 +179,6 @@ public class WindowController {
   private CheckBox moreGuns;
   @FXML
   private CheckBox morePreySoulsGuns;
-  @FXML
-  private CheckBox morePreySoulsChipsets;
   @FXML
   private CheckBox morePreySoulsEnemies;
   @FXML
@@ -254,15 +250,13 @@ public class WindowController {
 
   @FXML
   protected void initialize() {
-    checkboxes = ImmutableList.of(cosmeticCheckboxBodies, cosmeticCheckboxVoices,
-        cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel, cosmeticCheckboxPlanetSize,
-        cosmeticCheckboxCustomTips, gameplayRandomizeStation, gameplayRandomizeNeuromods,
-        gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeGravity,
-        gameplayRandomizeDispensers, startCheckboxDay2, startCheckboxAddAllEquipment,
-        startCheckboxSkipJovan, startCheckboxOutsideApartment, moreGuns, morePreySoulsGuns,
-        morePreySoulsChipsets, morePreySoulsEnemies, morePreySoulsTurrets, cheatsCheckboxAllScans,
-        cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, expCheckboxEnableGravity,
-        expCheckboxGravity, expCheckboxSelfDestruct, expCheckboxWander, expLivingCorpses);
+    checkboxes = ImmutableList.of(
+        cosmeticCheckboxBodies, cosmeticCheckboxVoices, cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel, cosmeticCheckboxPlanetSize, cosmeticCheckboxCustomTips, 
+        gameplayRandomizeStation, gameplayRandomizeNeuromods, gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeDispensers,
+        startCheckboxDay2, startCheckboxAddAllEquipment, startCheckboxSkipJovan, startCheckboxOutsideApartment, 
+        moreGuns, morePreySoulsGuns, morePreySoulsEnemies, morePreySoulsTurrets, 
+        cheatsCheckboxAllScans, cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, cheatsCheckboxFriendlyNpcs,
+        expCheckboxEnableGravity, expCheckboxGravity, expCheckboxSelfDestruct, expCheckboxWander, expLivingCorpses);
 
     toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton,
         clearButton, saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton,
@@ -335,8 +329,6 @@ public class WindowController {
         }
       }
     });
-
-
   }
 
   private void setTooltips() {
@@ -382,7 +374,6 @@ public class WindowController {
 
     gameplayRandomizeStation.setSelected(settings.getGameplaySettings().getRandomizeStation());
     gameplayRandomizeKeycards.setSelected(settings.getGameplaySettings().getRandomizeKeycards());
-    gameplayRandomizeGravity.setSelected(settings.getGameplaySettings().getRandomizeGravity());
     gameplayRandomizeNeuromods.setSelected(settings.getGameplaySettings().getRandomizeNeuromods());
     gameplayRandomizeFabPlanCosts
         .setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
@@ -402,7 +393,6 @@ public class WindowController {
 
     moreGuns.setSelected(settings.getMoreSettings().getMoreGuns());
     morePreySoulsGuns.setSelected(settings.getMoreSettings().getPreySoulsGuns());
-    morePreySoulsChipsets.setSelected(settings.getMoreSettings().getPreySoulsChipsets());
     morePreySoulsEnemies.setSelected(settings.getMoreSettings().getPreySoulsEnemies());
     morePreySoulsTurrets.setSelected(settings.getMoreSettings().getPreySoulsTurrets());
 
@@ -507,7 +497,6 @@ public class WindowController {
     resetUI();
     cosmeticCheckboxBodies.setSelected(true);
     cosmeticCheckboxVoices.setSelected(true);
-    cosmeticCheckboxMusic.setSelected(true);
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
     setPickupPreset("Randomize all items");
@@ -515,6 +504,7 @@ public class WindowController {
     setEnemyPreset("Randomize all enemies");
     setNpcPreset("Randomize friendly robots within type");
     gameplayRandomizeStation.setSelected(true);
+    gameplayRandomizeKeycards.setSelected(true);
     gameplayRandomizeFabPlanCosts.setSelected(true);
     gameplayRandomizeNeuromods.setSelected(true);
     gameplayRandomizeDispensers.setSelected(true);
@@ -523,9 +513,10 @@ public class WindowController {
     hackableSlider.set(true, 50.0);
     mimicSlider.set(true, 1.0);
     startCheckboxDay2.setSelected(true);
+    startCheckboxOutsideApartment.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
-    // morePreySoulsEnemies.setSelected(true);
+    morePreySoulsEnemies.setSelected(true);
     morePreySoulsTurrets.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
@@ -826,7 +817,6 @@ public class WindowController {
         .setEnemySpawnSettings(enemySpawnSettings)
         .setRandomizeStation(gameplayRandomizeStation.isSelected())
         .setRandomizeKeycards(gameplayRandomizeKeycards.isSelected())
-        .setRandomizeGravity(gameplayRandomizeGravity.isSelected())
         .setRandomizeNeuromods(gameplayRandomizeNeuromods.isSelected())
         .setRandomizeFabPlanCosts(gameplayRandomizeFabPlanCosts.isSelected())
         .setRandomizeDispensers(
@@ -854,7 +844,6 @@ public class WindowController {
   private MoreSettings getMoreSettings() {
     return MoreSettings.newBuilder().setMoreGuns(moreGuns.isSelected())
         .setPreySoulsGuns(morePreySoulsGuns.isSelected())
-        .setPreySoulsChipsets(morePreySoulsChipsets.isSelected())
         .setPreySoulsEnemies(morePreySoulsEnemies.isSelected())
         .setPreySoulsTurrets(morePreySoulsTurrets.isSelected()).build();
   }
