@@ -274,22 +274,26 @@
                                  <children>
                                     <VBox prefHeight="276.0" prefWidth="242.0" spacing="15.0">
                                        <children>
-                                          <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" />
+                                          <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" visible="false" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
-                                          <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" />
-                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Start outside apartment" />
+                                          <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" visible="false" />
+                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Intro skip: Start at Lobby door" />
+                                          <CheckBox fx:id="startCheckboxArtax" mnemonicParsing="false" text="Start with ARTAX Jetpack" />
+                                          <CheckBox fx:id="startCheckboxPsychoscope" mnemonicParsing="false" text="Start with Psychoscope" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
                                        <children>
-                                          <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." />
+                                          <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." visible="false" />
                                           <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
-                                          <Label text="Does not spawn Jovan so that his cutscene won't play." />
-                                          <Label prefHeight="22.0" prefWidth="295.0" text="Starts at the Neuromod Division --&gt; Lobby door.">
+                                          <Label text="Does not spawn Jovan so that his cutscene won't play." visible="false" />
+                                          <Label prefHeight="22.0" prefWidth="295.0" text="Skip intro and spawn by the Lobby door with a wrench.">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
+                                          <Label text="Grants ARTAX Jetpack at the start of the game." />
+                                          <Label text="Grants Psychoscope at the start of the game." />
                                        </children>
                                     </VBox>
                                  </children>

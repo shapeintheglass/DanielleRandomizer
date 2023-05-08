@@ -87,8 +87,8 @@ public class SettingsHelper {
     }
 
     if (settings.getGameStartSettings()
-        .getStartOnSecondDay()) {
-      addOptionToBuilder(builder, "Start on second day");
+        .getAddJetpack()) {
+      addOptionToBuilder(builder, "Add ARTAX Jetpack");
     }
 
     if (settings.getGameStartSettings()
@@ -97,8 +97,8 @@ public class SettingsHelper {
     }
 
     if (settings.getGameStartSettings()
-        .getSkipJovanCutscene()) {
-      addOptionToBuilder(builder, "Skip Jovan cutscene");
+        .getAddPsychoscope()) {
+      addOptionToBuilder(builder, "Add Psychoscope");
     }
 
     if (settings.getGameStartSettings()

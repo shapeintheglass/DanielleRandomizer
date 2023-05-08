@@ -110,6 +110,7 @@ public class ZipHelper {
 
   public static final String LOGO = "libs/ui/textures/danielle_shared_textures/prey_title.dds";
   public static final String ICONS_INVENTORY_DIR = "libs/ui/textures/icons_inventory/";
+  public static final String LORE_TEXTURES_DIR = "libs/ui/textures/danielle_lore/";
 
   public static final String PHANTOM_BLOOD_PROJECTILE_ROUND = "objects/arkeffects/characters/aliens/phantom/bloodprojectileround.mtl";
   public static final String PHANTOM_SOLAR_PROJECTILE_ROUND = "objects/arkeffects/characters/aliens/phantom/solarprojectileround.mtl";

@@ -166,13 +166,13 @@ public class WindowController {
 
   /* GAME START TAB */
   @FXML
-  private CheckBox startCheckboxDay2;
-  @FXML
   private CheckBox startCheckboxAddAllEquipment;
   @FXML
-  private CheckBox startCheckboxSkipJovan;
-  @FXML
   private CheckBox startCheckboxOutsideApartment;
+  @FXML
+  private CheckBox startCheckboxArtax;
+  @FXML
+  private CheckBox startCheckboxPsychoscope;
 
   /* MORE TAB */
   @FXML
@@ -253,7 +253,7 @@ public class WindowController {
     checkboxes = ImmutableList.of(
         cosmeticCheckboxBodies, cosmeticCheckboxVoices, cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel, cosmeticCheckboxPlanetSize, cosmeticCheckboxCustomTips, 
         gameplayRandomizeStation, gameplayRandomizeNeuromods, gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeDispensers,
-        startCheckboxDay2, startCheckboxAddAllEquipment, startCheckboxSkipJovan, startCheckboxOutsideApartment, 
+        startCheckboxArtax, startCheckboxAddAllEquipment, startCheckboxPsychoscope, startCheckboxOutsideApartment, 
         moreGuns, morePreySoulsGuns, morePreySoulsEnemies, morePreySoulsTurrets, 
         cheatsCheckboxAllScans, cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, cheatsCheckboxFriendlyNpcs,
         expCheckboxEnableGravity, expCheckboxGravity, expCheckboxSelfDestruct, expCheckboxWander, expLivingCorpses);
@@ -375,21 +375,17 @@ public class WindowController {
     gameplayRandomizeStation.setSelected(settings.getGameplaySettings().getRandomizeStation());
     gameplayRandomizeKeycards.setSelected(settings.getGameplaySettings().getRandomizeKeycards());
     gameplayRandomizeNeuromods.setSelected(settings.getGameplaySettings().getRandomizeNeuromods());
-    gameplayRandomizeFabPlanCosts
-        .setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
-    gameplayRandomizeDispensers
-        .setSelected(settings.getGameplaySettings().getRandomizeDispensers().getIsEnabled());
+    gameplayRandomizeFabPlanCosts.setSelected(settings.getGameplaySettings().getRandomizeFabPlanCosts());
+    gameplayRandomizeDispensers.setSelected(settings.getGameplaySettings().getRandomizeDispensers().getIsEnabled());
     recyclerSlider.set(settings.getGameplaySettings().getRandomizeRecyclers());
     breakableSlider.set(settings.getGameplaySettings().getRandomizeBreakables());
     hackableSlider.set(settings.getGameplaySettings().getRandomizeHackables());
     mimicSlider.set(settings.getGameplaySettings().getRandomizeMimics());
 
-    startCheckboxDay2.setSelected(settings.getGameStartSettings().getStartOnSecondDay());
-    startCheckboxAddAllEquipment
-        .setSelected(settings.getGameStartSettings().getAddLootToApartment());
-    startCheckboxSkipJovan.setSelected(settings.getGameStartSettings().getSkipJovanCutscene());
-    startCheckboxOutsideApartment
-        .setSelected(settings.getGameStartSettings().getStartOutsideApartment());
+    startCheckboxArtax.setSelected(settings.getGameStartSettings().getAddJetpack());
+    startCheckboxPsychoscope.setSelected(settings.getGameStartSettings().getAddPsychoscope());
+    startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings().getAddLootToApartment());
+    startCheckboxOutsideApartment.setSelected(settings.getGameStartSettings().getStartOutsideApartment());
 
     moreGuns.setSelected(settings.getMoreSettings().getMoreGuns());
     morePreySoulsGuns.setSelected(settings.getMoreSettings().getPreySoulsGuns());
@@ -481,7 +477,8 @@ public class WindowController {
     gameplayRandomizeFabPlanCosts.setSelected(true);
     gameplayRandomizeNeuromods.setSelected(true);
     gameplayRandomizeDispensers.setSelected(true);
-    startCheckboxDay2.setSelected(true);
+    startCheckboxOutsideApartment.setSelected(true);
+    startCheckboxPsychoscope.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
     morePreySoulsTurrets.setSelected(true);
@@ -512,8 +509,8 @@ public class WindowController {
     breakableSlider.set(true, 50.0);
     hackableSlider.set(true, 50.0);
     mimicSlider.set(true, 1.0);
-    startCheckboxDay2.setSelected(true);
     startCheckboxOutsideApartment.setSelected(true);
+    startCheckboxPsychoscope.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
     morePreySoulsEnemies.setSelected(true);
@@ -530,7 +527,6 @@ public class WindowController {
     setPickupPreset("Randomize items within type");
     setEnemyPreset("Randomize enemies within type");
     setNpcPreset("Randomize friendly robots within type");
-    startCheckboxDay2.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Lite preset selected.\n");
     outputWindow.appendText(
@@ -540,8 +536,7 @@ public class WindowController {
   @FXML
   protected void onPresetsGotsClicked(ActionEvent event) {
     resetUI();
-    startCheckboxDay2.setSelected(true);
-    startCheckboxSkipJovan.setSelected(true);
+
     expCheckboxSelfDestruct.setSelected(true);
     expTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
     expTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
@@ -836,9 +831,10 @@ public class WindowController {
   private GameStartSettings getGameStartSettings() {
     return GameStartSettings.newBuilder()
         .setAddLootToApartment(startCheckboxAddAllEquipment.isSelected())
-        .setStartOnSecondDay(startCheckboxDay2.isSelected())
-        .setSkipJovanCutscene(startCheckboxSkipJovan.isSelected())
-        .setStartOutsideApartment(startCheckboxOutsideApartment.isSelected()).build();
+        .setStartOutsideApartment(startCheckboxOutsideApartment.isSelected())
+        .setAddJetpack(startCheckboxArtax.isSelected())
+        .setAddPsychoscope(startCheckboxPsychoscope.isSelected())
+        .build();
   }
 
   private MoreSettings getMoreSettings() {

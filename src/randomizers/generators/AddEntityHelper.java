@@ -9,6 +9,7 @@ import org.jdom2.Element;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import proto.RandomizerSettings.Settings;
+import proto.RandomizerSettings.StartItem;
 import utils.LevelConsts;
 import utils.MimicSliderUtils;
 import utils.ZipHelper;
@@ -31,14 +32,14 @@ public class AddEntityHelper {
           .put(LevelConsts.POWER_PLANT, "PowerSource_Scripting")
           .put(LevelConsts.EXTERIOR, "Exterior_Scripting")
           .build();
-
-  private static Element getNeuromodDivisionSelfDestructFlowgraph() {
-    Element entity = new Element("Entity").setAttribute("Name", "Shenanigans")
+  
+  private static Element createFlowgraphStarter(String entityId, String entityGuid) {
+    Element entity = new Element("Entity").setAttribute("Name", "AddItemsFlowgraph")
         .setAttribute("Pos", "0,0,0")
         .setAttribute("Rotate", "0,0,0,1")
         .setAttribute("EntityClass", "FlowgraphEntity")
-        .setAttribute("EntityId", "5808")
-        .setAttribute("EntityGuid", "0451")
+        .setAttribute("EntityId", "2592734589")
+        .setAttribute("EntityGuid", "162362214")
         .setAttribute("CastShadowViewDistRatio", "0")
         .setAttribute("CastShadowMinSpec", "1")
         .setAttribute("CastSunShadowMinSpec", "8")
@@ -62,7 +63,70 @@ public class AddEntityHelper {
         .setAttribute("Group", "Utilities")
         .setAttribute("enabled", "1")
         .setAttribute("MultiPlayer", "ClientServer");
-    Element nodes = new Element("Nodes");
+    flowgraph.addContent(new Element("Nodes"));
+    flowgraph.addContent(new Element("Edges"));
+    flowgraph.addContent(new Element("GraphTokens"));
+    entity.addContent(properties);
+    entity.addContent(flowgraph);
+    return entity;
+  }
+
+  private static Element getNeuromodDivisionAddItemsFlowgraph(List<StartItem> archetypes) {
+    Element entity = createFlowgraphStarter("482317647", "91874238"); // Just needs to be unique within level
+    Element nodes = entity.getChild("FlowGraph").getChild("Nodes");
+    Element edges = entity.getChild("FlowGraph").getChild("Edges");
+    
+    String gameStartNodeId = "1";
+    Element gameStartNode = new Element("Node").setAttribute("Id", gameStartNodeId)
+        .setAttribute("Class", "Game:Start")
+        .setAttribute("pos", "-127,19,0")
+        .addContent(new Element("Inputs").setAttribute("InGame", "1")
+            .setAttribute("InEditor", "1")
+            .setAttribute("InEditorPlayFromHere", "0"));
+    String playerNodeId = "2";
+    Element playerNode = new Element("Node").setAttribute("Id", playerNodeId)
+        .setAttribute("Class", "Actor:LocalPlayer")
+        .setAttribute("pos", "620,570,0")
+        .addContent(new Element("Inputs"));
+    nodes.addContent(gameStartNode);
+    nodes.addContent(playerNode);
+    
+    int idCounter = 3;
+    for (StartItem s : archetypes) {
+      String newItemNodeId = Integer.toString(idCounter);
+      Element newItemNode = new Element("Node").setAttribute("Id", newItemNodeId)
+          .setAttribute("Class", "Inventory:ItemAdd")
+          .setAttribute("pos", "1360,520,0")
+          .addContent(new Element("Inputs")
+              .setAttribute("entityId", "0")
+              .setAttribute("archetype", s.getArchetype())
+              .setAttribute("quantity", Integer.toString(s.getQuantity()))
+              .setAttribute("playfanfare", "0"));
+      nodes.addContent(newItemNode);
+      
+      Element newItemTriggerEdge = new Element("Edge")
+          .setAttribute("nodeIn", newItemNodeId)
+          .setAttribute("nodeOut", gameStartNodeId)
+          .setAttribute("portIn", "add")
+          .setAttribute("portOut", "output")
+          .setAttribute("enabled", "1");
+      Element newItemEntityEdge = new Element("Edge")
+          .setAttribute("nodeIn", newItemNodeId)
+          .setAttribute("nodeOut", playerNodeId)
+          .setAttribute("portIn", "entityId")
+          .setAttribute("portOut", "entityId")
+          .setAttribute("enabled", "1");
+      edges.addContent(newItemTriggerEdge);
+      edges.addContent(newItemEntityEdge);
+      idCounter++;
+    }
+    
+    return entity;
+  }
+  
+  private static Element getNeuromodDivisionSelfDestructFlowgraph() {
+    Element entity = createFlowgraphStarter("5808", "0451"); // Just needs to be unique within level
+    Element nodes = entity.getChild("FlowGraph").getChild("Nodes");
     Element node1 = new Element("Node").setAttribute("Id", "1")
         .setAttribute("Class", "Game:Start")
         .setAttribute("pos", "-127,19,0")
@@ -90,7 +154,7 @@ public class AddEntityHelper {
     nodes.addContent(node2);
     nodes.addContent(node3);
     nodes.addContent(node4);
-    Element edges = new Element("Edges");
+    Element edges = entity.getChild("FlowGraph").getChild("Edges");
     Element edge1 = new Element("Edge").setAttribute("nodeIn", "3")
         .setAttribute("nodeOut", "1")
         .setAttribute("portIn", "Trigger")
@@ -112,10 +176,6 @@ public class AddEntityHelper {
     edges.addContent(edge1);
     edges.addContent(edge2);
     edges.addContent(edge3);
-    flowgraph.addContent(nodes);
-    flowgraph.addContent(edges);
-    entity.addContent(properties);
-    entity.addContent(flowgraph);
     return entity;
   }
 
@@ -354,21 +414,54 @@ public class AddEntityHelper {
    */
   public static void addEntities(Element objects, String levelDir, Settings settings,
       ZipHelper zipHelper, List<Element> mimicEntities, Random r) {
-    if (settings.getExpSettings().getStartSelfDestruct() 
-        && levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
-      objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
-    }
+    
+    // Neuromod Division-specific settings (usually game start stuff)
+    if (levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
+      if (settings.getExpSettings().getStartSelfDestruct()) {
+        objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
+      }
+      
+      List<StartItem> gameStartItems = Lists.newArrayList();
+      // Add any items specified in settings
+      gameStartItems.addAll(settings.getStartingItemsList());
+      
+      // If starting outside apartment, shift to second day and add some starting equipment
+      if (settings.getGameStartSettings().getStartOutsideApartment()) {
+        try {
+          Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
+          Element root = document.getRootElement()
+              .clone();
 
-    if (settings.getGameStartSettings()
-        .getStartOnSecondDay() && levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
-      try {
-        Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
-        Element root = document.getRootElement()
-            .clone();
-
-        objects.addContent(root);
-      } catch (Exception e) {
-        e.printStackTrace();
+          objects.addContent(root);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+        gameStartItems.add(StartItem.newBuilder()
+            .setArchetype("ArkPickups.Weapons.Wrench")
+            .setQuantity(1)
+            .build());
+        gameStartItems.add(StartItem.newBuilder()
+            .setArchetype("ArkPickups.Ammo.EMPGrenades")
+            .setQuantity(2)
+            .build());
+      }
+      
+      if (settings.getGameStartSettings().getAddJetpack()) {
+        gameStartItems.add(StartItem.newBuilder()
+            .setArchetype("ArkPickups.Player.ZeroGSuit")
+            .setQuantity(1)
+            .build());
+      }
+      if (settings.getGameStartSettings().getAddPsychoscope()) {
+        gameStartItems.add(StartItem.newBuilder()
+            .setArchetype("ArkPickups.Player.Psychoscope")
+            .setQuantity(1)
+            .build());
+      }
+      
+      if (!gameStartItems.isEmpty()) {
+        // Add requested starting items to player
+        objects.addContent(getNeuromodDivisionAddItemsFlowgraph(gameStartItems)); 
       }
     }
 
@@ -379,9 +472,8 @@ public class AddEntityHelper {
       objects.addContent(gravityBox(0));
     }
 
-    // Mimic slider
+    // Mimic slider: Generate the actual mimics for the items labelled as entities to mimic
     if (settings.getGameplaySettings().getRandomizeMimics().getIsEnabled() && LEVEL_TO_MAIN_SCRIPTING_LAYER.containsKey(levelDir)) {
-      
       // Generate mimics to add to level
       List<Element> mimicsInLevel = createMimicsInLevel(mimicEntities, r, levelDir);
       Element flowgraph = createMimicFlowgraphScript(levelDir, mimicEntities, mimicsInLevel, r);

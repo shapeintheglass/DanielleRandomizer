@@ -8663,22 +8663,22 @@ public final class RandomizerSettings {
     boolean getAddLootToApartment();
 
     /**
-     * <code>bool start_on_second_day = 2;</code>
-     * @return The startOnSecondDay.
-     */
-    boolean getStartOnSecondDay();
-
-    /**
-     * <code>bool skip_jovan_cutscene = 3;</code>
-     * @return The skipJovanCutscene.
-     */
-    boolean getSkipJovanCutscene();
-
-    /**
      * <code>bool start_outside_apartment = 4;</code>
      * @return The startOutsideApartment.
      */
     boolean getStartOutsideApartment();
+
+    /**
+     * <code>bool add_jetpack = 5;</code>
+     * @return The addJetpack.
+     */
+    boolean getAddJetpack();
+
+    /**
+     * <code>bool add_psychoscope = 6;</code>
+     * @return The addPsychoscope.
+     */
+    boolean getAddPsychoscope();
   }
   /**
    * Protobuf type {@code GameStartSettings}
@@ -8730,19 +8730,19 @@ public final class RandomizerSettings {
               addLootToApartment_ = input.readBool();
               break;
             }
-            case 16: {
-
-              startOnSecondDay_ = input.readBool();
-              break;
-            }
-            case 24: {
-
-              skipJovanCutscene_ = input.readBool();
-              break;
-            }
             case 32: {
 
               startOutsideApartment_ = input.readBool();
+              break;
+            }
+            case 40: {
+
+              addJetpack_ = input.readBool();
+              break;
+            }
+            case 48: {
+
+              addPsychoscope_ = input.readBool();
               break;
             }
             default: {
@@ -8788,28 +8788,6 @@ public final class RandomizerSettings {
       return addLootToApartment_;
     }
 
-    public static final int START_ON_SECOND_DAY_FIELD_NUMBER = 2;
-    private boolean startOnSecondDay_;
-    /**
-     * <code>bool start_on_second_day = 2;</code>
-     * @return The startOnSecondDay.
-     */
-    @java.lang.Override
-    public boolean getStartOnSecondDay() {
-      return startOnSecondDay_;
-    }
-
-    public static final int SKIP_JOVAN_CUTSCENE_FIELD_NUMBER = 3;
-    private boolean skipJovanCutscene_;
-    /**
-     * <code>bool skip_jovan_cutscene = 3;</code>
-     * @return The skipJovanCutscene.
-     */
-    @java.lang.Override
-    public boolean getSkipJovanCutscene() {
-      return skipJovanCutscene_;
-    }
-
     public static final int START_OUTSIDE_APARTMENT_FIELD_NUMBER = 4;
     private boolean startOutsideApartment_;
     /**
@@ -8819,6 +8797,28 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getStartOutsideApartment() {
       return startOutsideApartment_;
+    }
+
+    public static final int ADD_JETPACK_FIELD_NUMBER = 5;
+    private boolean addJetpack_;
+    /**
+     * <code>bool add_jetpack = 5;</code>
+     * @return The addJetpack.
+     */
+    @java.lang.Override
+    public boolean getAddJetpack() {
+      return addJetpack_;
+    }
+
+    public static final int ADD_PSYCHOSCOPE_FIELD_NUMBER = 6;
+    private boolean addPsychoscope_;
+    /**
+     * <code>bool add_psychoscope = 6;</code>
+     * @return The addPsychoscope.
+     */
+    @java.lang.Override
+    public boolean getAddPsychoscope() {
+      return addPsychoscope_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -8838,14 +8838,14 @@ public final class RandomizerSettings {
       if (addLootToApartment_ != false) {
         output.writeBool(1, addLootToApartment_);
       }
-      if (startOnSecondDay_ != false) {
-        output.writeBool(2, startOnSecondDay_);
-      }
-      if (skipJovanCutscene_ != false) {
-        output.writeBool(3, skipJovanCutscene_);
-      }
       if (startOutsideApartment_ != false) {
         output.writeBool(4, startOutsideApartment_);
+      }
+      if (addJetpack_ != false) {
+        output.writeBool(5, addJetpack_);
+      }
+      if (addPsychoscope_ != false) {
+        output.writeBool(6, addPsychoscope_);
       }
       unknownFields.writeTo(output);
     }
@@ -8860,17 +8860,17 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, addLootToApartment_);
       }
-      if (startOnSecondDay_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, startOnSecondDay_);
-      }
-      if (skipJovanCutscene_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, skipJovanCutscene_);
-      }
       if (startOutsideApartment_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(4, startOutsideApartment_);
+      }
+      if (addJetpack_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, addJetpack_);
+      }
+      if (addPsychoscope_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(6, addPsychoscope_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -8889,12 +8889,12 @@ public final class RandomizerSettings {
 
       if (getAddLootToApartment()
           != other.getAddLootToApartment()) return false;
-      if (getStartOnSecondDay()
-          != other.getStartOnSecondDay()) return false;
-      if (getSkipJovanCutscene()
-          != other.getSkipJovanCutscene()) return false;
       if (getStartOutsideApartment()
           != other.getStartOutsideApartment()) return false;
+      if (getAddJetpack()
+          != other.getAddJetpack()) return false;
+      if (getAddPsychoscope()
+          != other.getAddPsychoscope()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -8909,15 +8909,15 @@ public final class RandomizerSettings {
       hash = (37 * hash) + ADD_LOOT_TO_APARTMENT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getAddLootToApartment());
-      hash = (37 * hash) + START_ON_SECOND_DAY_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getStartOnSecondDay());
-      hash = (37 * hash) + SKIP_JOVAN_CUTSCENE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getSkipJovanCutscene());
       hash = (37 * hash) + START_OUTSIDE_APARTMENT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getStartOutsideApartment());
+      hash = (37 * hash) + ADD_JETPACK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAddJetpack());
+      hash = (37 * hash) + ADD_PSYCHOSCOPE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAddPsychoscope());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -9053,11 +9053,11 @@ public final class RandomizerSettings {
         super.clear();
         addLootToApartment_ = false;
 
-        startOnSecondDay_ = false;
-
-        skipJovanCutscene_ = false;
-
         startOutsideApartment_ = false;
+
+        addJetpack_ = false;
+
+        addPsychoscope_ = false;
 
         return this;
       }
@@ -9086,9 +9086,9 @@ public final class RandomizerSettings {
       public proto.RandomizerSettings.GameStartSettings buildPartial() {
         proto.RandomizerSettings.GameStartSettings result = new proto.RandomizerSettings.GameStartSettings(this);
         result.addLootToApartment_ = addLootToApartment_;
-        result.startOnSecondDay_ = startOnSecondDay_;
-        result.skipJovanCutscene_ = skipJovanCutscene_;
         result.startOutsideApartment_ = startOutsideApartment_;
+        result.addJetpack_ = addJetpack_;
+        result.addPsychoscope_ = addPsychoscope_;
         onBuilt();
         return result;
       }
@@ -9140,14 +9140,14 @@ public final class RandomizerSettings {
         if (other.getAddLootToApartment() != false) {
           setAddLootToApartment(other.getAddLootToApartment());
         }
-        if (other.getStartOnSecondDay() != false) {
-          setStartOnSecondDay(other.getStartOnSecondDay());
-        }
-        if (other.getSkipJovanCutscene() != false) {
-          setSkipJovanCutscene(other.getSkipJovanCutscene());
-        }
         if (other.getStartOutsideApartment() != false) {
           setStartOutsideApartment(other.getStartOutsideApartment());
+        }
+        if (other.getAddJetpack() != false) {
+          setAddJetpack(other.getAddJetpack());
+        }
+        if (other.getAddPsychoscope() != false) {
+          setAddPsychoscope(other.getAddPsychoscope());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9209,68 +9209,6 @@ public final class RandomizerSettings {
         return this;
       }
 
-      private boolean startOnSecondDay_ ;
-      /**
-       * <code>bool start_on_second_day = 2;</code>
-       * @return The startOnSecondDay.
-       */
-      @java.lang.Override
-      public boolean getStartOnSecondDay() {
-        return startOnSecondDay_;
-      }
-      /**
-       * <code>bool start_on_second_day = 2;</code>
-       * @param value The startOnSecondDay to set.
-       * @return This builder for chaining.
-       */
-      public Builder setStartOnSecondDay(boolean value) {
-        
-        startOnSecondDay_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool start_on_second_day = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearStartOnSecondDay() {
-        
-        startOnSecondDay_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean skipJovanCutscene_ ;
-      /**
-       * <code>bool skip_jovan_cutscene = 3;</code>
-       * @return The skipJovanCutscene.
-       */
-      @java.lang.Override
-      public boolean getSkipJovanCutscene() {
-        return skipJovanCutscene_;
-      }
-      /**
-       * <code>bool skip_jovan_cutscene = 3;</code>
-       * @param value The skipJovanCutscene to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSkipJovanCutscene(boolean value) {
-        
-        skipJovanCutscene_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool skip_jovan_cutscene = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearSkipJovanCutscene() {
-        
-        skipJovanCutscene_ = false;
-        onChanged();
-        return this;
-      }
-
       private boolean startOutsideApartment_ ;
       /**
        * <code>bool start_outside_apartment = 4;</code>
@@ -9298,6 +9236,68 @@ public final class RandomizerSettings {
       public Builder clearStartOutsideApartment() {
         
         startOutsideApartment_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean addJetpack_ ;
+      /**
+       * <code>bool add_jetpack = 5;</code>
+       * @return The addJetpack.
+       */
+      @java.lang.Override
+      public boolean getAddJetpack() {
+        return addJetpack_;
+      }
+      /**
+       * <code>bool add_jetpack = 5;</code>
+       * @param value The addJetpack to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddJetpack(boolean value) {
+        
+        addJetpack_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool add_jetpack = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAddJetpack() {
+        
+        addJetpack_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean addPsychoscope_ ;
+      /**
+       * <code>bool add_psychoscope = 6;</code>
+       * @return The addPsychoscope.
+       */
+      @java.lang.Override
+      public boolean getAddPsychoscope() {
+        return addPsychoscope_;
+      }
+      /**
+       * <code>bool add_psychoscope = 6;</code>
+       * @param value The addPsychoscope to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddPsychoscope(boolean value) {
+        
+        addPsychoscope_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool add_psychoscope = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAddPsychoscope() {
+        
+        addPsychoscope_ = false;
         onChanged();
         return this;
       }
@@ -15723,41 +15723,41 @@ public final class RandomizerSettings {
       "_name\030\n \001(\t\022\030\n\020prop_preset_name\030\013 \001(\t\022\031\n" +
       "\021enemy_preset_name\030\014 \001(\t\022\027\n\017npc_preset_n" +
       "ame\030\r \001(\t\":\n\020ToggleWithSlider\022\021\n\tisEnabl" +
-      "ed\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(\005\"\215\001\n\021GameSt" +
+      "ed\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(\005\"\201\001\n\021GameSt" +
       "artSettings\022\035\n\025add_loot_to_apartment\030\001 \001" +
-      "(\010\022\033\n\023start_on_second_day\030\002 \001(\010\022\033\n\023skip_" +
-      "jovan_cutscene\030\003 \001(\010\022\037\n\027start_outside_ap" +
-      "artment\030\004 \001(\010\"\217\001\n\014MoreSettings\022\021\n\tmore_g" +
-      "uns\030\001 \001(\010\022\027\n\017prey_souls_guns\030\002 \001(\010\022\033\n\023pr" +
-      "ey_souls_chipsets\030\003 \001(\010\022\032\n\022prey_souls_en" +
-      "emies\030\004 \001(\010\022\032\n\022prey_souls_turrets\030\005 \001(\010\"" +
-      "\337\003\n\rCheatSettings\022\024\n\014open_station\030\001 \001(\010\022" +
-      "\030\n\020unlock_all_scans\030\002 \001(\010\022\025\n\rfriendly_np" +
-      "cs\030\003 \001(\010\022\030\n\020use_custom_spawn\030\004 \001(\010\022;\n\025cu" +
-      "stom_spawn_location\030\005 \001(\0162\034.CheatSetting" +
-      "s.SpawnLocation\022\034\n\024game_token_overrides\030" +
-      "\006 \001(\t\"\221\002\n\rSpawnLocation\022\010\n\004NONE\020\000\022\n\n\006RAN" +
-      "DOM\020\001\022\t\n\005LOBBY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\rP" +
-      "SYCHOTRONICS\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006\022" +
-      "\n\n\006BRIDGE\020\007\022\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_S" +
-      "TORAGE\020\t\022\r\n\tCARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT\020" +
-      "\013\022\017\n\013POWER_PLANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010E" +
-      "XTERIOR\020\016\022\013\n\007ENDGAME\020\017\022\021\n\rGENDER_SELECT\020" +
-      "\020\"\360\001\n\024ExperimentalSettings\022\030\n\020wandering_" +
-      "humans\030\001 \001(\010\022\026\n\016living_corpses\030\002 \001(\010\022\037\n\027" +
-      "zero_gravity_everywhere\030\003 \001(\010\022&\n\036enable_" +
-      "gravity_in_ext_and_guts\030\004 \001(\010\022\033\n\023start_s" +
-      "elf_destruct\030\005 \001(\010\022\033\n\023self_destruct_time" +
-      "r\030\006 \001(\t\022#\n\033self_destruct_shuttle_timer\030\007" +
-      " \001(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name" +
-      "\030\001 \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027." +
-      "GenericSpawnPresetRule\"\220\001\n\026GenericSpawnP" +
-      "resetRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_" +
-      "tags\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do" +
-      "_not_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_t" +
-      "ags\030\005 \003(\t\"0\n\tStartItem\022\021\n\tarchetype\030\001 \001(" +
-      "\t\022\020\n\010quantity\030\002 \001(\005B\033\n\005protoB\022Randomizer" +
-      "Settingsb\006proto3"
+      "(\010\022\037\n\027start_outside_apartment\030\004 \001(\010\022\023\n\013a" +
+      "dd_jetpack\030\005 \001(\010\022\027\n\017add_psychoscope\030\006 \001(" +
+      "\010\"\217\001\n\014MoreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n" +
+      "\017prey_souls_guns\030\002 \001(\010\022\033\n\023prey_souls_chi" +
+      "psets\030\003 \001(\010\022\032\n\022prey_souls_enemies\030\004 \001(\010\022" +
+      "\032\n\022prey_souls_turrets\030\005 \001(\010\"\337\003\n\rCheatSet" +
+      "tings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_al" +
+      "l_scans\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020" +
+      "use_custom_spawn\030\004 \001(\010\022;\n\025custom_spawn_l" +
+      "ocation\030\005 \001(\0162\034.CheatSettings.SpawnLocat" +
+      "ion\022\034\n\024game_token_overrides\030\006 \001(\t\"\221\002\n\rSp" +
+      "awnLocation\022\010\n\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOB" +
+      "BY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\rPSYCHOTRONICS" +
+      "\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022" +
+      "\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\t" +
+      "CARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT\020\013\022\017\n\013POWER_P" +
+      "LANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n" +
+      "\007ENDGAME\020\017\022\021\n\rGENDER_SELECT\020\020\"\360\001\n\024Experi" +
+      "mentalSettings\022\030\n\020wandering_humans\030\001 \001(\010" +
+      "\022\026\n\016living_corpses\030\002 \001(\010\022\037\n\027zero_gravity" +
+      "_everywhere\030\003 \001(\010\022&\n\036enable_gravity_in_e" +
+      "xt_and_guts\030\004 \001(\010\022\033\n\023start_self_destruct" +
+      "\030\005 \001(\010\022\033\n\023self_destruct_timer\030\006 \001(\t\022#\n\033s" +
+      "elf_destruct_shuttle_timer\030\007 \001(\t\"`\n\030Gene" +
+      "ricSpawnPresetFilter\022\014\n\004name\030\001 \001(\t\022\014\n\004de" +
+      "sc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.GenericSpawn" +
+      "PresetRule\"\220\001\n\026GenericSpawnPresetRule\022\022\n" +
+      "\ninput_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026" +
+      "\n\016output_weights\030\003 \003(\005\022\031\n\021do_not_touch_t" +
+      "ags\030\004 \003(\t\022\032\n\022do_not_output_tags\030\005 \003(\t\"0\n" +
+      "\tStartItem\022\021\n\tarchetype\030\001 \001(\t\022\020\n\010quantit" +
+      "y\030\002 \001(\005B\033\n\005protoB\022RandomizerSettingsb\006pr" +
+      "oto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -15798,7 +15798,7 @@ public final class RandomizerSettings {
     internal_static_GameStartSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameStartSettings_descriptor,
-        new java.lang.String[] { "AddLootToApartment", "StartOnSecondDay", "SkipJovanCutscene", "StartOutsideApartment", });
+        new java.lang.String[] { "AddLootToApartment", "StartOutsideApartment", "AddJetpack", "AddPsychoscope", });
     internal_static_MoreSettings_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_MoreSettings_fieldAccessorTable = new

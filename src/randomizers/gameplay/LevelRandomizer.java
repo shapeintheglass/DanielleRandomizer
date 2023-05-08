@@ -80,9 +80,6 @@ public class LevelRandomizer extends BaseRandomizer {
     if (settings.getExpSettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
-    if (settings.getGameStartSettings().getSkipJovanCutscene()) {
-      gameTokenValues.putAll(LevelConsts.SKIP_JOVAN_TOKENS);
-    }
     if (settings.getCheatSettings().getUseCustomSpawn()) {
       gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
     }
@@ -187,6 +184,8 @@ public class LevelRandomizer extends BaseRandomizer {
       String archetype = e.getAttributeValue("Archetype");
       if (settings.getGameplaySettings().getRandomizeMimics().getIsEnabled() 
           && archetype != null
+          && e.getAttribute("Pos") != null
+          && e.getAttribute("Name") != null
           && !MimicSliderUtils.isInAntiMimicZone(e, levelDir)) {
 
         String shortArchetypeName = Utils.stripLibraryPrefixForEntity(archetype);

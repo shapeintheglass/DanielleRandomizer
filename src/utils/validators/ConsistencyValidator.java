@@ -87,8 +87,6 @@ public class ConsistencyValidator {
 
     GameStartSettings startSettings = GameStartSettings.newBuilder()
         .setAddLootToApartment(r.nextBoolean())
-        .setSkipJovanCutscene(r.nextBoolean())
-        .setStartOnSecondDay(r.nextBoolean())
         .build();
     CheatSettings cheatSettings = CheatSettings.newBuilder()
         .setOpenStation(r.nextBoolean())

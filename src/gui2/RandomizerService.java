@@ -149,7 +149,7 @@ public class RandomizerService extends Service<Void> {
           ZipHelper.ARK_META_TAGS, ZipHelper.LORE_LIBRARY, ZipHelper.NEUROMOD_RESEARCH_TOPICS,
           ZipHelper.AI_TREE_ABSOLUTE_NIGHTMARE, ZipHelper.ZOMBIE_CDF);
   private static final ImmutableList<String> PREY_SOULS_ENEMIES_DIR_DEPENDENCIES = ImmutableList
-      .of(ZipHelper.ANIMATIONS_ADB_DIR, ZipHelper.PHANTOM_SKINS_DIR, ZipHelper.WEAVER_SKINS_DIR);
+      .of(ZipHelper.ANIMATIONS_ADB_DIR, ZipHelper.PHANTOM_SKINS_DIR, ZipHelper.WEAVER_SKINS_DIR, ZipHelper.LORE_TEXTURES_DIR);
 
   private static final ImmutableList<String> WANDERING_HUMANS_DEPENDENCIES = ImmutableList.of(
       ZipHelper.AI_TREE_ARMED_HUMANS, ZipHelper.AI_TREE_HUMANS, ZipHelper.AI_TREE_UNARMED_HUMANS);

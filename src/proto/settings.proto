@@ -59,9 +59,9 @@ message ToggleWithSlider {
 
 message GameStartSettings {
   bool add_loot_to_apartment = 1;
-  bool start_on_second_day = 2;
-  bool skip_jovan_cutscene = 3;
   bool start_outside_apartment = 4;
+  bool add_jetpack = 5;
+  bool add_psychoscope = 6;
 }
 
 message MoreSettings {

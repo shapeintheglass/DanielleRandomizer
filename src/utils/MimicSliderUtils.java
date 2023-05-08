@@ -22,10 +22,14 @@ public class MimicSliderUtils {
   public static final ImmutableSet<String> PROP_MIMICABLE_TAGS_BLOCKLIST =
       ImmutableSet.of("_LEVERAGE_I", "_LEVERAGE_II", "_LEVERAGE_III", "Tech", "Space", "_IMPORTANT",
           "_MISSION_ITEMS", "_PLOT_CRITICAL", "_PROGRESSION", "Data", "ArkLight", "ArkFruitTree",
-          "TurretFabPlan", "NB_OxygenFuse", "Wrench");
+          "TurretFabPlan", "NB_OxygenFuse", "ExplosiveTanks");
   // Pickups that contain all of these tags qualify as hidden mimics
-  public static final ImmutableSet<String> PICKUP_MIMICABLE_TAGS = ImmutableSet.of("ArkPickups",
-      "_MIMICABLE", "_CARRYABLE", "RigidBodyEx", "_CAN_TRIGGER_AREAS");
+  public static final ImmutableSet<String> PICKUP_MIMICABLE_TAGS =
+      ImmutableSet.of("ArkPickups", "_MIMICABLE");
+  public static final ImmutableSet<String> PICKUP_MIMICABLE_TAGS_BLOCKLIST =
+      ImmutableSet.of("Data", "MissionItems", "_PROGRESSION", "_PLOT_CRITICAL", "ArkLight",
+          "research/simulationlabs;Weapons.Wrench1", "ArkContainer", "Light_Fixtures",
+          "ArkFruitTree", "TurretFabPlan", "NB_OxygenFuse", "ArkExplosiveTank");
   
   public static final ImmutableMap<String, List<AntiMimicZone>> ANTI_MIMIC_ZONES =
       new ImmutableMap.Builder<String, List<AntiMimicZone>>()
