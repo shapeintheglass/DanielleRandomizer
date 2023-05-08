@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.graph.ImmutableNetwork;
 import databases.EntityDatabase;
 import databases.TaggedDatabase;
@@ -46,8 +46,8 @@ import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.OperatorDispenserFilter;
 import randomizers.gameplay.filters.RecyclerFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
-import randomizers.generators.BookInfoHelper;
-import randomizers.generators.BookInfoHelper.Book;
+import randomizers.generators.WelcomeNoteHelper;
+import randomizers.generators.WelcomeNoteHelper.Note;
 import randomizers.generators.CustomSpawnGenerator;
 import randomizers.generators.ProgressionGenerator;
 import randomizers.generators.SelfDestructTimerHelper;
@@ -439,16 +439,8 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(keycardFilter);
     }
 
-    if (!connectivityInfo.toString().isEmpty()) {
-      Book b = new Book("Bk_SL_Apt_Electronics", "Station Connectivity Debug Info",
-          connectivityInfo.toString());
-      Map<String, Book> toOverwrite = Maps.newHashMap();
-      toOverwrite.put("Bk_SL_Apt_Electronics", b);
-      toOverwrite.put("Bk_TooFarTooFast1", b);
-      BookInfoHelper bih = new BookInfoHelper(zipHelper);
-      bih.installNewBooks(toOverwrite);
-    }
-
+    WelcomeNoteHelper bih = new WelcomeNoteHelper(zipHelper);
+    bih.installWelcomeNote(currentSettings, connectivityInfo.toString());
 
     if (currentSettings.getExpSettings().getEnableGravityInExtAndGuts()) {
       levelRandomizer = levelRandomizer.addFilter(new GravityDisablerFilter());

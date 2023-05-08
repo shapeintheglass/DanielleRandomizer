@@ -20,7 +20,7 @@ public class LockedObjectRule implements Rule {
           "47AB35CAF4B1B040", "438D3CFBEB37D79B", "4F25B7F4BE3C5996", "4F06C309CB74C283",
           "4000B4E17D27E1CE", "4000B4E17D27E1CE", "4F20531B49813BA4", "470F2B17DD46244E",
           "45379497EED0F578", "4C89A08F42BDE4C9", "4EE9354DB6A30976", "43AE6D273E15CD9F",
-          "43F82AA86E85F963");
+          "43F82AA86E85F963", "4BED469161F2A87C");
 
   private static final ImmutableSet<String> HACKABLE_ARCHETYPES =
       ImmutableSet.of("ArkGameplayObjects.Keypad.Keypad_Default",

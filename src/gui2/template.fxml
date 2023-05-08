@@ -31,12 +31,12 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" prefHeight="17.0" prefWidth="597.0" text="Pick a preset to start! Check out the other tabs for more customization. Click &quot;Install&quot; to install changes." />
-                              <Label layoutX="11.0" layoutY="289.0" prefHeight="45.0" prefWidth="603.0" text="If you already have a randomized game in progress, do not install a new seed/settings or uninstall until you are finished with that seed, or else you may not be able to load your old saves." wrapText="true" />
+                              <Label layoutX="11.0" layoutY="289.0" prefHeight="70.0" prefWidth="603.0" text="If you already have a randomized game in progress, do not install a new seed/settings or uninstall until you are finished with that seed. If you uninstall randomization or install with new settings/seed, you will no longer be able to load old randomizer saves." wrapText="true" />
                               <HBox layoutX="28.0" layoutY="50.0" prefHeight="171.0" prefWidth="633.0" spacing="15.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
                                        <children>
-                                          <Button fx:id="litePresetButton" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="Lite" />
+                                          <Button fx:id="litePresetButton" mnemonicParsing="false" onAction="#onPresetsLiteClicked" prefHeight="25.0" prefWidth="101.0" text="First Time" />
                                           <Button fx:id="recommendedPresetButton" mnemonicParsing="false" onAction="#onPresetsRecommendedClicked" prefHeight="25.0" prefWidth="101.0" text="Recommended" />
                                           <Button fx:id="chaoticPresetButton" mnemonicParsing="false" onAction="#onPresetsChaoticClicked" prefHeight="25.0" prefWidth="101.0" text="Chaotic" />
                                           <Label text="Special modes" />
@@ -46,9 +46,9 @@
                                     </VBox>
                                     <VBox prefHeight="275.0" prefWidth="478.0" spacing="24.0">
                                        <children>
-                                          <Label text="Minimal amount of randomization. Recommended starting point for first timers." />
-                                          <Label text="A recommended blend of randomization- fun but not too chaotic." />
-                                          <Label text="As many settings as possible. Potential sequence breaking / soft locks." />
+                                          <Label text="Just randomizes items/enemies within their type. Recommended for first timers." />
+                                          <Label text="A recommended blend of settings that's fun but not game breaking." />
+                                          <Label text="As many settings as possible. Can make the game highly challenging." />
                                           <Separator prefHeight="29.0" prefWidth="478.0" />
                                           <Label text="&quot;Get Off The Station&quot; mode. Can you escape Talos I before time is up?">
                                              <VBox.margin>
@@ -91,7 +91,7 @@
                                           <Label text="Shuffles in-game music. Some tracks may not be affected." />
                                           <Label text="Changes the first person player model to a random character." />
                                           <Label text="Changes the size of the Earth/Moon/Sun." />
-                                          <Label text="Replaces loading screen tips with tips relevant to the randomizer." />
+                                          <Label text="Adds loading screen tips relevant to the randomizer." />
                                           <Label text="Assigns a random facial expression to every voice line." visible="false" />
                                        </children>
                                     </VBox>
@@ -274,9 +274,7 @@
                                  <children>
                                     <VBox prefHeight="276.0" prefWidth="242.0" spacing="15.0">
                                        <children>
-                                          <CheckBox fx:id="startCheckboxDay2" mnemonicParsing="false" text="Start on 2nd day" visible="false" />
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
-                                          <CheckBox fx:id="startCheckboxSkipJovan" mnemonicParsing="false" text="Skip Jovan cutscene" visible="false" />
                                           <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Intro skip: Start at Lobby door" />
                                           <CheckBox fx:id="startCheckboxArtax" mnemonicParsing="false" text="Start with ARTAX Jetpack" />
                                           <CheckBox fx:id="startCheckboxPsychoscope" mnemonicParsing="false" text="Start with Psychoscope" />
@@ -284,14 +282,8 @@
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
                                        <children>
-                                          <Label prefHeight="17.0" prefWidth="368.0" text="Installs JerryTerry's &quot;Natural Day 2 Start&quot; to skip to the 2nd day." visible="false" />
-                                          <Label prefHeight="17.0" prefWidth="330.0" text="Adds useful equipment to containers in Morgan's apartment." />
-                                          <Label text="Does not spawn Jovan so that his cutscene won't play." visible="false" />
-                                          <Label prefHeight="22.0" prefWidth="295.0" text="Skip intro and spawn by the Lobby door with a wrench.">
-                                             <padding>
-                                                <Insets bottom="5.0" />
-                                             </padding>
-                                          </Label>
+                                          <Label text="Adds useful equipment to containers in Morgan's apartment." />
+                                          <Label text="Skip intro and spawn by the Lobby door with a wrench." />
                                           <Label text="Grants ARTAX Jetpack at the start of the game." />
                                           <Label text="Grants Psychoscope at the start of the game." />
                                        </children>
@@ -325,7 +317,7 @@
                                           <Label text="Adds 24 guns from the &quot;More Guns&quot; mod." />
                                           <Label text="Adds 16 weapons from the Prey For Death mod." />
                                           <Label />
-                                          <Label text="Adds new enemies, mostly from the Prey For Death mod." />
+                                          <Label text="Adds new enemies from the Prey For Death mod." />
                                           <Label />
                                           <Label text="Adds 3 turrets from the Prey For Death mod." />
                                        </children>

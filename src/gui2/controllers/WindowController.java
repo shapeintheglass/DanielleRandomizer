@@ -466,8 +466,6 @@ public class WindowController {
   protected void onPresetsRecommendedClicked(ActionEvent event) {
     resetUI();
     cosmeticCheckboxBodies.setSelected(true);
-    cosmeticCheckboxVoices.setSelected(true);
-    cosmeticCheckboxMusic.setSelected(true);
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
     setPickupPreset("Randomize items within type");
@@ -476,12 +474,8 @@ public class WindowController {
     setNpcPreset("Randomize friendly robots within type");
     gameplayRandomizeFabPlanCosts.setSelected(true);
     gameplayRandomizeNeuromods.setSelected(true);
-    gameplayRandomizeDispensers.setSelected(true);
     startCheckboxOutsideApartment.setSelected(true);
     startCheckboxPsychoscope.setSelected(true);
-    moreGuns.setSelected(true);
-    morePreySoulsGuns.setSelected(true);
-    morePreySoulsTurrets.setSelected(true);
     cheatsCheckboxAllScans.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Recommended preset selected.\n");
@@ -493,7 +487,6 @@ public class WindowController {
   protected void onPresetsChaoticClicked(ActionEvent event) {
     resetUI();
     cosmeticCheckboxBodies.setSelected(true);
-    cosmeticCheckboxVoices.setSelected(true);
     cosmeticCheckboxPlayerModel.setSelected(true);
     cosmeticCheckboxPlanetSize.setSelected(true);
     setPickupPreset("Randomize all items");
@@ -508,13 +501,14 @@ public class WindowController {
     recyclerSlider.set(true, 50.0);
     breakableSlider.set(true, 50.0);
     hackableSlider.set(true, 50.0);
-    mimicSlider.set(true, 1.0);
+    mimicSlider.set(true, 2.0);
     startCheckboxOutsideApartment.setSelected(true);
     startCheckboxPsychoscope.setSelected(true);
     moreGuns.setSelected(true);
     morePreySoulsGuns.setSelected(true);
     morePreySoulsEnemies.setSelected(true);
     morePreySoulsTurrets.setSelected(true);
+    cheatsCheckboxAllScans.setSelected(true);
     outputWindow.clear();
     outputWindow.appendText("Chaotic preset selected.\n");
     outputWindow.appendText(
@@ -552,7 +546,10 @@ public class WindowController {
     setEnemyPreset("Typhon to humans");
     expCheckboxWander.setSelected(true);
     expLivingCorpses.setSelected(true);
-    // startCheckboxOutsideApartment.setSelected(true);
+    startCheckboxOutsideApartment.setSelected(true);
+    startCheckboxPsychoscope.setSelected(true);
+    startCheckboxArtax.setSelected(true);
+    startCheckboxAddAllEquipment.setSelected(true);
     cheatsCheckboxFriendlyNpcs.setSelected(true);
     cheatsCheckboxOpenStation.setSelected(true);
     outputWindow.clear();

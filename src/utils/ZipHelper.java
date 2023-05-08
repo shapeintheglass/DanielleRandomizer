@@ -66,7 +66,7 @@ public class ZipHelper {
   public static final String AI_TREE_UNARMED_HUMANS = "ark/ai/aitrees/unarmedhumanaitree.xml";
   public static final String AI_SIGNAL_RECEIVER_THERMAL_MIMIC = "ark/ai/aisignalreceiverconfigs/thermalmimicsignalreceiverconfig.xml";
 
-  public static final String BOOKS_XML = "ark/campaign/books.xml";
+  public static final String NOTES_XML = "ark/campaign/notes.xml";
   public static final String LOCATIONS_XML = "ark/campaign/locations.xml";
   public static final String LORE_LIBRARY = "ark/campaign/lorelibrary.xml";
 

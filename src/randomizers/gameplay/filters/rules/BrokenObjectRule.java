@@ -14,7 +14,8 @@ import com.google.common.collect.ImmutableSet;
  */
 public class BrokenObjectRule implements Rule {
 
-  private static ImmutableSet<String> GUIDS_NOT_TO_RANDOMIZE = ImmutableSet.of();
+  // Fabricator/Recycler in psychotronics
+  private static ImmutableSet<String> GUIDS_NOT_TO_RANDOMIZE = ImmutableSet.of("48A3188ACC350D82", "4FD16C51804A6666");
 
   private static final ImmutableSet<String> BREAKABLE_ARCHETYPES =
       ImmutableSet.of("ArkGameplayObjects.Recycler.Recycler_Default",

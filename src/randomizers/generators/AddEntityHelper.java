@@ -121,6 +121,20 @@ public class AddEntityHelper {
       idCounter++;
     }
     
+    // Add welcome note
+    Element welcomeNoteNode = new Element("Node")
+        .setAttribute("Id", Integer.toString(idCounter))
+        .setAttribute("Class", "Ark:Notes:GiveNote")
+        .setAttribute("pos", "-11250,-5330,0")
+        .addContent(new Element("Inputs")
+            .setAttribute("note_Note", WelcomeNoteHelper.WELCOME_NOTE_ID));
+    Element welcomeNoteEdge = new Element("Edge")
+        .setAttribute("nodeIn", Integer.toString(idCounter))
+        .setAttribute("nodeOut", gameStartNodeId)
+        .setAttribute("portIn", "Trigger")
+        .setAttribute("portOut", "output");
+    nodes.addContent(welcomeNoteNode);
+    edges.addContent(welcomeNoteEdge);
     return entity;
   }
   
@@ -440,6 +454,10 @@ public class AddEntityHelper {
             .setArchetype("ArkPickups.Weapons.Wrench")
             .setQuantity(1)
             .build());
+      }
+      
+      // If station randomization is also enabled, add two EMP grenades to bypass the GUTS fan, just in case.
+      if (settings.getGameplaySettings().getRandomizeStation()) {
         gameStartItems.add(StartItem.newBuilder()
             .setArchetype("ArkPickups.Ammo.EMPGrenades")
             .setQuantity(2)

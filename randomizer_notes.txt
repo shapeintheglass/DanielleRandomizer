@@ -1,12 +1,8 @@
 Notes:
- - Fix portraits for Prey Souls enemies (need to actually copy them in)
  - Skip cutscenes
- - Fix anti-mimic zones, they don't seem to work
  - Fix heads for NPCs (incorporate husks)
  - Fix jetpack for helmet npcs
  - Add friendly mil op + friendly mil op dispenser for dispenser rando
- - whitelist the crystal in alex's office so we can break it
- - whitelist aaron ingram terminal
  - add book to starting items
 
 Todo:
