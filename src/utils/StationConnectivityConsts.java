@@ -106,21 +106,21 @@ public final class StationConnectivityConsts {
 
   // Map of level to level id
   public static final ImmutableBiMap<Level, String> LEVELS_TO_NAMES =
-      new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, "executive/arboretum")
-          .put(Level.BRIDGE, "executive/bridge")
-          .put(Level.CARGO_BAY, "engineering/cargobay")
-          .put(Level.CREW_QUARTERS, "executive/crewfacilities")
-          .put(Level.DEEP_STORAGE, "executive/corporateit")
-          .put(Level.GUTS, "research/zerog_utilitytunnels")
-          .put(Level.HARDWARE_LABS, "research/prototype")
-          .put(Level.LIFE_SUPPORT, "engineering/lifesupport")
-          .put(Level.LOBBY, "research/lobby")
-          .put(Level.NEUROMOD_DIVISION, "research/simulationlabs")
-          .put(Level.POWER_PLANT, "engineering/powersource")
-          .put(Level.PSYCHOTRONICS, "research/psychotronics")
-          .put(Level.SHUTTLE_BAY, "research/shuttlebay")
-          .put(Level.EXTERIOR, "station/exterior")
-          .put(Level.GENDER_SELECT, "playergenderselect")
+      new ImmutableBiMap.Builder<Level, String>().put(Level.ARBORETUM, LevelConsts.ARBORETUM)
+          .put(Level.BRIDGE, LevelConsts.BRIDGE)
+          .put(Level.CARGO_BAY, LevelConsts.CARGO_BAY)
+          .put(Level.CREW_QUARTERS, LevelConsts.CREW_QUARTERS)
+          .put(Level.DEEP_STORAGE, LevelConsts.DEEP_STORAGE)
+          .put(Level.GUTS, LevelConsts.GUTS)
+          .put(Level.HARDWARE_LABS, LevelConsts.HARDWARE_LABS)
+          .put(Level.LIFE_SUPPORT, LevelConsts.LIFE_SUPPORT)
+          .put(Level.LOBBY, LevelConsts.LOBBY)
+          .put(Level.NEUROMOD_DIVISION, LevelConsts.NEUROMOD_DIVISION)
+          .put(Level.POWER_PLANT, LevelConsts.POWER_PLANT)
+          .put(Level.PSYCHOTRONICS, LevelConsts.PSYCHOTRONICS)
+          .put(Level.SHUTTLE_BAY, LevelConsts.SHUTTLE_BAY)
+          .put(Level.EXTERIOR, LevelConsts.EXTERIOR)
+          .put(Level.GENDER_SELECT, LevelConsts.PLAYER_GENDER_SELECT)
           .build();
 
   // Map of level to associated spawn name

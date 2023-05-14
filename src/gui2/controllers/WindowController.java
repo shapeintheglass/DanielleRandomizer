@@ -27,7 +27,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -41,7 +40,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import proto.RandomizerSettings.AllPresets;
 import proto.RandomizerSettings.CheatSettings;
-import proto.RandomizerSettings.CheatSettings.SpawnLocation;
 import proto.RandomizerSettings.CosmeticSettings;
 import proto.RandomizerSettings.ExperimentalSettings;
 import proto.RandomizerSettings.GameStartSettings;
@@ -51,7 +49,6 @@ import proto.RandomizerSettings.GenericSpawnPresetRule;
 import proto.RandomizerSettings.MoreSettings;
 import proto.RandomizerSettings.Settings;
 import proto.RandomizerSettings.ToggleWithSlider;
-import randomizers.generators.CustomSpawnGenerator;
 import utils.Utils;
 
 public class WindowController {
@@ -170,6 +167,8 @@ public class WindowController {
   @FXML
   private CheckBox startCheckboxOutsideApartment;
   @FXML
+  private CheckBox startCheckboxRandomLocation;
+  @FXML
   private CheckBox startCheckboxArtax;
   @FXML
   private CheckBox startCheckboxPsychoscope;
@@ -191,12 +190,6 @@ public class WindowController {
   private CheckBox cheatsCheckboxAllScans;
   @FXML
   private CheckBox cheatsCheckboxFriendlyNpcs;
-  @FXML
-  private CheckBox cheatsCheckboxCustomStart;
-  @FXML
-  private ChoiceBox<String> cheatsChoiceBoxCustomStart;
-  @FXML
-  private TextField cheatsTextFieldGameTokens;
 
   /* EXPERIMENTAL TAB */
   @FXML
@@ -253,24 +246,19 @@ public class WindowController {
     checkboxes = ImmutableList.of(
         cosmeticCheckboxBodies, cosmeticCheckboxVoices, cosmeticCheckboxMusic, cosmeticCheckboxPlayerModel, cosmeticCheckboxPlanetSize, cosmeticCheckboxCustomTips, 
         gameplayRandomizeStation, gameplayRandomizeNeuromods, gameplayRandomizeFabPlanCosts, gameplayRandomizeKeycards, gameplayRandomizeDispensers,
-        startCheckboxArtax, startCheckboxAddAllEquipment, startCheckboxPsychoscope, startCheckboxOutsideApartment, 
+        startCheckboxArtax, startCheckboxAddAllEquipment, startCheckboxPsychoscope, startCheckboxOutsideApartment, startCheckboxRandomLocation,
         moreGuns, morePreySoulsGuns, morePreySoulsEnemies, morePreySoulsTurrets, 
-        cheatsCheckboxAllScans, cheatsCheckboxCustomStart, cheatsCheckboxOpenStation, cheatsCheckboxFriendlyNpcs,
+        cheatsCheckboxAllScans, cheatsCheckboxOpenStation, cheatsCheckboxFriendlyNpcs,
         expCheckboxEnableGravity, expCheckboxGravity, expCheckboxSelfDestruct, expCheckboxWander, expLivingCorpses);
 
     toDisable = Lists.newArrayList(changeDirButton, newSeedButton, installButton, uninstallButton,
         clearButton, saveSettingsButton, closeButton, recommendedPresetButton, chaoticPresetButton,
-        litePresetButton, gotsPresetButton, livingTalosPresetButton, cheatsTextFieldGameTokens,
+        litePresetButton, gotsPresetButton, livingTalosPresetButton,
         expTextFieldShuttleTimer, expTextFieldTimer, seedText, directoryText);
 
     logger = Logger.getLogger("randomizer_gui");
 
     setTooltips();
-
-    cheatsChoiceBoxCustomStart.getItems().add(SpawnLocation.RANDOM.name());
-    for (SpawnLocation l : CustomSpawnGenerator.SUPPORTED_SPAWNS) {
-      cheatsChoiceBoxCustomStart.getItems().add(l.name());
-    }
 
     // Attempt to read from preset definition file and saved settings file
     try {
@@ -308,16 +296,6 @@ public class WindowController {
         gameplayMimicTextbox, gameplayMimicPercent, 5.0);
 
     updateUI();
-
-    cheatsCheckboxCustomStart.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        if (event.getSource() instanceof CheckBox) {
-          boolean isCustomStart = cheatsCheckboxCustomStart.isSelected();
-          cheatsChoiceBoxCustomStart.setDisable(!isCustomStart);
-        }
-      }
-    });
 
     expCheckboxSelfDestruct.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -367,8 +345,7 @@ public class WindowController {
     cosmeticCheckboxBodies.setSelected(settings.getCosmeticSettings().getRandomizeBodies());
     cosmeticCheckboxVoices.setSelected(settings.getCosmeticSettings().getRandomizeVoicelines());
     cosmeticCheckboxMusic.setSelected(settings.getCosmeticSettings().getRandomizeMusic());
-    cosmeticCheckboxPlayerModel
-        .setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
+    cosmeticCheckboxPlayerModel.setSelected(settings.getCosmeticSettings().getRandomizePlayerModel());
     cosmeticCheckboxPlanetSize.setSelected(settings.getCosmeticSettings().getRandomizePlanetSize());
     cosmeticCheckboxCustomTips.setSelected(settings.getCosmeticSettings().getCustomLoadingTips());
 
@@ -386,6 +363,7 @@ public class WindowController {
     startCheckboxPsychoscope.setSelected(settings.getGameStartSettings().getAddPsychoscope());
     startCheckboxAddAllEquipment.setSelected(settings.getGameStartSettings().getAddLootToApartment());
     startCheckboxOutsideApartment.setSelected(settings.getGameStartSettings().getStartOutsideApartment());
+    startCheckboxRandomLocation.setSelected(settings.getGameStartSettings().getRandomStart());
 
     moreGuns.setSelected(settings.getMoreSettings().getMoreGuns());
     morePreySoulsGuns.setSelected(settings.getMoreSettings().getPreySoulsGuns());
@@ -395,11 +373,6 @@ public class WindowController {
     cheatsCheckboxOpenStation.setSelected(settings.getCheatSettings().getOpenStation());
     cheatsCheckboxAllScans.setSelected(settings.getCheatSettings().getUnlockAllScans());
     cheatsCheckboxFriendlyNpcs.setSelected(settings.getCheatSettings().getFriendlyNpcs());
-    cheatsCheckboxCustomStart.setSelected(settings.getCheatSettings().getUseCustomSpawn());
-    cheatsChoiceBoxCustomStart.setDisable(!settings.getCheatSettings().getUseCustomSpawn());
-    cheatsChoiceBoxCustomStart
-        .setValue(settings.getCheatSettings().getCustomSpawnLocation().name());
-    cheatsTextFieldGameTokens.setText(settings.getCheatSettings().getGameTokenOverrides());
 
     expCheckboxWander.setSelected(settings.getExpSettings().getWanderingHumans());
     expLivingCorpses.setSelected(settings.getExpSettings().getLivingCorpses());
@@ -424,9 +397,6 @@ public class WindowController {
     breakableSlider.set(false, 5.0);
     hackableSlider.set(false, 50.0);
     mimicSlider.set(false, 5.0);
-    cheatsChoiceBoxCustomStart.setValue(SpawnLocation.RANDOM.name());
-    cheatsChoiceBoxCustomStart.setDisable(true);
-    cheatsTextFieldGameTokens.clear();
     expTextFieldTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_TIMER);
     expTextFieldShuttleTimer.setText(Gui2Consts.DEFAULT_SELF_DESTRUCT_SHUTTLE_TIMER);
   }
@@ -831,6 +801,7 @@ public class WindowController {
         .setStartOutsideApartment(startCheckboxOutsideApartment.isSelected())
         .setAddJetpack(startCheckboxArtax.isSelected())
         .setAddPsychoscope(startCheckboxPsychoscope.isSelected())
+        .setRandomStart(startCheckboxRandomLocation.isSelected())
         .build();
   }
 
@@ -845,9 +816,7 @@ public class WindowController {
     return CheatSettings.newBuilder().setOpenStation(cheatsCheckboxOpenStation.isSelected())
         .setUnlockAllScans(cheatsCheckboxAllScans.isSelected())
         .setFriendlyNpcs(cheatsCheckboxFriendlyNpcs.isSelected())
-        .setUseCustomSpawn(cheatsCheckboxCustomStart.isSelected())
-        .setCustomSpawnLocation(SpawnLocation.valueOf(cheatsChoiceBoxCustomStart.getValue()))
-        .setGameTokenOverrides(cheatsTextFieldGameTokens.getText()).build();
+        .build();
   }
 
   private ExperimentalSettings getExperimentalSettings() {

@@ -31,7 +31,7 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="12.0" layoutY="21.0" prefHeight="17.0" prefWidth="597.0" text="Pick a preset to start! Check out the other tabs for more customization. Click &quot;Install&quot; to install changes." />
-                              <Label layoutX="11.0" layoutY="289.0" prefHeight="70.0" prefWidth="603.0" text="If you already have a randomized game in progress, do not install a new seed/settings or uninstall until you are finished with that seed. If you uninstall randomization or install with new settings/seed, you will no longer be able to load old randomizer saves." wrapText="true" />
+                              <Label layoutX="11.0" layoutY="289.0" prefHeight="70.0" prefWidth="603.0" text="If you already have a randomized game in progress, do not install a new seed/settings or uninstall until you are finished with that seed. If you do, you will no longer be able to load those old saves." wrapText="true" />
                               <HBox layoutX="28.0" layoutY="50.0" prefHeight="171.0" prefWidth="633.0" spacing="15.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
@@ -46,8 +46,8 @@
                                     </VBox>
                                     <VBox prefHeight="275.0" prefWidth="478.0" spacing="24.0">
                                        <children>
-                                          <Label text="Just randomizes items/enemies within their type. Recommended for first timers." />
-                                          <Label text="A recommended blend of settings that's fun but not game breaking." />
+                                          <Label text="Only randomize items/enemies within their type. Recommended for first timers." />
+                                          <Label text="A playable blend of settings that's fun but not game-breaking." />
                                           <Label text="As many settings as possible. Can make the game highly challenging." />
                                           <Separator prefHeight="29.0" prefWidth="478.0" />
                                           <Label text="&quot;Get Off The Station&quot; mode. Can you escape Talos I before time is up?">
@@ -202,9 +202,9 @@
                                        <children>
                                           <CheckBox fx:id="gameplayRandomizeNeuromods" mnemonicParsing="false" text="Randomize neuromods" />
                                           <CheckBox fx:id="gameplayRandomizeFabPlanCosts" mnemonicParsing="false" text="Randomize fab plan costs" />
-                                          <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
                                           <CheckBox fx:id="gameplayRandomizeStation" mnemonicParsing="false" text="Randomize station" />
                                           <CheckBox fx:id="gameplayRandomizeKeycards" mnemonicParsing="false" text="Randomize keycards" />
+                                          <CheckBox fx:id="gameplayRandomizeDispensers" mnemonicParsing="false" text="Randomize operator dispensers" />
                                           <CheckBox fx:id="gameplayRandomizeRecyclers" mnemonicParsing="false" text="\% recyclers (compared to fabricators)" />
                                           <CheckBox fx:id="gameplayRandomizeBreakables" mnemonicParsing="false" text="\% repairable objects that are broken" />
                                           <CheckBox fx:id="gameplayRandomizeHackables" mnemonicParsing="false" text="\% hackable objects that are locked" />
@@ -215,9 +215,9 @@
                                        <children>
                                           <Label text="Shuffles neuromod upgrade tree." />
                                           <Label text="Assigns new randomly generated costs for fab plans." />
-                                          <Label text="Redistributes operator dispensers with an equal ratio." />
                                           <Label prefHeight="17.0" prefWidth="321.0" text="Shuffles connections between levels." />
                                           <Label prefHeight="17.0" prefWidth="337.0" text="Shuffles keycards." />
+                                          <Label text="Redistributes operator dispensers with an equal ratio." />
                                           <HBox prefHeight="17.0" prefWidth="305.0">
                                              <children>
                                                 <Slider fx:id="gameplayRecyclerSlider" disable="true" prefHeight="25.0" prefWidth="262.0" snapToTicks="true" value="50.0" />
@@ -275,17 +275,19 @@
                                     <VBox prefHeight="276.0" prefWidth="242.0" spacing="15.0">
                                        <children>
                                           <CheckBox fx:id="startCheckboxAddAllEquipment" mnemonicParsing="false" text="Add equipment to Morgan's apartment" />
-                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Intro skip: Start at Lobby door" />
                                           <CheckBox fx:id="startCheckboxArtax" mnemonicParsing="false" text="Start with ARTAX Jetpack" />
                                           <CheckBox fx:id="startCheckboxPsychoscope" mnemonicParsing="false" text="Start with Psychoscope" />
+                                          <CheckBox fx:id="startCheckboxOutsideApartment" mnemonicParsing="false" text="Intro skip: Start at Lobby door" />
+                                          <CheckBox fx:id="startCheckboxRandomLocation" mnemonicParsing="false" text="Randomize starting location" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="276.0" prefWidth="355.0" spacing="15.0">
                                        <children>
                                           <Label text="Adds useful equipment to containers in Morgan's apartment." />
-                                          <Label text="Skip intro and spawn by the Lobby door with a wrench." />
                                           <Label text="Grants ARTAX Jetpack at the start of the game." />
                                           <Label text="Grants Psychoscope at the start of the game." />
+                                          <Label text="Skip intro and spawn in the Lobby in a wrench." />
+                                          <Label text="Teleport to a random location at the start of the game." />
                                        </children>
                                     </VBox>
                                  </children>
@@ -333,7 +335,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="633.0">
                            <children>
-                              <Label layoutX="12.0" layoutY="21.0" text="Facilitates gameplay/debugging." />
+                              <Label layoutX="12.0" layoutY="21.0" text="Facilitates gameplay." />
                               <HBox layoutX="27.0" layoutY="50.0" prefHeight="317.0" prefWidth="596.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="307.0" spacing="15.0">
@@ -341,9 +343,6 @@
                                           <CheckBox fx:id="cheatsCheckboxOpenStation" mnemonicParsing="false" text="Unlock all doors, safes, airlocks, and workstations" />
                                           <CheckBox fx:id="cheatsCheckboxAllScans" mnemonicParsing="false" text="Remove scan requirement for typhon neuromods" />
                                           <CheckBox fx:id="cheatsCheckboxFriendlyNpcs" mnemonicParsing="false" text="Friendly NPCs" />
-                                          <Separator prefWidth="200.0" />
-                                          <CheckBox fx:id="cheatsCheckboxCustomStart" mnemonicParsing="false" text="Custom starting map (do not use)" />
-                                          <Label prefHeight="41.0" prefWidth="203.0" text="Game token overrides (do not use)" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="317.0" prefWidth="309.0" spacing="15.0">
@@ -351,9 +350,6 @@
                                           <Label text="Unlocks (almost) everything except for scripted locks." />
                                           <Label text="Allows installing typhon neuromods without research." />
                                           <Label text="NPCS are non-hostile to the player." />
-                                          <Separator prefWidth="200.0" />
-                                          <ChoiceBox fx:id="cheatsChoiceBoxCustomStart" prefHeight="25.0" prefWidth="237.0" />
-                                          <TextField fx:id="cheatsTextFieldGameTokens" prefHeight="25.0" prefWidth="303.0" promptText="key1=value1,key2=value2,..." />
                                        </children>
                                     </VBox>
                                  </children>

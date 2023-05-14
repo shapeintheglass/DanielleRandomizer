@@ -28,6 +28,10 @@ public class SettingsHelper {
         .getRandomizePlanetSize()) {
       addOptionToBuilder(builder, "Randomize Earth/Moon/Sun");
     }
+    if (settings.getCosmeticSettings()
+        .getCustomLoadingTips()) {
+      addOptionToBuilder(builder, "Custom loading tips");
+    }
 
     if (!settings.getGameplaySettings()
         .getItemSpawnSettings()
@@ -37,7 +41,6 @@ public class SettingsHelper {
           .getItemSpawnSettings()
           .getName());
     }
-
     if (!settings.getGameplaySettings()
         .getEnemySpawnSettings()
         .getFiltersList()
@@ -46,40 +49,37 @@ public class SettingsHelper {
           .getEnemySpawnSettings()
           .getName());
     }
-
     if (settings.getGameplaySettings()
         .getRandomizeStation()) {
       addOptionToBuilder(builder, "Randomize station");
     }
-
+    if (settings.getGameplaySettings()
+        .getRandomizeKeycards()) {
+      addOptionToBuilder(builder, "Randomize keycards");
+    }
     if (settings.getGameplaySettings()
         .getRandomizeNeuromods()) {
       addOptionToBuilder(builder, "Randomize neuromods");
     }
-
     if (settings.getGameplaySettings()
         .getRandomizeFabPlanCosts()) {
       addOptionToBuilder(builder, "Randomize fab plan costs");
     }
-
     if (settings.getGameplaySettings()
         .getRandomizeRecyclers()
         .getIsEnabled()) {
       addOptionToBuilder(builder, "Randomize recyclers");
     }
-
     if (settings.getGameplaySettings()
         .getRandomizeDispensers()
         .getIsEnabled()) {
       addOptionToBuilder(builder, "Randomize operator dispensers");
     }
-
     if (settings.getGameplaySettings()
         .getRandomizeBreakables()
         .getIsEnabled()) {
       addOptionToBuilder(builder, "Randomize breakable objects");
     }
-
     if (settings.getGameplaySettings()
         .getRandomizeHackables()
         .getIsEnabled()) {
@@ -87,52 +87,43 @@ public class SettingsHelper {
     }
 
     if (settings.getGameStartSettings()
-        .getAddJetpack()) {
-      addOptionToBuilder(builder, "Add ARTAX Jetpack");
-    }
-
-    if (settings.getGameStartSettings()
         .getAddLootToApartment()) {
       addOptionToBuilder(builder, "Add loot to apartment");
     }
-
+    if (settings.getGameStartSettings()
+        .getAddJetpack()) {
+      addOptionToBuilder(builder, "Start with ARTAX Jetpack");
+    }
     if (settings.getGameStartSettings()
         .getAddPsychoscope()) {
-      addOptionToBuilder(builder, "Add Psychoscope");
+      addOptionToBuilder(builder, "Start with Psychoscope");
     }
-
     if (settings.getGameStartSettings()
         .getStartOutsideApartment()) {
-      addOptionToBuilder(builder, "Start outside apartment");
+      addOptionToBuilder(builder, "Intro skip");
     }
-
+    if (settings.getGameStartSettings()
+        .getRandomStart()) {
+      addOptionToBuilder(builder, "Random start location");
+    }
+    
     if (settings.getMoreSettings()
         .getMoreGuns()) {
       addOptionToBuilder(builder, "More guns");
     }
-
     if (settings.getMoreSettings()
         .getPreySoulsGuns()) {
       addOptionToBuilder(builder, "Prey For Death - Guns");
     }
-
-    if (settings.getMoreSettings()
-        .getPreySoulsChipsets()) {
-      addOptionToBuilder(builder, "Prey For Death - Chipsets");
-    }
-
     if (settings.getMoreSettings()
         .getPreySoulsEnemies()) {
       addOptionToBuilder(builder, "Prey For Death - Enemies");
     }
-
     if (settings.getMoreSettings()
         .getPreySoulsTurrets()) {
       addOptionToBuilder(builder, "Prey For Death - Turrets");
     }
-
-
-
+    
     if (settings.getCheatSettings()
         .getOpenStation()) {
       addOptionToBuilder(builder, "Unlock all doors/safes/workstations");
@@ -141,24 +132,20 @@ public class SettingsHelper {
         .getUnlockAllScans()) {
       addOptionToBuilder(builder, "Unlock all typhon scans");
     }
-    
     if (settings.getCheatSettings()
-        .getUseCustomSpawn()) {
-      addOptionToBuilder(builder, String.format("Start location: %s", settings.getCheatSettings()
-          .getCustomSpawnLocation()
-          .name()));
+        .getFriendlyNpcs()) {
+      addOptionToBuilder(builder, "Friendly NPCs");
     }
+    
     
     if (settings.getExpSettings()
         .getWanderingHumans()) {
       addOptionToBuilder(builder, "Make humans wander");
     }
-    
     if (settings.getExpSettings()
         .getLivingCorpses()) {
       addOptionToBuilder(builder, "Living corpses");
     }
-    
     if (settings.getExpSettings()
         .getZeroGravityEverywhere()) {
       addOptionToBuilder(builder, "Microgravity everywhere");

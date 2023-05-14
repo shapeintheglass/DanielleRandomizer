@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import com.google.common.collect.ImmutableList;
@@ -17,6 +16,7 @@ import installers.Installer;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
+import proto.RandomizerSettings.CheatSettings.SpawnLocation;
 import proto.RandomizerSettings.Settings;
 import randomizers.cosmetic.BinkRandomizer;
 import randomizers.cosmetic.BodyRandomizer;
@@ -46,12 +46,10 @@ import randomizers.gameplay.filters.OpenStationFilter;
 import randomizers.gameplay.filters.OperatorDispenserFilter;
 import randomizers.gameplay.filters.RecyclerFilter;
 import randomizers.gameplay.filters.StationConnectivityFilter;
-import randomizers.generators.WelcomeNoteHelper;
-import randomizers.generators.WelcomeNoteHelper.Note;
-import randomizers.generators.CustomSpawnGenerator;
 import randomizers.generators.ProgressionGenerator;
 import randomizers.generators.SelfDestructTimerHelper;
 import randomizers.generators.StationGenerator;
+import randomizers.generators.WelcomeNoteHelper;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
@@ -222,8 +220,7 @@ public class RandomizerService extends Service<Void> {
         return false;
       }
 
-      String spawnLocation =
-          executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
+      executeRandomization(finalSettings, tempDir, tempLevelDir, tempPatchDir);
 
       // Copy over dependencies files for certain settings
       copyDependencies(finalSettings, tempPatchDir);
@@ -233,7 +230,7 @@ public class RandomizerService extends Service<Void> {
       try {
         writeLine(Gui2Consts.INSTALL_PROGRESS_WRITING);
         Path installDir = Paths.get(finalSettings.getInstallDir());
-        Installer installer = new Installer(installDir, tempLevelDir, tempPatchDir, spawnLocation);
+        Installer installer = new Installer(installDir, tempLevelDir, tempPatchDir);
         installer.install();
       } catch (IOException | InterruptedException e) {
         writeLine(Gui2Consts.INSTALL_STATUS_FAILED_TEXT);
@@ -282,23 +279,16 @@ public class RandomizerService extends Service<Void> {
     return true;
   }
 
-  private String executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir,
-      Path tempPatchDir) {
+  private void executeRandomization(Settings currentSettings, Path tempDir, Path tempLevelDir, Path tempPatchDir) {
     long seed = Utils.stringToLong(currentSettings.getSeed());
 
     TaggedDatabase database = EntityDatabase.getInstance(zipHelper);
     if (database == null) {
-      return null;
+      // TODO: throw exception
+      return;
     }
 
     writeLine(SettingsHelper.settingsToString(currentSettings));
-
-    /* COSMETIC */
-    // try {
-    // OptionsMenuGenerator.addOptionsMenu(currentSettings, zipHelper);
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
 
     if (currentSettings.getCosmeticSettings().getRandomizeBodies()) {
       writeLine(Gui2Consts.INSTALL_PROGRESS_BODIES);
@@ -367,12 +357,39 @@ public class RandomizerService extends Service<Void> {
     new NpcAbilitiesRandomizer(currentSettings, zipHelper, database).randomize();
 
     /* GAMEPLAY, LEVEL */
-    LevelRandomizer levelRandomizer =
-        new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap, database)
-            .addFilter(new ItemSpawnFilter(database, currentSettings))
-            .addFilter(new FlowgraphFilter(database, currentSettings))
-            .addFilter(new EnemyFilter(database, currentSettings))
-    /* .addFilter(new MorgansOfficeLockFilter()) */;
+    
+    Door startingLocation = StationGenerator.getStartingLocation(seed);
+    
+    LevelRandomizer levelRandomizer = new LevelRandomizer(currentSettings, zipHelper, swappedLinesMap, startingLocation, database)
+        .addFilter(new ItemSpawnFilter(database, currentSettings))
+        .addFilter(new FlowgraphFilter(database, currentSettings))
+        .addFilter(new EnemyFilter(database, currentSettings));
+    
+    
+    ImmutableNetwork<Level, Door> stationConnectivity = StationConnectivityConsts.getDefaultNetwork();
+    StringBuilder connectivityInfo = new StringBuilder();
+    if (currentSettings.getGameplaySettings().getRandomizeStation()) {
+      StationGenerator stationGenerator = new StationGenerator(seed, startingLocation);
+      stationConnectivity = stationGenerator.getNetwork();
+      logger.info(stationGenerator.getDebugData());
+      StationConnectivityFilter connectivity =
+          new StationConnectivityFilter(stationGenerator.getDoorConnectivity(), stationGenerator.getSpawnConnectivity());
+      connectivityInfo.append(stationGenerator.toString());
+      connectivityInfo.append("\n");
+      
+      levelRandomizer = levelRandomizer.addFilter(connectivity);
+    }
+    
+    if (currentSettings.getGameplaySettings().getRandomizeKeycards()) {
+      ProgressionGenerator progressionGenerator = new ProgressionGenerator(stationConnectivity, seed, startingLocation);
+      String progressionGenerationStr = progressionGenerator.toString(); 
+      connectivityInfo.append(progressionGenerationStr);
+      logger.info(progressionGenerationStr);
+      KeycardFilter keycardFilter =
+          new KeycardFilter(progressionGenerator.getKeycardConnectivity());
+      
+      levelRandomizer = levelRandomizer.addFilter(keycardFilter);
+    }
 
     if (currentSettings.getCheatSettings().getOpenStation()) {
       levelRandomizer = levelRandomizer.addFilter(new OpenStationFilter());
@@ -402,43 +419,6 @@ public class RandomizerService extends Service<Void> {
       levelRandomizer = levelRandomizer.addFilter(new RecyclerFilter(currentSettings));
     }
 
-    CustomSpawnGenerator customSpawnGenerator = new CustomSpawnGenerator();
-
-    if (currentSettings.getCheatSettings().getUseCustomSpawn()) {
-      logger.info(String.format("Setting custom spawn to %s", customSpawnGenerator.getLocation()));
-      customSpawnGenerator.setSpawn(currentSettings.getCheatSettings().getCustomSpawnLocation(),
-          zipHelper, seed);
-      customSpawnGenerator.swapLocationId();
-    }
-
-    ImmutableNetwork<Level, Door> stationConnectivity =
-        StationConnectivityConsts.getDefaultNetwork();
-    StringBuilder connectivityInfo = new StringBuilder();
-    if (currentSettings.getGameplaySettings().getRandomizeStation()) {
-      StationGenerator stationGenerator =
-          new StationGenerator(seed, customSpawnGenerator.getLevelsToIds());
-      stationConnectivity = stationGenerator.getNetwork();
-      logger.info(stationGenerator.getDebugData());
-      StationConnectivityFilter connectivity =
-          new StationConnectivityFilter(stationGenerator.getDoorConnectivity(),
-              stationGenerator.getSpawnConnectivity(), customSpawnGenerator.getLevelsToIds());
-      connectivityInfo.append(stationGenerator.toString());
-      connectivityInfo.append("\n");
-
-      levelRandomizer = levelRandomizer.addFilter(connectivity);
-    }
-
-    if (currentSettings.getGameplaySettings().getRandomizeKeycards()) {
-      ProgressionGenerator progressionGenerator =
-          new ProgressionGenerator(stationConnectivity, seed);
-      String progressionGenerationStr = progressionGenerator.toString(); 
-      connectivityInfo.append(progressionGenerationStr);
-      logger.info(progressionGenerationStr);
-      KeycardFilter keycardFilter =
-          new KeycardFilter(progressionGenerator.getKeycardConnectivity());
-      levelRandomizer = levelRandomizer.addFilter(keycardFilter);
-    }
-
     WelcomeNoteHelper bih = new WelcomeNoteHelper(zipHelper);
     bih.installWelcomeNote(currentSettings, connectivityInfo.toString());
 
@@ -449,12 +429,6 @@ public class RandomizerService extends Service<Void> {
     writeLine(Gui2Consts.INSTALL_PROGRESS_LEVELS);
     levelRandomizer.randomize();
     writeLine("Done processing level files.");
-
-    if (currentSettings.getCheatSettings().getUseCustomSpawn()) {
-      return customSpawnGenerator.getNewSpawnLocation();
-    } else {
-      return null;
-    }
   }
 
   private void copyDependencies(Settings settings, Path tempPatchDir) throws IOException {

@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +13,7 @@ import java.util.Stack;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import databases.TaggedDatabase;
 import proto.RandomizerSettings.Settings;
 import randomizers.BaseRandomizer;
@@ -27,6 +22,7 @@ import randomizers.gameplay.filters.rules.GameTokenRule;
 import randomizers.generators.AddEntityHelper;
 import utils.LevelConsts;
 import utils.MimicSliderUtils;
+import utils.StationConnectivityConsts.Door;
 import utils.Utils;
 import utils.ZipHelper;
 
@@ -44,20 +40,24 @@ public class LevelRandomizer extends BaseRandomizer {
 
   private Map<String, String> gameTokenValues;
 
+  // Mapping for randomizing cutscene dialogue
   private Map<String, String> swappedLinesMap;
 
   private GameTokenRule gameTokenRule;
+  
+  private Door spawnLocation;
 
   TaggedDatabase database;
 
   private float ratioOfObjectsThatAreHiddenMimics;
 
-  public LevelRandomizer(Settings s, ZipHelper zipHelper, Map<String, String> swappedLinesMap,
+  public LevelRandomizer(Settings s, ZipHelper zipHelper, Map<String, String> swappedLinesMap, Door spawnLocation,
       TaggedDatabase database) {
     super(s, zipHelper);
     filterList = new LinkedList<>();
     this.gameTokenValues = new HashMap<>();
     this.swappedLinesMap = swappedLinesMap;
+    this.spawnLocation = spawnLocation;
     this.database = database;
     setupGameTokens();
 
@@ -80,22 +80,9 @@ public class LevelRandomizer extends BaseRandomizer {
     if (settings.getExpSettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
-    if (settings.getCheatSettings().getUseCustomSpawn()) {
-      gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
-    }
     if (settings.getGameStartSettings().getStartOutsideApartment()) {
       gameTokenValues.putAll(LevelConsts.START_OUTSIDE_APARTMENT_TOKENS);
       gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
-    }
-    if (!settings.getCheatSettings().getGameTokenOverrides().isEmpty()) {
-      String[] tokens = settings.getCheatSettings().getGameTokenOverrides().split(",");
-      for (String token : tokens) {
-        if (!token.contains("=")) {
-          continue;
-        }
-        String[] keyVals = token.split("=");
-        gameTokenValues.put(keyVals[0], keyVals[1]);
-      }
     }
 
     gameTokenRule = new GameTokenRule(gameTokenValues);
@@ -203,7 +190,7 @@ public class LevelRandomizer extends BaseRandomizer {
           entitiesToMimic.size(), levelDir, MimicSliderUtils.MAX_MIMICS));
     }
 
-    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper, entitiesToMimic, r);
+    AddEntityHelper.addEntities(objects, levelDir, settings, zipHelper, entitiesToMimic, spawnLocation, r);
 
     zipHelper.copyToLevelPak(document, pathInZip, levelDir);
   }

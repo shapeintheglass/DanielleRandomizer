@@ -39,8 +39,6 @@ message GameplaySettings {
   bool randomize_keycards = 15;
   bool randomize_neuromods = 4;
   bool randomize_fab_plan_costs = 5;
-  bool randomize_neuromod_requirements = 16;
-  bool randomize_gravity = 17;
   ToggleWithSlider randomize_recyclers = 6;
   ToggleWithSlider randomize_dispensers = 7;
   ToggleWithSlider randomize_breakables = 8;
@@ -62,12 +60,12 @@ message GameStartSettings {
   bool start_outside_apartment = 4;
   bool add_jetpack = 5;
   bool add_psychoscope = 6;
+  bool random_start = 7;
 }
 
 message MoreSettings {
   bool more_guns = 1;
   bool prey_souls_guns = 2;
-  bool prey_souls_chipsets = 3;
   bool prey_souls_enemies = 4;
   bool prey_souls_turrets = 5;
 }
@@ -76,28 +74,6 @@ message CheatSettings {
   bool open_station = 1;
   bool unlock_all_scans = 2;
   bool friendly_npcs = 3;
-  bool use_custom_spawn = 4;
-  enum SpawnLocation {
-	NONE = 0;
-	RANDOM = 1;
-	LOBBY = 2;
-	HARDWARE_LABS = 3;
-	PSYCHOTRONICS= 4;
-	GUTS = 5;
-	ARBORETUM = 6;
-	BRIDGE = 7;
-	CREW_QUARTERS = 8;
-	DEEP_STORAGE = 9;
-	CARGO_BAY = 10;
-	LIFE_SUPPORT = 11;
-	POWER_PLANT = 12;
-	SHUTTLE_BAY = 13;
-	EXTERIOR = 14;
-	ENDGAME = 15;
-	GENDER_SELECT = 16;
-  }
-  SpawnLocation custom_spawn_location = 5;
-  string game_token_overrides = 6;
 }
 
 message ExperimentalSettings {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -32,11 +31,13 @@ public class ProgressionGenerator {
   private ProgressionGraph progressionGraph;
   private long seed;
   private Random r;
+  private Door startingLocation;
 
-  public ProgressionGenerator(ImmutableNetwork<Level, Door> stationConnectivity, long seed) {
+  public ProgressionGenerator(ImmutableNetwork<Level, Door> stationConnectivity, long seed, Door startingLocation) {
     this.stationConnectivity = stationConnectivity;
     this.seed = seed;
     this.r = new Random(seed);
+    this.startingLocation = startingLocation;
 
     int numAttempts = 0;
     // Attempt to generate a station
@@ -143,7 +144,7 @@ public class ProgressionGenerator {
   }
 
   private boolean verify() {
-    ProgressionGraph pg = new ProgressionGraph(stationConnectivity, locationsToKeycards, seed);
+    ProgressionGraph pg = new ProgressionGraph(stationConnectivity, locationsToKeycards, seed, startingLocation);
     return pg.verify();
   }
 
@@ -169,24 +170,11 @@ public class ProgressionGenerator {
     for (int i = 0; i < numIterations; i++) {
       Random r = new Random();
       long seed = 6025717307696252058L;//r.nextLong();
-
-      ImmutableBiMap<Level, String> levelsToIds = new ImmutableBiMap.Builder<Level, String>()
-          .put(Level.ARBORETUM, "1713490239386284818").put(Level.BRIDGE, "844024417275035158")
-          .put(Level.CARGO_BAY, "15659330456296333985")
-          .put(Level.CREW_QUARTERS, "844024417252490146")
-          .put(Level.DEEP_STORAGE, "1713490239377738413").put(Level.GUTS, "4349723564886052417")
-          .put(Level.HARDWARE_LABS, "844024417263019221")
-          .put(Level.LIFE_SUPPORT, "4349723564895209499").put(Level.LOBBY, "1713490239377285936")
-          .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
-          .put(Level.POWER_PLANT, "6732635291182790112")
-          .put(Level.PSYCHOTRONICS, "11824555372632688907")
-          .put(Level.SHUTTLE_BAY, "1713490239386284988").put(Level.EXTERIOR, "1713490239386284337")
-          .build();
-
-      StationGenerator sg = new StationGenerator(seed, levelsToIds);
+      Door startingLocation = Door.NEUROMOD_DIVISION_LOBBY_EXIT;
+      StationGenerator sg = new StationGenerator(seed, startingLocation);
       ImmutableNetwork<Level, Door> stationConnectivity = sg.getNetwork();
 
-      ProgressionGenerator pg = new ProgressionGenerator(stationConnectivity, seed);
+      ProgressionGenerator pg = new ProgressionGenerator(stationConnectivity, seed, startingLocation);
       ImmutableMap<Location, Keycard> placement = pg.getKeycardPlacement();
 
       for (Location l : placement.keySet()) {

@@ -1,7 +1,6 @@
 package utils;
 
 import java.util.List;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
@@ -9,6 +8,22 @@ public class LevelConsts {
   public static final char DELIMITER = ';';
 
   public static final String PREFIX = "gamesdk/levels/campaign";
+  
+  public static enum TalosLocation {
+    LOBBY,
+    HARDWARE_LABS,
+    SHUTTLE_BAY,
+    PSYCHOTRONICS,
+    GUTS,
+    ARBORETUM,
+    BRIDGE,
+    CREW_QUARTERS,
+    DEEP_STORAGE,
+    CARGO_BAY,
+    LIFE_SUPPORT,
+    POWER_PLANT,
+    EXTERIOR
+  }
 
   public static final String NEUROMOD_DIVISION = "research/simulationlabs";
   public static final String LOBBY = "research/lobby";
@@ -26,13 +41,43 @@ public class LevelConsts {
   public static final String EXTERIOR = "station/exterior";
   public static final String ENDGAME = "endgame";
   public static final String PLAYER_GENDER_SELECT = "playergenderselect";
+  
+  public static final ImmutableMap<String, String> LEVEL_PATH_TO_NAME = new ImmutableMap.Builder<String, String>()
+      .put(NEUROMOD_DIVISION, "SimulationLabs")
+      .put(LOBBY, "Lobby")
+      .put(HARDWARE_LABS, "Prototype")
+      .put(SHUTTLE_BAY, "ShuttleBay")
+      .put(PSYCHOTRONICS, "psychotronics")
+      .put(GUTS, "ZeroG_UtilityTunnels")
+      .put(ARBORETUM, "Arboretum")
+      .put(CREW_QUARTERS, "CrewFacilities")
+      .put(DEEP_STORAGE, "CorporateIT")
+      .put(BRIDGE, "Bridge")
+      .put(CARGO_BAY, "CargoBay")
+      .put(LIFE_SUPPORT, "LifeSupport")
+      .put(POWER_PLANT, "PowerSource")
+      .put(EXTERIOR, "Exterior")
+      .put(ENDGAME, "EndGame")
+      .build();
+  
+  public static final ImmutableMap<TalosLocation, String> SPAWN_LOCATION_TO_LEVEL = new ImmutableMap.Builder<TalosLocation, String>()
+      .put(TalosLocation.LOBBY, LOBBY)
+      .put(TalosLocation.HARDWARE_LABS, HARDWARE_LABS)
+      .put(TalosLocation.SHUTTLE_BAY, SHUTTLE_BAY)
+      .put(TalosLocation.PSYCHOTRONICS, PSYCHOTRONICS)
+      .put(TalosLocation.GUTS, GUTS)
+      .put(TalosLocation.ARBORETUM, ARBORETUM)
+      .put(TalosLocation.BRIDGE, BRIDGE)
+      .put(TalosLocation.CREW_QUARTERS, CREW_QUARTERS)
+      .put(TalosLocation.DEEP_STORAGE, DEEP_STORAGE)
+      .put(TalosLocation.CARGO_BAY, CARGO_BAY)
+      .put(TalosLocation.LIFE_SUPPORT, LIFE_SUPPORT)
+      .put(TalosLocation.POWER_PLANT, POWER_PLANT)
+      .put(TalosLocation.EXTERIOR, EXTERIOR)
+      .build();
 
-  public static final String[] LEVEL_DIRS =
-      {"endgame", "engineering/cargobay", "engineering/lifesupport", "engineering/powersource",
-          "executive/arboretum", "executive/bridge", "executive/corporateit",
-          "executive/crewfacilities", "research/lobby", "research/prototype",
-          "research/psychotronics", "research/shuttlebay", "research/simulationlabs",
-          "research/zerog_utilitytunnels", "station/exterior", "playergenderselect"};
+  // Used for iterating through levels to install/uninstall randomization on
+  public static final String[] LEVEL_DIRS = {ENDGAME, CARGO_BAY, LIFE_SUPPORT, POWER_PLANT, ARBORETUM, BRIDGE, DEEP_STORAGE, CREW_QUARTERS, LOBBY, HARDWARE_LABS, PSYCHOTRONICS, SHUTTLE_BAY, NEUROMOD_DIVISION, GUTS, EXTERIOR, PLAYER_GENDER_SELECT};
 
   public static final List<String> DO_NOT_TOUCH_ITEM_TAGS =
       Lists.newArrayList("Data", "MissionItems", "_PROGRESSION", "_PLOT_CRITICAL", "ArkLight",

@@ -30,19 +30,16 @@ public class Installer {
   private Path tempPatchDir;
   private Path tempLevelDir;
 
-  private String spawnLocation;
-
   /**
    * Initialize the installer.
    * 
    * @param installDir Prey install location
    * @param tempDir Where to store temporary files
    */
-  public Installer(Path installDir, Path tempLevelDir, Path tempPatchDir, String spawnLocation) {
+  public Installer(Path installDir, Path tempLevelDir, Path tempPatchDir) {
     this.installDir = installDir;
     this.tempLevelDir = tempLevelDir;
     this.tempPatchDir = tempPatchDir;
-    this.spawnLocation = spawnLocation;
 
     patchFile = installDir.resolve(INSTALL_LOCATION)
         .resolve(PATCH_NAME)
@@ -172,19 +169,9 @@ public class Installer {
       Path sourcePak = tempLevelDir.resolve(levelDir)
           .resolve(ZipHelper.LEVEL_OUTPUT_PAK);
 
-      // Swap spawn location if applicable
-      String destLevelDir = levelDir;
-      if (spawnLocation != null && levelDir.equals(spawnLocation)) {
-        logger.info(String.format("Installing %s in place of sim labs", spawnLocation));
-        destLevelDir = "research/simulationlabs";
-      } else if (spawnLocation != null && levelDir.equals("research/simulationlabs")) {
-        logger.info(String.format("Installing sim labs in place of %s", spawnLocation));
-        destLevelDir = spawnLocation;
-      }
-
       // Copy zip over to final destination
       Path levelPak = installDir.resolve(LevelConsts.PREFIX)
-          .resolve(destLevelDir)
+          .resolve(levelDir)
           .resolve(LEVEL_PAK_NAME);
       Files.copy(sourcePak, levelPak, StandardCopyOption.REPLACE_EXISTING);
       logger.info(String.format("Installed level file %s (%d/%d)", levelPak, i + 1,

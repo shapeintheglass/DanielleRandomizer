@@ -23,7 +23,7 @@ public class OperatorDispenserRule implements Rule {
   private static final String ENGINEERING_ARCHETYPE = "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Engineering";
   private static final String MEDICAL_ARCHETYPE = "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Medical";
   private static final String SCIENCE_ARCHETYPE = "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Science";
-  private static final String MILITARY_ARCHETYPE = "ArkGameplayObjects.OperatorDispenser.OperatorDispenser_Military";
+  private static final String MILITARY_ARCHETYPE = "ArkGameplayObjects.Randomizer.FriendlyMilitaryOperatorDispenser";
   private static ImmutableSet<String> VALID_ARCHETYPES = ImmutableSet.of(ENGINEERING_ARCHETYPE, MEDICAL_ARCHETYPE,
       SCIENCE_ARCHETYPE, MILITARY_ARCHETYPE);
   private static ImmutableList<String> VALID_ARCHETYPES_LIST = ImmutableList.of(ENGINEERING_ARCHETYPE,

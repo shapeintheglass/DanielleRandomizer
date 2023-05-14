@@ -4,13 +4,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
-
 import org.jdom2.Element;
-
-import com.google.common.collect.ImmutableBiMap;
-
+import randomizers.generators.StationGenerator;
 import utils.StationConnectivityConsts;
-import utils.StationConnectivityConsts.Level;
 
 public class StationConnectivityRule implements Rule {
   private static final String PROPERTIES = "Properties";
@@ -20,13 +16,11 @@ public class StationConnectivityRule implements Rule {
   private static final String NAME = "Name";
   private Map<String, Map<String, String>> doorConnectivity;
   private Map<String, Map<String, String>> spawnConnectivity;
-  private ImmutableBiMap<Level, String> levelsToIds;
 
   public StationConnectivityRule(Map<String, Map<String, String>> doorConnectivity,
-      Map<String, Map<String, String>> spawnConnectivity, ImmutableBiMap<Level, String> levelsToIds) {
+      Map<String, Map<String, String>> spawnConnectivity) {
     this.doorConnectivity = doorConnectivity;
     this.spawnConnectivity = spawnConnectivity;
-    this.levelsToIds = levelsToIds;
   }
 
   @Override
@@ -51,8 +45,8 @@ public class StationConnectivityRule implements Rule {
     if (newLocation != null) {
       Element properties2Element = e.getChild(PROPERTIES2);
       String originalLocation = properties2Element.getAttributeValue(LOCATION_DESTINATION);
-      StationConnectivityConsts.Level originalLevel = levelsToIds.inverse().get(originalLocation);
-      StationConnectivityConsts.Level newLevel = levelsToIds.inverse().get(newLocation);
+      StationConnectivityConsts.Level originalLevel = StationGenerator.LEVELS_TO_IDS.inverse().get(originalLocation);
+      StationConnectivityConsts.Level newLevel = StationGenerator.LEVELS_TO_IDS.inverse().get(newLocation);
       properties2Element.setAttribute(LOCATION_DESTINATION, newLocation);
       Logger.getGlobal()
           .info(String.format("%s: Updating connection to %s to go to %s instead", filename, originalLevel, newLevel));

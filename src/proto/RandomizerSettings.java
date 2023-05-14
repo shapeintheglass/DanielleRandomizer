@@ -5287,18 +5287,6 @@ public final class RandomizerSettings {
     boolean getRandomizeFabPlanCosts();
 
     /**
-     * <code>bool randomize_neuromod_requirements = 16;</code>
-     * @return The randomizeNeuromodRequirements.
-     */
-    boolean getRandomizeNeuromodRequirements();
-
-    /**
-     * <code>bool randomize_gravity = 17;</code>
-     * @return The randomizeGravity.
-     */
-    boolean getRandomizeGravity();
-
-    /**
      * <code>.ToggleWithSlider randomize_recyclers = 6;</code>
      * @return Whether the randomizeRecyclers field is set.
      */
@@ -5605,16 +5593,6 @@ public final class RandomizerSettings {
               randomizeKeycards_ = input.readBool();
               break;
             }
-            case 128: {
-
-              randomizeNeuromodRequirements_ = input.readBool();
-              break;
-            }
-            case 136: {
-
-              randomizeGravity_ = input.readBool();
-              break;
-            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -5741,28 +5719,6 @@ public final class RandomizerSettings {
     @java.lang.Override
     public boolean getRandomizeFabPlanCosts() {
       return randomizeFabPlanCosts_;
-    }
-
-    public static final int RANDOMIZE_NEUROMOD_REQUIREMENTS_FIELD_NUMBER = 16;
-    private boolean randomizeNeuromodRequirements_;
-    /**
-     * <code>bool randomize_neuromod_requirements = 16;</code>
-     * @return The randomizeNeuromodRequirements.
-     */
-    @java.lang.Override
-    public boolean getRandomizeNeuromodRequirements() {
-      return randomizeNeuromodRequirements_;
-    }
-
-    public static final int RANDOMIZE_GRAVITY_FIELD_NUMBER = 17;
-    private boolean randomizeGravity_;
-    /**
-     * <code>bool randomize_gravity = 17;</code>
-     * @return The randomizeGravity.
-     */
-    @java.lang.Override
-    public boolean getRandomizeGravity() {
-      return randomizeGravity_;
     }
 
     public static final int RANDOMIZE_RECYCLERS_FIELD_NUMBER = 6;
@@ -6106,12 +6062,6 @@ public final class RandomizerSettings {
       if (randomizeKeycards_ != false) {
         output.writeBool(15, randomizeKeycards_);
       }
-      if (randomizeNeuromodRequirements_ != false) {
-        output.writeBool(16, randomizeNeuromodRequirements_);
-      }
-      if (randomizeGravity_ != false) {
-        output.writeBool(17, randomizeGravity_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -6177,14 +6127,6 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(15, randomizeKeycards_);
       }
-      if (randomizeNeuromodRequirements_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(16, randomizeNeuromodRequirements_);
-      }
-      if (randomizeGravity_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(17, randomizeGravity_);
-      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -6218,10 +6160,6 @@ public final class RandomizerSettings {
           != other.getRandomizeNeuromods()) return false;
       if (getRandomizeFabPlanCosts()
           != other.getRandomizeFabPlanCosts()) return false;
-      if (getRandomizeNeuromodRequirements()
-          != other.getRandomizeNeuromodRequirements()) return false;
-      if (getRandomizeGravity()
-          != other.getRandomizeGravity()) return false;
       if (hasRandomizeRecyclers() != other.hasRandomizeRecyclers()) return false;
       if (hasRandomizeRecyclers()) {
         if (!getRandomizeRecyclers()
@@ -6286,12 +6224,6 @@ public final class RandomizerSettings {
       hash = (37 * hash) + RANDOMIZE_FAB_PLAN_COSTS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getRandomizeFabPlanCosts());
-      hash = (37 * hash) + RANDOMIZE_NEUROMOD_REQUIREMENTS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeNeuromodRequirements());
-      hash = (37 * hash) + RANDOMIZE_GRAVITY_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getRandomizeGravity());
       if (hasRandomizeRecyclers()) {
         hash = (37 * hash) + RANDOMIZE_RECYCLERS_FIELD_NUMBER;
         hash = (53 * hash) + getRandomizeRecyclers().hashCode();
@@ -6473,10 +6405,6 @@ public final class RandomizerSettings {
 
         randomizeFabPlanCosts_ = false;
 
-        randomizeNeuromodRequirements_ = false;
-
-        randomizeGravity_ = false;
-
         if (randomizeRecyclersBuilder_ == null) {
           randomizeRecyclers_ = null;
         } else {
@@ -6555,8 +6483,6 @@ public final class RandomizerSettings {
         result.randomizeKeycards_ = randomizeKeycards_;
         result.randomizeNeuromods_ = randomizeNeuromods_;
         result.randomizeFabPlanCosts_ = randomizeFabPlanCosts_;
-        result.randomizeNeuromodRequirements_ = randomizeNeuromodRequirements_;
-        result.randomizeGravity_ = randomizeGravity_;
         if (randomizeRecyclersBuilder_ == null) {
           result.randomizeRecyclers_ = randomizeRecyclers_;
         } else {
@@ -6651,12 +6577,6 @@ public final class RandomizerSettings {
         }
         if (other.getRandomizeFabPlanCosts() != false) {
           setRandomizeFabPlanCosts(other.getRandomizeFabPlanCosts());
-        }
-        if (other.getRandomizeNeuromodRequirements() != false) {
-          setRandomizeNeuromodRequirements(other.getRandomizeNeuromodRequirements());
-        }
-        if (other.getRandomizeGravity() != false) {
-          setRandomizeGravity(other.getRandomizeGravity());
         }
         if (other.hasRandomizeRecyclers()) {
           mergeRandomizeRecyclers(other.getRandomizeRecyclers());
@@ -7076,68 +6996,6 @@ public final class RandomizerSettings {
       public Builder clearRandomizeFabPlanCosts() {
         
         randomizeFabPlanCosts_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean randomizeNeuromodRequirements_ ;
-      /**
-       * <code>bool randomize_neuromod_requirements = 16;</code>
-       * @return The randomizeNeuromodRequirements.
-       */
-      @java.lang.Override
-      public boolean getRandomizeNeuromodRequirements() {
-        return randomizeNeuromodRequirements_;
-      }
-      /**
-       * <code>bool randomize_neuromod_requirements = 16;</code>
-       * @param value The randomizeNeuromodRequirements to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeNeuromodRequirements(boolean value) {
-        
-        randomizeNeuromodRequirements_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_neuromod_requirements = 16;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeNeuromodRequirements() {
-        
-        randomizeNeuromodRequirements_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean randomizeGravity_ ;
-      /**
-       * <code>bool randomize_gravity = 17;</code>
-       * @return The randomizeGravity.
-       */
-      @java.lang.Override
-      public boolean getRandomizeGravity() {
-        return randomizeGravity_;
-      }
-      /**
-       * <code>bool randomize_gravity = 17;</code>
-       * @param value The randomizeGravity to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRandomizeGravity(boolean value) {
-        
-        randomizeGravity_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool randomize_gravity = 17;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRandomizeGravity() {
-        
-        randomizeGravity_ = false;
         onChanged();
         return this;
       }
@@ -8679,6 +8537,12 @@ public final class RandomizerSettings {
      * @return The addPsychoscope.
      */
     boolean getAddPsychoscope();
+
+    /**
+     * <code>bool random_start = 7;</code>
+     * @return The randomStart.
+     */
+    boolean getRandomStart();
   }
   /**
    * Protobuf type {@code GameStartSettings}
@@ -8743,6 +8607,11 @@ public final class RandomizerSettings {
             case 48: {
 
               addPsychoscope_ = input.readBool();
+              break;
+            }
+            case 56: {
+
+              randomStart_ = input.readBool();
               break;
             }
             default: {
@@ -8821,6 +8690,17 @@ public final class RandomizerSettings {
       return addPsychoscope_;
     }
 
+    public static final int RANDOM_START_FIELD_NUMBER = 7;
+    private boolean randomStart_;
+    /**
+     * <code>bool random_start = 7;</code>
+     * @return The randomStart.
+     */
+    @java.lang.Override
+    public boolean getRandomStart() {
+      return randomStart_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -8847,6 +8727,9 @@ public final class RandomizerSettings {
       if (addPsychoscope_ != false) {
         output.writeBool(6, addPsychoscope_);
       }
+      if (randomStart_ != false) {
+        output.writeBool(7, randomStart_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -8872,6 +8755,10 @@ public final class RandomizerSettings {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(6, addPsychoscope_);
       }
+      if (randomStart_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(7, randomStart_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -8895,6 +8782,8 @@ public final class RandomizerSettings {
           != other.getAddJetpack()) return false;
       if (getAddPsychoscope()
           != other.getAddPsychoscope()) return false;
+      if (getRandomStart()
+          != other.getRandomStart()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -8918,6 +8807,9 @@ public final class RandomizerSettings {
       hash = (37 * hash) + ADD_PSYCHOSCOPE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getAddPsychoscope());
+      hash = (37 * hash) + RANDOM_START_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getRandomStart());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -9059,6 +8951,8 @@ public final class RandomizerSettings {
 
         addPsychoscope_ = false;
 
+        randomStart_ = false;
+
         return this;
       }
 
@@ -9089,6 +8983,7 @@ public final class RandomizerSettings {
         result.startOutsideApartment_ = startOutsideApartment_;
         result.addJetpack_ = addJetpack_;
         result.addPsychoscope_ = addPsychoscope_;
+        result.randomStart_ = randomStart_;
         onBuilt();
         return result;
       }
@@ -9148,6 +9043,9 @@ public final class RandomizerSettings {
         }
         if (other.getAddPsychoscope() != false) {
           setAddPsychoscope(other.getAddPsychoscope());
+        }
+        if (other.getRandomStart() != false) {
+          setRandomStart(other.getRandomStart());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9301,6 +9199,37 @@ public final class RandomizerSettings {
         onChanged();
         return this;
       }
+
+      private boolean randomStart_ ;
+      /**
+       * <code>bool random_start = 7;</code>
+       * @return The randomStart.
+       */
+      @java.lang.Override
+      public boolean getRandomStart() {
+        return randomStart_;
+      }
+      /**
+       * <code>bool random_start = 7;</code>
+       * @param value The randomStart to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRandomStart(boolean value) {
+        
+        randomStart_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool random_start = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRandomStart() {
+        
+        randomStart_ = false;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -9371,12 +9300,6 @@ public final class RandomizerSettings {
     boolean getPreySoulsGuns();
 
     /**
-     * <code>bool prey_souls_chipsets = 3;</code>
-     * @return The preySoulsChipsets.
-     */
-    boolean getPreySoulsChipsets();
-
-    /**
      * <code>bool prey_souls_enemies = 4;</code>
      * @return The preySoulsEnemies.
      */
@@ -9443,11 +9366,6 @@ public final class RandomizerSettings {
               preySoulsGuns_ = input.readBool();
               break;
             }
-            case 24: {
-
-              preySoulsChipsets_ = input.readBool();
-              break;
-            }
             case 32: {
 
               preySoulsEnemies_ = input.readBool();
@@ -9512,17 +9430,6 @@ public final class RandomizerSettings {
       return preySoulsGuns_;
     }
 
-    public static final int PREY_SOULS_CHIPSETS_FIELD_NUMBER = 3;
-    private boolean preySoulsChipsets_;
-    /**
-     * <code>bool prey_souls_chipsets = 3;</code>
-     * @return The preySoulsChipsets.
-     */
-    @java.lang.Override
-    public boolean getPreySoulsChipsets() {
-      return preySoulsChipsets_;
-    }
-
     public static final int PREY_SOULS_ENEMIES_FIELD_NUMBER = 4;
     private boolean preySoulsEnemies_;
     /**
@@ -9565,9 +9472,6 @@ public final class RandomizerSettings {
       if (preySoulsGuns_ != false) {
         output.writeBool(2, preySoulsGuns_);
       }
-      if (preySoulsChipsets_ != false) {
-        output.writeBool(3, preySoulsChipsets_);
-      }
       if (preySoulsEnemies_ != false) {
         output.writeBool(4, preySoulsEnemies_);
       }
@@ -9590,10 +9494,6 @@ public final class RandomizerSettings {
       if (preySoulsGuns_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, preySoulsGuns_);
-      }
-      if (preySoulsChipsets_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, preySoulsChipsets_);
       }
       if (preySoulsEnemies_ != false) {
         size += com.google.protobuf.CodedOutputStream
@@ -9622,8 +9522,6 @@ public final class RandomizerSettings {
           != other.getMoreGuns()) return false;
       if (getPreySoulsGuns()
           != other.getPreySoulsGuns()) return false;
-      if (getPreySoulsChipsets()
-          != other.getPreySoulsChipsets()) return false;
       if (getPreySoulsEnemies()
           != other.getPreySoulsEnemies()) return false;
       if (getPreySoulsTurrets()
@@ -9645,9 +9543,6 @@ public final class RandomizerSettings {
       hash = (37 * hash) + PREY_SOULS_GUNS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getPreySoulsGuns());
-      hash = (37 * hash) + PREY_SOULS_CHIPSETS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getPreySoulsChipsets());
       hash = (37 * hash) + PREY_SOULS_ENEMIES_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getPreySoulsEnemies());
@@ -9791,8 +9686,6 @@ public final class RandomizerSettings {
 
         preySoulsGuns_ = false;
 
-        preySoulsChipsets_ = false;
-
         preySoulsEnemies_ = false;
 
         preySoulsTurrets_ = false;
@@ -9825,7 +9718,6 @@ public final class RandomizerSettings {
         proto.RandomizerSettings.MoreSettings result = new proto.RandomizerSettings.MoreSettings(this);
         result.moreGuns_ = moreGuns_;
         result.preySoulsGuns_ = preySoulsGuns_;
-        result.preySoulsChipsets_ = preySoulsChipsets_;
         result.preySoulsEnemies_ = preySoulsEnemies_;
         result.preySoulsTurrets_ = preySoulsTurrets_;
         onBuilt();
@@ -9881,9 +9773,6 @@ public final class RandomizerSettings {
         }
         if (other.getPreySoulsGuns() != false) {
           setPreySoulsGuns(other.getPreySoulsGuns());
-        }
-        if (other.getPreySoulsChipsets() != false) {
-          setPreySoulsChipsets(other.getPreySoulsChipsets());
         }
         if (other.getPreySoulsEnemies() != false) {
           setPreySoulsEnemies(other.getPreySoulsEnemies());
@@ -9978,37 +9867,6 @@ public final class RandomizerSettings {
       public Builder clearPreySoulsGuns() {
         
         preySoulsGuns_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean preySoulsChipsets_ ;
-      /**
-       * <code>bool prey_souls_chipsets = 3;</code>
-       * @return The preySoulsChipsets.
-       */
-      @java.lang.Override
-      public boolean getPreySoulsChipsets() {
-        return preySoulsChipsets_;
-      }
-      /**
-       * <code>bool prey_souls_chipsets = 3;</code>
-       * @param value The preySoulsChipsets to set.
-       * @return This builder for chaining.
-       */
-      public Builder setPreySoulsChipsets(boolean value) {
-        
-        preySoulsChipsets_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool prey_souls_chipsets = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearPreySoulsChipsets() {
-        
-        preySoulsChipsets_ = false;
         onChanged();
         return this;
       }
@@ -10148,35 +10006,6 @@ public final class RandomizerSettings {
      * @return The friendlyNpcs.
      */
     boolean getFriendlyNpcs();
-
-    /**
-     * <code>bool use_custom_spawn = 4;</code>
-     * @return The useCustomSpawn.
-     */
-    boolean getUseCustomSpawn();
-
-    /**
-     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-     * @return The enum numeric value on the wire for customSpawnLocation.
-     */
-    int getCustomSpawnLocationValue();
-    /**
-     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-     * @return The customSpawnLocation.
-     */
-    proto.RandomizerSettings.CheatSettings.SpawnLocation getCustomSpawnLocation();
-
-    /**
-     * <code>string game_token_overrides = 6;</code>
-     * @return The gameTokenOverrides.
-     */
-    java.lang.String getGameTokenOverrides();
-    /**
-     * <code>string game_token_overrides = 6;</code>
-     * @return The bytes for gameTokenOverrides.
-     */
-    com.google.protobuf.ByteString
-        getGameTokenOverridesBytes();
   }
   /**
    * Protobuf type {@code CheatSettings}
@@ -10191,8 +10020,6 @@ public final class RandomizerSettings {
       super(builder);
     }
     private CheatSettings() {
-      customSpawnLocation_ = 0;
-      gameTokenOverrides_ = "";
     }
 
     @java.lang.Override
@@ -10240,23 +10067,6 @@ public final class RandomizerSettings {
               friendlyNpcs_ = input.readBool();
               break;
             }
-            case 32: {
-
-              useCustomSpawn_ = input.readBool();
-              break;
-            }
-            case 40: {
-              int rawValue = input.readEnum();
-
-              customSpawnLocation_ = rawValue;
-              break;
-            }
-            case 50: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              gameTokenOverrides_ = s;
-              break;
-            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -10287,249 +10097,6 @@ public final class RandomizerSettings {
       return proto.RandomizerSettings.internal_static_CheatSettings_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               proto.RandomizerSettings.CheatSettings.class, proto.RandomizerSettings.CheatSettings.Builder.class);
-    }
-
-    /**
-     * Protobuf enum {@code CheatSettings.SpawnLocation}
-     */
-    public enum SpawnLocation
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>NONE = 0;</code>
-       */
-      NONE(0),
-      /**
-       * <code>RANDOM = 1;</code>
-       */
-      RANDOM(1),
-      /**
-       * <code>LOBBY = 2;</code>
-       */
-      LOBBY(2),
-      /**
-       * <code>HARDWARE_LABS = 3;</code>
-       */
-      HARDWARE_LABS(3),
-      /**
-       * <code>PSYCHOTRONICS = 4;</code>
-       */
-      PSYCHOTRONICS(4),
-      /**
-       * <code>GUTS = 5;</code>
-       */
-      GUTS(5),
-      /**
-       * <code>ARBORETUM = 6;</code>
-       */
-      ARBORETUM(6),
-      /**
-       * <code>BRIDGE = 7;</code>
-       */
-      BRIDGE(7),
-      /**
-       * <code>CREW_QUARTERS = 8;</code>
-       */
-      CREW_QUARTERS(8),
-      /**
-       * <code>DEEP_STORAGE = 9;</code>
-       */
-      DEEP_STORAGE(9),
-      /**
-       * <code>CARGO_BAY = 10;</code>
-       */
-      CARGO_BAY(10),
-      /**
-       * <code>LIFE_SUPPORT = 11;</code>
-       */
-      LIFE_SUPPORT(11),
-      /**
-       * <code>POWER_PLANT = 12;</code>
-       */
-      POWER_PLANT(12),
-      /**
-       * <code>SHUTTLE_BAY = 13;</code>
-       */
-      SHUTTLE_BAY(13),
-      /**
-       * <code>EXTERIOR = 14;</code>
-       */
-      EXTERIOR(14),
-      /**
-       * <code>ENDGAME = 15;</code>
-       */
-      ENDGAME(15),
-      /**
-       * <code>GENDER_SELECT = 16;</code>
-       */
-      GENDER_SELECT(16),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <code>NONE = 0;</code>
-       */
-      public static final int NONE_VALUE = 0;
-      /**
-       * <code>RANDOM = 1;</code>
-       */
-      public static final int RANDOM_VALUE = 1;
-      /**
-       * <code>LOBBY = 2;</code>
-       */
-      public static final int LOBBY_VALUE = 2;
-      /**
-       * <code>HARDWARE_LABS = 3;</code>
-       */
-      public static final int HARDWARE_LABS_VALUE = 3;
-      /**
-       * <code>PSYCHOTRONICS = 4;</code>
-       */
-      public static final int PSYCHOTRONICS_VALUE = 4;
-      /**
-       * <code>GUTS = 5;</code>
-       */
-      public static final int GUTS_VALUE = 5;
-      /**
-       * <code>ARBORETUM = 6;</code>
-       */
-      public static final int ARBORETUM_VALUE = 6;
-      /**
-       * <code>BRIDGE = 7;</code>
-       */
-      public static final int BRIDGE_VALUE = 7;
-      /**
-       * <code>CREW_QUARTERS = 8;</code>
-       */
-      public static final int CREW_QUARTERS_VALUE = 8;
-      /**
-       * <code>DEEP_STORAGE = 9;</code>
-       */
-      public static final int DEEP_STORAGE_VALUE = 9;
-      /**
-       * <code>CARGO_BAY = 10;</code>
-       */
-      public static final int CARGO_BAY_VALUE = 10;
-      /**
-       * <code>LIFE_SUPPORT = 11;</code>
-       */
-      public static final int LIFE_SUPPORT_VALUE = 11;
-      /**
-       * <code>POWER_PLANT = 12;</code>
-       */
-      public static final int POWER_PLANT_VALUE = 12;
-      /**
-       * <code>SHUTTLE_BAY = 13;</code>
-       */
-      public static final int SHUTTLE_BAY_VALUE = 13;
-      /**
-       * <code>EXTERIOR = 14;</code>
-       */
-      public static final int EXTERIOR_VALUE = 14;
-      /**
-       * <code>ENDGAME = 15;</code>
-       */
-      public static final int ENDGAME_VALUE = 15;
-      /**
-       * <code>GENDER_SELECT = 16;</code>
-       */
-      public static final int GENDER_SELECT_VALUE = 16;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static SpawnLocation valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static SpawnLocation forNumber(int value) {
-        switch (value) {
-          case 0: return NONE;
-          case 1: return RANDOM;
-          case 2: return LOBBY;
-          case 3: return HARDWARE_LABS;
-          case 4: return PSYCHOTRONICS;
-          case 5: return GUTS;
-          case 6: return ARBORETUM;
-          case 7: return BRIDGE;
-          case 8: return CREW_QUARTERS;
-          case 9: return DEEP_STORAGE;
-          case 10: return CARGO_BAY;
-          case 11: return LIFE_SUPPORT;
-          case 12: return POWER_PLANT;
-          case 13: return SHUTTLE_BAY;
-          case 14: return EXTERIOR;
-          case 15: return ENDGAME;
-          case 16: return GENDER_SELECT;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          SpawnLocation> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<SpawnLocation>() {
-              public SpawnLocation findValueByNumber(int number) {
-                return SpawnLocation.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
-        }
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return proto.RandomizerSettings.CheatSettings.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final SpawnLocation[] VALUES = values();
-
-      public static SpawnLocation valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private SpawnLocation(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:CheatSettings.SpawnLocation)
     }
 
     public static final int OPEN_STATION_FIELD_NUMBER = 1;
@@ -10565,74 +10132,6 @@ public final class RandomizerSettings {
       return friendlyNpcs_;
     }
 
-    public static final int USE_CUSTOM_SPAWN_FIELD_NUMBER = 4;
-    private boolean useCustomSpawn_;
-    /**
-     * <code>bool use_custom_spawn = 4;</code>
-     * @return The useCustomSpawn.
-     */
-    @java.lang.Override
-    public boolean getUseCustomSpawn() {
-      return useCustomSpawn_;
-    }
-
-    public static final int CUSTOM_SPAWN_LOCATION_FIELD_NUMBER = 5;
-    private int customSpawnLocation_;
-    /**
-     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-     * @return The enum numeric value on the wire for customSpawnLocation.
-     */
-    @java.lang.Override public int getCustomSpawnLocationValue() {
-      return customSpawnLocation_;
-    }
-    /**
-     * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-     * @return The customSpawnLocation.
-     */
-    @java.lang.Override public proto.RandomizerSettings.CheatSettings.SpawnLocation getCustomSpawnLocation() {
-      @SuppressWarnings("deprecation")
-      proto.RandomizerSettings.CheatSettings.SpawnLocation result = proto.RandomizerSettings.CheatSettings.SpawnLocation.valueOf(customSpawnLocation_);
-      return result == null ? proto.RandomizerSettings.CheatSettings.SpawnLocation.UNRECOGNIZED : result;
-    }
-
-    public static final int GAME_TOKEN_OVERRIDES_FIELD_NUMBER = 6;
-    private volatile java.lang.Object gameTokenOverrides_;
-    /**
-     * <code>string game_token_overrides = 6;</code>
-     * @return The gameTokenOverrides.
-     */
-    @java.lang.Override
-    public java.lang.String getGameTokenOverrides() {
-      java.lang.Object ref = gameTokenOverrides_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        gameTokenOverrides_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string game_token_overrides = 6;</code>
-     * @return The bytes for gameTokenOverrides.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getGameTokenOverridesBytes() {
-      java.lang.Object ref = gameTokenOverrides_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        gameTokenOverrides_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -10656,15 +10155,6 @@ public final class RandomizerSettings {
       if (friendlyNpcs_ != false) {
         output.writeBool(3, friendlyNpcs_);
       }
-      if (useCustomSpawn_ != false) {
-        output.writeBool(4, useCustomSpawn_);
-      }
-      if (customSpawnLocation_ != proto.RandomizerSettings.CheatSettings.SpawnLocation.NONE.getNumber()) {
-        output.writeEnum(5, customSpawnLocation_);
-      }
-      if (!getGameTokenOverridesBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, gameTokenOverrides_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -10685,17 +10175,6 @@ public final class RandomizerSettings {
       if (friendlyNpcs_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(3, friendlyNpcs_);
-      }
-      if (useCustomSpawn_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, useCustomSpawn_);
-      }
-      if (customSpawnLocation_ != proto.RandomizerSettings.CheatSettings.SpawnLocation.NONE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(5, customSpawnLocation_);
-      }
-      if (!getGameTokenOverridesBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, gameTokenOverrides_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -10718,11 +10197,6 @@ public final class RandomizerSettings {
           != other.getUnlockAllScans()) return false;
       if (getFriendlyNpcs()
           != other.getFriendlyNpcs()) return false;
-      if (getUseCustomSpawn()
-          != other.getUseCustomSpawn()) return false;
-      if (customSpawnLocation_ != other.customSpawnLocation_) return false;
-      if (!getGameTokenOverrides()
-          .equals(other.getGameTokenOverrides())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -10743,13 +10217,6 @@ public final class RandomizerSettings {
       hash = (37 * hash) + FRIENDLY_NPCS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getFriendlyNpcs());
-      hash = (37 * hash) + USE_CUSTOM_SPAWN_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getUseCustomSpawn());
-      hash = (37 * hash) + CUSTOM_SPAWN_LOCATION_FIELD_NUMBER;
-      hash = (53 * hash) + customSpawnLocation_;
-      hash = (37 * hash) + GAME_TOKEN_OVERRIDES_FIELD_NUMBER;
-      hash = (53 * hash) + getGameTokenOverrides().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10889,12 +10356,6 @@ public final class RandomizerSettings {
 
         friendlyNpcs_ = false;
 
-        useCustomSpawn_ = false;
-
-        customSpawnLocation_ = 0;
-
-        gameTokenOverrides_ = "";
-
         return this;
       }
 
@@ -10924,9 +10385,6 @@ public final class RandomizerSettings {
         result.openStation_ = openStation_;
         result.unlockAllScans_ = unlockAllScans_;
         result.friendlyNpcs_ = friendlyNpcs_;
-        result.useCustomSpawn_ = useCustomSpawn_;
-        result.customSpawnLocation_ = customSpawnLocation_;
-        result.gameTokenOverrides_ = gameTokenOverrides_;
         onBuilt();
         return result;
       }
@@ -10983,16 +10441,6 @@ public final class RandomizerSettings {
         }
         if (other.getFriendlyNpcs() != false) {
           setFriendlyNpcs(other.getFriendlyNpcs());
-        }
-        if (other.getUseCustomSpawn() != false) {
-          setUseCustomSpawn(other.getUseCustomSpawn());
-        }
-        if (other.customSpawnLocation_ != 0) {
-          setCustomSpawnLocationValue(other.getCustomSpawnLocationValue());
-        }
-        if (!other.getGameTokenOverrides().isEmpty()) {
-          gameTokenOverrides_ = other.gameTokenOverrides_;
-          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -11112,167 +10560,6 @@ public final class RandomizerSettings {
       public Builder clearFriendlyNpcs() {
         
         friendlyNpcs_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean useCustomSpawn_ ;
-      /**
-       * <code>bool use_custom_spawn = 4;</code>
-       * @return The useCustomSpawn.
-       */
-      @java.lang.Override
-      public boolean getUseCustomSpawn() {
-        return useCustomSpawn_;
-      }
-      /**
-       * <code>bool use_custom_spawn = 4;</code>
-       * @param value The useCustomSpawn to set.
-       * @return This builder for chaining.
-       */
-      public Builder setUseCustomSpawn(boolean value) {
-        
-        useCustomSpawn_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool use_custom_spawn = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearUseCustomSpawn() {
-        
-        useCustomSpawn_ = false;
-        onChanged();
-        return this;
-      }
-
-      private int customSpawnLocation_ = 0;
-      /**
-       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-       * @return The enum numeric value on the wire for customSpawnLocation.
-       */
-      @java.lang.Override public int getCustomSpawnLocationValue() {
-        return customSpawnLocation_;
-      }
-      /**
-       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-       * @param value The enum numeric value on the wire for customSpawnLocation to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCustomSpawnLocationValue(int value) {
-        
-        customSpawnLocation_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-       * @return The customSpawnLocation.
-       */
-      @java.lang.Override
-      public proto.RandomizerSettings.CheatSettings.SpawnLocation getCustomSpawnLocation() {
-        @SuppressWarnings("deprecation")
-        proto.RandomizerSettings.CheatSettings.SpawnLocation result = proto.RandomizerSettings.CheatSettings.SpawnLocation.valueOf(customSpawnLocation_);
-        return result == null ? proto.RandomizerSettings.CheatSettings.SpawnLocation.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-       * @param value The customSpawnLocation to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCustomSpawnLocation(proto.RandomizerSettings.CheatSettings.SpawnLocation value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        customSpawnLocation_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.CheatSettings.SpawnLocation custom_spawn_location = 5;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCustomSpawnLocation() {
-        
-        customSpawnLocation_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object gameTokenOverrides_ = "";
-      /**
-       * <code>string game_token_overrides = 6;</code>
-       * @return The gameTokenOverrides.
-       */
-      public java.lang.String getGameTokenOverrides() {
-        java.lang.Object ref = gameTokenOverrides_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          gameTokenOverrides_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string game_token_overrides = 6;</code>
-       * @return The bytes for gameTokenOverrides.
-       */
-      public com.google.protobuf.ByteString
-          getGameTokenOverridesBytes() {
-        java.lang.Object ref = gameTokenOverrides_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          gameTokenOverrides_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string game_token_overrides = 6;</code>
-       * @param value The gameTokenOverrides to set.
-       * @return This builder for chaining.
-       */
-      public Builder setGameTokenOverrides(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        gameTokenOverrides_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string game_token_overrides = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearGameTokenOverrides() {
-        
-        gameTokenOverrides_ = getDefaultInstance().getGameTokenOverrides();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string game_token_overrides = 6;</code>
-       * @param value The bytes for gameTokenOverrides to set.
-       * @return This builder for chaining.
-       */
-      public Builder setGameTokenOverridesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        gameTokenOverrides_ = value;
         onChanged();
         return this;
       }
@@ -15705,59 +14992,47 @@ public final class RandomizerSettings {
       "\024randomize_voicelines\030\002 \001(\010\022\027\n\017randomize" +
       "_music\030\003 \001(\010\022\036\n\026randomize_player_model\030\004" +
       " \001(\010\022\035\n\025randomize_planet_size\030\005 \001(\010\022\033\n\023c" +
-      "ustom_loading_tips\030\006 \001(\010\"\226\005\n\020GameplaySet" +
+      "ustom_loading_tips\030\006 \001(\010\"\322\004\n\020GameplaySet" +
       "tings\0226\n\023item_spawn_settings\030\001 \001(\0132\031.Gen" +
       "ericSpawnPresetFilter\0227\n\024enemy_spawn_set" +
       "tings\030\002 \001(\0132\031.GenericSpawnPresetFilter\022\031" +
       "\n\021randomize_station\030\003 \001(\010\022\032\n\022randomize_k" +
       "eycards\030\017 \001(\010\022\033\n\023randomize_neuromods\030\004 \001" +
-      "(\010\022 \n\030randomize_fab_plan_costs\030\005 \001(\010\022\'\n\037" +
-      "randomize_neuromod_requirements\030\020 \001(\010\022\031\n" +
-      "\021randomize_gravity\030\021 \001(\010\022.\n\023randomize_re" +
-      "cyclers\030\006 \001(\0132\021.ToggleWithSlider\022/\n\024rand" +
-      "omize_dispensers\030\007 \001(\0132\021.ToggleWithSlide" +
-      "r\022/\n\024randomize_breakables\030\010 \001(\0132\021.Toggle" +
-      "WithSlider\022.\n\023randomize_hackables\030\t \001(\0132" +
-      "\021.ToggleWithSlider\022+\n\020randomize_mimics\030\016" +
-      " \001(\0132\021.ToggleWithSlider\022\032\n\022pickup_preset" +
-      "_name\030\n \001(\t\022\030\n\020prop_preset_name\030\013 \001(\t\022\031\n" +
-      "\021enemy_preset_name\030\014 \001(\t\022\027\n\017npc_preset_n" +
-      "ame\030\r \001(\t\":\n\020ToggleWithSlider\022\021\n\tisEnabl" +
-      "ed\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(\005\"\201\001\n\021GameSt" +
-      "artSettings\022\035\n\025add_loot_to_apartment\030\001 \001" +
-      "(\010\022\037\n\027start_outside_apartment\030\004 \001(\010\022\023\n\013a" +
-      "dd_jetpack\030\005 \001(\010\022\027\n\017add_psychoscope\030\006 \001(" +
-      "\010\"\217\001\n\014MoreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n" +
-      "\017prey_souls_guns\030\002 \001(\010\022\033\n\023prey_souls_chi" +
-      "psets\030\003 \001(\010\022\032\n\022prey_souls_enemies\030\004 \001(\010\022" +
-      "\032\n\022prey_souls_turrets\030\005 \001(\010\"\337\003\n\rCheatSet" +
-      "tings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock_al" +
-      "l_scans\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\022\030\n\020" +
-      "use_custom_spawn\030\004 \001(\010\022;\n\025custom_spawn_l" +
-      "ocation\030\005 \001(\0162\034.CheatSettings.SpawnLocat" +
-      "ion\022\034\n\024game_token_overrides\030\006 \001(\t\"\221\002\n\rSp" +
-      "awnLocation\022\010\n\004NONE\020\000\022\n\n\006RANDOM\020\001\022\t\n\005LOB" +
-      "BY\020\002\022\021\n\rHARDWARE_LABS\020\003\022\021\n\rPSYCHOTRONICS" +
-      "\020\004\022\010\n\004GUTS\020\005\022\r\n\tARBORETUM\020\006\022\n\n\006BRIDGE\020\007\022" +
-      "\021\n\rCREW_QUARTERS\020\010\022\020\n\014DEEP_STORAGE\020\t\022\r\n\t" +
-      "CARGO_BAY\020\n\022\020\n\014LIFE_SUPPORT\020\013\022\017\n\013POWER_P" +
-      "LANT\020\014\022\017\n\013SHUTTLE_BAY\020\r\022\014\n\010EXTERIOR\020\016\022\013\n" +
-      "\007ENDGAME\020\017\022\021\n\rGENDER_SELECT\020\020\"\360\001\n\024Experi" +
-      "mentalSettings\022\030\n\020wandering_humans\030\001 \001(\010" +
-      "\022\026\n\016living_corpses\030\002 \001(\010\022\037\n\027zero_gravity" +
-      "_everywhere\030\003 \001(\010\022&\n\036enable_gravity_in_e" +
-      "xt_and_guts\030\004 \001(\010\022\033\n\023start_self_destruct" +
-      "\030\005 \001(\010\022\033\n\023self_destruct_timer\030\006 \001(\t\022#\n\033s" +
-      "elf_destruct_shuttle_timer\030\007 \001(\t\"`\n\030Gene" +
-      "ricSpawnPresetFilter\022\014\n\004name\030\001 \001(\t\022\014\n\004de" +
-      "sc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.GenericSpawn" +
-      "PresetRule\"\220\001\n\026GenericSpawnPresetRule\022\022\n" +
-      "\ninput_tags\030\001 \003(\t\022\023\n\013output_tags\030\002 \003(\t\022\026" +
-      "\n\016output_weights\030\003 \003(\005\022\031\n\021do_not_touch_t" +
-      "ags\030\004 \003(\t\022\032\n\022do_not_output_tags\030\005 \003(\t\"0\n" +
-      "\tStartItem\022\021\n\tarchetype\030\001 \001(\t\022\020\n\010quantit" +
-      "y\030\002 \001(\005B\033\n\005protoB\022RandomizerSettingsb\006pr" +
-      "oto3"
+      "(\010\022 \n\030randomize_fab_plan_costs\030\005 \001(\010\022.\n\023" +
+      "randomize_recyclers\030\006 \001(\0132\021.ToggleWithSl" +
+      "ider\022/\n\024randomize_dispensers\030\007 \001(\0132\021.Tog" +
+      "gleWithSlider\022/\n\024randomize_breakables\030\010 " +
+      "\001(\0132\021.ToggleWithSlider\022.\n\023randomize_hack" +
+      "ables\030\t \001(\0132\021.ToggleWithSlider\022+\n\020random" +
+      "ize_mimics\030\016 \001(\0132\021.ToggleWithSlider\022\032\n\022p" +
+      "ickup_preset_name\030\n \001(\t\022\030\n\020prop_preset_n" +
+      "ame\030\013 \001(\t\022\031\n\021enemy_preset_name\030\014 \001(\t\022\027\n\017" +
+      "npc_preset_name\030\r \001(\t\":\n\020ToggleWithSlide" +
+      "r\022\021\n\tisEnabled\030\001 \001(\010\022\023\n\013sliderValue\030\002 \001(" +
+      "\005\"\227\001\n\021GameStartSettings\022\035\n\025add_loot_to_a" +
+      "partment\030\001 \001(\010\022\037\n\027start_outside_apartmen" +
+      "t\030\004 \001(\010\022\023\n\013add_jetpack\030\005 \001(\010\022\027\n\017add_psyc" +
+      "hoscope\030\006 \001(\010\022\024\n\014random_start\030\007 \001(\010\"r\n\014M" +
+      "oreSettings\022\021\n\tmore_guns\030\001 \001(\010\022\027\n\017prey_s" +
+      "ouls_guns\030\002 \001(\010\022\032\n\022prey_souls_enemies\030\004 " +
+      "\001(\010\022\032\n\022prey_souls_turrets\030\005 \001(\010\"V\n\rCheat" +
+      "Settings\022\024\n\014open_station\030\001 \001(\010\022\030\n\020unlock" +
+      "_all_scans\030\002 \001(\010\022\025\n\rfriendly_npcs\030\003 \001(\010\"" +
+      "\360\001\n\024ExperimentalSettings\022\030\n\020wandering_hu" +
+      "mans\030\001 \001(\010\022\026\n\016living_corpses\030\002 \001(\010\022\037\n\027ze" +
+      "ro_gravity_everywhere\030\003 \001(\010\022&\n\036enable_gr" +
+      "avity_in_ext_and_guts\030\004 \001(\010\022\033\n\023start_sel" +
+      "f_destruct\030\005 \001(\010\022\033\n\023self_destruct_timer\030" +
+      "\006 \001(\t\022#\n\033self_destruct_shuttle_timer\030\007 \001" +
+      "(\t\"`\n\030GenericSpawnPresetFilter\022\014\n\004name\030\001" +
+      " \001(\t\022\014\n\004desc\030\002 \001(\t\022(\n\007filters\030\003 \003(\0132\027.Ge" +
+      "nericSpawnPresetRule\"\220\001\n\026GenericSpawnPre" +
+      "setRule\022\022\n\ninput_tags\030\001 \003(\t\022\023\n\013output_ta" +
+      "gs\030\002 \003(\t\022\026\n\016output_weights\030\003 \003(\005\022\031\n\021do_n" +
+      "ot_touch_tags\030\004 \003(\t\022\032\n\022do_not_output_tag" +
+      "s\030\005 \003(\t\"0\n\tStartItem\022\021\n\tarchetype\030\001 \001(\t\022" +
+      "\020\n\010quantity\030\002 \001(\005B\033\n\005protoB\022RandomizerSe" +
+      "ttingsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -15786,7 +15061,7 @@ public final class RandomizerSettings {
     internal_static_GameplaySettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameplaySettings_descriptor,
-        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeKeycards", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeNeuromodRequirements", "RandomizeGravity", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
+        new java.lang.String[] { "ItemSpawnSettings", "EnemySpawnSettings", "RandomizeStation", "RandomizeKeycards", "RandomizeNeuromods", "RandomizeFabPlanCosts", "RandomizeRecyclers", "RandomizeDispensers", "RandomizeBreakables", "RandomizeHackables", "RandomizeMimics", "PickupPresetName", "PropPresetName", "EnemyPresetName", "NpcPresetName", });
     internal_static_ToggleWithSlider_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_ToggleWithSlider_fieldAccessorTable = new
@@ -15798,19 +15073,19 @@ public final class RandomizerSettings {
     internal_static_GameStartSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GameStartSettings_descriptor,
-        new java.lang.String[] { "AddLootToApartment", "StartOutsideApartment", "AddJetpack", "AddPsychoscope", });
+        new java.lang.String[] { "AddLootToApartment", "StartOutsideApartment", "AddJetpack", "AddPsychoscope", "RandomStart", });
     internal_static_MoreSettings_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_MoreSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MoreSettings_descriptor,
-        new java.lang.String[] { "MoreGuns", "PreySoulsGuns", "PreySoulsChipsets", "PreySoulsEnemies", "PreySoulsTurrets", });
+        new java.lang.String[] { "MoreGuns", "PreySoulsGuns", "PreySoulsEnemies", "PreySoulsTurrets", });
     internal_static_CheatSettings_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_CheatSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CheatSettings_descriptor,
-        new java.lang.String[] { "OpenStation", "UnlockAllScans", "FriendlyNpcs", "UseCustomSpawn", "CustomSpawnLocation", "GameTokenOverrides", });
+        new java.lang.String[] { "OpenStation", "UnlockAllScans", "FriendlyNpcs", });
     internal_static_ExperimentalSettings_descriptor =
       getDescriptor().getMessageTypes().get(8);
     internal_static_ExperimentalSettings_fieldAccessorTable = new

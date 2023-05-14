@@ -23,6 +23,7 @@ import utils.ProgressionConsts.ProgressionMilestone;
 import utils.ProgressionConsts.ProgressionNode;
 import utils.StationConnectivityConsts.Door;
 import utils.StationConnectivityConsts.Level;
+import utils.generators.StationRandoConsts;
 
 public class ProgressionGraph {
   // Number of player simulations to run.
@@ -39,12 +40,14 @@ public class ProgressionGraph {
   private Door liftLowerDoor;
   private Set<ProgressionNode> progress;
   private Random r;
+  private Door startingLocation;
 
   public ProgressionGraph(ImmutableNetwork<Level, Door> stationConnectivity,
-      ImmutableMap<Location, Keycard> keycardConnectivity, long seed) {
+      ImmutableMap<Location, Keycard> keycardConnectivity, long seed, Door startingLocation) {
     this.stationConnectivity = stationConnectivity;
     this.keycardConnectivity = keycardConnectivity;
     this.r = new Random(seed);
+    this.startingLocation = startingLocation;
     levelsToMilestones = Maps.newHashMap();
 
     // Look up which levels are connected to the lift
@@ -54,7 +57,7 @@ public class ProgressionGraph {
     Level liftLowerLevel = stationConnectivity.incidentNodes(Door.LOBBY_LIFE_SUPPORT_EXIT).nodeV();
     liftLowerDoor = stationConnectivity.edgeConnectingOrNull(liftLowerLevel, Level.LOBBY);
 
-    for (Level l : StationGenerator.LEVELS_TO_PROCESS) {
+    for (Level l : StationRandoConsts.LEVELS_TO_PROCESS) {
       getLevel(l);
     }
   }
@@ -104,9 +107,9 @@ public class ProgressionGraph {
 
 
   private boolean simulatePlayerTraversal() {
-    // Start at neuromod division, see if we can wind up at the goal.
+    // Start at starting location, see if we can wind up at the goal.
     progress = Sets.newHashSet();
-    Level currentLevel = Level.NEUROMOD_DIVISION;
+    Level currentLevel = StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(startingLocation).asList().get(0);
     boolean ejected = false;
 
     int numVisitsPerLevel = 2;
@@ -604,16 +607,17 @@ public class ProgressionGraph {
       Random r = new Random();
       long seed =  -3299655590852521848L;//6025717307696252058L;//r.nextLong();
       System.out.println(seed);
-      StationGenerator sg = new StationGenerator(seed, levelsToIds);
+      Door startingLocation = Door.NEUROMOD_DIVISION_LOBBY_EXIT;
+      StationGenerator sg = new StationGenerator(seed, startingLocation);
 
       ImmutableNetwork<Level, Door> stationConnectivity = sg.getNetwork();
       // StationConnectivityConsts.getDefaultNetwork();
       
-      ProgressionGenerator pGen = new ProgressionGenerator(stationConnectivity, seed);
+      ProgressionGenerator pGen = new ProgressionGenerator(stationConnectivity, seed, startingLocation);
       pGen.getProgressionGraph();
 
       ProgressionGraph pg = new ProgressionGraph(stationConnectivity,
-          KeycardConnectivityConsts.DEFAULT_CONNECTIVITY, seed);
+          KeycardConnectivityConsts.DEFAULT_CONNECTIVITY, seed, startingLocation);
 
       boolean result = pg.verify();
       System.out.println(result);

@@ -12,6 +12,9 @@ import proto.RandomizerSettings.Settings;
 import proto.RandomizerSettings.StartItem;
 import utils.LevelConsts;
 import utils.MimicSliderUtils;
+import utils.StationConnectivityConsts;
+import utils.StationConnectivityConsts.Door;
+import utils.StationConnectivityConsts.Level;
 import utils.ZipHelper;
 
 public class AddEntityHelper {
@@ -68,6 +71,39 @@ public class AddEntityHelper {
     flowgraph.addContent(new Element("GraphTokens"));
     entity.addContent(properties);
     entity.addContent(flowgraph);
+    return entity;
+  }
+  
+  private static Element getTeleportFlowgraph(String levelDir) {
+    Element entity = createFlowgraphStarter("928759283", "29823482");
+    Element nodes = entity.getChild("FlowGraph").getChild("Nodes");
+    Element edges = entity.getChild("FlowGraph").getChild("Edges");
+    String gameStartNodeId = "1";
+    Element gameStartNode = new Element("Node").setAttribute("Id", gameStartNodeId)
+        .setAttribute("Class", "Game:Start")
+        .setAttribute("pos", "-127,19,0")
+        .addContent(new Element("Inputs").setAttribute("InGame", "1")
+            .setAttribute("InEditor", "1")
+            .setAttribute("InEditorPlayFromHere", "0"));
+    
+    String teleportNodeId = "2";
+    String levelName = LevelConsts.LEVEL_PATH_TO_NAME.get(levelDir);
+    Element teleportNode = new Element("Node").setAttribute("Id", teleportNodeId)
+        .setAttribute("Class", "Mission:LoadNextLevel")
+        .setAttribute("pos", "15900,3540,0")
+        .addContent(new Element("Inputs")
+            .setAttribute("NextLevel", levelName));
+    
+    Element edge = new Element("Edge")
+        .setAttribute("nodeIn", teleportNodeId)
+        .setAttribute("nodeOut", gameStartNodeId)
+        .setAttribute("portIn", "Trigger")
+        .setAttribute("portOut", "output")
+        .setAttribute("enabled", "1");
+    
+    nodes.addContent(gameStartNode);
+    nodes.addContent(teleportNode);
+    edges.addContent(edge);
     return entity;
   }
 
@@ -418,26 +454,51 @@ public class AddEntityHelper {
   }
 
   /**
-   * Appends new entities into a level map.
+   * Appends new entities into a level map. This is generally needed for custom flowgraph scripts.
    * @param objects Objects xml node of level map
    * @param levelDir levelDir representing the name of the map
    * @param settings Randomizer settings
    * @param zipHelper Handle to assist writing to zip
    * @param mimicEntities Entities to transform into hidden mimics
+   * @param talosStartLocation Level to teleport to at the start of the game
+   * @param startingDoor Door to teleport to at the start of the game
    * @param r seeded random number generator
    */
   public static void addEntities(Element objects, String levelDir, Settings settings,
-      ZipHelper zipHelper, List<Element> mimicEntities, Random r) {
+      ZipHelper zipHelper, List<Element> mimicEntities, Door spawnLocation, Random r) {
+    String startLocation = LevelConsts.NEUROMOD_DIVISION;
+    // Custom spawn - If enabled use the starting location provided
+    if (settings.getGameStartSettings().getRandomStart()) {
+      Level startLevel = StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(spawnLocation).asList().get(0);
+      startLocation = StationConnectivityConsts.LEVELS_TO_NAMES.get(startLevel);
+      if (levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
+        // TODO: Set starting door as well
+        objects.addContent(getTeleportFlowgraph(startLocation));
+      }
+    }
     
-    // Neuromod Division-specific settings (usually game start stuff)
-    if (levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
+    // Game start settings
+    if (levelDir.equals(startLocation)) {
       if (settings.getExpSettings().getStartSelfDestruct()) {
         objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
       }
       
       List<StartItem> gameStartItems = Lists.newArrayList();
+      
       // Add any items specified in settings
       gameStartItems.addAll(settings.getStartingItemsList());
+
+      // If station randomization is also enabled, add two EMP grenades to bypass the GUTS fan, just in case.
+      if (settings.getGameplaySettings().getRandomizeStation()) {
+        gameStartItems.add(StartItem.newBuilder()
+            .setArchetype("ArkPickups.Ammo.EMPGrenades")
+            .setQuantity(2)
+            .build());
+      }
+      gameStartItems.add(StartItem.newBuilder()
+          .setArchetype("ArkPickups.Weapons.Wrench")
+          .setQuantity(1)
+          .build());
       
       // If starting outside apartment, shift to second day and add some starting equipment
       if (settings.getGameStartSettings().getStartOutsideApartment()) {
@@ -450,18 +511,7 @@ public class AddEntityHelper {
         } catch (Exception e) {
           e.printStackTrace();
         }
-        gameStartItems.add(StartItem.newBuilder()
-            .setArchetype("ArkPickups.Weapons.Wrench")
-            .setQuantity(1)
-            .build());
-      }
-      
-      // If station randomization is also enabled, add two EMP grenades to bypass the GUTS fan, just in case.
-      if (settings.getGameplaySettings().getRandomizeStation()) {
-        gameStartItems.add(StartItem.newBuilder()
-            .setArchetype("ArkPickups.Ammo.EMPGrenades")
-            .setQuantity(2)
-            .build());
+        
       }
       
       if (settings.getGameStartSettings().getAddJetpack()) {
@@ -477,11 +527,12 @@ public class AddEntityHelper {
             .build());
       }
       
-      if (!gameStartItems.isEmpty()) {
-        // Add requested starting items to player
-        objects.addContent(getNeuromodDivisionAddItemsFlowgraph(gameStartItems)); 
-      }
+      // Add requested starting items to player
+      objects.addContent(getNeuromodDivisionAddItemsFlowgraph(gameStartItems));
     }
+    
+    // Neuromod division settings
+    // Skip the intro if starting outside of the apartment 
 
     // Gravity boxes: Zero Gravity Everywhere  will add a gravity box.
     if (settings.getExpSettings().getZeroGravityEverywhere() 

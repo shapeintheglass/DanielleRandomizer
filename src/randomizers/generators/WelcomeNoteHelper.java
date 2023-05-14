@@ -15,11 +15,11 @@ public class WelcomeNoteHelper {
   
   private static final String GREETING = "Thank you for trying the Prey Randomizer! For questions / bug reports, please join our discord server linked in the mod page.<br><br>";
   
-  private static final String STATION_RANDO_LOADOUT_EXPLANATION = "Your starter equipment includes two EMPs. These are intended to break the large fan in GUTS in case that is the first room after the Neuromod Division.<br><br>";
+  private static final String STATION_RANDO_LOADOUT_EXPLANATION = "Your starter equipment includes two EMPs. These are intended as a failsafe for the large fan in GUTS.<br><br>";
   
-  private static final String PREY_SOULS_HELP = "It looks like you enabled Prey For Death content. Please give all credit to coyote and try out the Prey For Death mod for the full experience!<br><br>";
+  private static final String PREY_SOULS_HELP = "All credit for Prey For Death content goes to coyote. Please give the full version of Prey For Death a try!<br><br>";
   
-  private static final String STATION_RANDOMIZER_HELP = "It looks like you enabled station or keycard randomization. Below is a guide on the new connectivity:<br><br>";
+  private static final String STATION_RANDOMIZER_HELP = "Below is a guide for the new station connectivity if needed:<br><br>";
   
   private ZipHelper zipHelper;
 

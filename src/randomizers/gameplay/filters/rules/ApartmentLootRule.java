@@ -3,6 +3,7 @@ package randomizers.gameplay.filters.rules;
 import java.util.Random;
 import org.jdom2.Element;
 import com.google.common.collect.ImmutableMap;
+import utils.LevelConsts;
 
 public class ApartmentLootRule implements Rule {
 
@@ -61,7 +62,7 @@ public class ApartmentLootRule implements Rule {
 
   @Override
   public boolean trigger(Element e, Random r, String filename) {
-    if (!filename.equals("research/simulationlabs")) {
+    if (!filename.equals(LevelConsts.NEUROMOD_DIVISION)) {
       return false;
     }
     String name = e.getAttributeValue("Name");
