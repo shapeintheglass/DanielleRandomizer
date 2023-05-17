@@ -11,6 +11,7 @@ import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 
 import utils.ProgressionConsts.ProgressionNode;
+import utils.StationConnectivityConsts.Level;
 
 public final class StationConnectivityConsts {
 
@@ -122,6 +123,25 @@ public final class StationConnectivityConsts {
           .put(Level.EXTERIOR, LevelConsts.EXTERIOR)
           .put(Level.GENDER_SELECT, LevelConsts.PLAYER_GENDER_SELECT)
           .build();
+  
+  public static ImmutableBiMap<Level, String> LEVELS_TO_IDS = new ImmutableBiMap.Builder<Level, String>()
+      .put(Level.ARBORETUM, "1713490239386284818")
+      .put(Level.BRIDGE, "844024417275035158")
+      .put(Level.CARGO_BAY, "15659330456296333985")
+      .put(Level.CREW_QUARTERS, "844024417252490146")
+      .put(Level.DEEP_STORAGE, "1713490239377738413")
+      .put(Level.GUTS, "4349723564886052417")
+      .put(Level.HARDWARE_LABS, "844024417263019221")
+      .put(Level.LIFE_SUPPORT, "4349723564895209499")
+      .put(Level.LOBBY, "1713490239377285936")
+      .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
+      .put(Level.POWER_PLANT, "6732635291182790112")
+      .put(Level.PSYCHOTRONICS, "11824555372632688907")
+      .put(Level.SHUTTLE_BAY, "1713490239386284988")
+      .put(Level.EXTERIOR, "1713490239386284337")
+      .put(Level.ENDGAME, "13680621263401479941")
+      .put(Level.GENDER_SELECT, "3149325216909839564")
+      .build();
 
   // Map of level to associated spawn name
   public static final ImmutableBiMap<Level, String> LEVELS_TO_DESTINATIONS =

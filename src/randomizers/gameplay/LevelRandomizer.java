@@ -80,9 +80,9 @@ public class LevelRandomizer extends BaseRandomizer {
     if (settings.getExpSettings().getStartSelfDestruct()) {
       gameTokenValues.putAll(LevelConsts.START_SELF_DESTRUCT_TOKENS);
     }
-    if (settings.getGameStartSettings().getStartOutsideApartment()) {
-      gameTokenValues.putAll(LevelConsts.START_OUTSIDE_APARTMENT_TOKENS);
-      gameTokenValues.putAll(LevelConsts.ALLOW_GAME_SAVE_TOKENS);
+    if (settings.getGameStartSettings().getStartOutsideApartment() || settings.getGameStartSettings().getRandomStart()) {
+      // Overwrite the "FromNowhere" token from the get-go so that we skip the intro
+      gameTokenValues.putAll(LevelConsts.START_OUTSIDE_APARTMENT_TOKENS);  
     }
 
     gameTokenRule = new GameTokenRule(gameTokenValues);

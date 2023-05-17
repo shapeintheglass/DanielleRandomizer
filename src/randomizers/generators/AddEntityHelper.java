@@ -8,6 +8,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import flowgraph.Edge;
+import flowgraph.Node;
 import proto.RandomizerSettings.Settings;
 import proto.RandomizerSettings.StartItem;
 import utils.LevelConsts;
@@ -41,8 +43,8 @@ public class AddEntityHelper {
         .setAttribute("Pos", "0,0,0")
         .setAttribute("Rotate", "0,0,0,1")
         .setAttribute("EntityClass", "FlowgraphEntity")
-        .setAttribute("EntityId", "2592734589")
-        .setAttribute("EntityGuid", "162362214")
+        .setAttribute("EntityId", entityId)
+        .setAttribute("EntityGuid", entityGuid)
         .setAttribute("CastShadowViewDistRatio", "0")
         .setAttribute("CastShadowMinSpec", "1")
         .setAttribute("CastSunShadowMinSpec", "8")
@@ -74,103 +76,209 @@ public class AddEntityHelper {
     return entity;
   }
   
-  private static Element getTeleportFlowgraph(String levelDir) {
+  private static Element getTeleportFlowgraph(String levelDir, String spawnDoor) {
     Element entity = createFlowgraphStarter("928759283", "29823482");
     Element nodes = entity.getChild("FlowGraph").getChild("Nodes");
     Element edges = entity.getChild("FlowGraph").getChild("Edges");
-    String gameStartNodeId = "1";
-    Element gameStartNode = new Element("Node").setAttribute("Id", gameStartNodeId)
-        .setAttribute("Class", "Game:Start")
-        .setAttribute("pos", "-127,19,0")
-        .addContent(new Element("Inputs").setAttribute("InGame", "1")
-            .setAttribute("InEditor", "1")
-            .setAttribute("InEditorPlayFromHere", "0"));
     
-    String teleportNodeId = "2";
+    int nodeId = 1;
+    
+    String gameStartNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(gameStartNodeId, "Game:Start", 
+        ImmutableMap.of("InGame", "1", "InEditor", "1", "InEditorPlayFromHere", "0")).get());
+    
+    // Repurpose an unused token for Trauma Center, PlayerHasExogeuousContrastingAgent
+    // to determine if we have already executed this script
+    String gameTokenCheckNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(gameTokenCheckNodeId, "Mission:GameTokenCheck",
+        ImmutableMap.of("gametokenid_Token", "1131953825", "CheckValue", "false")).get());
+    
+    // Set the token for the door to spawn by
+    String gameTokenSetSpawnDoorNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(gameTokenSetSpawnDoorNodeId,  "Mission:GameTokenSet",
+        ImmutableMap.of("gametokenid_Token", "101193842", "Value", spawnDoor)).get());
+    
+    // Trigger loading a different level
+    String loadNextLevelNodeId = Integer.toString(nodeId++);
     String levelName = LevelConsts.LEVEL_PATH_TO_NAME.get(levelDir);
-    Element teleportNode = new Element("Node").setAttribute("Id", teleportNodeId)
-        .setAttribute("Class", "Mission:LoadNextLevel")
-        .setAttribute("pos", "15900,3540,0")
-        .addContent(new Element("Inputs")
-            .setAttribute("NextLevel", levelName));
+    nodes.addContent(new Node(loadNextLevelNodeId, "Mission:LoadNextLevel",
+        ImmutableMap.of("NextLevel", levelName)).get());
+
+    // Set day2 token
+    String gameTokenSetDay2NodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(gameTokenSetDay2NodeId, "Mission:GameTokenSet",
+        ImmutableMap.of("gametokenid_Token", "1304802513", "Value", "true")).get());
     
-    Element edge = new Element("Edge")
-        .setAttribute("nodeIn", teleportNodeId)
-        .setAttribute("nodeOut", gameStartNodeId)
-        .setAttribute("portIn", "Trigger")
-        .setAttribute("portOut", "output")
-        .setAttribute("enabled", "1");
+    // Enable saving
+    String gameTokenSetEnableSavingNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(gameTokenSetEnableSavingNodeId, "Mission:GameTokenSet",
+        ImmutableMap.of("gametokenid_Token", "2067707504", "Value", "true")).get());
     
-    nodes.addContent(gameStartNode);
-    nodes.addContent(teleportNode);
-    edges.addContent(edge);
+    // Enable health/armor in HUD
+    String healthNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(healthNodeId, "Ark:UI:EnableHUDHealth", ImmutableMap.of()).get());
+    String armorNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(armorNodeId, "Ark:UI:EnableHUDArmor", ImmutableMap.of()).get());
+    String scopeNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(scopeNodeId, "Ark:EnableScope", ImmutableMap.of()).get());
+    String flashlightNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(flashlightNodeId, "Ark:Flashlight", ImmutableMap.of()).get());
+    
+    // Enemy health meters
+    String enemyHealthNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(enemyHealthNodeId, "Ark:Player:EnableEnemyHealthMeter", ImmutableMap.of()).get());
+    
+    // Enable PDA pages
+    String pdaAccessNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaAccessNodeId, "Ark:PDA:SetPDAAccess", ImmutableMap.of()).get());
+    String pdaDateTimeNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaDateTimeNodeId, "Ark:PDA:EnableDateAndTime", ImmutableMap.of()).get());
+    String pdaAbilitiesNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaAbilitiesNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Abilities")).get());
+    String pdaCodesNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaCodesNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Codes")).get());
+    String pdaFabPlansNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaFabPlansNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "FabricationPlans")).get());
+    String pdaStatusNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaStatusNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Status")).get());
+    String pdaObjectivesNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaObjectivesNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Objectives")).get());
+    String pdaLevelMapNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaLevelMapNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "LevelMap")).get());
+    String pdaStationMapNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaStationMapNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "StationMap")).get());
+    String pdaNotesNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaNotesNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Notes")).get());
+    String pdaMetadataNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaMetadataNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Metadata")).get());
+    String pdaSuitModsNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaSuitModsNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "SuitMods")).get());
+    String pdaScopeModsNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(pdaScopeModsNodeId, "Ark:PDA:EnablePDAPage",
+        ImmutableMap.of("bEnable", "1", "Page", "Status")).get());
+
+    // set location name
+    String setAltNameForSimLabsNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(setAltNameForSimLabsNodeId, "Ark:Locations:SetAlternateName",
+        ImmutableMap.of("location_Location", "12889009724983807463", "text_AlternateName", "@ui_simulationlabs")).get());
+
+    // Send sim lab cleanup event
+    String sendRemoteEventCleanSimLabsNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(sendRemoteEventCleanSimLabsNodeId, "Ark:SendRemoteEvent",
+        ImmutableMap.of("remoteEvent_Event", "12889009725049448174")).get());
+    
+    String timeDelayNodeId = Integer.toString(nodeId++);
+    nodes.addContent(new Node(timeDelayNodeId, "Time:Delay",
+        ImmutableMap.of("delay", "1", "resetOnInput", "0")).get());
+
+    // Game:Start In: ??? Out: output, LevelStateRestored
+    // Mission:GameTokenCheck In: Trigger Out: True/False
+    // Mission:GameTokenSet In: Trigger Out: OutValue
+    // Time:Delay In: in Out: out
+    // Mission:LoadNextLevel In: Trigger
+    // Ark:UI:EnableHUDHealth Ark:UI:EnableHUDArmor Ark:EnableScope Ark:Flashlight Ark:Player:EnableEnemyHealthMeter Ark:PDA:SetPDAAccess In: Enable
+    // Ark:PDA:EnablePDAPage In: Trigger
+    // Ark:PDA:EnableDateAndTime  In: Show/Hide?
+    // Ark:Locations:SetAlternateName In: Trigger
+    // Ark:SendRemoteEvent In: Send
+    // Ark:Player:LearnNameForResearchTopic In: Trigger
+    
+    // Game Start --> Token Check
+    edges.addContent(new Edge(gameTokenCheckNodeId, gameStartNodeId, "Trigger", "output").get());
+    // Token Check --> Set to Day 2 (to skip intro)
+    edges.addContent(new Edge(gameTokenSetDay2NodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    // Token Check --> Time Delay
+    edges.addContent(new Edge(timeDelayNodeId, gameTokenCheckNodeId, "in", "True").get());
+    // Time Delay --> Set Spawn and Teleport
+    edges.addContent(new Edge(gameTokenSetSpawnDoorNodeId, timeDelayNodeId, "Trigger", "out").get());
+    edges.addContent(new Edge(loadNextLevelNodeId, gameTokenSetSpawnDoorNodeId, "Trigger", "OutValue").get());
+    
+    // Token Check --> Everything else
+    edges.addContent(new Edge(gameTokenSetEnableSavingNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(healthNodeId, gameTokenCheckNodeId, "Enable", "True").get());
+    edges.addContent(new Edge(armorNodeId, gameTokenCheckNodeId, "Enable", "True").get());
+    edges.addContent(new Edge(scopeNodeId, gameTokenCheckNodeId, "Enable", "True").get());
+    edges.addContent(new Edge(flashlightNodeId, gameTokenCheckNodeId, "Enable", "True").get());
+    edges.addContent(new Edge(enemyHealthNodeId, gameTokenCheckNodeId, "Enable", "True").get());
+    edges.addContent(new Edge(pdaAccessNodeId, gameTokenCheckNodeId, "Enable", "True").get());
+    edges.addContent(new Edge(pdaDateTimeNodeId, gameTokenCheckNodeId, "Show", "True").get()); 
+    edges.addContent(new Edge(pdaAbilitiesNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaCodesNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaFabPlansNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaStatusNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaObjectivesNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaLevelMapNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaStationMapNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaNotesNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaMetadataNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaSuitModsNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(pdaScopeModsNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(setAltNameForSimLabsNodeId, gameTokenCheckNodeId, "Trigger", "True").get());
+    edges.addContent(new Edge(sendRemoteEventCleanSimLabsNodeId, gameTokenCheckNodeId, "Send", "True").get());
     return entity;
   }
 
-  private static Element getNeuromodDivisionAddItemsFlowgraph(List<StartItem> archetypes) {
+  private static Element getAddItemsFlowgraph(List<StartItem> archetypes) {
     Element entity = createFlowgraphStarter("482317647", "91874238"); // Just needs to be unique within level
     Element nodes = entity.getChild("FlowGraph").getChild("Nodes");
     Element edges = entity.getChild("FlowGraph").getChild("Edges");
     
-    String gameStartNodeId = "1";
-    Element gameStartNode = new Element("Node").setAttribute("Id", gameStartNodeId)
-        .setAttribute("Class", "Game:Start")
-        .setAttribute("pos", "-127,19,0")
-        .addContent(new Element("Inputs").setAttribute("InGame", "1")
-            .setAttribute("InEditor", "1")
-            .setAttribute("InEditorPlayFromHere", "0"));
-    String playerNodeId = "2";
-    Element playerNode = new Element("Node").setAttribute("Id", playerNodeId)
-        .setAttribute("Class", "Actor:LocalPlayer")
-        .setAttribute("pos", "620,570,0")
-        .addContent(new Element("Inputs"));
-    nodes.addContent(gameStartNode);
-    nodes.addContent(playerNode);
+    int idCounter = 1;
+    String gameStartNodeId = Integer.toString(idCounter++);
+    nodes.addContent(new Node(gameStartNodeId, "Game:Start", ImmutableMap.of("InGame", "1", "InEditor", "1", "InEditorPlayFromHere", "0")).get());
+  
+    // Repurpose an unused token for Trauma Center, PlayerHasExogeuousContrastingAgent
+    // to determine if we have already executed this script
+    String tokenCheckNodeId = Integer.toString(idCounter++);
+    nodes.addContent(new Node(tokenCheckNodeId, "Mission:GameTokenCheck", ImmutableMap.of("gametokenid_Token", "1131953825", "CheckValue", "false")).get());
     
-    int idCounter = 3;
-    for (StartItem s : archetypes) {
-      String newItemNodeId = Integer.toString(idCounter);
-      Element newItemNode = new Element("Node").setAttribute("Id", newItemNodeId)
-          .setAttribute("Class", "Inventory:ItemAdd")
-          .setAttribute("pos", "1360,520,0")
-          .addContent(new Element("Inputs")
-              .setAttribute("entityId", "0")
-              .setAttribute("archetype", s.getArchetype())
-              .setAttribute("quantity", Integer.toString(s.getQuantity()))
-              .setAttribute("playfanfare", "0"));
-      nodes.addContent(newItemNode);
-      
-      Element newItemTriggerEdge = new Element("Edge")
-          .setAttribute("nodeIn", newItemNodeId)
-          .setAttribute("nodeOut", gameStartNodeId)
-          .setAttribute("portIn", "add")
-          .setAttribute("portOut", "output")
-          .setAttribute("enabled", "1");
-      Element newItemEntityEdge = new Element("Edge")
-          .setAttribute("nodeIn", newItemNodeId)
-          .setAttribute("nodeOut", playerNodeId)
-          .setAttribute("portIn", "entityId")
-          .setAttribute("portOut", "entityId")
-          .setAttribute("enabled", "1");
-      edges.addContent(newItemTriggerEdge);
-      edges.addContent(newItemEntityEdge);
-      idCounter++;
-    }
+    // Node pointing to the entity we want to add items into (the player)
+    String playerNodeId = Integer.toString(idCounter++);
+    nodes.addContent(new Node(playerNodeId, "Actor:LocalPlayer", ImmutableMap.of()).get());
+    
+    // Set the token to indicate the setup has completed successfully
+    String gameTokenSetNodeId = Integer.toString(idCounter++);
+    nodes.addContent(new Node(gameTokenSetNodeId, "Mission:GameTokenSet", ImmutableMap.of("gametokenid_Token", "1131953825", "Value", "true")).get());
     
     // Add welcome note
-    Element welcomeNoteNode = new Element("Node")
-        .setAttribute("Id", Integer.toString(idCounter))
-        .setAttribute("Class", "Ark:Notes:GiveNote")
-        .setAttribute("pos", "-11250,-5330,0")
-        .addContent(new Element("Inputs")
-            .setAttribute("note_Note", WelcomeNoteHelper.WELCOME_NOTE_ID));
-    Element welcomeNoteEdge = new Element("Edge")
-        .setAttribute("nodeIn", Integer.toString(idCounter))
-        .setAttribute("nodeOut", gameStartNodeId)
-        .setAttribute("portIn", "Trigger")
-        .setAttribute("portOut", "output");
-    nodes.addContent(welcomeNoteNode);
-    edges.addContent(welcomeNoteEdge);
+    String welcomeNodeId = Integer.toString(idCounter++);
+    nodes.addContent(new Node(welcomeNodeId, "Ark:Notes:GiveNote", ImmutableMap.of("note_Note", WelcomeNoteHelper.WELCOME_NOTE_ID)).get());
+    
+    // Time delay for setting the token to make sure we don't run this script again
+    String timeDelayNodeId = Integer.toString(idCounter++);
+    nodes.addContent(new Node(timeDelayNodeId, "Time:Delay", ImmutableMap.of("delay", "1", "resetOnInput", "0")).get());
+    
+    // Game Start --> Token Check
+    edges.addContent(new Edge(tokenCheckNodeId, gameStartNodeId, "Trigger", "output").get());
+
+    // Token Check --> Add Welcome note
+    edges.addContent(new Edge(welcomeNodeId, tokenCheckNodeId, "Trigger", "OutValue").get());
+    
+    // Token Check --> Timer --> Set game token
+    edges.addContent(new Edge(timeDelayNodeId, tokenCheckNodeId, "in", "OutValue").get());
+    edges.addContent(new Edge(gameTokenSetNodeId, timeDelayNodeId, "Trigger", "out").get());
+
+    for (StartItem s : archetypes) {
+      String newItemNodeId = Integer.toString(idCounter++);
+      // Node for adding an inventory item
+      nodes.addContent(new Node(newItemNodeId, "Inventory:ItemAdd", ImmutableMap.of("entityId", "0", "archetype", s.getArchetype(),
+          "quantity", Integer.toString(s.getQuantity()), "playfanfare", "0")).get());
+      // Token Check --> Add item
+      edges.addContent(new Edge(newItemNodeId, tokenCheckNodeId, "add", "OutValue").get());
+      // Ensure item is added to player inventory
+      edges.addContent(new Edge(newItemNodeId, playerNodeId, "entityId", "entityId").get());
+    }
+
     return entity;
   }
   
@@ -466,52 +574,60 @@ public class AddEntityHelper {
    */
   public static void addEntities(Element objects, String levelDir, Settings settings,
       ZipHelper zipHelper, List<Element> mimicEntities, Door spawnLocation, Random r) {
+    
     String startLocation = LevelConsts.NEUROMOD_DIVISION;
-    // Custom spawn - If enabled use the starting location provided
     if (settings.getGameStartSettings().getRandomStart()) {
       Level startLevel = StationConnectivityConsts.LEVELS_TO_DOORS.inverse().get(spawnLocation).asList().get(0);
       startLocation = StationConnectivityConsts.LEVELS_TO_NAMES.get(startLevel);
-      if (levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
-        // TODO: Set starting door as well
-        objects.addContent(getTeleportFlowgraph(startLocation));
-      }
     }
     
-    // Game start settings
-    if (levelDir.equals(startLocation)) {
+    // Scripts that must be executed in the Neuromod Division.
+    if (levelDir.equals(LevelConsts.NEUROMOD_DIVISION)) {
+      // Kick off self-destruct for GOTS mode
       if (settings.getExpSettings().getStartSelfDestruct()) {
         objects.addContent(getNeuromodDivisionSelfDestructFlowgraph());
       }
-      
+
+      // If starting outside apartment, add the "day 2 start" script
+      if (settings.getGameStartSettings().getStartOutsideApartment() || settings.getGameStartSettings().getRandomStart()) {
+        try {
+          Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
+          Element root = document.getRootElement().clone();
+          objects.addContent(root);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+      if (settings.getGameStartSettings().getRandomStart()) {
+        Level connectingLevel = StationConnectivityConsts.LEVELS_TO_CONNECTING_DOORS.inverse().get(spawnLocation).asList().get(0);
+        // TODO: Use the destination from the randomized station bc this is just wrong
+        String fromDestination = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(connectingLevel);
+        // Insert flowgraph script that grants player their starting kit and teleports them
+        objects.addContent(getTeleportFlowgraph(startLocation, fromDestination));
+      }
+    }
+
+    // Scripts that must be run in the start level (may or may not be ND)
+    if (levelDir.equals(startLocation)) {
+      // Initialize starting inventory for player: Add any items specified in settings
       List<StartItem> gameStartItems = Lists.newArrayList();
-      
-      // Add any items specified in settings
       gameStartItems.addAll(settings.getStartingItemsList());
 
       // If station randomization is also enabled, add two EMP grenades to bypass the GUTS fan, just in case.
-      if (settings.getGameplaySettings().getRandomizeStation()) {
+      if (settings.getGameplaySettings().getRandomizeStation() || settings.getGameStartSettings().getRandomStart()) {
         gameStartItems.add(StartItem.newBuilder()
             .setArchetype("ArkPickups.Ammo.EMPGrenades")
             .setQuantity(2)
             .build());
       }
-      gameStartItems.add(StartItem.newBuilder()
-          .setArchetype("ArkPickups.Weapons.Wrench")
-          .setQuantity(1)
-          .build());
       
-      // If starting outside apartment, shift to second day and add some starting equipment
-      if (settings.getGameStartSettings().getStartOutsideApartment()) {
-        try {
-          Document document = zipHelper.getDocument(ZipHelper.NATURAL_DAY_2_START_FILE);
-          Element root = document.getRootElement()
-              .clone();
-
-          objects.addContent(root);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        
+      // If starting outside apartment, grant a wrench
+      if (settings.getGameStartSettings().getStartOutsideApartment() || settings.getGameStartSettings().getRandomStart()) {
+        gameStartItems.add(StartItem.newBuilder()
+            .setArchetype("ArkPickups.Weapons.Wrench")
+            .setQuantity(1)
+            .build());
       }
       
       if (settings.getGameStartSettings().getAddJetpack()) {
@@ -526,13 +642,8 @@ public class AddEntityHelper {
             .setQuantity(1)
             .build());
       }
-      
-      // Add requested starting items to player
-      objects.addContent(getNeuromodDivisionAddItemsFlowgraph(gameStartItems));
+      objects.addContent(getAddItemsFlowgraph(gameStartItems));
     }
-    
-    // Neuromod division settings
-    // Skip the intro if starting outside of the apartment 
 
     // Gravity boxes: Zero Gravity Everywhere  will add a gravity box.
     if (settings.getExpSettings().getZeroGravityEverywhere() 

@@ -13,8 +13,8 @@ import utils.ZipHelper;
 public class WelcomeNoteHelper {
   public static final String WELCOME_NOTE_ID = "7193487293";  
   
-  private static final String GREETING = "Thank you for trying the Prey Randomizer! For questions / bug reports, please join our discord server linked in the mod page.<br><br>";
-  
+  private static final String GREETING = "Thank you for trying the Prey Randomizer!<br><br>";
+    
   private static final String STATION_RANDO_LOADOUT_EXPLANATION = "Your starter equipment includes two EMPs. These are intended as a failsafe for the large fan in GUTS.<br><br>";
   
   private static final String PREY_SOULS_HELP = "All credit for Prey For Death content goes to coyote. Please give the full version of Prey For Death a try!<br><br>";

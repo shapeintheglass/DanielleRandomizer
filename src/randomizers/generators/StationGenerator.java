@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -20,7 +19,6 @@ import com.google.common.graph.ImmutableNetwork;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 import utils.KeycardConnectivityConsts;
-import utils.LevelConsts.TalosLocation;
 import utils.ProgressionGraph;
 import utils.StationConnectivityConsts;
 import utils.StationConnectivityConsts.Door;
@@ -65,25 +63,6 @@ public class StationGenerator {
       Door.LIFE_SUPPORT_CARGO_BAY_EXIT,
       Door.LIFE_SUPPORT_LOBBY_EXIT,
       Door.LIFE_SUPPORT_POWER_PLANT_EXIT);
-  
-  public static ImmutableBiMap<Level, String> LEVELS_TO_IDS = new ImmutableBiMap.Builder<Level, String>()
-      .put(Level.ARBORETUM, "1713490239386284818")
-      .put(Level.BRIDGE, "844024417275035158")
-      .put(Level.CARGO_BAY, "15659330456296333985")
-      .put(Level.CREW_QUARTERS, "844024417252490146")
-      .put(Level.DEEP_STORAGE, "1713490239377738413")
-      .put(Level.GUTS, "4349723564886052417")
-      .put(Level.HARDWARE_LABS, "844024417263019221")
-      .put(Level.LIFE_SUPPORT, "4349723564895209499")
-      .put(Level.LOBBY, "1713490239377285936")
-      .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
-      .put(Level.POWER_PLANT, "6732635291182790112")
-      .put(Level.PSYCHOTRONICS, "11824555372632688907")
-      .put(Level.SHUTTLE_BAY, "1713490239386284988")
-      .put(Level.EXTERIOR, "1713490239386284337")
-      .put(Level.ENDGAME, "13680621263401479941")
-      .put(Level.GENDER_SELECT, "3149325216909839564")
-      .build();
 
   ImmutableNetwork<Level, Door> network;
   private int numAttempts;
@@ -179,7 +158,7 @@ public class StationGenerator {
           logger.warning(
               String.format("Door value not found for door %s, level %s", d.toString(), levelName));
         }
-        String doorValueReadable = LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
             .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d)).toString();
         String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
@@ -208,7 +187,7 @@ public class StationGenerator {
         String doorName = StationConnectivityConsts.DOORS_TO_NAMES.get(d);
         String spawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(d);
         String doorValue = doorConnectivity.get(levelName).get(doorName);
-        String doorValueReadable = LEVELS_TO_IDS.inverse().get(doorValue).toString();
+        String doorValueReadable = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(doorValue).toString();
         String oldDoorValueReadable = StationConnectivityConsts.LEVELS_TO_DOORS.inverse()
             .get(StationConnectivityConsts.DEFAULT_CONNECTIVITY.get(d)).toString();
         String spawnValue = spawnConnectivity.get(levelName).get(spawnName);
@@ -235,7 +214,7 @@ public class StationGenerator {
       // Shorthand destination to use name when spawning from this level
       String fromDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(fromLevel);
       // Location ID of this level
-      String fromLocationId = LEVELS_TO_IDS.get(fromLevel);
+      String fromLocationId = StationConnectivityConsts.LEVELS_TO_IDS.get(fromLevel);
 
       // Iterate through all of its neighbors
       for (Level toLevel : network.successors(fromLevel)) {
@@ -249,7 +228,7 @@ public class StationGenerator {
         // Shorthand destination name to use when spawning from the neighbor
         String toDestName = StationConnectivityConsts.LEVELS_TO_DESTINATIONS.get(toLevel);
         // Location ID of the neighbor
-        String toLocationId = LEVELS_TO_IDS.get(toLevel);
+        String toLocationId = StationConnectivityConsts.LEVELS_TO_IDS.get(toLevel);
 
         // Spawn point name in this level
         String fromLevelSpawnName = StationConnectivityConsts.DOORS_TO_SPAWNS.get(fromDoor);
@@ -373,19 +352,6 @@ public class StationGenerator {
   }
 
   public static void main(String[] args) {
-    ImmutableBiMap<Level, String> levelsToIds = new ImmutableBiMap.Builder<Level, String>()
-        .put(Level.ARBORETUM, "1713490239386284818").put(Level.BRIDGE, "844024417275035158")
-        .put(Level.CARGO_BAY, "15659330456296333985").put(Level.CREW_QUARTERS, "844024417252490146")
-        .put(Level.DEEP_STORAGE, "1713490239377738413").put(Level.GUTS, "4349723564886052417")
-        .put(Level.HARDWARE_LABS, "844024417263019221")
-        .put(Level.LIFE_SUPPORT, "4349723564895209499").put(Level.LOBBY, "1713490239377285936")
-        .put(Level.NEUROMOD_DIVISION, "12889009724983807463")
-        .put(Level.POWER_PLANT, "6732635291182790112")
-        .put(Level.PSYCHOTRONICS, "11824555372632688907")
-        .put(Level.SHUTTLE_BAY, "1713490239386284988").put(Level.EXTERIOR, "1713490239386284337")
-        .build();
-
-
     Map<Level, Map<Level, Integer>> levelStats = Maps.newHashMap();
     for (Level l : StationRandoConsts.LEVELS_TO_PROCESS) {
       levelStats.put(l, Maps.newHashMap());

@@ -16,7 +16,6 @@ import installers.Installer;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
-import proto.RandomizerSettings.CheatSettings.SpawnLocation;
 import proto.RandomizerSettings.Settings;
 import randomizers.cosmetic.BinkRandomizer;
 import randomizers.cosmetic.BodyRandomizer;
@@ -364,7 +363,6 @@ public class RandomizerService extends Service<Void> {
         .addFilter(new ItemSpawnFilter(database, currentSettings))
         .addFilter(new FlowgraphFilter(database, currentSettings))
         .addFilter(new EnemyFilter(database, currentSettings));
-    
     
     ImmutableNetwork<Level, Door> stationConnectivity = StationConnectivityConsts.getDefaultNetwork();
     StringBuilder connectivityInfo = new StringBuilder();

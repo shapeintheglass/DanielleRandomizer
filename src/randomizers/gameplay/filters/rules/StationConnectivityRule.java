@@ -5,7 +5,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
 import org.jdom2.Element;
-import randomizers.generators.StationGenerator;
 import utils.StationConnectivityConsts;
 
 public class StationConnectivityRule implements Rule {
@@ -45,8 +44,8 @@ public class StationConnectivityRule implements Rule {
     if (newLocation != null) {
       Element properties2Element = e.getChild(PROPERTIES2);
       String originalLocation = properties2Element.getAttributeValue(LOCATION_DESTINATION);
-      StationConnectivityConsts.Level originalLevel = StationGenerator.LEVELS_TO_IDS.inverse().get(originalLocation);
-      StationConnectivityConsts.Level newLevel = StationGenerator.LEVELS_TO_IDS.inverse().get(newLocation);
+      StationConnectivityConsts.Level originalLevel = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(originalLocation);
+      StationConnectivityConsts.Level newLevel = StationConnectivityConsts.LEVELS_TO_IDS.inverse().get(newLocation);
       properties2Element.setAttribute(LOCATION_DESTINATION, newLocation);
       Logger.getGlobal()
           .info(String.format("%s: Updating connection to %s to go to %s instead", filename, originalLevel, newLevel));
